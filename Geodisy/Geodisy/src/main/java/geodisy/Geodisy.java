@@ -5,10 +5,21 @@
  */
 package geodisy;
 
+import geodisy.Crosswalking.JSONParsing.JSONParser;
+import geodisy.Crosswalking.JSONParsing.JacksonParser;
+import geodisy.Dataverse.DataverseAPI;
+
+
 /**
  *
  * @author pdante
  */
 class Geodisy {
+
+    public Geodisy() {
+    }
     
+    public void getMetadata(){
+        DataverseAPI dvAPI = new DataverseAPI();
+    }
 }
