@@ -9,6 +9,6 @@ package geodisy.Crosswalking;
  *
  * @author pdante
  */
-public class ISO_Schema implements MetadataSchema{
+public abstract class ISO_Schema implements MetadataSchema{
     
 }

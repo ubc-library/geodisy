@@ -10,5 +10,16 @@ package geodisy.DataSourceLocations;
  * @author pdante
  */
 public class Dataverse {
+    private String[] dataverses;
+
+    public Dataverse() {
+        //add all dataverse names into the curly brackes, as comma separated strings
+        dataverses = new String[]{"placeholder"};
+    }
+
+    public String[] getDataverses() {
+        return dataverses;
+    }
+    
     
 }

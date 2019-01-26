@@ -23,6 +23,8 @@ public class DataverseAPI extends SourceAPI  {
     //Find all the datasets and create a linkedlist of their DOIs
     @Override
     protected LinkedList<String> searchDV() {
+        String searchURL = "https" + dvName + "search?q=*&type=dataset";
+        //TODO make the search call and parse to get the number of entries and a list of DOIs
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

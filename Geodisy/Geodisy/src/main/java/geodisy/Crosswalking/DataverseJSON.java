@@ -14,6 +14,7 @@ import geodisy.Crosswalking.MetadataSchema;
 public class DataverseJSON implements MetadataSchema {
 
     public DataverseJSON() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
