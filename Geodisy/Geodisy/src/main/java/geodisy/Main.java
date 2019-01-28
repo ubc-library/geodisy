@@ -16,8 +16,8 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Geodisy geo =  new Geodisy();
-        geo.getMetadata();
+        Scheduler scheduler = new Scheduler();
+        scheduler.run();
         
     }
     
