@@ -17,11 +17,24 @@ public class Scheduler {
    private final static int HOUR_TO_RUN = 2;
     private final static int MINUTE_TO_RUN = 0; 
     protected Calendar today;
-    protected Scheduler() {
+    public Scheduler() {
         today = Calendar.getInstance();
         today.set(Calendar.HOUR_OF_DAY, HOUR_TO_RUN);
         today.set(Calendar.MINUTE, MINUTE_TO_RUN);
         today.set(Calendar.SECOND, 0);
+        today.set(Calendar.MILLISECOND,0);
+    }
+
+    public static int getHOUR_TO_RUN() {
+        return HOUR_TO_RUN;
+    }
+
+    public static int getMINUTE_TO_RUN() {
+        return MINUTE_TO_RUN;
+    }
+
+    public Calendar getToday() {
+        return today;
     }
 
 public void run(){
