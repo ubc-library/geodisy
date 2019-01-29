@@ -54,13 +54,5 @@ public class SchedulerTest {
 
         assertEquals(schedule.getToday().get(cal.DAY_OF_MONTH), cal.get(cal.DAY_OF_MONTH));
     }
-    @Test
-    public void testRun() {
-        System.out.println("run");
-        Scheduler instance = new Scheduler();
-        instance.run();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
     
 }
