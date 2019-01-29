@@ -15,11 +15,16 @@ import java.util.LinkedList;
 public class DataverseAPI extends SourceAPI  {
     private final String dvName;
     private JacksonParser jParse;
+    
     public DataverseAPI(String dvName) {
         this.dvName = dvName;
         jParse = new JacksonParser();
     }
 
+    public DataverseAPI(String dvName, JacksonParser jParse){
+        this.dvName = dvName;
+        this.jParse = jParse;
+    }
     //Find all the datasets and create a linkedlist of their DOIs
     @Override
     protected LinkedList<String> searchDV() {

@@ -24,7 +24,8 @@ class Geodisy {
         DataverseAPI dvAPI = new DataverseAPI(createURL(s));
         }
     }
-    //creates the universal part of the dataverse api search/retrieve URLs "://{database name}/api/". Will still need to add http/http and whatever is needed at the end.
+    /*creates the universal part of the dataverse api search/retrieve URLs "://{database name}/api/". 
+    Will still need to add http/http and whatever is needed at the end.*/
     private String createURL(String s) {
         String answer = "://" + s + "/api/";
         return answer;
