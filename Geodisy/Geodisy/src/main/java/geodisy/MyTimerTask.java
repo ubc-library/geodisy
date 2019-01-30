@@ -11,19 +11,22 @@ import java.util.TimeZone;
 import java.util.TimerTask;
 
 /**
- *
+ *This extends TimerTask to create the class that will
+ * be used in the Scheduler to start the Geodisy, harvesting from Dataverse and 
+ * exporting data and ISO-19115 metadata to Geoserver.
  * @author pdante
  */
 public class MyTimerTask extends TimerTask {
-    private static int i;
+    
     protected MyTimerTask() {
-        i = 0;
     }
-
+/**
+ * 
+ */
     @Override
     public void run() {
         Geodisy geo = new Geodisy();
-        geo.getMetadata();
+        geo.harvestDataverse();
     }
     
     //for testing the scheduler
@@ -32,7 +35,6 @@ public class MyTimerTask extends TimerTask {
         TimeZone tz = TimeZone.getTimeZone("America/Vancouver");
         Calendar today = Calendar.getInstance(tz);
         System.out.println("Current time: " + today.getTime());
-        i++;
     }*/
   
     

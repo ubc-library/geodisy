@@ -13,6 +13,9 @@ import java.util.concurrent.TimeUnit;
 /**
  *
  * @author pdante
+ * 
+ * This class is what schedules the metadata harvest to occur at a specific interval.
+ * Currently the plan is to have it run once a day at 2am PST.
  */
 public class Scheduler {
     
