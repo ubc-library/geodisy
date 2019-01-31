@@ -11,16 +11,23 @@ import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
 /**
- *
- * @author pdante
- * 
  * This class is what schedules the metadata harvest to occur at a specific interval.
  * Currently the plan is to have it run once a day at 2am PST.
+ * 
+ * @author pdante
+ * 
+
  */
 public class Scheduler {
     
-    /*24-hour representation of starttime program will run. 
-    Time is based on the timezone of the program's location (PST)*/
+    /**
+     * Class sets the schedule for how often Dataverse is harvested 
+     * and how often Geoserver is updated.
+     
+     * HOUR_TO_START_RUN is a 24-hour representation of hour when program will run. 
+     * Time is based on the time zone of the program's location (PST)
+     * 
+     */
     
     private final static int HOUR_TO_START_RUN = 2;
     private final static int MINUTE_TO_START_RUN = 0;
@@ -29,6 +36,9 @@ public class Scheduler {
     //for testing the timer
     //private final static TimeUnit UNIT_BETWEEN_RUNS = TimeUnit.SECONDS;
     
+    /**
+     * Used to set the time zone for the Calendar object.
+     */
     TimeZone tz = TimeZone.getTimeZone("America/Vancouver");
     
     protected Calendar today;
