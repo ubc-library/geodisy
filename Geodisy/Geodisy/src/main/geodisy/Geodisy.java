@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package geodisy;
+package main.geodisy;
 
-import geodisy.DataSourceLocations.Dataverse;
-import geodisy.Dataverse.DataverseAPI;
-import geodisy.Dataverse.SourceAPI;
+import main.geodisy.DataSourceLocations.Dataverse;
+import main.geodisy.Dataverse.SourceAPI;
+import main.geodisy.Dataverse.DataverseAPI;
 
 
 /**
@@ -18,12 +18,16 @@ import geodisy.Dataverse.SourceAPI;
 class Geodisy {
     public Geodisy() {
     }
-    
+
+    /**
+     * Front side of middleware, this part harvests data from Geoserver
+     */
     public void harvestDataverse(){
         Dataverse dv = new Dataverse();
         String[] dataverses = dv.getDataverses();
         for(String s: dataverses){
         SourceAPI dvAPI = new DataverseAPI(createDataverseURL(s));
+        dvAPI.harvest();
         }
     }
     /** 
@@ -36,6 +40,10 @@ class Geodisy {
         String answer = "://" + s + "/api/";
         return answer;
     }
+
+    /**
+     * Backside of middleware, this is the part that sends the processed data/metadata to Geoserver
+     */
     public void exportToGeoserver(){
         //TODO
     }
