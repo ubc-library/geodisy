@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package geodisy.Crosswalking;
+package main.geodisy.GeoServer;
 
 /**
  *
  * @author pdante
  */
-public abstract class ISO_Schema implements MetadataSchema{
-    
+public class GeoServerAPI extends DestinationAPI {
+    //TODO write API to connect to GeoServer
 }

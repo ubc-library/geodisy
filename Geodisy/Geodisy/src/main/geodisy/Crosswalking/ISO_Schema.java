@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package geodisy.Crosswalking.JSONParsing;
+package main.geodisy.Crosswalking;
 
 /**
  *
  * @author pdante
  */
-public class GSONParser implements JSONParser{
-    //TODO create GSON parser for reading a creating JSON objects
+public abstract class ISO_Schema implements MetadataSchema{
+    
 }

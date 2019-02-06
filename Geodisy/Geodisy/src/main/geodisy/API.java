@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package geodisy.Crosswalking;
+package main.geodisy;
 
 /**
  *
  * @author pdante
  */
-public interface Crosswalk {
-    //TODO create interface for metadata crosswalks
+public interface API {
+    
 }

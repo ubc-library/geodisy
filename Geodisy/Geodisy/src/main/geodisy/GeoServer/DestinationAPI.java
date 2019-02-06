@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package geodisy.Crosswalking.JSONParsing;
+package main.geodisy.GeoServer;
+
+import main.geodisy.API;
 
 /**
  *
  * @author pdante
  */
-public interface JSONParser {
-    
+public abstract class DestinationAPI implements API {
+    //TODO write any abstract code
 }

@@ -5,9 +5,9 @@
  */
 package Geodisy;
 
-import geodisy.Scheduler;
+import main.geodisy.Scheduler;
 import java.util.Calendar;
-import java.util.Date;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package geodisy.GeoServer;
+package main.geodisy.Crosswalking.JSONParsing;
 
 /**
  *
  * @author pdante
  */
-public class GeoServerAPI extends DestinationAPI {
-    //TODO write API to connect to GeoServer
+public interface JSONParser {
+    
 }
