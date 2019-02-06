@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Geodisy.src.main.geodisy.Crosswalking.JSONParsing;
+package Crosswalking.JSONParsing;
 
 
+import Crosswalking.DataverseJSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import main.geodisy.Crosswalking.DataverseJSON;
+
+
 
 import java.io.File;
 import java.io.IOException;
@@ -18,11 +20,11 @@ import java.nio.file.Files;
  *
  * @author pdante
  */
-public class JacksonParser implements JSONParser{
+public class JacksonParser implements JSONParser {
     
      public JacksonParser (){
     }
-     public DataverseJSON[] parseDVJSON(String filePath){    
+     public DataverseJSON[] parseDVJSON(String filePath){
          DataverseJSON[] dvMetaObjects = new DataverseJSON[0];
          try{
              byte[] metadata = Files.readAllBytes(new File(filePath).toPath());

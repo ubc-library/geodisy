@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main.geodisy;
+package src.main.java;
 
-import main.geodisy.DataSourceLocations.Dataverse;
-import main.geodisy.Dataverse.DataverseAPI;
-import main.geodisy.Dataverse.SourceAPI;
+import src.main.java.DataSourceLocations.Dataverse;
+import src.main.java.Dataverse.DataverseAPI;
+import src.main.java.Dataverse.SourceAPI;
 
 
 /**
- * This is the main activity class of the Geodisy middleware.
+ * This is the main activity class of the tests middleware.
  * From here the calls for harvesting of Dataverse and exporting to Geoserver happen.
  * @author pdante
  */
