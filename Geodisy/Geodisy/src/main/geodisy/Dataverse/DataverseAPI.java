@@ -3,16 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package geodisy.Dataverse;
+package main.geodisy.Dataverse;
 
-import geodisy.Crosswalking.JSONParsing.JacksonParser;
+import main.geodisy.Crosswalking.JSONParsing.JacksonParser;
+
 import java.util.LinkedList;
 
 /**
  *
  * @author pdante
  */
-public class DataverseAPI extends SourceAPI  {
+public class DataverseAPI extends SourceAPI {
     private final String dvName;
     private JacksonParser jParse;
     
@@ -29,6 +30,7 @@ public class DataverseAPI extends SourceAPI  {
     @Override
     protected LinkedList<String> searchDV() {
         String searchURL = "https" + dvName + "search?q=*&type=dataset";
+        LinkedList<String> doi = new LinkedList<String>();
         //TODO make the search call and parse to get the number of entries and a list of DOIs
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -49,5 +51,10 @@ public class DataverseAPI extends SourceAPI  {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
+    @Override
+    public LinkedList<DataverseJSONObject> harvest() {
+        return new LinkedList<>();
+    }
+
+
 }
