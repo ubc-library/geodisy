@@ -1,7 +1,7 @@
 package Dataverse;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import Dataverse.DataverseJSONFieldClasses.*;
 import Dataverse.DataverseJSONFieldClasses.DataverseJSONGeoFieldClasses.*;
 import java.util.List;
@@ -11,9 +11,9 @@ import java.util.List;
  * May need to change field types for dates, URLs, and/or email addresses.
  * Also need to test to see how textboxes work with this.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class DataverseJSONObject {
-    private String title, subtitle, alternativeTitle;
+
+public class DataverseJavaObject {
+    private String title, subtitle, alternativeTitle, alternativeURL;
     private List<OtherID> otherID;
     private List<Author> author;
     private List<DatasetContact> datasetContact;
@@ -63,6 +63,14 @@ public class DataverseJSONObject {
 
     public void setAlternativeTitle(String alternativeTitle) {
         this.alternativeTitle = alternativeTitle;
+    }
+
+    public String getAlternativeURL() {
+        return alternativeURL;
+    }
+
+    public void setAlternativeURL(String alternativeURL) {
+        this.alternativeURL = alternativeURL;
     }
 
     public List<OtherID> getOtherID() {

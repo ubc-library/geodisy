@@ -7,8 +7,11 @@ package tests;
 
 
 
+
+import BaseFiles.Scheduler;
 import org.junit.*;
-import src.main.java.Scheduler;
+
+
 import java.util.Calendar;
 
 import static org.junit.Assert.assertEquals;
@@ -39,7 +42,7 @@ public class SchedulerTest {
     }
 
     /**
-     * Test of run method, of class Scheduler.
+     * Test of run method, of class BaseFiles.Scheduler.
      */
     @Test
     public void testConstructor(){

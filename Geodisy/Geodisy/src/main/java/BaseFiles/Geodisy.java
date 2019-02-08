@@ -1,13 +1,14 @@
-/*
+package BaseFiles;/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package src.main.java;
 
-import src.main.java.DataSourceLocations.Dataverse;
-import src.main.java.Dataverse.DataverseAPI;
-import src.main.java.Dataverse.SourceAPI;
+
+import Dataverse.DataverseAPI;
+import Dataverse.SourceAPI;
+
+import DataSourceLocations.Dataverse;
 
 
 /**
@@ -31,7 +32,7 @@ class Geodisy {
         }
     }
     /** 
-     * Creates the universal part of the Dataverse API search/retrieve 
+     * Creates the universal part of the Dataverse BaseFiles.API search/retrieve
      * URLs "://{database name}/api/". 
      * Will still need to add http/http and whatever is needed at the end.
      */

@@ -9,7 +9,7 @@ Without this configuration present, some functionality in the IDE may be limited
     <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
         <word>api</word>
         <word>Dataverse</word>
-        <word>Geodisy</word>
+        <word>BaseFiles.Geodisy</word>
         <word>Geoserver</word>
         <word>http</word>
         <word>metadata</word>

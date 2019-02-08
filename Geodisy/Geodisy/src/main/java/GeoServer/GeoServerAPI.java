@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package src.main.java.GeoServer;
+package GeoServer;
 
 /**
  *
  * @author pdante
  */
 public class GeoServerAPI extends DestinationAPI {
-    //TODO write API to connect to GeoServer
+    //TODO write BaseFiles.API to connect to GeoServer
 }

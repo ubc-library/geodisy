@@ -53,7 +53,7 @@ public class DataverseAPI extends SourceAPI {
     }
 
     @Override
-    public LinkedList<DataverseJSONObject> harvest() {
+    public LinkedList<DataverseJavaObject> harvest() {
         return new LinkedList<>();
     }
 

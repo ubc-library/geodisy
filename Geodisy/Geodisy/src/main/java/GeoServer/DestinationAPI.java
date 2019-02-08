@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package src.main.java.GeoServer;
+package GeoServer;
 
-import src.main.java.API;
+import BaseFiles.API;
 
 /**
  *

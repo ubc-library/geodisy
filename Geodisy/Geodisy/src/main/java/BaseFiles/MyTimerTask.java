@@ -1,15 +1,16 @@
-/*
+package BaseFiles;/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package src.main.java;
+
+;
 
 import java.util.TimerTask;
 
 /**
  *This extends TimerTask to create the class that will
- * be used in the Scheduler to start the tests, harvesting from Dataverse and
+ * be used in the BaseFiles.Scheduler to start the tests, harvesting from Dataverse and
  * exporting data and ISO-19115 metadata to Geoserver.
  * @author pdante
  */

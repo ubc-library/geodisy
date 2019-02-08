@@ -5,7 +5,7 @@
  */
 package Dataverse;
 
-import src.main.java.API;
+import BaseFiles.API;
 
 import java.util.LinkedList;
 
@@ -17,5 +17,5 @@ public abstract class SourceAPI implements API {
     abstract protected LinkedList<String> searchDV();
     abstract protected void downloadMetadata(LinkedList<String> dIOs);
     abstract protected void downloadDatasets(String dOI);
-    abstract public LinkedList<DataverseJSONObject> harvest();
+    abstract public LinkedList<DataverseJavaObject> harvest();
 }
