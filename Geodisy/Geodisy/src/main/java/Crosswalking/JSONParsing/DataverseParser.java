@@ -20,6 +20,11 @@ public class DataverseParser {
         parse();
     }
 
+    /**
+     * Simple non-compound fields are parsed in this method, but for compound fields the appropriate JSONField class
+     * is created and its parseCompoundData() method is called to parse the rest.
+     * @throws JSONException
+     */
     private void parse() throws JSONException {
         JSONObject current = (JSONObject) dataverseJSON.get("data");
         dJO.setAlternativeURL(getValue(current,"persistentUrl"));

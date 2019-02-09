@@ -4,6 +4,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public abstract class JSONField {
+
+    /**
+     * Iterates through the JSONArray calling setField on each object
+     *
+     * @param compoundField
+     * @return
+     */
     public JSONField parseCompoundData(JSONArray compoundField){
         for(Object o: compoundField){
             JSONObject field = (JSONObject) o;
@@ -11,5 +18,13 @@ public abstract class JSONField {
         }
         return this;
     }
+
+    /**
+     *
+     * Each class overrides this with a version using a switch statement to
+     * try to fill all the fields of its class
+     *
+     * @param field
+     */
     protected abstract void setField(JSONObject field);
 }
