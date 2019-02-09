@@ -1,7 +1,16 @@
 package Dataverse.DataverseJSONFieldClasses;
 
-public class DatasetContact {
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+public class DatasetContact extends JSONField{
     private String datasetContactName, datasetContactAffiliation, datasetContactEmail;
+
+    public DatasetContact() {
+        this.datasetContactName = "";
+        this.datasetContactAffiliation = "";
+        this.datasetContactEmail = "";
+    }
 
     public String getDatasetContactName() {
         return datasetContactName;
@@ -25,5 +34,23 @@ public class DatasetContact {
 
     public void setDatasetContactEmail(String datasetContactEmail) {
         this.datasetContactEmail = datasetContactEmail;
+    }
+
+    @Override
+    public void setField(JSONObject field) {
+        String title = field.getString("typeName");
+        String value = field.getString("value");
+        switch(title){
+            case("datasetContactName"):
+                this.datasetContactName = value;
+                break;
+            case("datasetContactAffiliation"):
+                this.datasetContactAffiliation = value;
+                break;
+            case("datasetContactEmail"):
+                this.datasetContactEmail = value;
+            default:
+                System.out.println("Something wrong with DatasetContact parsing");
+        }
     }
 }

@@ -1,7 +1,18 @@
 package Dataverse.DataverseJSONFieldClasses.DataverseJSONGeoFieldClasses;
 
-public class GeographicBoundingBox {
+import Dataverse.DataverseJSONFieldClasses.JSONField;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+public class GeographicBoundingBox extends JSONField {
     private String westLongitude, eastLongitude, northLongitude, southLongitude;
+
+    public GeographicBoundingBox() {
+        this.westLongitude = "";
+        this.eastLongitude = "";
+        this.northLongitude = "";
+        this.southLongitude = "";
+    }
 
     public String getWestLongitude() {
         return westLongitude;
@@ -33,5 +44,28 @@ public class GeographicBoundingBox {
 
     public void setSouthLongitude(String southLongitude) {
         this.southLongitude = southLongitude;
+    }
+
+
+    @Override
+    public void setField(JSONObject field) {
+        String title = field.getString("typeName");
+        String value = field.getString("value");
+        switch (title) {
+            case("westLongitude"):
+                this.westLongitude = value;
+                break;
+            case("eastLongitude"):
+                this.eastLongitude = value;
+                break;
+            case("northLongitude"):
+                this.northLongitude = value;
+                break;
+            case("southLongitude"):
+                this.southLongitude = value;
+                break;
+            default:
+                System.out.println("Something went wrong with Geographic Boundary parsing");
+        }
     }
 }

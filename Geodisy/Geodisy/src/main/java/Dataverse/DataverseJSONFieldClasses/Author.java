@@ -1,7 +1,38 @@
 package Dataverse.DataverseJSONFieldClasses;
 
-public class Author {
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+public class Author extends JSONField{
     private String authorName, authorAffiliation, authorIdentifierScheme, authorIdentifier;
+
+    public Author() {
+        this.authorName = "";
+        this.authorAffiliation = "";
+        this.authorIdentifierScheme = "";
+        this.authorIdentifier = "";
+    }
+    @Override
+    protected void setField(JSONObject field) {
+        String title = field.getString("typeName");
+        String value = field.getString("value");
+        switch(title){
+            case "authorIdentifier":
+                this.authorIdentifier = value;
+                break;
+            case "authorAffiliation":
+                this.authorAffiliation = value;
+                break;
+            case "authorIdentifierScheme":
+                this.authorIdentifierScheme = value;
+                break;
+            case("authorName"):
+                this.authorName = value;
+                break;
+            default:
+                System.out.println("Something wrong parsing Author");
+        }
+    }
 
     public String getAuthorName() {
         return authorName;

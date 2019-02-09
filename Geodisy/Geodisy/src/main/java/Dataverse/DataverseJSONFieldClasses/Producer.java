@@ -1,7 +1,18 @@
 package Dataverse.DataverseJSONFieldClasses;
 
-public class Producer {
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+public class Producer extends JSONField{
     private String producerName, producerAffiliation, producerAbbreviation, producerURL, producerLogoURL;
+
+    public Producer() {
+        this.producerName = "";
+        this.producerAffiliation = "";
+        this.producerAbbreviation = "";
+        this.producerURL = "";
+        this.producerLogoURL = "";
+    }
 
     public String getProducerName() {
         return producerName;
@@ -41,5 +52,30 @@ public class Producer {
 
     public void setProducerLogoURL(String producerLogoURL) {
         this.producerLogoURL = producerLogoURL;
+    }
+
+    @Override
+    public void setField(JSONObject field) {
+        String title = field.getString("typeName");
+        String value = field.getString("value");
+        switch (title) {
+            case("producerName"):
+                this.producerName = value;
+                break;
+            case("producerAffiliation"):
+                this.producerAffiliation = value;
+                break;
+            case("producerAbbreviation"):
+                this.producerAbbreviation = value;
+                break;
+            case("producerURL"):
+                this.producerURL = value;
+                break;
+            case("producerLogoURL"):
+                this.producerLogoURL = value;
+                break;
+            default:
+                System.out.println("Something went wrong with Producer parsing");
+        }
     }
 }

@@ -1,7 +1,18 @@
 package Dataverse.DataverseJSONFieldClasses.DataverseJSONGeoFieldClasses;
 
-public class GeographicCoverage {
+import Dataverse.DataverseJSONFieldClasses.JSONField;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+public class GeographicCoverage extends JSONField {
     private String country, state, city, otherGeographicCoverage;
+
+    public GeographicCoverage() {
+        this.country = "";
+        this.state = "";
+        this.city = "";
+        this.otherGeographicCoverage = "";
+    }
 
     public String getCountry() {
         return country;
@@ -33,5 +44,29 @@ public class GeographicCoverage {
 
     public void setOtherGeographicCoverage(String otherGeographicCoverage) {
         this.otherGeographicCoverage = otherGeographicCoverage;
+    }
+
+
+    @Override
+    public void setField(JSONObject field) {
+        String title = field.getString("typeName");
+        String value = field.getString("value");
+        switch (title) {
+            case("country"):
+                this.country = value;
+                break;
+            case("state"):
+                this.state = value;
+                break;
+            case("city"):
+                this.city = value;
+                break;
+            case("otherGeographicCoverage"):
+                this.otherGeographicCoverage = value;
+                break;
+            default:
+                System.out.println("Something went wrong with Geographic Coverage parsing");
+
+        }
     }
 }

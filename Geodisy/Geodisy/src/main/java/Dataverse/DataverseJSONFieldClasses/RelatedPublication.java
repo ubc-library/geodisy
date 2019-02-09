@@ -1,7 +1,17 @@
 package Dataverse.DataverseJSONFieldClasses;
 
-public class RelatedPublication {
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+public class RelatedPublication extends JSONField{
     private String publicationCitation, publicationIDType, publicationIDNumber, publicationURL;
+
+    public RelatedPublication() {
+        this.publicationCitation = "";
+        this.publicationIDType = "";
+        this.publicationIDNumber = "";
+        this.publicationURL = "";
+    }
 
     public String getPublicationCitation() {
         return publicationCitation;
@@ -33,5 +43,27 @@ public class RelatedPublication {
 
     public void setPublicationURL(String publicationURL) {
         this.publicationURL = publicationURL;
+    }
+
+    @Override
+    public void setField(JSONObject field) {
+        String title = field.getString("typeName");
+        String value = field.getString("value");
+        switch (title) {
+            case("publicationCitation"):
+                this.publicationCitation = value;
+                break;
+            case("publicationIDType"):
+                this.publicationIDType = value;
+                break;
+            case("publicationIDNumber"):
+                this.publicationIDNumber = value;
+                break;
+            case("publicationURL"):
+                this.publicationURL = value;
+                break;
+            default:
+                System.out.println("Something went wrong with Related Publication parsing");
+        }
     }
 }
