@@ -31,7 +31,7 @@ public class DataverseAPI extends SourceAPI {
     @Override
     protected LinkedList<String> searchDV() {
         String searchURL = "https" + dvName + "search?q=*&type=dataset";
-        LinkedList<String> doi = new LinkedList<String>();
+        LinkedList<String> doi = new LinkedList<>();
         //TODO make the search call and parse to get the number of entries and a list of DOIs
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -42,7 +42,7 @@ public class DataverseAPI extends SourceAPI {
         LinkedList<String> current = dOIs;
         StringBuilder dOIList = new StringBuilder();
         while (current!= null){
-            dOIList.append(",\"" + current + "\"");
+            dOIList.append(",\"" + current.pop() + "\"");
         }
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

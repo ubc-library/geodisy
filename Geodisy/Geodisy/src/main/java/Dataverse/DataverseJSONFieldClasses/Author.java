@@ -1,6 +1,5 @@
 package Dataverse.DataverseJSONFieldClasses;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Author extends JSONField{

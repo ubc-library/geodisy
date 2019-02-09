@@ -38,8 +38,7 @@ class Geodisy {
      */
     
     private String createDataverseURL(String s) {
-        String answer = "://" + s + "/api/";
-        return answer;
+        return "://" + s + "/api/";
     }
 
     /**

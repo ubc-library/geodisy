@@ -1,7 +1,6 @@
 package Dataverse.DataverseJSONFieldClasses.DataverseJSONGeoFieldClasses;
 
 import Dataverse.DataverseJSONFieldClasses.JSONField;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class GeographicCoverage extends JSONField {

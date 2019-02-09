@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class DataverseParser {
 
@@ -33,14 +32,11 @@ public class DataverseParser {
         dJO.setProductionDate(getValue(current,"productionDate"));
         dJO.setLicense(getValue(current,"license"));
         JSONArray currentArray = current.getJSONObject("metadataBlocks").getJSONObject("citation").getJSONArray("fields");
-        HashMap<String,String> fields = new HashMap<>();
         for(Object o: currentArray){
             current = (JSONObject) o;
             Object value = current.get("value");
             String label = current.getString("typename");
-            if(value instanceof String)
-                fields.put(label, (String) value);
-            else if(value instanceof JSONArray){
+            if(value instanceof JSONArray){
                 JSONArray ja = (JSONArray) value;
                 switch(label){
                     case("author"):
