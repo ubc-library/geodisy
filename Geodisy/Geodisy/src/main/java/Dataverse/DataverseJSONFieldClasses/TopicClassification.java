@@ -3,7 +3,7 @@ package Dataverse.DataverseJSONFieldClasses;
 import Crosswalking.JSONParsing.DataverseParser;
 import org.json.JSONObject;
 
-public class TopicClassification extends JSONField{
+public class TopicClassification extends CompoundJSONField{
     private String topicClassValue, topicClassVocab, topicClassVocabURL;
 
     public TopicClassification() {
@@ -49,7 +49,7 @@ public class TopicClassification extends JSONField{
                 this.topicClassVocab = value;
                 break;
             case("topicClassVocabURL"):
-                this.topicClassVocabURL = DataverseParser.filterURL(value);
+                this.topicClassVocabURL = filterURL(value);
                 break;
             default:
                 logger.error("Something wrong parsing Topic Classification. Title is %s", title);

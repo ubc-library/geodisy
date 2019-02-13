@@ -2,7 +2,7 @@ package Dataverse.DataverseJSONFieldClasses;
 
 import org.json.JSONObject;
 
-public class OtherID extends JSONField{
+public class OtherID extends CompoundJSONField{
     private String otherIdAgency, otherIdValue;
 
     public OtherID() {

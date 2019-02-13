@@ -3,7 +3,7 @@ package Dataverse.DataverseJSONFieldClasses.DataverseJSONGeoFieldClasses;
 import Dataverse.DataverseJSONFieldClasses.JSONField;
 import org.json.JSONObject;
 
-public class GeographicBoundingBox extends JSONField {
+public class GeographicBoundingBox extends CompoundJSONField {
     private String westLongitude, eastLongitude, northLongitude, southLongitude;
 
     public GeographicBoundingBox() {

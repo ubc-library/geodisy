@@ -2,7 +2,7 @@ package Dataverse.DataverseJSONFieldClasses;
 
 import org.json.JSONObject;
 
-public class GrantNumber extends JSONField{
+public class GrantNumber extends CompoundJSONField{
     private String grantNumberAgency, grantNumberValue;
 
     public GrantNumber() {

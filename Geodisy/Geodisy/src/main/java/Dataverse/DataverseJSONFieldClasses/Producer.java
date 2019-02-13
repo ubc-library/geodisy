@@ -3,7 +3,7 @@ package Dataverse.DataverseJSONFieldClasses;
 import Crosswalking.JSONParsing.DataverseParser;
 import org.json.JSONObject;
 
-public class Producer extends JSONField{
+public class Producer extends CompoundJSONField{
     private String producerName, producerAffiliation, producerAbbreviation, producerURL, producerLogoURL;
 
     public Producer() {
@@ -69,10 +69,10 @@ public class Producer extends JSONField{
                 this.producerAbbreviation = value;
                 break;
             case("producerURL"):
-                this.producerURL = DataverseParser.filterURL(value);
+                this.producerURL = filterURL(value);
                 break;
             case("producerLogoURL"):
-                this.producerLogoURL = DataverseParser.filterURL(value);
+                this.producerLogoURL = filterURL(value);
                 break;
             default:
                 logger.error("Something wrong parsing Producer. Title is %s", title);

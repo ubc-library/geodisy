@@ -2,7 +2,7 @@ package Dataverse.DataverseJSONFieldClasses;
 
 import org.json.JSONObject;
 
-public class Software extends JSONField{
+public class Software extends CompoundJSONField{
     private String softwareName, softwareVersion;
 
     public Software() {

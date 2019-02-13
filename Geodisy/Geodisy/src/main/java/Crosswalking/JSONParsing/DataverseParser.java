@@ -22,18 +22,14 @@ public class DataverseParser {
     }
 
     /**
-     * Simple non-compound fields are parsed in this method, but for compound fields the appropriate JSONField class
-     * is created and its parseCompoundData() method is called to parse the rest.
+     * The appropriate JSONField class is created and its parseCompoundData() method or setField() method is called
+     * to parse compound or simple field data, respectively.
      * @throws JSONException
      */
     private void parse() throws JSONException {
         JSONObject current = (JSONObject) dataverseJSON.get("data");
-        dJO.setAlternativeURL(getValue(current,"persistentUrl"));
-        dJO.setProductionDate(getValueDate(current,"productionDate"));
-        current = current.getJSONObject("latestVersion");
-        dJO.setDataOfDeposit(getValueDate(current,"createTime"));
-        dJO.setDistributionDate(getValueDate(current,"releaseTime"));
-        dJO.setLicense(getValue(current,"license"));
+        SimpleFields sf = new SimpleFields();
+        sf.setBaseFields(current,dJO);
         JSONArray currentArray = current.getJSONObject("metadataBlocks").getJSONObject("citation").getJSONArray("fields");
         for(Object o: currentArray){
             current = (JSONObject) o;
@@ -99,96 +95,19 @@ public class DataverseParser {
                         dJO.addSoftware((Software) sw.parseCompoundData(ja));
                         break;
                     default:
+                        logger.error("Something went wrong parsing a compound field. Label is %s", label);
                         System.out.println("Something wrong parsing a compound field");
                 }
             }
             else {
-                String value = current.getString("value");
-                switch(label) {
-                    case("title"):
-                        dJO.setTitle(value);
-                        break;
-                    case("subtitle"):
-                        dJO.setSubtitle(value);
-                        break;
-                    case("alternativeTitle"):
-                        dJO.setAlternativeTitle(value);
-                        break;
-                    case("alternativeURL"):
-                        dJO.setAlternativeURL(filterURL(value));
-                        break;
-                    case("license"):
-                        dJO.setLicense(value);
-                        break;
-                    case("notesText"):
-                        dJO.setNotesText(value);
-                        break;
-                    case("productionDate"):
-                        dJO.setProductionDate(filterForDate(value));
-                        break;
-                    case("productionPlace"):
-                        dJO.setProductionPlace(value);
-                        break;
-                    case("distributionDate"):
-                        dJO.setDistributionDate(filterForDate(value));
-                        break;
-                    case("depositor"):
-                        dJO.setDepositor(value);
-                        break;
-                    case("dateOfDeposit"):
-                        dJO.setDataOfDeposit(filterForDate(value));
-                        break;
-                    case("originOfSources"):
-                        dJO.setOriginOfSources(value);
-                        break;
-                    case("characteristicOfSources"):
-                        dJO.setCharacteristicOfSources(value);
-                        break;
-                    case("accessToSources"):
-                        dJO.setAccessToSources(value);
-                        break;
-                    default:
-                        logger.error("Something has gone wrong with parsing. Label found is : %s", label);
-                        System.out.println("Something has gone wrong with parsing. Label found is : " + label);
-                }
+                String value = valueObject.toString();
+                dJO = sf.setField(dJO, value, label);
             }
         }
 
     }
 
-    static public String filterURL(String value) {
-        String URLFILTER = "^((?i)((http|https):\\/\\/(www))|(www))?.(?i)([\\w]+\\.)+(\\/[\\w\\/]*)*\\??([\\&a-z1-9=]*)?";
-        if(value.matches(URLFILTER))
-            return value;
-        logger.error("Malformed URL error (%s), returning blank String", value);
-        return "";
-    }
 
-    private String getValueDate(JSONObject current, String fieldName) {
-        if(!current.has(fieldName))
-            return "";
-        return filterForDate(current.getString(fieldName));
-    }
-
-    static public String filterForDate(String value) {
-        String justYear = "\\d{4}";
-        String yearMonthDay = "\\d{4}-[01]\\d-[123]\\d";
-        String formatedString = value;
-        if (value.length() > 10)
-            formatedString = value.substring(0, 10);
-        if(formatedString.matches(yearMonthDay)||value.matches(justYear))
-            return formatedString;
-
-        logger.error("Malformed data value (%s), returning blank String instead.", value);
-        return "";
-    }
-
-
-    private String getValue(JSONObject current, String fieldName) {
-        if(current.has(fieldName))
-            return current.getString(fieldName);
-        return "";
-    }
 
     public DataverseJavaObject getdJO() {
         return dJO;

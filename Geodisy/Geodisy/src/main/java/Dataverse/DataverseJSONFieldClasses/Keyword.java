@@ -4,7 +4,7 @@ package Dataverse.DataverseJSONFieldClasses;
 import Crosswalking.JSONParsing.DataverseParser;
 import org.json.JSONObject;
 
-public class Keyword extends JSONField{
+public class Keyword extends CompoundJSONField{
     private String keywordValue, keywordVocabulary, keywordVocabularyURL;
 
     public Keyword() {
@@ -49,7 +49,7 @@ public class Keyword extends JSONField{
                 this.keywordVocabulary = value;
                 break;
             case("keywordVocabularyURL"):
-                this.keywordVocabularyURL = DataverseParser.filterURL(value);
+                this.keywordVocabularyURL = filterURL(value);
                 break;
             default:
                 logger.error("Something wrong parsing Keyword. Title is %s", title);

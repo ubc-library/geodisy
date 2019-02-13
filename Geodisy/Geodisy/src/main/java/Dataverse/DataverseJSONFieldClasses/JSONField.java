@@ -1,6 +1,7 @@
 package Dataverse.DataverseJSONFieldClasses;
 
 import Crosswalking.JSONParsing.DataverseParser;
+import Dataverse.DataverseJavaObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
@@ -8,26 +9,39 @@ import org.json.JSONObject;
 
 public abstract class JSONField {
     protected Logger logger = LogManager.getLogger(DataverseParser.class);
-    /**
-     * Iterates through the JSONArray calling setField on each object
-     *
-     * @param compoundField
-     * @return
-     */
-    public JSONField parseCompoundData(JSONArray compoundField){
-        for(Object o: compoundField){
-            JSONObject field = (JSONObject) o;
-            setField(field);
-        }
-        return this;
+
+
+    protected String filterURL(String value) {
+        String URLFILTER = "^((?i)((http|https):\\/\\/(www))|(www))?.(?i)([\\w]+\\.)+(\\/[\\w\\/]*)*\\??([\\&a-z1-9=]*)?";
+        if(value.matches(URLFILTER))
+            return value;
+        logger.error("Malformed URL error (%s), returning blank String", value);
+        return "";
     }
 
-    /**
-     *
-     * Each class overrides this with a version using a switch statement to
-     * try to fill all the fields of its class
-     *
-     * @param field
-     */
-    protected abstract void setField(JSONObject field);
+    protected String getValueDate(JSONObject current, String fieldName) {
+        if(!current.has(fieldName))
+            return "";
+        return filterForDate(current.getString(fieldName));
+    }
+
+    protected String filterForDate(String value) {
+        String justYear = "\\d{4}";
+        String yearMonthDay = "\\d{4}-[01]\\d-[123]\\d";
+        String formatedString = value;
+        if (value.length() > 10)
+            formatedString = value.substring(0, 10);
+        if(formatedString.matches(yearMonthDay)||value.matches(justYear))
+            return formatedString;
+
+        logger.error("Malformed data value (%s), returning blank String instead.", value);
+        return "";
+    }
+
+
+    protected String getValue(JSONObject current, String fieldName) {
+        if(current.has(fieldName))
+            return current.getString(fieldName);
+        return "";
+    }
 }
