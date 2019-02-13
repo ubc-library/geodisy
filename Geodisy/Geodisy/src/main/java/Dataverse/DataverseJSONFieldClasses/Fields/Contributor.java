@@ -1,11 +1,9 @@
-package Dataverse.DataverseJSONFieldClasses;
+package Dataverse.DataverseJSONFieldClasses.Fields;
 
-import Crosswalking.JSONParsing.DataverseParser;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
-public class Contributor extends CompoundJSONField{
+public class Contributor extends CompoundJSONField {
     private String contributorType, contributorName;
 
     public Contributor() {

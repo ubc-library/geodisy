@@ -1,8 +1,9 @@
-package Dataverse.DataverseJSONFieldClasses;
+package Dataverse.DataverseJSONFieldClasses.Fields;
 
+import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
-public class Series extends CompoundJSONField{
+public class Series extends CompoundJSONField {
     private String seriesName, seriesInformation;
 
     public Series() {

@@ -1,10 +1,11 @@
-package Dataverse.DataverseJSONFieldClasses;
+package Dataverse.DataverseJSONFieldClasses.Fields;
 
 
-import Crosswalking.JSONParsing.DataverseParser;
+
+import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
-public class Keyword extends CompoundJSONField{
+public class Keyword extends CompoundJSONField {
     private String keywordValue, keywordVocabulary, keywordVocabularyURL;
 
     public Keyword() {

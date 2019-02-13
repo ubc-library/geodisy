@@ -2,8 +2,8 @@ package Dataverse;
 
 
 
-import Dataverse.DataverseJSONFieldClasses.*;
-import Dataverse.DataverseJSONFieldClasses.DataverseJSONGeoFieldClasses.*;
+import Dataverse.DataverseJSONFieldClasses.Fields.*;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
 
 import java.util.LinkedList;
 import java.util.List;

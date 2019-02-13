@@ -1,11 +1,10 @@
-package Dataverse.DataverseJSONFieldClasses;
+package Dataverse.DataverseJSONFieldClasses.Fields;
 
-import Crosswalking.JSONParsing.DataverseParser;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
-public class Description extends CompoundJSONField{
+public class Description extends CompoundJSONField {
     private String dsDescriptionValue, dsDescriptionDate;
 
     public Description() {

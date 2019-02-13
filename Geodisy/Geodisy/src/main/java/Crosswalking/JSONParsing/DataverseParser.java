@@ -1,6 +1,6 @@
 package Crosswalking.JSONParsing;
 
-import Dataverse.DataverseJSONFieldClasses.*;
+import Dataverse.DataverseJSONFieldClasses.Fields.*;
 import Dataverse.DataverseJavaObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -1,5 +1,6 @@
-package Dataverse.DataverseJSONFieldClasses;
+package Dataverse.DataverseJSONFieldClasses.Fields;
 
+import Dataverse.DataverseJSONFieldClasses.JSONField;
 import Dataverse.DataverseJavaObject;
 import org.json.JSONObject;
 

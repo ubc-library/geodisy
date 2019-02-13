@@ -1,9 +1,10 @@
-package Dataverse.DataverseJSONFieldClasses;
+package Dataverse.DataverseJSONFieldClasses.Fields;
 
-import Crosswalking.JSONParsing.DataverseParser;
+
+import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
-public class Producer extends CompoundJSONField{
+public class Producer extends CompoundJSONField {
     private String producerName, producerAffiliation, producerAbbreviation, producerURL, producerLogoURL;
 
     public Producer() {

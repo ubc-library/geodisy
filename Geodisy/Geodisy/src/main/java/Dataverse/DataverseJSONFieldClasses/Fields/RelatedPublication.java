@@ -1,9 +1,10 @@
-package Dataverse.DataverseJSONFieldClasses;
+package Dataverse.DataverseJSONFieldClasses.Fields;
 
-import Crosswalking.JSONParsing.DataverseParser;
+
+import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
-public class RelatedPublication extends CompoundJSONField{
+public class RelatedPublication extends CompoundJSONField {
     private String publicationCitation, publicationIDType, publicationIDNumber, publicationURL;
 
     public RelatedPublication() {

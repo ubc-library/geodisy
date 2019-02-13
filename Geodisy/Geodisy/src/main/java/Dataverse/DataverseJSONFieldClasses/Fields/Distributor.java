@@ -1,9 +1,10 @@
-package Dataverse.DataverseJSONFieldClasses;
+package Dataverse.DataverseJSONFieldClasses.Fields;
 
-import Crosswalking.JSONParsing.DataverseParser;
+
+import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
-public class Distributor extends CompoundJSONField{
+public class Distributor extends CompoundJSONField {
     private String distributorName, distributorAffiliation, distributorAbbreviation, distributorURL, distributorLogoURL;
 
     public Distributor() {

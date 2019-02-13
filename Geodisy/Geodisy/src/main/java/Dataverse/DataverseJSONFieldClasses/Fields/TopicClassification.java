@@ -1,9 +1,10 @@
-package Dataverse.DataverseJSONFieldClasses;
+package Dataverse.DataverseJSONFieldClasses.Fields;
 
-import Crosswalking.JSONParsing.DataverseParser;
+
+import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
-public class TopicClassification extends CompoundJSONField{
+public class TopicClassification extends CompoundJSONField {
     private String topicClassValue, topicClassVocab, topicClassVocabURL;
 
     public TopicClassification() {

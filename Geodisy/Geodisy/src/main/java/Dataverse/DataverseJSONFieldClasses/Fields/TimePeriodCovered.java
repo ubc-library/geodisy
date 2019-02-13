@@ -1,10 +1,9 @@
-package Dataverse.DataverseJSONFieldClasses;
+package Dataverse.DataverseJSONFieldClasses.Fields;
 
-import Crosswalking.JSONParsing.DataverseParser;
-import DataSourceLocations.Dataverse;
+import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
-public class TimePeriodCovered extends CompoundJSONField{
+public class TimePeriodCovered extends CompoundJSONField {
     private String timePeriodCoveredStart, timePeriodCoveredEnd;
 
     public TimePeriodCovered() {
