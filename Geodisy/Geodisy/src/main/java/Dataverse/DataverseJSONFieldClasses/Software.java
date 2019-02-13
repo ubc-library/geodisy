@@ -39,6 +39,7 @@ public class Software extends JSONField{
                 this.softwareVersion = value;
                 break;
             default:
+                logger.error("Something wrong parsing Software. Title is %s", title);
                 System.out.println("Something went wrong with Software parsing");
         }
     }

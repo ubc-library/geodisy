@@ -38,6 +38,7 @@ public class GrantNumber extends JSONField{
                 this.grantNumberValue = value;
                 break;
             default:
+                logger.error("Something wrong parsing Grant Number. Title is %s", title);
                 System.out.println("Something went wrong with Grant Number parsing");
         }
     }

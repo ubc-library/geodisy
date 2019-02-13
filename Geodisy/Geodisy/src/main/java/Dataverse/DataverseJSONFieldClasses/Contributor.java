@@ -1,5 +1,8 @@
 package Dataverse.DataverseJSONFieldClasses;
 
+import Crosswalking.JSONParsing.DataverseParser;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
 public class Contributor extends JSONField{
@@ -38,6 +41,7 @@ public class Contributor extends JSONField{
                 this.contributorName = value;
                 break;
             default:
+                logger.error("Something wrong parsing Contributor. Title is %s", title);
                 System.out.println("Something wrong parsing Contributor");
         }
     }

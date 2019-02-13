@@ -1,5 +1,6 @@
 package Dataverse.DataverseJSONFieldClasses;
 
+import Crosswalking.JSONParsing.DataverseParser;
 import org.json.JSONObject;
 
 public class Producer extends JSONField{
@@ -68,12 +69,13 @@ public class Producer extends JSONField{
                 this.producerAbbreviation = value;
                 break;
             case("producerURL"):
-                this.producerURL = value;
+                this.producerURL = DataverseParser.filterURL(value);
                 break;
             case("producerLogoURL"):
-                this.producerLogoURL = value;
+                this.producerLogoURL = DataverseParser.filterURL(value);
                 break;
             default:
+                logger.error("Something wrong parsing Producer. Title is %s", title);
                 System.out.println("Something went wrong with Producer parsing");
         }
     }

@@ -1,6 +1,7 @@
 package Dataverse.DataverseJSONFieldClasses;
 
 
+import Crosswalking.JSONParsing.DataverseParser;
 import org.json.JSONObject;
 
 public class Keyword extends JSONField{
@@ -48,9 +49,10 @@ public class Keyword extends JSONField{
                 this.keywordVocabulary = value;
                 break;
             case("keywordVocabularyURL"):
-                this.keywordVocabularyURL = value;
+                this.keywordVocabularyURL = DataverseParser.filterURL(value);
                 break;
             default:
+                logger.error("Something wrong parsing Keyword. Title is %s", title);
                 System.out.println("Something wrong with Keyword parsing. Could be URL vs URl vs URI issue.");
         }
     }

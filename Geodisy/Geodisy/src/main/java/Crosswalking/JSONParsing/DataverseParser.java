@@ -2,16 +2,18 @@ package Crosswalking.JSONParsing;
 
 import Dataverse.DataverseJSONFieldClasses.*;
 import Dataverse.DataverseJavaObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 
 public class DataverseParser {
 
     private JSONObject dataverseJSON;
     private DataverseJavaObject dJO;
+    static Logger logger = LogManager.getLogger(DataverseParser.class);
 
     public DataverseParser(String dataverseJSONString) {
         this.dataverseJSON = new JSONObject(dataverseJSONString);
@@ -146,17 +148,19 @@ public class DataverseParser {
                         dJO.setAccessToSources(value);
                         break;
                     default:
-                    System.out.println("Something has gone wrong with parsing");
+                        logger.error("Something has gone wrong with parsing. Label found is : %s", label);
+                        System.out.println("Something has gone wrong with parsing. Label found is : " + label);
                 }
             }
         }
 
     }
 
-    private String filterURL(String value) {
+    static public String filterURL(String value) {
         String URLFILTER = "^((?i)((http|https):\\/\\/(www))|(www))?.(?i)([\\w]+\\.)+(\\/[\\w\\/]*)*\\??([\\&a-z1-9=]*)?";
         if(value.matches(URLFILTER))
             return value;
+        logger.error("Malformed URL error (%s), returning blank String", value);
         return "";
     }
 
@@ -166,15 +170,17 @@ public class DataverseParser {
         return filterForDate(current.getString(fieldName));
     }
 
-    private String filterForDate(String value) {
+    static public String filterForDate(String value) {
         String justYear = "\\d{4}";
         String yearMonthDay = "\\d{4}-[01]\\d-[123]\\d";
+        String formatedString = value;
         if (value.length() > 10)
-            value = value.substring(0, 10);
-        if(value.matches(yearMonthDay)||value.matches(justYear))
-            return value;
-        else
-            return "";
+            formatedString = value.substring(0, 10);
+        if(formatedString.matches(yearMonthDay)||value.matches(justYear))
+            return formatedString;
+
+        logger.error("Malformed data value (%s), returning blank String instead.", value);
+        return "";
     }
 
 

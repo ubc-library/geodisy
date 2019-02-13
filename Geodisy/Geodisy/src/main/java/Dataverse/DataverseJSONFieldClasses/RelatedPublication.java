@@ -1,5 +1,6 @@
 package Dataverse.DataverseJSONFieldClasses;
 
+import Crosswalking.JSONParsing.DataverseParser;
 import org.json.JSONObject;
 
 public class RelatedPublication extends JSONField{
@@ -59,9 +60,10 @@ public class RelatedPublication extends JSONField{
                 this.publicationIDNumber = value;
                 break;
             case("publicationURL"):
-                this.publicationURL = value;
+                this.publicationURL = DataverseParser.filterURL(value);
                 break;
             default:
+                logger.error("Something wrong parsing Related Publication. Title is %s", title);
                 System.out.println("Something went wrong with Related Publication parsing");
         }
     }

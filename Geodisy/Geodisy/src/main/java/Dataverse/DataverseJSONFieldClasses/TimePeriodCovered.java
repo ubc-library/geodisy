@@ -1,5 +1,7 @@
 package Dataverse.DataverseJSONFieldClasses;
 
+import Crosswalking.JSONParsing.DataverseParser;
+import DataSourceLocations.Dataverse;
 import org.json.JSONObject;
 
 public class TimePeriodCovered extends JSONField{
@@ -32,12 +34,13 @@ public class TimePeriodCovered extends JSONField{
         String value = field.getString("value");
         switch (title) {
             case("timePeriodCoverStart"):
-                this.timePeriodCoveredStart = value;
+                this.timePeriodCoveredStart = DataverseParser.filterForDate(value);
                 break;
             case("timePeriodCoverEnd"):
-                this.timePeriodCoveredEnd = value;
+                this.timePeriodCoveredEnd = DataverseParser.filterForDate(value);
                 break;
             default:
+                logger.error("Something wrong parsing Time Period Covered. Title is %s", title);
                 System.out.println("Something went wrong with Time Period Cover parsing");
         }
     }

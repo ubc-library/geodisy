@@ -64,6 +64,7 @@ public class GeographicCoverage extends JSONField {
                 this.otherGeographicCoverage = value;
                 break;
             default:
+                logger.error("Something wrong parsing Geographic Coverage. Title is %s", title);
                 System.out.println("Something went wrong with Geographic Coverage parsing");
 
         }

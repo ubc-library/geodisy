@@ -39,6 +39,7 @@ public class OtherID extends JSONField{
                 this.otherIdValue = value;
                 break;
             default:
+                logger.error("Something wrong parsing Other ID. Title is %s", title);
                 System.out.println("Something wrong with OtherId parsing");
         }
     }

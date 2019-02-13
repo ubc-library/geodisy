@@ -39,6 +39,7 @@ public class Series extends JSONField{
                 this.seriesInformation = value;
                 break;
             default:
+                logger.error("Something wrong parsing Series. Title is %s", title);
                 System.out.println("Something went wrong with Series parsing");
         }
     }

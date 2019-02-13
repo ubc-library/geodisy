@@ -1,5 +1,6 @@
 package Dataverse.DataverseJSONFieldClasses;
 
+import Crosswalking.JSONParsing.DataverseParser;
 import org.json.JSONObject;
 
 public class TopicClassification extends JSONField{
@@ -48,9 +49,10 @@ public class TopicClassification extends JSONField{
                 this.topicClassVocab = value;
                 break;
             case("topicClassVocabURL"):
-                this.topicClassVocabURL = value;
+                this.topicClassVocabURL = DataverseParser.filterURL(value);
                 break;
             default:
+                logger.error("Something wrong parsing Topic Classification. Title is %s", title);
                 System.out.println("Something went wrong with Topic Class parsing. Could be URL vs URI vs URl issue");
         }
     }

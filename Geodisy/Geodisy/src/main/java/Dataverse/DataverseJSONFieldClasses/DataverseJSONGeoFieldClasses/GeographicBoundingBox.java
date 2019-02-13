@@ -64,6 +64,7 @@ public class GeographicBoundingBox extends JSONField {
                 this.southLongitude = value;
                 break;
             default:
+                logger.error("Something wrong parsing Geographic bounding box. Title is %s", title);
                 System.out.println("Something went wrong with Geographic Boundary parsing");
         }
     }

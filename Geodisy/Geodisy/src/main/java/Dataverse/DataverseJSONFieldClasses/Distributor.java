@@ -1,5 +1,6 @@
 package Dataverse.DataverseJSONFieldClasses;
 
+import Crosswalking.JSONParsing.DataverseParser;
 import org.json.JSONObject;
 
 public class Distributor extends JSONField{
@@ -68,12 +69,13 @@ public class Distributor extends JSONField{
                 this.distributorAbbreviation = value;
                 break;
             case("distributorURL"):
-                this.distributorURL = value;
+                this.distributorURL = DataverseParser.filterURL(value);
                 break;
             case("distributorLogoURL"):
-                this.distributorLogoURL = value;
+                this.distributorLogoURL = DataverseParser.filterURL(value);
                 break;
             default:
+                logger.error("Something wrong parsing Distributor. Title is %s", title);
                 System.out.println("Something went wrong with Distributor parsing");
         }
     }

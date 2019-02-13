@@ -1,10 +1,13 @@
 package Dataverse.DataverseJSONFieldClasses;
 
+import Crosswalking.JSONParsing.DataverseParser;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public abstract class JSONField {
-
+    protected Logger logger = LogManager.getLogger(DataverseParser.class);
     /**
      * Iterates through the JSONArray calling setField on each object
      *
