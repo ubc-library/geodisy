@@ -27,17 +27,18 @@ public class DataverseParser {
     private void parse() throws JSONException {
         JSONObject current = (JSONObject) dataverseJSON.get("data");
         dJO.setAlternativeURL(getValue(current,"persistentUrl"));
-        dJO.setDataOfDeposit(getValue(current,"createTime"));
-        dJO.setDistributionDate(getValue(current,"releaseTime"));
-        dJO.setProductionDate(getValue(current,"productionDate"));
+        dJO.setProductionDate(getValueDate(current,"productionDate"));
+        current = current.getJSONObject("latestVersion");
+        dJO.setDataOfDeposit(getValueDate(current,"createTime"));
+        dJO.setDistributionDate(getValueDate(current,"releaseTime"));
         dJO.setLicense(getValue(current,"license"));
         JSONArray currentArray = current.getJSONObject("metadataBlocks").getJSONObject("citation").getJSONArray("fields");
         for(Object o: currentArray){
             current = (JSONObject) o;
-            Object value = current.get("value");
-            String label = current.getString("typename");
-            if(value instanceof JSONArray){
-                JSONArray ja = (JSONArray) value;
+            Object valueObject = current.get("value");
+            String label = current.getString("typeName");
+            if(valueObject instanceof JSONArray){
+                JSONArray ja = (JSONArray) valueObject;
                 switch(label){
                     case("author"):
                         Author a = new Author();
@@ -99,12 +100,82 @@ public class DataverseParser {
                         System.out.println("Something wrong parsing a compound field");
                 }
             }
-            else
-                System.out.println("Something has gone wrong with parsing");
+            else {
+                String value = current.getString("value");
+                switch(label) {
+                    case("title"):
+                        dJO.setTitle(value);
+                        break;
+                    case("subtitle"):
+                        dJO.setSubtitle(value);
+                        break;
+                    case("alternativeTitle"):
+                        dJO.setAlternativeTitle(value);
+                        break;
+                    case("alternativeURL"):
+                        dJO.setAlternativeURL(filterURL(value));
+                        break;
+                    case("license"):
+                        dJO.setLicense(value);
+                        break;
+                    case("notesText"):
+                        dJO.setNotesText(value);
+                        break;
+                    case("productionDate"):
+                        dJO.setProductionDate(filterForDate(value));
+                        break;
+                    case("productionPlace"):
+                        dJO.setProductionPlace(value);
+                        break;
+                    case("distributionDate"):
+                        dJO.setDistributionDate(filterForDate(value));
+                        break;
+                    case("depositor"):
+                        dJO.setDepositor(value);
+                        break;
+                    case("dateOfDeposit"):
+                        dJO.setDataOfDeposit(filterForDate(value));
+                        break;
+                    case("originOfSources"):
+                        dJO.setOriginOfSources(value);
+                        break;
+                    case("characteristicOfSources"):
+                        dJO.setCharacteristicOfSources(value);
+                        break;
+                    case("accessToSources"):
+                        dJO.setAccessToSources(value);
+                        break;
+                    default:
+                    System.out.println("Something has gone wrong with parsing");
+                }
+            }
         }
 
     }
 
+    private String filterURL(String value) {
+        String URLFILTER = "^((?i)((http|https):\\/\\/(www))|(www))?.(?i)([\\w]+\\.)+(\\/[\\w\\/]*)*\\??([\\&a-z1-9=]*)?";
+        if(value.matches(URLFILTER))
+            return value;
+        return "";
+    }
+
+    private String getValueDate(JSONObject current, String fieldName) {
+        if(!current.has(fieldName))
+            return "";
+        return filterForDate(current.getString(fieldName));
+    }
+
+    private String filterForDate(String value) {
+        String justYear = "\\d{4}";
+        String yearMonthDay = "\\d{4}-[01]\\d-[123]\\d";
+        if (value.length() > 10)
+            value = value.substring(0, 10);
+        if(value.matches(yearMonthDay)||value.matches(justYear))
+            return value;
+        else
+            return "";
+    }
 
 
     private String getValue(JSONObject current, String fieldName) {
