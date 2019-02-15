@@ -1,4 +1,4 @@
-package Dataverse.DataverseJSONFieldClasses.Fields;
+package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;

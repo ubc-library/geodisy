@@ -1,4 +1,4 @@
-package Dataverse.DataverseJSONFieldClasses.Fields;
+package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
 
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 public class Author extends CompoundJSONField {
     private String authorName, authorAffiliation, authorIdentifierScheme, authorIdentifier;
+
 
     public Author() {
         this.authorName = "";
@@ -67,4 +68,6 @@ public class Author extends CompoundJSONField {
     public void setAuthorIdentifier(String authorIdentifier) {
         this.authorIdentifier = authorIdentifier;
     }
+
+
 }

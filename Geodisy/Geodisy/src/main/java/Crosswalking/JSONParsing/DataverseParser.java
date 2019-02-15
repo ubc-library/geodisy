@@ -1,6 +1,7 @@
 package Crosswalking.JSONParsing;
 
-import Dataverse.DataverseJSONFieldClasses.Fields.*;
+import Dataverse.DataverseJSONFieldClasses.Fields.CompoundField.*;
+import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
 import Dataverse.DataverseJavaObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -93,6 +94,27 @@ public class DataverseParser {
                     case("software"):
                         Software sw = new Software();
                         dJO.addSoftware((Software) sw.parseCompoundData(ja));
+                        break;
+                        case("dataSource"):
+                        dJO.setDataSources(sf.getList(ja));
+                        break;
+                    case("kindOfData"):
+                        dJO.setKindOfData(sf.getList(ja));
+                        break;
+                    case("language"):
+                        dJO.setLanguage(sf.getList(ja));
+                        break;
+                    case("otherReference"):
+                        dJO.setOtherReferences(sf.getList(ja));
+                        break;
+                    case("relatedDataset"):
+                        dJO.setRelatedDatasets(sf.getList(ja));
+                        break;
+                    case("relatedMaterial"):
+                        dJO.setRelatedMaterial(sf.getList(ja));
+                        break;
+                    case("subject"):
+                        dJO.setSubject(sf.getList(ja));
                         break;
                     default:
                         logger.error("Something went wrong parsing a compound field. Label is %s", label);

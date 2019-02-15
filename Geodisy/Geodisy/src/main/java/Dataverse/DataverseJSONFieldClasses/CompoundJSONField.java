@@ -3,8 +3,9 @@ package Dataverse.DataverseJSONFieldClasses;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-abstract public class CompoundJSONField extends JSONField {
+import java.util.Set;
 
+abstract public class CompoundJSONField extends JSONField {
     /**
      * Iterates through the JSONArray calling setField on each object
      *
@@ -15,7 +16,10 @@ abstract public class CompoundJSONField extends JSONField {
         for(Object o: compoundField){
             //TODO this is parsing strangely need to fix
             JSONObject field = (JSONObject) o;
-            setField(field);
+            Set<String> keys = field.keySet();
+            for(String k:keys) {
+                setField((JSONObject) field.get(k));
+            }
         }
         return this;
     }
@@ -27,5 +31,7 @@ abstract public class CompoundJSONField extends JSONField {
      *
      * @param field
      */
+
+
     protected abstract void setField(JSONObject field);
 }

@@ -1,4 +1,4 @@
-package Dataverse.DataverseJSONFieldClasses.Fields;
+package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
@@ -49,6 +49,7 @@ public class DatasetContact extends CompoundJSONField {
                 break;
             case("datasetContactEmail"):
                 this.datasetContactEmail = value;
+                break;
             default:
                 logger.error("Something wrong parsing DatasetContact. Title is %s", title);
                 System.out.println("Something wrong with DatasetContact parsing");

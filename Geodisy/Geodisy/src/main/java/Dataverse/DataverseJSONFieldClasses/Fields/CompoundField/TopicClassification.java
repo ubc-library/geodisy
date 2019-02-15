@@ -1,4 +1,4 @@
-package Dataverse.DataverseJSONFieldClasses.Fields;
+package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
 
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
@@ -37,7 +37,6 @@ public class TopicClassification extends CompoundJSONField {
         this.topicClassVocabURL = topicClassVocabURL;
     }
 
-   //TODO
     @Override
     public void setField(JSONObject field) {
         String title = field.getString("typeName");
