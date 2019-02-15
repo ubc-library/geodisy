@@ -15,7 +15,13 @@ import java.util.List;
  */
 
 public class DataverseJavaObject {
-    private String title, subtitle, alternativeTitle, alternativeURL, license;
+    private String title;
+    private String subtitle;
+    private String alternativeTitle;
+    private String alternativeURL;
+    private String license;
+    private String publisher;
+    private String publishDate;
     private List<OtherID> otherID;
     private List<Author> author;
     private List<DatasetContact> datasetContact;
@@ -420,4 +426,22 @@ public class DataverseJavaObject {
     public void setLicense(String license) {
         this.license = license;
     }
+
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getPublishDate() {
+        return publishDate;
+    }
+
+    public void setPublishDate(String publishDate) {
+        this.publishDate = publishDate;
+    }
+
 }

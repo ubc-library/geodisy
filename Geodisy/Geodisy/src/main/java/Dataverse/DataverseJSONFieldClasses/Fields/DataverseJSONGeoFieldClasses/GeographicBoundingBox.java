@@ -1,5 +1,6 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 
+import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
 public class GeographicBoundingBox extends CompoundJSONField {

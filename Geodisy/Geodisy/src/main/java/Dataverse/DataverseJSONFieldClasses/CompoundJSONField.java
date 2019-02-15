@@ -13,6 +13,7 @@ abstract public class CompoundJSONField extends JSONField {
      */
     public JSONField parseCompoundData(JSONArray compoundField){
         for(Object o: compoundField){
+            //TODO this is parsing strangely need to fix
             JSONObject field = (JSONObject) o;
             setField(field);
         }

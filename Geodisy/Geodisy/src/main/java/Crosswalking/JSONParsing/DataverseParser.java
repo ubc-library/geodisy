@@ -30,7 +30,7 @@ public class DataverseParser {
         JSONObject current = (JSONObject) dataverseJSON.get("data");
         SimpleFields sf = new SimpleFields();
         sf.setBaseFields(current,dJO);
-        JSONArray currentArray = current.getJSONObject("metadataBlocks").getJSONObject("citation").getJSONArray("fields");
+        JSONArray currentArray = current.getJSONObject("latestVersion").getJSONObject("metadataBlocks").getJSONObject("citation").getJSONArray("fields");
         for(Object o: currentArray){
             current = (JSONObject) o;
             Object valueObject = current.get("value");

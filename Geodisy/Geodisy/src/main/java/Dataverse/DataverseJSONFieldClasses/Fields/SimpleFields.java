@@ -60,8 +60,10 @@ public class SimpleFields extends JSONField {
     public DataverseJavaObject setBaseFields(JSONObject current, DataverseJavaObject dJO){
 
         dJO.setAlternativeURL(getValue(current,"persistentUrl"));
-        dJO.setProductionDate(getValueDate(current,"productionDate"));
+        dJO.setPublishDate(getValueDate(current,"publicationDate"));
+        dJO.setPublisher(getValue(current,"publisher"));
         current = current.getJSONObject("latestVersion");
+        dJO.setProductionDate(getValueDate(current,"productionDate"));
         dJO.setDataOfDeposit(getValueDate(current,"createTime"));
         dJO.setDistributionDate(getValueDate(current,"releaseTime"));
         dJO.setLicense(getValue(current,"license"));
