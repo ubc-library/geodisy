@@ -1,10 +1,14 @@
 package tests;
 
 import Crosswalking.JSONParsing.DataverseParser;
+import Dataverse.DataverseJavaObject;
+import org.junit.Assert.*;
 import org.junit.Test;
 
 
 import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DataverseParserTest {
 
@@ -21,7 +25,8 @@ public class DataverseParserTest {
         //create ObjectMapper instance
         DataverseParser dataverseParser = new DataverseParser(jsonData);
 
-        System.out.println("Wait!");
+        //TODO create actual tests
+        assertEquals(dataverseParser.getdJO(), new DataverseJavaObject());
 
     }
 
