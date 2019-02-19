@@ -12,6 +12,18 @@ import java.util.List;
  * Java object structure to parse Dataverse Json into
  * May need to change field types for dates, URLs, and/or email addresses.
  * Also need to test to see how textboxes work with this.
+ *
+ * Dataverse Alias: Java Class: JavaObject Variable
+ * Title : String: title
+ * Subtitle : String: subtitle
+ * Alternative Title : String : alternativeTitle
+ * Alternative URL: String : alternativeURL
+ * License : String : license
+ * Publisher : String : publisher
+ * Publication Date : String : Publication Date
+ * Other ID : OtherID : otherID
+ *
+ *
  */
 
 public class DataverseJavaObject {
