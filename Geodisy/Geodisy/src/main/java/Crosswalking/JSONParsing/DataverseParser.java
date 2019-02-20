@@ -9,6 +9,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.LinkedList;
+import java.util.List;
+
 
 public class DataverseParser {
 
@@ -29,8 +32,7 @@ public class DataverseParser {
      */
     private void parse() throws JSONException {
         JSONObject current = (JSONObject) dataverseJSON.get("data");
-        SimpleFields sf = new SimpleFields();
-        sf.setBaseFields(current,dJO);
+        dJO.setBaseFields(current);
         JSONArray currentArray = current.getJSONObject("latestVersion").getJSONObject("metadataBlocks").getJSONObject("citation").getJSONArray("fields");
         for(Object o: currentArray){
             current = (JSONObject) o;
@@ -96,25 +98,25 @@ public class DataverseParser {
                         dJO.addSoftware((Software) sw.parseCompoundData(ja));
                         break;
                         case("dataSource"):
-                        dJO.setDataSources(sf.getList(ja));
+                        dJO.setDataSources(getList(ja));
                         break;
                     case("kindOfData"):
-                        dJO.setKindOfData(sf.getList(ja));
+                        dJO.setKindOfData(getList(ja));
                         break;
                     case("language"):
-                        dJO.setLanguage(sf.getList(ja));
+                        dJO.setLanguage(getList(ja));
                         break;
                     case("otherReference"):
-                        dJO.setOtherReferences(sf.getList(ja));
+                        dJO.setOtherReferences(getList(ja));
                         break;
                     case("relatedDataset"):
-                        dJO.setRelatedDatasets(sf.getList(ja));
+                        dJO.setRelatedDatasets(getList(ja));
                         break;
                     case("relatedMaterial"):
-                        dJO.setRelatedMaterial(sf.getList(ja));
+                        dJO.setRelatedMaterial(getList(ja));
                         break;
                     case("subject"):
-                        dJO.setSubject(sf.getList(ja));
+                        dJO.setSubject(getList(ja));
                         break;
                     default:
                         logger.error("Something went wrong parsing a compound field. Label is %s", label);
@@ -123,13 +125,23 @@ public class DataverseParser {
             }
             else {
                 String value = valueObject.toString();
-                dJO = sf.setField(dJO, value, label);
+                SimpleFields sf = dJO.getSimpleFields();
+                sf.setField(value, label);
+                dJO.setSimpleFields(sf);
             }
         }
 
     }
 
-
+    public List<String> getList(JSONArray ja){
+        List<String> answer = new LinkedList<>();
+        String s;
+        for(Object o: ja){
+            s = (String) o;
+            answer.add(s);
+        }
+        return answer;
+    }
 
     public DataverseJavaObject getdJO() {
         return dJO;

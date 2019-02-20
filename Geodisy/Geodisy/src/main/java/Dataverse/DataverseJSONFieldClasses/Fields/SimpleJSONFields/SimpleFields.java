@@ -1,16 +1,17 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields;
 
 import Dataverse.DataverseJSONFieldClasses.JSONField;
-import Dataverse.DataverseJavaObject;
+
 import org.json.JSONArray;
-import org.json.JSONObject;
+
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class SimpleFields extends JSONField {
-    String title, subtitle, alternativeTitle, alternativeURL, license,notesText,productionPlace,depositor,originOfSources,characteristicOfSources, accessToSources;
-    Date productionDate,distributionDate,dateOfDeposit;
+    private String title, subtitle, alternativeTitle, alternativeURL, license,notesText,productionPlace,depositor, accessToSources, publisher,originOfSources, characteristicOfSources;
+
+    private Date productionDate,distributionDate,dateOfDeposit, publicationDate;
 
     public SimpleFields() {
         this.title = "";
@@ -24,13 +25,13 @@ public class SimpleFields extends JSONField {
         this.originOfSources = "";
         this.characteristicOfSources = "";
         this.accessToSources = "";
+        this.publisher = "";
     }
 
     /**
      *
      * @param label Field name label
      * @param value Value to put into that field
-     * @return this
      *
      * This method is for using the SimpleFields class as the Class to store the simple fields values rather than have them be individual fields in the larger DataverseJavaObject class.
      */
@@ -78,111 +79,18 @@ public class SimpleFields extends JSONField {
             case("accessToSources"):
                 setAccessToSources(value);
                 break;
-            default:
-                errorParsing(this.getClass().getName(),label);
-        }
-    }
-
-    /**
-     *
-     * @param dJO the DataverseJavaObject passed into the class
-     * @param value the String value of the value field of the current JSONObject being looked at
-     * @param label the String value of the typeName field of the current JSONObject
-     * @return
-     *
-     * This class is for dealing with simple fields in the DataverseJavaObject (i.e. String and List\<String\> fields)
-     *  that are at the same level of the heirarchy as the compound fields
-     */
-    /*
-    public DataverseJavaObject setField(DataverseJavaObject dJO, String value, String label) {
-        switch(label) {
-            case("title"):
-                dJO.setTitle(value);
+            case("publicationDate"):
+                setPublicationDate(value);
                 break;
-            case("subtitle"):
-                dJO.setSubtitle(value);
-                break;
-            case("alternativeTitle"):
-                dJO.setAlternativeTitle(value);
-                break;
-            case("alternativeURL"):
-                dJO.setAlternativeURL(filterURL(value));
-                break;
-            case("license"):
-                dJO.setLicense(value);
-                break;
-            case("notesText"):
-                dJO.setNotesText(value);
-                break;
-            case("productionDate"):
-                dJO.setProductionDate(filterForDate(value));
-                break;
-            case("productionPlace"):
-                dJO.setProductionPlace(value);
-                break;
-            case("distributionDate"):
-                dJO.setDistributionDate(filterForDate(value));
-                break;
-            case("depositor"):
-                dJO.setDepositor(value);
-                break;
-            case("dateOfDeposit"):
-                dJO.setDateOfDeposit(filterForDate(value));
-                break;
-            case("originOfSources"):
-                dJO.setOriginOfSources(value);
-                break;
-            case("characteristicOfSources"):
-                dJO.setCharacteristicOfSources(value);
-                break;
-            case("accessToSources"):
-                dJO.setAccessToSources(value);
+            case("publisher"):
+                setPublisher(value);
                 break;
             default:
                 errorParsing(this.getClass().getName(),label);
         }
-        return dJO;
-    }*/
-
-    /**
-     *
-     * @param current
-     * @param dJO
-     * @return
-     *
-     * This method fills in the simple fields that are in the parts of the JSON hierarchy that are higher up than the compound fields
-     */
-    public DataverseJavaObject setBaseFields(JSONObject current, DataverseJavaObject dJO){
-
-        dJO.setAlternativeURL(parseSimpleValue(current,"persistentUrl"));
-        dJO.setPublishDate(getValueDate(current,"publicationDate"));
-        dJO.setPublisher(parseSimpleValue(current,"publisher"));
-        current = current.getJSONObject("latestVersion");
-        dJO.setProductionDate(getValueDate(current,"productionDate"));
-        dJO.setDateOfDeposit(getValueDate(current,"createTime"));
-        dJO.setDistributionDate(getValueDate(current,"releaseTime"));
-        dJO.setLicense(parseSimpleValue(current,"license"));
-
-        return dJO;
     }
 
-    /**
-     *
-     * @param ja JSONArray
-     * @return the list of Strings for that field
-     *
-     * This method gets all the Strings in the list for a given JSONArray of Strings and returns as a list
-     */
-    public List<String> getList(JSONArray ja){
-        List<String> answer = new LinkedList<>();
-        String s;
-        for(Object o: ja){
-            s = (String) o;
-            answer.add(s);
-        }
-        return answer;
-    }
-    //TODO fix this to work when simple fields are in this class
+
     @Override
     public String getField(String fieldName) {
         switch (fieldName) {
@@ -214,121 +122,143 @@ public class SimpleFields extends JSONField {
                 return getCharacteristicOfSources();
             case ("accessToSources"):
                 return getAccessToSources();
+            case("publicationDate"):
+                return getPublicationDate();
+            case("publisher"):
+                return getPublisher();
             default:
                 errorParsing(this.getClass().getName(), fieldName);
                 return "Bad Field Name";
         }
 
     }
-    public void setTitle(String title) {
+    private void setTitle(String title) {
         this.title = title;
     }
 
-    public void setSubtitle(String subtitle) {
+    private void setSubtitle(String subtitle) {
         this.subtitle = subtitle;
     }
 
-    public void setAlternativeTitle(String alternativeTitle) {
+    private void setAlternativeTitle(String alternativeTitle) {
         this.alternativeTitle = alternativeTitle;
     }
 
-    public void setAlternativeURL(String alternativeURL) {
+    private void setAlternativeURL(String alternativeURL) {
         this.alternativeURL = filterURL(alternativeURL);
     }
 
-    public void setLicense(String license) {
+    private void setLicense(String license) {
         this.license = license;
     }
 
-    public void setNotesText(String notesText) {
+    private void setNotesText(String notesText) {
         this.notesText = notesText;
     }
 
-    public void setProductionPlace(String productionPlace) {
+    private void setProductionPlace(String productionPlace) {
         this.productionPlace = productionPlace;
     }
 
-    public void setDepositor(String depositor) {
+    private void setDepositor(String depositor) {
         this.depositor = depositor;
     }
 
-    public void setOriginOfSources(String originOfSources) {
+    private void setOriginOfSources(String originOfSources) {
         this.originOfSources = originOfSources;
     }
 
-    public void setCharacteristicOfSources(String characteristicOfSources) {
+    private void setCharacteristicOfSources(String characteristicOfSources) {
         this.characteristicOfSources = characteristicOfSources;
     }
 
-    public void setAccessToSources(String accessToSources) {
+    private void setAccessToSources(String accessToSources) {
         this.accessToSources = accessToSources;
     }
 
-    public void setProductionDate(String productionDate) {
+    private void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    private void setProductionDate(String productionDate) {
         this.productionDate = new Date(productionDate);
     }
 
-    public void setDistributionDate(String distributionDate) {
+    private void setDistributionDate(String distributionDate) {
         this.distributionDate = new Date(distributionDate);
     }
 
-    public void setDateOfDeposit(String dateOfDeposit) {
+    private void setDateOfDeposit(String dateOfDeposit) {
         this.dateOfDeposit = new Date(dateOfDeposit);
     }
 
-    public String getTitle() {
+    private void setPublicationDate(String privateationDate) {
+        this.publicationDate = new Date(privateationDate);
+    }
+
+    private String getTitle() {
         return title;
     }
 
-    public String getSubtitle() {
+    private String getSubtitle() {
         return subtitle;
     }
 
-    public String getAlternativeTitle() {
+    private String getAlternativeTitle() {
         return alternativeTitle;
     }
 
-    public String getAlternativeURL() {
+    private String getAlternativeURL() {
         return alternativeURL;
     }
 
-    public String getLicense() {
+    private String getLicense() {
         return license;
     }
 
-    public String getNotesText() {
+    private String getNotesText() {
         return notesText;
     }
 
-    public String getProductionPlace() {
+    private String getProductionPlace() {
         return productionPlace;
     }
 
-    public String getDepositor() {
+    private String getDepositor() {
         return depositor;
     }
 
-    public String getOriginOfSources() {
+    private String getOriginOfSources() {
         return originOfSources;
     }
 
-    public String getCharacteristicOfSources() {
+    private String getCharacteristicOfSources() {
         return characteristicOfSources;
     }
 
-    public String getAccessToSources() {
+    private String getAccessToSources() {
         return accessToSources;
     }
 
-    public String getProductionDate() {
+    private String getPublisher() {
+        return publisher;
+    }
+
+    private String getProductionDate() {
         return productionDate.getDateAsString();
     }
 
-    public String getDistributionDate() {
+    private String getDistributionDate() {
         return distributionDate.getDateAsString();
     }
 
-    public String getDateOfDeposit() {
+    private String getDateOfDeposit() {
         return dateOfDeposit.getDateAsString();
     }
+
+    private String getPublicationDate() {
+        return publicationDate.getDateAsString();
+    }
+
+
 }

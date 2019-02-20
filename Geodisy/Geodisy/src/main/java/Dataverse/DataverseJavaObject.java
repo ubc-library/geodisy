@@ -2,10 +2,14 @@ package Dataverse;
 
 
 
+import Crosswalking.JSONParsing.DataverseParser;
 import Dataverse.DataverseJSONFieldClasses.Fields.CompoundField.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.Date;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.json.JSONObject;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -29,14 +33,9 @@ import java.util.List;
  */
 
 public class DataverseJavaObject {
-    private String title;
-    private String subtitle;
-    private String alternativeTitle;
-    private String alternativeURL;
-    private String license;
+    private SimpleFields simpleFields;
     private String publisher;
     private Date publishDate;
-    private SimpleFields simpleFields;
     private List<OtherID> otherID;
     private List<Author> author;
     private List<DatasetContact> datasetContact;
@@ -45,25 +44,20 @@ public class DataverseJavaObject {
     private List<Keyword> keyword;
     private List<TopicClassification> topicClassification;
     private List<RelatedPublication> publication;
-    private String notesText;
     private List<String> language;
     private List<Producer> producer;
-    private Date productionDate;
-    private String productionPlace;
     private List<Contributor> contributor;
     private List<GrantNumber> grantNumber;
     private List<Distributor> distributor;
-    private Date distributionDate, dateOfDeposit;
-    private String depositor;
     private List<TimePeriodCovered> timePeriodCovered;
     private List<DateOfCollection> datesOfCollection;
     private List<String> kindOfData;
     private List<Series> series;
     private List<Software> software;
     private List<String> relatedMaterial, relatedDatasets, otherReferences, dataSources;
-    private String originOfSources, characteristicOfSources, accessToSources;
     private List<GeographicCoverage> geographicCoverage;
     private List<GeographicBoundingBox> geographicBoundingBox;
+    protected Logger logger = LogManager.getLogger(DataverseParser.class);
 
     public DataverseJavaObject() {
         this.simpleFields = new SimpleFields();
@@ -93,6 +87,58 @@ public class DataverseJavaObject {
         this.geographicBoundingBox = new LinkedList<>();
     }
 
+    public void setBaseFields(JSONObject current){
+
+        simpleFields.setField("alternativeURL",parseSimpleValue( current,"persistentUrl"));
+        simpleFields.setField("publishDate", getValueDate(current,"publicationDate"));
+        simpleFields.setField("publisher", parseSimpleValue(current,"publisher"));
+        current = current.getJSONObject("latestVersion");
+        simpleFields.setField("productionDate",getValueDate(current,"productionDate"));
+        simpleFields.setField("dateOfDeposit",getValueDate(current,"createTime"));
+        simpleFields.setField("distributionDate",getValueDate(current,"releaseTime"));
+        simpleFields.setField("license",parseSimpleValue(current,"license"));
+
+    }
+
+    /**
+     *
+     * @param current Current JSONObject to extract a simple String value from (fieldname as key to String value)
+     * @param fieldName The name of the field to get the String value from
+     * @return String value if field exists, otherwise an empty string
+     */
+    protected String parseSimpleValue(JSONObject current, String fieldName) {
+        if(current.has(fieldName))
+            return current.getString(fieldName);
+        return "";
+    }
+    /**
+     *
+     * @param current Current JSONObject to extract a date from
+     * @param fieldName The name of the field that has the date
+     * @return An empty String if the object doesn't have that field or the String result from filterForDate(the String at location fieldname)
+     */
+    protected String getValueDate(JSONObject current, String fieldName) {
+        if(!current.has(fieldName))
+            return "";
+        return filterForDate(current.getString(fieldName));
+    }
+
+    /**
+     *
+     * @param value String value of a possible Date
+     * @return Either the properly formatted date String or an empty String)
+     */
+    protected String filterForDate(String value) {
+        String justYear = "-?\\d{4}";
+        String yearMonthDay = "-?\\d{4}-[01]\\d-[123]\\d";
+        String yearMonth = "-?\\d{4}-[01]\\d";
+        String dateTime = "-?\\d{4}-[01]\\d-[123]\\dT[(0\\d)(1[012])]:[0-5]\\d:[0-5]\\dZ";
+        String formatedString = value;
+        if(formatedString.matches(yearMonthDay)||value.matches(justYear)||value.matches(yearMonth)||value.matches(dateTime))
+            return formatedString;
+        logger.error("Malformed date value (%s), returning blank String instead.", value);
+        return "";
+    }
     public String getTitle() {
         return simpleFields.getField("title");
     }
@@ -461,4 +507,11 @@ public class DataverseJavaObject {
         this.publishDate = new Date(publishDate);
     }
 
+    public SimpleFields getSimpleFields() {
+        return simpleFields;
+    }
+
+    public void setSimpleFields(SimpleFields simpleFields) {
+        this.simpleFields = simpleFields;
+    }
 }
