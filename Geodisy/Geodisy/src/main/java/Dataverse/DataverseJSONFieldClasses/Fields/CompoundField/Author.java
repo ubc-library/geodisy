@@ -20,20 +20,36 @@ public class Author extends CompoundJSONField {
         String value = field.getString("value");
         switch(title){
             case "authorIdentifier":
-                this.authorIdentifier = value;
+                setAuthorIdentifier(value);
                 break;
             case "authorAffiliation":
-                this.authorAffiliation = value;
+                setAuthorAffiliation(value);
                 break;
             case "authorIdentifierScheme":
-                this.authorIdentifierScheme = value;
+                setAuthorIdentifierScheme(value);
                 break;
             case("authorName"):
-                this.authorName = value;
+                setAuthorName(value);
                 break;
             default:
-                logger.error("Something wrong parsing Author. Title is %s", title);
-                System.out.println("Something wrong parsing Author");
+                errorParsing(this.getClass().getName(),title);
+        }
+    }
+
+    @Override
+    protected String getSpecifiedField(String title) {
+        switch(title){
+            case "authorIdentifier":
+                return getAuthorIdentifier();
+            case "authorAffiliation":
+                 return getAuthorAffiliation();
+            case "authorIdentifierScheme":
+                return getAuthorIdentifierScheme();
+            case("authorName"):
+                return getAuthorName();
+            default:
+                errorGettingValue(this.getClass().getName(),title);
+                return "Bad field name";
         }
     }
 

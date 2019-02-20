@@ -1,30 +1,31 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
+import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.Date;
 import org.json.JSONObject;
 
 public class TimePeriodCovered extends CompoundJSONField {
-    private String timePeriodCoveredStart, timePeriodCoveredEnd;
+    private Date timePeriodCoveredStart, timePeriodCoveredEnd;
 
     public TimePeriodCovered() {
-        this.timePeriodCoveredStart = "";
-        this.timePeriodCoveredEnd = "";
+        this.timePeriodCoveredStart = new Date("6000");
+        this.timePeriodCoveredEnd = new Date("");
     }
 
     public String getTimePeriodCoveredStart() {
-        return timePeriodCoveredStart;
+        return timePeriodCoveredStart.getDateAsString();
     }
 
     public void setTimePeriodCoveredStart(String timePeriodCoveredStart) {
-        this.timePeriodCoveredStart = timePeriodCoveredStart;
+        this.timePeriodCoveredStart = new Date(timePeriodCoveredStart);
     }
 
     public String getTimePeriodCoveredEnd() {
-        return timePeriodCoveredEnd;
+        return timePeriodCoveredEnd.getDateAsString();
     }
 
     public void setTimePeriodCoveredEnd(String timePeriodCoveredEnd) {
-        this.timePeriodCoveredEnd = timePeriodCoveredEnd;
+        this.timePeriodCoveredEnd = new Date(timePeriodCoveredEnd);
     }
 
     @Override
@@ -33,14 +34,26 @@ public class TimePeriodCovered extends CompoundJSONField {
         String value = field.getString("value");
         switch (title) {
             case("timePeriodCoverStart"):
-                this.timePeriodCoveredStart = filterForDate(value);
+                setTimePeriodCoveredStart(value);
                 break;
             case("timePeriodCoverEnd"):
-                this.timePeriodCoveredEnd = filterForDate(value);
+                setTimePeriodCoveredEnd(value);
                 break;
             default:
-                logger.error("Something wrong parsing Time Period Covered. Title is %s", title);
-                System.out.println("Something went wrong with Time Period Cover parsing");
+                errorParsing(this.getClass().getName(),title);
+        }
+    }
+
+    @Override
+    protected String getSpecifiedField(String fieldName) {
+        switch (fieldName) {
+            case ("timePeriodCoverStart"):
+                getTimePeriodCoveredStart();
+            case ("timePeriodCoverEnd"):
+                getTimePeriodCoveredEnd();
+            default:
+                errorGettingValue(this.getClass().getName(), fieldName);
+                return "Bad field name";
         }
     }
 }

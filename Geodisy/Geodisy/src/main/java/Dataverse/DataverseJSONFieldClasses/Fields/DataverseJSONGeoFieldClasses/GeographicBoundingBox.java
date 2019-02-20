@@ -52,20 +52,36 @@ public class GeographicBoundingBox extends CompoundJSONField {
         String value = field.getString("value");
         switch (title) {
             case("westLongitude"):
-                this.westLongitude = value;
+                setWestLongitude(value);
                 break;
             case("eastLongitude"):
-                this.eastLongitude = value;
+                setEastLongitude(value);
                 break;
             case("northLongitude"):
-                this.northLongitude = value;
+                setNorthLongitude(value);
                 break;
             case("southLongitude"):
-                this.southLongitude = value;
+                setSouthLongitude(value);
                 break;
             default:
-                logger.error("Something wrong parsing Geographic bounding box. Title is %s", title);
-                System.out.println("Something went wrong with Geographic Boundary parsing");
+                errorParsing(this.getClass().getName(),title);
+        }
+    }
+
+    @Override
+    protected String getSpecifiedField(String fieldName) {
+        switch (fieldName) {
+            case("westLongitude"):
+                return getWestLongitude();
+            case("eastLongitude"):
+                return getEastLongitude();
+            case("northLongitude"):
+                return getNorthLongitude();
+            case("southLongitude"):
+                return getSouthLongitude();
+            default:
+                errorGettingValue(this.getClass().getName(),fieldName);
+                return "Bad fieldName";
         }
     }
 }

@@ -43,7 +43,7 @@ public class RelatedPublication extends CompoundJSONField {
     }
 
     public void setPublicationURL(String publicationURL) {
-        this.publicationURL = publicationURL;
+        this.publicationURL = filterURL(publicationURL);
     }
 
     @Override
@@ -52,20 +52,36 @@ public class RelatedPublication extends CompoundJSONField {
         String value = field.getString("value");
         switch (title) {
             case("publicationCitation"):
-                this.publicationCitation = value;
+                setPublicationCitation(value);
                 break;
             case("publicationIDType"):
-                this.publicationIDType = value;
+                setPublicationIDType(value);
                 break;
             case("publicationIDNumber"):
-                this.publicationIDNumber = value;
+                setPublicationIDNumber(value);
                 break;
             case("publicationURL"):
-                this.publicationURL = filterURL(value);
+                setPublicationURL(value);
                 break;
             default:
-                logger.error("Something wrong parsing Related Publication. Title is %s", title);
-                System.out.println("Something went wrong with Related Publication parsing");
+                errorParsing(this.getClass().getName(),title);
+        }
+    }
+
+    @Override
+    protected String getSpecifiedField(String title) {
+        switch (title) {
+            case("publicationCitation"):
+                return getPublicationCitation();
+            case("publicationIDType"):
+                return getPublicationIDType();
+            case("publicationIDNumber"):
+                return getPublicationIDNumber();
+            case("publicationURL"):
+                return getPublicationURL();
+            default:
+                errorGettingValue(this.getClass().getName(),title);
+                return "Bad field name";
         }
     }
 }

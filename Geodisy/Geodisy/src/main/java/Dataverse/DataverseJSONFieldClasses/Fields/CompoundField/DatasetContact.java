@@ -42,17 +42,31 @@ public class DatasetContact extends CompoundJSONField {
         String value = field.getString("value");
         switch(title){
             case("datasetContactName"):
-                this.datasetContactName = value;
+                setDatasetContactName(value);
                 break;
             case("datasetContactAffiliation"):
-                this.datasetContactAffiliation = value;
+                setDatasetContactAffiliation(value);
                 break;
             case("datasetContactEmail"):
-                this.datasetContactEmail = value;
+                setDatasetContactEmail(value);
                 break;
             default:
-                logger.error("Something wrong parsing DatasetContact. Title is %s", title);
-                System.out.println("Something wrong with DatasetContact parsing");
+                errorParsing(this.getClass().getName(),title);
+        }
+    }
+
+    @Override
+    protected String getSpecifiedField(String title) {
+        switch(title){
+            case("datasetContactName"):
+                return getDatasetContactName();
+            case("datasetContactAffiliation"):
+                return getDatasetContactAffiliation();
+            case("datasetContactEmail"):
+                return getDatasetContactEmail();
+            default:
+                errorGettingValue(this.getClass().getName(),title);
+                return "Bad field name";
         }
     }
 }

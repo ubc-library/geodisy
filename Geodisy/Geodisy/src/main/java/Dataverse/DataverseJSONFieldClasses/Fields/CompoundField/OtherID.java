@@ -34,14 +34,26 @@ public class OtherID extends CompoundJSONField {
         String value = field.getString("value");
         switch (title) {
             case("otherIdAgency"):
-                this.otherIdAgency = value;
+                setOtherIdAgency(value);
                 break;
             case("otherIdValue"):
-                this.otherIdValue = value;
+                setOtherIdValue(value);
                 break;
             default:
-                logger.error("Something wrong parsing Other ID. Title is %s", title);
-                System.out.println("Something wrong with OtherId parsing");
+                errorParsing(this.getClass().getName(),title);
+        }
+    }
+
+    @Override
+    protected String getSpecifiedField(String title) {
+        switch (title) {
+            case("otherIdAgency"):
+                return getOtherIdAgency();
+            case("otherIdValue"):
+                return getOtherIdValue();
+            default:
+                errorGettingValue(this.getClass().getName(),title);
+                return "Bad Field name";
         }
     }
 }

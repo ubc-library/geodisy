@@ -4,6 +4,7 @@ package Dataverse;
 
 import Dataverse.DataverseJSONFieldClasses.Fields.CompoundField.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
+import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.Date;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class DataverseJavaObject {
     private String alternativeURL;
     private String license;
     private String publisher;
-    private String publishDate;
+    private Date publishDate;
     private List<OtherID> otherID;
     private List<Author> author;
     private List<DatasetContact> datasetContact;
@@ -45,13 +46,15 @@ public class DataverseJavaObject {
     private String notesText;
     private List<String> language;
     private List<Producer> producer;
-    private String productionDate, productionPlace;
+    private Date productionDate;
+    private String productionPlace;
     private List<Contributor> contributor;
     private List<GrantNumber> grantNumber;
     private List<Distributor> distributor;
-    private String distributionDate, depositor, dataOfDeposit;
+    private Date distributionDate, dateOfDeposit;
+    private String depositor;
     private List<TimePeriodCovered> timePeriodCovered;
-    private List<DateOfCollection> dateOfCollection;
+    private List<DateOfCollection> datesOfCollection;
     private List<String> kindOfData;
     private List<Series> series;
     private List<Software> software;
@@ -75,7 +78,7 @@ public class DataverseJavaObject {
         this.grantNumber = new LinkedList<>();
         this.distributor  = new LinkedList<>();
         this.timePeriodCovered = new LinkedList<>();
-        this.dateOfCollection = new LinkedList<>();
+        this.datesOfCollection = new LinkedList<>();
         this.kindOfData = new LinkedList<>();
         this.series  = new LinkedList<>();
         this.software = new LinkedList<>();
@@ -227,12 +230,11 @@ public class DataverseJavaObject {
 
     public void addProducer(Producer p){this.producer.add(p);}
 
-    public String getProductionDate() {
-        return productionDate;
+    public String getProductionDate() { return productionDate.getDateAsString();
     }
 
     public void setProductionDate(String productionDate) {
-        this.productionDate = productionDate;
+        this.productionDate = new Date(productionDate);
     }
 
     public String getProductionPlace() {
@@ -274,11 +276,11 @@ public class DataverseJavaObject {
     public void addDistributor(Distributor d){this.distributor.add(d);}
 
     public String getDistributionDate() {
-        return distributionDate;
+        return distributionDate.getDateAsString();
     }
 
     public void setDistributionDate(String distributionDate) {
-        this.distributionDate = distributionDate;
+        this.distributionDate = new Date(distributionDate);
     }
 
     public String getDepositor() {
@@ -289,12 +291,12 @@ public class DataverseJavaObject {
         this.depositor = depositor;
     }
 
-    public String getDataOfDeposit() {
-        return dataOfDeposit;
+    public String getDateOfDeposit() {
+        return dateOfDeposit.getDateAsString();
     }
 
-    public void setDataOfDeposit(String dataOfDeposit) {
-        this.dataOfDeposit = dataOfDeposit;
+    public void setDateOfDeposit(String dateOfDeposit) {
+        this.dateOfDeposit = new Date(dateOfDeposit);
     }
 
     public List<TimePeriodCovered> getTimePeriodCovered() {
@@ -307,15 +309,15 @@ public class DataverseJavaObject {
 
     public void addTimePeriodCovered(TimePeriodCovered tpc){this.timePeriodCovered.add(tpc);}
 
-    public List<DateOfCollection> getDateOfCollection() {
-        return dateOfCollection;
+    public List<DateOfCollection> getDatesOfCollection() {
+        return datesOfCollection;
     }
 
-    public void setDateOfCollection(List<DateOfCollection> dateOfCollection) {
-        this.dateOfCollection = dateOfCollection;
+    public void setDatesOfCollection(List<DateOfCollection> datesOfCollection) {
+        this.datesOfCollection = datesOfCollection;
     }
 
-    public void addDateOfCollection(DateOfCollection dc){this.dateOfCollection.add(dc);}
+    public void addDateOfCollection(DateOfCollection dc){this.datesOfCollection.add(dc);}
 
     public List<String> getKindOfData() {
         return kindOfData;
@@ -449,11 +451,11 @@ public class DataverseJavaObject {
     }
 
     public String getPublishDate() {
-        return publishDate;
+        return publishDate.getDateAsString();
     }
 
     public void setPublishDate(String publishDate) {
-        this.publishDate = publishDate;
+        this.publishDate = new Date(publishDate);
     }
 
 }

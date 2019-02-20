@@ -33,14 +33,26 @@ public class Contributor extends CompoundJSONField {
         String value = field.getString("value");
         switch(title){
             case("contributorType"):
-                this.contributorType = value;
+                setContributorType(value);
                 break;
             case("contributorName"):
-                this.contributorName = value;
+                setContributorName(value);
                 break;
             default:
-                logger.error("Something wrong parsing Contributor. Title is %s", title);
-                System.out.println("Something wrong parsing Contributor");
+                errorParsing(this.getClass().getName(),title);
+        }
+    }
+
+    @Override
+    protected String getSpecifiedField(String title) {
+        switch(title){
+            case("contributorType"):
+                return getContributorType();
+            case("contributorName"):
+                return getContributorName();
+            default:
+                errorGettingValue(this.getClass().getName(),title);
+                return "Bad field Name";
         }
     }
 }

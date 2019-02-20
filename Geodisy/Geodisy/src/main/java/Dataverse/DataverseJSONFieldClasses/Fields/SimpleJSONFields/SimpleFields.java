@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class SimpleFields extends JSONField {
+    //TODO move all simple fields into this class and treat the same as compound classes (i.e. stop
+
     /**
      *
      * @param dJO the DataverseJavaObject passed into the class
@@ -52,7 +54,7 @@ public class SimpleFields extends JSONField {
                 dJO.setDepositor(value);
                 break;
             case("dateOfDeposit"):
-                dJO.setDataOfDeposit(filterForDate(value));
+                dJO.setDateOfDeposit(filterForDate(value));
                 break;
             case("originOfSources"):
                 dJO.setOriginOfSources(value);
@@ -64,8 +66,7 @@ public class SimpleFields extends JSONField {
                 dJO.setAccessToSources(value);
                 break;
             default:
-                logger.error("Something has gone wrong with parsing. Label found is : %s", label);
-                System.out.println("Something has gone wrong with parsing. Label found is : " + label);
+                errorParsing(this.getClass().getName(),label);
         }
         return dJO;
     }
@@ -80,14 +81,14 @@ public class SimpleFields extends JSONField {
      */
     public DataverseJavaObject setBaseFields(JSONObject current, DataverseJavaObject dJO){
 
-        dJO.setAlternativeURL(getValue(current,"persistentUrl"));
+        dJO.setAlternativeURL(parseSimpleValue(current,"persistentUrl"));
         dJO.setPublishDate(getValueDate(current,"publicationDate"));
-        dJO.setPublisher(getValue(current,"publisher"));
+        dJO.setPublisher(parseSimpleValue(current,"publisher"));
         current = current.getJSONObject("latestVersion");
         dJO.setProductionDate(getValueDate(current,"productionDate"));
-        dJO.setDataOfDeposit(getValueDate(current,"createTime"));
+        dJO.setDateOfDeposit(getValueDate(current,"createTime"));
         dJO.setDistributionDate(getValueDate(current,"releaseTime"));
-        dJO.setLicense(getValue(current,"license"));
+        dJO.setLicense(parseSimpleValue(current,"license"));
 
         return dJO;
     }
@@ -107,5 +108,55 @@ public class SimpleFields extends JSONField {
             answer.add(s);
         }
         return answer;
+    }
+    //TODO fix this to work when simple fields are in this class
+    @Override
+    public String getField(String fieldName) {
+        /*switch(fieldName) {
+            case("title"):
+                return dJO.getTitle(value);
+                break;
+            case("subtitle"):
+                dJO.setSubtitle(value);
+                break;
+            case("alternativeTitle"):
+                dJO.setAlternativeTitle(value);
+                break;
+            case("alternativeURL"):
+                dJO.setAlternativeURL(filterURL(value));
+                break;
+            case("license"):
+                dJO.setLicense(value);
+                break;
+            case("notesText"):
+                dJO.setNotesText(value);
+                break;
+            case("productionDate"):
+                dJO.setProductionDate(filterForDate(value));
+                break;
+            case("productionPlace"):
+                dJO.setProductionPlace(value);
+                break;
+            case("distributionDate"):
+                dJO.setDistributionDate(filterForDate(value));
+                break;
+            case("depositor"):
+                dJO.setDepositor(value);
+                break;
+            case("dateOfDeposit"):
+                dJO.setDateOfDeposit(filterForDate(value));
+                break;
+            case("originOfSources"):
+                dJO.setOriginOfSources(value);
+                break;
+            case("characteristicOfSources"):
+                dJO.setCharacteristicOfSources(value);
+                break;
+            case("accessToSources"):
+                dJO.setAccessToSources(value);
+                break;
+            default:
+                errorParsing(this.getClass().getName(),label);*/
+        return "this hasn't been written yet";
     }
 }

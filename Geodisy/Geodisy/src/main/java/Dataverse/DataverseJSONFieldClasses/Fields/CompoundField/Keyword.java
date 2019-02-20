@@ -35,7 +35,7 @@ public class Keyword extends CompoundJSONField {
     }
 
     public void setKeywordVocabularyURL(String keywordVocabularyURL) {
-        this.keywordVocabularyURL = keywordVocabularyURL;
+        this.keywordVocabularyURL = filterURL(keywordVocabularyURL);
     }
 
     @Override
@@ -44,17 +44,31 @@ public class Keyword extends CompoundJSONField {
         String value = field.getString("value");
         switch (title) {
             case("keywordValue"):
-                this.keywordValue = value;
+                setKeywordValue(value);
                 break;
             case("keywordVocabulary"):
-                this.keywordVocabulary = value;
+                setKeywordVocabulary(value);
                 break;
             case("keywordVocabularyURL"):
-                this.keywordVocabularyURL = filterURL(value);
+                setKeywordVocabularyURL(value);
                 break;
             default:
-                logger.error("Something wrong parsing Keyword. Title is %s", title);
-                System.out.println("Something wrong with Keyword parsing. Could be URL vs URl vs URI issue.");
+                errorParsing(this.getClass().getName(),title);
+        }
+    }
+
+    @Override
+    protected String getSpecifiedField(String title) {
+        switch (title) {
+            case("keywordValue"):
+                return getKeywordValue();
+            case("keywordVocabulary"):
+                return getKeywordVocabulary();
+            case("keywordVocabularyURL"):
+                return getKeywordVocabularyURL();
+            default:
+                errorGettingValue(this.getClass().getName(),title);
+                return "Bad field name";
         }
     }
 }
