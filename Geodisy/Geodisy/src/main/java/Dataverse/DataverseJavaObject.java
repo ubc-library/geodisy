@@ -11,6 +11,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAccessor;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,8 +39,6 @@ import java.util.List;
 
 public class DataverseJavaObject {
     private SimpleFields simpleFields;
-    private String publisher;
-    private Date publishDate;
     private List<OtherID> otherID;
     private List<Author> author;
     private List<DatasetContact> datasetContact;
@@ -90,7 +93,7 @@ public class DataverseJavaObject {
     public void setBaseFields(JSONObject current){
 
         simpleFields.setField("alternativeURL",parseSimpleValue( current,"persistentUrl"));
-        simpleFields.setField("publishDate", getValueDate(current,"publicationDate"));
+        simpleFields.setField("publicationDate", getValueDate(current,"publicationDate"));
         simpleFields.setField("publisher", parseSimpleValue(current,"publisher"));
         current = current.getJSONObject("latestVersion");
         simpleFields.setField("productionDate",getValueDate(current,"productionDate"));
@@ -119,26 +122,10 @@ public class DataverseJavaObject {
      */
     protected String getValueDate(JSONObject current, String fieldName) {
         if(!current.has(fieldName))
-            return "";
-        return filterForDate(current.getString(fieldName));
+            return "9999";
+        return Date.checkDateString(current.getString(fieldName));
     }
 
-    /**
-     *
-     * @param value String value of a possible Date
-     * @return Either the properly formatted date String or an empty String)
-     */
-    protected String filterForDate(String value) {
-        String justYear = "-?\\d{4}";
-        String yearMonthDay = "-?\\d{4}-[01]\\d-[123]\\d";
-        String yearMonth = "-?\\d{4}-[01]\\d";
-        String dateTime = "-?\\d{4}-[01]\\d-[123]\\dT[(0\\d)(1[012])]:[0-5]\\d:[0-5]\\dZ";
-        String formatedString = value;
-        if(formatedString.matches(yearMonthDay)||value.matches(justYear)||value.matches(yearMonth)||value.matches(dateTime))
-            return formatedString;
-        logger.error("Malformed date value (%s), returning blank String instead.", value);
-        return "";
-    }
     public String getTitle() {
         return simpleFields.getField("title");
     }
@@ -489,23 +476,6 @@ public class DataverseJavaObject {
 
     public void addGeographicBoundingBox(GeographicBoundingBox gbb){this.geographicBoundingBox.add(gbb);}
 
-
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public String getPublishDate() {
-        return publishDate.getDateAsString();
-    }
-
-    public void setPublishDate(String publishDate) {
-        this.publishDate = new Date(publishDate);
-    }
 
     public SimpleFields getSimpleFields() {
         return simpleFields;
