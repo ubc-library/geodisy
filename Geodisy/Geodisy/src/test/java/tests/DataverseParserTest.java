@@ -10,7 +10,6 @@ import Dataverse.DataverseJavaObject;
 import org.junit.Test;
 
 
-import javax.security.auth.Subject;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

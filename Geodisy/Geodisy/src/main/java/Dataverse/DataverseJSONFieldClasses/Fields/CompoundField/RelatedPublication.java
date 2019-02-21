@@ -4,6 +4,8 @@ package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+
 public class RelatedPublication extends CompoundJSONField {
     private String publicationCitation, publicationIDType, publicationIDNumber, publicationURL;
 
@@ -48,19 +50,19 @@ public class RelatedPublication extends CompoundJSONField {
 
     @Override
     public void setField(JSONObject field) {
-        String title = field.getString("typeName");
-        String value = field.getString("value");
+        String title = field.getString(TYPE_NAME);
+        String value = field.getString(VAL);
         switch (title) {
-            case("publicationCitation"):
+            case PUB_CITE:
                 setPublicationCitation(value);
                 break;
-            case("publicationIDType"):
+            case PUB_ID_TYPE:
                 setPublicationIDType(value);
                 break;
-            case("publicationIDNumber"):
+            case PUB_ID_NUM:
                 setPublicationIDNumber(value);
                 break;
-            case("publicationURL"):
+            case PUB_URL:
                 setPublicationURL(value);
                 break;
             default:
@@ -71,13 +73,13 @@ public class RelatedPublication extends CompoundJSONField {
     @Override
     protected String getSpecifiedField(String title) {
         switch (title) {
-            case("publicationCitation"):
+            case PUB_CITE:
                 return getPublicationCitation();
-            case("publicationIDType"):
+            case PUB_ID_TYPE:
                 return getPublicationIDType();
-            case("publicationIDNumber"):
+            case PUB_ID_NUM:
                 return getPublicationIDNumber();
-            case("publicationURL"):
+            case PUB_URL:
                 return getPublicationURL();
             default:
                 errorGettingValue(this.getClass().getName(),title);

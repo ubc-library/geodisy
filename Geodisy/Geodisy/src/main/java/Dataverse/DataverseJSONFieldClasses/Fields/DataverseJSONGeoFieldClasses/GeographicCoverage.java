@@ -3,6 +3,8 @@ package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+
 public class GeographicCoverage extends CompoundJSONField {
     private String country, state, city, otherGeographicCoverage;
 
@@ -48,19 +50,19 @@ public class GeographicCoverage extends CompoundJSONField {
 
     @Override
     public void setField(JSONObject field) {
-        String title = field.getString("typeName");
-        String value = field.getString("value");
+        String title = field.getString(TYPE_NAME);
+        String value = field.getString(VAL);
         switch (title) {
-            case("country"):
+            case COUNTRY:
                setCountry(value);
                 break;
-            case("state"):
+            case STATE:
                 setState(value);
                 break;
-            case("city"):
+            case CITY:
                 setCity(value);
                 break;
-            case("otherGeographicCoverage"):
+            case OTHER_GEO_COV:
                 setOtherGeographicCoverage(value);
                 break;
             default:
@@ -72,13 +74,13 @@ public class GeographicCoverage extends CompoundJSONField {
     @Override
     protected String getSpecifiedField(String fieldName) {
         switch (fieldName) {
-            case ("country"):
+            case COUNTRY:
                 return getCountry();
-            case ("state"):
+            case STATE:
                 return getState();
-            case ("city"):
+            case CITY:
                 return getCity();
-            case ("otherGeographicCoverage"):
+            case OTHER_GEO_COV:
                 return getOtherGeographicCoverage();
             default:
                 errorParsing(this.getClass().getName(), fieldName);

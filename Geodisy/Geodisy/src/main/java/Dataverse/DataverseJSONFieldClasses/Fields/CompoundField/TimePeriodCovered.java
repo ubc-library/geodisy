@@ -4,6 +4,8 @@ import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.Date;
 import org.json.JSONObject;
 
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+
 public class TimePeriodCovered extends CompoundJSONField {
     private Date timePeriodCoveredStart, timePeriodCoveredEnd;
 
@@ -30,13 +32,13 @@ public class TimePeriodCovered extends CompoundJSONField {
 
     @Override
     public void setField(JSONObject field) {
-        String title = field.getString("typeName");
-        String value = field.getString("value");
+        String title = field.getString(TYPE_NAME);
+        String value = field.getString(VAL);
         switch (title) {
-            case("timePeriodCoverStart"):
+            case TIME_PER_COV_START:
                 setTimePeriodCoveredStart(value);
                 break;
-            case("timePeriodCoverEnd"):
+            case TIME_PER_COV_END:
                 setTimePeriodCoveredEnd(value);
                 break;
             default:
@@ -47,9 +49,9 @@ public class TimePeriodCovered extends CompoundJSONField {
     @Override
     protected String getSpecifiedField(String fieldName) {
         switch (fieldName) {
-            case ("timePeriodCoverStart"):
+            case TIME_PER_COV_START:
                 getTimePeriodCoveredStart();
-            case ("timePeriodCoverEnd"):
+            case TIME_PER_COV_END:
                 getTimePeriodCoveredEnd();
             default:
                 errorGettingValue(this.getClass().getName(), fieldName);

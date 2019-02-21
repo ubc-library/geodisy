@@ -5,6 +5,8 @@ package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+
 public class Keyword extends CompoundJSONField {
     private String keywordValue, keywordVocabulary, keywordVocabularyURL;
 
@@ -40,16 +42,16 @@ public class Keyword extends CompoundJSONField {
 
     @Override
     public void setField(JSONObject field) {
-        String title = field.getString("typeName");
-        String value = field.getString("value");
+        String title = field.getString(TYPE_NAME);
+        String value = field.getString(VAL);
         switch (title) {
-            case("keywordValue"):
+            case KEYWORD_VAL:
                 setKeywordValue(value);
                 break;
-            case("keywordVocabulary"):
+            case KEYWORD_VOCAB:
                 setKeywordVocabulary(value);
                 break;
-            case("keywordVocabularyURL"):
+            case KEYWORD_VOCAB_URL:
                 setKeywordVocabularyURL(value);
                 break;
             default:
@@ -60,11 +62,11 @@ public class Keyword extends CompoundJSONField {
     @Override
     protected String getSpecifiedField(String title) {
         switch (title) {
-            case("keywordValue"):
+            case KEYWORD_VAL:
                 return getKeywordValue();
-            case("keywordVocabulary"):
+            case KEYWORD_VOCAB:
                 return getKeywordVocabulary();
-            case("keywordVocabularyURL"):
+            case KEYWORD_VOCAB_URL:
                 return getKeywordVocabularyURL();
             default:
                 errorGettingValue(this.getClass().getName(),title);

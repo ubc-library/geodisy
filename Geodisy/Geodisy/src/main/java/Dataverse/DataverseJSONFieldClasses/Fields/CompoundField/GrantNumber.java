@@ -3,6 +3,8 @@ package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+
 public class GrantNumber extends CompoundJSONField {
     private String grantNumberAgency, grantNumberValue;
 
@@ -29,13 +31,13 @@ public class GrantNumber extends CompoundJSONField {
 
     @Override
     public void setField(JSONObject field) {
-        String title = field.getString("typeName");
-        String value = field.getString("value");
+        String title = field.getString(TYPE_NAME);
+        String value = field.getString(VAL);
         switch (title) {
-            case ("grantNumberAgency"):
+            case GRANT_NUM_AGENCY:
                 setGrantNumberAgency(value);
                 break;
-            case ("grantNumberValue"):
+            case GRANT_NUM_VAL:
                 setGrantNumberValue(value);
                 break;
             default:
@@ -46,9 +48,9 @@ public class GrantNumber extends CompoundJSONField {
     @Override
     protected String getSpecifiedField(String title) {
         switch (title) {
-            case ("grantNumberAgency"):
+            case GRANT_NUM_AGENCY:
                 return getGrantNumberAgency();
-            case ("grantNumberValue"):
+            case GRANT_NUM_VAL:
                 return getGrantNumberValue();
             default:
                 errorGettingValue(this.getClass().getName(),title);

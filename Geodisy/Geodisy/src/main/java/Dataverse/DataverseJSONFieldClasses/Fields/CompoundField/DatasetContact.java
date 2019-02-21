@@ -3,6 +3,8 @@ package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+
 public class DatasetContact extends CompoundJSONField {
     private String datasetContactName, datasetContactAffiliation, datasetContactEmail;
 
@@ -38,16 +40,16 @@ public class DatasetContact extends CompoundJSONField {
 
     @Override
     public void setField(JSONObject field) {
-        String title = field.getString("typeName");
-        String value = field.getString("value");
+        String title = field.getString(TYPE_NAME);
+        String value = field.getString(VAL);
         switch(title){
-            case("datasetContactName"):
+            case DS_CONTACT_NAME:
                 setDatasetContactName(value);
                 break;
-            case("datasetContactAffiliation"):
+            case DS_CONTACT_AFFIL:
                 setDatasetContactAffiliation(value);
                 break;
-            case("datasetContactEmail"):
+            case DS_CONTACT_EMAIL:
                 setDatasetContactEmail(value);
                 break;
             default:
@@ -58,11 +60,11 @@ public class DatasetContact extends CompoundJSONField {
     @Override
     protected String getSpecifiedField(String title) {
         switch(title){
-            case("datasetContactName"):
+            case DS_CONTACT_NAME:
                 return getDatasetContactName();
-            case("datasetContactAffiliation"):
+            case DS_CONTACT_AFFIL:
                 return getDatasetContactAffiliation();
-            case("datasetContactEmail"):
+            case DS_CONTACT_EMAIL:
                 return getDatasetContactEmail();
             default:
                 errorGettingValue(this.getClass().getName(),title);

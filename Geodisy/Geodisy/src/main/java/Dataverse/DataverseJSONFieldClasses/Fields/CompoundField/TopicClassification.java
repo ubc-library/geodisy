@@ -2,7 +2,10 @@ package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
 
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
+
 import org.json.JSONObject;
+
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
 
 public class TopicClassification extends CompoundJSONField {
     private String topicClassValue, topicClassVocab, topicClassVocabURL;
@@ -42,13 +45,13 @@ public class TopicClassification extends CompoundJSONField {
         String title = field.getString("typeName");
         String value = field.getString("value");
         switch (title) {
-            case("topicClassValue"):
+            case TOPIC_CLASS_VAL:
                 setTopicClassValue(value);
                 break;
-            case("topicClassVocab"):
+            case TOPIC_CLASS_VOCAB:
                 setTopicClassVocab(value);
                 break;
-            case("topicClassVocabURL"):
+            case TOPIC_CLASS_VOCAB_URL:
                 setTopicClassVocabURL(value);
                 break;
             default:
@@ -59,11 +62,11 @@ public class TopicClassification extends CompoundJSONField {
     @Override
     protected String getSpecifiedField(String fieldName) {
         switch (fieldName) {
-            case("topicClassValue"):
+            case TOPIC_CLASS_VAL:
                 return getTopicClassValue();
-            case("topicClassVocab"):
+            case TOPIC_CLASS_VOCAB:
                 return getTopicClassVocab();
-            case("topicClassVocabURL"):
+            case TOPIC_CLASS_VOCAB_URL:
                return getTopicClassVocabURL();
             default:
                 errorParsing(this.getClass().getName(),fieldName);

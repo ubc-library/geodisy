@@ -3,6 +3,8 @@ package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+
 public class Contributor extends CompoundJSONField {
     private String contributorType, contributorName;
 
@@ -29,13 +31,13 @@ public class Contributor extends CompoundJSONField {
 
     @Override
     public void setField(JSONObject field) {
-        String title = field.getString("typeName");
-        String value = field.getString("value");
+        String title = field.getString(TYPE_NAME);
+        String value = field.getString(VAL);
         switch(title){
-            case("contributorType"):
+            case CONTRIB_TYPE:
                 setContributorType(value);
                 break;
-            case("contributorName"):
+            case CONTRIB_NAME:
                 setContributorName(value);
                 break;
             default:
@@ -46,9 +48,9 @@ public class Contributor extends CompoundJSONField {
     @Override
     protected String getSpecifiedField(String title) {
         switch(title){
-            case("contributorType"):
+            case CONTRIB_TYPE:
                 return getContributorType();
-            case("contributorName"):
+            case CONTRIB_NAME:
                 return getContributorName();
             default:
                 errorGettingValue(this.getClass().getName(),title);

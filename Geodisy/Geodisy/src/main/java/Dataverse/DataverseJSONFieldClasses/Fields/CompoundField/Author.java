@@ -4,6 +4,8 @@ package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+
 public class Author extends CompoundJSONField {
     private String authorName, authorAffiliation, authorIdentifierScheme, authorIdentifier;
 
@@ -16,19 +18,19 @@ public class Author extends CompoundJSONField {
     }
     @Override
     protected void setField(JSONObject field) {
-        String title = field.getString("typeName");
-        String value = field.getString("value");
+        String title = field.getString(TYPE_NAME);
+        String value = field.getString(VAL);
         switch(title){
-            case "authorIdentifier":
+            case AUTHOR_ID:
                 setAuthorIdentifier(value);
                 break;
-            case "authorAffiliation":
+            case AUTHOR_AFFIL:
                 setAuthorAffiliation(value);
                 break;
-            case "authorIdentifierScheme":
+            case AUTHOR_ID_SCHEME:
                 setAuthorIdentifierScheme(value);
                 break;
-            case("authorName"):
+            case AUTHOR_NAME:
                 setAuthorName(value);
                 break;
             default:
@@ -39,13 +41,13 @@ public class Author extends CompoundJSONField {
     @Override
     protected String getSpecifiedField(String title) {
         switch(title){
-            case "authorIdentifier":
+            case AUTHOR_ID:
                 return getAuthorIdentifier();
-            case "authorAffiliation":
+            case AUTHOR_AFFIL:
                  return getAuthorAffiliation();
-            case "authorIdentifierScheme":
+            case AUTHOR_ID_SCHEME:
                 return getAuthorIdentifierScheme();
-            case("authorName"):
+            case AUTHOR_NAME:
                 return getAuthorName();
             default:
                 errorGettingValue(this.getClass().getName(),title);

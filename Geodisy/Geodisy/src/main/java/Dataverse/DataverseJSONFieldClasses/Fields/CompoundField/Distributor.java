@@ -4,6 +4,8 @@ package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+
 public class Distributor extends CompoundJSONField {
     private String distributorName, distributorAffiliation, distributorAbbreviation, distributorURL, distributorLogoURL;
 
@@ -57,22 +59,22 @@ public class Distributor extends CompoundJSONField {
 
     @Override
     public void setField(JSONObject field) {
-        String title = field.getString("typeName");
-        String value = field.getString("value");
+        String title = field.getString(TYPE_NAME);
+        String value = field.getString(VAL);
         switch(title){
-            case("distributorName"):
+            case DISTRIB_NAME:
                 setDistributorName(value);
                 break;
-            case("distributorAffiliation"):
+            case DISTRIB_AFFIL:
                 setDistributorAffiliation(value);
                 break;
-            case("distributorAbbreviation"):
+            case DISTRIB_ABRIV:
                 setDistributorAbbreviation(value);
                 break;
-            case("distributorURL"):
+            case DISTRIB_URL:
                 setDistributorURL(value);
                 break;
-            case("distributorLogoURL"):
+            case DISTRIB_LOGO_URL:
                 setDistributorLogoURL(value);
                 break;
             default:
@@ -83,15 +85,15 @@ public class Distributor extends CompoundJSONField {
     @Override
     protected String getSpecifiedField(String title) {
         switch(title){
-            case("distributorName"):
+            case DISTRIB_NAME:
                 return getDistributorName();
-            case("distributorAffiliation"):
+            case DISTRIB_AFFIL:
                 return getDistributorAffiliation();
-            case("distributorAbbreviation"):
+            case DISTRIB_ABRIV:
                 return getDistributorAbbreviation();
-            case("distributorURL"):
+            case DISTRIB_URL:
                 return getDistributorURL();
-            case("distributorLogoURL"):
+            case DISTRIB_LOGO_URL:
                 return getDistributorLogoURL();
             default:
                 errorGettingValue(this.getClass().getName(),title);

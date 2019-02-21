@@ -8,6 +8,8 @@ import org.json.JSONArray;
 import java.util.LinkedList;
 import java.util.List;
 
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+
 public class SimpleFields extends JSONField {
     private String title, subtitle, alternativeTitle, alternativeURL, license,notesText,productionPlace,depositor, accessToSources, publisher,originOfSources, characteristicOfSources;
 
@@ -37,52 +39,52 @@ public class SimpleFields extends JSONField {
      */
     public void setField(String label, String value){
         switch(label) {
-            case("title"):
+            case TITLE:
                 setTitle(value);
                 break;
-            case("subtitle"):
+            case SUBTITLE:
                 setSubtitle(value);
                 break;
-            case("alternativeTitle"):
+            case ALT_TITLE:
                 setAlternativeTitle(value);
                 break;
-            case("alternativeURL"):
+            case ALT_URL:
                 setAlternativeURL(value);
                 break;
-            case("license"):
+            case LICENSE:
                 setLicense(value);
                 break;
-            case("notesText"):
+            case NOTES_TEXT:
                 setNotesText(value);
                 break;
-            case("productionDate"):
+            case PROD_DATE:
                 setProductionDate(value);
                 break;
-            case("productionPlace"):
+            case PROD_PLACE:
                 setProductionPlace(value);
                 break;
-            case("distributionDate"):
+            case DIST_DATE:
                 setDistributionDate(value);
                 break;
-            case("depositor"):
+            case DEPOSITOR:
                 setDepositor(value);
                 break;
-            case("dateOfDeposit"):
+            case DEPOS_DATE:
                 setDateOfDeposit(value);
                 break;
-            case("originOfSources"):
+            case ORIG_OF_SOURCES:
                 setOriginOfSources(value);
                 break;
-            case("characteristicOfSources"):
+            case CHAR_OF_SOURCES:
                 setCharacteristicOfSources(value);
                 break;
-            case("accessToSources"):
+            case ACCESS_TO_SOURCES:
                 setAccessToSources(value);
                 break;
-            case("publicationDate"):
+            case PUB_DATE:
                 setPublicationDate(value);
                 break;
-            case("publisher"):
+            case PUBLISHER:
                 setPublisher(value);
                 break;
             default:
@@ -94,37 +96,37 @@ public class SimpleFields extends JSONField {
     @Override
     public String getField(String fieldName) {
         switch (fieldName) {
-            case ("title"):
+            case TITLE:
                 return getTitle();
-            case ("subtitle"):
+            case SUBTITLE:
                 return getSubtitle();
-            case ("alternativeTitle"):
+            case ALT_TITLE:
                 return getAlternativeTitle();
-            case ("alternativeURL"):
+            case ALT_URL:
                 return getAlternativeURL();
-            case ("license"):
+            case LICENSE:
                 return getLicense();
-            case ("notesText"):
+            case NOTES_TEXT:
                 return getNotesText();
-            case ("productionDate"):
+            case PROD_DATE:
                 return getProductionDate();
-            case ("productionPlace"):
+            case PROD_PLACE:
                 return getProductionPlace();
-            case ("distributionDate"):
+            case DIST_DATE:
                 return getDistributionDate();
-            case ("depositor"):
+            case DEPOSITOR:
                 return getDepositor();
-            case ("dateOfDeposit"):
+            case DEPOS_DATE:
                 return getDateOfDeposit();
-            case ("originOfSources"):
+            case ORIG_OF_SOURCES:
                 return getOriginOfSources();
-            case ("characteristicOfSources"):
+            case CHAR_OF_SOURCES:
                 return getCharacteristicOfSources();
-            case ("accessToSources"):
+            case ACCESS_TO_SOURCES:
                 return getAccessToSources();
-            case("publicationDate"):
+            case PUB_DATE:
                 return getPublicationDate();
-            case("publisher"):
+            case PUBLISHER:
                 return getPublisher();
             default:
                 errorParsing(this.getClass().getName(), fieldName);

@@ -4,6 +4,8 @@ import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.Date;
 import org.json.JSONObject;
 
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+
 public class DateOfCollection extends CompoundJSONField {
     private Date dateOfCollectionStart, dateOfCollectionEnd;
 
@@ -31,13 +33,13 @@ public class DateOfCollection extends CompoundJSONField {
 
     @Override
     public void setField(JSONObject field) {
-        String title = field.getString("typeName");
-        String value = field.getString("value");
+        String title = field.getString(TYPE_NAME);
+        String value = field.getString(VAL);
         switch(title){
-            case("dateOfCollectionStart"):
+            case DATE_OF_COLLECT_START:
                 setDateOfCollectionStart(value);
                 break;
-            case("dateOfCollectionEnd"):
+            case DATE_OF_COLLECT_END:
                 setDateOfCollectionEnd(value);
                 break;
             default:
@@ -48,9 +50,9 @@ public class DateOfCollection extends CompoundJSONField {
     @Override
     protected String getSpecifiedField(String title) {
         switch(title){
-            case("dateOfCollectionStart"):
+            case DATE_OF_COLLECT_START:
                 return getDateOfCollectionStart();
-            case("dateOfCollectionEnd"):
+            case DATE_OF_COLLECT_END:
                 return getDateOfCollectionEnd();
             default:
                 errorGettingValue(this.getClass().getName(),title);

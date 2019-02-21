@@ -3,6 +3,8 @@ package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+
 public class Software extends CompoundJSONField {
     private String softwareName, softwareVersion;
 
@@ -30,13 +32,13 @@ public class Software extends CompoundJSONField {
 
     @Override
     public void setField(JSONObject field) {
-        String title = field.getString("typeName");
-        String value = field.getString("value");
+        String title = field.getString(TYPE_NAME);
+        String value = field.getString(VAL);
         switch (title) {
-            case("softwareName"):
+            case SOFTWARE_NAME:
                 this.softwareName = value;
                 break;
-            case("softwareVersion"):
+            case SOFTWARE_VERSION:
                 this.softwareVersion = value;
                 break;
             default:
@@ -47,9 +49,9 @@ public class Software extends CompoundJSONField {
     @Override
     protected String getSpecifiedField(String title) {
         switch (title) {
-            case("softwareName"):
+            case SOFTWARE_NAME:
                 return getSoftwareName();
-            case("softwareVersion"):
+            case SOFTWARE_VERSION:
                 return getSoftwareVersion();
             default:
                 errorGettingValue(this.getClass().getName(),title);

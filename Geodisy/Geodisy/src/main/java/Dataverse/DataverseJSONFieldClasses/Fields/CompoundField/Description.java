@@ -5,6 +5,8 @@ import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.Date;
 import org.json.JSONObject;
 
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+
 public class Description extends CompoundJSONField {
     private String dsDescriptionValue;
     private Date dsDescriptionDate;
@@ -32,13 +34,13 @@ public class Description extends CompoundJSONField {
 
     @Override
     public void setField(JSONObject field) {
-        String title = field.getString("typeName");
-        String value = field.getString("value");
+        String title = field.getString(TYPE_NAME);
+        String value = field.getString(VAL);
         switch(title){
-            case("dsDescriptionValue"):
+            case DS_DESCRIPT_VAL:
                 setDsDescriptionValue(value);
                 break;
-            case("dsDescriptionDate"):
+            case DS_DESCRIPT_DATE:
                 setDsDescriptionDate(value);
                 break;
             default:
@@ -49,9 +51,9 @@ public class Description extends CompoundJSONField {
     @Override
     protected String getSpecifiedField(String title) {
         switch(title){
-            case("dsDescriptionValue"):
+            case DS_DESCRIPT_VAL:
                 return getDsDescriptionValue();
-            case("dsDescriptionDate"):
+            case DS_DESCRIPT_DATE:
                 return getDsDescriptionDate();
             default:
                 errorGettingValue(this.getClass().getName(),title);

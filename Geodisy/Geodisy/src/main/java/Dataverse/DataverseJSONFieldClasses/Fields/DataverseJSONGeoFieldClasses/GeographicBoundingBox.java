@@ -3,6 +3,8 @@ package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+
 public class GeographicBoundingBox extends CompoundJSONField {
     private String westLongitude, eastLongitude, northLongitude, southLongitude;
 
@@ -48,19 +50,19 @@ public class GeographicBoundingBox extends CompoundJSONField {
 
     @Override
     public void setField(JSONObject field) {
-        String title = field.getString("typeName");
-        String value = field.getString("value");
+        String title = field.getString(TYPE_NAME);
+        String value = field.getString(VAL);
         switch (title) {
-            case("westLongitude"):
+            case WEST_LONG:
                 setWestLongitude(value);
                 break;
-            case("eastLongitude"):
+            case EAST_LONG:
                 setEastLongitude(value);
                 break;
-            case("northLongitude"):
+            case NORTH_LAT:
                 setNorthLongitude(value);
                 break;
-            case("southLongitude"):
+            case SOUTH_LAT:
                 setSouthLongitude(value);
                 break;
             default:
@@ -71,13 +73,13 @@ public class GeographicBoundingBox extends CompoundJSONField {
     @Override
     protected String getSpecifiedField(String fieldName) {
         switch (fieldName) {
-            case("westLongitude"):
+            case WEST_LONG:
                 return getWestLongitude();
-            case("eastLongitude"):
+            case EAST_LONG:
                 return getEastLongitude();
-            case("northLongitude"):
+            case NORTH_LAT:
                 return getNorthLongitude();
-            case("southLongitude"):
+            case SOUTH_LAT:
                 return getSouthLongitude();
             default:
                 errorGettingValue(this.getClass().getName(),fieldName);

@@ -4,6 +4,8 @@ package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+
 public class Producer extends CompoundJSONField {
     private String producerName, producerAffiliation, producerAbbreviation, producerURL, producerLogoURL;
 
@@ -57,22 +59,22 @@ public class Producer extends CompoundJSONField {
 
     @Override
     public void setField(JSONObject field) {
-        String title = field.getString("typeName");
-        String value = field.getString("value");
+        String title = field.getString(TYPE_NAME);
+        String value = field.getString(VAL);
         switch (title) {
-            case("producerName"):
+            case PROD_NAME:
                 setProducerName(value);
                 break;
-            case("producerAffiliation"):
+            case PROD_AFFIL:
                 setProducerAffiliation(value);
                 break;
-            case("producerAbbreviation"):
+            case PROD_ABBREV:
                 setProducerAbbreviation(value);
                 break;
-            case("producerURL"):
+            case PROD_URL:
                 setProducerURL(value);
                 break;
-            case("producerLogoURL"):
+            case PROD_LOGO_URL:
                 setProducerLogoURL(value);
                 break;
             default:
@@ -83,15 +85,15 @@ public class Producer extends CompoundJSONField {
     @Override
     protected String getSpecifiedField(String title) {
         switch (title) {
-            case("producerName"):
+            case PROD_NAME:
                 return getProducerName();
-            case("producerAffiliation"):
+            case PROD_AFFIL:
                 return getProducerAffiliation();
-            case("producerAbbreviation"):
+            case PROD_ABBREV:
                 return getProducerAbbreviation();
-            case("producerURL"):
+            case PROD_URL:
                 return getProducerURL();
-            case("producerLogoURL"):
+            case PROD_LOGO_URL:
                 return getProducerLogoURL();
             default:
                 errorGettingValue(this.getClass().getName(),title);
