@@ -34,14 +34,26 @@ public class Series extends CompoundJSONField {
         String value = field.getString("value");
         switch (title) {
             case("seriesName"):
-                this.seriesName = value;
+                setSeriesName(value);
                 break;
             case("seriesInformation"):
-                this.seriesInformation = value;
+                setSeriesInformation(value);
                 break;
             default:
-                logger.error("Something wrong parsing Series. Title is %s", title);
-                System.out.println("Something went wrong with Series parsing");
+                errorParsing(this.getClass().getName(),title);
+        }
+    }
+
+    @Override
+    protected String getSpecifiedField(String title) {
+        switch (title) {
+            case("seriesName"):
+                return getSeriesName();
+            case("seriesInformation"):
+                return getSeriesInformation();
+            default:
+                errorGettingValue(this.getClass().getName(),title);
+                return "Bad field name";
         }
     }
 }

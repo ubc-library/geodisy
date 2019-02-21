@@ -40,8 +40,20 @@ public class Software extends CompoundJSONField {
                 this.softwareVersion = value;
                 break;
             default:
-                logger.error("Something wrong parsing Software. Title is %s", title);
-                System.out.println("Something went wrong with Software parsing");
+                errorParsing(this.getClass().getName(),title);
+        }
+    }
+
+    @Override
+    protected String getSpecifiedField(String title) {
+        switch (title) {
+            case("softwareName"):
+                return getSoftwareName();
+            case("softwareVersion"):
+                return getSoftwareVersion();
+            default:
+                errorGettingValue(this.getClass().getName(),title);
+                return "Bad field name";
         }
     }
 }

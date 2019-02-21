@@ -34,4 +34,12 @@ abstract public class CompoundJSONField extends JSONField {
 
 
     protected abstract void setField(JSONObject field);
+    
+    @Override
+    public String getField(String fieldName){
+        return getSpecifiedField(fieldName);
+    }
+
+    protected abstract String getSpecifiedField(String fieldName);
+
 }

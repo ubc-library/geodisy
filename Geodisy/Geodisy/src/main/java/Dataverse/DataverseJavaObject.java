@@ -2,9 +2,20 @@ package Dataverse;
 
 
 
+import Crosswalking.JSONParsing.DataverseParser;
 import Dataverse.DataverseJSONFieldClasses.Fields.CompoundField.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
+import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.Date;
+import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.json.JSONObject;
 
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAccessor;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,13 +38,7 @@ import java.util.List;
  */
 
 public class DataverseJavaObject {
-    private String title;
-    private String subtitle;
-    private String alternativeTitle;
-    private String alternativeURL;
-    private String license;
-    private String publisher;
-    private String publishDate;
+    private SimpleFields simpleFields;
     private List<OtherID> otherID;
     private List<Author> author;
     private List<DatasetContact> datasetContact;
@@ -42,25 +47,23 @@ public class DataverseJavaObject {
     private List<Keyword> keyword;
     private List<TopicClassification> topicClassification;
     private List<RelatedPublication> publication;
-    private String notesText;
     private List<String> language;
     private List<Producer> producer;
-    private String productionDate, productionPlace;
     private List<Contributor> contributor;
     private List<GrantNumber> grantNumber;
     private List<Distributor> distributor;
-    private String distributionDate, depositor, dataOfDeposit;
     private List<TimePeriodCovered> timePeriodCovered;
-    private List<DateOfCollection> dateOfCollection;
+    private List<DateOfCollection> datesOfCollection;
     private List<String> kindOfData;
     private List<Series> series;
     private List<Software> software;
     private List<String> relatedMaterial, relatedDatasets, otherReferences, dataSources;
-    private String originOfSources, characteristicOfSources, accessToSources;
     private List<GeographicCoverage> geographicCoverage;
     private List<GeographicBoundingBox> geographicBoundingBox;
+    protected Logger logger = LogManager.getLogger(DataverseParser.class);
 
     public DataverseJavaObject() {
+        this.simpleFields = new SimpleFields();
         this.otherID = new LinkedList<>();
         this.author = new LinkedList<>();
         this.datasetContact = new LinkedList<>();
@@ -75,7 +78,7 @@ public class DataverseJavaObject {
         this.grantNumber = new LinkedList<>();
         this.distributor  = new LinkedList<>();
         this.timePeriodCovered = new LinkedList<>();
-        this.dateOfCollection = new LinkedList<>();
+        this.datesOfCollection = new LinkedList<>();
         this.kindOfData = new LinkedList<>();
         this.series  = new LinkedList<>();
         this.software = new LinkedList<>();
@@ -87,36 +90,148 @@ public class DataverseJavaObject {
         this.geographicBoundingBox = new LinkedList<>();
     }
 
+    public void setBaseFields(JSONObject current){
+
+        simpleFields.setField("alternativeURL",parseSimpleValue( current,"persistentUrl"));
+        simpleFields.setField("publicationDate", getValueDate(current,"publicationDate"));
+        simpleFields.setField("publisher", parseSimpleValue(current,"publisher"));
+        current = current.getJSONObject("latestVersion");
+        simpleFields.setField("productionDate",getValueDate(current,"productionDate"));
+        simpleFields.setField("dateOfDeposit",getValueDate(current,"createTime"));
+        simpleFields.setField("distributionDate",getValueDate(current,"releaseTime"));
+        simpleFields.setField("license",parseSimpleValue(current,"license"));
+
+    }
+
+    /**
+     *
+     * @param current Current JSONObject to extract a simple String value from (fieldname as key to String value)
+     * @param fieldName The name of the field to get the String value from
+     * @return String value if field exists, otherwise an empty string
+     */
+    protected String parseSimpleValue(JSONObject current, String fieldName) {
+        if(current.has(fieldName))
+            return current.getString(fieldName);
+        return "";
+    }
+    /**
+     *
+     * @param current Current JSONObject to extract a date from
+     * @param fieldName The name of the field that has the date
+     * @return An empty String if the object doesn't have that field or the String result from filterForDate(the String at location fieldname)
+     */
+    protected String getValueDate(JSONObject current, String fieldName) {
+        if(!current.has(fieldName))
+            return "9999";
+        return Date.checkDateString(current.getString(fieldName));
+    }
+
     public String getTitle() {
-        return title;
+        return simpleFields.getField("title");
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        simpleFields.setField("title",title);
     }
 
-    public String getSubtitle() {
-        return subtitle;
-    }
+    public String getSubtitle() { return simpleFields.getField("subtitle"); }
 
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
+    public void setSubtitle(String subtitle) { simpleFields.setField("subtitle",subtitle);
     }
 
     public String getAlternativeTitle() {
-        return alternativeTitle;
+        return simpleFields.getField("alternativeTitle");
     }
 
     public void setAlternativeTitle(String alternativeTitle) {
-        this.alternativeTitle = alternativeTitle;
+        simpleFields.setField("alternativeTitle",alternativeTitle);
     }
 
     public String getAlternativeURL() {
-        return alternativeURL;
+        return simpleFields.getField("alternativeURL");
     }
 
     public void setAlternativeURL(String alternativeURL) {
-        this.alternativeURL = alternativeURL;
+        simpleFields.setField("alternativeURL",alternativeURL);
+    }
+
+    public String getLicense() {
+        return simpleFields.getField("license");
+    }
+
+    public void setLicense(String license) {
+        simpleFields.setField("license",license);
+    }
+
+    public String getNotesText() {
+        return simpleFields.getField("noteText");
+    }
+
+    public void setNotesText(String notesText) {
+        simpleFields.setField("notesText",notesText);
+    }
+
+    public String getProductionPlace() {
+        return simpleFields.getField("productionPlace");
+    }
+
+    public void setProductionPlace(String productionPlace) {
+        simpleFields.setField("productionPlace",productionPlace);
+    }
+
+    public String getDepositor() {
+        return simpleFields.getField("depositor");
+    }
+
+    public void setDepositor(String depositor) {
+        simpleFields.setField("depositor",depositor);
+    }
+
+    public String getOriginOfSources() {
+        return simpleFields.getField("originOfSources");
+    }
+
+    public void setOriginOfSources(String originOfSources) {
+        simpleFields.setField("originOfSources", originOfSources);
+    }
+
+    public String getCharacteristicOfSources() {
+        return simpleFields.getField("characteristicsOfSources");
+    }
+
+    public void setCharacteristicOfSources(String characteristicOfSources) {
+        simpleFields.setField("characteristicOfSources",characteristicOfSources);
+    }
+
+    public String getAccessToSources() {
+        return simpleFields.getField("accessToSources");
+    }
+
+    public void setAccessToSources(String accessToSources) {
+        simpleFields.setField("accessToSources", accessToSources);
+    }
+
+    public String getProductionDate() { return simpleFields.getField("productionDate");
+    }
+
+    public void setProductionDate(String productionDate) {
+        simpleFields.setField("productionDate", productionDate);
+    }
+
+    public String getDistributionDate() {
+        return simpleFields.getField("distributionDate");
+    }
+
+    public void setDistributionDate(String distributionDate) {
+        simpleFields.setField("distributionDate", distributionDate);
+    }
+
+    public String getDateOfDeposit() {
+        return simpleFields.getField("dateOfDeposit");
+    }
+
+    public void setDateOfDeposit(String dateOfDeposit) {
+        simpleFields.setField("dateOfDeposit",dateOfDeposit);
     }
 
     public List<OtherID> getOtherID() {
@@ -199,13 +314,6 @@ public class DataverseJavaObject {
 
     public void addPublication(RelatedPublication rp){this.publication.add(rp);}
 
-    public String getNotesText() {
-        return notesText;
-    }
-
-    public void setNotesText(String notesText) {
-        this.notesText = notesText;
-    }
 
     public List<String> getLanguage() {
         return language;
@@ -227,21 +335,6 @@ public class DataverseJavaObject {
 
     public void addProducer(Producer p){this.producer.add(p);}
 
-    public String getProductionDate() {
-        return productionDate;
-    }
-
-    public void setProductionDate(String productionDate) {
-        this.productionDate = productionDate;
-    }
-
-    public String getProductionPlace() {
-        return productionPlace;
-    }
-
-    public void setProductionPlace(String productionPlace) {
-        this.productionPlace = productionPlace;
-    }
 
     public List<Contributor> getContributor() {
         return contributor;
@@ -273,30 +366,6 @@ public class DataverseJavaObject {
 
     public void addDistributor(Distributor d){this.distributor.add(d);}
 
-    public String getDistributionDate() {
-        return distributionDate;
-    }
-
-    public void setDistributionDate(String distributionDate) {
-        this.distributionDate = distributionDate;
-    }
-
-    public String getDepositor() {
-        return depositor;
-    }
-
-    public void setDepositor(String depositor) {
-        this.depositor = depositor;
-    }
-
-    public String getDataOfDeposit() {
-        return dataOfDeposit;
-    }
-
-    public void setDataOfDeposit(String dataOfDeposit) {
-        this.dataOfDeposit = dataOfDeposit;
-    }
-
     public List<TimePeriodCovered> getTimePeriodCovered() {
         return timePeriodCovered;
     }
@@ -307,15 +376,15 @@ public class DataverseJavaObject {
 
     public void addTimePeriodCovered(TimePeriodCovered tpc){this.timePeriodCovered.add(tpc);}
 
-    public List<DateOfCollection> getDateOfCollection() {
-        return dateOfCollection;
+    public List<DateOfCollection> getDatesOfCollection() {
+        return datesOfCollection;
     }
 
-    public void setDateOfCollection(List<DateOfCollection> dateOfCollection) {
-        this.dateOfCollection = dateOfCollection;
+    public void setDatesOfCollection(List<DateOfCollection> datesOfCollection) {
+        this.datesOfCollection = datesOfCollection;
     }
 
-    public void addDateOfCollection(DateOfCollection dc){this.dateOfCollection.add(dc);}
+    public void addDateOfCollection(DateOfCollection dc){this.datesOfCollection.add(dc);}
 
     public List<String> getKindOfData() {
         return kindOfData;
@@ -387,30 +456,6 @@ public class DataverseJavaObject {
 
     public void addDataSource(String s){this.dataSources.add(s);}
 
-    public String getOriginOfSources() {
-        return originOfSources;
-    }
-
-    public void setOriginOfSources(String originOfSources) {
-        this.originOfSources = originOfSources;
-    }
-
-    public String getCharacteristicOfSources() {
-        return characteristicOfSources;
-    }
-
-    public void setCharacteristicOfSources(String characteristicOfSources) {
-        this.characteristicOfSources = characteristicOfSources;
-    }
-
-    public String getAccessToSources() {
-        return accessToSources;
-    }
-
-    public void setAccessToSources(String accessToSources) {
-        this.accessToSources = accessToSources;
-    }
-
     public List<GeographicCoverage> getGeographicCoverage() {
         return geographicCoverage;
     }
@@ -431,29 +476,12 @@ public class DataverseJavaObject {
 
     public void addGeographicBoundingBox(GeographicBoundingBox gbb){this.geographicBoundingBox.add(gbb);}
 
-    public String getLicense() {
-        return license;
+
+    public SimpleFields getSimpleFields() {
+        return simpleFields;
     }
 
-    public void setLicense(String license) {
-        this.license = license;
+    public void setSimpleFields(SimpleFields simpleFields) {
+        this.simpleFields = simpleFields;
     }
-
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public String getPublishDate() {
-        return publishDate;
-    }
-
-    public void setPublishDate(String publishDate) {
-        this.publishDate = publishDate;
-    }
-
 }

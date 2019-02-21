@@ -34,7 +34,7 @@ public class TopicClassification extends CompoundJSONField {
     }
 
     public void setTopicClassVocabURL(String topicClassVocabURL) {
-        this.topicClassVocabURL = topicClassVocabURL;
+        this.topicClassVocabURL = filterURL(topicClassVocabURL);
     }
 
     @Override
@@ -43,17 +43,31 @@ public class TopicClassification extends CompoundJSONField {
         String value = field.getString("value");
         switch (title) {
             case("topicClassValue"):
-                this.topicClassValue = value;
+                setTopicClassValue(value);
                 break;
             case("topicClassVocab"):
-                this.topicClassVocab = value;
+                setTopicClassVocab(value);
                 break;
             case("topicClassVocabURL"):
-                this.topicClassVocabURL = filterURL(value);
+                setTopicClassVocabURL(value);
                 break;
             default:
-                logger.error("Something wrong parsing Topic Classification. Title is %s", title);
-                System.out.println("Something went wrong with Topic Class parsing. Could be URL vs URI vs URl issue");
+                errorParsing(this.getClass().getName(),title);
+        }
+    }
+
+    @Override
+    protected String getSpecifiedField(String fieldName) {
+        switch (fieldName) {
+            case("topicClassValue"):
+                return getTopicClassValue();
+            case("topicClassVocab"):
+                return getTopicClassVocab();
+            case("topicClassVocabURL"):
+               return getTopicClassVocabURL();
+            default:
+                errorParsing(this.getClass().getName(),fieldName);
+                return "Bad field name";
         }
     }
 }

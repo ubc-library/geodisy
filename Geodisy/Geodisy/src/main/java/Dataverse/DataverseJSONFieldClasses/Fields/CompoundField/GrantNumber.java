@@ -33,14 +33,26 @@ public class GrantNumber extends CompoundJSONField {
         String value = field.getString("value");
         switch (title) {
             case ("grantNumberAgency"):
-                this.grantNumberAgency = value;
+                setGrantNumberAgency(value);
                 break;
             case ("grantNumberValue"):
-                this.grantNumberValue = value;
+                setGrantNumberValue(value);
                 break;
             default:
-                logger.error("Something wrong parsing Grant Number. Title is %s", title);
-                System.out.println("Something went wrong with Grant Number parsing");
+                errorParsing(this.getClass().getName(),title);
+        }
+    }
+
+    @Override
+    protected String getSpecifiedField(String title) {
+        switch (title) {
+            case ("grantNumberAgency"):
+                return getGrantNumberAgency();
+            case ("grantNumberValue"):
+                return getGrantNumberValue();
+            default:
+                errorGettingValue(this.getClass().getName(),title);
+                return "Bad field name";
         }
     }
 }

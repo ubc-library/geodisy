@@ -2,14 +2,15 @@ package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
 
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
+import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.Date;
 import org.json.JSONObject;
 
 public class Description extends CompoundJSONField {
-    private String dsDescriptionValue, dsDescriptionDate;
+    private String dsDescriptionValue;
+    private Date dsDescriptionDate;
 
     public Description() {
         this.dsDescriptionValue = "";
-        this.dsDescriptionDate = "";
     }
 
     public String getDsDescriptionValue() {
@@ -21,11 +22,11 @@ public class Description extends CompoundJSONField {
     }
 
     public String getDsDescriptionDate() {
-        return dsDescriptionDate;
+        return dsDescriptionDate.getDateAsString();
     }
 
     public void setDsDescriptionDate(String dsDescriptionDate) {
-        this.dsDescriptionDate = dsDescriptionDate;
+        this.dsDescriptionDate = new Date(dsDescriptionDate);
     }
 
 
@@ -35,14 +36,26 @@ public class Description extends CompoundJSONField {
         String value = field.getString("value");
         switch(title){
             case("dsDescriptionValue"):
-                this.dsDescriptionValue = value;
+                setDsDescriptionValue(value);
                 break;
             case("dsDescriptionDate"):
-                this.dsDescriptionDate = filterForDate(value);
+                setDsDescriptionDate(value);
                 break;
             default:
-                logger.error("Something wrong parsing Dataset Description. Title is %s", title);
-                System.out.println("Something wrong with Dataset Description parsing");
+                errorParsing(this.getClass().getName(),title);
+        }
+    }
+
+    @Override
+    protected String getSpecifiedField(String title) {
+        switch(title){
+            case("dsDescriptionValue"):
+                return getDsDescriptionValue();
+            case("dsDescriptionDate"):
+                return getDsDescriptionDate();
+            default:
+                errorGettingValue(this.getClass().getName(),title);
+                return "Bad field name";
         }
     }
 }

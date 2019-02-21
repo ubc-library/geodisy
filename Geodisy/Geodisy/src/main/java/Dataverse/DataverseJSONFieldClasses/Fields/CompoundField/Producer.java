@@ -44,7 +44,7 @@ public class Producer extends CompoundJSONField {
     }
 
     public void setProducerURL(String producerURL) {
-        this.producerURL = producerURL;
+        this.producerURL = filterURL(producerURL);
     }
 
     public String getProducerLogoURL() {
@@ -52,7 +52,7 @@ public class Producer extends CompoundJSONField {
     }
 
     public void setProducerLogoURL(String producerLogoURL) {
-        this.producerLogoURL = producerLogoURL;
+        this.producerLogoURL = filterURL(producerLogoURL);
     }
 
     @Override
@@ -61,23 +61,41 @@ public class Producer extends CompoundJSONField {
         String value = field.getString("value");
         switch (title) {
             case("producerName"):
-                this.producerName = value;
+                setProducerName(value);
                 break;
             case("producerAffiliation"):
-                this.producerAffiliation = value;
+                setProducerAffiliation(value);
                 break;
             case("producerAbbreviation"):
-                this.producerAbbreviation = value;
+                setProducerAbbreviation(value);
                 break;
             case("producerURL"):
-                this.producerURL = filterURL(value);
+                setProducerURL(value);
                 break;
             case("producerLogoURL"):
-                this.producerLogoURL = filterURL(value);
+                setProducerLogoURL(value);
                 break;
             default:
-                logger.error("Something wrong parsing Producer. Title is %s", title);
-                System.out.println("Something went wrong with Producer parsing");
+                errorParsing(this.getClass().getName(),title);
+        }
+    }
+
+    @Override
+    protected String getSpecifiedField(String title) {
+        switch (title) {
+            case("producerName"):
+                return getProducerName();
+            case("producerAffiliation"):
+                return getProducerAffiliation();
+            case("producerAbbreviation"):
+                return getProducerAbbreviation();
+            case("producerURL"):
+                return getProducerURL();
+            case("producerLogoURL"):
+                return getProducerLogoURL();
+            default:
+                errorGettingValue(this.getClass().getName(),title);
+                return "Bad field name";
         }
     }
 }

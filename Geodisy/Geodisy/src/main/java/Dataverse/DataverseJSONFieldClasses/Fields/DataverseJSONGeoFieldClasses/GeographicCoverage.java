@@ -52,21 +52,37 @@ public class GeographicCoverage extends CompoundJSONField {
         String value = field.getString("value");
         switch (title) {
             case("country"):
-                this.country = value;
+               setCountry(value);
                 break;
             case("state"):
-                this.state = value;
+                setState(value);
                 break;
             case("city"):
-                this.city = value;
+                setCity(value);
                 break;
             case("otherGeographicCoverage"):
-                this.otherGeographicCoverage = value;
+                setOtherGeographicCoverage(value);
                 break;
             default:
-                logger.error("Something wrong parsing Geographic Coverage. Title is %s", title);
-                System.out.println("Something went wrong with Geographic Coverage parsing");
+                errorParsing(this.getClass().getName(),title);
 
+        }
+    }
+
+    @Override
+    protected String getSpecifiedField(String fieldName) {
+        switch (fieldName) {
+            case ("country"):
+                return getCountry();
+            case ("state"):
+                return getState();
+            case ("city"):
+                return getCity();
+            case ("otherGeographicCoverage"):
+                return getOtherGeographicCoverage();
+            default:
+                errorParsing(this.getClass().getName(), fieldName);
+                return "Bad FieldName";
         }
     }
 }

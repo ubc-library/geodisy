@@ -44,7 +44,7 @@ public class Distributor extends CompoundJSONField {
     }
 
     public void setDistributorURL(String distributorURL) {
-        this.distributorURL = distributorURL;
+        this.distributorURL = filterURL(distributorURL);
     }
 
     public String getDistributorLogoURL() {
@@ -52,7 +52,7 @@ public class Distributor extends CompoundJSONField {
     }
 
     public void setDistributorLogoURL(String distributorLogoURL) {
-        this.distributorLogoURL = distributorLogoURL;
+        this.distributorLogoURL = filterURL(distributorLogoURL);
     }
 
     @Override
@@ -61,23 +61,41 @@ public class Distributor extends CompoundJSONField {
         String value = field.getString("value");
         switch(title){
             case("distributorName"):
-                this.distributorName = value;
+                setDistributorName(value);
                 break;
             case("distributorAffiliation"):
-                this.distributorAffiliation = value;
+                setDistributorAffiliation(value);
                 break;
             case("distributorAbbreviation"):
-                this.distributorAbbreviation = value;
+                setDistributorAbbreviation(value);
                 break;
             case("distributorURL"):
-                this.distributorURL = filterURL(value);
+                setDistributorURL(value);
                 break;
             case("distributorLogoURL"):
-                this.distributorLogoURL = filterURL(value);
+                setDistributorLogoURL(value);
                 break;
             default:
-                logger.error("Something wrong parsing Distributor. Title is %s", title);
-                System.out.println("Something went wrong with Distributor parsing");
+                errorParsing(this.getClass().getName(),title);
+        }
+    }
+
+    @Override
+    protected String getSpecifiedField(String title) {
+        switch(title){
+            case("distributorName"):
+                return getDistributorName();
+            case("distributorAffiliation"):
+                return getDistributorAffiliation();
+            case("distributorAbbreviation"):
+                return getDistributorAbbreviation();
+            case("distributorURL"):
+                return getDistributorURL();
+            case("distributorLogoURL"):
+                return getDistributorLogoURL();
+            default:
+                errorGettingValue(this.getClass().getName(),title);
+                return "Bad field name";
         }
     }
 }
