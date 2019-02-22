@@ -19,6 +19,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+
 /**
  * Java object structure to parse Dataverse Json into
  * May need to change field types for dates, URLs, and/or email addresses.
@@ -43,21 +45,18 @@ public class DataverseJavaObject {
     private List<Author> author;
     private List<DatasetContact> datasetContact;
     private List<Description> dsDescription;
-    private List<String> subject;
     private List<Keyword> keyword;
     private List<TopicClassification> topicClassification;
     private List<RelatedPublication> publication;
-    private List<String> language;
     private List<Producer> producer;
     private List<Contributor> contributor;
     private List<GrantNumber> grantNumber;
     private List<Distributor> distributor;
     private List<TimePeriodCovered> timePeriodCovered;
     private List<DateOfCollection> datesOfCollection;
-    private List<String> kindOfData;
     private List<Series> series;
     private List<Software> software;
-    private List<String> relatedMaterial, relatedDatasets, otherReferences, dataSources;
+    private List<String> relatedMaterial, relatedDatasets, otherReferences, dataSources, kindOfData, language, subject;
     private List<GeographicCoverage> geographicCoverage;
     private List<GeographicBoundingBox> geographicBoundingBox;
     protected Logger logger = LogManager.getLogger(DataverseParser.class);
@@ -92,14 +91,14 @@ public class DataverseJavaObject {
 
     public void setBaseFields(JSONObject current){
 
-        simpleFields.setField("alternativeURL",parseSimpleValue( current,"persistentUrl"));
-        simpleFields.setField("publicationDate", getValueDate(current,"publicationDate"));
-        simpleFields.setField("publisher", parseSimpleValue(current,"publisher"));
+        simpleFields.setField(ALT_URL,parseSimpleValue( current,"persistentUrl"));
+        simpleFields.setField(PUB_DATE, getValueDate(current,PUB_DATE));
+        simpleFields.setField(PUBLISHER, parseSimpleValue(current,PUBLISHER));
         current = current.getJSONObject("latestVersion");
-        simpleFields.setField("productionDate",getValueDate(current,"productionDate"));
-        simpleFields.setField("dateOfDeposit",getValueDate(current,"createTime"));
-        simpleFields.setField("distributionDate",getValueDate(current,"releaseTime"));
-        simpleFields.setField("license",parseSimpleValue(current,"license"));
+        simpleFields.setField(PROD_DATE,getValueDate(current,PROD_DATE));
+        simpleFields.setField(DEPOS_DATE,getValueDate(current,"createTime"));
+        simpleFields.setField(DIST_DATE,getValueDate(current,"releaseTime"));
+        simpleFields.setField(LICENSE,parseSimpleValue(current,LICENSE));
 
     }
 
@@ -127,111 +126,111 @@ public class DataverseJavaObject {
     }
 
     public String getTitle() {
-        return simpleFields.getField("title");
+        return simpleFields.getField(TITLE);
     }
 
     public void setTitle(String title) {
-        simpleFields.setField("title",title);
+        simpleFields.setField(TITLE,title);
     }
 
-    public String getSubtitle() { return simpleFields.getField("subtitle"); }
+    public String getSubtitle() { return simpleFields.getField(SUBJECT); }
 
-    public void setSubtitle(String subtitle) { simpleFields.setField("subtitle",subtitle);
+    public void setSubtitle(String subtitle) { simpleFields.setField(SUBJECT,subtitle);
     }
 
     public String getAlternativeTitle() {
-        return simpleFields.getField("alternativeTitle");
+        return simpleFields.getField(ALT_TITLE);
     }
 
     public void setAlternativeTitle(String alternativeTitle) {
-        simpleFields.setField("alternativeTitle",alternativeTitle);
+        simpleFields.setField(ALT_TITLE,alternativeTitle);
     }
 
     public String getAlternativeURL() {
-        return simpleFields.getField("alternativeURL");
+        return simpleFields.getField(ALT_URL);
     }
 
     public void setAlternativeURL(String alternativeURL) {
-        simpleFields.setField("alternativeURL",alternativeURL);
+        simpleFields.setField(ALT_URL,alternativeURL);
     }
 
     public String getLicense() {
-        return simpleFields.getField("license");
+        return simpleFields.getField(LICENSE);
     }
 
     public void setLicense(String license) {
-        simpleFields.setField("license",license);
+        simpleFields.setField(LICENSE,license);
     }
 
     public String getNotesText() {
-        return simpleFields.getField("noteText");
+        return simpleFields.getField(NOTES_TEXT);
     }
 
     public void setNotesText(String notesText) {
-        simpleFields.setField("notesText",notesText);
+        simpleFields.setField(NOTES_TEXT,notesText);
     }
 
     public String getProductionPlace() {
-        return simpleFields.getField("productionPlace");
+        return simpleFields.getField(PROD_PLACE);
     }
 
     public void setProductionPlace(String productionPlace) {
-        simpleFields.setField("productionPlace",productionPlace);
+        simpleFields.setField(PROD_PLACE,productionPlace);
     }
 
     public String getDepositor() {
-        return simpleFields.getField("depositor");
+        return simpleFields.getField(DEPOSITOR);
     }
 
     public void setDepositor(String depositor) {
-        simpleFields.setField("depositor",depositor);
+        simpleFields.setField(DEPOSITOR,depositor);
     }
 
     public String getOriginOfSources() {
-        return simpleFields.getField("originOfSources");
+        return simpleFields.getField(ORIG_OF_SOURCES);
     }
 
     public void setOriginOfSources(String originOfSources) {
-        simpleFields.setField("originOfSources", originOfSources);
+        simpleFields.setField(ORIG_OF_SOURCES, originOfSources);
     }
 
     public String getCharacteristicOfSources() {
-        return simpleFields.getField("characteristicsOfSources");
+        return simpleFields.getField(CHAR_OF_SOURCES);
     }
 
     public void setCharacteristicOfSources(String characteristicOfSources) {
-        simpleFields.setField("characteristicOfSources",characteristicOfSources);
+        simpleFields.setField(CHAR_OF_SOURCES,characteristicOfSources);
     }
 
     public String getAccessToSources() {
-        return simpleFields.getField("accessToSources");
+        return simpleFields.getField(ACCESS_TO_SOURCES);
     }
 
     public void setAccessToSources(String accessToSources) {
-        simpleFields.setField("accessToSources", accessToSources);
+        simpleFields.setField(ACCESS_TO_SOURCES, accessToSources);
     }
 
-    public String getProductionDate() { return simpleFields.getField("productionDate");
+    public String getProductionDate() { return simpleFields.getField(PROD_DATE);
     }
 
     public void setProductionDate(String productionDate) {
-        simpleFields.setField("productionDate", productionDate);
+        simpleFields.setField(PROD_DATE, productionDate);
     }
 
     public String getDistributionDate() {
-        return simpleFields.getField("distributionDate");
+        return simpleFields.getField(DIST_DATE);
     }
 
     public void setDistributionDate(String distributionDate) {
-        simpleFields.setField("distributionDate", distributionDate);
+        simpleFields.setField(DIST_DATE, distributionDate);
     }
 
     public String getDateOfDeposit() {
-        return simpleFields.getField("dateOfDeposit");
+        return simpleFields.getField(DEPOS_DATE);
     }
 
     public void setDateOfDeposit(String dateOfDeposit) {
-        simpleFields.setField("dateOfDeposit",dateOfDeposit);
+        simpleFields.setField(DEPOS_DATE,dateOfDeposit);
     }
 
     public List<OtherID> getOtherID() {

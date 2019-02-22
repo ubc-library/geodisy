@@ -5,6 +5,7 @@ public class DVFieldNames {
     //General Field Names
     public final static String TYPE_NAME = "typeName";
     public final static String VAL = "value";
+
     //Simple Field Names
     public final static String ACCESS_TO_SOURCES = "accessToSources";
     public final static String ALT_TITLE = "alternativeTitle";
@@ -23,6 +24,15 @@ public class DVFieldNames {
     public final static String TITLE = "title";
     public final static String SUBTITLE = "subtitle";
 
+    //String List Field Names
+    public final static String RELATED_MATERIAL = "relatedMaterial";
+    public final static String RELATED_DATASETS = "relatedDatasets";
+    public final static String OTHER_REFERENCES = "otherReferences";
+    public final static String DATA_SOURCE = "dataSource";
+    public final static String KIND_OF_DATA = "kindOfData";
+    public final static String LANGUAGE = "language";
+    public final static String SUBJECT = "subject";
+
     //Geospatial Bounding Box Field Names
     public final static String WEST_LONG = "westLongitude";
     public final static String EAST_LONG = "eastLongitude";
@@ -36,16 +46,19 @@ public class DVFieldNames {
     public final static String OTHER_GEO_COV = "otherGeographicCoverage";
 
     //Author Field Names
+    public final static String AUTHOR = "author";
     public final static String AUTHOR_AFFIL = "authorAffiliation";
     public final static String AUTHOR_ID = "authorIdentifier";
     public final static String AUTHOR_ID_SCHEME = "authorIdentifierScheme";
     public final static String AUTHOR_NAME = "authorName";
 
     //Contributor Field Names
+    public final static String CONTRIB = "contributor";
     public final static String CONTRIB_NAME = "contributorName";
     public final static String CONTRIB_TYPE = "contributorType";
 
     //Dataset Contact Field Names
+    public final static String DS_CONTACT = "datasetContact";
     public final static String DS_CONTACT_AFFIL = "datasetContactAffiliation";
     public final static String DS_CONTACT_EMAIL = "datasetContactEmail";
     public final static String DS_CONTACT_NAME = "datasetContactName";
@@ -55,10 +68,12 @@ public class DVFieldNames {
     public final static String DATE_OF_COLLECT_END = "dateOfCollectionEnd";
 
     //Description Field Names
+    public final static String DS_DESCRIPT = "dsDescription";
     public final static String DS_DESCRIPT_DATE = "dsDescriptionDate";
     public final static String DS_DESCRIPT_VAL = "dsDescriptionValue";
 
     //Distribution Field Names
+    public final static String DISTRIB = "distributor";
     public final static String DISTRIB_ABRIV = "distributorAbbreviation";
     public final static String DISTRIB_AFFIL = "distributorAffiliation";
     public final static String DISTRIB_LOGO_URL = "distributorLogoURL";
@@ -66,19 +81,23 @@ public class DVFieldNames {
     public final static String DISTRIB_URL = "distributorURL";
 
     //Grant Number Field Names
+    public final static String GRANT_NUM = "grantNumber";
     public final static String GRANT_NUM_AGENCY = "grantNumberAgency";
     public final static String GRANT_NUM_VAL = "grantNumberValue";
 
     //Keyword Field Names
+    public final static String KEYWORD = "keyword";
     public final static String KEYWORD_VAL = "keywordValue";
     public final static String KEYWORD_VOCAB = "keywordVocabulary";
     public final static String KEYWORD_VOCAB_URL = "keywordVocabularyURL";
 
     //Other ID Field Names
+    public final static String OTHER_ID = "otherId";
     public final static String OTHER_ID_AGENCY = "otherIdAgency";
     public final static String OTHER_ID_VAL = "otherIdValue";
 
     //Producer Field Names
+    public final static String PRODUCER = "producer";
     public final static String PROD_ABBREV = "producerAbbreviation";
     public final static String PROD_AFFIL = "producerAffiliation";
     public final static String PROD_LOGO_URL = "producerLogoURL";
@@ -86,24 +105,29 @@ public class DVFieldNames {
     public final static String PROD_URL = "producerURL";
 
     //Related Publication Field Names
+    public final static String PUBLICATION = "publication";
     public final static String PUB_CITE = "publicationCitation";
     public final static String PUB_ID_NUM = "publicationIDNumber";
     public final static String PUB_ID_TYPE = "publicationIDType";
     public final static String PUB_URL = "publicationURL";
 
     //Series Field Names
+    public final static String SERIES = "series";
     public final static String SERIES_INFO = "seriesInformation";
     public final static String SERIES_NAME = "seriesName";
 
     //Software Field Names
+    public final static String SOFTWARE = "software";
     public final static String SOFTWARE_NAME = "softwareName";
     public final static String SOFTWARE_VERSION = "softwareVersion";
 
     //Time Period Covered Field Names
+    public final static String TIME_PER_COV = "timePeriodCovered";
     public final static String TIME_PER_COV_START = "timePeriodCoverStart";
     public final static String TIME_PER_COV_END = "timePeriodCoverEnd";
 
     //Topic Classification Field Names
+    public final static String TOPIC_CLASS = "topicClassification";
     public final static String TOPIC_CLASS_VAL = "topicClassValue";
     public final static String TOPIC_CLASS_VOCAB = "topicClassVocab";
     public final static String TOPIC_CLASS_VOCAB_URL = "topicClassVocabURL";

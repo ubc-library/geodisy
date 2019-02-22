@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DataverseParserTest {
@@ -32,16 +33,16 @@ public class DataverseParserTest {
 
     private DataverseJavaObject getValues(DataverseJavaObject dataverseJavaObject) {
         SimpleFields sf = new SimpleFields();
-        sf.setField("alternativeURL","https://doi.org/10.5072/FK2/OVQBMK");
-        sf.setField("publisher","Demo Dataverse");
-        sf.setField("publicationDate","2015-07-13");
-        sf.setField("productionDate","Production Date");
-        sf.setField("distributionDate","2015-07-13T11:02:21Z");
-        sf.setField("dateOfDeposit","2015-07-13T10:59:33Z");
-        sf.setField("license","CC0");
-        sf.setField("title","Shapefile Dataset");
-        sf.setField("depositor","Quigley, Elizabeth");
-        sf.setField("dateOfDeposit","2015-07-13");
+        sf.setField(ALT_URL,"https://doi.org/10.5072/FK2/OVQBMK");
+        sf.setField(PUBLISHER,"Demo Dataverse");
+        sf.setField(PUB_DATE,"2015-07-13");
+        sf.setField(PROD_DATE,"Production Date");
+        sf.setField(DIST_DATE,"2015-07-13T11:02:21Z");
+        sf.setField(DEPOS_DATE,"2015-07-13T10:59:33Z");
+        sf.setField(LICENSE,"CC0");
+        sf.setField(TITLE,"Shapefile Dataset");
+        sf.setField(DEPOSITOR,"Quigley, Elizabeth");
+        sf.setField(DEPOS_DATE,"2015-07-13");
         dataverseJavaObject.setSimpleFields(sf);
         Author a = new Author();
         a.setAuthorName("Quigley, Elizabeth");

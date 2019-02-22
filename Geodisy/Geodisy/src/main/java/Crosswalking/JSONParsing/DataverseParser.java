@@ -12,6 +12,8 @@ import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+
 
 public class DataverseParser {
 
@@ -36,86 +38,86 @@ public class DataverseParser {
         JSONArray currentArray = current.getJSONObject("latestVersion").getJSONObject("metadataBlocks").getJSONObject("citation").getJSONArray("fields");
         for(Object o: currentArray){
             current = (JSONObject) o;
-            Object valueObject = current.get("value");
-            String label = current.getString("typeName");
+            Object valueObject = current.get(VAL);
+            String label = current.getString(TYPE_NAME);
             if(valueObject instanceof JSONArray){
                 JSONArray ja = (JSONArray) valueObject;
                 switch(label){
-                    case("author"):
+                    case AUTHOR:
                         Author a = new Author();
                         dJO.addAuthor((Author) a.parseCompoundData(ja));
                         break;
-                    case("otherId"):
+                    case OTHER_ID:
                         OtherID otherID = new OtherID();
                         dJO.addOtherID((OtherID) otherID.parseCompoundData(ja));
                         break;
-                    case("datasetContact"):
+                    case DS_CONTACT:
                         DatasetContact dc = new DatasetContact();
                         dJO.addDatasetContact((DatasetContact) dc.parseCompoundData(ja));
                         break;
-                    case("dsDescription"):
+                    case DS_DESCRIPT:
                         Description d =  new Description();
                         dJO.addDsDescription((Description) d.parseCompoundData(ja));
                         break;
-                    case("keyword"):
+                    case KEYWORD:
                         Keyword k = new Keyword();
                         dJO.addKeyword((Keyword) k.parseCompoundData(ja));
                         break;
-                    case("topicClassification"):
+                    case TOPIC_CLASS:
                         TopicClassification tc = new TopicClassification();
                         dJO.addTopicClassification((TopicClassification) tc.parseCompoundData(ja));
                         break;
-                    case("publication"):
+                    case PUBLICATION:
                         RelatedPublication rp = new RelatedPublication();
                         dJO.addPublication((RelatedPublication) rp.parseCompoundData(ja));
                         break;
-                    case("producer"):
+                    case PRODUCER:
                         Producer p = new Producer();
                         dJO.addProducer((Producer) p.parseCompoundData(ja));
                         break;
-                    case("contributor"):
+                    case CONTRIB:
                         Contributor c = new Contributor();
                         dJO.addContributor((Contributor) c.parseCompoundData(ja));
                         break;
-                    case("grantNumber"):
+                    case GRANT_NUM:
                         GrantNumber gn = new GrantNumber();
                         dJO.addGrantNumber((GrantNumber) gn.parseCompoundData(ja));
                         break;
-                    case("distributor"):
+                    case DISTRIB:
                         Distributor dt = new Distributor();
                         dJO.addDistributor((Distributor) dt.parseCompoundData(ja));
                         break;
-                    case("timePeriodCovered"):
+                    case TIME_PER_COV:
                         TimePeriodCovered tpc = new TimePeriodCovered();
                         dJO.addTimePeriodCovered((TimePeriodCovered) tpc.parseCompoundData(ja));
                         break;
-                    case("series"):
+                    case SERIES:
                         Series s = new Series();
                         dJO.addSeries((Series) s.parseCompoundData(ja));
                         break;
-                    case("software"):
+                    case SOFTWARE:
                         Software sw = new Software();
                         dJO.addSoftware((Software) sw.parseCompoundData(ja));
                         break;
-                        case("dataSource"):
+                        case DATA_SOURCE:
                         dJO.setDataSources(getList(ja));
                         break;
-                    case("kindOfData"):
+                    case KIND_OF_DATA:
                         dJO.setKindOfData(getList(ja));
                         break;
-                    case("language"):
+                    case LANGUAGE:
                         dJO.setLanguage(getList(ja));
                         break;
-                    case("otherReference"):
+                    case OTHER_REFERENCES:
                         dJO.setOtherReferences(getList(ja));
                         break;
-                    case("relatedDataset"):
+                    case RELATED_DATASETS:
                         dJO.setRelatedDatasets(getList(ja));
                         break;
-                    case("relatedMaterial"):
+                    case RELATED_MATERIAL:
                         dJO.setRelatedMaterial(getList(ja));
                         break;
-                    case("subject"):
+                    case SUBJECT:
                         dJO.setSubject(getList(ja));
                         break;
                     default:
@@ -125,9 +127,7 @@ public class DataverseParser {
             }
             else {
                 String value = valueObject.toString();
-                SimpleFields sf = dJO.getSimpleFields();
-                sf.setField(value, label);
-                dJO.setSimpleFields(sf);
+                dJO.getSimpleFields().setField(label, value);
             }
         }
 
