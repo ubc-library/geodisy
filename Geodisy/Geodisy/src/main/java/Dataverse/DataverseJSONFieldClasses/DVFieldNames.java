@@ -5,6 +5,7 @@ public class DVFieldNames {
     //General Field Names
     public final static String TYPE_NAME = "typeName";
     public final static String VAL = "value";
+    public final static String DV_ID = "entity_id";
 
     //Simple Field Names
     public final static String ACCESS_TO_SOURCES = "accessToSources";
