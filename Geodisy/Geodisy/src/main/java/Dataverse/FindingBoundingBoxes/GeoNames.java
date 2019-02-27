@@ -29,7 +29,7 @@ public class GeoNames implements FindBoundBox {
     }
 
     @Override
-    public BoundingBox getDVBoundingBox(String country) {
+    public Location getDVBoundingBox(String country) {
         String countryCode = countries.get(country.toUpperCase());
         //searchCriteria.setCountryCode();
 
@@ -38,17 +38,17 @@ public class GeoNames implements FindBoundBox {
     }
 
     @Override
-    public BoundingBox getDVBoundingBox(String country, String state) {
+    public GeographicUnit getDVBoundingBox(String country, String state) {
         return null;
     }
 
     @Override
-    public BoundingBox getDVBoundingBox(String country, String state, String city) {
+    public GeographicUnit getDVBoundingBox(String country, String state, String city) {
         return null;
     }
 
     @Override
-    public BoundingBox getDVBoundingBox(String country, String state, String city, String other) {
+    public GeographicUnit getDVBoundingBox(String country, String state, String city, String other) {
         return null;
     }
 

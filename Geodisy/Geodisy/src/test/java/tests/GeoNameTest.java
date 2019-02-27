@@ -18,11 +18,11 @@ public class GeoNameTest {
     private ToponymSearchCriteria searchCriteria;
     @Test
     public void testGeoNameLookup(){
-        String countryBoundingBoxesCSV = "/Geodisy/country-boundingboxes.csv";
+        String countryBoundingBoxesCSV = "./country-boundingboxes.csv";
         BufferedReader br = null;
         String line = "";
         String csvSplitBy = ",";
-        List<Country> countries = new LinkedList<>();
+        HashMap <String, Country> countries = new HashMap<>();
         try {
 
             br = new BufferedReader(new FileReader(countryBoundingBoxesCSV));
@@ -31,7 +31,7 @@ public class GeoNameTest {
 
                 // use comma as separator
                 String[] countryLine = line.split(csvSplitBy);
-                if(countryLine[0]=="country")
+                if(countryLine[0].matches("country"))
                     continue;
                 country = new Country(countryLine[0]);
                 country.setCountryCode(countryLine[1]);
@@ -39,6 +39,7 @@ public class GeoNameTest {
                 country.setLatMin(countryLine[3]);
                 country.setLongMax(countryLine[4]);
                 country.setLatMax(countryLine[5]);
+                countries.put(country.getName(),country);
 
 
             }
