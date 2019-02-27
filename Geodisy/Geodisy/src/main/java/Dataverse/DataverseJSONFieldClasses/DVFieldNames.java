@@ -92,7 +92,7 @@ public class DVFieldNames {
     public final static String KEYWORD_VOCAB = "keywordVocabulary";
     public final static String KEYWORD_VOCAB_URL = "keywordVocabularyURL";
 
-    //Other ID Field Names
+    //OtherLocation ID Field Names
     public final static String OTHER_ID = "otherId";
     public final static String OTHER_ID_AGENCY = "otherIdAgency";
     public final static String OTHER_ID_VAL = "otherIdValue";

@@ -34,7 +34,7 @@ import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
  * License : String : license
  * Publisher : String : publisher
  * Publication Date : String : Publication Date
- * Other ID : OtherID : otherID
+ * OtherLocation ID : OtherID : otherID
  *
  *
  */
