@@ -6,11 +6,16 @@ import org.geonames.ToponymSearchCriteria;
 import org.geonames.ToponymSearchResult;
 import org.geonames.WebService;
 import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.*;
 import java.util.*;
 
 public class GeoNameTest {
@@ -18,46 +23,6 @@ public class GeoNameTest {
     private ToponymSearchCriteria searchCriteria;
     @Test
     public void testGeoNameLookup(){
-        String countryBoundingBoxesCSV = "./country-boundingboxes.csv";
-        BufferedReader br = null;
-        String line = "";
-        String csvSplitBy = ",";
-        HashMap <String, Country> countries = new HashMap<>();
-        try {
-
-            br = new BufferedReader(new FileReader(countryBoundingBoxesCSV));
-            Country country;
-            while ((line = br.readLine()) != null) {
-
-                // use comma as separator
-                String[] countryLine = line.split(csvSplitBy);
-                if(countryLine[0].matches("country"))
-                    continue;
-                country = new Country(countryLine[0]);
-                country.setCountryCode(countryLine[1]);
-                country.setLongMin(countryLine[2]);
-                country.setLatMin(countryLine[3]);
-                country.setLongMax(countryLine[4]);
-                country.setLatMax(countryLine[5]);
-                countries.put(country.getName(),country);
-
-
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
         WebService.setUserName("geodisy"); // add your username here
         getCountryCodes();
         searchCriteria = new ToponymSearchCriteria();
@@ -76,6 +41,8 @@ public class GeoNameTest {
 
         }
 
+
+
     private void getCountryCodes() {
         String[] countryCodes = Locale.getISOCountries();
         for (String iso : countryCodes) {
@@ -84,4 +51,6 @@ public class GeoNameTest {
         }
         System.out.println("hi");
     }
+
+
 }

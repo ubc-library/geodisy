@@ -1,15 +1,17 @@
 package Dataverse.FindingBoundingBoxes;
 
+import org.apache.commons.text.WordUtils;
+
 public class Location implements GeographicUnit {
     protected String name;
-    protected double latMin = 361;
-    protected double latMax = 361;
-    protected double longMin = 361;
-    protected double longMax = 361;
+    protected double latSouth = 361;
+    protected double latNorth = 361;
+    protected double longWest = 361;
+    protected double longEast = 361;
     protected final String NO_NAME= "no name";
 
     public Location(String name) {
-        this.name = name;
+        this.name = WordUtils.capitalizeFully(name);
     }
 
     public String getName() {
@@ -22,50 +24,50 @@ public class Location implements GeographicUnit {
         this.name = name;
     }
 
-    public double getLatMin() {
-        return latMin;
+    public double getLatSouth() {
+        return latSouth;
     }
 
-    public void setLatMin(double latMin) {
-        this.latMin = latMin;
+    public void setLatSouth(double latSouth) {
+        this.latSouth = latSouth;
     }
 
     public void setLatMin(String latMin) {
-        this.latMin = Double.parseDouble(latMin);
+        this.latSouth = Double.parseDouble(latMin);
     }
-    public double getLatMax() {
-        return latMax;
+    public double getLatNorth() {
+        return latNorth;
     }
 
-    public void setLatMax(double latMax) {
-        this.latMax = latMax;
+    public void setLatNorth(double latNorth) {
+        this.latNorth = latNorth;
     }
 
     public void setLatMax(String latMax) {
-        this.latMax = Double.parseDouble(latMax);
+        this.latNorth = Double.parseDouble(latMax);
     }
 
-    public double getLongMin() {
-        return longMin;
+    public double getLongWest() {
+        return longWest;
     }
 
-    public void setLongMin(double longMin) {
-        this.longMin = longMin;
+    public void setLongWest(double longWest) {
+        this.longWest = longWest;
     }
 
     public void setLongMin(String longMin) {
-        this.longMin = Double.parseDouble(longMin);
+        this.longWest = Double.parseDouble(longMin);
     }
-    public double getLongMax() {
-        return longMax;
+    public double getLongEast() {
+        return longEast;
     }
 
-    public void setLongMax(double longMax) {
-        this.longMax = longMax;
+    public void setLongEast(double longEast) {
+        this.longEast = longEast;
     }
 
     public void setLongMax(String longMax) {
-        this.longMax = Double.parseDouble(longMax);
+        this.longEast = Double.parseDouble(longMax);
     }
 
 

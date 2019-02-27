@@ -16,32 +16,32 @@ public class City extends Location {
     }
 
     @Override
-    public double getLatMin() {
-        if(latMin != 361)
-            return latMin;
+    public double getLatSouth() {
+        if(latSouth != 361)
+            return latSouth;
         else
-            return province.getLatMin();
+            return province.getLatSouth();
     }
     @Override
-    public double getLatMax() {
-        if(latMax != 361)
-            return latMax;
+    public double getLatNorth() {
+        if(latNorth != 361)
+            return latNorth;
         else
-            return province.getLatMax();
+            return province.getLatNorth();
     }
     @Override
-    public double getLongMin() {
-        if(longMin != 361)
-            return longMin;
+    public double getLongWest() {
+        if(longWest != 361)
+            return longWest;
         else
-            return province.getLongMin();
+            return province.getLongWest();
     }
 
     @Override
-    public double getLongMax() {
-        if(longMax != 361)
-            return longMax;
+    public double getLongEast() {
+        if(longEast != 361)
+            return longEast;
         else
-            return province.getLongMax();
+            return province.getLongEast();
     }
 }

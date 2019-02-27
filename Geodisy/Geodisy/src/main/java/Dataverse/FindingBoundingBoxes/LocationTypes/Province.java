@@ -1,7 +1,6 @@
 package Dataverse.FindingBoundingBoxes.LocationTypes;
 
 import Dataverse.FindingBoundingBoxes.Location;
-import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
 
 public class Province extends Location {
     private Country country;
@@ -11,32 +10,32 @@ public class Province extends Location {
         country = new Country(countryName);
     }
     @Override
-    public double getLatMin() {
-        if(latMin != 361)
-            return latMin;
+    public double getLatSouth() {
+        if(latSouth != 361)
+            return latSouth;
         else
-            return country.getLatMin();
+            return country.getLatSouth();
     }
     @Override
-    public double getLatMax() {
-        if(latMax != 361)
-            return latMax;
+    public double getLatNorth() {
+        if(latNorth != 361)
+            return latNorth;
         else
-            return country.getLatMax();
+            return country.getLatNorth();
     }
     @Override
-    public double getLongMin() {
-        if(longMin != 361)
-            return longMin;
+    public double getLongWest() {
+        if(longWest != 361)
+            return longWest;
         else
-            return country.getLongMin();
+            return country.getLongWest();
     }
 
     @Override
-    public double getLongMax() {
-        if(longMax != 361)
-            return longMax;
+    public double getLongEast() {
+        if(longEast != 361)
+            return longEast;
         else
-            return country.getLongMax();
+            return country.getLongEast();
     }
 }

@@ -1,7 +1,6 @@
 package Dataverse.FindingBoundingBoxes.LocationTypes;
 
 import Dataverse.FindingBoundingBoxes.Location;
-import Dataverse.FindingBoundingBoxes.LocationTypes.City;
 
 public class OtherLocation extends Location {
     private City city;
@@ -26,34 +25,34 @@ public class OtherLocation extends Location {
     }
 
     @Override
-    public double getLatMin() {
-        if(latMin == 361)
-            return city.getLatMin();
+    public double getLatSouth() {
+        if(latSouth == 361)
+            return city.getLatSouth();
         else
-            return latMin;
+            return latSouth;
     }
 
     @Override
-    public double getLatMax() {
-        if(latMax == 361)
-            return city.getLatMax();
+    public double getLatNorth() {
+        if(latNorth == 361)
+            return city.getLatNorth();
         else
-            return latMax;
+            return latNorth;
     }
 
     @Override
-    public double getLongMin() {
-        if(longMin == 361)
-            return city.getLongMin();
+    public double getLongWest() {
+        if(longWest == 361)
+            return city.getLongWest();
         else
-            return longMin;
+            return longWest;
     }
 
     @Override
-    public double getLongMax() {
-        if(longMin == 361)
-            return city.getLongMax();
+    public double getLongEast() {
+        if(longWest == 361)
+            return city.getLongEast();
         else
-            return longMax;
+            return longEast;
     }
 }

@@ -25,31 +25,31 @@ public class Country extends Location {
     }
 
     @Override
-    public double getLatMin() {
-        if(latMin == 361)
-            logger.error("No latMin for %s, returning 361", name);
-        return latMin;
+    public double getLatSouth() {
+        if(latSouth == 361)
+            logger.error("No latSouth for %s, returning 361", name);
+        return latSouth;
     }
 
     @Override
-    public double getLatMax() {
-        if(latMax == 361)
-            logger.error("No latMax for %s, returning 361", name);
+    public double getLatNorth() {
+        if(latNorth == 361)
+            logger.error("No latNorth for %s, returning 361", name);
 
-        return latMax;
+        return latNorth;
     }
 
     @Override
-    public double getLongMin() {
-        if(longMin == 361)
-            logger.error("No longMin for %s, returning 361", name);
-        return longMin;
+    public double getLongWest() {
+        if(longWest == 361)
+            logger.error("No longWest for %s, returning 361", name);
+        return longWest;
     }
 
     @Override
-    public double getLongMax() {
-        if(longMin == 361)
+    public double getLongEast() {
+        if(longWest == 361)
             logger.error("No logMax for %s, returning 361", name);
-        return longMax;
+        return longEast;
     }
 }
