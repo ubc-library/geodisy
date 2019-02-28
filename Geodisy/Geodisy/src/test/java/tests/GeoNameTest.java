@@ -12,10 +12,13 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 public class GeoNameTest {
@@ -23,24 +26,33 @@ public class GeoNameTest {
     private ToponymSearchCriteria searchCriteria;
     @Test
     public void testGeoNameLookup(){
-        WebService.setUserName("geodisy"); // add your username here
-        getCountryCodes();
-        searchCriteria = new ToponymSearchCriteria();
-        searchCriteria.setQ("zurich");
-        ToponymSearchResult searchResult = null;
+        String city = "Philadelphia";
+        String state = "Mississippi";
+        String country = "USA";
+
+        String bbString = getBBString(country,state,city);
+        System.out.println(bbString);
+        }
+
+    private String getBBString(String country, String state, String city) {
+        String baseQuery = "https://nominatim.openstreetmap.org/search?q=";
+        String suffix = "&format=xml";
         try {
-            searchResult = WebService.search(searchCriteria);
-        } catch (Exception e) {
+            String url = baseQuery+city+",%2C" + state +",%2C" + country + suffix;
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(new URL(url).openStream());
+            NodeList nodes = doc.getElementsByTagName("place");
+            Node node = nodes.item(0);
+            Element element = (Element) node;
+            return element.getAttribute("boundingbox");
+
+
+        } catch (IOException | ParserConfigurationException | SAXException e) {
             e.printStackTrace();
         }
-        for (Toponym toponym : searchResult.getToponyms()) {
-            System.out.println(toponym.getName()+" "+ toponym.getCountryName());
-        }
-
-
-
-        }
-
+        return "";
+    }
 
 
     private void getCountryCodes() {

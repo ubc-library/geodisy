@@ -1,21 +1,24 @@
 package Dataverse.FindingBoundingBoxes;
 
+import Crosswalking.JSONParsing.DataverseParser;
+import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.apache.commons.text.WordUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Location implements GeographicUnit {
     protected String name;
-    protected double latSouth = 361;
-    protected double latNorth = 361;
-    protected double longWest = 361;
-    protected double longEast = 361;
+    protected BoundingBox boundingBox;
     protected final String NO_NAME= "no name";
+    Logger logger = LogManager.getLogger(DataverseParser.class);
+
 
     public Location(String name) {
         this.name = WordUtils.capitalizeFully(name);
     }
 
     public String getName() {
-        if(name == NO_NAME)
+        if(name.matches(NO_NAME))
             return "";
         return name;
     }
@@ -25,49 +28,61 @@ public class Location implements GeographicUnit {
     }
 
     public double getLatSouth() {
-        return latSouth;
+        double answer= boundingBox.getLatSouth();
+        if(answer==361)
+            logger.error("No latSouth for %s, returning 361", name);
+        return answer;
     }
 
     public void setLatSouth(double latSouth) {
-        this.latSouth = latSouth;
+        boundingBox.setLatSouth(latSouth);
     }
 
-    public void setLatMin(String latMin) {
-        this.latSouth = Double.parseDouble(latMin);
+    public void setLatSouth(String latSouth) {
+        boundingBox.setLatSouth(Double.parseDouble(latSouth));
     }
     public double getLatNorth() {
-        return latNorth;
+        double answer= boundingBox.getLatNorth();
+        if(answer==361)
+            logger.error("No latNorth for %s, returning 361", name);
+        return answer;
     }
 
     public void setLatNorth(double latNorth) {
-        this.latNorth = latNorth;
+       boundingBox.setLatNorth(latNorth);
     }
 
-    public void setLatMax(String latMax) {
-        this.latNorth = Double.parseDouble(latMax);
+    public void setLatNorth(String latNorth) {
+        boundingBox.setLatNorth(Double.parseDouble(latNorth));
     }
 
     public double getLongWest() {
-        return longWest;
+        double answer= boundingBox.getLongWest();
+        if(answer==361)
+            logger.error("No longWest for %s, returning 361", name);
+        return answer;
     }
 
     public void setLongWest(double longWest) {
-        this.longWest = longWest;
+        boundingBox.setLongWest(longWest);
     }
 
-    public void setLongMin(String longMin) {
-        this.longWest = Double.parseDouble(longMin);
+    public void setLongMin(String longWest) {
+        boundingBox.setLongWest(Double.parseDouble(longWest));
     }
     public double getLongEast() {
-        return longEast;
+        double answer= boundingBox.getLongEast();
+        if(answer==361)
+            logger.error("No longEast for %s, returning 361", name);
+        return answer;
     }
 
     public void setLongEast(double longEast) {
-        this.longEast = longEast;
+        boundingBox.setLongEast(longEast);
     }
 
-    public void setLongMax(String longMax) {
-        this.longEast = Double.parseDouble(longMax);
+    public void setLongMax(String longEast) {
+        boundingBox.setLongEast(Double.parseDouble(longEast));
     }
 
 

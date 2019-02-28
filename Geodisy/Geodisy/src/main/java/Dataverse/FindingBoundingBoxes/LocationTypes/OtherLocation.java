@@ -26,33 +26,37 @@ public class OtherLocation extends Location {
 
     @Override
     public double getLatSouth() {
-        if(latSouth == 361)
+        double answer = boundingBox.getLatSouth();
+        if(answer == 361)
             return city.getLatSouth();
         else
-            return latSouth;
+            return answer;
     }
 
     @Override
     public double getLatNorth() {
-        if(latNorth == 361)
+        double answer = boundingBox.getLatNorth();
+        if(answer == 361)
             return city.getLatNorth();
         else
-            return latNorth;
+            return answer;
     }
 
     @Override
     public double getLongWest() {
-        if(longWest == 361)
+        double answer = boundingBox.getLongWest();
+        if(answer == 361)
             return city.getLongWest();
         else
-            return longWest;
+            return answer;
     }
 
     @Override
     public double getLongEast() {
-        if(longWest == 361)
+        double answer = boundingBox.getLongEast();
+        if(answer == 361)
             return city.getLongEast();
         else
-            return longEast;
+            return answer;
     }
 }

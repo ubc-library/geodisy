@@ -17,30 +17,34 @@ public class City extends Location {
 
     @Override
     public double getLatSouth() {
-        if(latSouth != 361)
-            return latSouth;
+        double answer = boundingBox.getLatSouth();
+        if(answer != 361)
+            return answer;
         else
             return province.getLatSouth();
     }
     @Override
     public double getLatNorth() {
-        if(latNorth != 361)
-            return latNorth;
+        double answer = boundingBox.getLatNorth();
+        if(answer != 361)
+            return answer;
         else
             return province.getLatNorth();
     }
     @Override
     public double getLongWest() {
-        if(longWest != 361)
-            return longWest;
+        double answer = boundingBox.getLongWest();
+        if(answer != 361)
+            return answer;
         else
             return province.getLongWest();
     }
 
     @Override
     public double getLongEast() {
-        if(longEast != 361)
-            return longEast;
+        double answer = boundingBox.getLongEast();
+        if(answer != 361)
+            return answer;
         else
             return province.getLongEast();
     }
