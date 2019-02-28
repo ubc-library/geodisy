@@ -1,6 +1,7 @@
 package Dataverse.FindingBoundingBoxes;
 
-import javafx.geometry.BoundingBox;
+
+import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.geonames.ToponymSearchCriteria;
 import org.geonames.WebService;
 import org.w3c.dom.Document;
@@ -18,14 +19,14 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * Accesses OpenStreetMap.org to try and generate a bounding box for the dataset
+ */
 public class OpenStreetMap implements FindBoundBox {
     private ToponymSearchCriteria searchCriteria;
     private Map<String, String> countries = new HashMap<String, String>();
 
     public OpenStreetMap() {
-        WebService.setUserName("geodisy");
-        searchCriteria = new ToponymSearchCriteria();
-
         getCountryCodes();
 
     }
@@ -39,33 +40,44 @@ public class OpenStreetMap implements FindBoundBox {
     }
 
     @Override
-    public Location getDVBoundingBox(String country) {
+    public BoundingBox getDVBoundingBox(String country) {
         String countryCode = countries.get(country.toUpperCase());
-        //searchCriteria.setCountryCode();
-
 
         return null;
     }
 
     @Override
-    public GeographicUnit getDVBoundingBox(String country, String state) {
+    public BoundingBox getDVBoundingBox(String country, String state) {
+        String locationURL = state + ",%2C" + country;
+        String boundingBox = getBBString(locationURL);
+        if(boundingBox.matches(""))
+            return getDVBoundingBox(country);
+
         return null;
     }
 
     @Override
-    public GeographicUnit getDVBoundingBox(String country, String state, String city) {
+    public BoundingBox getDVBoundingBox(String country, String state, String city) {
         String locationURL = city + ",%2C" + state + ",%2C" + country;
-        getBBString(locationURL);
+        String boundingBox = getBBString(locationURL);
+        if(boundingBox.matches(""))
+            return getDVBoundingBox(country, state);
+
         return null;
     }
 
     @Override
-    public GeographicUnit getDVBoundingBox(String country, String state, String city, String other) {
+    public BoundingBox getDVBoundingBox(String country, String state, String city, String other) {
+        String locationURL = city + ",%2C" + state + ",%2C" + country;
+        String boundingBox = getBBString(locationURL);
+        if(boundingBox.matches(""))
+            return getDVBoundingBox(country,state,city);
         return null;
     }
 
     @Override
-    public GeographicUnit getDVBoundingBoxOther(String other) {
+    public BoundingBox getDVBoundingBoxOther(String other) {
+        String boundingBox = getBBString(other);
         return null;
     }
 
