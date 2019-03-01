@@ -5,10 +5,14 @@ package BaseFiles;/*
  */
 
 
+import DataSourceLocations.DataLocation;
 import Dataverse.DataverseAPI;
 import Dataverse.SourceAPI;
 
 import DataSourceLocations.Dataverse;
+
+import java.util.LinkedList;
+import java.util.List;
 
 
 /**
@@ -23,12 +27,17 @@ class Geodisy {
     /**
      * Front side of middleware, this part harvests data from Geoserver
      */
+    //TODO Broken, need to finish
     public void harvestDataverse(){
-        Dataverse dv = new Dataverse();
-        String[] dataverses = dv.getDataverses();
-        for(String s: dataverses){
-        SourceAPI dvAPI = new DataverseAPI(createDataverseURL(s));
-        dvAPI.harvest();
+        DataLocation dv = new Dataverse();
+        List<DataLocation> locations = new LinkedList<>();
+        locations.add(dv);
+        List<String> baseURLs = new LinkedList<>();
+        for(DataLocation dl: locations) {
+
+        }
+            SourceAPI dLAPI = new DataverseAPI(createDataverseURL(s));
+        dLAPI.harvest();
         }
     }
     /** 

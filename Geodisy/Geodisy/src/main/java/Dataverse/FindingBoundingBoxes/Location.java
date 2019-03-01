@@ -85,5 +85,11 @@ public class Location implements GeographicUnit {
         boundingBox.setLongEast(Double.parseDouble(longEast));
     }
 
+    public BoundingBox getBoundingBox() {
+        return boundingBox;
+    }
 
+    public void setBoundingBox(BoundingBox boundingBox) {
+        this.boundingBox = boundingBox;
+    }
 }

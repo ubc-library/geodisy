@@ -2,6 +2,7 @@ package Dataverse.FindingBoundingBoxes;
 
 
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
+import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
 import org.geonames.ToponymSearchCriteria;
 import org.geonames.WebService;
 import org.w3c.dom.Document;
@@ -15,35 +16,18 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+
 
 /**
  * Accesses OpenStreetMap.org to try and generate a bounding box for the dataset
  */
 public class OpenStreetMap implements FindBoundBox {
-    private ToponymSearchCriteria searchCriteria;
-    private Map<String, String> countries = new HashMap<String, String>();
-
-    public OpenStreetMap() {
-        getCountryCodes();
-
-    }
-
-    private void getCountryCodes() {
-        String[] countryCodes = Locale.getISOCountries();
-        for (String iso : countryCodes) {
-            Locale l = new Locale("", iso);
-            countries.put(l.getDisplayCountry(), iso);
-        }
-    }
 
     @Override
-    public BoundingBox getDVBoundingBox(String country) {
-        String countryCode = countries.get(country.toUpperCase());
+    public BoundingBox getDVBoundingBox(String countryName) {
+        Country country = Countries.getCountryByName(countryName);
 
-        return null;
+        return country.getBoundingBox();
     }
 
     @Override
@@ -53,7 +37,7 @@ public class OpenStreetMap implements FindBoundBox {
         if(boundingBox.matches(""))
             return getDVBoundingBox(country);
 
-        return null;
+        return parseCoords(boundingBox);
     }
 
     @Override
@@ -63,7 +47,7 @@ public class OpenStreetMap implements FindBoundBox {
         if(boundingBox.matches(""))
             return getDVBoundingBox(country, state);
 
-        return null;
+        return parseCoords(boundingBox);
     }
 
     @Override
@@ -72,13 +56,13 @@ public class OpenStreetMap implements FindBoundBox {
         String boundingBox = getBBString(locationURL);
         if(boundingBox.matches(""))
             return getDVBoundingBox(country,state,city);
-        return null;
+        return parseCoords(boundingBox);
     }
 
     @Override
     public BoundingBox getDVBoundingBoxOther(String other) {
         String boundingBox = getBBString(other);
-        return null;
+        return parseCoords(boundingBox);
     }
 
 
@@ -100,5 +84,57 @@ public class OpenStreetMap implements FindBoundBox {
             e.printStackTrace();
         }
         return "";
+    }
+
+    /**
+     * Parses the coordinate doubles from a coordinate string from OpenStreetMap
+     * @param bbString coordinate string from OpenStreetMap
+     * @return Bounding Box with the parsed coordinates or 361 if there is an
+     * error in the coordinates string
+     *
+     * String coordinate order is LatSouth, LatNorth, LongWest, LongEast
+     */
+    private BoundingBox parseCoords(String bbString){
+        BoundingBox bb = new BoundingBox();
+        int comma = bbString.indexOf(",");
+        String singleVal = bbString.substring(0,comma);
+        bb.setLatSouth(getDoubleVal(singleVal));
+        bbString = bbString.substring(comma+1);
+        comma = bbString.indexOf(",");
+        singleVal = bbString.substring(0,comma);
+        bb.setLatNorth(getDoubleVal(singleVal));
+        bbString = bbString.substring(comma+1);
+        comma = bbString.indexOf(",");
+        singleVal = bbString.substring(0,comma);
+        bb.setLongWest(getDoubleVal(singleVal));
+        bbString = bbString.substring(comma+1);
+        singleVal = bbString;
+        bb.setLongEast(getDoubleVal(singleVal));
+
+        bb = checkCoords(bb);
+
+        return bb;
+    }
+
+    private BoundingBox checkCoords(BoundingBox bb) {
+        if(bb.getLatNorth()==361|bb.getLatSouth()==361|bb.getLongEast()==361|bb.getLongWest()==361){
+            bb.setLongEast(361);
+            bb.setLatSouth(361);
+            bb.setLatNorth(361);
+            bb.setLongWest(361);
+        }
+        return bb;
+    }
+
+    private double getDoubleVal(String doubleString) {
+        double val;
+        try {
+            val = Double.parseDouble(doubleString);
+            return val;
+        } catch (NumberFormatException e){
+            val = 361;
+            return val;
+
+        }
     }
 }

@@ -14,9 +14,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 import org.apache.commons.text.WordUtils;
 
+
+/**
+ * A basically static class that opens a file that holds all the Country codes and bounding box values
+ * This can then be accessed to quickly grab a bounding box for a dataset that has a country label but
+ * no defined bounding box or geospatial file.
+ */
 public class Countries {
     static HashMap<String, Country> countries = new HashMap<>();;
     static HashMap<String, String> countryCodes = new HashMap<>();;
