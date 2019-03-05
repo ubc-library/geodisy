@@ -1,0 +1,92 @@
+Installing Geoblacklight
+=========================
+
+# Install Centos 7 base OS
+
+As user centos:
+
+# Install packages
+sudo yum check-update
+sudo yum update -y
+sudo yum install -y git-core zlib zlib-devel gcc-c++ patch readline readline-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison curl sqlite-devel
+sudo yum install -y epel-release psmisc lsof java-1.8.0-openjdk
+java -version
+
+# Install nodejs
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+source ~/.bash_profile
+nvm install node
+
+# Install yarn
+npm install -g yarn
+
+# Install Ruby
+cd ~
+git clone git://github.com/sstephenson/rbenv.git .rbenv
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+source ~/.bash_profile
+git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+rbenv install 2.6.1
+rbenv global 2.6.1
+ruby -v
+
+# Install gems
+echo "gem: --no-document" > ~/.gemrc
+gem install bundler
+
+# Install rails
+gem install rails
+gem update --system
+gem install execjs
+gem install solr_wrapper
+rbenv rehash
+rails -v
+
+# Update system limits
+echo '*    soft    nofile 65535' | sudo tee --append /etc/security/limits.conf > /dev/null
+echo '*    hard    nofile 65535' | sudo tee --append /etc/security/limits.conf > /dev/null
+echo 'centos    soft    nproc 65535' | sudo tee --append /etc/security/limits.conf > /dev/null
+echo '*    hard    nproc 65535' | sudo tee --append /etc/security/limits.conf > /dev/null
+
+# ** FOR PROD **
+# Install solr - note port 8983 still not open yet
+#cd ~
+#curl -o solr-7.7.1.tgz http://apache.org/dist/lucene/solr/7.7.1/solr-7.7.1.tgz
+#tar xzf solr-7.7.1.tgz solr-7.7.1/bin/install_solr_service.sh --strip-components=2
+#sudo bash ./install_solr_service.sh solr-7.7.1.tgz
+#sudo service solr stop
+
+# Make user group and directory
+# ** FOR PROD - run as unpriviled user is not complete here **
+sudo useradd -m geoblack -s /bin/bash
+sudo mkdir /opt/geoblacklight
+sudo chown geoblack:geoblack /opt/geoblacklight/
+sudo chmod 775 /opt/geoblacklight/
+sudo usermod -a -G geoblack centos
+
+# Now log out, log in again to get new limits into current session
+exit
+
+# Install geoblacklight
+cd /opt/
+rails new geoblacklight -m https://raw.githubusercontent.com/geoblacklight/geoblacklight/master/template.rb
+
+cd /opt/geoblacklight
+# See what commands can be run
+rake --tasks
+
+# Start development server
+rake geoblacklight:server
+# You can use CTRL-C to stop the dev server
+
+# ** FOR PROD **
+# Start rails server as a daemon
+#cd /opt/geoblacklight
+#rails server -d
+#echo "Geoblacklight PID: " `cat /opt/geoblacklight/tmp/pids/server.pid`
+
+# Follow up: https://geoblacklight.org/tutorial/2015/02/09/index-solr-documents.html
+
+
+
