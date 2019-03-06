@@ -1,6 +1,7 @@
 package Crosswalking.JSONParsing;
 
 import Dataverse.DataverseJSONFieldClasses.Fields.CompoundField.*;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicCoverage;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
 import Dataverse.DataverseJavaObject;
 import org.apache.logging.log4j.LogManager;
@@ -129,6 +130,11 @@ public class DataverseParser {
                 String value = valueObject.toString();
                 dJO.getSimpleFields().setField(label, value);
             }
+        }
+        String prodPlace = dJO.getProductionPlace();
+        //TODO not sure about this logic or what this is even trying to do
+        if(!prodPlace.matches("")){
+            List<GeographicCoverage> gc = dJO.getGeographicCoverage();
         }
 
     }

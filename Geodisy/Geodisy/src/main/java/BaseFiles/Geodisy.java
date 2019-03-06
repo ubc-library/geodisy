@@ -36,10 +36,9 @@ class Geodisy {
         for(DataLocation dl: locations) {
 
         }
-            SourceAPI dLAPI = new DataverseAPI(createDataverseURL(s));
+            SourceAPI dLAPI = new DataverseAPI(createDataverseURL(dv.getDataLocationURL()));
         dLAPI.harvest();
         }
-    }
     /** 
      * Creates the universal part of the Dataverse BaseFiles.API search/retrieve
      * URLs "://{database name}/api/". 

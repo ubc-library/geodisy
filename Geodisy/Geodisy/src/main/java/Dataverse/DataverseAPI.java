@@ -34,11 +34,12 @@ public class DataverseAPI extends SourceAPI {
         int rows = 100;
         boolean moreEntries = true;
         while(moreEntries){
-            JSONObject o =
+
         }
         Set<Integer> newEntries = new HashSet<>();
         //TODO make the search call and parse to get the number of entries and a list of entry_ids
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     //Find all the datasets and create a linkedlist of their DOIs
@@ -60,12 +61,12 @@ public class DataverseAPI extends SourceAPI {
         }
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    //TODO
+    //TODO download the Datasets somewhere to pass on to Geoserver
     @Override
     protected void downloadDatasets(String dIOList) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    //TODO make call to get dataverseJSON, parse DataverseJavaObjects, and return a list of the DataverseJavaObjects
     @Override
     public LinkedList<DataverseJavaObject> harvest() {
         return new LinkedList<>();

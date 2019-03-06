@@ -2,5 +2,6 @@ package DataSourceLocations;
 
 public interface DataLocation {
 
-   String[] getDataLocationURLs();
+   String getDataLocationURL();
+   String[] getSet();
 }

@@ -6,13 +6,13 @@ import org.json.JSONObject;
 import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
 
 public class GeographicBoundingBox extends CompoundJSONField {
-    private String westLongitude, eastLongitude, northLongitude, southLongitude;
+    private String westLongitude, eastLongitude, northLatitude, southLatitude;
 
     public GeographicBoundingBox() {
         this.westLongitude = "";
         this.eastLongitude = "";
-        this.northLongitude = "";
-        this.southLongitude = "";
+        this.northLatitude = "";
+        this.southLatitude = "";
     }
 
     public String getWestLongitude() {
@@ -31,20 +31,20 @@ public class GeographicBoundingBox extends CompoundJSONField {
         this.eastLongitude = eastLongitude;
     }
 
-    public String getNorthLongitude() {
-        return northLongitude;
+    public String getNorthLatitude() {
+        return northLatitude;
     }
 
-    public void setNorthLongitude(String northLongitude) {
-        this.northLongitude = northLongitude;
+    public void setNorthLatitude(String northLatitude) {
+        this.northLatitude = northLatitude;
     }
 
-    public String getSouthLongitude() {
-        return southLongitude;
+    public String getSouthLatitude() {
+        return southLatitude;
     }
 
-    public void setSouthLongitude(String southLongitude) {
-        this.southLongitude = southLongitude;
+    public void setSouthLatitude(String southLatitude) {
+        this.southLatitude = southLatitude;
     }
 
 
@@ -60,10 +60,10 @@ public class GeographicBoundingBox extends CompoundJSONField {
                 setEastLongitude(value);
                 break;
             case NORTH_LAT:
-                setNorthLongitude(value);
+                setNorthLatitude(value);
                 break;
             case SOUTH_LAT:
-                setSouthLongitude(value);
+                setSouthLatitude(value);
                 break;
             default:
                 errorParsing(this.getClass().getName(),title);
@@ -78,9 +78,9 @@ public class GeographicBoundingBox extends CompoundJSONField {
             case EAST_LONG:
                 return getEastLongitude();
             case NORTH_LAT:
-                return getNorthLongitude();
+                return getNorthLatitude();
             case SOUTH_LAT:
-                return getSouthLongitude();
+                return getSouthLatitude();
             default:
                 errorGettingValue(this.getClass().getName(),fieldName);
                 return "Bad fieldName";
