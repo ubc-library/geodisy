@@ -3,8 +3,6 @@ package Dataverse.FindingBoundingBoxes;
 
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
-import org.geonames.ToponymSearchCriteria;
-import org.geonames.WebService;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -15,13 +13,15 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 
 /**
  * Accesses OpenStreetMap.org to try and generate a bounding box for the dataset
  */
-public class OpenStreetMap implements FindBoundBox {
+public class OpenStreetMap extends FindBoundBox {
 
     @Override
     public BoundingBox getDVBoundingBox(String countryName) {
@@ -63,6 +63,11 @@ public class OpenStreetMap implements FindBoundBox {
     public BoundingBox getDVBoundingBoxOther(String other) {
         String boundingBox = getBBString(other);
         return parseCoords(boundingBox);
+    }
+    //TODO if we want to use OpenStreetMap rather than another FindBoundBox class (currently Geonames)
+    @Override
+    HttpURLConnection getHttpURLConnection(String country, Map parameters) {
+        return null;
     }
 
 
