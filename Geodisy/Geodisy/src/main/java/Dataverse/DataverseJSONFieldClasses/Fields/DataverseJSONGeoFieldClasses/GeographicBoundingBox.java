@@ -1,50 +1,53 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
+import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONObject;
 
 import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
 
 public class GeographicBoundingBox extends CompoundJSONField {
-    private String westLongitude, eastLongitude, northLatitude, southLatitude;
+    private BoundingBox bb;
 
     public GeographicBoundingBox() {
-        this.westLongitude = "";
-        this.eastLongitude = "";
-        this.northLatitude = "";
-        this.southLatitude = "";
+        this.bb = new BoundingBox();
     }
 
     public String getWestLongitude() {
-        return westLongitude;
+        checkCoords(bb);
+        return String.valueOf(bb.getLongWest());
     }
 
     public void setWestLongitude(String westLongitude) {
-        this.westLongitude = westLongitude;
+        this.bb.setLongWest(westLongitude);
     }
 
     public String getEastLongitude() {
-        return eastLongitude;
+
+        checkCoords(bb);
+        return String.valueOf(bb.getLongEast());
     }
 
     public void setEastLongitude(String eastLongitude) {
-        this.eastLongitude = eastLongitude;
+        this.bb.setLongEast(eastLongitude);
     }
 
     public String getNorthLatitude() {
-        return northLatitude;
+        checkCoords(bb);
+        return String.valueOf(bb.getLatNorth());
     }
 
     public void setNorthLatitude(String northLatitude) {
-        this.northLatitude = northLatitude;
+        this.bb.setLatNorth(northLatitude);
     }
 
     public String getSouthLatitude() {
-        return southLatitude;
+        checkCoords(bb);
+        return String.valueOf(bb.getLatSouth());
     }
 
     public void setSouthLatitude(String southLatitude) {
-        this.southLatitude = southLatitude;
+        this.bb.setLatSouth(southLatitude);
     }
 
 
@@ -72,6 +75,7 @@ public class GeographicBoundingBox extends CompoundJSONField {
 
     @Override
     protected String getSpecifiedField(String fieldName) {
+        checkCoords(bb);
         switch (fieldName) {
             case WEST_LONG:
                 return getWestLongitude();
@@ -84,6 +88,19 @@ public class GeographicBoundingBox extends CompoundJSONField {
             default:
                 errorGettingValue(this.getClass().getName(),fieldName);
                 return "Bad fieldName";
+        }
+    }
+
+    /**
+     *  If any of the coordinates are invalid, then invalidate all the coordinates for this bounding box
+     * @param bb
+     */
+    private void checkCoords(BoundingBox bb) {
+        if(bb.getLatNorth()==361|bb.getLatSouth()==361|bb.getLongEast()==361|bb.getLongWest()==361){
+            bb.setLongEast(361);
+            bb.setLatSouth(361);
+            bb.setLatNorth(361);
+            bb.setLongWest(361);
         }
     }
 }
