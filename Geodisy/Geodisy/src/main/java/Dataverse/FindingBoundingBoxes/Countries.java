@@ -69,7 +69,7 @@ public class Countries {
 
     private static String getTagValue(String tag, Element element) {
         NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
-        Node node = (Node) nodeList.item(0);
+        Node node = nodeList.item(0);
         return node.getNodeValue();
     }
 
@@ -87,5 +87,23 @@ public class Countries {
             return getCountryByName(countryCodes.get(codeCorrect));
         else
             return countries.get("Junk");
+    }
+
+    public static String getCountryCode(String countryName){
+        String capName = WordUtils.capitalizeFully(countryName);
+        Country country;
+        if(countries.containsKey(capName))
+            country = countries.get(capName);
+        else
+            return "_JJ";
+        return countryCodes.get(capName);
+
+    }
+
+    public static boolean isCountryCode(String code){
+        String codeCorrect = code.toUpperCase();
+        if(countryCodes.containsKey(codeCorrect))
+            return true;
+        return false;
     }
 }

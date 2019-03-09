@@ -2,37 +2,48 @@ package Dataverse.FindingBoundingBoxes;
 
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
-import com.sun.deploy.net.HttpRequest;
-
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class Geonames extends FindBoundBox {
     private String USER_NAME = "geodisy";
     @Override
     public BoundingBox getDVBoundingBox(String countryName) {
-        Country country = Countries.getCountryByName(countryName);
+        Country country;
+        if(Countries.isCountryCode(countryName))
+            country = Countries.getCountryByCode(countryName);
+         else
+             country = Countries.getCountryByName(countryName);
         if(country.getCountryCode().matches("_JJ")){
             logger.error(countryName + " is not a valid country name, so no bounding box could be automatically generated");
+            return new BoundingBox();
         }
         return country.getBoundingBox();
     }
 
+    /**
+     * Get the bounding box from Geonames when Country and State/Province/Etc is known
+     * For other Geonames Feature Codes [fcode] see: https://www.geonames.org/export/codes.html
+     * @param country
+     * @param state
+     * @return a Bounding box with N/S/E/W extents
+     */
     @Override
     public BoundingBox getDVBoundingBox(String country, String state)  {
         BoundingBox box =  new BoundingBox();
         Map<String, String> parameters = new HashMap<>();
         parameters.put("username", USER_NAME);
         parameters.put("style","FULL");
-        parameters.put("name",state);
-        HttpURLConnection con = getHttpURLConnection(country, parameters);
+        parameters.put("maxRows","1");
+        String countryCode = Countries.isCountryCode(country) ? country : Countries.getCountryCode(country);
+        parameters.put("country",countryCode);
+        parameters.put("fcode","ADM*");
+        HttpURLConnection con = getHttpURLConnection(state);
 
         try {
             box = readResponse(con, parameters);
@@ -48,8 +59,11 @@ public class Geonames extends FindBoundBox {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("username", USER_NAME);
         parameters.put("style","FULL");
-        parameters.put("name",city+ "%2C%20" + state);
-        HttpURLConnection con = getHttpURLConnection(country, parameters);
+        String countryCode = Countries.isCountryCode(country) ? country : Countries.getCountryCode(country);
+        parameters.put("country",countryCode);
+        parameters.put("fcode","PPL*");
+        String searchString = city+ "%2C%20" + state;
+        HttpURLConnection con = getHttpURLConnection(searchString);
 
         try {
             box = readResponse(con, parameters);
@@ -60,13 +74,15 @@ public class Geonames extends FindBoundBox {
     }
 
     @Override
-    public BoundingBox getDVBoundingBox(String country, String state, String city, String other) {
+    public BoundingBox getDVBoundingBoxOther(String country, String other) {
         BoundingBox box =  new BoundingBox();
         Map<String, String> parameters = new HashMap<>();
         parameters.put("username", USER_NAME);
         parameters.put("style","FULL");
         parameters.put("name",other);
-        HttpURLConnection con = getHttpURLConnection(country, parameters);
+        String countryCode = Countries.isCountryCode(country) ? country : Countries.getCountryCode(country);
+        parameters.put("country",countryCode);
+        HttpURLConnection con = getHttpURLConnection(other);
 
         try {
             box = readResponse(con, parameters);
@@ -77,19 +93,9 @@ public class Geonames extends FindBoundBox {
     }
 
     @Override
-    public BoundingBox getDVBoundingBoxOther(String other) {
-        return null;
-    }
-
-    @Override
-    public HttpURLConnection getHttpURLConnection(String country, Map parameters) {
+    public HttpURLConnection getHttpURLConnection(String searchValue) {
         try {
-            String urlString = "http://api.geonames.org/search?q=" + country;
-            Iterator it = parameters.entrySet().iterator();
-            while (it.hasNext()){
-                Map.Entry pair = (Map.Entry)it.next();
-                urlString = urlString + "&" + pair.getKey() + "=" + pair.getValue();
-            }
+            String urlString = "http://api.geonames.org/search?q=" + searchValue;
             URL url = new URL(urlString);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");

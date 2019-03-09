@@ -20,9 +20,8 @@ public abstract class FindBoundBox {
     abstract BoundingBox getDVBoundingBox(String country);
     abstract BoundingBox getDVBoundingBox(String country, String state) throws IOException;
     abstract BoundingBox getDVBoundingBox(String country, String state, String city);
-    abstract BoundingBox getDVBoundingBox(String country, String state, String city, String other);
-    abstract BoundingBox getDVBoundingBoxOther(String other);
-    abstract HttpURLConnection getHttpURLConnection(String country, Map parameters);
+    abstract BoundingBox getDVBoundingBoxOther(String country, String other);
+    abstract HttpURLConnection getHttpURLConnection(String country);
     Logger logger = LogManager.getLogger(FindBoundBox.class);
     //TODO get HTTP response (XML) and parse for boundingbox coordinates
     BoundingBox readResponse(HttpURLConnection con, Map parameters) throws IOException{
@@ -63,24 +62,21 @@ public abstract class FindBoundBox {
 
     protected  BoundingBox parseXMLString(String responseString){
         BoundingBox box = new BoundingBox();
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder;
-        Document doc;
-        try
-        {
-            builder = factory.newDocumentBuilder();
-            doc = builder.parse( new InputSource( new StringReader( responseString ) ) );
-        } catch (Exception e) {
-            e.printStackTrace();
+        int start = responseString.indexOf("<west>");
+        if(start==-1)
             return box;
-        }
-        NodeList array = doc.getElementsByTagName("geonames");
-        Element primary =  (Element) array.item(0);
-        Element bbox = (Element) primary.getElementsByTagName("bbox");
-        box.setLatSouth(Double.parseDouble(bbox.getAttribute("south")));
-        box.setLatNorth(Double.parseDouble(bbox.getAttribute("north")));
-        box.setLongEast(Double.parseDouble(bbox.getAttribute("east")));
-        box.setLongWest(Double.parseDouble(bbox.getAttribute("west")));
+        int end = responseString.indexOf("</west>");
+        box.setLongWest(Double.parseDouble(responseString.substring(start+6, end)));
+        start = responseString.indexOf("<east>");
+        end = responseString.indexOf("</east>");
+        box.setLongEast(Double.parseDouble(responseString.substring(start+6, end)));
+        start = responseString.indexOf("<north>");
+        end = responseString.indexOf("</north>");
+        box.setLatNorth(Double.parseDouble(responseString.substring(start+7, end)));
+        start = responseString.indexOf("<south>");
+        end = responseString.indexOf("</south>");
+        box.setLatSouth(Double.parseDouble(responseString.substring(start+7, end)));
+
         return box;
     }
 

@@ -85,7 +85,7 @@ public class BoundingBox {
     public void setLongWest(double longWest) {
         this.longWest = checkLong(longWest);
     }
-    
+
     public void setLongWest(String longWest){
         this.longWest =  getDoubleLong(longWest);
     }
