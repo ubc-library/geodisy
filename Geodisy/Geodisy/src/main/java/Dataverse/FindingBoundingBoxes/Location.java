@@ -15,6 +15,7 @@ public class Location implements GeographicUnit {
 
     public Location(String name) {
         this.name = WordUtils.capitalizeFully(name);
+        this.boundingBox = new BoundingBox();
     }
 
     public String getName() {
@@ -39,7 +40,7 @@ public class Location implements GeographicUnit {
     }
 
     public void setLatSouth(String latSouth) {
-        boundingBox.setLatSouth(Double.parseDouble(latSouth));
+        boundingBox.setLatSouth(latSouth);
     }
     public double getLatNorth() {
         double answer= boundingBox.getLatNorth();
@@ -53,7 +54,7 @@ public class Location implements GeographicUnit {
     }
 
     public void setLatNorth(String latNorth) {
-        boundingBox.setLatNorth(Double.parseDouble(latNorth));
+        boundingBox.setLatNorth(latNorth);
     }
 
     public double getLongWest() {
@@ -67,8 +68,12 @@ public class Location implements GeographicUnit {
         boundingBox.setLongWest(longWest);
     }
 
+    public void setLongWest(String longWest){
+        boundingBox.setLongWest(longWest);
+    }
+
     public void setLongMin(String longWest) {
-        boundingBox.setLongWest(Double.parseDouble(longWest));
+        boundingBox.setLongWest(longWest);
     }
     public double getLongEast() {
         double answer= boundingBox.getLongEast();
@@ -77,12 +82,15 @@ public class Location implements GeographicUnit {
         return answer;
     }
 
-    public void setLongEast(double longEast) {
+    public void setLongEast(double longEast){
+        boundingBox.setLongEast(longEast);
+    }
+    public void setLongEast(String longEast) {
         boundingBox.setLongEast(longEast);
     }
 
     public void setLongMax(String longEast) {
-        boundingBox.setLongEast(Double.parseDouble(longEast));
+        boundingBox.setLongEast(longEast);
     }
 
     public BoundingBox getBoundingBox() {

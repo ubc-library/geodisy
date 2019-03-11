@@ -23,19 +23,30 @@ import org.apache.commons.text.WordUtils;
  * no defined bounding box or geospatial file.
  */
 public class Countries {
-    static HashMap<String, Country> countries = new HashMap<>();;
-    static HashMap<String, String> countryCodes = new HashMap<>();;
+    HashMap<String, Country> countries;
+    HashMap<String, String> countryCodes;
+    private static Countries single_instance = null;
+    static Document doc;
 
-    static{
+    public static Countries getCountry(){
+        if(single_instance==null)
+            single_instance = new Countries();
+        return single_instance;
+    }
+
+    private Countries(){
         String countryBoundingBoxesXML = "./Geoname_countries.xml";
         File xmlFile = new File(countryBoundingBoxesXML);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder;
+        countries = new HashMap<>();
+        countryCodes = new HashMap<>();
 
         try {
             dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(xmlFile);
+            doc = dBuilder.parse(xmlFile);
             doc.getDocumentElement().normalize();
+            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
             NodeList nodeList = doc.getElementsByTagName("country");
             for (int i = 0; i <nodeList.getLength(); i++){
                 getCountry(nodeList.item(i));
@@ -50,7 +61,8 @@ public class Countries {
         }
     }
 
-    private static void getCountry(Node node) {
+
+    private void getCountry(Node node) {
 
         if (node.getNodeType() == Node.ELEMENT_NODE) {
             Element element = (Element) node;
@@ -58,22 +70,22 @@ public class Countries {
             Country country = new Country(name);
             String cCode = getTagValue("countryCode", element);
             country.setCountryCode(cCode);
-            country.setLongEast(Double.parseDouble(getTagValue("east", element)));
-            country.setLongWest(Double.parseDouble(getTagValue("west", element)));
-            country.setLatSouth(Double.parseDouble(getTagValue("south", element)));
-            country.setLatNorth(Double.parseDouble(getTagValue("north", element)));
+            country.setLongEast(getTagValue("east", element));
+            country.setLongWest(getTagValue("west", element));
+            country.setLatSouth(getTagValue("south", element));
+            country.setLatNorth(getTagValue("north", element));
             countries.put(country.getName(),country);
             countryCodes.put(cCode,name);
         }
     }
 
-    private static String getTagValue(String tag, Element element) {
+    private String getTagValue(String tag, Element element) {
         NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
         Node node = nodeList.item(0);
         return node.getNodeValue();
     }
 
-    public static Country getCountryByName(String name){
+    public Country getCountryByName(String name){
         String capName = WordUtils.capitalizeFully(name);
         if(countries.containsKey(capName))
             return countries.get(capName);
@@ -81,7 +93,7 @@ public class Countries {
             return countries.get("Junk");
     }
 
-    public static Country getCountryByCode(String code){
+    public Country getCountryByCode(String code){
         String codeCorrect = code.toUpperCase();
         if(countryCodes.containsKey(codeCorrect))
             return getCountryByName(countryCodes.get(codeCorrect));
@@ -89,18 +101,18 @@ public class Countries {
             return countries.get("Junk");
     }
 
-    public static String getCountryCode(String countryName){
+    public String getCountryCode(String countryName){
         String capName = WordUtils.capitalizeFully(countryName);
         Country country;
         if(countries.containsKey(capName))
             country = countries.get(capName);
         else
             return "_JJ";
-        return countryCodes.get(capName);
+        return country.getCountryCode();
 
     }
 
-    public static boolean isCountryCode(String code){
+    public boolean isCountryCode(String code){
         String codeCorrect = code.toUpperCase();
         if(countryCodes.containsKey(codeCorrect))
             return true;

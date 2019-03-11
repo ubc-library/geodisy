@@ -25,7 +25,8 @@ public class OpenStreetMap extends FindBoundBox {
 
     @Override
     public BoundingBox getDVBoundingBox(String countryName) {
-        Country country = Countries.getCountryByName(countryName);
+        Countries countries = Countries.getCountry();
+        Country country = countries.getCountryByName(countryName);
 
         return country.getBoundingBox();
     }
@@ -51,22 +52,12 @@ public class OpenStreetMap extends FindBoundBox {
     }
 
     @Override
-    public BoundingBox getDVBoundingBox(String country, String state, String city, String other) {
-        String locationURL = city + ",%2C" + state + ",%2C" + country;
-        String boundingBox = getBBString(locationURL);
-        if(boundingBox.matches(""))
-            return getDVBoundingBox(country,state,city);
-        return parseCoords(boundingBox);
+    BoundingBox getDVBoundingBoxOther(String country, String other) {
+        return null;
     }
 
     @Override
-    public BoundingBox getDVBoundingBoxOther(String other) {
-        String boundingBox = getBBString(other);
-        return parseCoords(boundingBox);
-    }
-    //TODO if we want to use OpenStreetMap rather than another FindBoundBox class (currently Geonames)
-    @Override
-    HttpURLConnection getHttpURLConnection(String country, Map parameters) {
+    HttpURLConnection getHttpURLConnection(String country) {
         return null;
     }
 
@@ -103,18 +94,18 @@ public class OpenStreetMap extends FindBoundBox {
         BoundingBox bb = new BoundingBox();
         int comma = bbString.indexOf(",");
         String singleVal = bbString.substring(0,comma);
-        bb.setLatSouth(getDoubleVal(singleVal));
+        bb.setLatSouth(singleVal);
         bbString = bbString.substring(comma+1);
         comma = bbString.indexOf(",");
         singleVal = bbString.substring(0,comma);
-        bb.setLatNorth(getDoubleVal(singleVal));
+        bb.setLatNorth(singleVal);
         bbString = bbString.substring(comma+1);
         comma = bbString.indexOf(",");
         singleVal = bbString.substring(0,comma);
-        bb.setLongWest(getDoubleVal(singleVal));
+        bb.setLongWest(singleVal);
         bbString = bbString.substring(comma+1);
         singleVal = bbString;
-        bb.setLongEast(getDoubleVal(singleVal));
+        bb.setLongEast(singleVal);
 
         bb = checkCoords(bb);
 
@@ -131,15 +122,5 @@ public class OpenStreetMap extends FindBoundBox {
         return bb;
     }
 
-    private double getDoubleVal(String doubleString) {
-        double val;
-        try {
-            val = Double.parseDouble(doubleString);
-            return val;
-        } catch (NumberFormatException e){
-            val = 361;
-            return val;
 
-        }
-    }
 }

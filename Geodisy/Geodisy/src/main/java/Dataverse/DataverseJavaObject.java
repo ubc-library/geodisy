@@ -478,16 +478,16 @@ public class DataverseJavaObject {
         double west = 360;
         double temp;
         for(GeographicBoundingBox b: getGeographicBoundingBoxes()){
-            temp = Double.parseDouble(b.getNorthLatitude());
+            temp = b.getNorthLatDub();
             north = (temp>north) ? temp : north;
 
-            temp = Double.parseDouble(b.getSouthLatitude());
+            temp = b.getSouthLatDub();
             south = (temp<south) ? temp : south;
 
-            temp = Double.parseDouble(b.getEastLongitude());
+            temp = b.getEastLongDub();
             east = (temp>east) ? temp : east;
 
-            temp = Double.parseDouble(b.getWestLongitude());
+            temp = b.getWestLongDub();
             west = (temp<west) ? temp : west;
         }
         BoundingBox box = new BoundingBox();

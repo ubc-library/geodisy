@@ -12,13 +12,15 @@ import java.util.Map;
 
 public class Geonames extends FindBoundBox {
     private String USER_NAME = "geodisy";
+    Countries countries = Countries.getCountry();
     @Override
     public BoundingBox getDVBoundingBox(String countryName) {
         Country country;
-        if(Countries.isCountryCode(countryName))
-            country = Countries.getCountryByCode(countryName);
+        Countries countries = Countries.getCountry();
+        if(countries.isCountryCode(countryName))
+            country = countries.getCountryByCode(countryName);
          else
-             country = Countries.getCountryByName(countryName);
+             country = countries.getCountryByName(countryName);
         if(country.getCountryCode().matches("_JJ")){
             logger.error(countryName + " is not a valid country name, so no bounding box could be automatically generated");
             return new BoundingBox();
@@ -35,12 +37,13 @@ public class Geonames extends FindBoundBox {
      */
     @Override
     public BoundingBox getDVBoundingBox(String country, String state)  {
+        Countries countries = Countries.getCountry();
         BoundingBox box =  new BoundingBox();
         Map<String, String> parameters = new HashMap<>();
         parameters.put("username", USER_NAME);
         parameters.put("style","FULL");
         parameters.put("maxRows","1");
-        String countryCode = Countries.isCountryCode(country) ? country : Countries.getCountryCode(country);
+        String countryCode = countries.isCountryCode(country) ? country : countries.getCountryCode(country);
         parameters.put("country",countryCode);
         parameters.put("fcode","ADM*");
         HttpURLConnection con = getHttpURLConnection(state);
@@ -59,7 +62,7 @@ public class Geonames extends FindBoundBox {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("username", USER_NAME);
         parameters.put("style","FULL");
-        String countryCode = Countries.isCountryCode(country) ? country : Countries.getCountryCode(country);
+        String countryCode = countries.isCountryCode(country) ? country : countries.getCountryCode(country);
         parameters.put("country",countryCode);
         parameters.put("fcode","PPL*");
         String searchString = city+ "%2C%20" + state;
@@ -80,7 +83,7 @@ public class Geonames extends FindBoundBox {
         parameters.put("username", USER_NAME);
         parameters.put("style","FULL");
         parameters.put("name",other);
-        String countryCode = Countries.isCountryCode(country) ? country : Countries.getCountryCode(country);
+        String countryCode = countries.isCountryCode(country) ? country : countries.getCountryCode(country);
         parameters.put("country",countryCode);
         HttpURLConnection con = getHttpURLConnection(other);
 

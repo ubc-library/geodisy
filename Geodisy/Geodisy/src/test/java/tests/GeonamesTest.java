@@ -34,14 +34,15 @@ class GeonamesTest {
     //Country Only
     @Test
     void getDVBoundingBox() {
-        geonames.getDVBoundingBox("France");
+        BoundingBox bb = geonames.getDVBoundingBox("France");
+        assertEquals(bb.getLongEast(),9.5596148665824);
     }
 
     //Country and State
     @Test
     void getDVBoundingBox1() {
         BoundingBox bb = geonames.getDVBoundingBox("Spain","Valencia");
-        assertEquals(bb.getLatNorth(),39.58684);
+        assertEquals(bb.getLatNorth(),40.78863);
     }
 
     //Country, State, City
@@ -55,7 +56,7 @@ class GeonamesTest {
     @Test
     void getDVBoundingBox3() {
         BoundingBox bb = geonames.getDVBoundingBoxOther("United States", "Arches National Park");
-        System.out.println(bb.getLatNorth());
+        assertEquals(bb.getLongEast(),361);
     }
 
 

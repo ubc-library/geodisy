@@ -66,16 +66,16 @@ public abstract class FindBoundBox {
         if(start==-1)
             return box;
         int end = responseString.indexOf("</west>");
-        box.setLongWest(Double.parseDouble(responseString.substring(start+6, end)));
+        box.setLongWest(responseString.substring(start+6, end));
         start = responseString.indexOf("<east>");
         end = responseString.indexOf("</east>");
-        box.setLongEast(Double.parseDouble(responseString.substring(start+6, end)));
+        box.setLongEast(responseString.substring(start+6, end));
         start = responseString.indexOf("<north>");
         end = responseString.indexOf("</north>");
-        box.setLatNorth(Double.parseDouble(responseString.substring(start+7, end)));
+        box.setLatNorth(responseString.substring(start+7, end));
         start = responseString.indexOf("<south>");
         end = responseString.indexOf("</south>");
-        box.setLatSouth(Double.parseDouble(responseString.substring(start+7, end)));
+        box.setLatSouth(responseString.substring(start+7, end));
 
         return box;
     }
