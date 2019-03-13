@@ -2,12 +2,16 @@ package Dataverse.FindingBoundingBoxes.LocationTypes;
 
 import Dataverse.FindingBoundingBoxes.Location;
 
+import java.util.HashMap;
+
 public class Province extends Location {
     private Country country;
+    private HashMap<String, City> cities;
 
     public Province(String name, String countryName) {
         super(name);
         country = new Country(countryName);
+        cities = new HashMap<>();
     }
     @Override
     public double getLatSouth() {
@@ -41,5 +45,13 @@ public class Province extends Location {
             return answer;
         else
             return country.getLongEast();
+    }
+
+    public void addCity(City c){
+        cities.put(c.getName(),c);
+    }
+
+    public HashMap getCities(){
+        return cities;
     }
 }

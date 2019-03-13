@@ -53,8 +53,9 @@ public class DataverseJavaObject {
     private List<Series> series;
     private List<Software> software;
     private List<String> relatedMaterial, relatedDatasets, otherReferences, dataSources, kindOfData, language, subject;
-    private List<GeographicCoverage> geographicCoverage;
-    private List<GeographicBoundingBox> geographicBoundingBoxes;
+    //private List<GeographicCoverage> geographicCoverage;
+    //private List<GeographicBoundingBox> geographicBoundingBoxes;
+    private List<GeographicFields> geoFields;
     protected Logger logger = LogManager.getLogger(DataverseParser.class);
 
     public DataverseJavaObject() {
@@ -81,8 +82,9 @@ public class DataverseJavaObject {
         this.relatedDatasets = new LinkedList<>();
         this.otherReferences = new LinkedList<>();
         this.dataSources = new LinkedList<>();
-        this.geographicCoverage = new LinkedList<>();
-        this.geographicBoundingBoxes = new LinkedList<>();
+        //this.geographicCoverage = new LinkedList<>();
+        //this.geographicBoundingBoxes = new LinkedList<>();
+        this.geoFields = new LinkedList<>();
     }
 
     public void setBaseFields(JSONObject current){
@@ -451,25 +453,16 @@ public class DataverseJavaObject {
 
     public void addDataSource(String s){this.dataSources.add(s);}
 
-    public List<GeographicCoverage> getGeographicCoverage() {
-        return geographicCoverage;
+    public List<GeographicFields> getGeographicFields() {
+        return geoFields;
     }
 
-    public void setGeographicCoverage(List<GeographicCoverage> geographicCoverage) {
-        this.geographicCoverage = geographicCoverage;
+    public void setGeoFields(List<GeographicFields> geographicFields) {
+        this.geoFields = geographicFields;
     }
 
-    public void addGeographicCoverage(GeographicCoverage gc){this.geographicCoverage.add(gc);}
+    public void addGeographicField(GeographicFields gf){this.geoFields.add(gf);}
 
-    public List<GeographicBoundingBox> getGeographicBoundingBoxes() {
-        return geographicBoundingBoxes;
-    }
-
-    public void setGeographicBoundingBoxes(List<GeographicBoundingBox> geographicBoundingBoxes) {
-        this.geographicBoundingBoxes = geographicBoundingBoxes;
-    }
-
-    public void addGeographicBoundingBox(GeographicBoundingBox gbb){this.geographicBoundingBoxes.add(gbb);}
 
     public BoundingBox getBoundingBox(){
         double north = -360;
@@ -477,7 +470,11 @@ public class DataverseJavaObject {
         double east = -360;
         double west = 360;
         double temp;
-        for(GeographicBoundingBox b: getGeographicBoundingBoxes()){
+        List<GeographicBoundingBox> boundingBoxes = new LinkedList<>();
+        for(GeographicFields gf: geoFields){
+            boundingBoxes.add(gf.getGeoBBox());
+        }
+        for(GeographicBoundingBox b: boundingBoxes){
             temp = b.getNorthLatDub();
             north = (temp>north) ? temp : north;
 
@@ -491,13 +488,20 @@ public class DataverseJavaObject {
             west = (temp<west) ? temp : west;
         }
         BoundingBox box = new BoundingBox();
-        if(west == 360 || east == -360 || north == -360 || south == 360)
+        if(west == 360 || east == -360 || north == -360 || south == 360) {
             logger.error("Something went wrong with the bounding box");
+            west = 361;
+            east = 361;
+            north = 361;
+            south = 361;
+        }
         box.setLongWest(west);
         box.setLongEast(east);
         box.setLatNorth(north);
         box.setLatSouth(south);
-        return box;}
+        return box;
+    }
+
     public SimpleFields getSimpleFields() {
         return simpleFields;
     }

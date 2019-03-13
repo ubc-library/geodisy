@@ -1,6 +1,9 @@
 package Dataverse.FindingBoundingBoxes;
 
+import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
+import Dataverse.FindingBoundingBoxes.LocationTypes.City;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
+import Dataverse.FindingBoundingBoxes.LocationTypes.Province;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -14,6 +17,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.text.WordUtils;
 
 
@@ -25,6 +31,7 @@ import org.apache.commons.text.WordUtils;
 public class Countries {
     HashMap<String, Country> countries;
     HashMap<String, String> countryCodes;
+    HashMap<String, BoundingBox> boundingBoxes;
     private static Countries single_instance = null;
     static Document doc;
 
@@ -41,6 +48,7 @@ public class Countries {
         DocumentBuilder dBuilder;
         countries = new HashMap<>();
         countryCodes = new HashMap<>();
+        boundingBoxes = new HashMap<>();
 
         try {
             dBuilder = dbFactory.newDocumentBuilder();
@@ -118,4 +126,30 @@ public class Countries {
             return true;
         return false;
     }
+
+    public void addProvince(String country, Province province){
+        if(province.getBoundingBox().getLongWest()!=361)
+            boundingBoxes.put(country+province, province.getBoundingBox());
+    }
+
+    public BoundingBox getProvincialBB(String country, String province){
+        if(boundingBoxes.containsKey(country+province))
+            return boundingBoxes.get(country+province);
+        return new BoundingBox();
+    }
+
+    public BoundingBox getCityBB(String country, String province, String city){
+        if(boundingBoxes.containsKey(country+province+city))
+            return boundingBoxes.get(country+province+city);
+        return new BoundingBox();
+    }
+
+    public HashMap getBoundingBoxes(){
+        return boundingBoxes;
+    }
+
+    public void setBoundingBoxes(HashMap<String, BoundingBox> bBoxes){
+        this.boundingBoxes = bBoxes;
+    }
+
 }

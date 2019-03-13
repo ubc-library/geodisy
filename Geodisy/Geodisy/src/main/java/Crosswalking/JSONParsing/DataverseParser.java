@@ -21,7 +21,7 @@ public class DataverseParser {
     private JSONObject dataverseJSON;
     private DataverseJavaObject dJO;
     static Logger logger = LogManager.getLogger(DataverseParser.class);
-
+    //TODO compartimentalize Citation metadata, Geographic Metadata, etc
     public DataverseParser(String dataverseJSONString) {
         this.dataverseJSON = new JSONObject(dataverseJSONString);
         this.dJO = new DataverseJavaObject();
