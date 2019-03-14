@@ -2,17 +2,21 @@ package Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields;
 
 import Dataverse.DataverseJSONFieldClasses.JSONField;
 
-import org.json.JSONArray;
-
-
-import java.util.LinkedList;
-import java.util.List;
 
 import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
 
 public class SimpleFields extends JSONField {
+    /**
+     *  * Title : String: title
+     *  * Subtitle : String: subtitle
+     *  * Alternative Title : String : alternativeTitle
+     *  * Alternative URL: String : alternativeURL
+     *  * License : String : license
+     *  * Publisher : String : publisher
+     *  * Publication Date : String : Publication Date
+     *  * OtherLocation ID : OtherID : otherID
+     */
     private String title, subtitle, alternativeTitle, alternativeURL, license,notesText,productionPlace,depositor, accessToSources, publisher,originOfSources, characteristicOfSources;
-
     private Date productionDate,distributionDate,dateOfDeposit, publicationDate;
 
     public SimpleFields() {

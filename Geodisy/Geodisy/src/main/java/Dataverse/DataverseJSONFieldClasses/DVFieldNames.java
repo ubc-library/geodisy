@@ -6,6 +6,8 @@ public class DVFieldNames {
     public final static String TYPE_NAME = "typeName";
     public final static String VAL = "value";
     public final static String DV_ID = "entity_id";
+    public final static String FIELD = "field";
+    public final static String CITATION = "citation";
 
     //Simple Field Names
     public final static String ACCESS_TO_SOURCES = "accessToSources";
@@ -34,11 +36,19 @@ public class DVFieldNames {
     public final static String LANGUAGE = "language";
     public final static String SUBJECT = "subject";
 
+    //Geospatial Metadata Fields
+    public final static String GEOGRAPHIC_COVERAGE = "geographicCoverage";
+    public final static String GEOGRAPHIC_BBOX = "geographicBoundingBox";
+    public final static String GEOGRAPHIC_UNIT = "geographicUnit";
+    public final static String GEOSPATIAL = "geospatial";
+
     //Geospatial Bounding Box Field Names
     public final static String WEST_LONG = "westLongitude";
     public final static String EAST_LONG = "eastLongitude";
     public final static String NORTH_LAT = "northLatitude";
     public final static String SOUTH_LAT = "southLatitude";
+    public final static String NORTH_LAT_LONG = "northLongitude";
+    public final static String SOUTH_LAT_LONG = "southLongitude";
 
     //Geographic Coverage Field Names
     public final static String COUNTRY = "country";
