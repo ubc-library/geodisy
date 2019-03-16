@@ -17,7 +17,8 @@ import java.nio.file.Files;
 
 
 /**
- *
+ * This class is probably not getting used at all due to the Dataverse JSON structure not easily
+ * working with standard JSON parsers.
  * @author pdante
  */
 public class JacksonParser implements JSONParser {

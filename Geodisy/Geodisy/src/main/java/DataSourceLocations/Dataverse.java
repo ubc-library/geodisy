@@ -6,20 +6,28 @@
 package DataSourceLocations;
 
 /**
- *
+ * Class holds the list of all the dataverse urls that are being harvested from
  * @author pdante
  */
-public class Dataverse {
-    private String[] dataverses;
+public class Dataverse implements DataLocation {
+    private String dataverseURL;
+    private String[] sets;
 
+    //TODO actually add dataverse urls to harvest from
     public Dataverse() {
-        //add all dataverse names into the curly brackes, as comma separated strings
-        dataverses = new String[]{"placeholder"};
+        //add all dataverse URLs into the curly brackes, as comma separated strings
+        dataverseURL = "placeholder";
+        sets = new String[]{"placeholder"};
+    }
+    @Override
+    public String getDataLocationURL() {
+        return dataverseURL;
     }
 
-    public String[] getDataverses() {
-        return dataverses;
+    @Override
+    public String[] getSet() {
+        return sets;
     }
-    
-    
+
+
 }

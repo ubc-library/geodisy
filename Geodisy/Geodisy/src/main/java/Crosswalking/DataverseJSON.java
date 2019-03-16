@@ -11,7 +11,7 @@ package Crosswalking;
  * @author pdante
  */
 public class DataverseJSON implements MetadataSchema {
-
+    //TODO write the DataverseJSON class, but I'm not sure what it does at the moment
     public DataverseJSON() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

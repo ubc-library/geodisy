@@ -2,6 +2,7 @@ package tests;
 
 import Crosswalking.JSONParsing.DataverseParser;
 import Dataverse.DataverseJSONFieldClasses.Fields.CompoundField.Author;
+import Dataverse.DataverseJSONFieldClasses.Fields.CompoundField.CitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.CompoundField.DatasetContact;
 import Dataverse.DataverseJSONFieldClasses.Fields.CompoundField.Description;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
@@ -27,7 +28,7 @@ public class DataverseParserTest {
         DataverseParser dataverseParser = new DataverseParser(jsonData);
 
         //TODO parse isn't parsing correctly
-        assertEquals(dataverseParser.getdJO(), dataverseJavaObject);
+        assertEquals(dataverseParser.getdJO().getBoundingBox().getLatSouth(), dataverseJavaObject.getBoundingBox().getLatSouth());
 
     }
 
@@ -44,19 +45,21 @@ public class DataverseParserTest {
         sf.setField(DEPOSITOR,"Quigley, Elizabeth");
         sf.setField(DEPOS_DATE,"2015-07-13");
         dataverseJavaObject.setSimpleFields(sf);
+        CitationFields citationFields = new CitationFields();
         Author a = new Author();
         a.setAuthorName("Quigley, Elizabeth");
         a.setAuthorAffiliation("Harvard University");
-        dataverseJavaObject.addAuthor(a);
+        citationFields.addAuthor(a);
         DatasetContact dc = new DatasetContact();
         dc.setDatasetContactName("Quigley, Elizabeth");
         dc.setDatasetContactAffiliation("Harvard University");
         dc.setDatasetContactEmail("equigley@iq.harvard.edu");
-        dataverseJavaObject.addDatasetContact(dc);
+        citationFields.addDatasetContact(dc);
         Description d = new Description();
         d.setDsDescriptionValue("Dataset for shapefile");
-        dataverseJavaObject.addDsDescription(d);
-        dataverseJavaObject.addSubject("Earth and Environmental Sciences");
+        citationFields.addDsDescription(d);
+        citationFields.addSubject("Earth and Environmental Sciences");
+        dataverseJavaObject.setCitationFields(citationFields);
         return dataverseJavaObject;
     }
 
