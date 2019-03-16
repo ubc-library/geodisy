@@ -129,20 +129,21 @@ public class Countries {
 
     public void addProvince(String country, Province province){
         if(province.getBoundingBox().getLongWest()!=361)
-            boundingBoxes.put(country+province, province.getBoundingBox());
+            boundingBoxes.put(country+"zzz"+province, province.getBoundingBox());
     }
 
-    public BoundingBox getProvincialBB(String country, String province){
-        if(boundingBoxes.containsKey(country+province))
-            return boundingBoxes.get(country+province);
+    public BoundingBox get2ParamBB(String country, String province){
+        if(boundingBoxes.containsKey(country+"zzz"+province))
+            return boundingBoxes.get(country+"zzz"+province);
         return new BoundingBox();
     }
 
-    public BoundingBox getCityBB(String country, String province, String city){
-        if(boundingBoxes.containsKey(country+province+city))
-            return boundingBoxes.get(country+province+city);
+    public BoundingBox get3ParamBB(String country, String province, String city){
+        if(boundingBoxes.containsKey(country+"zzz"+ province+ "zzz" + city))
+            return boundingBoxes.get(country+"zzz"+ province+ "zzz" + city);
         return new BoundingBox();
     }
+
 
     public HashMap getBoundingBoxes(){
         return boundingBoxes;

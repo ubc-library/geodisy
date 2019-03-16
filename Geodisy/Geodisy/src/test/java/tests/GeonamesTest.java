@@ -56,7 +56,7 @@ class GeonamesTest {
     @Test
     void getDVBoundingBox3() {
         BoundingBox bb = geonames.getDVBoundingBoxOther("United States", "Arches National Park");
-        assertEquals(bb.getLongEast(),361);
+        assertEquals(bb.getLongEast(),-66.949607);
     }
 
 

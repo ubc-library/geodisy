@@ -21,15 +21,16 @@ public abstract class FindBoundBox {
     abstract BoundingBox getDVBoundingBox(String country, String state) throws IOException;
     abstract BoundingBox getDVBoundingBox(String country, String state, String city);
     abstract BoundingBox getDVBoundingBoxOther(String country, String other);
+    abstract BoundingBox getDVBoundingBoxOther(String country,String state, String other);
     abstract HttpURLConnection getHttpURLConnection(String country);
     Logger logger = LogManager.getLogger(FindBoundBox.class);
     //TODO get HTTP response (XML) and parse for boundingbox coordinates
-    BoundingBox readResponse(HttpURLConnection con, Map parameters) throws IOException{
+    BoundingBox readResponse(HttpURLConnection con) throws IOException{
         con.setDoOutput(true);
-        DataOutputStream out = new DataOutputStream(con.getOutputStream());
+        /*DataOutputStream out = new DataOutputStream(con.getOutputStream());
         out.writeBytes(ParameterStringBuilder.getParamsString(parameters));
         out.flush();
-        out.close();
+        out.close();*/
         BoundingBox box = new BoundingBox();
         int responseCode = 0;
         try {
@@ -80,5 +81,12 @@ public abstract class FindBoundBox {
         return box;
     }
 
+    protected String addDelimiter(String country, String secondParam) {
+        return country + "zzz"+ secondParam;
+    }
+
+    protected String addDelimiter(String country, String secondParam, String thirdParam) {
+        return country + "zzz"+ secondParam + "zzz" + thirdParam;
+    }
 
 }

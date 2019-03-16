@@ -57,6 +57,11 @@ public class OpenStreetMap extends FindBoundBox {
     }
 
     @Override
+    BoundingBox getDVBoundingBoxOther(String country, String state, String other) {
+        return null;
+    }
+
+    @Override
     HttpURLConnection getHttpURLConnection(String country) {
         return null;
     }
