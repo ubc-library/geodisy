@@ -1,12 +1,15 @@
 package Dataverse.DataverseJSONFieldClasses;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class DVFieldNames {
 
     //General Field Names
     public final static String TYPE_NAME = "typeName";
     public final static String VAL = "value";
     public final static String DV_ID = "entity_id";
-    public final static String FIELD = "field";
+    public final static String FIELDS = "fields";
     public final static String CITATION = "citation";
 
     //Simple Field Names
@@ -26,6 +29,7 @@ public class DVFieldNames {
     public final static String PUBLISHER = "publisher";
     public final static String TITLE = "title";
     public final static String SUBTITLE = "subtitle";
+    public final static List<String> SIMPLE_FIELD_NAMES = Arrays.asList(ACCESS_TO_SOURCES,ALT_TITLE,ALT_URL,CHAR_OF_SOURCES,DEPOS_DATE,DEPOSITOR,DIST_DATE,LICENSE,NOTES_TEXT,ORIG_OF_SOURCES,PROD_DATE,PROD_PLACE,PUB_DATE,PUBLISHER,TITLE,SUBTITLE);
 
     //String List Field Names
     public final static String RELATED_MATERIAL = "relatedMaterial";
@@ -35,26 +39,6 @@ public class DVFieldNames {
     public final static String KIND_OF_DATA = "kindOfData";
     public final static String LANGUAGE = "language";
     public final static String SUBJECT = "subject";
-
-    //Geospatial Metadata Fields
-    public final static String GEOGRAPHIC_COVERAGE = "geographicCoverage";
-    public final static String GEOGRAPHIC_BBOX = "geographicBoundingBox";
-    public final static String GEOGRAPHIC_UNIT = "geographicUnit";
-    public final static String GEOSPATIAL = "geospatial";
-
-    //Geospatial Bounding Box Field Names
-    public final static String WEST_LONG = "westLongitude";
-    public final static String EAST_LONG = "eastLongitude";
-    public final static String NORTH_LAT = "northLatitude";
-    public final static String SOUTH_LAT = "southLatitude";
-    public final static String NORTH_LAT_LONG = "northLongitude";
-    public final static String SOUTH_LAT_LONG = "southLongitude";
-
-    //Geographic Coverage Field Names
-    public final static String COUNTRY = "country";
-    public final static String STATE = "state";
-    public final static String CITY = "city";
-    public final static String OTHER_GEO_COV = "otherGeographicCoverage";
 
     //Author Field Names
     public final static String AUTHOR = "author";
@@ -142,4 +126,27 @@ public class DVFieldNames {
     public final static String TOPIC_CLASS_VAL = "topicClassValue";
     public final static String TOPIC_CLASS_VOCAB = "topicClassVocab";
     public final static String TOPIC_CLASS_VOCAB_URL = "topicClassVocabURL";
+
+    //Geographic
+    //Geospatial Metadata Fields
+    public final static String GEOGRAPHIC_COVERAGE = "geographicCoverage";
+    public final static String GEOGRAPHIC_BBOX = "geographicBoundingBox";
+    public final static String GEOGRAPHIC_UNIT = "geographicUnit";
+    public final static String GEOSPATIAL = "geospatial";
+
+    //Geospatial Bounding Box Field Names
+    public final static String WEST_LONG = "westLongitude";
+    public final static String EAST_LONG = "eastLongitude";
+    public final static String NORTH_LAT = "northLatitude";
+    public final static String SOUTH_LAT = "southLatitude";
+    public final static String NORTH_LAT_LONG = "northLongitude";
+    public final static String SOUTH_LAT_LONG = "southLongitude";
+
+    //Geographic Coverage Field Names
+    public final static String COUNTRY = "country";
+    public final static String STATE = "state";
+    public final static String CITY = "city";
+    public final static String OTHER_GEO_COV = "otherGeographicCoverage";
+
+    public final static List<String> GEO_META_FIELDS = Arrays.asList(GEOGRAPHIC_COVERAGE, GEOGRAPHIC_BBOX, GEOGRAPHIC_UNIT, WEST_LONG, EAST_LONG, NORTH_LAT, NORTH_LAT_LONG, SOUTH_LAT, SOUTH_LAT_LONG, COUNTRY, STATE, CITY, OTHER_GEO_COV);
 }

@@ -29,7 +29,7 @@ import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
 public class DataverseJavaObject {
     private CitationFields citationFields;
     private GeographicFields geoFields;
-    protected Logger logger = LogManager.getLogger(DataverseParser.class);
+    private Logger logger = LogManager.getLogger(DataverseParser.class);
 
     public DataverseJavaObject() {
         this.citationFields = new CitationFields();
@@ -45,7 +45,7 @@ public class DataverseJavaObject {
     public void parseCitationFields(JSONObject current) {
         citationFields.setBaseFields(current);
         JSONObject metadata = current.getJSONObject("latestVersion").getJSONObject("metadataBlocks");
-        JSONArray currentArray = metadata.getJSONObject(CITATION).getJSONArray(FIELD);
+        JSONArray currentArray = metadata.getJSONObject(CITATION).getJSONArray(FIELDS);
         for (Object o : currentArray) {
             JSONObject jo = (JSONObject) o;
             citationFields.setFields(jo);
@@ -114,7 +114,8 @@ public class DataverseJavaObject {
 
 
 
-    // Following methods are for getting the simple field values
+    // Following methods are for getting the simple field values.
+    // May end up deleting all of these and just dealing with them inside the CitationFields class
     public String getTitle() {
         SimpleFields simpleFields = citationFields.getSimpleFields();
         return simpleFields.getField(TITLE);
@@ -266,5 +267,17 @@ public class DataverseJavaObject {
         SimpleFields simpleFields = citationFields.getSimpleFields();
         simpleFields.setField(DEPOS_DATE,dateOfDeposit);
         citationFields.setSimpleFields(simpleFields);
+    }
+
+    public CitationFields getCitationFields() {
+        return citationFields;
+    }
+
+    public void setCitationFields(CitationFields citationFields) {
+        this.citationFields = citationFields;
+    }
+
+    public GeographicFields getGeoFields() {
+        return geoFields;
     }
 }
