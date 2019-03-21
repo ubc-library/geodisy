@@ -38,7 +38,7 @@ public class MyTimerTask extends TimerTask {
 
         Geodisy geo = new Geodisy();
         geo.harvestDataverse();
-        f1 = Files.readAllBytes(manualCheckPath);
+        f2 = Files.readAllBytes(manualCheckPath);
         if(Arrays.equals(f1,f2))
             emailCheckRecords();
         } catch (IOException e) {
@@ -46,6 +46,7 @@ public class MyTimerTask extends TimerTask {
         }
     }
 
+    //TODO setup email system
     private void emailCheckRecords() {
     }
 
