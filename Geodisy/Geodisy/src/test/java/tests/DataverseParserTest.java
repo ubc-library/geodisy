@@ -8,6 +8,9 @@ import Dataverse.DataverseJSONFieldClasses.Fields.CompoundField.Description;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
 import Dataverse.DataverseJavaObject;
 
+import Dataverse.FindingBoundingBoxes.FindBoundBox;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
 
@@ -60,6 +63,9 @@ public class DataverseParserTest {
         citationFields.addDsDescription(d);
         citationFields.addSubject("Earth and Environmental Sciences");
         dataverseJavaObject.setCitationFields(citationFields);
+        Logger logger = LogManager.getLogger(DataverseParserTest.class);
+        logger.error("Testing an error");
+        logger.info("Testing an info");
         return dataverseJavaObject;
     }
 

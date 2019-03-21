@@ -1,8 +1,5 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 
-import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
-import Dataverse.DataverseJSONFieldClasses.JSONField;
-
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,6 +13,7 @@ public class GeographicFields extends MetadataType {
     List<GeographicCoverage> geoCovers;
     List<GeographicBoundingBox> geoBBoxes;
     List<GeographicUnit> geoUnits;
+    protected String doi;
 
     public GeographicFields() {
         this.geoCovers = new LinkedList<>();
@@ -57,7 +55,7 @@ public class GeographicFields extends MetadataType {
      * @return A Geographic Coverage
      */
     public GeographicCoverage addGeoCover(JSONObject jObject) {
-        GeographicCoverage gC = new GeographicCoverage();
+        GeographicCoverage gC = new GeographicCoverage(doi);
         JSONArray ja = (JSONArray) jObject.get("value");
         for (Object o: ja){
             JSONObject jO = (JSONObject) o;
@@ -77,7 +75,7 @@ public class GeographicFields extends MetadataType {
      * @return A Geographic Bounding Box
      */
     public GeographicBoundingBox addGeoBBox(JSONObject jObject) {
-            GeographicBoundingBox gBB = new GeographicBoundingBox();
+            GeographicBoundingBox gBB = new GeographicBoundingBox(doi);
             JSONArray ja = (JSONArray) jObject.get("value");
         for (Object o: ja){
             JSONObject jO = (JSONObject) o;
@@ -108,5 +106,13 @@ public class GeographicFields extends MetadataType {
     @Override
     public String getField(String fieldName) {
         return null;
+    }
+
+    public String getDoi() {
+        return doi;
+    }
+
+    public void setDoi(String doi) {
+        this.doi = doi;
     }
 }

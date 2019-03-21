@@ -3,18 +3,10 @@ package Dataverse.FindingBoundingBoxes;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
 import java.net.HttpURLConnection;
 
-import java.util.Map;
 
 public abstract class FindBoundBox {
     abstract BoundingBox getDVBoundingBox(String country);
@@ -23,7 +15,8 @@ public abstract class FindBoundBox {
     abstract BoundingBox getDVBoundingBoxOther(String country, String other);
     abstract BoundingBox getDVBoundingBoxOther(String country,String state, String other);
     abstract HttpURLConnection getHttpURLConnection(String country);
-    Logger logger = LogManager.getLogger(FindBoundBox.class);
+    Logger logger = LogManager.getLogger(FindBoundBox.class.getName());
+    Logger checkRecordLogger = LogManager.getLogger(FindBoundBox.class);
     //TODO get HTTP response (XML) and parse for boundingbox coordinates
     BoundingBox readResponse(HttpURLConnection con) throws IOException{
         con.setDoOutput(true);

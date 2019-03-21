@@ -15,8 +15,10 @@ public class Geonames extends FindBoundBox {
     private String USER_NAME = "geodisy";
     Countries countries;
     HashMap<String, BoundingBox> bBoxes;
+    String doi;
 
-    public Geonames() {
+    public Geonames(String doi) {
+        this.doi = doi;
         this.countries = Countries.getCountry();
         this.bBoxes = countries.getBoundingBoxes();
     }
@@ -29,7 +31,8 @@ public class Geonames extends FindBoundBox {
          else
              country = countries.getCountryByName(countryName);
         if(country.getCountryCode().matches("_JJ")){
-            logger.error(countryName + " is not a valid country name, so no bounding box could be automatically generated");
+            logger.info(countryName + " is not a valid country name in record at DOI: " + doi + ", so no bounding box could be automatically generated. Check this record manually ");
+
             return new BoundingBox();
         }
         return country.getBoundingBox();
@@ -66,7 +69,7 @@ public class Geonames extends FindBoundBox {
         try {
             box = readResponse(con);
         }catch (IOException e){
-            logger.error("something went wrong with the http request for a bounding box");
+            logger.error("something went wrong with the http request for a bounding box of record: " + doi);
         }
         if(box.getLongWest()==361)
             return getDVBoundingBox(country);
@@ -104,7 +107,7 @@ public class Geonames extends FindBoundBox {
         try {
             box = readResponse(con);
         }catch (IOException e){
-            logger.error("something went wrong with the http request for a bounding box");
+            logger.error("something went wrong with the http request for a bounding box of record: \" + doi");
         }
         if(box.getLongWest()==361)
             return getDVBoundingBox(country,state);
@@ -115,9 +118,20 @@ public class Geonames extends FindBoundBox {
         return box;
     }
 
+    /**
+     *
+     * @param country
+     * @param other
+     * @return a bounding box with likely no real values
+     *
+     * We decided that if the Other Geographic Coverage is filled in at all that an actual human needs to look into
+     * the geographic coverage.
+     */
     @Override
     public BoundingBox getDVBoundingBoxOther(String country, String other) {
         BoundingBox box =  countries.get2ParamBB(country, other);
+
+        /*
         if(box.getLongWest()!=361)
             return box;
         Map<String, String> parameters = new HashMap<>();
@@ -142,14 +156,25 @@ public class Geonames extends FindBoundBox {
         if(box.getLongWest()!=361)
             bBoxes.put(addDelimiter(country,unURLedOther),box);
         else
-            box = getDVBoundingBox(country);
+            box = getDVBoundingBox(country);*/
+        logger.info("Record with DOI: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" );
         return box;
-    }
 
+    }
+    /**
+     *
+     * @param country
+     * @param state
+     * @param other
+     * @return a bounding box with likely no real values
+     *
+     * We decided that if the Other Geographic Coverage is filled in at all that an actual human needs to look into
+     * the geographic coverage.
+     */
     @Override
     BoundingBox getDVBoundingBoxOther(String country, String state, String other) {
         BoundingBox box =  countries.get3ParamBB(country, state, other);
-        if(box.getLongWest()!=361)
+        /*if(box.getLongWest()!=361)
             return box;
         Map<String, String> parameters = new HashMap<>();
         parameters.put("username", USER_NAME);
@@ -175,7 +200,8 @@ public class Geonames extends FindBoundBox {
         if(box.getLongWest()!=361)
             bBoxes.put(addDelimiter(country,unURLedState,unURLedOther),box);
         else
-            box = getDVBoundingBoxOther(country, other);
+            box = getDVBoundingBoxOther(country, other);*/
+        logger.info("Record with DOI: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" );
         return box;
     }
 

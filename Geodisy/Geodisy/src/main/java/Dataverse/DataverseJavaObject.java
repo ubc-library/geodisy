@@ -3,6 +3,7 @@ package Dataverse;
 
 
 import Crosswalking.JSONParsing.DataverseParser;
+import Dataverse.DataverseJSONFieldClasses.DVFieldNames;
 import Dataverse.DataverseJSONFieldClasses.Fields.CompoundField.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
@@ -50,6 +51,7 @@ public class DataverseJavaObject {
             JSONObject jo = (JSONObject) o;
             citationFields.setFields(jo);
         }
+        geoFields.setDoi(citationFields.getSimpleFields().getField(ALT_URL));
     }
 
     public GeographicFields getGeographicFields() {
@@ -82,7 +84,8 @@ public class DataverseJavaObject {
         }
         BoundingBox box = new BoundingBox();
         if(west == 360 || east == -360 || north == -360 || south == 360) {
-            logger.error("Something went wrong with the bounding box");
+            logger.info("Something went wrong with the bounding box for record " + getDOI());
+            logger.error("Something went wrong with the bounding box for record " + getDOI());
             west = 361;
             east = 361;
             north = 361;
@@ -110,7 +113,9 @@ public class DataverseJavaObject {
         return true;
     }
 
-
+    public String getDOI(){
+        return citationFields.getDOI();
+    }
 
 
 

@@ -8,8 +8,10 @@ import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
 
 public class GeographicBoundingBox extends CompoundJSONField {
     private BoundingBox bb;
+    String doi;
 
-    public GeographicBoundingBox() {
+    public GeographicBoundingBox(String doi) {
+        this.doi = doi;
         this.bb = new BoundingBox();
     }
 

@@ -32,3 +32,9 @@ Geodisy/Geodisy/package-list
 *.java___jb_old___
 
 ~\$Dataverse Metadata v4\.x\.xlsx
+
+Geodisy/Geodisy/logs/mylog\.log
+
+Geodisy/Geodisy/logs/recordsToCheck\.log
+
+Template\+for\+System\+Descriptions\.mht

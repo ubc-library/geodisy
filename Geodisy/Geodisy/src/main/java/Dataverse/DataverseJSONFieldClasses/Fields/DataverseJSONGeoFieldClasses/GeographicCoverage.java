@@ -6,9 +6,10 @@ import org.json.JSONObject;
 import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
 
 public class GeographicCoverage extends CompoundJSONField {
-    private String country, state, city, otherGeographicCoverage;
+    private String country, state, city, otherGeographicCoverage, doi;
 
-    public GeographicCoverage() {
+    public GeographicCoverage(String doi) {
+        this.doi = doi;
         this.country = "";
         this.state = "";
         this.city = "";

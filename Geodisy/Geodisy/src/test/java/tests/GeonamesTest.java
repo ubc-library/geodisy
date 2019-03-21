@@ -11,9 +11,10 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GeonamesTest {
-    Geonames geonames = new Geonames();
+    Geonames geonames = new Geonames("fake doi val for test");
     private String USER_NAME = "geodisy";
     HashMap<String, String> parameters;
+
 
     @BeforeEach
     void setUp() {
@@ -56,7 +57,7 @@ class GeonamesTest {
     @Test
     void getDVBoundingBox3() {
         BoundingBox bb = geonames.getDVBoundingBoxOther("United States", "Arches National Park");
-        assertEquals(bb.getLongEast(),-66.949607);
+        assertEquals(bb.getLongEast(),361);
     }
 
 

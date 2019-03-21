@@ -266,5 +266,7 @@ public class SimpleFields extends JSONField {
         return publicationDate.getDateAsString();
     }
 
-
+    public String getDOI(){
+        return getAlternativeTitle();
+    }
 }

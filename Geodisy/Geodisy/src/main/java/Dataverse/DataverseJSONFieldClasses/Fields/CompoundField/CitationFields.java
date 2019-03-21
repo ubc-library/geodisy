@@ -430,4 +430,8 @@ public class CitationFields extends MetadataType {
     public void setSimpleFields(SimpleFields simpleFields) {
         this.simpleFields = simpleFields;
     }
+
+    public String getDOI(){
+        return getSimpleFields().getDOI();
+    }
 }
