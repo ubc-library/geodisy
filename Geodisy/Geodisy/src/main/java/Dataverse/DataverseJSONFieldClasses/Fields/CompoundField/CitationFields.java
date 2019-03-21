@@ -434,4 +434,5 @@ public class CitationFields extends MetadataType {
     public String getDOI(){
         return getSimpleFields().getDOI();
     }
+
 }

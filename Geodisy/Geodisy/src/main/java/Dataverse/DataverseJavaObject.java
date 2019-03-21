@@ -63,39 +63,7 @@ public class DataverseJavaObject {
     }
 
     public BoundingBox getBoundingBox(){
-        double north = -360;
-        double south = 360;
-        double east = -360;
-        double west = 360;
-        double temp;
-        List<GeographicBoundingBox> boundingBoxes = geoFields.getGeoBBoxes();
-        for(GeographicBoundingBox b: boundingBoxes){
-            temp = b.getNorthLatDub();
-            north = (temp>north) ? temp : north;
-
-            temp = b.getSouthLatDub();
-            south = (temp<south) ? temp : south;
-
-            temp = b.getEastLongDub();
-            east = (temp>east) ? temp : east;
-
-            temp = b.getWestLongDub();
-            west = (temp<west) ? temp : west;
-        }
-        BoundingBox box = new BoundingBox();
-        if(west == 360 || east == -360 || north == -360 || south == 360) {
-            logger.info("Something went wrong with the bounding box for record " + getDOI());
-            logger.error("Something went wrong with the bounding box for record " + getDOI());
-            west = 361;
-            east = 361;
-            north = 361;
-            south = 361;
-        }
-        box.setLongWest(west);
-        box.setLongEast(east);
-        box.setLatNorth(north);
-        box.setLatSouth(south);
-        return box;
+        return geoFields.getBoundingBox();
     }
 
     public SimpleFields getSimpleFields() {
@@ -107,17 +75,16 @@ public class DataverseJavaObject {
         citationFields.setSimpleFields(simpleFields);
     }
     public boolean hasBoundingBox(){
-        BoundingBox b = getBoundingBox();
-        if(b.getLongWest()==361)
-            return false;
-        return true;
+        return geoFields.hasBB();
     }
 
     public String getDOI(){
         return citationFields.getDOI();
     }
 
-
+    public void setBoundingBox(BoundingBox b){
+        geoFields.setFullBB(b);
+    }
 
     // Following methods are for getting the simple field values.
     // May end up deleting all of these and just dealing with them inside the CitationFields class

@@ -2,6 +2,7 @@ package Crosswalking.JSONParsing;
 
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJavaObject;
+import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
@@ -36,14 +37,16 @@ public class DataverseParser {
         String prodPlace = dJO.getProductionPlace();
         if(!prodPlace.matches("")&&!dJO.hasBoundingBox()){
             GeographicFields gf = dJO.getGeographicFields();
-            gf.addGeoBBox(getBBFromProdPlace(prodPlace));
+            gf.setFullBB(getBBFromProdPlace(prodPlace));
         }
 
     }
 
     //TODO get bounding box from production name using geonames, if possible
-    private JSONObject getBBFromProdPlace(String prodPlace) {
-        return null;
+    private BoundingBox getBBFromProdPlace(String prodPlace) {
+        BoundingBox b = new BoundingBox();
+        logger.info("The following record has no geographic location info other than a Production Place. Please manually check: %s", dJO.getDOI());
+        return b;
     }
 
 

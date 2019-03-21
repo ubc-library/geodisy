@@ -160,4 +160,18 @@ public class GeographicFields extends MetadataType {
             return false;
         return true;
     }
+
+    public BoundingBox getBoundingBox(){
+        return fullBB;
+    }
+
+    public void setFullBB(BoundingBox b){
+        GeographicBoundingBox g = new GeographicBoundingBox(doi);
+        g.setEastLongitude(String.valueOf(b.getLongEast()));
+        g.setWestLongitude(String.valueOf(b.getLongWest()));
+        g.setNorthLatitude(String.valueOf(b.getLatNorth()));
+        g.setSouthLatitude(String.valueOf(b.getLatSouth()));
+        geoBBoxes.add(g);
+        setBoundingBox();
+    }
 }
