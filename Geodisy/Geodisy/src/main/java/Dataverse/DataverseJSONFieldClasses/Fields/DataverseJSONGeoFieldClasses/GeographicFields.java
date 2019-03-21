@@ -1,6 +1,7 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
+import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,6 +14,7 @@ public class GeographicFields extends MetadataType {
     List<GeographicCoverage> geoCovers;
     List<GeographicBoundingBox> geoBBoxes;
     List<GeographicUnit> geoUnits;
+    BoundingBox fullBB; //The single bounding box that includes all listed bounding box extents
     protected String doi;
 
     public GeographicFields() {
@@ -27,8 +29,9 @@ public class GeographicFields extends MetadataType {
             case GEOGRAPHIC_BBOX:
                 for(Object o: (JSONArray) field.get("value")) {
                     JSONObject jo = (JSONObject) o;
-                    geoBBoxes.add(addGeoBBox(jo));
+                    geoBBoxes.add(parseGeoBBox(jo));
                 }
+                setBoundingBox();
                 break;
             case GEOGRAPHIC_COVERAGE:
                 for(Object o: (JSONArray) field.get("value")) {
@@ -74,7 +77,7 @@ public class GeographicFields extends MetadataType {
      * @param jObject
      * @return A Geographic Bounding Box
      */
-    public GeographicBoundingBox addGeoBBox(JSONObject jObject) {
+    public GeographicBoundingBox parseGeoBBox(JSONObject jObject) {
             GeographicBoundingBox gBB = new GeographicBoundingBox(doi);
             JSONArray ja = (JSONArray) jObject.get("value");
         for (Object o: ja){
@@ -86,6 +89,7 @@ public class GeographicFields extends MetadataType {
 
     public void setGeoBBoxes(List<GeographicBoundingBox> geoBBoxes) {
         this.geoBBoxes = geoBBoxes;
+        setBoundingBox();
     }
 
     public void setGeoUnits(List<GeographicUnit> geoUnits) {
@@ -114,5 +118,46 @@ public class GeographicFields extends MetadataType {
 
     public void setDoi(String doi) {
         this.doi = doi;
+    }
+
+    private void setBoundingBox(){
+        double north = -360;
+        double south = 360;
+        double east = -360;
+        double west = 360;
+        double temp;
+        for(GeographicBoundingBox b: geoBBoxes){
+            temp = b.getNorthLatDub();
+            north = (temp>north) ? temp : north;
+
+            temp = b.getSouthLatDub();
+            south = (temp<south) ? temp : south;
+
+            temp = b.getEastLongDub();
+            east = (temp>east) ? temp : east;
+
+            temp = b.getWestLongDub();
+            west = (temp<west) ? temp : west;
+        }
+        BoundingBox box = new BoundingBox();
+        if(west == 360 || east == -360 || north == -360 || south == 360) {
+            logger.info("Something went wrong with the bounding box for record " + doi);
+            logger.error("Something went wrong with the bounding box for record " + doi);
+            west = 361;
+            east = 361;
+            north = 361;
+            south = 361;
+        }
+        box.setLongWest(west);
+        box.setLongEast(east);
+        box.setLatNorth(north);
+        box.setLatSouth(south);
+        fullBB = box;
+    }
+
+    public boolean hasBB(){
+        if(fullBB.getLongWest()==361)
+            return false;
+        return true;
     }
 }

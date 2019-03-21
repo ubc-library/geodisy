@@ -3,7 +3,7 @@ package Dataverse;
 
 
 import Crosswalking.JSONParsing.DataverseParser;
-import Dataverse.DataverseJSONFieldClasses.DVFieldNames;
+
 import Dataverse.DataverseJSONFieldClasses.Fields.CompoundField.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
