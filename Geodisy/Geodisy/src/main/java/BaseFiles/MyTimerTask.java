@@ -6,6 +6,14 @@ package BaseFiles;/*
 
 ;
 
+
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.TimerTask;
 
 /**
@@ -23,10 +31,24 @@ public class MyTimerTask extends TimerTask {
  */
     @Override
     public void run() {
+        Path manualCheckPath = Paths.get("./logs/recordsToCheck");
+        byte[] f1, f2;
+        try {
+            f1 = Files.readAllBytes(manualCheckPath);
+
         Geodisy geo = new Geodisy();
         geo.harvestDataverse();
+        f1 = Files.readAllBytes(manualCheckPath);
+        if(Arrays.equals(f1,f2))
+            emailCheckRecords();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    
+
+    private void emailCheckRecords() {
+    }
+
     //for testing the scheduler
     /*@Override
     public void run(){
