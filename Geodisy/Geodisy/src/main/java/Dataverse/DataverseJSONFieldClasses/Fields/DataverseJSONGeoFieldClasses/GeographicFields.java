@@ -21,6 +21,7 @@ public class GeographicFields extends MetadataType {
         this.geoCovers = new LinkedList<>();
         this.geoBBoxes = new LinkedList<>();
         this.geoUnits = new LinkedList<>();
+        fullBB = new BoundingBox();
     }
     @Override
     public void setFields(JSONObject field) {
