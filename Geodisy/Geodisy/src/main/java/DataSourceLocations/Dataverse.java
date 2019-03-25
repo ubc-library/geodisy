@@ -17,7 +17,7 @@ public class Dataverse implements DataLocation {
     public Dataverse() {
         //add all dataverse URLs into the curly brackes, as comma separated strings
         dataverseURL = "placeholder";
-        sets = new String[]{"placeholder"};
+        sets = new String[]{"https://206-12-90-131.cloud.computecanada.ca/"};
     }
     @Override
     public String getDataLocationURL() {
