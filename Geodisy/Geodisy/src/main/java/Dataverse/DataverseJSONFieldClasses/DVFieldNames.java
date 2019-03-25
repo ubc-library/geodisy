@@ -11,6 +11,8 @@ public class DVFieldNames {
     public final static String DV_ID = "entity_id";
     public final static String FIELDS = "fields";
     public final static String CITATION = "citation";
+    public final static String BASE_DV_URL = "https://206-12-90-131.cloud.computecanada.ca/"; //currently our sandbox
+
 
     //Simple Field Names
     public final static String ACCESS_TO_SOURCES = "accessToSources";

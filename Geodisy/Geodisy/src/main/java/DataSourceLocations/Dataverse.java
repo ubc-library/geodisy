@@ -5,6 +5,8 @@
  */
 package DataSourceLocations;
 
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.BASE_DV_URL;
+
 /**
  * Class holds the list of all the dataverse urls that are being harvested from
  * @author pdante
@@ -17,7 +19,7 @@ public class Dataverse implements DataLocation {
     public Dataverse() {
         //add all dataverse URLs into the curly brackes, as comma separated strings
         dataverseURL = "placeholder";
-        sets = new String[]{"https://206-12-90-131.cloud.computecanada.ca/"};
+        sets = new String[]{BASE_DV_URL};
     }
     @Override
     public String getDataLocationURL() {
