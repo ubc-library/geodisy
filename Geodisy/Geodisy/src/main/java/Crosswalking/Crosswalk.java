@@ -5,10 +5,15 @@
  */
 package Crosswalking;
 
+import Dataverse.DataverseJavaObject;
+
+import java.util.LinkedList;
+
 /**
  *
  * @author pdante
  */
 public interface Crosswalk {
     //TODO create interface for metadata crosswalks
+    public void convertDJO(LinkedList<DataverseJavaObject> records);
 }
