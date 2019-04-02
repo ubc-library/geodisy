@@ -21,7 +21,7 @@ import java.util.List;
  * From here the calls for harvesting of Dataverse and exporting to Geoserver happen.
  * @author pdante
  */
-class Geodisy {
+public class Geodisy {
     public Geodisy() {
     }
 
