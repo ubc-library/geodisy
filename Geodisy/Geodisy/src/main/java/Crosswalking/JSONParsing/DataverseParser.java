@@ -30,9 +30,14 @@ public class DataverseParser {
      */
     private void parse()  {
         try {
-            JSONObject current = (JSONObject) dataverseJSON.get("data");
+            JSONObject current;
+            if(dataverseJSON.has("data"))
+                current = (JSONObject) dataverseJSON.get("data");
+            else
+                current = dataverseJSON;
             dJO.parseCitationFields(current);
-            JSONObject metadata = current.getJSONObject("latestVersion").getJSONObject("metadataBlocks");
+            JSONObject metadata;
+            metadata = dJO.getVersionSection(current).getJSONObject("metadataBlocks");
             if (metadata.has(GEOSPATIAL))
                 dJO.parseGeospatialFields(metadata.getJSONObject(GEOSPATIAL).getJSONArray(FIELDS));
             else

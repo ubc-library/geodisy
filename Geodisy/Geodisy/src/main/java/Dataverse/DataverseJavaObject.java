@@ -45,13 +45,24 @@ public class DataverseJavaObject {
     }
     public void parseCitationFields(JSONObject current) {
         citationFields.setBaseFields(current);
-        JSONObject metadata = current.getJSONObject("latestVersion").getJSONObject("metadataBlocks");
+        JSONObject metadata = getVersionSection(current).getJSONObject("metadataBlocks");
         JSONArray currentArray = metadata.getJSONObject(CITATION).getJSONArray(FIELDS);
         for (Object o : currentArray) {
             JSONObject jo = (JSONObject) o;
             citationFields.setFields(jo);
         }
         geoFields.setDoi(citationFields.getSimpleFields().getField(ALT_URL));
+    }
+    //if changed, need to change copy in CitationFields Class
+    public JSONObject getVersionSection(JSONObject current) {
+        if(current.has("latestVersion"))
+            return current.getJSONObject("latestVersion");
+        else if(current.has("datasetVersion"))
+            return current.getJSONObject("datasetVersion");
+        else{
+            logger.error("missing a _____Version field in the dataverseJson in $s", current.toString());
+            return new JSONObject();
+        }
     }
 
     public GeographicFields getGeographicFields() {

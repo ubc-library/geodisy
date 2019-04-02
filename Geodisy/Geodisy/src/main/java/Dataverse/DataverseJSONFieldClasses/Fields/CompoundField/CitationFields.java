@@ -3,6 +3,7 @@ package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.Date;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
+import Dataverse.DataverseJavaObject;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -29,6 +30,7 @@ public class CitationFields extends MetadataType {
     private List<Series> series;
     private List<Software> software;
     private List<String> relatedMaterial, relatedDatasets, otherReferences, dataSources, kindOfData, language, subject;
+
 
     public CitationFields() {
         this.simpleFields = new SimpleFields();
@@ -156,7 +158,7 @@ public class CitationFields extends MetadataType {
         simpleFields.setField(ALT_URL,parseSimpleValue( current,"persistentUrl"));
         simpleFields.setField(PUB_DATE, getValueDate(current,PUB_DATE));
         simpleFields.setField(PUBLISHER, parseSimpleValue(current,PUBLISHER));
-        current = current.getJSONObject("latestVersion");
+        current = getVersionSection(current);
         simpleFields.setField(PROD_DATE,getValueDate(current,PROD_DATE));
         simpleFields.setField(DEPOS_DATE,getValueDate(current,"createTime"));
         simpleFields.setField(DIST_DATE,getValueDate(current,"releaseTime"));
@@ -433,6 +435,18 @@ public class CitationFields extends MetadataType {
 
     public String getDOI(){
         return getSimpleFields().getDOI();
+    }
+
+    //If you update this method, also update copy in DataverseJavaObject
+    public JSONObject getVersionSection(JSONObject current) {
+        if(current.has("latestVersion"))
+            return current.getJSONObject("latestVersion");
+        else if(current.has("datasetVersion"))
+            return current.getJSONObject("datasetVersion");
+        else{
+            logger.error("missing a _____Version field in the dataverseJson in $s", current.toString());
+            return new JSONObject();
+        }
     }
 
 }

@@ -69,6 +69,7 @@ public class DataverseAPI extends SourceAPI {
     //TODO make call to get dataverseJSON, parse DataverseJavaObjects, and return a list of the DataverseJavaObjects
     @Override
     public LinkedList<DataverseJavaObject> harvest() {
+
         return new LinkedList<>();
     }
 
