@@ -1,40 +1,59 @@
 package tests.DataverseTestCases;
 
+import Dataverse.DataverseJSONFieldClasses.DVFieldNames;
+import Dataverse.DataverseJavaObject;
 import org.junit.Test;
 
-public class StraightMetadataTests {
-    String doi;
+import static org.junit.Assert.assertEquals;
+
+public class StraightMetadataTests extends DataverseTests{
 
     @Test
     public void metadataBoundingBox(){
         doi = "10.5072/FK2/U174JA";
+        DataverseJavaObject val = dataverseCallTest();
+        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"not entered yet");
     }
     @Test
     public void metadataCityStateCountry(){
-        doi = "10.5072/FK2/U174JA";
+        doi = "doi:10.5072/FK2/U174JA";
+        DataverseJavaObject val = dataverseCallTest();
+        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"not entered yet");
+
     }
 
     @Test
     public void metadataStateCountry(){
-        doi = "10.5072/FK2/8O2NUZ";
+        doi = "doi:10.5072/FK2/8O2NUZ";
+        DataverseJavaObject val = dataverseCallTest();
+        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"not entered yet");
     }
-    @Test
+    //TODO need to get a doi
+    /*@Test
     public void metadataCountry(){
         doi = "need to add still";
-    }
+        DataverseJavaObject val = dataverseCallTest();
+        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"not entered yet");
+    }*/
 
     @Test
     public void metadataAddress(){
-        doi = "10.5072/FK2/OOG4RY";
+        doi = "doi:10.5072/FK2/OOG4RY";
     }
 
-    @Test
+    //TODO need to get a doi
+    /*@Test
     public void flawedOrMinMetadata(){
         doi = "still need to add";
-    }
+        DataverseJavaObject val = dataverseCallTest();
+        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"not entered yet");
+    }*/
 
-    @Test
+    //TODO need to get a doi
+    /*@Test
     public void goodMetadata(){
         doi = "still need to add";
-    }
+        DataverseJavaObject val = dataverseCallTest();
+        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"not entered yet");
+    }*/
 }

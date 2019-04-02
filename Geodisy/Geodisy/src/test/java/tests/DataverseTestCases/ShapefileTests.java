@@ -1,42 +1,59 @@
 package tests.DataverseTestCases;
 
+import Dataverse.DataverseJSONFieldClasses.DVFieldNames;
+import Dataverse.DataverseJavaObject;
 import org.junit.Test;
 
-public class ShapefileTests {
-    String doi;
+import static org.junit.Assert.assertEquals;
+
+public class ShapefileTests extends DataverseTests{
 
     @Test
     public void shapefileTest(){
-        doi = "10.5072/FK2/QZIPVK";
+        doi = "doi:10.5072/FK2/QZIPVK";
+        DataverseJavaObject val = dataverseCallTest();
+        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"not entered yet");
     }
 
     @Test
     public void shapeCross180WGS84Test(){
-        doi = "10.5072/FK2/GCWZZ1";
+        doi = "doi:10.5072/FK2/GCWZZ1";
+        DataverseJavaObject val = dataverseCallTest();
+        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"not entered yet");
     }
 
     @Test
     public void shapeCross180StandTest(){
-        doi = "10.5072/FK2/1TUKUB";
+        doi = "doi:10.5072/FK2/1TUKUB";
+        DataverseJavaObject val = dataverseCallTest();
+        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"not entered yet");
     }
 
     @Test
     public void shapeCross180CustomTest() {
-        doi = "10.5072/FK2/VWSCHA";
+        doi = "doi:10.5072/FK2/VWSCHA";
+        DataverseJavaObject val = dataverseCallTest();
+        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"not entered yet");
     }
 
     @Test
     public void shapeCJKTest(){
-        doi = "10.5072/FK2/TGMXVG";
+        doi = "doi:10.5072/FK2/TGMXVG";
+        DataverseJavaObject val = dataverseCallTest();
+        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"not entered yet");
     }
 
     @Test
     public void shapeNAD1983(){
-        doi = "10.5072/FK2/8EB4HR";
+        doi = "doi:10.5072/FK2/8EB4HR";
+        DataverseJavaObject val = dataverseCallTest();
+        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"not entered yet");
     }
-
-    @Test
+    //TODO still need to add doi
+    /*@Test
     public void shapeWithXML(){
         doi = "NEED TO FIND";
-    }
+        DataverseJavaObject val = dataverseCallTest();
+        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"not entered yet");
+    }*/
 }

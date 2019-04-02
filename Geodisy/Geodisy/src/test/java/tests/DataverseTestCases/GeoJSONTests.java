@@ -1,27 +1,38 @@
 package tests.DataverseTestCases;
 
+import Dataverse.DataverseJSONFieldClasses.DVFieldNames;
+import Dataverse.DataverseJavaObject;
 import org.junit.Test;
 
-public class GeoJSONTests {
-    String doi;
+import static org.junit.Assert.assertEquals;
+
+public class GeoJSONTests extends DataverseTests {
 
     @Test
     public void geoJSONPoints(){
-        doi = "10.5072/FK2/ZWAV7Z";
+        doi = "doi:10.5072/FK2/ZWAV7Z";
+        DataverseJavaObject val = dataverseCallTest();
+        assertEquals(val.getCitationFields().getAuthor().get(0).getAuthorName(),"Thornberry, Evan");
     }
 
     @Test
     public void geoJSONPointsLinesPolyTest(){
-        doi = "10.5072/FK2/73OWOX";
+        doi = "doi:10.5072/FK2/73OWOX";
+        DataverseJavaObject val = dataverseCallTest();
+        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"not entered yet");
     }
 
     @Test
     public void geoJSONPoly(){
-        doi = "10.5072/FK2/2KQIL0";
+        doi = "doi:10.5072/FK2/2KQIL0";
+        DataverseJavaObject val = dataverseCallTest();
+        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"not entered yet");
     }
 
     @Test
     public void geoJSONNonWG84(){
-        doi = "10.5072/FK2/LFZMTA";
+        doi = "doi:10.5072/FK2/LFZMTA";
+        DataverseJavaObject val = dataverseCallTest();
+        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"not entered yet");
     }
 }
