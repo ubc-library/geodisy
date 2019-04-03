@@ -26,7 +26,7 @@ public class GeographicBoundingBox extends CompoundJSONField {
     }
 
     public void setWestLongitude(String westLongitude) {
-        this.bb.setLongWest(westLongitude);
+         bb.setLongWest(westLongitude);
     }
 
     public String getEastLongitude() {
@@ -69,7 +69,7 @@ public class GeographicBoundingBox extends CompoundJSONField {
     }
 
     public void setSouthLatitude(String southLatitude) {
-        this.bb.setLatSouth(southLatitude);
+        bb.setLatSouth(southLatitude);
     }
 
 
@@ -87,7 +87,13 @@ public class GeographicBoundingBox extends CompoundJSONField {
             case NORTH_LAT:
                 setNorthLatitude(value);
                 break;
+            case NORTH_LAT_LONG:
+                setNorthLatitude(value);
+                break;
             case SOUTH_LAT:
+                setSouthLatitude(value);
+                break;
+            case SOUTH_LAT_LONG:
                 setSouthLatitude(value);
                 break;
             default:
@@ -105,7 +111,11 @@ public class GeographicBoundingBox extends CompoundJSONField {
                 return getEastLongitude();
             case NORTH_LAT:
                 return getNorthLatitude();
+            case NORTH_LAT_LONG:
+                return getNorthLatitude();
             case SOUTH_LAT:
+                return getSouthLatitude();
+            case SOUTH_LAT_LONG:
                 return getSouthLatitude();
             default:
                 errorGettingValue(this.getClass().getName(),fieldName);

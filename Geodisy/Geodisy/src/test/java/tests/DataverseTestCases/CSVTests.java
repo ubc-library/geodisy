@@ -11,6 +11,8 @@ public class CSVTests extends DataverseTests {
     @Test
     public void CSVNonGeo(){
         doi = "doi:10.5072/FK2/VLOTSI";
+        DataverseJavaObject val = dataverseCallTest();
+        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"CSV file that is not geospatial data");
     }
 
     //TODO this seems like an invalid doi

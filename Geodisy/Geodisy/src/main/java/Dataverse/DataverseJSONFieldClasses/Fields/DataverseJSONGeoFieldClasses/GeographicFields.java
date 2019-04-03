@@ -42,8 +42,8 @@ public class GeographicFields extends MetadataType {
                 break;
             case GEOGRAPHIC_UNIT:
                 for(Object o: (JSONArray) field.get("value")) {
-                    JSONObject jo = (JSONObject) o;
-                    GeographicUnit geographicUnit = new GeographicUnit(jo.getString("value"));
+                    //JSONObject jo = (JSONObject) o;
+                    GeographicUnit geographicUnit = new GeographicUnit((String)o);
                     geoUnits.add(geographicUnit);
                 }
                 break;
@@ -75,16 +75,15 @@ public class GeographicFields extends MetadataType {
     /**
      * This method takes a Geographic Bounding box JSON array and returns a
      * Geographic bounding box java object
-     * @param jObject
+     * @param jA
      * @return A Geographic Bounding Box
      */
-    public GeographicBoundingBox parseGeoBBox(JSONObject jObject) {
+    public GeographicBoundingBox parseGeoBBox(JSONObject jsonObject) {
             GeographicBoundingBox gBB = new GeographicBoundingBox(doi);
-            JSONArray ja = (JSONArray) jObject.get("value");
-        for (Object o: ja){
-            JSONObject jO = (JSONObject) o;
-            gBB.setField(jO);
-        }
+            for(String k: jsonObject.keySet()) {
+                JSONObject jO = jsonObject.getJSONObject(k);
+                gBB.setField(jO);
+            }
         return gBB;
     }
 

@@ -24,6 +24,14 @@ abstract public class CompoundJSONField extends JSONField {
         return this;
     }
 
+    public JSONField parseCompoundData(JSONObject compoundField){
+        Set<String> keys = compoundField.keySet();
+        for(String k:keys) {
+            setField((JSONObject) compoundField.get(k));
+        }
+        return this;
+    }
+
     /**
      *
      * Each class overrides this with a version using a switch statement to

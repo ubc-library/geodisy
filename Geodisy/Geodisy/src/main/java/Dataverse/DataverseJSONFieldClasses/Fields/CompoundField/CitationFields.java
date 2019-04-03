@@ -27,7 +27,7 @@ public class CitationFields extends MetadataType {
     private List<Distributor> distributor;
     private List<TimePeriodCovered> timePeriodCovered;
     private List<DateOfCollection> datesOfCollection;
-    private List<Series> series;
+    private Series series;
     private List<Software> software;
     private List<String> relatedMaterial, relatedDatasets, otherReferences, dataSources, kindOfData, language, subject;
 
@@ -50,7 +50,7 @@ public class CitationFields extends MetadataType {
         this.timePeriodCovered = new LinkedList<>();
         this.datesOfCollection = new LinkedList<>();
         this.kindOfData = new LinkedList<>();
-        this.series  = new LinkedList<>();
+        this.series  = new Series();
         this.software = new LinkedList<>();
         this.relatedMaterial = new LinkedList<>();
         this.relatedDatasets = new LinkedList<>();
@@ -62,8 +62,13 @@ public class CitationFields extends MetadataType {
     public void setFields(JSONObject jo) {
         Object valueObject = jo.get(VAL);
         String label = jo.getString(TYPE_NAME);
-        if(valueObject instanceof JSONArray){
-            JSONArray ja = (JSONArray) valueObject;
+        if(!(valueObject instanceof String)){
+            JSONObject jobj = new JSONObject();
+            JSONArray ja = new JSONArray();
+            if(label.equals(SERIES))
+                jobj  = (JSONObject) valueObject;
+            else
+                ja = (JSONArray) valueObject;
             switch(label){
                 case AUTHOR:
                     Author a = new Author();
@@ -114,8 +119,7 @@ public class CitationFields extends MetadataType {
                     addTimePeriodCovered((TimePeriodCovered) tpc.parseCompoundData(ja));
                     break;
                 case SERIES:
-                    Series s = new Series();
-                    addSeries((Series) s.parseCompoundData(ja));
+                    series.parseCompoundData(jobj);
                     break;
                 case SOFTWARE:
                     Software sw = new Software();
@@ -365,15 +369,14 @@ public class CitationFields extends MetadataType {
 
     public void addKindOfData(String s){this.kindOfData.add(s);}
 
-    public List<Series> getSeries() {
+    public Series getSeries() {
         return series;
     }
 
-    public void setSeries(List<Series> series) {
+    public void setSeries(Series series) {
         this.series = series;
     }
 
-    public void addSeries(Series s){this.series.add(s);}
 
     public List<Software> getSoftware() {
         return software;

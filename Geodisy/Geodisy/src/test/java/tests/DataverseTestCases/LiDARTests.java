@@ -12,7 +12,7 @@ public class LiDARTests extends DataverseTests{
     public void liDATACV(){
         doi = "doi:10.5072/FK2/JSE79W";
         DataverseJavaObject val = dataverseCallTest();
-        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"not entered yet");
+        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"CITY OF SURREY. 2013 BARE EARTH DIGITAL ELEVATION MODEL");
     }
     //TODO still need to add doi's
     /*@Test

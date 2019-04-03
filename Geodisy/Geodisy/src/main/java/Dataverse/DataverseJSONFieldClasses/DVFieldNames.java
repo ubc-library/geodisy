@@ -120,8 +120,8 @@ public class DVFieldNames {
 
     //Time Period Covered Field Names
     public final static String TIME_PER_COV = "timePeriodCovered";
-    public final static String TIME_PER_COV_START = "timePeriodCoverStart";
-    public final static String TIME_PER_COV_END = "timePeriodCoverEnd";
+    public final static String TIME_PER_COV_START = "timePeriodCoveredStart";
+    public final static String TIME_PER_COV_END = "timePeriodCoveredEnd";
 
     //Topic Classification Field Names
     public final static String TOPIC_CLASS = "topicClassification";
