@@ -47,6 +47,8 @@ public class DataverseParser {
                 GeographicFields gf = dJO.getGeographicFields();
                 gf.setFullBB(getBBFromProdPlace(prodPlace));
             }
+            if(current.has("files"))
+                dJO.parseFiles(current.getJSONArray("files"));
         }catch (JSONException e){
             logger.error("Something was malformed with the JSON string returned from Dataverse");
         }

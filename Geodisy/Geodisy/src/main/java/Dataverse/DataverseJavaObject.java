@@ -13,6 +13,8 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.util.LinkedList;
 import java.util.List;
 
 import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
@@ -31,10 +33,12 @@ public class DataverseJavaObject {
     private CitationFields citationFields;
     private GeographicFields geoFields;
     private Logger logger = LogManager.getLogger(DataverseParser.class);
+    private List<DataverseRecordFile> dataFiles; //Stores the datafiles
 
     public DataverseJavaObject() {
         this.citationFields = new CitationFields();
         this.geoFields = new GeographicFields();
+        dataFiles = new LinkedList<>();
     }
 
     public void parseGeospatialFields(JSONArray jsonArray) {
@@ -262,5 +266,28 @@ public class DataverseJavaObject {
 
     public GeographicFields getGeoFields() {
         return geoFields;
+    }
+
+    public void parseFiles(JSONArray files) {
+        List<DataverseRecordFile> recordFiles = new LinkedList<>();
+        for(Object o: files){
+            JSONObject jo = (JSONObject) o;
+            if(jo.getString("restricted").equals("false"))
+                continue;
+            String title = jo.getString("label");
+            JSONObject dataFile = (JSONObject) jo.get("dataFile");
+            //TODO pass the server URL to this class rather than the current hardcode
+            String server = "https://206-12-90-131.cloud.computecanada.ca"; //this is the sandbox dataverse
+            System.out.println("This is using the sandbox dataverse hard-coded into the DJO for getting files");
+            DataverseRecordFile dRF;
+            if(dataFile.has("persistentId")&& !dataFile.getString("persistentID").equals("")) {
+                String doi = dataFile.getString("persistentId");
+                dRF = new DataverseRecordFile(title, doi, server);
+            }else{
+                int dbID = Integer.parseInt(dataFile.getString("id"));
+                dRF = new DataverseRecordFile(title,dbID,server);
+            }
+            recordFiles.add(dRF);
+        }
     }
 }
