@@ -13,7 +13,6 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -277,11 +276,12 @@ public class DataverseJavaObject {
             String title = jo.getString("label");
             JSONObject dataFile = (JSONObject) jo.get("dataFile");
             //TODO pass the server URL to this class rather than the current hardcode
-            String server = "https://206-12-90-131.cloud.computecanada.ca"; //this is the sandbox dataverse
+            String server = BASE_DV_URL; //this is the sandbox dataverse
             System.out.println("This is using the sandbox dataverse hard-coded into the DJO for getting files");
             DataverseRecordFile dRF;
-            if(dataFile.has("persistentId")&& !dataFile.getString("persistentID").equals("")) {
-                String doi = dataFile.getString("persistentId");
+            //Some Dataverses don't have individual DOIs for files, so for those I will use the database's file id instead
+            if(dataFile.has(DOI)&& !dataFile.getString(DOI).equals("")) {
+                String doi = dataFile.getString(DOI);
                 dRF = new DataverseRecordFile(title, doi, server);
             }else{
                 int dbID = Integer.parseInt(dataFile.getString("id"));
