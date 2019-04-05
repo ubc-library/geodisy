@@ -1,5 +1,6 @@
 package Dataverse.FindingBoundingBoxes;
 
+import BaseFiles.HTTPCaller;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.City;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
@@ -63,14 +64,8 @@ public class Geonames extends FindBoundBox {
         } catch (UnsupportedEncodingException ignored) {
             // Can be safely ignored because UTF-8 is always supported
         }
-        String urlString = state + addParameters(parameters);
-        HttpURLConnection con = getHttpURLConnection(urlString);
-
-        try {
-            box = readResponse(con);
-        }catch (IOException e){
-            logger.error("something went wrong with the http request for a bounding box of record: " + doi);
-        }
+        String searchString = state + addParameters(parameters);
+        box = readResponse(getJSONString(searchString));
         if(box.getLongWest()==361)
             return getDVBoundingBox(country);
         Province p = new Province(unURLedState, country);
@@ -102,13 +97,7 @@ public class Geonames extends FindBoundBox {
             // Can be safely ignored because UTF-8 is always supported
         }
         String searchString = city + "%2C%20" + state + addParameters(parameters);
-        HttpURLConnection con = getHttpURLConnection(searchString);
-
-        try {
-            box = readResponse(con);
-        }catch (IOException e){
-            logger.error("something went wrong with the http request for a bounding box of record: \" + doi");
-        }
+            box = readResponse(getJSONString(searchString));
         if(box.getLongWest()==361)
             return getDVBoundingBox(country,state);
         City cit = new City(city,state,country);
@@ -206,23 +195,11 @@ public class Geonames extends FindBoundBox {
     }
 
     @Override
-    public HttpURLConnection getHttpURLConnection(String searchValue) {
-        try {
-            String urlString = "http://api.geonames.org/search?q=" + searchValue;
-            URL url = new URL(urlString);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            con.setConnectTimeout(5000);
-            con.setReadTimeout(5000);
-            return con;
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public String getJSONString(String searchValue) {
+
+        String urlString = "http://api.geonames.org/search?q=" + searchValue;
+        HTTPCaller caller = new HTTPCaller(urlString);
+        return caller.getSearchJSON();
     }
 
     private String addParameters(Map<String, String> parameters) {
