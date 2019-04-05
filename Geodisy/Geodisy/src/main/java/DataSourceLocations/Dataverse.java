@@ -12,24 +12,15 @@ import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.BASE_DV_URL;
  * @author pdante
  */
 public class Dataverse implements DataLocation {
-    private String dataverseURL;
-    private String[] sets;
+    private String[] dataverseURLs;
 
-    //TODO actually add dataverse urls to harvest from
     public Dataverse() {
-        //add all dataverse URLs into the curly brackes, as comma separated strings
-        dataverseURL = "placeholder";
-        sets = new String[]{BASE_DV_URL};
+        //enter dataverse urls into brackets, comma separated
+        String[] dvs={BASE_DV_URL};
+        dataverseURLs =dvs;
     }
     @Override
-    public String getDataLocationURL() {
-        return dataverseURL;
+    public String[] getDataLocationURLs() {
+        return dataverseURLs;
     }
-
-    @Override
-    public String[] getSet() {
-        return sets;
-    }
-
-
 }
