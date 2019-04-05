@@ -25,7 +25,7 @@ public class DataverseRecordFile {
         this.title = title;
         this.doi = doi;
         this.server = server;
-        recordURL = server+"/api/access/datafile/:/persistentId/?persistentId=" + doi;
+        recordURL = server+"api/access/datafile/:/persistentId/?persistentId=" + doi;
         getFile();
     }
 
@@ -33,7 +33,7 @@ public class DataverseRecordFile {
         this.title = title;
         this.dbID = dbID;
         this.server = server;
-        recordURL = String.format(server+"/api/access/datafile/$d", dbID);
+        recordURL = String.format(server+"api/access/datafile/$d", dbID);
         getFile();
     }
 
