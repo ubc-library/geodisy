@@ -14,6 +14,9 @@ import DataSourceLocations.Dataverse;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+
+import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.BASE_DV_URL;
 
 
 /**
@@ -26,21 +29,22 @@ public class Geodisy {
     }
 
     /**
-     * Front side of middleware, this part harvests data from Geoserver
+     * Front side of middleware, this part harvests data from Dataverse
      */
-    //TODO Broken, need to finish
-    public List<DataverseJavaObject> harvestDataverse(){
-        DataLocation dv = new Dataverse();
-        List<DataLocation> locations = new LinkedList<>();
-        locations.add(dv);
-        List<String> baseURLs = new LinkedList<>();
+
+    public List<DataverseJavaObject> harvestDataverse() {
+        Dataverse dv = new Dataverse();
+        String[] dvs = dv.getDataLocationURLs();
         List<DataverseJavaObject> records = new LinkedList<>();
-        for(DataLocation dl: locations) {
-            SourceAPI dLAPI = new DataverseAPI(createDataverseURL(dl.getDataLocationURL()));
-            dLAPI.harvest();
+        for (String s : dvs) {
+            SourceAPI dVAPI = new DataverseAPI(s);
+            LinkedList<DataverseJavaObject> current = dVAPI.harvest();
+            for(DataverseJavaObject djo:current){
+                records.add(djo);
+            }
         }
-            return records;
-        }
+        return records;
+    }
 
 
     /** 
