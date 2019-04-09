@@ -20,7 +20,7 @@ public class HTTPCaller {
 
     }
 
-    private HttpURLConnection getHttpURLConnection(String searchValue) {
+    private HttpURLConnection getHttpURLConnection() {
         try {
 
             URL url = new URL(searchUrl);
@@ -67,8 +67,8 @@ public class HTTPCaller {
         return answer;
     }
 
-    public String getSearchJSON(){
-        HttpURLConnection h = getHttpURLConnection(searchUrl);
+    public String getJSONString(){
+        HttpURLConnection h = getHttpURLConnection();
         return readResponse(h);
     }
 }
