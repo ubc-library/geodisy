@@ -17,10 +17,8 @@ public class DataverseParser {
     private DataverseJavaObject dJO;
     static Logger logger = LogManager.getLogger(DataverseParser.class);
 
-    public DataverseParser(String dataverseJSONString) {
-        this.dataverseJSON = new JSONObject(dataverseJSONString);
+    public DataverseParser() {
         this.dJO = new DataverseJavaObject();
-        parse();
     }
 
     /**
@@ -28,8 +26,9 @@ public class DataverseParser {
      * to parse compound or simple field data, respectively.
      * @throws JSONException
      */
-    private void parse()  {
+    public DataverseJavaObject parse(JSONObject jo)  {
         try {
+            dataverseJSON = jo;
             JSONObject current;
             if(dataverseJSON.has("data"))
                 current = (JSONObject) dataverseJSON.get("data");
@@ -52,6 +51,7 @@ public class DataverseParser {
         }catch (JSONException e){
             logger.error("Something was malformed with the JSON string returned from Dataverse");
         }
+        return dJO;
     }
 
     // We decided that we aren't trying to get a bounding box from Production Place but will instead log it to
