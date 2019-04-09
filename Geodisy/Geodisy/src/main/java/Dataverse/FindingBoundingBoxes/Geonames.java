@@ -6,7 +6,6 @@ import Dataverse.FindingBoundingBoxes.LocationTypes.City;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Province;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.*;
 import java.util.HashMap;
@@ -199,7 +198,7 @@ public class Geonames extends FindBoundBox {
 
         String urlString = "http://api.geonames.org/search?q=" + searchValue;
         HTTPCaller caller = new HTTPCaller(urlString);
-        return caller.getSearchJSON();
+        return caller.getJSONString();
     }
 
     private String addParameters(Map<String, String> parameters) {
