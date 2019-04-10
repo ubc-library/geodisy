@@ -1,14 +1,12 @@
 package Dataverse.FindingBoundingBoxes.LocationTypes;
 
-public class BoundingBox {
+import java.io.Serializable;
+
+public class BoundingBox implements Serializable {
     private double latSouth = 361;
     private double latNorth = 361;
     private double longWest = 361;
     private double longEast = 361;
-
-
-    public BoundingBox() {
-    }
 
     /**
      *

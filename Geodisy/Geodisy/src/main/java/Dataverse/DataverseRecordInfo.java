@@ -1,10 +1,12 @@
 package Dataverse;
 
-public class DataverseRecordInfo {
-    int major;
-    int minor;
-    String doi;
-    String server;
+import java.io.Serializable;
+
+public class DataverseRecordInfo implements Serializable {
+    private int major;
+    private int minor;
+    private String doi;
+    private String server;
 
     public DataverseRecordInfo(String server) {
         this.server = server;
@@ -51,5 +53,21 @@ public class DataverseRecordInfo {
     {
         int prime = 31;
         return prime + (doi == null ? 0 : doi.hashCode());
+    }
+
+    public void setMajor(int major) {
+        this.major = major;
+    }
+
+    public void setMinor(int minor) {
+        this.minor = minor;
+    }
+
+    public void setDoi(String doi) {
+        this.doi = doi;
+    }
+
+    public void setServer(String server) {
+        this.server = server;
     }
 }
