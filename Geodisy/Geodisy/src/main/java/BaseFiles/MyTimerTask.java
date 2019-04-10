@@ -7,9 +7,10 @@ package BaseFiles;/*
 ;
 
 
+import Dataverse.DataverseRecordInfo;
+import Dataverse.ExistingSearches;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -37,14 +38,22 @@ public class MyTimerTask extends TimerTask {
             f1 = Files.readAllBytes(manualCheckPath);
 
         Geodisy geo = new Geodisy();
+        ExistingSearchesFile eSF = new ExistingSearchesFile("ExistingRecords.txt");
+
+        //noinspection UnusedAssignment
+        ExistingSearches existingSearches = eSF.readExistingSearches();
         geo.harvestDataverse();
         f2 = Files.readAllBytes(manualCheckPath);
         if(Arrays.equals(f1,f2))
             emailCheckRecords();
-        } catch (IOException e) {
+        existingSearches = ExistingSearches.getExistingSearches();
+        eSF.writeExistingSearches(existingSearches);
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
+
+
 
     //TODO setup email system
     private void emailCheckRecords() {
