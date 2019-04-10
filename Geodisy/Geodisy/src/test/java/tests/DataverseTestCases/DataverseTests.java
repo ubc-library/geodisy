@@ -6,6 +6,7 @@ import Crosswalking.JSONParsing.DataverseParser;
 import Dataverse.DataverseJavaObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
@@ -37,8 +38,9 @@ public abstract class DataverseTests {
     public DataverseJavaObject dataverseCallTest(){
         String dataverseCall = getDataverseString();
         String dataverse = call(dataverseCall);
-        DataverseParser dataverseParser = new DataverseParser(dataverse);
-        dJO = dataverseParser.getdJO();
+        JSONObject jo = new JSONObject(dataverse);
+        DataverseParser dataverseParser = new DataverseParser();
+        dJO = dataverseParser.parse(jo);
         return dJO;
     }
 
