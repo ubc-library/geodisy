@@ -40,3 +40,13 @@ Geodisy/Geodisy/logs/recordsToCheck\.log
 Template\+for\+System\+Descriptions\.mht
 
 Geodisy/Geodisy/logs/error\.log
+
+Geodisy/Geodisy/\.idea/
+
+Time reports/
+
+Geodisy/Geodisy/src/\.idea/
+
+Geodisy/Geodisy/Geodisy\.iml
+
+Geodisy/Geodisy/ExistingRecordsTest\.txt
