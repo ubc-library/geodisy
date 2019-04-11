@@ -43,9 +43,10 @@ public class DataverseAPI extends SourceAPI {
         LinkedList<JSONObject> jsons = downloadMetadata(dois);
         LinkedList<DataverseJavaObject> answers =  new LinkedList<>();
         DataverseParser parser = new DataverseParser();
+        ExistingSearches eS = ExistingSearches.getExistingSearches();
         for(JSONObject jo:jsons){
             DataverseJavaObject djo = parser.parse(jo);
-            //TODO check if DJO has new info and don't add to answer if it doesn't
+            //TODO check versioning
             answers.add(djo);
         }
         return answers;

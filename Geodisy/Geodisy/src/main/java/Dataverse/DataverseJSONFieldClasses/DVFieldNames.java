@@ -13,6 +13,8 @@ public class DVFieldNames {
     public final static String CITATION = "citation";
     public final static String BASE_DV_URL = "https://206-12-90-131.cloud.computecanada.ca/"; //currently our sandbox
     public final static String DOI = "persistentId";
+    public final static String MAJOR_VERSION = "versionNumber";
+    public final static String MINOR_VERSION = "versionMinorNumber";
 
 
     //Simple Field Names

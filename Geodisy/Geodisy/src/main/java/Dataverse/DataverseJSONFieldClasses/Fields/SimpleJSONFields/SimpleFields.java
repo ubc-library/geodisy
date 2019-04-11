@@ -18,6 +18,7 @@ public class SimpleFields extends JSONField {
      */
     private String title, subtitle, alternativeTitle, alternativeURL, license,notesText,productionPlace,depositor, accessToSources, publisher,originOfSources, characteristicOfSources;
     private Date productionDate,distributionDate,dateOfDeposit, publicationDate;
+    private int versionMajor, versionMinor;
 
     public SimpleFields() {
         this.title = "";
@@ -32,6 +33,8 @@ public class SimpleFields extends JSONField {
         this.characteristicOfSources = "";
         this.accessToSources = "";
         this.publisher = "";
+        this.versionMajor = 0;
+        this.versionMinor = 0;
     }
 
     /**
@@ -91,6 +94,12 @@ public class SimpleFields extends JSONField {
             case PUBLISHER:
                 setPublisher(value);
                 break;
+            case MAJOR_VERSION:
+                setVersionMajor(Integer.parseInt(value));
+                break;
+            case MINOR_VERSION:
+                setVersionMinor(Integer.parseInt(value));
+                break;
             default:
                 errorParsing(this.getClass().getName(),label);
         }
@@ -132,6 +141,10 @@ public class SimpleFields extends JSONField {
                 return getPublicationDate();
             case PUBLISHER:
                 return getPublisher();
+            case MAJOR_VERSION:
+                return getVersionMajor();
+            case MINOR_VERSION:
+                return getVersionMinor();
             default:
                 errorParsing(this.getClass().getName(), fieldName);
                 return "Bad Field Name";
@@ -202,6 +215,14 @@ public class SimpleFields extends JSONField {
         this.publicationDate = new Date(privateationDate);
     }
 
+    public void setVersionMajor(int versionMajor) {
+        this.versionMajor = versionMajor;
+    }
+
+    public void setVersionMinor(int versionMinor) {
+        this.versionMinor = versionMinor;
+    }
+
     private String getTitle() {
         return title;
     }
@@ -268,5 +289,13 @@ public class SimpleFields extends JSONField {
 
     public String getDOI(){
         return getAlternativeTitle();
+    }
+
+    public String getVersionMajor() {
+        return String.valueOf(versionMajor);
+    }
+
+    public String getVersionMinor() {
+        return String.valueOf(versionMinor);
     }
 }

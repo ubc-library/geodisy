@@ -28,15 +28,15 @@ public class ExistingSearches implements Serializable {
         bBoxes.put(name,boundingBox);
     }
 
-    private boolean hasBBox(String name){
-        if(bBoxes.containsKey(name))
+    private boolean hasBBox(String doi){
+        if(bBoxes.containsKey(doi))
             return true;
         return false;
     }
 
-    public BoundingBox getBBox(String name){
-        if(hasBBox(name))
-            return bBoxes.get(name);
+    public BoundingBox getBBox(String doi){
+        if(hasBBox(doi))
+            return bBoxes.get(doi);
         return new BoundingBox();
     }
 

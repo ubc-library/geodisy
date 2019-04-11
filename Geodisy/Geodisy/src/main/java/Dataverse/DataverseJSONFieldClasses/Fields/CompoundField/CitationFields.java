@@ -167,6 +167,8 @@ public class CitationFields extends MetadataType {
         simpleFields.setField(DEPOS_DATE,getValueDate(current,"createTime"));
         simpleFields.setField(DIST_DATE,getValueDate(current,"releaseTime"));
         simpleFields.setField(LICENSE,parseSimpleValue(current,LICENSE));
+        simpleFields.setField(MAJOR_VERSION,parseSimpleValue(current,MAJOR_VERSION));
+        simpleFields.setField(MINOR_VERSION,parseSimpleValue(current,MINOR_VERSION));
 
     }
 

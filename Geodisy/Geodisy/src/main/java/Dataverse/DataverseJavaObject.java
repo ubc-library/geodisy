@@ -290,4 +290,5 @@ public class DataverseJavaObject {
             recordFiles.add(dRF);
         }
     }
+
 }
