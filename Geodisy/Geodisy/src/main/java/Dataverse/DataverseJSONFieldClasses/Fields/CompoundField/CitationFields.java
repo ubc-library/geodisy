@@ -453,5 +453,7 @@ public class CitationFields extends MetadataType {
             return new JSONObject();
         }
     }
-
+    public int getVersion(){
+        return getSimpleFields().getVersion();
+    }
 }

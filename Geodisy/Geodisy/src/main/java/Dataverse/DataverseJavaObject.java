@@ -33,6 +33,7 @@ public class DataverseJavaObject {
     private GeographicFields geoFields;
     private Logger logger = LogManager.getLogger(DataverseParser.class);
     private List<DataverseRecordFile> dataFiles; //Stores the datafiles
+    private String server;
 
     public DataverseJavaObject() {
         this.citationFields = new CitationFields();
@@ -290,5 +291,8 @@ public class DataverseJavaObject {
             recordFiles.add(dRF);
         }
     }
+    public int getVersion(){
+        return getCitationFields().getVersion();
 
+    }
 }

@@ -151,6 +151,12 @@ public class SimpleFields extends JSONField {
         }
 
     }
+
+    public int getVersion(){
+        int major = Integer.parseInt(getVersionMajor());
+        int minor = Integer.parseInt(getVersionMinor());
+        return major*1000+minor;
+    }
     private void setTitle(String title) {
         this.title = title;
     }
