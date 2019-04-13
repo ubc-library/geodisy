@@ -19,7 +19,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.BASE_DV_URL;
+import static Dataverse.DVFieldNameStrings.BASE_DV_URL;
 
 /**
  *  Search Dataverse for datasets
@@ -46,8 +46,8 @@ public class DataverseAPI extends SourceAPI {
         ExistingSearches eS = ExistingSearches.getExistingSearches();
         for(JSONObject jo:jsons){
             DataverseJavaObject djo = parser.parse(jo);
-            //TODO check versioning
-            answers.add(djo);
+            if(djo.dJOHasContent())
+                answers.add(djo);
         }
         return answers;
     }

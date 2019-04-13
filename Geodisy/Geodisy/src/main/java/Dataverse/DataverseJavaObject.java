@@ -16,7 +16,7 @@ import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 
-import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+import static Dataverse.DVFieldNameStrings.*;
 
 /**
  * Java object structure to parse Dataverse Json into
@@ -34,11 +34,13 @@ public class DataverseJavaObject {
     private Logger logger = LogManager.getLogger(DataverseParser.class);
     private List<DataverseRecordFile> dataFiles; //Stores the datafiles
     private String server;
+    private boolean hasContent;
 
     public DataverseJavaObject() {
         this.citationFields = new CitationFields();
         this.geoFields = new GeographicFields();
-        dataFiles = new LinkedList<>();
+        this.dataFiles = new LinkedList<>();
+        hasContent = false;
     }
 
     public void parseGeospatialFields(JSONArray jsonArray) {
@@ -55,6 +57,7 @@ public class DataverseJavaObject {
             JSONObject jo = (JSONObject) o;
             citationFields.setFields(jo);
         }
+        hasContent=true;
         geoFields.setDoi(citationFields.getSimpleFields().getField(ALT_URL));
     }
     //if changed, need to change copy in CitationFields Class
@@ -293,6 +296,19 @@ public class DataverseJavaObject {
     }
     public int getVersion(){
         return getCitationFields().getVersion();
-
+    }
+    public DataverseRecordInfo generateDRI(){
+        String major, minor,doi;
+        major = getCitationFields().getSimpleFields().getVersionMajor();
+        minor = getCitationFields().getSimpleFields().getVersionMinor();
+        doi = getCitationFields().getDOI();
+        DataverseRecordInfo answer = new DataverseRecordInfo();
+        answer.setDoi(doi);
+        answer.setMajor(major);
+        answer.setMinor(minor);
+        return answer;
+    }
+    public boolean dJOHasContent(){
+        return hasContent;
     }
 }

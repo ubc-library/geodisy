@@ -7,15 +7,19 @@ package BaseFiles;/*
 ;
 
 
-import Dataverse.DataverseRecordInfo;
-import Dataverse.ExistingSearches;
 
+import Dataverse.ExistingSearches;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.TimerTask;
+
+import static BaseFiles.GeodisyStrings.EXISTING_RECORDS;
+import static BaseFiles.GeodisyStrings.RECORDS_TO_CHECK;
 
 /**
  *This extends TimerTask to create the class that will
@@ -24,7 +28,7 @@ import java.util.TimerTask;
  * @author pdante
  */
 public class MyTimerTask extends TimerTask {
-    
+    Logger logger = LogManager.getLogger(this.getClass());
     protected MyTimerTask() {
     }
 /**
@@ -32,13 +36,13 @@ public class MyTimerTask extends TimerTask {
  */
     @Override
     public void run() {
-        Path manualCheckPath = Paths.get("./logs/recordsToCheck");
+        Path manualCheckPath = Paths.get(RECORDS_TO_CHECK);
         byte[] f1, f2;
         try {
             f1 = Files.readAllBytes(manualCheckPath);
 
         Geodisy geo = new Geodisy();
-        ExistingSearchesFile eSF = new ExistingSearchesFile("ExistingRecords.txt");
+        ExistingSearchesFile eSF = new ExistingSearchesFile(EXISTING_RECORDS);
 
         //noinspection UnusedAssignment
         ExistingSearches existingSearches = eSF.readExistingSearches();
@@ -49,7 +53,7 @@ public class MyTimerTask extends TimerTask {
         existingSearches = ExistingSearches.getExistingSearches();
         eSF.writeExistingSearches(existingSearches);
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error("Something went wrong trying to read permanent file ExistingRecords.txt!");
         }
     }
 

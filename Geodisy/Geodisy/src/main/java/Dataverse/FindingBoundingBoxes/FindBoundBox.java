@@ -17,8 +17,8 @@ public abstract class FindBoundBox {
     Logger logger = LogManager.getLogger(FindBoundBox.class.getName());
     //TODO get HTTP response (XML) and parse for boundingbox coordinates
 
-    protected BoundingBox readResponse(String searchString){
-        return parseXMLString(getJSONString(searchString));
+    protected BoundingBox readResponse(String responseString){
+        return parseXMLString(responseString);
     }
 
     protected  BoundingBox parseXMLString(String responseString){

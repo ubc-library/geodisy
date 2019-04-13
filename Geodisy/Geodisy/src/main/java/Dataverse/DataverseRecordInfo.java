@@ -6,10 +6,9 @@ public class DataverseRecordInfo implements Serializable {
     private int major;
     private int minor;
     private String doi;
-    private String server;
 
-    public DataverseRecordInfo(String server) {
-        this.server = server;
+    public DataverseRecordInfo() {
+
     }
 
     @Override
@@ -45,9 +44,6 @@ public class DataverseRecordInfo implements Serializable {
         return doi;
     }
 
-    public String getServer() {
-        return server;
-    }
     @Override
     public int hashCode()
     {
@@ -58,16 +54,18 @@ public class DataverseRecordInfo implements Serializable {
     public void setMajor(int major) {
         this.major = major;
     }
+    public void setMajor(String major){
+        this.major = Integer.parseInt(major);
+    }
 
     public void setMinor(int minor) {
         this.minor = minor;
     }
 
+    public void setMinor(String minor){this.minor = Integer.parseInt(minor);}
+
     public void setDoi(String doi) {
         this.doi = doi;
     }
 
-    public void setServer(String server) {
-        this.server = server;
-    }
 }

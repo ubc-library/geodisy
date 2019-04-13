@@ -19,38 +19,21 @@ public class ExistingSearchesFile {
     }
 
     public void writeExistingSearches(ExistingSearches existingSearches) throws IOException {
-        verifyFileExistence();
-        FileOutputStream f =  new FileOutputStream(new File(path));
-        ObjectOutputStream o =  new ObjectOutputStream(f);
-        o.writeObject(existingSearches);
-        o.close();
-        f.close();
-    }
+        FileWriter writer = new FileWriter();
+        writer.writeObjectToFile(existingSearches,path);
+        }
 
 
 
     public ExistingSearches readExistingSearches() throws IOException, ClassNotFoundException {
-        verifyFileExistence();
-        FileInputStream fi =  new FileInputStream(new File(path));
-        ObjectInputStream oi =  new ObjectInputStream(fi);
-        ExistingSearches answer = (ExistingSearches) oi.readObject();
-        oi.close();
-        fi.close();
-        return answer;
-
-    }
-    private void verifyFileExistence() {
-        Path filePath = Paths.get(path);
+        FileWriter writer = new FileWriter();
+        ExistingSearches es = ExistingSearches.getExistingSearches();
         try {
-            Files.createFile(filePath);
-            System.out.println("File didn't already exists, so created it");
-            ExistingSearches es = ExistingSearches.getExistingSearches();
-            if(es.isEmpty())
-                es.addBBox("_filler_", new BoundingBox());
+            es = (ExistingSearches) writer.readSavedObject(path);
+        } catch (FileNotFoundException e) {
             writeExistingSearches(es);
-        } catch (IOException e) {
-
         }
+        return es;
 
     }
 }

@@ -11,6 +11,13 @@ import java.net.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Geonames collects a bounding box for a record that has enough geospatial fields filled out.
+ * If just country is available then a local file with all the country bounding boxes is used.
+ * If country and state/province or country state/province and city are provided, a call to the geonames.org API is
+ * made to get a bounding box for that place. If no bounding box can be found, then a bounding box with all lat/longs
+ * set to 361 is used.
+ */
 public class Geonames extends FindBoundBox {
     private String USER_NAME = "geodisy";
     Countries countries;
@@ -23,6 +30,12 @@ public class Geonames extends FindBoundBox {
         this.bBoxes = countries.getBoundingBoxes();
     }
 
+    /**
+     *
+     * @param countryName
+     * Country name is compared to list of country bounding boxes in Geonames_countries.xml
+     * @return value from xml file, or a 361 lat/long bounding box if the country can't be found
+     */
     @Override
     public BoundingBox getDVBoundingBox(String countryName) {
         Country country;
@@ -44,6 +57,8 @@ public class Geonames extends FindBoundBox {
      * @param country
      * @param state
      * @return a Bounding box with N/S/E/W extents
+     *
+     * If bounding box can't be found in geonames, return a search for just the country.
      */
     @Override
     public BoundingBox getDVBoundingBox(String country, String state)  {
@@ -75,6 +90,17 @@ public class Geonames extends FindBoundBox {
     }
 
 
+    /**
+     *
+     * Get the bounding box from Geonames when Country, State/Province/Etc, and city are known
+     *      * For other Geonames Feature Codes [fcode] see: https://www.geonames.org/export/codes.html
+     * @param country
+     * @param state
+     * @param city
+     * @return a Bounding box with N/S/E/W extents
+     *
+     * If bounding box cannot be found in geonames, run search with just country and state/province
+     */
 
     @Override
     public BoundingBox getDVBoundingBox(String country, String state, String city) {
@@ -103,6 +129,7 @@ public class Geonames extends FindBoundBox {
         cit.setBoundingBox(box);
         bBoxes.put(addDelimiter(country,unURLedState,unURLedCity),box);
         countries.setBoundingBoxes(bBoxes);
+
         return box;
     }
 
