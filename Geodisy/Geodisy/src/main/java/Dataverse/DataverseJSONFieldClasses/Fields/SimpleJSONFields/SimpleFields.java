@@ -3,7 +3,7 @@ package Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields;
 import Dataverse.DataverseJSONFieldClasses.JSONField;
 
 
-import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+import static Dataverse.DVFieldNameStrings.*;
 
 public class SimpleFields extends JSONField {
     /**

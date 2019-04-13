@@ -3,7 +3,7 @@ package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
-import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+import static Dataverse.DVFieldNameStrings.*;
 
 public class GeographicCoverage extends CompoundJSONField {
     private String country, state, city, otherGeographicCoverage, doi;

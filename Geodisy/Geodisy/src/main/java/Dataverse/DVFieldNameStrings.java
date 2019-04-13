@@ -1,4 +1,4 @@
-package Dataverse.DataverseJSONFieldClasses;
+package Dataverse;
 
 import java.util.Arrays;
 import java.util.List;
@@ -152,6 +152,5 @@ public class DVFieldNames {
     public final static String STATE = "state";
     public final static String CITY = "city";
     public final static String OTHER_GEO_COV = "otherGeographicCoverage";
-
     public final static List<String> GEO_META_FIELDS = Arrays.asList(GEOGRAPHIC_COVERAGE, GEOGRAPHIC_BBOX, GEOGRAPHIC_UNIT, WEST_LONG, EAST_LONG, NORTH_LAT, NORTH_LAT_LONG, SOUTH_LAT, SOUTH_LAT_LONG, COUNTRY, STATE, CITY, OTHER_GEO_COV);
 }

@@ -4,7 +4,7 @@ import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.Date;
 import org.json.JSONObject;
 
-import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+import static Dataverse.DVFieldNameStrings.*;
 
 public class TimePeriodCovered extends CompoundJSONField {
     private Date timePeriodCoveredStart, timePeriodCoveredEnd;

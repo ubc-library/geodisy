@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 
-import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+import static Dataverse.DVFieldNameStrings.*;
 
 public class GeographicFields extends MetadataType {
     List<GeographicCoverage> geoCovers;
