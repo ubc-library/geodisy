@@ -15,7 +15,7 @@ import org.json.JSONObject;
 import org.junit.Test;
 
 
-import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+import static Dataverse.DVFieldNameStrings.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DataverseParserTest {

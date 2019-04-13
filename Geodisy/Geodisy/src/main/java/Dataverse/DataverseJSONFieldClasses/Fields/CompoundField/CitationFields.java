@@ -3,14 +3,13 @@ package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.Date;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
-import Dataverse.DataverseJavaObject;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+import static Dataverse.DVFieldNameStrings.*;
 
 public class CitationFields extends MetadataType {
     private SimpleFields simpleFields;

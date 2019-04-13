@@ -3,7 +3,7 @@ package Dataverse;
 import java.util.Arrays;
 import java.util.List;
 
-public class DVFieldNames {
+public class DVFieldNameStrings {
 
     //General Field Names
     public final static String TYPE_NAME = "typeName";

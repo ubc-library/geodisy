@@ -4,7 +4,7 @@ package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
-import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+import static Dataverse.DVFieldNameStrings.*;
 
 public class Author extends CompoundJSONField {
     private String authorName, authorAffiliation, authorIdentifierScheme, authorIdentifier;
