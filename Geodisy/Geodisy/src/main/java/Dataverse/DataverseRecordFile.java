@@ -25,7 +25,7 @@ public class DataverseRecordFile {
         this.title = title;
         this.doi = doi;
         this.server = server;
-        recordURL = server+"api/access/datafile/:/persistentId/?persistentId=" + doi;
+        recordURL = server+"api/access/datafile/:persistentId/?persistentId=" + doi;
         getFile();
     }
 
@@ -36,7 +36,7 @@ public class DataverseRecordFile {
         recordURL = String.format(server+"api/access/datafile/$d", dbID);
         getFile();
     }
-
+    //TODO figure out how to save the files to a different location
     private void getFile() {
         try {
             FileUtils.copyURLToFile(

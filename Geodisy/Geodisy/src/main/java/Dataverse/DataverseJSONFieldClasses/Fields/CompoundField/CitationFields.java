@@ -179,7 +179,7 @@ public class CitationFields extends MetadataType {
      */
     protected String parseSimpleValue(JSONObject current, String fieldName) {
         if(current.has(fieldName))
-            return current.getString(fieldName);
+            return current.get(fieldName).toString();
         return "";
     }
     /**

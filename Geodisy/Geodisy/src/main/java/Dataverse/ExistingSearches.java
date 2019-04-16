@@ -7,9 +7,11 @@ import java.util.HashMap;
 
 
 public class ExistingSearches implements Serializable {
+    private static final long serialVersionUID = 8947943825774008362L;
     HashMap<String, BoundingBox> bBoxes;
     HashMap<String, DataverseRecordInfo> recordVersions;
     private static ExistingSearches single_instance = null;
+
 
     public static ExistingSearches getExistingSearches() {
         if (single_instance == null) {

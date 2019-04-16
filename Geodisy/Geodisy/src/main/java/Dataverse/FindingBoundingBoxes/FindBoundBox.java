@@ -15,17 +15,19 @@ public abstract class FindBoundBox {
     abstract BoundingBox getDVBoundingBoxOther(String country,String state, String other);
     abstract String getJSONString(String search);
     Logger logger = LogManager.getLogger(FindBoundBox.class.getName());
-    //TODO get HTTP response (XML) and parse for boundingbox coordinates
 
-    protected BoundingBox readResponse(String responseString){
-        return parseXMLString(responseString);
+    protected BoundingBox readResponse(String responseString, String doi){
+        return parseXMLString(responseString, doi);
     }
 
-    protected  BoundingBox parseXMLString(String responseString){
+    protected  BoundingBox parseXMLString(String responseString, String doi){
         BoundingBox box = new BoundingBox();
+        int tooFar = responseString.indexOf("</geoname>");
         int start = responseString.indexOf("<west>");
-        if(start==-1)
+        if(start==-1||start>tooFar) {
+            logger.info("Record with DOI of "+ doi + "could not have a bounding box found in geonames. Please doublecheck the geospatial coverage field values");
             return box;
+        }
         int end = responseString.indexOf("</west>");
         box.setLongWest(responseString.substring(start+6, end));
         start = responseString.indexOf("<east>");

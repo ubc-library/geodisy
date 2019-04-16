@@ -20,7 +20,7 @@ public class FileWriter {
             throw new FileNotFoundException();
         FileInputStream fi =  new FileInputStream(new File(path));
         ObjectInputStream oi =  new ObjectInputStream(fi);
-        Object answer = oi.readObject();
+        Object answer = (Object) oi.readObject();
         oi.close();
         fi.close();
         return answer;

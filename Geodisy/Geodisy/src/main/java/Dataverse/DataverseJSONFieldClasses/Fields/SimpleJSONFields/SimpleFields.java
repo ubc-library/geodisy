@@ -294,7 +294,7 @@ public class SimpleFields extends JSONField {
     }
 
     public String getDOI(){
-        return getAlternativeTitle();
+        return getAlternativeURL();
     }
 
     public String getVersionMajor() {

@@ -36,10 +36,11 @@ public class DataverseJavaObject {
     private String server;
     private boolean hasContent;
 
-    public DataverseJavaObject() {
+    public DataverseJavaObject(String server) {
         this.citationFields = new CitationFields();
         this.geoFields = new GeographicFields();
         this.dataFiles = new LinkedList<>();
+        this.server = server;
         hasContent = false;
     }
 
@@ -275,28 +276,28 @@ public class DataverseJavaObject {
         List<DataverseRecordFile> recordFiles = new LinkedList<>();
         for(Object o: files){
             JSONObject jo = (JSONObject) o;
-            if(jo.getString("restricted").equals("false"))
+            if(jo.getBoolean("restricted"))
                 continue;
             String title = jo.getString("label");
             JSONObject dataFile = (JSONObject) jo.get("dataFile");
-            //TODO pass the server URL to this class rather than the current hardcode
-            String server = BASE_DV_URL; //this is the sandbox dataverse
-            System.out.println("This is using the sandbox dataverse hard-coded into the DJO for getting files");
+            System.out.println("This is using the " + server + " dataverse for getting files, should it be changed to something else?");
             DataverseRecordFile dRF;
             //Some Dataverses don't have individual DOIs for files, so for those I will use the database's file id instead
             if(dataFile.has(DOI)&& !dataFile.getString(DOI).equals("")) {
                 String doi = dataFile.getString(DOI);
                 dRF = new DataverseRecordFile(title, doi, server);
             }else{
-                int dbID = Integer.parseInt(dataFile.getString("id"));
+                int dbID = (int) dataFile.get("id");
                 dRF = new DataverseRecordFile(title,dbID,server);
             }
             recordFiles.add(dRF);
         }
     }
+
     public int getVersion(){
         return getCitationFields().getVersion();
     }
+
     public DataverseRecordInfo generateDRI(){
         String major, minor,doi;
         major = getCitationFields().getSimpleFields().getVersionMajor();

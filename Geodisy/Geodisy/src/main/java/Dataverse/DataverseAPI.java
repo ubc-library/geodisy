@@ -45,7 +45,7 @@ public class DataverseAPI extends SourceAPI {
         DataverseParser parser = new DataverseParser();
         ExistingSearches eS = ExistingSearches.getExistingSearches();
         for(JSONObject jo:jsons){
-            DataverseJavaObject djo = parser.parse(jo);
+            DataverseJavaObject djo = parser.parse(jo,dvName);
             if(djo.dJOHasContent())
                 answers.add(djo);
         }
@@ -61,7 +61,7 @@ public class DataverseAPI extends SourceAPI {
             HTTPCaller hC = new HTTPCaller(searchURL+"&start="+ start);
             result = hC.getJSONString();
             moreEntries = parseResponseForDOIs(result,start, answer);
-            start+=1000;
+            start+=10;
         }
         return answer;
     }
@@ -72,8 +72,8 @@ public class DataverseAPI extends SourceAPI {
 
             JSONObject current = new JSONObject(result);
             current = (JSONObject) current.get("data");
-            int totalRecords = Integer.parseInt(current.getString("total_count"));
-            if(totalRecords-1>start+999)
+            int totalRecords = (int) current.get("total_count");
+            if(totalRecords-1>start+9)
                 more = true;
             JSONArray records = (JSONArray) current.get("items");
             for(Object o:records){
@@ -98,6 +98,7 @@ public class DataverseAPI extends SourceAPI {
     @Override
     protected LinkedList<JSONObject> downloadMetadata(HashSet<String> dOIs) {
         HTTPCaller getMetadata;
+        //TODO set base URL programmatically
         String baseURL = BASE_DV_URL + "api/datasets/export?exporter=dataverse_json&persistentId=";
         LinkedList<JSONObject> answers =  new LinkedList<>();
         for(String s: dOIs){

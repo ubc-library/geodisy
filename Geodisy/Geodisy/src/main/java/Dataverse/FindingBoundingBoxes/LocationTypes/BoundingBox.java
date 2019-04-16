@@ -3,6 +3,7 @@ package Dataverse.FindingBoundingBoxes.LocationTypes;
 import java.io.Serializable;
 
 public class BoundingBox implements Serializable {
+    private static final long serialVersionUID = -515599959188846468L;
     private double latSouth = 361;
     private double latNorth = 361;
     private double longWest = 361;

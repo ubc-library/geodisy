@@ -7,6 +7,7 @@ import Dataverse.ExistingSearches;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,8 +24,8 @@ public class DataverseParser {
      * to parse compound or simple field data, respectively.
      * @throws JSONException
      */
-    public DataverseJavaObject parse(JSONObject jo)  {
-        DataverseJavaObject dJO = new DataverseJavaObject();
+    public DataverseJavaObject parse(JSONObject jo, String server)  {
+        DataverseJavaObject dJO = new DataverseJavaObject(server);
         JSONObject dataverseJSON;
         try {
             dataverseJSON = jo;
@@ -36,8 +37,8 @@ public class DataverseParser {
             dJO.parseCitationFields(current);
             ExistingSearches es = ExistingSearches.getExistingSearches();
             DataverseRecordInfo dRI = dJO.generateDRI();
-            if(dRI.younger(es.getRecordInfo(dRI.getDoi())))
-                return new DataverseJavaObject();
+            if(!dRI.younger(es.getRecordInfo(dRI.getDoi())))
+                return new DataverseJavaObject("");
             JSONObject metadata;
             metadata = dJO.getVersionSection(current).getJSONObject("metadataBlocks");
             if (metadata.has(GEOSPATIAL))
@@ -49,8 +50,8 @@ public class DataverseParser {
                 GeographicFields gf = dJO.getGeographicFields();
                 gf.setFullBB(getBBFromProdPlace(prodPlace,dJO));
             }
-            if(current.has("files"))
-                dJO.parseFiles(current.getJSONArray("files"));
+            if(dJO.getVersionSection(current).has("files"))
+                dJO.parseFiles((JSONArray) dJO.getVersionSection(current).get("files"));
         }catch (JSONException e){
             logger.error("Something was malformed with the JSON string returned from Dataverse");
         }

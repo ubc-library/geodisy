@@ -3,9 +3,11 @@ package Dataverse;
 import java.io.Serializable;
 
 public class DataverseRecordInfo implements Serializable {
+    private static final long serialVersionUID = -3342760939630407200L;
     private int major;
     private int minor;
     private String doi;
+
 
     public DataverseRecordInfo() {
 
@@ -25,6 +27,9 @@ public class DataverseRecordInfo implements Serializable {
 
     public boolean younger(Object obj) {
         if (obj == null) return true;
+        DataverseRecordInfo dRI = (DataverseRecordInfo) obj;
+        if(dRI.getDoi()==null)
+            return true;
         if (obj == this)
             return false;
         Boolean younger = this.getMajor() >((DataverseRecordInfo) obj).getMajor() || (this.getMajor()==((DataverseRecordInfo) obj).getMajor() && this.getMinor() >((DataverseRecordInfo) obj).getMinor());

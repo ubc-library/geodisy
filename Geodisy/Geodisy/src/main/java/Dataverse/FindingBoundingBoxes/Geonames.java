@@ -79,7 +79,7 @@ public class Geonames extends FindBoundBox {
             // Can be safely ignored because UTF-8 is always supported
         }
         String searchString = state + addParameters(parameters);
-        box = readResponse(getJSONString(searchString));
+        box = readResponse(getJSONString(searchString),doi);
         if(box.getLongWest()==361)
             return getDVBoundingBox(country);
         Province p = new Province(unURLedState, country);
@@ -122,7 +122,7 @@ public class Geonames extends FindBoundBox {
             // Can be safely ignored because UTF-8 is always supported
         }
         String searchString = city + "%2C%20" + state + addParameters(parameters);
-            box = readResponse(getJSONString(searchString));
+            box = readResponse(getJSONString(searchString),doi);
         if(box.getLongWest()==361)
             return getDVBoundingBox(country,state);
         City cit = new City(city,state,country);
