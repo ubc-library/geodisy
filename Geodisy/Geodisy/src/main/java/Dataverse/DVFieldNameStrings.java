@@ -64,6 +64,7 @@ public class DVFieldNameStrings {
     public final static String DS_CONTACT_NAME = "datasetContactName";
 
     //Date of Collection Field Names
+    public final static String DATE_OF_COLLECT = "dateOfCollection";
     public final static String DATE_OF_COLLECT_START = "dateOfCollectionStart";
     public final static String DATE_OF_COLLECT_END = "dateOfCollectionEnd";
 

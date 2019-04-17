@@ -17,11 +17,12 @@ public class GeographicFields extends MetadataType {
     BoundingBox fullBB; //The single bounding box that includes all listed bounding box extents
     protected String doi;
 
-    public GeographicFields() {
+    public GeographicFields(String doi) {
         this.geoCovers = new LinkedList<>();
         this.geoBBoxes = new LinkedList<>();
         this.geoUnits = new LinkedList<>();
         fullBB = new BoundingBox();
+        this.doi = doi;
     }
     @Override
     public void setFields(JSONObject field) {

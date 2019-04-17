@@ -38,7 +38,6 @@ public class DataverseJavaObject {
 
     public DataverseJavaObject(String server) {
         this.citationFields = new CitationFields();
-        this.geoFields = new GeographicFields();
         this.dataFiles = new LinkedList<>();
         this.server = server;
         hasContent = false;
@@ -59,7 +58,7 @@ public class DataverseJavaObject {
             citationFields.setFields(jo);
         }
         hasContent=true;
-        geoFields.setDoi(citationFields.getSimpleFields().getField(ALT_URL));
+        geoFields = new GeographicFields(citationFields.getDOI());
     }
     //if changed, need to change copy in CitationFields Class
     public JSONObject getVersionSection(JSONObject current) {
@@ -309,7 +308,7 @@ public class DataverseJavaObject {
         answer.setMinor(minor);
         return answer;
     }
-    public boolean dJOHasContent(){
+    public boolean hasContent(){
         return hasContent;
     }
 }

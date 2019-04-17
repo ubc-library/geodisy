@@ -8,6 +8,7 @@ import org.apache.commons.io.FileUtils;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -41,13 +42,15 @@ public class DataverseRecordFile {
         try {
             FileUtils.copyURLToFile(
                     new URL(recordURL),
-                    new File(title),
+                    new File("./datasetFiles/" + title),
                     10000, //10 seconds connection timeout
                     120000); //2 minute read timeout
-        } catch (MalformedURLException e) {
-            logger.error(String.format("Something is wonky with the DOI $s or the dbID $d", doi, dbID));
+        } catch (FileNotFoundException e){
+            logger.error(String.format("This dataset file %s couldn't be found from dataset %s", dbID, doi));
+        }catch (MalformedURLException e) {
+            logger.error(String.format("Something is wonky with the DOI %s or the dbID %d", doi, dbID));
         } catch (IOException e) {
-            logger.error(String.format("Something went wrong with downloading file $s, with doi $s or dbID $d", title, doi, dbID));
+            logger.error(String.format("Something went wrong with downloading file %s, with doi %s or dbID %d", title, doi, dbID));
             e.printStackTrace();
         }
 

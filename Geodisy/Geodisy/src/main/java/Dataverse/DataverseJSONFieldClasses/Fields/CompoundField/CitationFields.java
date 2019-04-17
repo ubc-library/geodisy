@@ -145,6 +145,10 @@ public class CitationFields extends MetadataType {
                 case SUBJECT:
                     setSubject(getList(ja));
                     break;
+                case DATE_OF_COLLECT:
+                    DateOfCollection doc = new DateOfCollection();
+                    addDateOfCollection((DateOfCollection) doc.parseCompoundData(ja));
+                    break;
                 default:
                     logger.error("Something went wrong parsing a compound field. Label is %s", label);
                     System.out.println("Something wrong parsing a compound field");

@@ -44,7 +44,7 @@ public class DataverseParser {
             if (metadata.has(GEOSPATIAL))
                 dJO.parseGeospatialFields(metadata.getJSONObject(GEOSPATIAL).getJSONArray(FIELDS));
             else
-                dJO.setGeoFields(new GeographicFields());
+                dJO.setGeoFields(new GeographicFields(dJO.getDOI()));
             String prodPlace = dJO.getProductionPlace();
             if (!prodPlace.matches("") && !dJO.hasBoundingBox()) {
                 GeographicFields gf = dJO.getGeographicFields();

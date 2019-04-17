@@ -9,9 +9,9 @@ import static Dataverse.DVFieldNameStrings.*;
 public class DateOfCollection extends CompoundJSONField {
     private Date dateOfCollectionStart, dateOfCollectionEnd;
 
-    public DateOfCollection(String start, String end) {
-        this.dateOfCollectionStart = new Date(start);
-        this.dateOfCollectionEnd = new Date(end);
+    public DateOfCollection() {
+        this.dateOfCollectionStart = new Date("6000");
+        this.dateOfCollectionEnd = new Date("");
     }
 
     public String getDateOfCollectionStart() {

@@ -46,7 +46,7 @@ public class DataverseAPI extends SourceAPI {
         ExistingSearches eS = ExistingSearches.getExistingSearches();
         for(JSONObject jo:jsons){
             DataverseJavaObject djo = parser.parse(jo,dvName);
-            if(djo.dJOHasContent())
+            if(djo.hasContent())
                 answers.add(djo);
         }
         return answers;

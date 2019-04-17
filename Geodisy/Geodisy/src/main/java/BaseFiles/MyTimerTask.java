@@ -12,6 +12,7 @@ import Dataverse.ExistingSearches;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.*;
+import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,10 +37,10 @@ public class MyTimerTask extends TimerTask {
  */
     @Override
     public void run() {
-        Path manualCheckPath = Paths.get(RECORDS_TO_CHECK);
-        byte[] f1, f2;
+       BufferedReader reader1;
+       BufferedReader reader2;
         try {
-            f1 = Files.readAllBytes(manualCheckPath);
+            reader1 = new BufferedReader(new FileReader(RECORDS_TO_CHECK));
 
         Geodisy geo = new Geodisy();
         ExistingSearchesFile eSF = new ExistingSearchesFile(EXISTING_RECORDS);
@@ -47,9 +48,13 @@ public class MyTimerTask extends TimerTask {
         //noinspection UnusedAssignment
         ExistingSearches existingSearches = eSF.readExistingSearches();
         geo.harvestDataverse();
-        f2 = Files.readAllBytes(manualCheckPath);
-        if(Arrays.equals(f1,f2))
+        reader2 = trimErrors();
+        if(filesDiffer(reader1,reader2)) {
             emailCheckRecords();
+
+        }
+        reader1.close();
+        reader2.close();
         existingSearches = ExistingSearches.getExistingSearches();
         eSF.writeExistingSearches(existingSearches);
         } catch (IOException | ClassNotFoundException e) {
@@ -57,6 +62,58 @@ public class MyTimerTask extends TimerTask {
         }
     }
 
+    private BufferedReader trimErrors() throws IOException {
+        File tempFile = new File("./logs/tempFile.txt");
+        File inputFile = new File(RECORDS_TO_CHECK);
+        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+        BufferedReader reader2 = new BufferedReader(new FileReader(inputFile));
+        String currentLine;
+
+        while((currentLine= reader2.readLine()) != null){
+            if(!currentLine.contains("ERROR Dataverse"))
+                writer.write(currentLine + System.getProperty("line.separator"));
+        }
+        writer.close();
+        reader2.close();
+        inputFile.delete();
+        tempFile.renameTo(inputFile);
+        return new BufferedReader(new FileReader(inputFile));
+    }
+
+    private boolean filesDiffer(BufferedReader reader1, BufferedReader reader2) throws IOException {
+        String line1 = reader1.readLine();
+
+        String line2 = reader2.readLine();
+
+
+        boolean areDifferent = false;
+
+        int lineNum = 1;
+
+        while (line1 != null || line2 != null)
+        {
+            if(line1.contains("ERROR Dataverse"))
+            if(line1 == null || line2 == null)
+            {
+                areDifferent = true;
+
+                break;
+            }
+            else if(! line1.equalsIgnoreCase(line2))
+            {
+                areDifferent = true;
+
+                break;
+            }
+
+            line1 = reader1.readLine();
+
+            line2 = reader2.readLine();
+
+            lineNum++;
+        }
+    return areDifferent;
+    }
 
 
     //TODO setup email system
