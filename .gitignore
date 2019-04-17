@@ -50,3 +50,7 @@ Geodisy/Geodisy/src/\.idea/
 Geodisy/Geodisy/Geodisy\.iml
 
 Geodisy/Geodisy/ExistingRecordsTest\.txt
+
+Geodisy/Geodisy/datasetFiles/
+
+Geodisy/Geodisy/logs/tempFile\.txt
