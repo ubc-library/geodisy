@@ -1,5 +1,6 @@
 package tests;
 
+import BaseFiles.MyTimerTask;
 import Crosswalking.JSONParsing.DataverseParser;
 import Dataverse.DataverseJSONFieldClasses.Fields.CompoundField.Author;
 import Dataverse.DataverseJSONFieldClasses.Fields.CompoundField.CitationFields;
@@ -14,6 +15,8 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 import org.junit.Test;
 
+
+import java.io.IOException;
 
 import static Dataverse.DVFieldNameStrings.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,7 +33,12 @@ public class DataverseParserTest {
         //create ObjectMapper instance
         DataverseParser dataverseParser = new DataverseParser();
         DataverseJavaObject djo = dataverseParser.parse(jo, "another fake server name");
-
+        MyTimerTask my = new MyTimerTask();
+        try {
+            my.trimErrors();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         //TODO parse isn't parsing correctly
         assertEquals(djo.getBoundingBox().getLatSouth(), dataverseJavaObject.getBoundingBox().getLatSouth());
 
@@ -67,6 +75,7 @@ public class DataverseParserTest {
         Logger logger = LogManager.getLogger(DataverseParserTest.class);
         logger.error("Testing an error");
         logger.info("Testing an info");
+
         return dataverseJavaObject;
     }
 

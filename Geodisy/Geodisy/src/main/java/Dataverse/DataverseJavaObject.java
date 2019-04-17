@@ -39,6 +39,7 @@ public class DataverseJavaObject {
     public DataverseJavaObject(String server) {
         this.citationFields = new CitationFields();
         this.dataFiles = new LinkedList<>();
+        this.geoFields = new GeographicFields("placeholder");
         this.server = server;
         hasContent = false;
     }
@@ -59,6 +60,7 @@ public class DataverseJavaObject {
         }
         hasContent=true;
         geoFields = new GeographicFields(citationFields.getDOI());
+
     }
     //if changed, need to change copy in CitationFields Class
     public JSONObject getVersionSection(JSONObject current) {
@@ -284,10 +286,10 @@ public class DataverseJavaObject {
             //Some Dataverses don't have individual DOIs for files, so for those I will use the database's file id instead
             if(dataFile.has(DOI)&& !dataFile.getString(DOI).equals("")) {
                 String doi = dataFile.getString(DOI);
-                dRF = new DataverseRecordFile(title, doi, server);
+                dRF = new DataverseRecordFile(title, doi, server, citationFields.getDOI());
             }else{
                 int dbID = (int) dataFile.get("id");
-                dRF = new DataverseRecordFile(title,dbID,server);
+                dRF = new DataverseRecordFile(title,dbID,server,citationFields.getDOI());
             }
             recordFiles.add(dRF);
         }
