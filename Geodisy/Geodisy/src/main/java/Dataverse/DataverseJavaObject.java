@@ -4,15 +4,19 @@ package Dataverse;
 
 import Crosswalking.JSONParsing.DataverseParser;
 
+import DataSourceLocations.Dataverse;
 import Dataverse.DataverseJSONFieldClasses.Fields.CompoundField.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -274,7 +278,7 @@ public class DataverseJavaObject {
     }
 
     public void parseFiles(JSONArray files) {
-        List<DataverseRecordFile> recordFiles = new LinkedList<>();
+
         for(Object o: files){
             JSONObject jo = (JSONObject) o;
             if(jo.getBoolean("restricted"))
@@ -286,12 +290,12 @@ public class DataverseJavaObject {
             //Some Dataverses don't have individual DOIs for files, so for those I will use the database's file id instead
             if(dataFile.has(DOI)&& !dataFile.getString(DOI).equals("")) {
                 String doi = dataFile.getString(DOI);
-                dRF = new DataverseRecordFile(title, doi, server, citationFields.getDOI());
+                dRF = new DataverseRecordFile(title, doi,dataFile.getInt("id"), server, citationFields.getDOI());
             }else{
                 int dbID = (int) dataFile.get("id");
                 dRF = new DataverseRecordFile(title,dbID,server,citationFields.getDOI());
             }
-            recordFiles.add(dRF);
+            dataFiles.add(dRF);
         }
     }
 
@@ -312,5 +316,28 @@ public class DataverseJavaObject {
     }
     public boolean hasContent(){
         return hasContent;
+    }
+//TODO check that files are only getting downloaded if there is a change in the record, and that the old files are being deleted first.
+    public void downloadFiles() {
+        File f = new File("./dataFiles/" + citationFields.getDOI());
+        deleteDir(f);
+        for (DataverseRecordFile dRF : dataFiles) {
+            dRF.getFile();
+        }
+    }
+
+    private void deleteDir(File f) {
+        File[] files = f.listFiles();
+        for(File myFile: files){
+            if (myFile.isDirectory()) {
+                deleteDir(myFile);
+            }
+            myFile.delete();
+        }
+    }
+
+
+    public List<DataverseRecordFile> getFileRecords(){
+        return dataFiles;
     }
 }

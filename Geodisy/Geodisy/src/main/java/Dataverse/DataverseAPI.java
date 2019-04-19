@@ -46,10 +46,16 @@ public class DataverseAPI extends SourceAPI {
         ExistingSearches eS = ExistingSearches.getExistingSearches();
         for(JSONObject jo:jsons){
             DataverseJavaObject djo = parser.parse(jo,dvName);
-            if(djo.hasContent())
+            if(djo.hasContent()&& hasNewInfo(djo))
                 answers.add(djo);
         }
         return answers;
+    }
+
+    private boolean hasNewInfo(DataverseJavaObject djo) {
+        ExistingSearches es = ExistingSearches.getExistingSearches();
+        DataverseRecordInfo dri = new DataverseRecordInfo(djo);
+        return dri.younger(es.getRecordInfo(djo.getDOI()));
     }
 
     private HashSet<String> getRecords(String searchURL) {

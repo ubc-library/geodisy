@@ -71,4 +71,10 @@ public class ExistingSearches implements Serializable {
         if(bBoxes.containsKey(location))
             bBoxes.remove(location);
     }
+
+    public boolean hasRecord(String doi){
+        return recordVersions.containsKey(doi);
+    }
+
+
 }

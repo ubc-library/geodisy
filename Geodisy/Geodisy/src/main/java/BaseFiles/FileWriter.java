@@ -1,6 +1,8 @@
 package BaseFiles;
 
 
+import Dataverse.ExistingSearches;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,7 +21,15 @@ public class FileWriter {
         if (!verifyFileExistence(path))
             throw new FileNotFoundException();
         FileInputStream fi =  new FileInputStream(new File(path));
-        ObjectInputStream oi =  new ObjectInputStream(fi);
+        ObjectInputStream oi;
+        try{
+            oi =  new ObjectInputStream(fi);
+        } catch (EOFException e){
+            ExistingSearches es = ExistingSearches.getExistingSearches();
+            writeObjectToFile(ExistingSearches.getExistingSearches(),path);
+            fi.close();
+            return es;
+        }
         Object answer = (Object) oi.readObject();
         oi.close();
         fi.close();

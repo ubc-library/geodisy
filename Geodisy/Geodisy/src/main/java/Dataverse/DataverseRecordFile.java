@@ -23,25 +23,25 @@ public class DataverseRecordFile {
     String recordURL;
     String datasetDOI;
 
-    public DataverseRecordFile(String title, String doi, String server, String datasetDOI){
+    public DataverseRecordFile(String title, String doi, int dbID, String server, String datasetDOI){
         this.title = title;
         this.doi = doi;
+        this.dbID = dbID;
         this.server = server;
         recordURL = server+"api/access/datafile/:persistentId/?persistentId=" + doi;
-        this.datasetDOI = datasetDOI.substring(16).replaceAll("\\.","_").replaceAll("/","_");
-        getFile();
+        this.datasetDOI = datasetDOI.replaceAll("\\.","_").replaceAll("/","_");
     }
 
     public DataverseRecordFile(String title, int dbID, String server, String datasetDOI){
         this.title = title;
         this.dbID = dbID;
+        this.doi = String.valueOf(dbID);
         this.server = server;
         recordURL = String.format(server+"api/access/datafile/$d", dbID);
         this.datasetDOI = datasetDOI;
-        getFile();
     }
     //TODO figure out how to save the files to a different location
-    private void getFile() {
+    public void getFile() {
         try {
             new File("./datasetFiles/" + datasetDOI + "/").mkdirs();
             FileUtils.copyURLToFile(
@@ -51,13 +51,17 @@ public class DataverseRecordFile {
                     120000); //2 minute read timeout
         } catch (FileNotFoundException e){
             logger.error(String.format("This dataset file %s couldn't be found from dataset %s", dbID, doi));
+            logger.info("Check out dataset " + datasetDOI);
         }catch (MalformedURLException e) {
-            logger.error(String.format("Something is wonky with the DOI %s or the dbID %d", doi, dbID));
+            logger.error(String.format("Something is wonky with the DOI " + doi + " or the dbID " + dbID));
         } catch (IOException e) {
             logger.error(String.format("Something went wrong with downloading file %s, with doi %s or dbID %d", title, doi, dbID));
             e.printStackTrace();
         }
 
+    }
+    public String getFileIdentifier(){
+        return doi;
     }
 
 }

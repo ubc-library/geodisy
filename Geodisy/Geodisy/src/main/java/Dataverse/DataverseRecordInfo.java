@@ -12,6 +12,12 @@ public class DataverseRecordInfo implements Serializable {
     public DataverseRecordInfo() {
 
     }
+    public DataverseRecordInfo(DataverseJavaObject dataverseJavaObject){
+        doi = dataverseJavaObject.getDOI();
+        int version = dataverseJavaObject.getVersion();
+        setMajor(version/1000);
+        setMinor(version%1000);
+    }
 
     @Override
     public boolean equals(Object obj) {

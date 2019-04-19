@@ -7,15 +7,18 @@ package BaseFiles;/*
 ;
 
 
-
+import Dataverse.DataverseJavaObject;
+import Dataverse.DataverseRecordFile;
+import Dataverse.DataverseRecordInfo;
 import Dataverse.ExistingSearches;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.*;
 import java.io.FileWriter;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.List;
 import java.util.TimerTask;
 
 import static BaseFiles.GeodisyStrings.EXISTING_RECORDS;
@@ -47,15 +50,33 @@ public class MyTimerTask extends TimerTask {
 
         //noinspection UnusedAssignment
         ExistingSearches existingSearches = eSF.readExistingSearches();
-        geo.harvestDataverse();
+        List<DataverseJavaObject> dJOs= geo.harvestDataverse();
+        for(DataverseJavaObject dJO : dJOs) {
+            existingSearches.addOrReplaceRecord(new DataverseRecordInfo(dJO));
+        }
+
         end = trimErrors();
         if(!start.equals(end)) {
             emailCheckRecords();
+            writeRecordsToCheck(end);
         }
-        existingSearches = ExistingSearches.getExistingSearches();
         eSF.writeExistingSearches(existingSearches);
+
         } catch (IOException | ClassNotFoundException e) {
             logger.error("Something went wrong trying to read permanent file ExistingRecords.txt!");
+        }
+    }
+
+    private void writeRecordsToCheck(String end) throws IOException {
+        File file = new File(RECORDS_TO_CHECK);
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(file);
+            writer.write(end);
+        } catch (IOException e){
+            throw e;
+        } finally{
+            writer.close();
         }
     }
 

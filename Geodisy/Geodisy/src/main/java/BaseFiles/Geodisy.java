@@ -39,6 +39,7 @@ public class Geodisy {
             LinkedList<DataverseJavaObject> current = dVAPI.harvest();
             for(DataverseJavaObject djo:current){
                 records.add(djo);
+                djo.downloadFiles();
             }
         }
         return records;

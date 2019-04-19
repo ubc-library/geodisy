@@ -170,7 +170,7 @@ public class SimpleFields extends JSONField {
     }
 
     private void setAlternativeURL(String alternativeURL) {
-        this.alternativeURL = filterURL(alternativeURL);
+        this.alternativeURL = filterURL(alternativeURL).substring(16);
     }
 
     private void setLicense(String license) {
