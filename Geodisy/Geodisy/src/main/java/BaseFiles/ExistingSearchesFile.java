@@ -1,15 +1,10 @@
 package BaseFiles;
 
 import Dataverse.ExistingSearches;
-import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
-import org.apache.commons.io.FileUtils;
+
 
 import java.io.*;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
+
 
 public class ExistingSearchesFile {
     String path;
