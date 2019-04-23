@@ -9,6 +9,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class FileWriter {
+    public FileWriter() {
+    }
+
     public void writeObjectToFile(Object objectToSave, String path) throws IOException {
         verifyFileExistence(path);
         FileOutputStream f =  new FileOutputStream(new File(path));
@@ -36,6 +39,25 @@ public class FileWriter {
         return answer;
     }
 
+    public ExistingSearches readExistingSearches(String path) throws IOException, ClassNotFoundException {
+        ExistingSearches es;
+        try {
+            FileInputStream f = new FileInputStream(path);
+            ObjectInputStream ois = new ObjectInputStream(f);
+            es = (ExistingSearches) ois.readObject();
+        } catch (FileNotFoundException e) {
+            es = ExistingSearches.getExistingSearches();
+            writeExistingSearches(es,path);
+        } catch (ClassNotFoundException e){
+            System.out.println("something went wonky loading the existing searches from the file");
+            return ExistingSearches.getExistingSearches();
+        }
+        return es;
+    }
+    public void writeExistingSearches(ExistingSearches existingSearches, String path) throws IOException {
+        FileWriter writer = new FileWriter();
+        writer.writeObjectToFile(existingSearches,path);
+    }
     private boolean verifyFileExistence(String path) {
         Path filePath = Paths.get(path);
         try {

@@ -319,11 +319,16 @@ public class DataverseJavaObject {
     }
 //TODO check that files are only getting downloaded if there is a change in the record, and that the old files are being deleted first.
     public void downloadFiles() {
-        File f = new File("./dataFiles/" + citationFields.getDOI());
+        File f = new File("datasetFiles\\\\" + urlized(citationFields.getDOI()));
         deleteDir(f);
         for (DataverseRecordFile dRF : dataFiles) {
             dRF.getFile();
         }
+    }
+
+    private String urlized(String doi) {
+        doi = doi.replaceAll("\\.","_");
+        return doi.replaceAll("/","_");
     }
 
     private void deleteDir(File f) {

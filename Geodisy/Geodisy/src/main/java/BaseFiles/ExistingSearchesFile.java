@@ -5,14 +5,18 @@ import Dataverse.ExistingSearches;
 
 import java.io.*;
 
+import static BaseFiles.GeodisyStrings.EXISTING_RECORDS;
+
 
 public class ExistingSearchesFile {
-    String path;
-
-    public ExistingSearchesFile(String path) {
-        this.path = path;
+    private String path;
+    public ExistingSearchesFile(){
+        path = EXISTING_RECORDS;
     }
 
+    public ExistingSearchesFile(String path){
+        this.path = path;
+    }
     public void writeExistingSearches(ExistingSearches existingSearches) throws IOException {
         FileWriter writer = new FileWriter();
         writer.writeObjectToFile(existingSearches,path);
@@ -21,12 +25,17 @@ public class ExistingSearchesFile {
 
 
     public ExistingSearches readExistingSearches() throws IOException, ClassNotFoundException {
-        FileWriter writer = new FileWriter();
-        ExistingSearches es = ExistingSearches.getExistingSearches();
+        ExistingSearches es;
         try {
-            es = (ExistingSearches) writer.readSavedObject(path);
+            FileInputStream f = new FileInputStream(path);
+            ObjectInputStream ois = new ObjectInputStream(f);
+            es = (ExistingSearches) ois.readObject();
         } catch (FileNotFoundException e) {
+            es = ExistingSearches.getExistingSearches();
             writeExistingSearches(es);
+        } catch (ClassNotFoundException e){
+            System.out.println("something went wonky loading the existing searches from the file");
+            return ExistingSearches.getExistingSearches();
         }
         return es;
 

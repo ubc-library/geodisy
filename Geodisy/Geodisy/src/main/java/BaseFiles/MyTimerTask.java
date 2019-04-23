@@ -8,16 +8,14 @@ package BaseFiles;/*
 
 
 import Dataverse.DataverseJavaObject;
-import Dataverse.DataverseRecordFile;
 import Dataverse.DataverseRecordInfo;
 import Dataverse.ExistingSearches;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.*;
-import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.TimerTask;
 
@@ -45,38 +43,24 @@ public class MyTimerTask extends TimerTask {
             start = new String(Files.readAllBytes(Paths.get(RECORDS_TO_CHECK)));
 
 
-        Geodisy geo = new Geodisy();
-        ExistingSearchesFile eSF = new ExistingSearchesFile(EXISTING_RECORDS);
+            Geodisy geo = new Geodisy();
+            FileWriter fW = new FileWriter();
 
-        //noinspection UnusedAssignment
-        ExistingSearches existingSearches = eSF.readExistingSearches();
-        List<DataverseJavaObject> dJOs= geo.harvestDataverse();
-        for(DataverseJavaObject dJO : dJOs) {
-            existingSearches.addOrReplaceRecord(new DataverseRecordInfo(dJO));
-        }
+            ExistingSearches existingSearches = fW.readExistingSearches(EXISTING_RECORDS);
+            List<DataverseJavaObject> dJOs= geo.harvestDataverse(existingSearches);
+            for(DataverseJavaObject dJO : dJOs) {
+                existingSearches.addOrReplaceRecord(new DataverseRecordInfo(dJO));
+            }
 
-        end = trimErrors();
-        if(!start.equals(end)) {
-            emailCheckRecords();
-            writeRecordsToCheck(end);
-        }
-        eSF.writeExistingSearches(existingSearches);
+            end = trimErrors();
+            if(!start.equals(end)) {
+                emailCheckRecords();
+                fW.writeObjectToFile(end,RECORDS_TO_CHECK);
+            }
+            fW.writeExistingSearches(existingSearches, EXISTING_RECORDS);
 
         } catch (IOException | ClassNotFoundException e) {
             logger.error("Something went wrong trying to read permanent file ExistingRecords.txt!");
-        }
-    }
-
-    private void writeRecordsToCheck(String end) throws IOException {
-        File file = new File(RECORDS_TO_CHECK);
-        FileWriter writer = null;
-        try {
-            writer = new FileWriter(file);
-            writer.write(end);
-        } catch (IOException e){
-            throw e;
-        } finally{
-            writer.close();
         }
     }
 
@@ -89,41 +73,6 @@ public class MyTimerTask extends TimerTask {
                 continue;
             sb.append(s);        }
         return sb.toString();
-    }
-
-    private boolean filesDiffer(BufferedReader reader1, BufferedReader reader2) throws IOException {
-        String line1 = reader1.readLine();
-
-        String line2 = reader2.readLine();
-
-
-        boolean areDifferent = false;
-
-        int lineNum = 1;
-
-        while (line1 != null || line2 != null)
-        {
-            if(line1.contains("ERROR Dataverse"))
-            if(line1 == null || line2 == null)
-            {
-                areDifferent = true;
-
-                break;
-            }
-            else if(! line1.equalsIgnoreCase(line2))
-            {
-                areDifferent = true;
-
-                break;
-            }
-
-            line1 = reader1.readLine();
-
-            line2 = reader2.readLine();
-
-            lineNum++;
-        }
-    return areDifferent;
     }
 
 

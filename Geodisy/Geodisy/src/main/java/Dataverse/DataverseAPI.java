@@ -7,6 +7,7 @@ package Dataverse;
 
 
 
+import BaseFiles.FileWriter;
 import BaseFiles.HTTPCaller;
 import Crosswalking.JSONParsing.DataverseParser;
 import org.apache.logging.log4j.LogManager;
@@ -15,10 +16,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.imageio.IIOException;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
+import static BaseFiles.GeodisyStrings.EXISTING_RECORDS;
 import static Dataverse.DVFieldNameStrings.BASE_DV_URL;
 
 /**
@@ -38,22 +42,21 @@ public class DataverseAPI extends SourceAPI {
     }
     //TODO test if this works
     @Override
-    public LinkedList<DataverseJavaObject> harvest() {
+    public LinkedList<DataverseJavaObject> harvest(ExistingSearches es) {
         HashSet<String> dois = searchDV();
         LinkedList<JSONObject> jsons = downloadMetadata(dois);
         LinkedList<DataverseJavaObject> answers =  new LinkedList<>();
         DataverseParser parser = new DataverseParser();
-        ExistingSearches eS = ExistingSearches.getExistingSearches();
         for(JSONObject jo:jsons){
             DataverseJavaObject djo = parser.parse(jo,dvName);
-            if(djo.hasContent()&& hasNewInfo(djo))
+            if(djo.hasContent()&& hasNewInfo(djo, es)) {
                 answers.add(djo);
+            }
         }
         return answers;
     }
 
-    private boolean hasNewInfo(DataverseJavaObject djo) {
-        ExistingSearches es = ExistingSearches.getExistingSearches();
+    private boolean hasNewInfo(DataverseJavaObject djo, ExistingSearches es) {
         DataverseRecordInfo dri = new DataverseRecordInfo(djo);
         return dri.younger(es.getRecordInfo(djo.getDOI()));
     }
