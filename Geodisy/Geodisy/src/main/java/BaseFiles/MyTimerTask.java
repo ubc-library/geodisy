@@ -19,8 +19,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.TimerTask;
 
-import static BaseFiles.GeodisyStrings.EXISTING_RECORDS;
-import static BaseFiles.GeodisyStrings.RECORDS_TO_CHECK;
+import static BaseFiles.GeodisyStrings.*;
 
 /**
  *This extends TimerTask to create the class that will
@@ -37,11 +36,13 @@ public class MyTimerTask extends TimerTask {
  */
     @Override
     public void run() {
-       String start;
-       String end;
+       String startRecsToCheck;
+       String endRecsToCheck;
+       String startErrorLog;
+       String endErrorLog;
         try {
-            start = new String(Files.readAllBytes(Paths.get(RECORDS_TO_CHECK)));
-
+            startRecsToCheck = new String(Files.readAllBytes(Paths.get(RECORDS_TO_CHECK)));
+            startErrorLog = new String(Files.readAllBytes(Paths.get(ERROR_LOG)));
 
             Geodisy geo = new Geodisy();
             FileWriter fW = new FileWriter();
@@ -52,16 +53,31 @@ public class MyTimerTask extends TimerTask {
                 existingSearches.addOrReplaceRecord(new DataverseRecordInfo(dJO));
             }
 
-            end = trimErrors();
-            if(!start.equals(end)) {
+            endRecsToCheck = trimErrors();
+            endErrorLog = trimInfo();
+            if(!startRecsToCheck.equals(endRecsToCheck)) {
                 emailCheckRecords();
-                fW.writeObjectToFile(end,RECORDS_TO_CHECK);
+                fW.writeObjectToFile(endRecsToCheck,RECORDS_TO_CHECK);
+            }
+            if(!startErrorLog.equals(endErrorLog)){
+                fW.writeObjectToFile(endErrorLog,ERROR_LOG);
             }
             fW.writeExistingSearches(existingSearches, EXISTING_RECORDS);
 
         } catch (IOException | ClassNotFoundException e) {
             logger.error("Something went wrong trying to read permanent file ExistingRecords.txt!");
         }
+    }
+
+    private String trimInfo()throws IOException {
+        String end = new String(Files.readAllBytes(Paths.get(ERROR_LOG)));
+        String[] lines = end.split(System.getProperty("line.separator"));
+        StringBuilder sb = new StringBuilder();
+        for(String s: lines){
+            if(s.contains("INFO"))
+                continue;
+            sb.append(s);        }
+        return sb.toString();
     }
 
     public String trimErrors() throws IOException {

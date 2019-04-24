@@ -49,6 +49,7 @@ public class DataverseRecordFile {
                     new File("./datasetFiles/" + datasetDOI + "/" + title),
                     10000, //10 seconds connection timeout
                     120000); //2 minute read timeout
+
         } catch (FileNotFoundException e){
             logger.error(String.format("This dataset file %s couldn't be found from dataset %s", dbID, doi));
             logger.info("Check out dataset " + datasetDOI);
