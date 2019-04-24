@@ -3,13 +3,20 @@ package Dataverse;
 import java.io.Serializable;
 
 public class DataverseRecordInfo implements Serializable {
+    private static final long serialVersionUID = -3342760939630407200L;
     private int major;
     private int minor;
     private String doi;
-    private String server;
 
-    public DataverseRecordInfo(String server) {
-        this.server = server;
+
+    public DataverseRecordInfo() {
+
+    }
+    public DataverseRecordInfo(DataverseJavaObject dataverseJavaObject){
+        doi = dataverseJavaObject.getDOI();
+        int version = dataverseJavaObject.getVersion();
+        setMajor(version/1000);
+        setMinor(version%1000);
     }
 
     @Override
@@ -26,6 +33,9 @@ public class DataverseRecordInfo implements Serializable {
 
     public boolean younger(Object obj) {
         if (obj == null) return true;
+        DataverseRecordInfo dRI = (DataverseRecordInfo) obj;
+        if(dRI.getDoi()==null)
+            return true;
         if (obj == this)
             return false;
         Boolean younger = this.getMajor() >((DataverseRecordInfo) obj).getMajor() || (this.getMajor()==((DataverseRecordInfo) obj).getMajor() && this.getMinor() >((DataverseRecordInfo) obj).getMinor());
@@ -45,9 +55,6 @@ public class DataverseRecordInfo implements Serializable {
         return doi;
     }
 
-    public String getServer() {
-        return server;
-    }
     @Override
     public int hashCode()
     {
@@ -58,16 +65,18 @@ public class DataverseRecordInfo implements Serializable {
     public void setMajor(int major) {
         this.major = major;
     }
+    public void setMajor(String major){
+        this.major = Integer.parseInt(major);
+    }
 
     public void setMinor(int minor) {
         this.minor = minor;
     }
 
+    public void setMinor(String minor){this.minor = Integer.parseInt(minor);}
+
     public void setDoi(String doi) {
         this.doi = doi;
     }
 
-    public void setServer(String server) {
-        this.server = server;
-    }
 }

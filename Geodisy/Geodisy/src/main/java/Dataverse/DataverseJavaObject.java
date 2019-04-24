@@ -4,19 +4,23 @@ package Dataverse;
 
 import Crosswalking.JSONParsing.DataverseParser;
 
+import DataSourceLocations.Dataverse;
 import Dataverse.DataverseJSONFieldClasses.Fields.CompoundField.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+import static Dataverse.DVFieldNameStrings.*;
 
 /**
  * Java object structure to parse Dataverse Json into
@@ -33,11 +37,15 @@ public class DataverseJavaObject {
     private GeographicFields geoFields;
     private Logger logger = LogManager.getLogger(DataverseParser.class);
     private List<DataverseRecordFile> dataFiles; //Stores the datafiles
+    private String server;
+    private boolean hasContent;
 
-    public DataverseJavaObject() {
+    public DataverseJavaObject(String server) {
         this.citationFields = new CitationFields();
-        this.geoFields = new GeographicFields();
-        dataFiles = new LinkedList<>();
+        this.dataFiles = new LinkedList<>();
+        this.geoFields = new GeographicFields("placeholder");
+        this.server = server;
+        hasContent = false;
     }
 
     public void parseGeospatialFields(JSONArray jsonArray) {
@@ -54,7 +62,9 @@ public class DataverseJavaObject {
             JSONObject jo = (JSONObject) o;
             citationFields.setFields(jo);
         }
-        geoFields.setDoi(citationFields.getSimpleFields().getField(ALT_URL));
+        hasContent=true;
+        geoFields = new GeographicFields(citationFields.getDOI());
+
     }
     //if changed, need to change copy in CitationFields Class
     public JSONObject getVersionSection(JSONObject current) {
@@ -268,26 +278,71 @@ public class DataverseJavaObject {
     }
 
     public void parseFiles(JSONArray files) {
-        List<DataverseRecordFile> recordFiles = new LinkedList<>();
+
         for(Object o: files){
             JSONObject jo = (JSONObject) o;
-            if(jo.getString("restricted").equals("false"))
+            if(jo.getBoolean("restricted"))
                 continue;
             String title = jo.getString("label");
             JSONObject dataFile = (JSONObject) jo.get("dataFile");
-            //TODO pass the server URL to this class rather than the current hardcode
-            String server = BASE_DV_URL; //this is the sandbox dataverse
-            System.out.println("This is using the sandbox dataverse hard-coded into the DJO for getting files");
+            System.out.println("This is using the " + server + " dataverse for getting files, should it be changed to something else?");
             DataverseRecordFile dRF;
             //Some Dataverses don't have individual DOIs for files, so for those I will use the database's file id instead
             if(dataFile.has(DOI)&& !dataFile.getString(DOI).equals("")) {
                 String doi = dataFile.getString(DOI);
-                dRF = new DataverseRecordFile(title, doi, server);
+                dRF = new DataverseRecordFile(title, doi,dataFile.getInt("id"), server, citationFields.getDOI());
             }else{
-                int dbID = Integer.parseInt(dataFile.getString("id"));
-                dRF = new DataverseRecordFile(title,dbID,server);
+                int dbID = (int) dataFile.get("id");
+                dRF = new DataverseRecordFile(title,dbID,server,citationFields.getDOI());
             }
-            recordFiles.add(dRF);
+            dataFiles.add(dRF);
         }
+    }
+
+    public int getVersion(){
+        return getCitationFields().getVersion();
+    }
+
+    public DataverseRecordInfo generateDRI(){
+        String major, minor,doi;
+        major = getCitationFields().getSimpleFields().getVersionMajor();
+        minor = getCitationFields().getSimpleFields().getVersionMinor();
+        doi = getCitationFields().getDOI();
+        DataverseRecordInfo answer = new DataverseRecordInfo();
+        answer.setDoi(doi);
+        answer.setMajor(major);
+        answer.setMinor(minor);
+        return answer;
+    }
+    public boolean hasContent(){
+        return hasContent;
+    }
+//TODO check that files are only getting downloaded if there is a change in the record, and that the old files are being deleted first.
+    public void downloadFiles() {
+        File f = new File("datasetFiles\\\\" + urlized(citationFields.getDOI()));
+        deleteDir(f);
+        for (DataverseRecordFile dRF : dataFiles) {
+            dRF.getFile();
+        }
+    }
+
+    private String urlized(String doi) {
+        doi = doi.replaceAll("\\.","_");
+        return doi.replaceAll("/","_");
+    }
+
+    private void deleteDir(File f) {
+        File[] files = f.listFiles();
+        for(File myFile: files){
+            if (myFile.isDirectory()) {
+                deleteDir(myFile);
+            }
+            myFile.delete();
+        }
+    }
+
+
+    public List<DataverseRecordFile> getFileRecords(){
+        return dataFiles;
     }
 }

@@ -3,7 +3,7 @@ package Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields;
 import Dataverse.DataverseJSONFieldClasses.JSONField;
 
 
-import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+import static Dataverse.DVFieldNameStrings.*;
 
 public class SimpleFields extends JSONField {
     /**
@@ -18,6 +18,7 @@ public class SimpleFields extends JSONField {
      */
     private String title, subtitle, alternativeTitle, alternativeURL, license,notesText,productionPlace,depositor, accessToSources, publisher,originOfSources, characteristicOfSources;
     private Date productionDate,distributionDate,dateOfDeposit, publicationDate;
+    private int versionMajor, versionMinor;
 
     public SimpleFields() {
         this.title = "";
@@ -32,6 +33,8 @@ public class SimpleFields extends JSONField {
         this.characteristicOfSources = "";
         this.accessToSources = "";
         this.publisher = "";
+        this.versionMajor = 0;
+        this.versionMinor = 0;
     }
 
     /**
@@ -91,6 +94,12 @@ public class SimpleFields extends JSONField {
             case PUBLISHER:
                 setPublisher(value);
                 break;
+            case MAJOR_VERSION:
+                setVersionMajor(Integer.parseInt(value));
+                break;
+            case MINOR_VERSION:
+                setVersionMinor(Integer.parseInt(value));
+                break;
             default:
                 errorParsing(this.getClass().getName(),label);
         }
@@ -132,11 +141,21 @@ public class SimpleFields extends JSONField {
                 return getPublicationDate();
             case PUBLISHER:
                 return getPublisher();
+            case MAJOR_VERSION:
+                return getVersionMajor();
+            case MINOR_VERSION:
+                return getVersionMinor();
             default:
                 errorParsing(this.getClass().getName(), fieldName);
                 return "Bad Field Name";
         }
 
+    }
+
+    public int getVersion(){
+        int major = Integer.parseInt(getVersionMajor());
+        int minor = Integer.parseInt(getVersionMinor());
+        return major*1000+minor;
     }
     private void setTitle(String title) {
         this.title = title;
@@ -151,7 +170,7 @@ public class SimpleFields extends JSONField {
     }
 
     private void setAlternativeURL(String alternativeURL) {
-        this.alternativeURL = filterURL(alternativeURL);
+        this.alternativeURL = filterURL(alternativeURL).substring(16);
     }
 
     private void setLicense(String license) {
@@ -200,6 +219,14 @@ public class SimpleFields extends JSONField {
 
     private void setPublicationDate(String privateationDate) {
         this.publicationDate = new Date(privateationDate);
+    }
+
+    public void setVersionMajor(int versionMajor) {
+        this.versionMajor = versionMajor;
+    }
+
+    public void setVersionMinor(int versionMinor) {
+        this.versionMinor = versionMinor;
     }
 
     private String getTitle() {
@@ -267,6 +294,14 @@ public class SimpleFields extends JSONField {
     }
 
     public String getDOI(){
-        return getAlternativeTitle();
+        return getAlternativeURL();
+    }
+
+    public String getVersionMajor() {
+        return String.valueOf(versionMajor);
+    }
+
+    public String getVersionMinor() {
+        return String.valueOf(versionMinor);
     }
 }

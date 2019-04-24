@@ -1,6 +1,6 @@
 package tests.DataverseTestCases;
 
-import Dataverse.DataverseJSONFieldClasses.DVFieldNames;
+import Dataverse.DVFieldNameStrings;
 import Dataverse.DataverseJavaObject;
 import org.junit.Test;
 
@@ -12,13 +12,13 @@ public class StraightMetadataTests extends DataverseTests{
     public void metadataBoundingBox(){
         doi = "doi:10.5072/FK2/U174JA";
         DataverseJavaObject val = dataverseCallTest();
-        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"UBC Research Data Management Survey: Humanities and Social Sciences");
+        assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"UBC Research Data Management Survey: Humanities and Social Sciences");
     }
     @Test
     public void metadataCityStateCountry(){
         doi = "doi:10.5072/FK2/U174JA";
         DataverseJavaObject val = dataverseCallTest();
-        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"UBC Research Data Management Survey: Humanities and Social Sciences");
+        assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"UBC Research Data Management Survey: Humanities and Social Sciences");
 
     }
 
@@ -26,21 +26,21 @@ public class StraightMetadataTests extends DataverseTests{
     public void metadataStateCountry(){
         doi = "doi:10.5072/FK2/8O2NUZ";
         DataverseJavaObject val = dataverseCallTest();
-        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"Forum Research Political Poll – Municipal Issues (Toronto) 2013");
+        assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"Forum Research Political Poll – Municipal Issues (Toronto) 2013");
     }
     //TODO need to get a doi
     /*@Test
     public void metadataCountry(){
         doi = "need to add still";
         DataverseJavaObject val = dataverseCallTest();
-        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"not entered yet");
+        assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
     }*/
 
     @Test
     public void metadataAddress(){
         doi = "doi:10.5072/FK2/OOG4RY";
         DataverseJavaObject val = dataverseCallTest();
-        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"Pierson v. Post Judgment Roll");
+        assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"Pierson v. Post Judgment Roll");
     }
 
     //TODO need to get a doi
@@ -48,7 +48,7 @@ public class StraightMetadataTests extends DataverseTests{
     public void flawedOrMinMetadata(){
         doi = "still need to add";
         DataverseJavaObject val = dataverseCallTest();
-        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"not entered yet");
+        assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
     }*/
 
     //TODO need to get a doi
@@ -56,6 +56,6 @@ public class StraightMetadataTests extends DataverseTests{
     public void goodMetadata(){
         doi = "still need to add";
         DataverseJavaObject val = dataverseCallTest();
-        assertEquals(val.getSimpleFields().getField(DVFieldNames.TITLE),"not entered yet");
+        assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
     }*/
 }

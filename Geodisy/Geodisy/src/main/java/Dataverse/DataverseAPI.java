@@ -7,6 +7,7 @@ package Dataverse;
 
 
 
+import BaseFiles.FileWriter;
 import BaseFiles.HTTPCaller;
 import Crosswalking.JSONParsing.DataverseParser;
 import org.apache.logging.log4j.LogManager;
@@ -15,11 +16,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.imageio.IIOException;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.BASE_DV_URL;
+import static BaseFiles.GeodisyStrings.EXISTING_RECORDS;
+import static Dataverse.DVFieldNameStrings.BASE_DV_URL;
 
 /**
  *  Search Dataverse for datasets
@@ -38,17 +42,23 @@ public class DataverseAPI extends SourceAPI {
     }
     //TODO test if this works
     @Override
-    public LinkedList<DataverseJavaObject> harvest() {
+    public LinkedList<DataverseJavaObject> harvest(ExistingSearches es) {
         HashSet<String> dois = searchDV();
         LinkedList<JSONObject> jsons = downloadMetadata(dois);
         LinkedList<DataverseJavaObject> answers =  new LinkedList<>();
         DataverseParser parser = new DataverseParser();
         for(JSONObject jo:jsons){
-            DataverseJavaObject djo = parser.parse(jo);
-            //TODO check if DJO has new info and don't add to answer if it doesn't
-            answers.add(djo);
+            DataverseJavaObject djo = parser.parse(jo,dvName);
+            if(djo.hasContent()&& hasNewInfo(djo, es)) {
+                answers.add(djo);
+            }
         }
         return answers;
+    }
+
+    private boolean hasNewInfo(DataverseJavaObject djo, ExistingSearches es) {
+        DataverseRecordInfo dri = new DataverseRecordInfo(djo);
+        return dri.younger(es.getRecordInfo(djo.getDOI()));
     }
 
     private HashSet<String> getRecords(String searchURL) {
@@ -60,7 +70,7 @@ public class DataverseAPI extends SourceAPI {
             HTTPCaller hC = new HTTPCaller(searchURL+"&start="+ start);
             result = hC.getJSONString();
             moreEntries = parseResponseForDOIs(result,start, answer);
-            start+=1000;
+            start+=10;
         }
         return answer;
     }
@@ -71,8 +81,8 @@ public class DataverseAPI extends SourceAPI {
 
             JSONObject current = new JSONObject(result);
             current = (JSONObject) current.get("data");
-            int totalRecords = Integer.parseInt(current.getString("total_count"));
-            if(totalRecords-1>start+999)
+            int totalRecords = (int) current.get("total_count");
+            if(totalRecords-1>start+9)
                 more = true;
             JSONArray records = (JSONArray) current.get("items");
             for(Object o:records){
@@ -97,6 +107,7 @@ public class DataverseAPI extends SourceAPI {
     @Override
     protected LinkedList<JSONObject> downloadMetadata(HashSet<String> dOIs) {
         HTTPCaller getMetadata;
+        //TODO set base URL programmatically
         String baseURL = BASE_DV_URL + "api/datasets/export?exporter=dataverse_json&persistentId=";
         LinkedList<JSONObject> answers =  new LinkedList<>();
         for(String s: dOIs){

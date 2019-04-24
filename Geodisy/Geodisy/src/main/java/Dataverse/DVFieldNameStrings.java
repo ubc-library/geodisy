@@ -1,9 +1,9 @@
-package Dataverse.DataverseJSONFieldClasses;
+package Dataverse;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class DVFieldNames {
+public class DVFieldNameStrings {
 
     //General Field Names
     public final static String TYPE_NAME = "typeName";
@@ -13,6 +13,8 @@ public class DVFieldNames {
     public final static String CITATION = "citation";
     public final static String BASE_DV_URL = "https://206-12-90-131.cloud.computecanada.ca/"; //currently our sandbox
     public final static String DOI = "persistentId";
+    public final static String MAJOR_VERSION = "versionNumber";
+    public final static String MINOR_VERSION = "versionMinorNumber";
 
 
     //Simple Field Names
@@ -62,6 +64,7 @@ public class DVFieldNames {
     public final static String DS_CONTACT_NAME = "datasetContactName";
 
     //Date of Collection Field Names
+    public final static String DATE_OF_COLLECT = "dateOfCollection";
     public final static String DATE_OF_COLLECT_START = "dateOfCollectionStart";
     public final static String DATE_OF_COLLECT_END = "dateOfCollectionEnd";
 
@@ -150,6 +153,5 @@ public class DVFieldNames {
     public final static String STATE = "state";
     public final static String CITY = "city";
     public final static String OTHER_GEO_COV = "otherGeographicCoverage";
-
     public final static List<String> GEO_META_FIELDS = Arrays.asList(GEOGRAPHIC_COVERAGE, GEOGRAPHIC_BBOX, GEOGRAPHIC_UNIT, WEST_LONG, EAST_LONG, NORTH_LAT, NORTH_LAT_LONG, SOUTH_LAT, SOUTH_LAT_LONG, COUNTRY, STATE, CITY, OTHER_GEO_COV);
 }

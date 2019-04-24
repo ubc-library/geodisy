@@ -3,14 +3,13 @@ package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.Date;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
-import Dataverse.DataverseJavaObject;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+import static Dataverse.DVFieldNameStrings.*;
 
 public class CitationFields extends MetadataType {
     private SimpleFields simpleFields;
@@ -146,6 +145,10 @@ public class CitationFields extends MetadataType {
                 case SUBJECT:
                     setSubject(getList(ja));
                     break;
+                case DATE_OF_COLLECT:
+                    DateOfCollection doc = new DateOfCollection();
+                    addDateOfCollection((DateOfCollection) doc.parseCompoundData(ja));
+                    break;
                 default:
                     logger.error("Something went wrong parsing a compound field. Label is %s", label);
                     System.out.println("Something wrong parsing a compound field");
@@ -167,6 +170,8 @@ public class CitationFields extends MetadataType {
         simpleFields.setField(DEPOS_DATE,getValueDate(current,"createTime"));
         simpleFields.setField(DIST_DATE,getValueDate(current,"releaseTime"));
         simpleFields.setField(LICENSE,parseSimpleValue(current,LICENSE));
+        simpleFields.setField(MAJOR_VERSION,parseSimpleValue(current,MAJOR_VERSION));
+        simpleFields.setField(MINOR_VERSION,parseSimpleValue(current,MINOR_VERSION));
 
     }
 
@@ -178,7 +183,7 @@ public class CitationFields extends MetadataType {
      */
     protected String parseSimpleValue(JSONObject current, String fieldName) {
         if(current.has(fieldName))
-            return current.getString(fieldName);
+            return current.get(fieldName).toString();
         return "";
     }
     /**
@@ -451,5 +456,7 @@ public class CitationFields extends MetadataType {
             return new JSONObject();
         }
     }
-
+    public int getVersion(){
+        return getSimpleFields().getVersion();
+    }
 }

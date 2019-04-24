@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 
-import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+import static Dataverse.DVFieldNameStrings.*;
 
 public class GeographicFields extends MetadataType {
     List<GeographicCoverage> geoCovers;
@@ -17,11 +17,12 @@ public class GeographicFields extends MetadataType {
     BoundingBox fullBB; //The single bounding box that includes all listed bounding box extents
     protected String doi;
 
-    public GeographicFields() {
+    public GeographicFields(String doi) {
         this.geoCovers = new LinkedList<>();
         this.geoBBoxes = new LinkedList<>();
         this.geoUnits = new LinkedList<>();
         fullBB = new BoundingBox();
+        this.doi = doi;
     }
     @Override
     public void setFields(JSONObject field) {
@@ -53,18 +54,14 @@ public class GeographicFields extends MetadataType {
     }
 
     /**
-     * This method takes a Geographic Coverage JSON array and returns a
+     * This method takes a Geographic Coverage JSON object and returns a
      * Geographic Coverage java object
-     * @param jObject
+     * @param jObj
      * @return A Geographic Coverage
      */
-    public GeographicCoverage addGeoCover(JSONObject jObject) {
+    public GeographicCoverage addGeoCover(JSONObject jObj) {
         GeographicCoverage gC = new GeographicCoverage(doi);
-        JSONArray ja = (JSONArray) jObject.get("value");
-        for (Object o: ja){
-            JSONObject jO = (JSONObject) o;
-            gC.setField(jO);
-        }
+        gC.setField(jObj);
         return gC;
     }
 
@@ -75,7 +72,7 @@ public class GeographicFields extends MetadataType {
     /**
      * This method takes a Geographic Bounding box JSON array and returns a
      * Geographic bounding box java object
-     * @param jA
+     * @param jsonObject
      * @return A Geographic Bounding Box
      */
     public GeographicBoundingBox parseGeoBBox(JSONObject jsonObject) {

@@ -58,7 +58,9 @@ public class Scheduler {
 public void run(){
 // every night at 2am you run your task
 Timer timer = new Timer();
-timer.scheduleAtFixedRate(new MyTimerTask(), today.getTime(), TimeUnit.MILLISECONDS.convert(1, UNIT_BETWEEN_RUNS)); // period: 1 day
+//TODO uncomment the following to get the timer actually running, but for now I want the task to run when I start the program so I can test
+//timer.scheduleAtFixedRate(new MyTimerTask(), today.getTime(), TimeUnit.MILLISECONDS.convert(1, UNIT_BETWEEN_RUNS)); // period: 1 day
+    new MyTimerTask().run();
     }
     
     

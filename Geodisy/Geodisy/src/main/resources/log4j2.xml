@@ -27,11 +27,12 @@
     </Appenders>
 
     <Loggers>
-
-        <Logger name="Dataverse" level="info" additivity="false" >
+<!--        <Logger name="DataverseIssues" level="debug" additivity="false" >
+            <AppenderRef ref="ErrorLog" />
+        </Logger>-->
+        <Logger name="Dataverse" level="info" additivity="true" >
             <AppenderRef ref="MyFile" />
         </Logger>
-
         <Root level="error">
             <AppenderRef ref="ErrorLog" />
         </Root>

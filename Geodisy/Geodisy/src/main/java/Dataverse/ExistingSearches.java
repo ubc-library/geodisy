@@ -7,13 +7,17 @@ import java.util.HashMap;
 
 
 public class ExistingSearches implements Serializable {
+    private static final long serialVersionUID = 8947943825774008362L;
     HashMap<String, BoundingBox> bBoxes;
     HashMap<String, DataverseRecordInfo> recordVersions;
     private static ExistingSearches single_instance = null;
 
+
     public static ExistingSearches getExistingSearches() {
-        if (single_instance == null)
+        if (single_instance == null) {
             single_instance = new ExistingSearches();
+            single_instance.addBBox("_filler_", new BoundingBox());
+        }
         return single_instance;
     }
 
@@ -28,16 +32,24 @@ public class ExistingSearches implements Serializable {
         bBoxes.put(name,boundingBox);
     }
 
-    private boolean hasBBox(String name){
-        if(bBoxes.containsKey(name))
+    private boolean hasBBox(String doi){
+        if(bBoxes.containsKey(doi))
             return true;
         return false;
     }
 
-    public BoundingBox getBBox(String name){
-        if(hasBBox(name))
-            return bBoxes.get(name);
+    public BoundingBox getBBox(String doi){
+        if(hasBBox(doi))
+            return bBoxes.get(doi);
         return new BoundingBox();
+    }
+
+    public int numberOfBBoxes(){
+        return bBoxes.size();
+    }
+
+    public int numberOfRecords(){
+        return recordVersions.size();
     }
 
     public void addOrReplaceRecord(DataverseRecordInfo dataverseRecordInfo){
@@ -47,4 +59,22 @@ public class ExistingSearches implements Serializable {
     public boolean isNewerRecord(DataverseRecordInfo dataverseRecordInfo){
         return dataverseRecordInfo.younger(recordVersions.get(dataverseRecordInfo.getDoi()));
     }
+
+
+    public DataverseRecordInfo getRecordInfo(String doi){
+        if(recordVersions.containsKey(doi))
+            return recordVersions.get(doi);
+        return new DataverseRecordInfo();
+    }
+
+    public void deleteBBox(String location){
+        if(bBoxes.containsKey(location))
+            bBoxes.remove(location);
+    }
+
+    public boolean hasRecord(String doi){
+        return recordVersions.containsKey(doi);
+    }
+
+
 }

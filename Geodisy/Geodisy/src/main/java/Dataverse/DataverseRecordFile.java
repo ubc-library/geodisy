@@ -8,6 +8,7 @@ import org.apache.commons.io.FileUtils;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20,37 +21,48 @@ public class DataverseRecordFile {
     String server;
     Logger logger = LogManager.getLogger(this.getClass());
     String recordURL;
+    String datasetDOI;
 
-    public DataverseRecordFile(String title, String doi, String server){
+    public DataverseRecordFile(String title, String doi, int dbID, String server, String datasetDOI){
         this.title = title;
         this.doi = doi;
-        this.server = server;
-        recordURL = server+"api/access/datafile/:/persistentId/?persistentId=" + doi;
-        getFile();
-    }
-
-    public DataverseRecordFile(String title, int dbID, String server){
-        this.title = title;
         this.dbID = dbID;
         this.server = server;
-        recordURL = String.format(server+"api/access/datafile/$d", dbID);
-        getFile();
+        recordURL = server+"api/access/datafile/:persistentId/?persistentId=" + doi;
+        this.datasetDOI = datasetDOI.replaceAll("\\.","_").replaceAll("/","_");
     }
 
-    private void getFile() {
+    public DataverseRecordFile(String title, int dbID, String server, String datasetDOI){
+        this.title = title;
+        this.dbID = dbID;
+        this.doi = String.valueOf(dbID);
+        this.server = server;
+        recordURL = String.format(server+"api/access/datafile/$d", dbID);
+        this.datasetDOI = datasetDOI;
+    }
+    //TODO figure out how to save the files to a different location
+    public void getFile() {
         try {
+            new File("./datasetFiles/" + datasetDOI + "/").mkdirs();
             FileUtils.copyURLToFile(
                     new URL(recordURL),
-                    new File(title),
+                    new File("./datasetFiles/" + datasetDOI + "/" + title),
                     10000, //10 seconds connection timeout
                     120000); //2 minute read timeout
-        } catch (MalformedURLException e) {
-            logger.error(String.format("Something is wonky with the DOI $s or the dbID $d", doi, dbID));
+
+        } catch (FileNotFoundException e){
+            logger.error(String.format("This dataset file %s couldn't be found from dataset %s", dbID, doi));
+            logger.info("Check out dataset " + datasetDOI);
+        }catch (MalformedURLException e) {
+            logger.error(String.format("Something is wonky with the DOI " + doi + " or the dbID " + dbID));
         } catch (IOException e) {
-            logger.error(String.format("Something went wrong with downloading file $s, with doi $s or dbID $d", title, doi, dbID));
+            logger.error(String.format("Something went wrong with downloading file %s, with doi %s or dbID %d", title, doi, dbID));
             e.printStackTrace();
         }
 
+    }
+    public String getFileIdentifier(){
+        return doi;
     }
 
 }

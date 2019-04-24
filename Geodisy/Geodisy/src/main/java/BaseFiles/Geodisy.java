@@ -11,6 +11,7 @@ import Dataverse.SourceAPI;
 import Dataverse.DataverseJavaObject;
 
 import DataSourceLocations.Dataverse;
+import Dataverse.ExistingSearches;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -30,15 +31,16 @@ public class Geodisy {
      * Front side of middleware, this part harvests data from Dataverse
      */
 
-    public List<DataverseJavaObject> harvestDataverse() {
+    public List<DataverseJavaObject> harvestDataverse(ExistingSearches es) {
         Dataverse dv = new Dataverse();
         String[] dvs = dv.getDataLocationURLs();
         List<DataverseJavaObject> records = new LinkedList<>();
         for (String s : dvs) {
             SourceAPI dVAPI = new DataverseAPI(s);
-            LinkedList<DataverseJavaObject> current = dVAPI.harvest();
+            LinkedList<DataverseJavaObject> current = dVAPI.harvest(es);
             for(DataverseJavaObject djo:current){
                 records.add(djo);
+                djo.downloadFiles();
             }
         }
         return records;

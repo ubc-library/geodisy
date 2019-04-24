@@ -1,15 +1,16 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields;
 
-import Crosswalking.JSONParsing.DataverseParser;
-import Dataverse.DataverseJSONFieldClasses.JSONField;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
+import Dataverse.DataverseJSONFieldClasses.JSONField;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.TemporalAccessor;
 
+/**
+ * This class makes sure that the date entered as a string is actually formatted correctly and if it is not it returns
+ * a date with the year 9999. When getting a date, if the date is year 9999, it returns an empty string.
+ */
 public class Date extends JSONField implements DateField {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu[-MM[-dd['T'HH:mm:ss['Z']]]]");
     TemporalAccessor date;

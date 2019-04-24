@@ -4,14 +4,14 @@ import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.Date;
 import org.json.JSONObject;
 
-import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.*;
+import static Dataverse.DVFieldNameStrings.*;
 
 public class DateOfCollection extends CompoundJSONField {
     private Date dateOfCollectionStart, dateOfCollectionEnd;
 
-    public DateOfCollection(String start, String end) {
-        this.dateOfCollectionStart = new Date(start);
-        this.dateOfCollectionEnd = new Date(end);
+    public DateOfCollection() {
+        this.dateOfCollectionStart = new Date("6000");
+        this.dateOfCollectionEnd = new Date("");
     }
 
     public String getDateOfCollectionStart() {

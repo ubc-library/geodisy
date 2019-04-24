@@ -2,7 +2,6 @@ package tests;
 
 import Dataverse.FindingBoundingBoxes.Geonames;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

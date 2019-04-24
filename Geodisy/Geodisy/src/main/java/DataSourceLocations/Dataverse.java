@@ -5,7 +5,7 @@
  */
 package DataSourceLocations;
 
-import static Dataverse.DataverseJSONFieldClasses.DVFieldNames.BASE_DV_URL;
+import static Dataverse.DVFieldNameStrings.BASE_DV_URL;
 
 /**
  * Class holds the list of all the dataverse urls that are being harvested from

@@ -40,7 +40,7 @@ public abstract class DataverseTests {
         String dataverse = call(dataverseCall);
         JSONObject jo = new JSONObject(dataverse);
         DataverseParser dataverseParser = new DataverseParser();
-        dJO = dataverseParser.parse(jo);
+        dJO = dataverseParser.parse(jo,"fake server name dvCallTest");
         return dJO;
     }
 
