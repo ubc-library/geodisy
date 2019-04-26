@@ -33,6 +33,8 @@ public class Scheduler {
     private final static int HOUR_TO_START_RUN = 2;
     private final static int MINUTE_TO_START_RUN = 0;
     private final static TimeUnit UNIT_BETWEEN_RUNS = TimeUnit.DAYS;
+    private long testDelay = 0;
+    private long testPeriod = 120000;
     
     //for testing the timer
     //private final static TimeUnit UNIT_BETWEEN_RUNS = TimeUnit.SECONDS;
@@ -58,9 +60,12 @@ public class Scheduler {
 public void run(){
 // every night at 2am you run your task
 Timer timer = new Timer();
+
 //TODO uncomment the following to get the timer actually running, but for now I want the task to run when I start the program so I can test
-//timer.scheduleAtFixedRate(new MyTimerTask(), today.getTime(), TimeUnit.MILLISECONDS.convert(1, UNIT_BETWEEN_RUNS)); // period: 1 day
-    new MyTimerTask().run();
+/*new MyTimerTask().run(); //runs Geodisy when the program first get's spun up to get all the existing records
+timer.scheduleAtFixedRate(new MyTimerTask(), today.getTime(), TimeUnit.MILLISECONDS.convert(1, UNIT_BETWEEN_RUNS)); // period: 1 day */
+    timer.scheduleAtFixedRate(new MyTimerTask(),testDelay,testPeriod);
+    //new MyTimerTask().run();
     }
     
     

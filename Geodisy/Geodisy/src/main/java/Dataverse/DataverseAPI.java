@@ -47,12 +47,15 @@ public class DataverseAPI extends SourceAPI {
         LinkedList<JSONObject> jsons = downloadMetadata(dois);
         LinkedList<DataverseJavaObject> answers =  new LinkedList<>();
         DataverseParser parser = new DataverseParser();
+        System.out.println("This is using the " + dvName + " dataverse for getting files, should it be changed to something else?");
         for(JSONObject jo:jsons){
             DataverseJavaObject djo = parser.parse(jo,dvName);
             if(djo.hasContent()&& hasNewInfo(djo, es)) {
                 answers.add(djo);
             }
         }
+        if(answers.size()>0)
+            System.out.println("Updated or added " + answers.size() + " records.");
         return answers;
     }
 

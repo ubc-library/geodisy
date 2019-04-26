@@ -5,13 +5,14 @@ import org.apache.logging.log4j.Logger;
 import org.apache.commons.io.FileUtils;
 
 
-
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 
 public class DataverseRecordFile {
@@ -44,12 +45,12 @@ public class DataverseRecordFile {
     public void getFile() {
         try {
             new File("./datasetFiles/" + datasetDOI + "/").mkdirs();
+            String filePath = "./datasetFiles/" + datasetDOI + "/" + title;
             FileUtils.copyURLToFile(
                     new URL(recordURL),
-                    new File("./datasetFiles/" + datasetDOI + "/" + title),
+                    new File(filePath),
                     10000, //10 seconds connection timeout
                     120000); //2 minute read timeout
-
         } catch (FileNotFoundException e){
             logger.error(String.format("This dataset file %s couldn't be found from dataset %s", dbID, doi));
             logger.info("Check out dataset " + datasetDOI);
@@ -61,6 +62,8 @@ public class DataverseRecordFile {
         }
 
     }
+
+
     public String getFileIdentifier(){
         return doi;
     }

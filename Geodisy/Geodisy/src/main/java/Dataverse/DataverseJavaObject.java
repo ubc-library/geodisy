@@ -35,7 +35,7 @@ import static Dataverse.DVFieldNameStrings.*;
 public class DataverseJavaObject {
     private CitationFields citationFields;
     private GeographicFields geoFields;
-    private Logger logger = LogManager.getLogger(DataverseParser.class);
+    private Logger logger = LogManager.getLogger(DataverseJavaObject.class);
     private List<DataverseRecordFile> dataFiles; //Stores the datafiles
     private String server;
     private boolean hasContent;
@@ -278,14 +278,12 @@ public class DataverseJavaObject {
     }
 
     public void parseFiles(JSONArray files) {
-
         for(Object o: files){
             JSONObject jo = (JSONObject) o;
             if(jo.getBoolean("restricted"))
                 continue;
             String title = jo.getString("label");
             JSONObject dataFile = (JSONObject) jo.get("dataFile");
-            System.out.println("This is using the " + server + " dataverse for getting files, should it be changed to something else?");
             DataverseRecordFile dRF;
             //Some Dataverses don't have individual DOIs for files, so for those I will use the database's file id instead
             if(dataFile.has(DOI)&& !dataFile.getString(DOI).equals("")) {
@@ -333,11 +331,13 @@ public class DataverseJavaObject {
 
     private void deleteDir(File f) {
         File[] files = f.listFiles();
-        for(File myFile: files){
-            if (myFile.isDirectory()) {
-                deleteDir(myFile);
+        if(files != null) {
+            for (File myFile : files) {
+                if (myFile.isDirectory()) {
+                    deleteDir(myFile);
+                }
+                myFile.delete();
             }
-            myFile.delete();
         }
     }
 

@@ -38,7 +38,7 @@ public class DataverseRecordInfo implements Serializable {
             return true;
         if (obj == this)
             return false;
-        Boolean younger = this.getMajor() >((DataverseRecordInfo) obj).getMajor() || (this.getMajor()==((DataverseRecordInfo) obj).getMajor() && this.getMinor() >((DataverseRecordInfo) obj).getMinor());
+        Boolean younger = this.getMajor() >((DataverseRecordInfo) obj).getMajor();
 
         return younger;
     }

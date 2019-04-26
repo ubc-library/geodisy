@@ -16,6 +16,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.TimerTask;
 
@@ -40,6 +42,7 @@ public class MyTimerTask extends TimerTask {
        String endRecsToCheck;
        String startErrorLog;
        String endErrorLog;
+       long startTime = Calendar.getInstance().getTimeInMillis();
         try {
             startRecsToCheck = new String(Files.readAllBytes(Paths.get(RECORDS_TO_CHECK)));
             startErrorLog = new String(Files.readAllBytes(Paths.get(ERROR_LOG)));
@@ -66,6 +69,10 @@ public class MyTimerTask extends TimerTask {
 
         } catch (IOException | ClassNotFoundException e) {
             logger.error("Something went wrong trying to read permanent file ExistingRecords.txt!");
+        } finally {
+            Calendar end =  Calendar.getInstance();
+            Long total = end.getTimeInMillis()-startTime;
+            System.out.println("Finished a run at: " + end.getTime() + " after " + total + " milliseconds");
         }
     }
 
