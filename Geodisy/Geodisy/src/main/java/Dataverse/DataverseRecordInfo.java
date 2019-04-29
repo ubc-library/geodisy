@@ -8,10 +8,16 @@ public class DataverseRecordInfo implements Serializable {
     private int minor;
     private String doi;
 
-
+    /**
+     * A blank Dataverse Record info object
+     */
     public DataverseRecordInfo() {
-
     }
+
+    /**
+     * Create a Dataverse Record Info object from a Dataverse Java Object
+     * @param dataverseJavaObject
+     */
     public DataverseRecordInfo(DataverseJavaObject dataverseJavaObject){
         doi = dataverseJavaObject.getDOI();
         int version = dataverseJavaObject.getVersion();

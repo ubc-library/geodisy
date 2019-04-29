@@ -7,21 +7,16 @@ import org.junit.Test;
 
 import java.io.*;
 import java.time.LocalDateTime;
-
-import static BaseFiles.GeodisyStrings.EXISTING_RECORDS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ReadWriteToFileTest {
-
     @Test
     public void getFileTest(){
         try {
-            ExistingSearchesFile eSF = new ExistingSearchesFile(EXISTING_RECORDS);
+            ExistingSearchesFile eSF = new ExistingSearchesFile();
             ExistingSearches es = eSF.readExistingSearches();
             int i = 1;//
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -33,8 +28,8 @@ public class ReadWriteToFileTest {
         es.addBBox(location,new BoundingBox());
         try {
             eSF.writeExistingSearches(es);
-            ExistingSearches es2 = eSF.readExistingSearches();
-        } catch (IOException | ClassNotFoundException e) {
+            es = eSF.readExistingSearches();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         assertEquals(es.numberOfBBoxes(),2);
@@ -42,7 +37,7 @@ public class ReadWriteToFileTest {
         try{
             eSF.writeExistingSearches(es);
             es = eSF.readExistingSearches();
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         es = ExistingSearches.getExistingSearches();

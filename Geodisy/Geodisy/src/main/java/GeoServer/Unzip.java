@@ -9,7 +9,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
+/**
+ * Class for unzipping a file right before uploading things to Geosever
+ * and then deleting the unzipped files after the upload process is finished
+ */
 public class Unzip {
     Logger logger = LogManager.getLogger(Unzip.class);
     //TODO call unzip when adding zipped files to Geoserver and then call deleteUnzippedFiles() after upload is done to save space

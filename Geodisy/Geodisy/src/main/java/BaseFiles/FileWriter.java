@@ -8,6 +8,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Class used to write things to files (logs and existing records files)
+ */
 public class FileWriter {
     public FileWriter() {
     }
@@ -33,13 +36,20 @@ public class FileWriter {
             fi.close();
             return es;
         }
-        Object answer = (Object) oi.readObject();
+        Object answer = oi.readObject();
         oi.close();
         fi.close();
         return answer;
     }
 
-    public ExistingSearches readExistingSearches(String path) throws IOException, ClassNotFoundException {
+    /**
+     * Get values from the ExistingRecords.txt. If the files isn't found create one and seed it with a filler record
+     * @param path
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public ExistingSearches readExistingSearches(String path) throws IOException {
         ExistingSearches es;
         try {
             FileInputStream f = new FileInputStream(path);
@@ -47,17 +57,19 @@ public class FileWriter {
             es = (ExistingSearches) ois.readObject();
         } catch (FileNotFoundException e) {
             es = ExistingSearches.getExistingSearches();
-            writeExistingSearches(es,path);
+            writeObjectToFile(es,path);
         } catch (ClassNotFoundException e){
             System.out.println("something went wonky loading the existing searches from the file");
             return ExistingSearches.getExistingSearches();
         }
         return es;
     }
-    public void writeExistingSearches(ExistingSearches existingSearches, String path) throws IOException {
-        FileWriter writer = new FileWriter();
-        writer.writeObjectToFile(existingSearches,path);
-    }
+
+    /**
+     * Checks if file exists. If file doesn't exist, create it.
+     * @param path
+     * @return
+     */
     private boolean verifyFileExistence(String path) {
         Path filePath = Paths.get(path);
         try {

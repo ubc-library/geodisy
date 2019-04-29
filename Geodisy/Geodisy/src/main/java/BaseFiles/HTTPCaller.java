@@ -11,6 +11,9 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
+/**
+ * Class for making HTTP calls and getting JSON string responses
+ */
 public class HTTPCaller {
     String searchUrl;
     Logger logger = LogManager.getLogger(this.getClass());

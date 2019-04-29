@@ -5,7 +5,9 @@ import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import java.io.Serializable;
 import java.util.HashMap;
 
-
+/**
+ * Class that holds bounding boxes that have already been found and what versions of records have already been downloaded.
+ */
 public class ExistingSearches implements Serializable {
     private static final long serialVersionUID = 8947943825774008362L;
     HashMap<String, BoundingBox> bBoxes;

@@ -40,7 +40,7 @@ public class DataverseAPI extends SourceAPI {
         records = new HashSet<>();
 
     }
-    //TODO test if this works
+
     @Override
     public LinkedList<DataverseJavaObject> harvest(ExistingSearches es) {
         HashSet<String> dois = searchDV();

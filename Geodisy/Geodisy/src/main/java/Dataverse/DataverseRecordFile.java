@@ -14,7 +14,9 @@ import java.nio.file.Paths;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-
+/**
+ * Info for downloading a geospatial dataset file, and the methods used to download the files.
+ */
 public class DataverseRecordFile {
     String title;
     String doi = "N/A";
@@ -24,6 +26,14 @@ public class DataverseRecordFile {
     String recordURL;
     String datasetDOI;
 
+    /**
+     * Creates a DataverseRecordFile when there is a File-specific doi.
+     * @param title
+     * @param doi
+     * @param dbID
+     * @param server
+     * @param datasetDOI
+     */
     public DataverseRecordFile(String title, String doi, int dbID, String server, String datasetDOI){
         this.title = title;
         this.doi = doi;
@@ -33,6 +43,13 @@ public class DataverseRecordFile {
         this.datasetDOI = datasetDOI.replaceAll("\\.","_").replaceAll("/","_");
     }
 
+    /**
+     * Creates a DataverseRecordFile when there is no File-specific doi, only a dataset doi and a database ID.
+     * @param title
+     * @param dbID
+     * @param server
+     * @param datasetDOI
+     */
     public DataverseRecordFile(String title, int dbID, String server, String datasetDOI){
         this.title = title;
         this.dbID = dbID;
@@ -41,7 +58,7 @@ public class DataverseRecordFile {
         recordURL = String.format(server+"api/access/datafile/$d", dbID);
         this.datasetDOI = datasetDOI;
     }
-    //TODO figure out how to save the files to a different location
+
     public void getFile() {
         try {
             new File("./datasetFiles/" + datasetDOI + "/").mkdirs();

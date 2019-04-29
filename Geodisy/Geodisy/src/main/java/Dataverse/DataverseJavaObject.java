@@ -2,6 +2,7 @@ package Dataverse;
 
 
 
+import BaseFiles.GeodisyStrings;
 import Crosswalking.JSONParsing.DataverseParser;
 
 import DataSourceLocations.Dataverse;
@@ -25,7 +26,6 @@ import static Dataverse.DVFieldNameStrings.*;
 /**
  * Java object structure to parse Dataverse Json into
  * May need to change field types for dates, URLs, and/or email addresses.
- * Also need to test to see how textboxes work with this.
  *
  * Dataverse Alias: Java Class: JavaObject Variable
  *
@@ -48,15 +48,13 @@ public class DataverseJavaObject {
         hasContent = false;
     }
 
-    public void parseGeospatialFields(JSONArray jsonArray) {
-        for(Object o: jsonArray){
-            JSONObject jo = (JSONObject) o;
-            geoFields.setFields(jo);
-        }
-    }
-    public void parseCitationFields(JSONObject current) {
-        citationFields.setBaseFields(current);
-        JSONObject metadata = getVersionSection(current).getJSONObject("metadataBlocks");
+    /**
+     * Gets the Citation metadata for the record
+     * @param citationFieldsArray
+     */
+    public void parseCitationFields(JSONObject citationFieldsArray) {
+        citationFields.setBaseFields(citationFieldsArray);
+        JSONObject metadata = getVersionSection(citationFieldsArray).getJSONObject("metadataBlocks");
         JSONArray currentArray = metadata.getJSONObject(CITATION).getJSONArray(FIELDS);
         for (Object o : currentArray) {
             JSONObject jo = (JSONObject) o;
@@ -64,7 +62,41 @@ public class DataverseJavaObject {
         }
         hasContent=true;
         geoFields = new GeographicFields(citationFields.getDOI());
+    }
 
+    /**
+     * Gets the Geospatial metadata for the record
+     * @param geoFieldsArray
+     */
+    public void parseGeospatialFields(JSONArray geoFieldsArray) {
+        for(Object o: geoFieldsArray){
+            JSONObject jo = (JSONObject) o;
+            this.geoFields.setFields(jo);
+        }
+    }
+
+    /**
+     * Gets the File metadata for the record.
+     * @param fileFieldsArray
+     */
+    public void parseFiles(JSONArray fileFieldsArray) {
+        for(Object o: fileFieldsArray){
+            JSONObject jo = (JSONObject) o;
+            if(jo.getBoolean("restricted"))
+                continue;
+            String title = jo.getString("label");
+            JSONObject dataFile = (JSONObject) jo.get("dataFile");
+            DataverseRecordFile dRF;
+            //Some Dataverses don't have individual DOIs for files, so for those I will use the database's file id instead
+            if(dataFile.has(DOI)&& !dataFile.getString(DOI).equals("")) {
+                String doi = dataFile.getString(DOI);
+                dRF = new DataverseRecordFile(title, doi,dataFile.getInt("id"), server, citationFields.getDOI());
+            }else{
+                int dbID = (int) dataFile.get("id");
+                dRF = new DataverseRecordFile(title,dbID,server,citationFields.getDOI());
+            }
+            dataFiles.add(dRF);
+        }
     }
     //if changed, need to change copy in CitationFields Class
     public JSONObject getVersionSection(JSONObject current) {
@@ -277,25 +309,7 @@ public class DataverseJavaObject {
         return geoFields;
     }
 
-    public void parseFiles(JSONArray files) {
-        for(Object o: files){
-            JSONObject jo = (JSONObject) o;
-            if(jo.getBoolean("restricted"))
-                continue;
-            String title = jo.getString("label");
-            JSONObject dataFile = (JSONObject) jo.get("dataFile");
-            DataverseRecordFile dRF;
-            //Some Dataverses don't have individual DOIs for files, so for those I will use the database's file id instead
-            if(dataFile.has(DOI)&& !dataFile.getString(DOI).equals("")) {
-                String doi = dataFile.getString(DOI);
-                dRF = new DataverseRecordFile(title, doi,dataFile.getInt("id"), server, citationFields.getDOI());
-            }else{
-                int dbID = (int) dataFile.get("id");
-                dRF = new DataverseRecordFile(title,dbID,server,citationFields.getDOI());
-            }
-            dataFiles.add(dRF);
-        }
-    }
+
 
     public int getVersion(){
         return getCitationFields().getVersion();
@@ -315,13 +329,31 @@ public class DataverseJavaObject {
     public boolean hasContent(){
         return hasContent;
     }
-//TODO check that files are only getting downloaded if there is a change in the record, and that the old files are being deleted first.
+
+    /**
+     *  Deletes the directory of the record's files if it exists and then downloads the updated
+     *  files, excluding non-geospatial file types other than .zip
+     *  If there aren't any geospatial files uploaded, the entire directory get's deleted.
+     */
     public void downloadFiles() {
         File f = new File("datasetFiles\\\\" + urlized(citationFields.getDOI()));
         deleteDir(f);
         for (DataverseRecordFile dRF : dataFiles) {
+            if(fileTypeToIgnore(dRF.title))
+                continue;
             dRF.getFile();
         }
+        if(f.list().length==0)
+            f.delete();
+
+    }
+
+    private boolean fileTypeToIgnore(String title) {
+        for(String s: GeodisyStrings.FILE_TYPES_TO_IGNORE){
+            if(title.endsWith(s))
+                return true;
+        }
+        return false;
     }
 
     private String urlized(String doi) {
@@ -331,7 +363,7 @@ public class DataverseJavaObject {
 
     private void deleteDir(File f) {
         File[] files = f.listFiles();
-        if(files != null) {
+        if(files != null && files.length >0) {
             for (File myFile : files) {
                 if (myFile.isDirectory()) {
                     deleteDir(myFile);
@@ -339,10 +371,7 @@ public class DataverseJavaObject {
                 myFile.delete();
             }
         }
+        f.delete();
     }
 
-
-    public List<DataverseRecordFile> getFileRecords(){
-        return dataFiles;
-    }
 }

@@ -1,11 +1,4 @@
-package BaseFiles;/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-;
-
+package BaseFiles;
 
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordInfo;
@@ -65,9 +58,9 @@ public class MyTimerTask extends TimerTask {
             if(!startErrorLog.equals(endErrorLog)){
                 fW.writeObjectToFile(endErrorLog,ERROR_LOG);
             }
-            fW.writeExistingSearches(existingSearches, EXISTING_RECORDS);
+            fW.writeObjectToFile(existingSearches, EXISTING_RECORDS);
 
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException  e) {
             logger.error("Something went wrong trying to read permanent file ExistingRecords.txt!");
         } finally {
             Calendar end =  Calendar.getInstance();
@@ -76,6 +69,11 @@ public class MyTimerTask extends TimerTask {
         }
     }
 
+    /**
+     * Removes INFO messages from the error log.
+     * @return String with no INFO messages
+     * @throws IOException
+     */
     private String trimInfo()throws IOException {
         String end = new String(Files.readAllBytes(Paths.get(ERROR_LOG)));
         String[] lines = end.split(System.getProperty("line.separator"));
@@ -87,6 +85,11 @@ public class MyTimerTask extends TimerTask {
         return sb.toString();
     }
 
+    /**
+     * Removes ERROR messages from the recordsToCheck log.
+     * @return String with no ERROR messages
+     * @throws IOException
+     */
     public String trimErrors() throws IOException {
         String end = new String(Files.readAllBytes(Paths.get(RECORDS_TO_CHECK)));
         String[] lines = end.split(System.getProperty("line.separator"));
