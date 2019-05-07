@@ -33,11 +33,11 @@ public class HTTPCaller {
             con.setReadTimeout(5000);
             return con;
         } catch (ProtocolException e) {
-            e.printStackTrace();
+            logger.error("Something went wrong making the HTTP URL connection, Protocol exception");
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            logger.error("Something went wrong making the HTTP URL connection, URL was malformed");
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Something went wrong making the HTTP URL connection, IOException");
         }
         return null;
     }
@@ -72,6 +72,8 @@ public class HTTPCaller {
 
     public String getJSONString(){
         HttpURLConnection h = getHttpURLConnection();
+        if(h==null)
+            return "HTTP Fail";
         return readResponse(h);
     }
 }
