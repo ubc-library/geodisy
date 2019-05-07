@@ -1,5 +1,4 @@
 package Dataverse.FindingBoundingBoxes.LocationTypes;
-
 import java.io.Serializable;
 
 public class BoundingBox implements Serializable {
@@ -100,6 +99,5 @@ public class BoundingBox implements Serializable {
     public void setLongEast(String longEast){
         this.longEast = getDoubleLong(longEast);
     }
-
 
 }

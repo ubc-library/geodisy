@@ -23,7 +23,7 @@ public class FileWriter {
         o.close();
         f.close();
     }
-    public Object readSavedObject(String path) throws IOException, ClassNotFoundException,FileNotFoundException {
+    public Object readSavedObject(String path) throws IOException, ClassNotFoundException {
         if (!verifyFileExistence(path))
             throw new FileNotFoundException();
         FileInputStream fi =  new FileInputStream(new File(path));

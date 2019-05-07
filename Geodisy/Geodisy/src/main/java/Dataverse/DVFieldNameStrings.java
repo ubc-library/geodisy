@@ -3,6 +3,10 @@ package Dataverse;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Central location for all the dataverse json file names. If any field name changes we only have to alter it here
+ * rather than search through all the code to find all the usages of the old field name.
+ */
 public class DVFieldNameStrings {
 
     //General Field Names

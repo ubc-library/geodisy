@@ -6,7 +6,7 @@
 package Crosswalking;
 
 /**
- *
+ * Interface for the output metadata schema side of a crosswalk
  * @author pdante
  */
 public interface MetadataSchema {

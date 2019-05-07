@@ -2,10 +2,10 @@ package tests;
 
 import BaseFiles.MyTimerTask;
 import Crosswalking.JSONParsing.DataverseParser;
-import Dataverse.DataverseJSONFieldClasses.Fields.CompoundField.Author;
-import Dataverse.DataverseJSONFieldClasses.Fields.CompoundField.CitationFields;
-import Dataverse.DataverseJSONFieldClasses.Fields.CompoundField.DatasetContact;
-import Dataverse.DataverseJSONFieldClasses.Fields.CompoundField.Description;
+import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.Author;
+import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.CitationFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.DatasetContact;
+import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.Description;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
 import Dataverse.DataverseJavaObject;
 

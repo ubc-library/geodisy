@@ -4,8 +4,6 @@ package BaseFiles;/*
  * and open the template in the editor.
  */
 
-;
-
 import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.Timer;

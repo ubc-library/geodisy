@@ -122,9 +122,7 @@ public class Countries {
 
     public boolean isCountryCode(String code){
         String codeCorrect = code.toUpperCase();
-        if(countryCodes.containsKey(codeCorrect))
-            return true;
-        return false;
+        return countryCodes.containsKey(codeCorrect);
     }
 
     public void addProvince(String country, Province province){
@@ -132,13 +130,13 @@ public class Countries {
             boundingBoxes.put(country+"zzz"+province, province.getBoundingBox());
     }
 
-    public BoundingBox get2ParamBB(String country, String province){
+    public BoundingBox getExistingBB(String country, String province){
         if(boundingBoxes.containsKey(country+"zzz"+province))
             return boundingBoxes.get(country+"zzz"+province);
         return new BoundingBox();
     }
 
-    public BoundingBox get3ParamBB(String country, String province, String city){
+    public BoundingBox getExistingBB(String country, String province, String city){
         if(boundingBoxes.containsKey(country+"zzz"+ province+ "zzz" + city))
             return boundingBoxes.get(country+"zzz"+ province+ "zzz" + city);
         return new BoundingBox();

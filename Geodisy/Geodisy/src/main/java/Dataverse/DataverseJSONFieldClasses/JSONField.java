@@ -6,6 +6,8 @@ import org.apache.commons.validator.routines.UrlValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
+
 public abstract class JSONField {
     protected Logger logger = LogManager.getLogger(DataverseParser.class);
 
@@ -22,6 +24,7 @@ public abstract class JSONField {
         logger.error("Malformed URL error (%s), returning blank String", value);
         return "";
     }
+
 
 
 
