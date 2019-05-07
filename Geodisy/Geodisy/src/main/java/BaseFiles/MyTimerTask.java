@@ -3,6 +3,7 @@ package BaseFiles;
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordInfo;
 import Dataverse.ExistingSearches;
+import Dataverse.SourceJavaObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.*;
@@ -44,8 +45,8 @@ public class MyTimerTask extends TimerTask {
             FileWriter fW = new FileWriter();
 
             ExistingSearches existingSearches = fW.readExistingSearches(EXISTING_RECORDS);
-            List<DataverseJavaObject> dJOs= geo.harvestDataverse(existingSearches);
-            for(DataverseJavaObject dJO : dJOs) {
+            List<SourceJavaObject> dJOs = geo.harvestDataverse(existingSearches);
+            for(SourceJavaObject dJO : dJOs) {
                 existingSearches.addOrReplaceRecord(new DataverseRecordInfo(dJO));
             }
 

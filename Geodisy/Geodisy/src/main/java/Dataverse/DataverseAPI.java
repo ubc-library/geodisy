@@ -42,10 +42,10 @@ public class DataverseAPI extends SourceAPI {
     }
 
     @Override
-    public LinkedList<DataverseJavaObject> harvest(ExistingSearches es) {
+    public LinkedList<SourceJavaObject> harvest(ExistingSearches es) {
         HashSet<String> dois = searchDV();
         LinkedList<JSONObject> jsons = downloadMetadata(dois);
-        LinkedList<DataverseJavaObject> answers =  new LinkedList<>();
+        LinkedList<SourceJavaObject> answers =  new LinkedList<>();
         DataverseParser parser = new DataverseParser();
         System.out.println("This is using the " + dvName + " dataverse for getting files, should it be changed to something else?");
         for(JSONObject jo:jsons){
@@ -72,6 +72,8 @@ public class DataverseAPI extends SourceAPI {
         while(moreEntries){
             HTTPCaller hC = new HTTPCaller(searchURL+"&start="+ start);
             result = hC.getJSONString();
+            if(result.equals("HTTP Fail"))
+                break;
             moreEntries = parseResponseForDOIs(result,start, answer);
             start+=10;
         }
@@ -116,6 +118,8 @@ public class DataverseAPI extends SourceAPI {
         for(String s: dOIs){
             getMetadata = new HTTPCaller(baseURL+s);
             String dataverseJSON = getMetadata.getJSONString();
+            if(dataverseJSON.equals("HTTP Fail"))
+                continue;
             JSONObject jo = new JSONObject(dataverseJSON);
             answers.add(jo);
         }

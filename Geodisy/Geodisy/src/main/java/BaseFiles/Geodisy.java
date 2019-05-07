@@ -9,6 +9,7 @@ package BaseFiles;/*
 import Dataverse.DataverseAPI;
 import Dataverse.SourceAPI;
 import Dataverse.DataverseJavaObject;
+import Dataverse.SourceJavaObject;
 
 import DataSourceLocations.Dataverse;
 import Dataverse.ExistingSearches;
@@ -31,14 +32,14 @@ public class Geodisy {
      * Front side of middleware, this part harvests data from Dataverse
      */
 
-    public List<DataverseJavaObject> harvestDataverse(ExistingSearches es) {
+    public List<SourceJavaObject> harvestDataverse(ExistingSearches es) {
         Dataverse dv = new Dataverse();
         String[] dvs = dv.getDataLocationURLs();
-        List<DataverseJavaObject> records = new LinkedList<>();
+        List<SourceJavaObject> records = new LinkedList<>();
         for (String s : dvs) {
             SourceAPI dVAPI = new DataverseAPI(s);
-            LinkedList<DataverseJavaObject> current = dVAPI.harvest(es);
-            for(DataverseJavaObject djo:current){
+            LinkedList<SourceJavaObject> current = dVAPI.harvest(es);
+            for(SourceJavaObject djo:current){
                 records.add(djo);
                 djo.downloadFiles();
             }

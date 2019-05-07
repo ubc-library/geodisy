@@ -54,7 +54,7 @@ public class SchedulerTest {
         cal.set(Calendar.SECOND,0);
         cal.set(Calendar.MILLISECOND,0);
 
-        assertEquals(schedule.getToday().get(cal.DAY_OF_MONTH), cal.get(cal.DAY_OF_MONTH));
+        assertEquals(schedule.getToday().get(Calendar.DAY_OF_MONTH), cal.get(Calendar.DAY_OF_MONTH));
     }
     
 }

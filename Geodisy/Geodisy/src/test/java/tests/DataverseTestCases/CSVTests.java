@@ -2,6 +2,7 @@ package tests.DataverseTestCases;
 
 import Dataverse.DVFieldNameStrings;
 import Dataverse.DataverseJavaObject;
+import Dataverse.SourceJavaObject;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -11,7 +12,7 @@ public class CSVTests extends DataverseTests {
     @Test
     public void CSVNonGeo(){
         doi = "doi:10.5072/FK2/VLOTSI";
-        DataverseJavaObject val = dataverseCallTest();
+        SourceJavaObject val = dataverseCallTest();
         assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"CSV file that is not geospatial data");
     }
 
@@ -19,7 +20,7 @@ public class CSVTests extends DataverseTests {
     /*@Test
     public void CSVCityNames(){
         doi = "206-12-90-131.cloud.computecanada.ca/dataverse/bam";
-        DataverseJavaObject val = dataverseCallTest();
+        SourceJavaObject val = dataverseCallTest();
         assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
     }*/
 }

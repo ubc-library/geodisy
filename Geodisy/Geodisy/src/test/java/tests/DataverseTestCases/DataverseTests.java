@@ -1,13 +1,11 @@
 package tests.DataverseTestCases;
 
 
-import BaseFiles.Geodisy;
 import Crosswalking.JSONParsing.DataverseParser;
-import Dataverse.DataverseJavaObject;
+import Dataverse.SourceJavaObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
-
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,7 +17,7 @@ import java.net.URL;
 public abstract class DataverseTests {
     protected String doi;
     protected Logger logger = LogManager.getLogger(DataverseTests.class);
-    protected DataverseJavaObject dJO;
+    protected SourceJavaObject dJO;
 
     //https://206-12-90-131.cloud.computecanada.ca/api/datasets/export?exporter=dataverse_json&persistentId=doi:10.5072/FK2/QZIPVK
 
@@ -35,7 +33,7 @@ public abstract class DataverseTests {
             return doi;
 
     }
-    public DataverseJavaObject dataverseCallTest(){
+    public SourceJavaObject dataverseCallTest(){
         String dataverseCall = getDataverseString();
         String dataverse = call(dataverseCall);
         JSONObject jo = new JSONObject(dataverse);

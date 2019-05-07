@@ -16,8 +16,7 @@ public class Dataverse implements DataLocation {
 
     public Dataverse() {
         //enter dataverse urls into brackets including http/https part, comma separated
-        String[] dvs={BASE_DV_URL};
-        dataverseURLs =dvs;
+        dataverseURLs = new String[]{BASE_DV_URL};
     }
     @Override
     public String[] getDataLocationURLs() {

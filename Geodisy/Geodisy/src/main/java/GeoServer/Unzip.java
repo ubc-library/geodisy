@@ -17,7 +17,6 @@ public class Unzip {
     Logger logger = LogManager.getLogger(Unzip.class);
     //TODO call unzip when adding zipped files to Geoserver and then call deleteUnzippedFiles() after upload is done to save space
     public void unzip(String filePath) {
-        String fileZip = filePath;
         String destPath = filePath.substring(0,filePath.length()-4);
         File destDir = new File(destPath);
 
@@ -34,7 +33,7 @@ public class Unzip {
         byte[] buffer = new byte[1024];
         ZipInputStream zis = null;
         try {
-            zis = new ZipInputStream(new FileInputStream(fileZip));
+            zis = new ZipInputStream(new FileInputStream(filePath));
         } catch (FileNotFoundException e) {
             logger.error("Something went wrong unzipping" + filePath + ". The file couldn't be found somehow.");
         }

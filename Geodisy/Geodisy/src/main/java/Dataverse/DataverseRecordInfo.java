@@ -2,6 +2,11 @@ package Dataverse;
 
 import java.io.Serializable;
 
+/**
+ * Class of keeping track of the most recent version of a dataset that has been harvested. A collection of these will be
+ * saved to the ExistingRecords.txt file so that we still maintain a record even if the system shuts down or if we need
+ * to restart Geodisy for whatever reason.
+ */
 public class DataverseRecordInfo implements Serializable {
     private static final long serialVersionUID = -3342760939630407200L;
     private int major;
@@ -18,7 +23,7 @@ public class DataverseRecordInfo implements Serializable {
      * Create a Dataverse Record Info object from a Dataverse Java Object
      * @param dataverseJavaObject
      */
-    public DataverseRecordInfo(DataverseJavaObject dataverseJavaObject){
+    public DataverseRecordInfo(SourceJavaObject dataverseJavaObject){
         doi = dataverseJavaObject.getDOI();
         int version = dataverseJavaObject.getVersion();
         setMajor(version/1000);
@@ -32,9 +37,8 @@ public class DataverseRecordInfo implements Serializable {
             return false;
         if (obj == this)
             return true;
-        Boolean equals = this.getMajor()==((DataverseRecordInfo) obj).getMajor()
+        return this.getMajor()==((DataverseRecordInfo) obj).getMajor()
                 && this.getMinor()==((DataverseRecordInfo) obj).getMinor();
-        return equals;
     }
 
     public boolean younger(Object obj) {
@@ -44,9 +48,8 @@ public class DataverseRecordInfo implements Serializable {
             return true;
         if (obj == this)
             return false;
-        Boolean younger = this.getMajor() >((DataverseRecordInfo) obj).getMajor();
 
-        return younger;
+        return this.getMajor() >((DataverseRecordInfo) obj).getMajor();
     }
 
     public int getMajor() {

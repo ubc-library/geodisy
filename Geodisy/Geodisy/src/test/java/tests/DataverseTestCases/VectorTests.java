@@ -8,21 +8,21 @@ public class VectorTests extends DataverseTests{
     /*@Test
     public void lineVector(){
         doi = "still need to add";
-        DataverseJavaObject val = dataverseCallTest();
+        SourceJavaObject val = dataverseCallTest();
         assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
     }
 
     @Test
     public void pointVector(){
         doi = "still need to add";
-        DataverseJavaObject val = dataverseCallTest();
+        SourceJavaObject val = dataverseCallTest();
         assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
     }
 
     @Test
     public void polygonVector(){
         doi = "still need to add";
-        DataverseJavaObject val = dataverseCallTest();
+        SourceJavaObject val = dataverseCallTest();
         assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
     }*/
 }
