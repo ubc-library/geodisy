@@ -6,7 +6,8 @@
 package Crosswalking;
 
 /**
- *
+ * Output schema that will be then sent to Geoserver to be indexed for GeoBlacklight. Values for this will be
+ * crosswalked in for the data repository Java Objects.
  * @author pdante
  */
 public class ISO_19115 extends ISO_Schema {
