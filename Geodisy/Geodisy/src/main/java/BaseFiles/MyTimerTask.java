@@ -82,7 +82,8 @@ public class MyTimerTask extends TimerTask {
         for(String s: lines){
             if(s.contains("INFO"))
                 continue;
-            sb.append(s);        }
+            sb.append(s+System.lineSeparator());
+        }
         return sb.toString();
     }
 
@@ -98,7 +99,7 @@ public class MyTimerTask extends TimerTask {
         for(String s: lines){
             if(s.contains("ERROR"))
                 continue;
-            sb.append(s);        }
+            sb.append(s + System.lineSeparator());        }
         return sb.toString();
     }
 

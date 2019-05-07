@@ -54,7 +54,7 @@ public class Countries {
             dBuilder = dbFactory.newDocumentBuilder();
             doc = dBuilder.parse(xmlFile);
             doc.getDocumentElement().normalize();
-            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+            System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
             NodeList nodeList = doc.getElementsByTagName("country");
             for (int i = 0; i <nodeList.getLength(); i++){
                 getCountry(nodeList.item(i));

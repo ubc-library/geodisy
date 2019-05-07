@@ -191,7 +191,7 @@ public class CitationFields extends MetadataType {
             return current.get(fieldName).toString();
         return "";
     }
-    
+
     /**
      *
      * @param current Current JSONObject to extract a date from
