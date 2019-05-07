@@ -35,9 +35,7 @@ public class ExistingSearches implements Serializable {
     }
 
     private boolean hasBBox(String doi){
-        if(bBoxes.containsKey(doi))
-            return true;
-        return false;
+        return bBoxes.containsKey(doi);
     }
 
     public BoundingBox getBBox(String doi){
@@ -70,8 +68,7 @@ public class ExistingSearches implements Serializable {
     }
 
     public void deleteBBox(String location){
-        if(bBoxes.containsKey(location))
-            bBoxes.remove(location);
+        bBoxes.remove(location);
     }
 
     public boolean hasRecord(String doi){
