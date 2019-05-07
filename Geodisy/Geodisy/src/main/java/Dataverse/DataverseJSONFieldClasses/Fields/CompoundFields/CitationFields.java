@@ -1,8 +1,13 @@
-package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
+package Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields;
 
+import Crosswalking.JSONParsing.DataverseParser;
+import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.Date;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
+import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,45 +18,45 @@ import static Dataverse.DVFieldNameStrings.*;
 
 public class CitationFields extends MetadataType {
     private SimpleFields simpleFields;
-    private List<OtherID> otherID;
-    private List<Author> author;
-    private List<DatasetContact> datasetContact;
-    private List<Description> dsDescription;
-    private List<Keyword> keyword;
-    private List<TopicClassification> topicClassification;
-    private List<RelatedPublication> publication;
-    private List<Producer> producer;
-    private List<Contributor> contributor;
-    private List<GrantNumber> grantNumber;
-    private List<Distributor> distributor;
-    private List<TimePeriodCovered> timePeriodCovered;
+    private List<OtherID> otherIDs;
+    private List<Author> authors;
+    private List<DatasetContact> datasetContacts;
+    private List<Description> dsDescriptions;
+    private List<Keyword> keywords;
+    private List<TopicClassification> topicClassifications;
+    private List<RelatedPublication> publications;
+    private List<Producer> producers;
+    private List<Contributor> contributors;
+    private List<GrantNumber> grantNumbers;
+    private List<Distributor> distributors;
+    private List<TimePeriodCovered> timePeriodsCovered;
     private List<DateOfCollection> datesOfCollection;
     private Series series;
-    private List<Software> software;
-    private List<String> relatedMaterial, relatedDatasets, otherReferences, dataSources, kindOfData, language, subject;
-
+    private List<Software> softwares;
+    private List<String> relatedMaterials, relatedDatasets, otherReferences, dataSources, kindsOfData, languages, subjects;
+    Logger logger = LogManager.getLogger(CitationFields.class);
 
     public CitationFields() {
         this.simpleFields = new SimpleFields();
-        this.otherID = new LinkedList<>();
-        this.author = new LinkedList<>();
-        this.datasetContact = new LinkedList<>();
-        this.dsDescription = new LinkedList<>();
-        this.subject = new LinkedList<>();
-        this.keyword = new LinkedList<>();
-        this.topicClassification = new LinkedList<>();
-        this.publication = new LinkedList<>();
-        this.language = new LinkedList<>();
-        this.producer = new LinkedList<>();
-        this.contributor = new LinkedList<>();
-        this.grantNumber = new LinkedList<>();
-        this.distributor  = new LinkedList<>();
-        this.timePeriodCovered = new LinkedList<>();
+        this.otherIDs = new LinkedList<>();
+        this.authors = new LinkedList<>();
+        this.datasetContacts = new LinkedList<>();
+        this.dsDescriptions = new LinkedList<>();
+        this.subjects = new LinkedList<>();
+        this.keywords = new LinkedList<>();
+        this.topicClassifications = new LinkedList<>();
+        this.publications = new LinkedList<>();
+        this.languages = new LinkedList<>();
+        this.producers = new LinkedList<>();
+        this.contributors = new LinkedList<>();
+        this.grantNumbers = new LinkedList<>();
+        this.distributors = new LinkedList<>();
+        this.timePeriodsCovered = new LinkedList<>();
         this.datesOfCollection = new LinkedList<>();
-        this.kindOfData = new LinkedList<>();
+        this.kindsOfData = new LinkedList<>();
         this.series  = new Series();
-        this.software = new LinkedList<>();
-        this.relatedMaterial = new LinkedList<>();
+        this.softwares = new LinkedList<>();
+        this.relatedMaterials = new LinkedList<>();
         this.relatedDatasets = new LinkedList<>();
         this.otherReferences = new LinkedList<>();
         this.dataSources = new LinkedList<>();
@@ -128,10 +133,10 @@ public class CitationFields extends MetadataType {
                     setDataSources(getList(ja));
                     break;
                 case KIND_OF_DATA:
-                    setKindOfData(getList(ja));
+                    setKindsOfData(getList(ja));
                     break;
                 case LANGUAGE:
-                    setLanguage(getList(ja));
+                    setLanguages(getList(ja));
                     break;
                 case OTHER_REFERENCES:
                     setOtherReferences(getList(ja));
@@ -140,10 +145,10 @@ public class CitationFields extends MetadataType {
                     setRelatedDatasets(getList(ja));
                     break;
                 case RELATED_MATERIAL:
-                    setRelatedMaterial(getList(ja));
+                    setRelatedMaterials(getList(ja));
                     break;
                 case SUBJECT:
-                    setSubject(getList(ja));
+                    setSubjects(getList(ja));
                     break;
                 case DATE_OF_COLLECT:
                     DateOfCollection doc = new DateOfCollection();
@@ -186,6 +191,7 @@ public class CitationFields extends MetadataType {
             return current.get(fieldName).toString();
         return "";
     }
+    
     /**
      *
      * @param current Current JSONObject to extract a date from
@@ -208,155 +214,171 @@ public class CitationFields extends MetadataType {
         return answer;
     }
     @Override
-    public String getField(String fieldName) {
-        return null;
+    public List getListField(String fieldName) {
+        switch(fieldName){
+            case AUTHOR:
+                return authors;
+            case OTHER_ID:
+                return otherIDs;
+            case DS_CONTACT:
+                return datasetContacts;
+            case DS_DESCRIPT:
+                return dsDescriptions;
+            case KEYWORD:
+                return keywords;
+            case TOPIC_CLASS:
+                return topicClassifications;
+            case PUBLICATION:
+                return publications;
+            case PRODUCER:
+                return producers;
+            case CONTRIB:
+                return contributors;
+            case GRANT_NUM:
+                return grantNumbers;
+            case DISTRIB:
+                return distributors;
+            case TIME_PER_COV:
+                return timePeriodsCovered;
+            case SOFTWARE:
+                return softwares;
+            case DATA_SOURCE:
+                return dataSources;
+            case KIND_OF_DATA:
+                return kindsOfData;
+            case LANGUAGE:
+                return languages;
+            case OTHER_REFERENCES:
+                return otherReferences;
+            case RELATED_DATASETS:
+                return relatedDatasets;
+            case RELATED_MATERIAL:
+                return relatedMaterials;
+            case SUBJECT:
+                return subjects;
+            case DATE_OF_COLLECT:
+                return datesOfCollection;
+            default:
+                logger.error("Something went wrong parsing a compound field. Label is %s", fieldName);
+                System.out.println("Something wrong parsing a compound field");
+                return new LinkedList();
+        }
     }
 
-    public List<OtherID> getOtherID() {
-        return otherID;
+    public CompoundJSONField getSeries(){
+        return series;
     }
 
-    public void setOtherID(List<OtherID> otherID) {
-        this.otherID = otherID;
+    @Override
+    public String getDoi() {
+        return simpleFields.getDOI();
     }
 
-    public void addOtherID(OtherID oID){this.otherID.add(oID);}
+    @Override
+    public void setDoi(String doi) {
+        simpleFields.setField(DOI,doi);
 
-    public List<Author> getAuthor() {
-        return author;
     }
 
-    public void setAuthor(List<Author> author) {
-        this.author = author;
+    @Override
+    public boolean hasBB() {
+        logger.debug("Somehow trying to find a bounding box in the citation metadata");
+        return false;
     }
 
-    public void addAuthor(Author author){this.author.add(author);}
-
-    public List<DatasetContact> getDatasetContact() {
-        return datasetContact;
+    @Override
+    public BoundingBox getBoundingBox() {
+        logger.debug("Somehow trying to find a bounding box in the citation metadata");
+        return new BoundingBox();
     }
 
-    public void setDatasetContact(List<DatasetContact> datasetContact) {
-        this.datasetContact = datasetContact;
+    public List<OtherID> getOtherIDs() {
+        return otherIDs;
     }
 
-    public void addDatasetContact(DatasetContact dc) {this.datasetContact.add(dc);}
-
-    public List<Description> getDsDescription() {
-        return dsDescription;
+    public void setOtherIDs(List<OtherID> otherIDs) {
+        this.otherIDs = otherIDs;
     }
 
-    public void setDsDescription(List<Description> dsDescription) {
-        this.dsDescription = dsDescription;
+    public void addOtherID(OtherID oID){this.otherIDs.add(oID);}
+
+    public void setAuthor(List<Author> authors) {
+        this.authors = authors;
     }
 
-    public void addDsDescription(Description d){this.dsDescription.add(d);}
+    public void addAuthor(Author author){this.authors.add(author);}
 
-    public List<String> getSubject() {
-        return subject;
+    public void setDatasetContacts(List<DatasetContact> datasetContacts) {
+        this.datasetContacts = datasetContacts;
     }
 
-    public void setSubject(List<String> subject) {
-        this.subject = subject;
+    public void addDatasetContact(DatasetContact dc) {this.datasetContacts.add(dc);}
+
+    public void setDsDescriptions(List<Description> dsDescriptions) {
+        this.dsDescriptions = dsDescriptions;
     }
 
-    public void addSubject(String s){this.subject.add(s);}
+    public void addDsDescription(Description d){this.dsDescriptions.add(d);}
 
-    public List<Keyword> getKeyword() {
-        return keyword;
+    public void setSubjects(List<String> subjects) {
+        this.subjects = subjects;
     }
 
-    public void setKeyword(List<Keyword> keyword) {
-        this.keyword = keyword;
+    public void addSubject(String s){this.subjects.add(s);}
+
+    public void setKeywords(List<Keyword> keywords) {
+        this.keywords = keywords;
     }
 
-    public void addKeyword(Keyword k){this.keyword.add(k);}
+    public void addKeyword(Keyword k){this.keywords.add(k);}
 
-    public List<TopicClassification> getTopicClassification() {
-        return topicClassification;
+    public void setTopicClassifications(List<TopicClassification> topicClassifications) {
+        this.topicClassifications = topicClassifications;
     }
 
-    public void setTopicClassification(List<TopicClassification> topicClassification) {
-        this.topicClassification = topicClassification;
+    public void addTopicClassification(TopicClassification tc){this.topicClassifications.add(tc);}
+
+    public void setPublications(List<RelatedPublication> publications) {
+        this.publications = publications;
     }
 
-    public void addTopicClassification(TopicClassification tc){this.topicClassification.add(tc);}
+    public void addPublication(RelatedPublication rp){this.publications.add(rp);}
 
-    public List<RelatedPublication> getPublication() {
-        return publication;
+    public void setLanguages(List<String> languages) {
+        this.languages = languages;
     }
 
-    public void setPublication(List<RelatedPublication> publication) {
-        this.publication = publication;
+    public void addLanguage(String s){this.languages.add(s);}
+
+    public void setProducers(List<Producer> producers) {
+        this.producers = producers;
     }
 
-    public void addPublication(RelatedPublication rp){this.publication.add(rp);}
+    public void addProducer(Producer p){this.producers.add(p);}
 
-
-    public List<String> getLanguage() {
-        return language;
+    public void setContributors(List<Contributor> contributors) {
+        this.contributors = contributors;
     }
 
-    public void setLanguage(List<String> language) {
-        this.language = language;
+    public void addContributor(Contributor c){this.contributors.add(c);}
+
+    public void setGrantNumbers(List<GrantNumber> grantNumbers) {
+        this.grantNumbers = grantNumbers;
     }
 
-    public void addLanguage(String s){this.language.add(s);}
+    public void addGrantNumber(GrantNumber gn){this.grantNumbers.add(gn);}
 
-    public List<Producer> getProducer() {
-        return producer;
+    public void setDistributors(List<Distributor> distributors) {
+        this.distributors = distributors;
     }
 
-    public void setProducer(List<Producer> producer) {
-        this.producer = producer;
+    public void addDistributor(Distributor d){this.distributors.add(d);}
+
+    public void setTimePeriodsCovered(List<TimePeriodCovered> timePeriodsCovered) {
+        this.timePeriodsCovered = timePeriodsCovered;
     }
 
-    public void addProducer(Producer p){this.producer.add(p);}
-
-
-    public List<Contributor> getContributor() {
-        return contributor;
-    }
-
-    public void setContributor(List<Contributor> contributor) {
-        this.contributor = contributor;
-    }
-
-    public void addContributor(Contributor c){this.contributor.add(c);}
-
-    public List<GrantNumber> getGrantNumber() {
-        return grantNumber;
-    }
-
-    public void setGrantNumber(List<GrantNumber> grantNumber) {
-        this.grantNumber = grantNumber;
-    }
-
-    public void addGrantNumber(GrantNumber gn){this.grantNumber.add(gn);}
-
-    public List<Distributor> getDistributor() {
-        return distributor;
-    }
-
-    public void setDistributor(List<Distributor> distributor) {
-        this.distributor = distributor;
-    }
-
-    public void addDistributor(Distributor d){this.distributor.add(d);}
-
-    public List<TimePeriodCovered> getTimePeriodCovered() {
-        return timePeriodCovered;
-    }
-
-    public void setTimePeriodCovered(List<TimePeriodCovered> timePeriodCovered) {
-        this.timePeriodCovered = timePeriodCovered;
-    }
-
-    public void addTimePeriodCovered(TimePeriodCovered tpc){this.timePeriodCovered.add(tpc);}
-
-    public List<DateOfCollection> getDatesOfCollection() {
-        return datesOfCollection;
-    }
+    public void addTimePeriodCovered(TimePeriodCovered tpc){this.timePeriodsCovered.add(tpc);}
 
     public void setDatesOfCollection(List<DateOfCollection> datesOfCollection) {
         this.datesOfCollection = datesOfCollection;
@@ -364,48 +386,27 @@ public class CitationFields extends MetadataType {
 
     public void addDateOfCollection(DateOfCollection dc){this.datesOfCollection.add(dc);}
 
-    public List<String> getKindOfData() {
-        return kindOfData;
+    public void setKindsOfData(List<String> kindsOfData) {
+        this.kindsOfData = kindsOfData;
     }
 
-    public void setKindOfData(List<String> kindOfData) {
-        this.kindOfData = kindOfData;
-    }
-
-    public void addKindOfData(String s){this.kindOfData.add(s);}
-
-    public Series getSeries() {
-        return series;
-    }
+    public void addKindOfData(String s){this.kindsOfData.add(s);}
 
     public void setSeries(Series series) {
         this.series = series;
     }
 
-
-    public List<Software> getSoftware() {
-        return software;
+    public void setSoftwares(List<Software> softwares) {
+        this.softwares = softwares;
     }
 
-    public void setSoftware(List<Software> software) {
-        this.software = software;
+    public void addSoftware(Software s){this.softwares.add(s);}
+
+    public void setRelatedMaterials(List<String> relatedMaterials) {
+        this.relatedMaterials = relatedMaterials;
     }
 
-    public void addSoftware(Software s){this.software.add(s);}
-
-    public List<String> getRelatedMaterial() {
-        return relatedMaterial;
-    }
-
-    public void setRelatedMaterial(List<String> relatedMaterial) {
-        this.relatedMaterial = relatedMaterial;
-    }
-
-    public void addRelatedMaterial(String s){this.relatedMaterial.add(s);}
-
-    public List<String> getRelatedDatasets() {
-        return relatedDatasets;
-    }
+    public void addRelatedMaterial(String s){this.relatedMaterials.add(s);}
 
     public void setRelatedDatasets(List<String> relatedDatasets) {
         this.relatedDatasets = relatedDatasets;
@@ -413,19 +414,11 @@ public class CitationFields extends MetadataType {
 
     public void addRelatedDatasets(String s){this.relatedDatasets.add(s);}
 
-    public List<String> getOtherReferences() {
-        return otherReferences;
-    }
-
     public void setOtherReferences(List<String> otherReferences) {
         this.otherReferences = otherReferences;
     }
 
     public void addOtherReference(String s){this.otherReferences.add(s);}
-
-    public List<String> getDataSources() {
-        return dataSources;
-    }
 
     public void setDataSources(List<String> dataSources) {
         this.dataSources = dataSources;
@@ -459,4 +452,5 @@ public class CitationFields extends MetadataType {
     public int getVersion(){
         return getSimpleFields().getVersion();
     }
+
 }

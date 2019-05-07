@@ -1,7 +1,9 @@
-package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
+package Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields;
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import static Dataverse.DVFieldNameStrings.*;
 
@@ -58,7 +60,7 @@ public class DatasetContact extends CompoundJSONField {
     }
 
     @Override
-    protected String getSpecifiedField(String title) {
+    public String getField(String title) {
         switch(title){
             case DS_CONTACT_NAME:
                 return getDatasetContactName();
@@ -71,4 +73,5 @@ public class DatasetContact extends CompoundJSONField {
                 return "Bad field name";
         }
     }
+
 }

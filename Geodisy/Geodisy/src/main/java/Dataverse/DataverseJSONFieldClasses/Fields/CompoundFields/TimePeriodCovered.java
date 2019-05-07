@@ -1,4 +1,4 @@
-package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
+package Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields;
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.Date;
@@ -47,7 +47,7 @@ public class TimePeriodCovered extends CompoundJSONField {
     }
 
     @Override
-    protected String getSpecifiedField(String fieldName) {
+    public String getField(String fieldName) {
         switch (fieldName) {
             case TIME_PER_COV_START:
                 getTimePeriodCoveredStart();

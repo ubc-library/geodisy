@@ -85,14 +85,10 @@ public class GeographicBoundingBox extends CompoundJSONField {
                 setEastLongitude(value);
                 break;
             case NORTH_LAT:
-                setNorthLatitude(value);
-                break;
             case NORTH_LAT_LONG:
                 setNorthLatitude(value);
                 break;
             case SOUTH_LAT:
-                setSouthLatitude(value);
-                break;
             case SOUTH_LAT_LONG:
                 setSouthLatitude(value);
                 break;
@@ -102,7 +98,7 @@ public class GeographicBoundingBox extends CompoundJSONField {
     }
 
     @Override
-    protected String getSpecifiedField(String fieldName) {
+    public String getField(String fieldName) {
         checkCoords(bb);
         switch (fieldName) {
             case WEST_LONG:

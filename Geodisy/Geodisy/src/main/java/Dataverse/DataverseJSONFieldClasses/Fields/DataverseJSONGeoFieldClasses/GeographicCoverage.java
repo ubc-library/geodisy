@@ -75,7 +75,7 @@ public class GeographicCoverage extends CompoundJSONField {
     }
 
     @Override
-    protected String getSpecifiedField(String fieldName) {
+    public String getField(String fieldName) {
         switch (fieldName) {
             case COUNTRY:
                 return getCountry();

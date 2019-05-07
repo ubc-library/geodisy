@@ -1,4 +1,4 @@
-package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
+package Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields;
 
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
@@ -71,7 +71,7 @@ public class RelatedPublication extends CompoundJSONField {
     }
 
     @Override
-    protected String getSpecifiedField(String title) {
+    public String getField(String title) {
         switch (title) {
             case PUB_CITE:
                 return getPublicationCitation();

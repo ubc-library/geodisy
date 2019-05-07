@@ -1,9 +1,11 @@
-package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
+package Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields;
 
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.Date;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import static Dataverse.DVFieldNameStrings.*;
 
@@ -49,7 +51,7 @@ public class Description extends CompoundJSONField {
     }
 
     @Override
-    protected String getSpecifiedField(String title) {
+    public String getField(String title) {
         switch(title){
             case DS_DESCRIPT_VAL:
                 return getDsDescriptionValue();

@@ -1,4 +1,4 @@
-package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
+package Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields;
 
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
@@ -60,7 +60,7 @@ public class TopicClassification extends CompoundJSONField {
     }
 
     @Override
-    protected String getSpecifiedField(String fieldName) {
+    public String getField(String fieldName) {
         switch (fieldName) {
             case TOPIC_CLASS_VAL:
                 return getTopicClassValue();

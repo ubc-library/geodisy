@@ -1,4 +1,4 @@
-package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
+package Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields;
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
@@ -47,7 +47,7 @@ public class Series extends CompoundJSONField {
     }
 
     @Override
-    protected String getSpecifiedField(String title) {
+    public String getField(String title) {
         switch (title) {
             case SERIES_NAME:
                 return getSeriesName();

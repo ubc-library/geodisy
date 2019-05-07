@@ -1,4 +1,4 @@
-package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
+package Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields;
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
@@ -45,9 +45,9 @@ public class Software extends CompoundJSONField {
                 errorParsing(this.getClass().getName(),title);
         }
     }
-
+    //TODO make get more universal
     @Override
-    protected String getSpecifiedField(String title) {
+    public String getField(String title) {
         switch (title) {
             case SOFTWARE_NAME:
                 return getSoftwareName();

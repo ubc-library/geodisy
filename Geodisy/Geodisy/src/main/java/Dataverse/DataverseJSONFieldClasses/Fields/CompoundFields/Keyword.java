@@ -1,9 +1,11 @@
-package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
+package Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields;
 
 
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import static Dataverse.DVFieldNameStrings.*;
 
@@ -60,7 +62,7 @@ public class Keyword extends CompoundJSONField {
     }
 
     @Override
-    protected String getSpecifiedField(String title) {
+    public String getField(String title) {
         switch (title) {
             case KEYWORD_VAL:
                 return getKeywordValue();

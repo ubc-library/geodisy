@@ -1,8 +1,10 @@
-package Dataverse.DataverseJSONFieldClasses.Fields.CompoundField;
+package Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields;
 
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import static Dataverse.DVFieldNameStrings.*;
 
@@ -17,21 +19,21 @@ public class Author extends CompoundJSONField {
         this.authorIdentifier = "";
     }
     @Override
-    protected void setField(JSONObject field) {
+    public void setField(JSONObject field) {
         String title = field.getString(TYPE_NAME);
         String value = field.getString(VAL);
         switch(title){
             case AUTHOR_ID:
-                setAuthorIdentifier(value);
+                authorIdentifier = value;
                 break;
             case AUTHOR_AFFIL:
-                setAuthorAffiliation(value);
+                authorAffiliation = value;
                 break;
             case AUTHOR_ID_SCHEME:
-                setAuthorIdentifierScheme(value);
+                authorIdentifierScheme = value;
                 break;
             case AUTHOR_NAME:
-                setAuthorName(value);
+                authorName = value;
                 break;
             default:
                 errorParsing(this.getClass().getName(),title);
@@ -39,53 +41,43 @@ public class Author extends CompoundJSONField {
     }
 
     @Override
-    protected String getSpecifiedField(String title) {
+    public String getField(String title) {
         switch(title){
             case AUTHOR_ID:
-                return getAuthorIdentifier();
+                return authorIdentifier;
             case AUTHOR_AFFIL:
-                 return getAuthorAffiliation();
+                return authorAffiliation;
             case AUTHOR_ID_SCHEME:
-                return getAuthorIdentifierScheme();
+                return authorIdentifierScheme;
             case AUTHOR_NAME:
-                return getAuthorName();
+                return authorName;
             default:
                 errorGettingValue(this.getClass().getName(),title);
                 return "Bad field name";
         }
     }
 
-    public String getAuthorName() {
-        return authorName;
-    }
+    /*
+    The Following setters are only for use in testing.
 
+     */
     public void setAuthorName(String authorName) {
         this.authorName = authorName;
-    }
-
-    public String getAuthorAffiliation() {
-        return authorAffiliation;
     }
 
     public void setAuthorAffiliation(String authorAffiliation) {
         this.authorAffiliation = authorAffiliation;
     }
 
-    public String getAuthorIdentifierScheme() {
-        return authorIdentifierScheme;
-    }
-
     public void setAuthorIdentifierScheme(String authorIdentifierScheme) {
         this.authorIdentifierScheme = authorIdentifierScheme;
-    }
-
-    public String getAuthorIdentifier() {
-        return authorIdentifier;
     }
 
     public void setAuthorIdentifier(String authorIdentifier) {
         this.authorIdentifier = authorIdentifier;
     }
+
+
 
 
 }
