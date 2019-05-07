@@ -14,7 +14,7 @@ import org.json.JSONObject;
 import static Dataverse.DVFieldNameStrings.*;
 
 
-public class DataverseParser {
+public class DataverseParser implements JSONParser {
 
     static Logger logger = LogManager.getLogger(DataverseParser.class);
 
@@ -45,9 +45,9 @@ public class DataverseParser {
                 dJO.parseGeospatialFields(metadata.getJSONObject(GEOSPATIAL).getJSONArray(FIELDS));
             else
                 dJO.setGeoFields(new GeographicFields(dJO.getDOI()));
-            String prodPlace = dJO.getProductionPlace();
+            String prodPlace = dJO.getSimpleFieldVal(PROD_PLACE);
             if (!prodPlace.matches("") && !dJO.hasBoundingBox()) {
-                GeographicFields gf = dJO.getGeographicFields();
+                GeographicFields gf = dJO.getGeoFields();
                 gf.setFullBB(getBBFromProdPlace(prodPlace,dJO));
             }
             if(dJO.getVersionSection(current).has("files"))
