@@ -1,7 +1,13 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 
+import Dataverse.DVFieldNameStrings;
+import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
+import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.CitationFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.Series;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -16,6 +22,7 @@ public class GeographicFields extends MetadataType {
     List<GeographicUnit> geoUnits;
     BoundingBox fullBB; //The single bounding box that includes all listed bounding box extents
     protected String doi;
+    Logger logger = LogManager.getLogger(GeographicFields.class);
 
     public GeographicFields(String doi) {
         this.geoCovers = new LinkedList<>();
@@ -49,7 +56,7 @@ public class GeographicFields extends MetadataType {
                 }
                 break;
             default:
-                errorParsing(this.getClass().getName(), title);
+               logger.error("Something went wrong parsing the Geographic Fields. Field " + title + " does not exist");
         }
     }
 
@@ -75,7 +82,7 @@ public class GeographicFields extends MetadataType {
      * @param jsonObject
      * @return A Geographic Bounding Box
      */
-    public GeographicBoundingBox parseGeoBBox(JSONObject jsonObject) {
+    private GeographicBoundingBox parseGeoBBox(JSONObject jsonObject) {
             GeographicBoundingBox gBB = new GeographicBoundingBox(doi);
             for(String k: jsonObject.keySet()) {
                 JSONObject jO = jsonObject.getJSONObject(k);
@@ -104,15 +111,27 @@ public class GeographicFields extends MetadataType {
     public List<GeographicUnit> getGeoUnits(){
         return geoUnits;
     }
+/*TODO Figure out how getField will work when there are multiple copies of that section of the geographic
+  metadata*/
     @Override
-    public String getField(String fieldName) {
-        return null;
+    public List getListField(String fieldName) {
+        switch(fieldName){
+            case GEOGRAPHIC_COVERAGE:
+                return geoCovers;
+            case GEOGRAPHIC_BBOX:
+                return geoBBoxes;
+            case GEOGRAPHIC_UNIT:
+                return geoUnits;
+            default:
+                return new LinkedList<>();
+        }
     }
 
+    @Override
     public String getDoi() {
         return doi;
     }
-
+    @Override
     public void setDoi(String doi) {
         this.doi = doi;
     }
@@ -151,13 +170,11 @@ public class GeographicFields extends MetadataType {
         box.setLatSouth(south);
         fullBB = box;
     }
-
+    @Override
     public boolean hasBB(){
-        if(fullBB.getLongWest()==361)
-            return false;
-        return true;
+        return fullBB.getLongWest() != 361;
     }
-
+    @Override
     public BoundingBox getBoundingBox(){
         return fullBB;
     }

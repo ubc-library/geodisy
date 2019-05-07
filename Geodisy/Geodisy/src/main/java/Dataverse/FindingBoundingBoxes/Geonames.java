@@ -62,7 +62,7 @@ public class Geonames extends FindBoundBox {
      */
     @Override
     public BoundingBox getDVBoundingBox(String country, String state)  {
-        BoundingBox box = countries.get2ParamBB(country, state);
+        BoundingBox box = countries.getExistingBB(country, state);
         if(box.getLongWest()!=361)
             return box;
         Map<String, String> parameters = new HashMap<>();
@@ -104,7 +104,7 @@ public class Geonames extends FindBoundBox {
 
     @Override
     public BoundingBox getDVBoundingBox(String country, String state, String city) {
-        BoundingBox box = countries.get3ParamBB(country, state, city);
+        BoundingBox box = countries.getExistingBB(country, state, city);
         if(box.getLongWest()!=361)
             return box;
         Map<String, String> parameters = new HashMap<>();
@@ -144,7 +144,7 @@ public class Geonames extends FindBoundBox {
      */
     @Override
     public BoundingBox getDVBoundingBoxOther(String country, String other) {
-        BoundingBox box =  countries.get2ParamBB(country, other);
+        BoundingBox box =  countries.getExistingBB(country, other);
 
         /*
         if(box.getLongWest()!=361)
@@ -188,7 +188,7 @@ public class Geonames extends FindBoundBox {
      */
     @Override
     BoundingBox getDVBoundingBoxOther(String country, String state, String other) {
-        BoundingBox box =  countries.get3ParamBB(country, state, other);
+        BoundingBox box =  countries.getExistingBB(country, state, other);
         /*if(box.getLongWest()!=361)
             return box;
         Map<String, String> parameters = new HashMap<>();
