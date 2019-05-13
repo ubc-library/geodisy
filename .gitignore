@@ -56,3 +56,13 @@ Geodisy/Geodisy/datasetFiles/
 Geodisy/Geodisy/logs/tempFile\.txt
 
 Geodisy/Geodisy/savedFiles/ExisitingRecords\.txt
+
+gdal-2\.4\.1/
+
+Geodisy/GDAL/\.idea/
+
+Geodisy/GDAL/venv/Lib/site-packages/
+
+Geodisy/GDAL/venv/Scripts/
+
+Geodisy/GDAL/venv/
