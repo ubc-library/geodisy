@@ -7,11 +7,14 @@ package Crosswalking;
 
 import Dataverse.SourceJavaObject;
 
+import java.util.LinkedList;
+
 /**
- * Interface for the output metadata schema side of a crosswalk
+ * An interface used for crosswalking from a datasource Java Object to
+ * a metadata schema.
  * @author pdante
  */
-public interface MetadataSchema {
+public interface Crosswalking {
     //TODO create interface for metadata crosswalks
-    public void generateXML(SourceJavaObject s);
+    void convertDJO(LinkedList<SourceJavaObject> records);
 }
