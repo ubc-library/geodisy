@@ -75,59 +75,120 @@ public class CitationFields extends MetadataType {
                 ja = (JSONArray) valueObject;
             switch(label){
                 case AUTHOR:
-                    Author a = new Author();
-                    addAuthor((Author) a.parseCompoundData(ja));
+                    Author a;
+                    for(int i = 0; i<ja.length(); i++) {
+                        a = new Author();
+                        a.parseCompoundData((JSONObject)ja.get(i));
+                        addAuthor(a);
+                    }
                     break;
                 case OTHER_ID:
-                    OtherID otherID = new OtherID();
-                    addOtherID((OtherID) otherID.parseCompoundData(ja));
+                    OtherID otherID;
+                    for(int i = 0; i<ja.length(); i++) {
+                        otherID = new OtherID();
+                        otherID.parseCompoundData((JSONObject)ja.get(i));
+                        addOtherID(otherID);
+                    }
                     break;
                 case DS_CONTACT:
-                    DatasetContact dc = new DatasetContact();
-                    addDatasetContact((DatasetContact) dc.parseCompoundData(ja));
+                    DatasetContact dc;
+                    for(int i = 0; i<ja.length(); i++) {
+                        dc = new DatasetContact();
+                        dc.parseCompoundData((JSONObject)ja.get(i));
+                        addDatasetContact(dc);
+                    }
                     break;
                 case DS_DESCRIPT:
-                    Description d =  new Description();
-                    addDsDescription((Description) d.parseCompoundData(ja));
+                    Description d;
+                    for(int i = 0; i<ja.length(); i++) {
+                        d =  new Description();
+                        d.parseCompoundData((JSONObject)ja.get(i));
+                        addDsDescription(d);
+                    }
                     break;
                 case KEYWORD:
-                    Keyword k = new Keyword();
-                    addKeyword((Keyword) k.parseCompoundData(ja));
+                    Keyword k;
+                    for(int i = 0; i<ja.length(); i++) {
+                        k = new Keyword();
+                        k.parseCompoundData((JSONObject)ja.get(i));
+                        addKeyword(k);
+                    }
                     break;
                 case TOPIC_CLASS:
-                    TopicClassification tc = new TopicClassification();
-                    addTopicClassification((TopicClassification) tc.parseCompoundData(ja));
+                    TopicClassification tc;
+                    for(int i = 0; i<ja.length(); i++) {
+                        tc = new TopicClassification();
+                        tc.parseCompoundData((JSONObject)ja.get(i));
+                        addTopicClassification(tc);
+                    }
                     break;
                 case PUBLICATION:
-                    RelatedPublication rp = new RelatedPublication();
-                    addPublication((RelatedPublication) rp.parseCompoundData(ja));
+                    RelatedPublication rp;
+                    for(int i = 0; i<ja.length(); i++) {
+                        rp = new RelatedPublication();
+                        rp.parseCompoundData((JSONObject)ja.get(i));
+                        addPublication(rp);
+                    }
                     break;
                 case PRODUCER:
-                    Producer p = new Producer();
-                    addProducer((Producer) p.parseCompoundData(ja));
+                    Producer p;
+                    for(int i = 0; i<ja.length(); i++) {
+                        p = new Producer();
+                        p.parseCompoundData((JSONObject)ja.get(i));
+                        addProducer(p);
+                    }
                     break;
                 case CONTRIB:
-                    Contributor c = new Contributor();
-                    addContributor((Contributor) c.parseCompoundData(ja));
+                    Contributor c;
+                    for(int i = 0; i<ja.length(); i++) {
+                        c = new Contributor();
+                        c.parseCompoundData((JSONObject)ja.get(i));
+                        addContributor(c);
+                    }
                     break;
                 case GRANT_NUM:
-                    GrantNumber gn = new GrantNumber();
-                    addGrantNumber((GrantNumber) gn.parseCompoundData(ja));
+                    GrantNumber gn;
+                    for(int i = 0; i<ja.length(); i++) {
+                        gn = new GrantNumber();
+                        gn.parseCompoundData((JSONObject)ja.get(i));
+                        addGrantNumber(gn);
+                    }
                     break;
                 case DISTRIB:
-                    Distributor dt = new Distributor();
-                    addDistributor((Distributor) dt.parseCompoundData(ja));
+                    Distributor dt;
+                    for(int i = 0; i<ja.length(); i++) {
+                        dt = new Distributor();
+                        dt.parseCompoundData((JSONObject)ja.get(i));
+                        addDistributor(dt);
+                    }
                     break;
                 case TIME_PER_COV:
-                    TimePeriodCovered tpc = new TimePeriodCovered();
-                    addTimePeriodCovered((TimePeriodCovered) tpc.parseCompoundData(ja));
+                    TimePeriodCovered tpc;
+                    for(int i = 0; i<ja.length(); i++) {
+                        tpc = new TimePeriodCovered();
+                        tpc.parseCompoundData((JSONObject)ja.get(i));
+                        addTimePeriodCovered(tpc);
+                    }
+                    break;
+
+                case SOFTWARE:
+                    Software sw;
+                    for(int i = 0; i<ja.length(); i++) {
+                        sw = new Software();
+                        sw.parseCompoundData((JSONObject)ja.get(i));
+                        addSoftware(sw);
+                    }
+                    break;
+                case DATE_OF_COLLECT:
+                    DateOfCollection doc;
+                    for(int i = 0; i<ja.length(); i++) {
+                        doc = new DateOfCollection();
+                        doc.parseCompoundData((JSONObject)ja.get(i));
+                        addDateOfCollection(doc);
+                    }
                     break;
                 case SERIES:
                     series.parseCompoundData(jobj);
-                    break;
-                case SOFTWARE:
-                    Software sw = new Software();
-                    addSoftware((Software) sw.parseCompoundData(ja));
                     break;
                 case DATA_SOURCE:
                     setDataSources(getList(ja));
@@ -149,10 +210,6 @@ public class CitationFields extends MetadataType {
                     break;
                 case SUBJECT:
                     setSubjects(getList(ja));
-                    break;
-                case DATE_OF_COLLECT:
-                    DateOfCollection doc = new DateOfCollection();
-                    addDateOfCollection((DateOfCollection) doc.parseCompoundData(ja));
                     break;
                 default:
                     logger.error("Something went wrong parsing a compound field. Label is %s", label);
