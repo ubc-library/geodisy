@@ -68,15 +68,6 @@ public class DataverseRecordFile {
                     new File(filePath),
                     10000, //10 seconds connection timeout
                     120000); //2 minute read timeout
-            int extension = title.indexOf(".");
-            /*if(title.substring(extension).equalsIgnoreCase(".geojson")){
-                String filePathGeoJSON = filePath;
-                int dotLocation = filePathGeoJSON.indexOf(".geojson");
-                String filePathShape = filePathGeoJSON.substring(0,dotLocation)+".shp";
-                convertGeoJSONToShape(filePathGeoJSON,filePathShape);
-            }*/
-
-
         } catch (FileNotFoundException e){
             logger.error(String.format("This dataset file %s couldn't be found from dataset %s", dbID, doi));
             logger.info("Check out dataset " + datasetDOI);
@@ -88,12 +79,6 @@ public class DataverseRecordFile {
         }
 
     }
-
-    private void convertGeoJSONToShape(String filePathGeoJSON, String filePathShape) {
-        GeoJSONToShape geo2Shape = new GeoJSONToShape();
-        geo2Shape.createShape(filePathGeoJSON, filePathShape);
-    }
-
 
     public String getFileIdentifier(){
         return doi;
