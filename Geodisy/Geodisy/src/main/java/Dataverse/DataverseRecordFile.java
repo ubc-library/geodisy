@@ -80,7 +80,6 @@ public class DataverseRecordFile {
 
     }
 
-
     public String getFileIdentifier(){
         return doi;
     }
