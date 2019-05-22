@@ -1,4 +1,4 @@
 package Dataverse.FindingBoundingBoxes;
 
-public interface GeographicUnit {
+public interface GeographicPoliticalUnit {
 }

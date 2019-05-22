@@ -6,7 +6,7 @@ import org.apache.commons.text.WordUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Location implements GeographicUnit {
+public class Location implements GeographicPoliticalUnit {
     protected String name;
     protected BoundingBox boundingBox;
     protected final String NO_NAME= "no name";
