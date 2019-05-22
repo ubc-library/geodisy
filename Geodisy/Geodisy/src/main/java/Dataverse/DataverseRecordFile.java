@@ -8,11 +8,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
+
 
 /**
  * Info for downloading a geospatial dataset file, and the methods used to download the files.

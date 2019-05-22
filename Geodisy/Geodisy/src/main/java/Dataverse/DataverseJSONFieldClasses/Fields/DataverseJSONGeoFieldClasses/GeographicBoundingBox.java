@@ -106,11 +106,9 @@ public class GeographicBoundingBox extends CompoundJSONField {
             case EAST_LONG:
                 return getEastLongitude();
             case NORTH_LAT:
-                return getNorthLatitude();
             case NORTH_LAT_LONG:
                 return getNorthLatitude();
             case SOUTH_LAT:
-                return getSouthLatitude();
             case SOUTH_LAT_LONG:
                 return getSouthLatitude();
             default:

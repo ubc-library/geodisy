@@ -51,12 +51,20 @@ public class DataverseAPI extends SourceAPI {
         for(JSONObject jo:jsons){
             DataverseJavaObject djo = parser.parse(jo,dvName);
             if(djo.hasContent()&& hasNewInfo(djo, es)) {
+                if(djo.getBoundingBox().getLongEast()==361)
+                    djo = generateBoundingBox(djo);
                 answers.add(djo);
             }
         }
         if(answers.size()>0)
             System.out.println("Updated or added " + answers.size() + " records.");
         return answers;
+    }
+
+    private DataverseJavaObject generateBoundingBox(DataverseJavaObject djo) {
+        GDAL gdal = new GDAL();
+        djo = gdal.generateBB(djo);
+        return djo;
     }
 
     private boolean hasNewInfo(DataverseJavaObject djo, ExistingSearches es) {

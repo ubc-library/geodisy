@@ -9,4 +9,8 @@ public class GeodisyStrings {
 
     //Unused file type extensions
     public final static String[] FILE_TYPES_TO_IGNORE = {".txt",".doc",".csv",".pdf",".jpg", ".docx"};
+
+    //TODO Change GDAL location to where it is when on Cloud instance
+    //GDAL
+    public final static String GDAL_LOCATION = "C:\\Program Files\\GDAL\\ogrinfo -rl ";
 }
