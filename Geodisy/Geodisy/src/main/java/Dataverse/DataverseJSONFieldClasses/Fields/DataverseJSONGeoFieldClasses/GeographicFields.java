@@ -136,12 +136,23 @@ public class GeographicFields extends MetadataType {
         this.doi = doi;
     }
 
+    /**
+     * Creates 2 bounding boxes, one for 180 down to -180 the other for -180 up to 180. I need to create 2 so
+     * I don't have any bounding boxes crossing the 180/-180 meridian. Once I have calculated the E/W extents of these
+     * two bounding boxes, I can then calculate if I should merge them across the meridian or the other direction when
+     * creating a final single bounding box to encompass all the smaller bounding boxes.
+     */
+    //TODO Create the merge at the end
+    //TODO test the if/else logic to make sure this is working as it should.
     private void setBoundingBox(){
-        double north = -360;
-        double south = 360;
-        double east = -360;
-        double west = 360;
+        double north = -180;
+        double south = 180;
+        double east = -180;
+        double west = 180;
+        double altWest = 180;
+        double altEast = -180;
         double temp;
+        double temp2;
         for(GeographicBoundingBox b: geoBBoxes){
             temp = b.getNorthLatDub();
             north = (temp>north) ? temp : north;
@@ -150,13 +161,34 @@ public class GeographicFields extends MetadataType {
             south = (temp<south) ? temp : south;
 
             temp = b.getEastLongDub();
-            east = (temp>east) ? temp : east;
+            temp2 = b.getWestLongDub();
+            if(temp>east){
+                if(temp<altWest){
+                    if(temp2-east<=altWest-temp){
+                        east = temp;
+                        if(temp2<west)
+                            west = temp2;
+                    }else{
+                        west = temp2;
+                    }
+                }else{
+                    if(temp>altEast) {
+                        altEast = temp;
+                    }
+                    if(temp2<altWest) {
+                            altWest = temp2;
+                    }
+                }
+            }else{
+                if(temp2<west)
+                    west=temp2;
+            }
 
             temp = b.getWestLongDub();
             west = (temp<west) ? temp : west;
         }
         BoundingBox box = new BoundingBox();
-        if(west == 360 || east == -360 || north == -360 || south == 360) {
+        if(west == 180 || east == -180 || north == -180 || south == 180) {
             logger.info("Something went wrong with the bounding box for record " + doi);
             logger.error("Something went wrong with the bounding box for record " + doi);
             west = 361;
@@ -187,5 +219,26 @@ public class GeographicFields extends MetadataType {
         g.setSouthLatitude(String.valueOf(b.getLatSouth()));
         geoBBoxes.add(g);
         setBoundingBox();
+    }
+
+    public void addBB(List<GeographicBoundingBox> bboxes, GeographicBoundingBox gBB) {
+        double east = gBB.getEastLongDub();
+        double west = gBB.getWestLongDub();
+        double north = gBB.getNorthLatDub();
+        double south = gBB.getSouthLatDub();
+
+        if(east<west){
+            GeographicBoundingBox second = new GeographicBoundingBox(gBB.doi);
+            second.setNorthLatitude(String.valueOf(north));
+            second.setSouthLatitude(String.valueOf(south));
+            second.setWestLongitude(String.valueOf(west));
+            second.setEastLongitude("180");
+            bboxes.add(second);
+            gBB.setWestLongitude("-180");
+            bboxes.add(gBB);
+        }else
+            bboxes.add(gBB);
+        setGeoBBoxes(bboxes);
+
     }
 }
