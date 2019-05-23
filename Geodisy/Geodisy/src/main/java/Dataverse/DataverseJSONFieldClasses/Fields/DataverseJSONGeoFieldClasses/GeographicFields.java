@@ -142,15 +142,13 @@ public class GeographicFields extends MetadataType {
      * two bounding boxes, I can then calculate if I should merge them across the meridian or the other direction when
      * creating a final single bounding box to encompass all the smaller bounding boxes.
      */
-    //TODO Create the merge at the end
-    //TODO test the if/else logic to make sure this is working as it should.
-    private void setBoundingBox(){
-        double north = -180;
-        double south = 180;
-        double east = -180;
-        double west = 180;
-        double altWest = 180;
-        double altEast = -180;
+    public void setBoundingBox(){
+        double north = -181;
+        double south = 181;
+        double east = -181;
+        double west = 181;
+        double altWest = 181;
+        double altEast = -181;
         double temp;
         double temp2;
         for(GeographicBoundingBox b: geoBBoxes){
@@ -162,6 +160,7 @@ public class GeographicFields extends MetadataType {
 
             temp = b.getEastLongDub();
             temp2 = b.getWestLongDub();
+//Ugly nested if/else statements, but couldn't think of another easier way. Would be happy for this to get cleaned up.
             if(temp>east){
                 if(temp<altWest){
                     if(temp2-east<=altWest-temp){
@@ -169,7 +168,9 @@ public class GeographicFields extends MetadataType {
                         if(temp2<west)
                             west = temp2;
                     }else{
-                        west = temp2;
+                        altWest = temp2;
+                        if(altEast<temp)
+                            altEast=temp;
                     }
                 }else{
                     if(temp>altEast) {
@@ -184,11 +185,11 @@ public class GeographicFields extends MetadataType {
                     west=temp2;
             }
 
-            temp = b.getWestLongDub();
-            west = (temp<west) ? temp : west;
         }
         BoundingBox box = new BoundingBox();
-        if(west == 180 || east == -180 || north == -180 || south == 180) {
+        west = (west==181) ? altWest : west;
+        east = (east==-181)? altEast : east;
+        if(west == 181 || east == -181 || north == -181 || south == 181) {
             logger.info("Something went wrong with the bounding box for record " + doi);
             logger.error("Something went wrong with the bounding box for record " + doi);
             west = 361;
@@ -196,8 +197,16 @@ public class GeographicFields extends MetadataType {
             north = 361;
             south = 361;
         }
-        box.setLongWest(west);
-        box.setLongEast(east);
+        if(altWest==181) {
+            box.setLongWest(west);
+            box.setLongEast(east);
+        }else if(altWest-east>west-altEast){
+            box.setLongWest(altWest);
+            box.setLongEast(east);
+        }else{
+            box.setLongEast(altEast);
+            box.setLongWest(west);
+        }
         box.setLatNorth(north);
         box.setLatSouth(south);
         fullBB = box;
