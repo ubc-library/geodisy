@@ -15,5 +15,5 @@ Install Miniconda for Python3.x
 
 Make a Symbol link to conda
 
-conda install -c anaconda libgdal
+conda install -c conda-forge gdal
 
