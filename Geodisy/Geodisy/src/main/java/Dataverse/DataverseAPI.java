@@ -133,12 +133,5 @@ public class DataverseAPI extends SourceAPI {
         }
         return answers;
     }
-    //TODO download the Datasets somewhere to pass on to Geoserver
-    @Override
-    protected void downloadDatasets(String dIOList) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-
 
 }

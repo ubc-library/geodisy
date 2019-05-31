@@ -111,8 +111,6 @@ public class GeographicFields extends MetadataType {
     public List<GeographicUnit> getGeoUnits(){
         return geoUnits;
     }
-/*TODO Figure out how getField will work when there are multiple copies of that section of the geographic
-  metadata*/
     @Override
     public List getListField(String fieldName) {
         switch(fieldName){

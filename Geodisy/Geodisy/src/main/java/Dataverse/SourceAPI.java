@@ -18,6 +18,5 @@ import java.util.LinkedList;
 public abstract class SourceAPI implements API {
     abstract protected HashSet<String> searchDV();
     abstract protected LinkedList<JSONObject> downloadMetadata(HashSet<String> dIOs);
-    abstract protected void downloadDatasets(String dOI);
     abstract public LinkedList<SourceJavaObject> harvest(ExistingSearches es);
 }
