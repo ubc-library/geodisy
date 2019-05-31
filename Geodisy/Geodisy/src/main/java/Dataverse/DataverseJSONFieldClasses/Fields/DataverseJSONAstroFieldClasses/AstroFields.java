@@ -15,12 +15,13 @@ public class AstroFields extends MetadataType {
     protected String doi;
 
     public AstroFields(String doi) {
-        this.simpleAstroFields = new SimpleAstroFields();
-        this.spatialFields = new Spatial();
-        this.spectralFields = new Spectral();
-        this.temporalFields = new Temporal();
-        this.redshiftFields = new Redshift();
         this.doi = doi;
+        this.simpleAstroFields = new SimpleAstroFields();
+        this.spatialFields = new Spatial(doi);
+        this.spectralFields = new Spectral(doi);
+        this.temporalFields = new Temporal(doi);
+        this.redshiftFields = new Redshift(doi);
+
     }
 
     //TODO implement Class fields
