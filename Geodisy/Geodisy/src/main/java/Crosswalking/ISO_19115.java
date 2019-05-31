@@ -5,7 +5,11 @@
  */
 package Crosswalking;
 
-import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.CitationFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONAstroFieldClasses.AstroFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONJournalFieldClasses.JournalFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONLifeFieldClasses.LifeFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseRecordFile;
 import Dataverse.SourceJavaObject;
@@ -17,7 +21,6 @@ import org.jdom2.output.XMLOutputter;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -73,5 +76,33 @@ public class ISO_19115 extends ISO_Schema {
 
         return citation;
     }
+    //TODO Flesh this out
+    private Element getCitation(SocialFields socialFields) {
+        Element citation = new Element("placeholder for citation elements");
 
+
+        return citation;
     }
+
+    //TODO Flesh this out
+    private Element getCitation(AstroFields astroFields) {
+        Element citation = new Element("placeholder for citation elements");
+
+
+        return citation;
+    }
+    //TODO Flesh this out
+    private Element getCitation(LifeFields lifeFields) {
+        Element citation = new Element("placeholder for citation elements");
+
+
+        return citation;
+    }
+    //TODO Flesh this out
+    private Element getCitation(JournalFields journalFields) {
+        Element citation = new Element("placeholder for citation elements");
+
+
+        return citation;
+    }
+ }

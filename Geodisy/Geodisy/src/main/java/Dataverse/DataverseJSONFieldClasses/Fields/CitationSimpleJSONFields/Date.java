@@ -1,4 +1,4 @@
-package Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields;
+package Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields;
 
 
 import Dataverse.DataverseJSONFieldClasses.JSONField;

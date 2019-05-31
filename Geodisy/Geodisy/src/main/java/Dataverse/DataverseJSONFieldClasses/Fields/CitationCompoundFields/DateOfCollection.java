@@ -1,10 +1,8 @@
-package Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields;
+package Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields;
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
-import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.Date;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Date;
 import org.json.JSONObject;
-
-import java.util.List;
 
 import static Dataverse.DVFieldNameStrings.*;
 

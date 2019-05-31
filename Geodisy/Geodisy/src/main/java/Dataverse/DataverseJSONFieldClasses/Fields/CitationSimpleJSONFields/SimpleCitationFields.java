@@ -1,11 +1,11 @@
-package Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields;
+package Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields;
 
 import Dataverse.DataverseJSONFieldClasses.JSONField;
 
 
 import static Dataverse.DVFieldNameStrings.*;
 
-public class SimpleFields extends JSONField {
+public class SimpleCitationFields extends JSONField {
     /**
      *  * Title : String: title
      *  * Subtitle : String: subtitle
@@ -20,7 +20,7 @@ public class SimpleFields extends JSONField {
     private Date productionDate,distributionDate,dateOfDeposit, publicationDate;
     private int versionMajor, versionMinor;
 
-    public SimpleFields() {
+    public SimpleCitationFields() {
         this.title = "";
         this.subtitle = "";
         this.alternativeTitle = "";
@@ -42,7 +42,7 @@ public class SimpleFields extends JSONField {
      * @param label Field name label
      * @param value Value to put into that field
      *
-     * This method is for using the SimpleFields class as the Class to store the simple fields values rather than have them be individual fields in the larger DataverseJavaObject class.
+     * This method is for using the SimpleCitationFields class as the Class to store the simple fields values rather than have them be individual fields in the larger DataverseJavaObject class.
      */
     public void setField(String label, String value){
         switch(label) {

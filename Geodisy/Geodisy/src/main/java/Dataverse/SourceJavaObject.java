@@ -1,9 +1,9 @@
 package Dataverse;
 
 import BaseFiles.GeodisyStrings;
-import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.CitationFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
-import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -32,8 +32,8 @@ public abstract class SourceJavaObject {
         this.server = server;
         hasContent = false;
     }
-    public SimpleFields getSimpleFields(){
-        return citationFields.getSimpleFields();
+    public SimpleCitationFields getSimpleFields(){
+        return citationFields.getSimpleCitationFields();
     }
 
     protected boolean fileTypeToIgnore(String title) {
@@ -118,18 +118,18 @@ public abstract class SourceJavaObject {
         return geoFields.hasBB();
     }
 
-    public void setSimpleFields(SimpleFields simpleFields) {
-        citationFields.setSimpleFields(simpleFields);
+    public void setSimpleFields(SimpleCitationFields simpleCitationFields) {
+        citationFields.setSimpleCitationFields(simpleCitationFields);
     }
 
     public void setSimpleFieldVal (String fieldName, String fieldValue){
-        SimpleFields simpleFields = getSimpleFields();
-        simpleFields.setField(fieldName,fieldValue);
-        citationFields.setSimpleFields(simpleFields);
+        SimpleCitationFields simpleCitationFields = getSimpleFields();
+        simpleCitationFields.setField(fieldName,fieldValue);
+        citationFields.setSimpleCitationFields(simpleCitationFields);
     }
     public String getSimpleFieldVal(String fieldName){
-        SimpleFields simpleFields = getSimpleFields();
-        return simpleFields.getField(fieldName);
+        SimpleCitationFields simpleCitationFields = getSimpleFields();
+        return simpleCitationFields.getField(fieldName);
     }
 
     public boolean hasContent(){

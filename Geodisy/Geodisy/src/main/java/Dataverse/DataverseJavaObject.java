@@ -2,11 +2,7 @@ package Dataverse;
 
 
 
-import BaseFiles.GeodisyStrings;
-
-import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
-import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
 import Dataverse.FindingBoundingBoxes.Geonames;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.apache.logging.log4j.LogManager;
@@ -130,8 +126,8 @@ public class DataverseJavaObject extends SourceJavaObject {
 
     public DataverseRecordInfo generateDRI(){
         String major, minor,doi;
-        major = getCitationFields().getSimpleFields().getVersionMajor();
-        minor = getCitationFields().getSimpleFields().getVersionMinor();
+        major = getCitationFields().getSimpleCitationFields().getVersionMajor();
+        minor = getCitationFields().getSimpleCitationFields().getVersionMinor();
         doi = getCitationFields().getDOI();
         DataverseRecordInfo answer = new DataverseRecordInfo();
         answer.setDoi(doi);

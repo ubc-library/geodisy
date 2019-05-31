@@ -2,11 +2,11 @@ package tests;
 
 import BaseFiles.MyTimerTask;
 import Crosswalking.JSONParsing.DataverseParser;
-import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.Author;
-import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.CitationFields;
-import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.DatasetContact;
-import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.Description;
-import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Author;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.DatasetContact;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Description;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJavaObject;
 
 
@@ -52,7 +52,7 @@ public class DataverseParserTest {
     }
 
     private DataverseJavaObject setValues(DataverseJavaObject dataverseJavaObject) {
-        SimpleFields sf = new SimpleFields();
+        SimpleCitationFields sf = new SimpleCitationFields();
         sf.setField(ALT_URL,"https://doi.org/10.5072/FK2/OVQBMK");
         sf.setField(PUBLISHER,"Demo Dataverse");
         sf.setField(PUB_DATE,"2015-07-13");

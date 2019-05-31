@@ -1,9 +1,8 @@
-package Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields;
+package Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields;
 
-import Crosswalking.JSONParsing.DataverseParser;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
-import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.Date;
-import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Date;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.apache.logging.log4j.LogManager;
@@ -17,7 +16,7 @@ import java.util.List;
 import static Dataverse.DVFieldNameStrings.*;
 
 public class CitationFields extends MetadataType {
-    private SimpleFields simpleFields;
+    private SimpleCitationFields simpleCitationFields;
     private List<OtherID> otherIDs;
     private List<Author> authors;
     private List<DatasetContact> datasetContacts;
@@ -37,7 +36,7 @@ public class CitationFields extends MetadataType {
     Logger logger = LogManager.getLogger(CitationFields.class);
 
     public CitationFields() {
-        this.simpleFields = new SimpleFields();
+        this.simpleCitationFields = new SimpleCitationFields();
         this.otherIDs = new LinkedList<>();
         this.authors = new LinkedList<>();
         this.datasetContacts = new LinkedList<>();
@@ -218,22 +217,22 @@ public class CitationFields extends MetadataType {
         }
         else {
             String value = valueObject.toString();
-            simpleFields.setField(label, value);
+            simpleCitationFields.setField(label, value);
         }
     }
 
     public void setBaseFields(JSONObject current){
 
-        simpleFields.setField(ALT_URL,parseSimpleValue( current,"persistentUrl"));
-        simpleFields.setField(PUB_DATE, getValueDate(current,PUB_DATE));
-        simpleFields.setField(PUBLISHER, parseSimpleValue(current,PUBLISHER));
+        simpleCitationFields.setField(ALT_URL,parseSimpleValue( current,"persistentUrl"));
+        simpleCitationFields.setField(PUB_DATE, getValueDate(current,PUB_DATE));
+        simpleCitationFields.setField(PUBLISHER, parseSimpleValue(current,PUBLISHER));
         current = getVersionSection(current);
-        simpleFields.setField(PROD_DATE,getValueDate(current,PROD_DATE));
-        simpleFields.setField(DEPOS_DATE,getValueDate(current,"createTime"));
-        simpleFields.setField(DIST_DATE,getValueDate(current,"releaseTime"));
-        simpleFields.setField(LICENSE,parseSimpleValue(current,LICENSE));
-        simpleFields.setField(MAJOR_VERSION,parseSimpleValue(current,MAJOR_VERSION));
-        simpleFields.setField(MINOR_VERSION,parseSimpleValue(current,MINOR_VERSION));
+        simpleCitationFields.setField(PROD_DATE,getValueDate(current,PROD_DATE));
+        simpleCitationFields.setField(DEPOS_DATE,getValueDate(current,"createTime"));
+        simpleCitationFields.setField(DIST_DATE,getValueDate(current,"releaseTime"));
+        simpleCitationFields.setField(LICENSE,parseSimpleValue(current,LICENSE));
+        simpleCitationFields.setField(MAJOR_VERSION,parseSimpleValue(current,MAJOR_VERSION));
+        simpleCitationFields.setField(MINOR_VERSION,parseSimpleValue(current,MINOR_VERSION));
 
     }
 
@@ -328,12 +327,12 @@ public class CitationFields extends MetadataType {
 
     @Override
     public String getDoi() {
-        return simpleFields.getDOI();
+        return simpleCitationFields.getDOI();
     }
 
     @Override
     public void setDoi(String doi) {
-        simpleFields.setField(DOI,doi);
+        simpleCitationFields.setField(DOI,doi);
 
     }
 
@@ -483,16 +482,16 @@ public class CitationFields extends MetadataType {
 
     public void addDataSource(String s){this.dataSources.add(s);}
 
-    public SimpleFields getSimpleFields() {
-        return simpleFields;
+    public SimpleCitationFields getSimpleCitationFields() {
+        return simpleCitationFields;
     }
 
-    public void setSimpleFields(SimpleFields simpleFields) {
-        this.simpleFields = simpleFields;
+    public void setSimpleCitationFields(SimpleCitationFields simpleCitationFields) {
+        this.simpleCitationFields = simpleCitationFields;
     }
 
     public String getDOI(){
-        return getSimpleFields().getDOI();
+        return getSimpleCitationFields().getDOI();
     }
 
     //If you update this method, also update copy in DataverseJavaObject
@@ -507,7 +506,7 @@ public class CitationFields extends MetadataType {
         }
     }
     public int getVersion(){
-        return getSimpleFields().getVersion();
+        return getSimpleCitationFields().getVersion();
     }
 
 }

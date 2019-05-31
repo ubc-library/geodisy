@@ -34,7 +34,7 @@ public class StraightMetadataTests extends DataverseTests{
     public void metadataCountry(){
         doi = "need to add still";
         SourceJavaObject val = dataverseCallTest();
-        assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
+        assertEquals(val.getSimpleCitationFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
     }*/
 
     @Test
@@ -49,7 +49,7 @@ public class StraightMetadataTests extends DataverseTests{
     public void flawedOrMinMetadata(){
         doi = "still need to add";
         SourceJavaObject val = dataverseCallTest();
-        assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
+        assertEquals(val.getSimpleCitationFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
     }*/
 
     //TODO need to get a doi
@@ -57,6 +57,6 @@ public class StraightMetadataTests extends DataverseTests{
     public void goodMetadata(){
         doi = "still need to add";
         SourceJavaObject val = dataverseCallTest();
-        assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
+        assertEquals(val.getSimpleCitationFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
     }*/
 }

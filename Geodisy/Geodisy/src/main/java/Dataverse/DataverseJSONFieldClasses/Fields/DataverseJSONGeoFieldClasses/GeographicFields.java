@@ -1,9 +1,5 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 
-import Dataverse.DVFieldNameStrings;
-import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
-import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.CitationFields;
-import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.Series;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.apache.logging.log4j.LogManager;

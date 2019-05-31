@@ -20,13 +20,13 @@ public class LiDARTests extends DataverseTests{
     public void liDARLAS(){
         doi = "still need to add";
         SourceJavaObject val = dataverseCallTest();
-        assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
+        assertEquals(val.getSimpleCitationFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
     }
 
     @Test
     public void liDARXYZ(){
         doi = "still need to add";
         SourceJavaObject val = dataverseCallTest();
-        assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
+        assertEquals(val.getSimpleCitationFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
     }*/
 }
