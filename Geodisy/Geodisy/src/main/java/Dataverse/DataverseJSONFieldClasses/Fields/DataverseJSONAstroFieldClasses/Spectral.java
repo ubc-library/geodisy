@@ -1,6 +1,7 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONAstroFieldClasses;
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.LinkedList;
@@ -23,6 +24,23 @@ public class Spectral extends CompoundJSONField {
     //TODO implement Class methods
     @Override
     public void setField(JSONObject field) {
+        JSONArray array = (JSONArray) field.get("value");
+        WaveLengthExtents waveLengthExtents =  new WaveLengthExtents();
+        for(Object o: array){
+            JSONObject jo = (JSONObject) o;
+            String typeName = jo.getString("typeName");
+            String value = jo.getString("value");
+            switch(typeName){
+                case("minimumWavelength"):
+                    waveLengthExtents.setMinWavelength(value);
+                    break;
+                case("maximumWavelength"):
+                    waveLengthExtents.setMaxWavelength(value);
+                    break;
+                default:
+                    logger.error("Something went wrong with field " + typeName + " in Spectral when trying to parse");
+            }
+        }
 
     }
 

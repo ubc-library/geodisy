@@ -1,8 +1,7 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONAstroFieldClasses;
 
-import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.DataverseJSONFieldClasses.JSONField;
-import org.json.JSONObject;
+
 
 public class WaveLengthExtents extends JSONField {
     float minWavelength, maxWavelength;
@@ -12,5 +11,20 @@ public class WaveLengthExtents extends JSONField {
     @Override
     public String getField(String fieldName) {
         return null;
+    }
+
+    public void setMinWavelength(float minWavelength) {
+        this.minWavelength = minWavelength;
+    }
+    public void setMinWavelength(String minWavelength) {
+        this.minWavelength = Float.parseFloat(minWavelength);
+    }
+
+    public void setMaxWavelength(float maxWavelength) {
+        this.maxWavelength = maxWavelength;
+    }
+
+    public void setMaxWavelength(String maxWavelength) {
+        this.maxWavelength = Float.parseFloat(maxWavelength);
     }
 }
