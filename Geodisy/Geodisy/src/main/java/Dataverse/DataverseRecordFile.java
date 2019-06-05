@@ -51,7 +51,7 @@ public class DataverseRecordFile {
         this.dbID = dbID;
         this.doi = String.valueOf(dbID);
         this.server = server;
-        recordURL = String.format(server+"api/access/datafile/$d", dbID);
+        recordURL = String.format(server+"api/access/datafile/$d?format=original", dbID);
         this.datasetDOI = datasetDOI;
     }
 
