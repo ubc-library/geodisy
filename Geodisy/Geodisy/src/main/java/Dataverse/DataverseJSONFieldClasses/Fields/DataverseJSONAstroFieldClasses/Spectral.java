@@ -7,6 +7,8 @@ import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 
+import static Dataverse.DVFieldNameStrings.*;
+
 public class Spectral extends CompoundJSONField {
     private String resolution, bandpass, coverage, doi;
     private float centralWavelength;
@@ -21,31 +23,38 @@ public class Spectral extends CompoundJSONField {
         this.waveLengths = new LinkedList<>();
     }
 
-    //TODO implement Class methods
     @Override
     public void setField(JSONObject field) {
-        JSONArray array = (JSONArray) field.get("value");
+        JSONArray array = (JSONArray) field.get(VAL);
         WaveLengthExtents waveLengthExtents =  new WaveLengthExtents();
-        for(Object o: array){
-            JSONObject jo = (JSONObject) o;
-            String typeName = jo.getString("typeName");
-            String value = jo.getString("value");
-            switch(typeName){
-                case("minimumWavelength"):
-                    waveLengthExtents.setMinWavelength(value);
-                    break;
-                case("maximumWavelength"):
-                    waveLengthExtents.setMaxWavelength(value);
-                    break;
-                default:
-                    logger.error("Something went wrong with field " + typeName + " in Spectral when trying to parse");
-            }
+        for(Object o: array) {
+            waveLengthExtents.setField((JSONObject) o);
         }
-
     }
 
     @Override
     public String getField(String fieldName) {
-        return null;
+        switch (fieldName) {
+            case SPECTRAL_RESOLUTION:
+                return resolution;
+            case SPECTRAL_BANDPASS_COVERAGE:
+                return bandpass;
+            case SPECTRAL_CENTRAL_WAVELENGTH_COVERAGE:
+                return Float.toString(centralWavelength);
+            case ("doi"):
+                return doi;
+            default:
+                logger.error("Strange fieldName requested: " + fieldName + ". Record doi: " + doi);
+                return "ERROR in Spectral get";
+        }
+    }
+
+        public List<WaveLengthExtents> getListField(String fieldName){
+            if(fieldName.equals(SPECTRAL_WAVELENGTH_COVERAGE))
+                return waveLengths;
+            else{
+                logger.error("Strange fieldName requested: " + fieldName + ". Record doi: " + doi);
+                return new LinkedList<>();
+        }
     }
 }

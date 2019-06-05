@@ -1,8 +1,12 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONAstroFieldClasses;
 
+import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.DataverseJSONFieldClasses.JSONField;
+import org.json.JSONObject;
 
-public class Spatial extends JSONField {
+import static Dataverse.DVFieldNameStrings.*;
+
+public class Spatial extends CompoundJSONField {
     private String resolution, coverage, doi;
 
     public Spatial(String doi) {
@@ -11,14 +15,14 @@ public class Spatial extends JSONField {
         this.doi = doi;
     }
 
-    //TODO implement Class methods
+
 
     public void setField(String label, String value) {
         switch(label) {
-            case ("resolution"):
+            case SPATIAL_RESOLUTION:
                 this.resolution = value;
                 break;
-            case("coverage"):
+            case SPATIAL_COVERAGE:
                 this.coverage = value;
                 break;
             default:
@@ -28,15 +32,22 @@ public class Spatial extends JSONField {
     }
 
     @Override
+    public void setField(JSONObject field) {
+        String fieldName = field.getString(TYPE_NAME);
+        String val = field.getString(VAL);
+        setField(fieldName,val);
+    }
+
+    @Override
     public String getField(String fieldName) {
         switch (fieldName){
-            case ("resolution"):
+            case SPATIAL_RESOLUTION:
                return resolution;
-            case("coverage"):
+            case SPATIAL_COVERAGE:
                 return coverage;
             default:
                 logger.error("Tried to get a non-existent field in the Spatial fields of the Astrophysics metadata.");
-                return "";
+                return "ERROR in Spatial get";
         }
     }
 }

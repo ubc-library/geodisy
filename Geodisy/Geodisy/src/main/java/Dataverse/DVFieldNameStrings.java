@@ -137,7 +137,7 @@ public class DVFieldNameStrings {
     public final static String TOPIC_CLASS_VOCAB = "topicClassVocab";
     public final static String TOPIC_CLASS_VOCAB_URL = "topicClassVocabURL";
 
-    //Geographic
+    //Geographic___________________________________________________________________________________________
     //Geospatial Metadata Fields
     public final static String GEOGRAPHIC_COVERAGE = "geographicCoverage";
     public final static String GEOGRAPHIC_BBOX = "geographicBoundingBox";
@@ -158,4 +158,71 @@ public class DVFieldNameStrings {
     public final static String CITY = "city";
     public final static String OTHER_GEO_COV = "otherGeographicCoverage";
     public final static List<String> GEO_META_FIELDS = Arrays.asList(GEOGRAPHIC_COVERAGE, GEOGRAPHIC_BBOX, GEOGRAPHIC_UNIT, WEST_LONG, EAST_LONG, NORTH_LAT, NORTH_LAT_LONG, SOUTH_LAT, SOUTH_LAT_LONG, COUNTRY, STATE, CITY, OTHER_GEO_COV);
+
+    //Astrophysics_________________________________________________________________________________
+    // Spatial Field Names
+    public final static String SPATIAL_FIELDS = "spatial";
+    public final static String SPATIAL_RESOLUTION = "resolution.Spatial";
+    public final static String SPATIAL_COVERAGE = "coverage.Spatial";
+
+    //Spectral Field Names
+    public final static String SPECTRAL_FIELDS = "spectral";
+    public final static String SPECTRAL_RESOLUTION = "resolution.Spectral";
+    public final static String SPECTRAL_BANDPASS_COVERAGE = "coverage.Spectral.Bandpass";
+    public final static String SPECTRAL_CENTRAL_WAVELENGTH_COVERAGE = "coverage.Spectral.CentralWavelength";
+    public final static String SPECTRAL_WAVELENGTH_COVERAGE = "coverage.Spectral.Wavelength";
+    public final static String SPECTRAL_MIN_WAVELENGTH_COVERAGE = "coverage.Spectral.MinimumWavelength";
+    public final static String SPECTRAL_MAX_WAVELENGTH_COVERAGE = "coverage.Spectral.MaximumWavelength";
+
+    //Temporal Field Names
+    public final static String TEMPORAL_FIELDS = "temporal";
+    public final static String TEMPORAL_RESOLUTION = "resolution.Temporal";
+    public final static String TEMPORAL_COVERAGE = "coverage.Temporal";
+    public final static String TEMPORAL_COVERAGE_START_TIME = "coverage.Temporal.StartTime";
+    public final static String TEMPORAL_COVERAGE_STOP_TIME = "coverage.Temporal.StopTime";
+
+    //Redshift Field Names
+    public final static String REDSHIFT_FIELDS = "redshift";
+    public final static String REDSHIFT_TYPE = "redshiftType";
+    public final static String REDSHIFT_RESOLUTION = "resolution.Redshift";
+    public final static String REDSHIFT_VALUE_COVERAGE = "coverage.RedshiftValue";
+    public final static String REDSHIFT_MINIMUM_VALUE_COVERAGE = "coverage.Redshift.MinimumValue";
+    public final static String REDSHIFT_MAXIMUM_VALUE_COVERAGE = "coverage.Redshift.MaximumValue";
+
+    //Simple Astrophysics Field Names
+    public final static String ASTRO_TYPE = "astroType";
+    public final static String ASTRO_FACILITY = "astroFacility";
+    public final static String ASTRO_INSTRUMENT = "astroInstrument";
+    public final static String ASTRO_OBJECT = "astroObject";
+    public final static String DEPTH_COVERAGE = "coverage.Depth";
+    public final static String OBJECT_DENSITY_COVERAGE = "coverage.ObjectDensity";
+    public final static String OBJECT_COUNT_COVERAGE = "coverage.ObjectCount";
+    public final static String SKY_FRACTION_COVERAGE = "coverage.SkyFraction";
+    public final static String POLARIZATION_COVERAGE = "coverage.Polarization";
+
+    //Journals_________________________________________________________________________________________
+    public final static String JOURNAL_FIELDS = "journal";
+    public final static String JOURNAL_VOLUME_ISSUE = "journalVolumeIssue";
+    public final static String JOURNAL_VOLUME = "journalVolume";
+    public final static String JOURNAL_ISSUE = "journalIssue";
+    public final static String JOURNAL_PUB_DATE = "journalPubDate";
+    public final static String JOURNAL_ARTICLE_TYPE = "journalArticleType";
+
+    //Life Sciences_____________________________________________________________________________________
+    public final static String STUDY_DESIGN_TYPE = "studyDesignType";
+    public final static String STUDY_FACTOR_TYPE = "studyFactorType";
+    public final static String STUDY_ASSAY_ORGANISM = "studyAssayOrganism";
+    public final static String STUDY_ASSAY_OTHER_ORGANISM = "studyAssayOtherOrganism";
+    public final static String STUDY_ASSAY_MEASUREMENT_TYPE = "studyAssayMeasurementType";
+    public final static String STUDY_ASSAY_OTHER_MEASUREMENT = "studyAssayOtherMeasurement";
+    public final static String STUDY_ASSAY_TECHNOLOGY_TYPE = "studyAssayTechnologyType";
+    public final static String STUDY_ASSAY_PLATFORM = "studyAssayPlatform";
+    public final static String STUDY_ASSAY_CELL_TYPE = "studyAssayCellType";
+
+    
+
+
+
+
+
 }

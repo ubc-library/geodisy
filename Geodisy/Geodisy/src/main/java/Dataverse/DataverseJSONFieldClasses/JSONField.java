@@ -43,4 +43,12 @@ public abstract class JSONField {
         logger.error("Something wrong getting field from %s. Field name is %s", className, fieldName);
         System.out.println("Something wrong with " + className + " getting value.");
     }
+
+    protected String stringed(float val) {
+        return String.valueOf(val);
+    }
+    protected String stringed(int val){
+        return String.valueOf(val);
+    }
+
 }
