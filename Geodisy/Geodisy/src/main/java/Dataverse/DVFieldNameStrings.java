@@ -227,7 +227,7 @@ public class DVFieldNameStrings {
     public final static String COLLECTOR_TRAINER = "collectorTrainer";
     public final static String FREQUENCY_OF_DATA_COLLECTION = "frequencyOfDataCollection";
     public final static String SAMPLING_PROCEDURE = "samplingProcedure";
-    public final static String TARGET_SAMPLE_SIZE = "targetSampleSize";
+    public final static String TARGET_SAMPLE_SIZE_FIELDS = "targetSampleSize";
     public final static String TARGET_SAMPLE_ACTUAL_SIZE = "targetSampleActualSize";
     public final static String TARGET_SAMPLE_SIZE_FORMULA = "targetSampleSizeFormula";
     public final static String DEVIATIONS_FROM_SAMPLE_DESIGN = "deviationsFromSampleDesign";
@@ -242,7 +242,7 @@ public class DVFieldNameStrings {
     public final static String RESPONSE_RATE = "responseRate";
     public final static String SAMPLING_ERROR_ESTIMATES = "samplingErrorEstimate";
     public final static String OTHER_DATA_APPRAISAL = "otherDataAppraisal";
-    public final static String SOCIAL_SCIENCE_NOTES = "socialScienceNotes";
+    public final static String SOCIAL_SCIENCE_NOTES_FIELDS = "socialScienceNotes";
     public final static String SOCIAL_SCIENCE_NOTES_TYPE = "socialScienceNotesType";
     public final static String SOCIAL_SCIENCE_NOTES_SUBJECT = "socialScienceNotesSubject";
     public final static String SOCIAL_SCIENCE_NOTES_TEXT = "socialScienceNotesText";

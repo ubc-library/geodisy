@@ -172,7 +172,8 @@ public class Geonames extends FindBoundBox {
             bBoxes.put(addDelimiter(country,unURLedOther),box);
         else
             box = getDVBoundingBox(country);*/
-        logger.info("Record with DOI: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" );
+        if(box.getLatSouth() == 361)
+            logger.info("Record with DOI: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" );
         return box;
 
     }
@@ -216,7 +217,8 @@ public class Geonames extends FindBoundBox {
             bBoxes.put(addDelimiter(country,unURLedState,unURLedOther),box);
         else
             box = getDVBoundingBoxOther(country, other);*/
-        logger.info("Record with DOI: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" );
+        if(box.getLatSouth() == 361)
+            logger.info("Record with DOI: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" );
         return box;
     }
 
