@@ -12,5 +12,9 @@ public class GeodisyStrings {
 
     //TODO Change GDAL location to where it is when on Cloud instance
     //GDAL
-    public final static String GDAL_LOCATION = "C:\\Program Files\\GDAL\\ogrinfo -rl ";
+    public final static String GDALINFO_LOCAL = "C:\\Program Files\\GDAL\\gdalinfo -json ";
+    public final static String OGRINFO_LOCAL = "C:\\Program Files\\GDAL\\ogrinfo -ro -al -so ";
+    public final static String GDALINFO_CLOUD = "gdalinfo -listmdd ";
+    public final static String OGRINFO_CLOUD = "ogrinfo -ro -al -so ";
+    public final static String[] GDAL_FILE_EXTENSION = {".geojason", ".tif",".shp", ".csv", ""};
 }

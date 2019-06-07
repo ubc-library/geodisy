@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import static BaseFiles.GeodisyStrings.GDAL_LOCATION;
+import static BaseFiles.GeodisyStrings.GDALINFO_LOCAL;
 
 public class GDAL {
     Logger logger = LogManager.getLogger(this.getClass());
@@ -29,10 +29,10 @@ public class GDAL {
             try {
                 if (isWindows) {
                     process = Runtime.getRuntime()
-                            .exec(String.format("cmd.exe %s", GDAL_LOCATION + filePath));
+                            .exec(String.format("cmd.exe %s", GDALINFO_LOCAL + filePath));
                 } else {
                     process = Runtime.getRuntime()
-                            .exec(String.format("sh %s", GDAL_LOCATION + filePath));
+                            .exec(String.format("sh %s", GDALINFO_LOCAL + filePath));
                 }
 
                 BufferedReader stdInput = new BufferedReader(new
