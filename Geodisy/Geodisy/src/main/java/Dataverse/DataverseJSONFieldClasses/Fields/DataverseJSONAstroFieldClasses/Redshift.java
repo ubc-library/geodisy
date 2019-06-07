@@ -25,13 +25,9 @@ public class Redshift extends CompoundJSONField {
     @Override
     public String getField(String fieldName) {
         switch(fieldName){
-            case REDSHIFT_TYPE:
-                return type;
-            case REDSHIFT_RESOLUTION:
-                return String.valueOf(resolution);
-            default:
-                logger.error("Tried to return field " + fieldName + " from Redshift in doi: " + doi);
-                return "";
+            case REDSHIFT_TYPE: return type;
+            case REDSHIFT_RESOLUTION: return String.valueOf(resolution);
+            default: logger.error("Tried to return field " + fieldName + " from Redshift in doi: " + doi); return "";
         }
     }
 
@@ -46,12 +42,8 @@ public class Redshift extends CompoundJSONField {
         String fieldName =  jo.getString(TYPE_NAME);
         Object val = jo.get(VAL);
         switch(fieldName){
-            case REDSHIFT_TYPE:
-                setType((String) val);
-                break;
-            case REDSHIFT_RESOLUTION:
-                setResolution((String) val);
-                break;
+            case REDSHIFT_TYPE: setType((String) val); break;
+            case REDSHIFT_RESOLUTION: setResolution((String) val); break;
             case REDSHIFT_VALUE_COVERAGE:
                 RedshiftExtents redshiftExtents = new RedshiftExtents();
                 JSONArray ja = (JSONArray) val;
@@ -60,9 +52,7 @@ public class Redshift extends CompoundJSONField {
                 }
                 addRedshiftExtent(redshiftExtents);
                 break;
-            default:
-                logger.error("Weird fieldName, " + fieldName + ", in Redshift, with doi: " + doi + " and val = " + val);
-                break;
+            default: logger.error("Weird fieldName, " + fieldName + ", in Redshift, with doi: " + doi + " and val = " + val); break;
         }
     }
 

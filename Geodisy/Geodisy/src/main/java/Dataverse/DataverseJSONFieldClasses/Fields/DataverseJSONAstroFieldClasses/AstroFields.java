@@ -28,7 +28,6 @@ public class AstroFields extends MetadataType {
         this.spectralFields = new Spectral(doi);
         this.temporalFields = new Temporal(doi);
         this.redshiftFields = new Redshift(doi);
-
     }
 
     @Override

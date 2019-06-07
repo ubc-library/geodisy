@@ -1,17 +1,20 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONAstroFieldClasses;
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
-import Dataverse.DataverseJSONFieldClasses.JSONField;
 import org.json.JSONObject;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import static Dataverse.DVFieldNameStrings.*;
 
 public class Spatial extends CompoundJSONField {
-    private String resolution, coverage, doi;
+    private String resolution, doi;
+    private List<String> coverage;
 
     public Spatial(String doi) {
         this.resolution = "";
-        this.coverage = "";
+        this.coverage = new LinkedList<>();
         this.doi = doi;
     }
 
@@ -23,7 +26,7 @@ public class Spatial extends CompoundJSONField {
                 this.resolution = value;
                 break;
             case SPATIAL_COVERAGE:
-                this.coverage = value;
+                coverage.add(value);
                 break;
             default:
                     logger.error("Tried to set a non-existent field in the Spatial fields of the Astrophysics metadata.");
@@ -44,10 +47,16 @@ public class Spatial extends CompoundJSONField {
             case SPATIAL_RESOLUTION:
                return resolution;
             case SPATIAL_COVERAGE:
-                return coverage;
             default:
-                logger.error("Tried to get a non-existent field in the Spatial fields of the Astrophysics metadata.");
+                logger.error("Tried to get a non-existent field in the Spatial fields of the Astrophysics metadata or tried to return Spatial Coverage as a string rather than a list. Field requested was " + fieldName + ".");
                 return "ERROR in Spatial get";
         }
+    }
+
+    public List getListField(String fieldName){
+        if(fieldName.equals(SPATIAL_COVERAGE))
+            return coverage;
+        errorGettingValue(this.getClass().toString(),fieldName);
+        return new LinkedList<>();
     }
 }

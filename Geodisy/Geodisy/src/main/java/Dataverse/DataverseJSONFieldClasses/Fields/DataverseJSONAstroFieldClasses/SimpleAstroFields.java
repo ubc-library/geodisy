@@ -1,20 +1,23 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONAstroFieldClasses;
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
-import Dataverse.DataverseJSONFieldClasses.JSONField;
 import org.json.JSONObject;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import static Dataverse.DVFieldNameStrings.*;
 
 public class SimpleAstroFields extends CompoundJSONField {
-    private String astroType, astroFacility, astroInstrument, astroObject, polarization;
+    private List<String> astroType, astroFacility, astroInstrument;
+    private String astroObject, polarization;
     private float depth, objectDensity, skyFraction;
     private int objectCount;
 
     public SimpleAstroFields() {
-        this.astroType = "";
-        this.astroFacility = "";
-        this.astroInstrument = "";
+        this.astroType = new LinkedList<>();
+        this.astroFacility = new LinkedList<>();
+        this.astroInstrument = new LinkedList<>();
         this.astroObject = "";
         this.polarization = "";
 
@@ -25,79 +28,62 @@ public class SimpleAstroFields extends CompoundJSONField {
         String fieldName = field.getString(TYPE_NAME);
         String value = field.getString(VAL);
         switch(fieldName){
-            case ASTRO_TYPE:
-                setAstroType(value);
-                break;
-            case ASTRO_FACILITY:
-                setAstroFacility(value);
-                break;
-            case ASTRO_INSTRUMENT:
-                setAstroInstrument(value);
-                break;
-            case ASTRO_OBJECT:
-                setAstroObject(value);
-                break;
-            case POLARIZATION_COVERAGE:
-                setPolarization(value);
-                break;
-            case DEPTH_COVERAGE:
-                setDepth(Float.parseFloat(value));
-                break;
-            case OBJECT_DENSITY_COVERAGE:
-                setObjectDensity(Float.parseFloat(value));
-                break;
-            case SKY_FRACTION_COVERAGE:
-                setSkyFraction(Float.parseFloat(value));
-                break;
-            case OBJECT_COUNT_COVERAGE:
-                setObjectCount(Integer.parseInt(value));
-                break;
-            default:
-                errorParsing(this.getClass().getName(),fieldName);
-                break;
+            case ASTRO_TYPE: setAstroType(value); break;
+            case ASTRO_FACILITY: setAstroFacility(value); break;
+            case ASTRO_INSTRUMENT: setAstroInstrument(value); break;
+            case ASTRO_OBJECT: setAstroObject(value); break;
+            case POLARIZATION_COVERAGE: setPolarization(value); break;
+            case DEPTH_COVERAGE: setDepth(Float.parseFloat(value)); break;
+            case OBJECT_DENSITY_COVERAGE: setObjectDensity(Float.parseFloat(value)); break;
+            case SKY_FRACTION_COVERAGE: setSkyFraction(Float.parseFloat(value)); break;
+            case OBJECT_COUNT_COVERAGE: setObjectCount(Integer.parseInt(value)); break;
+            default: errorParsing(this.getClass().getName(),fieldName); break;
         }
     }
 
     @Override
     public String getField(String fieldName) {
         switch(fieldName){
+
+            case ASTRO_OBJECT: return astroObject;
+            case POLARIZATION_COVERAGE: return polarization;
+            case DEPTH_COVERAGE: return stringed(depth);
+            case OBJECT_DENSITY_COVERAGE: return stringed(objectDensity);
+            case SKY_FRACTION_COVERAGE: return stringed(skyFraction);
+            case OBJECT_COUNT_COVERAGE: return stringed(objectCount);
             case ASTRO_TYPE:
-                return astroType;
             case ASTRO_FACILITY:
-                return astroFacility;
             case ASTRO_INSTRUMENT:
-                return astroInstrument;
-            case ASTRO_OBJECT:
-                return astroObject;
-            case POLARIZATION_COVERAGE:
-                return polarization;
-            case DEPTH_COVERAGE:
-                return stringed(depth);
-            case OBJECT_DENSITY_COVERAGE:
-                return stringed(objectDensity);
-            case SKY_FRACTION_COVERAGE:
-                return stringed(skyFraction);
-            case OBJECT_COUNT_COVERAGE:
-                return stringed(objectCount);
-                default:
-                    errorParsing(this.getClass().getName(),fieldName);
-                    return "";
+            default:
+                errorParsing(this.getClass().getName(),fieldName);
+                return "Error, tried to get an invalid class field, misnamed or field is a list. The field name was " + fieldName;
+        }
+    }
+
+    public List getListField(String fieldName){
+        switch(fieldName){
+            case ASTRO_TYPE: return astroType;
+            case ASTRO_FACILITY: return astroFacility;
+            case ASTRO_INSTRUMENT: return astroInstrument;
+            default:
+            errorParsing(this.getClass().getName(),fieldName);
+            return new LinkedList<>();
         }
     }
 
 
     private void setAstroType(String astroType) {
-        this.astroType = astroType;
+        this.astroType.add(astroType);
     }
 
 
     private void setAstroFacility(String astroFacility) {
-        this.astroFacility = astroFacility;
+        this.astroFacility.add(astroFacility);
     }
 
 
     private void setAstroInstrument(String astroInstrument) {
-        this.astroInstrument = astroInstrument;
+        this.astroInstrument.add(astroInstrument);
     }
 
 

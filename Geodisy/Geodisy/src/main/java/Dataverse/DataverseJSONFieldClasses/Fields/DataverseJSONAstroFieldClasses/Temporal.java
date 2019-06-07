@@ -23,9 +23,7 @@ public class Temporal extends CompoundJSONField {
         String fieldName = field.getString(TYPE_NAME);
         Object o = field.get(VAL);
         switch (fieldName) {
-            case TEMPORAL_RESOLUTION:
-                resolution = (String) o;
-                break;
+            case TEMPORAL_RESOLUTION: resolution = (String) o; break;
             case TEMPORAL_COVERAGE:
                 JSONArray timeFields = (JSONArray) o;
                 TemporalExtents temporalExtents = new TemporalExtents();
@@ -46,7 +44,7 @@ public class Temporal extends CompoundJSONField {
         return "ERROR in Temporal get";
     }
 
-    public List<TemporalExtents> getListField(String fieldName){
+    public List getListField(String fieldName){
         if(fieldName.equals("TemporalExtent"))
             return times;
         logger.error("Asked for weird temporal list: " + fieldName + ". See doi: " + doi);

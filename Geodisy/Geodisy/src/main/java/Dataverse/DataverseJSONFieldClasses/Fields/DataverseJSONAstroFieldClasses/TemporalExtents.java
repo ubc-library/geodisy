@@ -17,14 +17,9 @@ public class TemporalExtents extends CompoundJSONField {
         String title = field.getString(TYPE_NAME);
         String value = field.getString(VAL);
         switch(title){
-            case TEMPORAL_COVERAGE_START_TIME:
-                setStart(value);
-                break;
-            case TEMPORAL_COVERAGE_STOP_TIME:
-                setEnd(value);
-                break;
-            default:
-                errorParsing(this.getClass().getName(),title);
+            case TEMPORAL_COVERAGE_START_TIME: setStart(value); break;
+            case TEMPORAL_COVERAGE_STOP_TIME: setEnd(value); break;
+            default: errorParsing(this.getClass().getName(),title);
         }
     }
 

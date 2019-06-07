@@ -3,27 +3,27 @@ package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONAstroFieldClasse
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import static Dataverse.DVFieldNameStrings.*;
 
 public class RedshiftExtents extends CompoundJSONField {
-    private float redValue, min, max;
+    private float  min, max;
+    private List<Float> redValues;
 
+    public RedshiftExtents(){
+        redValues = new LinkedList<>();
+    }
     @Override
     public void setField(JSONObject field) {
         String title = field.getString(TYPE_NAME);
         String value = field.getString(VAL);
         switch(title){
-            case REDSHIFT_MINIMUM_VALUE_COVERAGE:
-                setMin(value);
-                break;
-            case REDSHIFT_MAXIMUM_VALUE_COVERAGE:
-                setMax(value);
-                break;
-            case REDSHIFT_VALUE_COVERAGE:
-                setRedValue(value);
-                break;
-            default:
-                errorParsing(this.getClass().getName(),title);
+            case REDSHIFT_MINIMUM_VALUE_COVERAGE: setMin(value); break;
+            case REDSHIFT_MAXIMUM_VALUE_COVERAGE: setMax(value); break;
+            case REDSHIFT_VALUE_COVERAGE: addRedValue(value); break;
+            default: errorParsing(this.getClass().getName(),title);
         }
     }
 
@@ -31,16 +31,18 @@ public class RedshiftExtents extends CompoundJSONField {
     @Override
     public String getField(String fieldName) {
         switch(fieldName){
-            case REDSHIFT_MINIMUM_VALUE_COVERAGE:
-                return stringed(min);
-            case REDSHIFT_MAXIMUM_VALUE_COVERAGE:
-                return stringed(max);
-            case REDSHIFT_VALUE_COVERAGE:
-                return stringed(redValue);
-            default:
-                errorParsing(this.getClass().getName(),fieldName);
-                return "";
+            case REDSHIFT_MINIMUM_VALUE_COVERAGE: return stringed(min);
+            case REDSHIFT_MAXIMUM_VALUE_COVERAGE: return stringed(max);
+            case REDSHIFT_VALUE_COVERAGE: logger.error("Tried to get a String from the Redshift Value Coverage List, should use the getListField method instead");
+            default: errorParsing(this.getClass().getName(),fieldName); return "";
         }
+    }
+
+    public List getListField(String fieldName){
+        if(fieldName.equals(REDSHIFT_VALUE_COVERAGE))
+            return redValues;
+        errorGettingValue(this.getClass().toString(),fieldName);
+        return new LinkedList();
     }
 
 
@@ -61,11 +63,11 @@ public class RedshiftExtents extends CompoundJSONField {
         setMax(Float.parseFloat(max));
     }
 
-    private void setRedValue(float redValue) {
-        this.redValue = redValue;
+    private void addRedValue(float redValue) {
+        this.redValues.add(redValue);
     }
 
-    private void setRedValue(String value){
-        setRedValue(Float.parseFloat(value));
+    private void addRedValue(String value){
+        addRedValue(Float.parseFloat(value));
     }
 }

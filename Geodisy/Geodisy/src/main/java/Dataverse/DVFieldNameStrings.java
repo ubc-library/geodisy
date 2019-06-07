@@ -214,12 +214,39 @@ public class DVFieldNameStrings {
     public final static String STUDY_ASSAY_ORGANISM = "studyAssayOrganism";
     public final static String STUDY_ASSAY_OTHER_ORGANISM = "studyAssayOtherOrganism";
     public final static String STUDY_ASSAY_MEASUREMENT_TYPE = "studyAssayMeasurementType";
-    public final static String STUDY_ASSAY_OTHER_MEASUREMENT = "studyAssayOtherMeasurement";
+    public final static String STUDY_ASSAY_OTHER_MEASUREMENT_TYPE = "studyAssayOtherMeasurementType";
     public final static String STUDY_ASSAY_TECHNOLOGY_TYPE = "studyAssayTechnologyType";
     public final static String STUDY_ASSAY_PLATFORM = "studyAssayPlatform";
     public final static String STUDY_ASSAY_CELL_TYPE = "studyAssayCellType";
 
-    
+    //Social
+    public final static String UNIT_OF_ANALYSIS = "unitOfAnalysis";
+    public final static String UNIVERSE = "universe";
+    public final static String TIME_METHOD = "timeMethod";
+    public final static String DATA_COLLECTOR = "dataCollector";
+    public final static String COLLECTOR_TRAINER = "collectorTrainer";
+    public final static String FREQUENCY_OF_DATA_COLLECTION = "frequencyOfDataCollection";
+    public final static String SAMPLING_PROCEDURE = "samplingProcedure";
+    public final static String TARGET_SAMPLE_SIZE = "targetSampleSize";
+    public final static String TARGET_SAMPLE_ACTUAL_SIZE = "targetSampleActualSize";
+    public final static String TARGET_SAMPLE_SIZE_FORMULA = "targetSampleSizeFormula";
+    public final static String DEVIATIONS_FROM_SAMPLE_DESIGN = "deviationsFromSampleDesign";
+    public final static String COLLECTION_MODE = "collectionMode";
+    public final static String RESEARCH_INSTRUMENT = "researchInstrument";
+    public final static String DATA_COLLECTION_SITUATION = "dataCollectionSituation";
+    public final static String ACTIONS_TO_MINIMIZE_LOSS = "actionsToMimimizeLoss";
+    public final static String CONTROL_OPERATIONS = "controlOperations";
+    public final static String WEIGHTING = "weighting";
+    public final static String CLEANING_OPERATIONS = "cleaningOperations";
+    public final static String DATASET_LEVEL_ERROR_NOTES = "datasetLevelErrorNotes";
+    public final static String RESPONSE_RATE = "responseRate";
+    public final static String SAMPLING_ERROR_ESTIMATES = "samplingErrorEstimate";
+    public final static String OTHER_DATA_APPRAISAL = "otherDataAppraisal";
+    public final static String SOCIAL_SCIENCE_NOTES = "socialScienceNotes";
+    public final static String SOCIAL_SCIENCE_NOTES_TYPE = "socialScienceNotesType";
+    public final static String SOCIAL_SCIENCE_NOTES_SUBJECT = "socialScienceNotesSubject";
+    public final static String SOCIAL_SCIENCE_NOTES_TEXT = "socialScienceNotesText";
+
 
 
 
