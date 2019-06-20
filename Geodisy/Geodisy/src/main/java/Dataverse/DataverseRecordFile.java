@@ -1,5 +1,6 @@
 package Dataverse;
 
+import GeoServer.Unzip;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.commons.io.FileUtils;
@@ -8,6 +9,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Stack;
 
 
 /**
@@ -35,7 +37,7 @@ public class DataverseRecordFile {
         this.doi = doi;
         this.dbID = dbID;
         this.server = server;
-        recordURL = server+"api/access/datafile/:persistentId/?persistentId=" + doi;
+        recordURL = server+"api/access/datafile/:persistentId/?persistentId=" + doi + "&format=original";
         this.datasetDOI = datasetDOI.replaceAll("\\.","_").replaceAll("/","_");
     }
 
@@ -57,13 +59,28 @@ public class DataverseRecordFile {
 
     public void getFile() {
         try {
-            new File("./datasetFiles/" + datasetDOI + "/").mkdirs();
-            String filePath = "./datasetFiles/" + datasetDOI + "/" + title;
+            String dirPath = "./datasetFiles/" + datasetDOI + "/";
+            File folder = new File(dirPath);
+            folder.mkdirs();
+            String filePath = dirPath + title;
             FileUtils.copyURLToFile(
                     new URL(recordURL),
                     new File(filePath),
                     10000, //10 seconds connection timeout
                     120000); //2 minute read timeout
+            if(title.endsWith(".zip")) {
+                Unzip zip = new Unzip();
+                zip.unzip(filePath, this);
+                new File(filePath).delete();
+            }
+            File[] listOfFiles = folder.listFiles();
+            for(File f: listOfFiles){
+                if(f.isFile()) {
+                    String name = f.getName();
+                    if (name.endsWith(".tab"))
+                        convertFromTabToCSV(f, dirPath,name);
+                }
+            }
         } catch (FileNotFoundException e){
             logger.error(String.format("This dataset file %s couldn't be found from dataset %s", dbID, doi));
             logger.info("Check out dataset " + datasetDOI);
@@ -76,7 +93,41 @@ public class DataverseRecordFile {
 
     }
 
-    public String getFileIdentifier(){
+    public void convertFromTabToCSV(File inputFile, String dirPath, String title) {
+        String fileName = title.substring(0, title.length() - 3) + "csv";
+        File outputFile = new File(dirPath + fileName);
+        BufferedReader br = null;
+        FileWriter writer = null;
+        try {
+            String line;
+            Stack stack = new Stack();
+            br = new BufferedReader(new FileReader(inputFile));
+            writer = (new FileWriter(outputFile));
+            while ((line = br.readLine()) != null)
+                stack.push(line.replace("\t", ","));
+            while (!stack.isEmpty()) {
+                writer.write((String) stack.pop());
+                if (!stack.empty())
+                    writer.write("\n");
+            }
+            inputFile.delete();
+        } catch (FileNotFoundException e) {
+            logger.error("Tried to convert an non-existant .tab file: " + title);
+        } catch (IOException e) {
+            logger.error("Something went wrong when converting a .tab file to .csv: " + title);
+        }
+        finally {
+            try{
+                br.close();
+                writer.close();
+            }
+            catch(IOException d){
+                logger.error("Something went wrong when converting a .tab file to .csv when closing br or writer: " + title);
+            }
+        }
+
+    }
+        public String getFileIdentifier(){
         return doi;
     }
 

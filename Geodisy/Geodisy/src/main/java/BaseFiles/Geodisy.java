@@ -35,14 +35,11 @@ public class Geodisy {
     public List<SourceJavaObject> harvestDataverse(ExistingSearches es) {
         Dataverse dv = new Dataverse();
         String[] dvs = dv.getDataLocationURLs();
-        List<SourceJavaObject> records = new LinkedList<>();
+        LinkedList<SourceJavaObject> records = new LinkedList<>();
+        SourceAPI dVAPI;
         for (String s : dvs) {
-            SourceAPI dVAPI = new DataverseAPI(s);
-            LinkedList<SourceJavaObject> current = dVAPI.harvest(es);
-            for(SourceJavaObject djo:current){
-                records.add(djo);
-                djo.downloadFiles();
-            }
+            dVAPI = new DataverseAPI(s);
+            records = dVAPI.harvest(es);
         }
         return records;
     }

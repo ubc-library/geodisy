@@ -2,6 +2,7 @@ package Dataverse;
 
 
 
+import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
 import Dataverse.FindingBoundingBoxes.Geonames;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
@@ -146,7 +147,7 @@ public class DataverseJavaObject extends SourceJavaObject {
         File f = new File("datasetFiles\\\\" + urlized(citationFields.getDOI()));
         deleteDir(f);
         for (DataverseRecordFile dRF : dataFiles) {
-            if(fileTypeToIgnore(dRF.title))
+            if(GeodisyStrings.fileToIgnore(dRF.title))
                 continue;
             dRF.getFile();
         }

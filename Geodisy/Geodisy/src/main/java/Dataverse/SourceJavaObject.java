@@ -36,7 +36,7 @@ public abstract class SourceJavaObject {
         return citationFields.getSimpleCitationFields();
     }
 
-    protected boolean fileTypeToIgnore(String title) {
+    public boolean fileTypeToIgnore(String title) {
         for (String s : GeodisyStrings.FILE_TYPES_TO_IGNORE) {
             if (title.endsWith(s))
                 return true;
