@@ -55,6 +55,12 @@ public class ISO_19115 extends ISO_Schema {
 
 
 }
+//TODO
+    @Override
+    public void crosswalk(SourceJavaObject sJO) {
+
+    }
+
     //TODO Flesh this out
     private Element getFileFields(List<DataverseRecordFile> dataFiles) {
         Element fileFields = new Element("placeholder for file elements");

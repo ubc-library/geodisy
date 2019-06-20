@@ -8,8 +8,9 @@ public class Crosswalk implements Crosswalking {
     //TODO write the crosswalk class
     @Override
     public void convertDJO(LinkedList<SourceJavaObject> records) {
-        MetadataSchema metadataSchema = new ISO_19115();
+        MetadataSchema metadata = new ISO_19115();
         for(SourceJavaObject sJO: records){
+            metadata.crosswalk(sJO);
 
         }
     }
