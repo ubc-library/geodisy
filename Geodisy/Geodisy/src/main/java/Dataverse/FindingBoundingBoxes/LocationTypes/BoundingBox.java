@@ -26,11 +26,15 @@ public class BoundingBox implements Serializable {
         return longitude;
     }
 
+    public boolean hasUTMCoords(){
+        return latSouth <-90 || latNorth > 361 || Math.abs(longEast) > 361 || Math.abs(longWest) > 361;
+    }
     /**
      *
      * @param numString
      * @return Double parsed from the given string or 361 if the string was not parsable into a double
      */
+
     private double getDoubleLat(String numString) {
         double val;
         try{
