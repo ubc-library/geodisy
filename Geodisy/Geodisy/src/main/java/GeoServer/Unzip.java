@@ -1,5 +1,7 @@
 package GeoServer;
 
+import BaseFiles.GeodisyStrings;
+import Dataverse.DataverseRecordFile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,19 +18,11 @@ import java.util.zip.ZipInputStream;
 public class Unzip {
     Logger logger = LogManager.getLogger(Unzip.class);
     //TODO call unzip when adding zipped files to Geoserver and then call deleteUnzippedFiles() after upload is done to save space
-    public void unzip(String filePath) {
+    public void unzip(String filePath, DataverseRecordFile dRF) {
         String destPath = filePath.substring(0,filePath.length()-4);
-        File destDir = new File(destPath);
+        File destDir = new File(destPath.substring(0,34));
 
         Path path = Paths.get(destPath);
-
-        if (!Files.exists(path)) {
-            try {
-                Files.createDirectory(path);
-            } catch (IOException e) {
-                logger.error("Not sure how creating a directory could fail, but it did. Check " + destPath);
-            }
-        }
 
         byte[] buffer = new byte[1024];
         ZipInputStream zis = null;
@@ -42,6 +36,11 @@ public class Unzip {
             zipEntry = zis.getNextEntry();
 
             while (zipEntry != null) {
+                if(GeodisyStrings.fileToIgnore(zipEntry.getName())){
+                    zipEntry = zis.getNextEntry();
+                    continue;
+                }
+
                 File newFile = newFile(destDir, zipEntry);
                 FileOutputStream fos = new FileOutputStream(newFile);
                 int len;
@@ -59,6 +58,7 @@ public class Unzip {
             logger.error("Something went wrong unzipping " + filePath);
         }
     }
+
 
     private File newFile(File destDir, ZipEntry zipEntry) {
         File destFile = new File(destDir, zipEntry.getName());
