@@ -37,8 +37,9 @@ public class GDAL {
         String[] files = folder.list();
         for(String name: files){
             String filePath = "./datasetFiles/" + path + "/" + name;
-            if(!GeodisyStrings.gdalRasterExtention(name) && !GeodisyStrings.gdalVectorExtension(name))
+            if(!GeodisyStrings.gdalinfoRasterExtention(name) && !GeodisyStrings.ogrinfoVectorExtension(name))
                 continue;
+            boolean gdalInfo = GeodisyStrings.gdalinfoRasterExtention(name);
             boolean isWindows = System.getProperty("os.name")
                     .toLowerCase().startsWith("windows");
 
@@ -46,29 +47,20 @@ public class GDAL {
             BoundingBox temp;
             try {
                 gdalString = getGDALInfo(filePath, name, isWindows);
+                if(gdalInfo)
+                    temp = getRaster(gdalString,djo, isWindows, name, filePath);
+                else
+                    temp = getVector(gdalString,djo, isWindows, name, filePath);
 
-                int start = gdalString.indexOf("Extent: (")+9;
-                if(start != -1+9){
-                    int end = gdalString.indexOf(", ",start);
-                    temp = getLatLong(gdalString,start,end, djo);
-                    if(temp.hasUTMCoords()) {
-                        convertToWGS84(filePath, isWindows, name);
-                        gdalString = getGDALInfo(filePath, name, isWindows);
-                        start = gdalString.indexOf("Extent: (")+9;
-                        end = gdalString.indexOf(", ",start);
-                        temp = getLatLong(gdalString,start,end, djo); 
-                    }
-                    GeographicFields gf = djo.getGeoFields();
-                    List<GeographicBoundingBox> bboxes = gf.getGeoBBoxes();
-                    GeographicBoundingBox gBB =  new GeographicBoundingBox(djo.getDOI());
-                    gBB.setEastLongitude(String.valueOf(temp.getLongEast()));
-                    gBB.setWestLongitude(String.valueOf(temp.getLongWest()));
-                    gBB.setNorthLatitude(String.valueOf(temp.getLatNorth()));
-                    gBB.setEastLongitude(String.valueOf(temp.getLatSouth()));
-                    gf.addBB(bboxes,gBB);
-                    djo.setGeoFields(gf);
-                }
-
+                GeographicFields gf = djo.getGeoFields();
+                List<GeographicBoundingBox> bboxes = gf.getGeoBBoxes();
+                GeographicBoundingBox gBB =  new GeographicBoundingBox(djo.getDOI());
+                gBB.setEastLongitude(String.valueOf(temp.getLongEast()));
+                gBB.setWestLongitude(String.valueOf(temp.getLongWest()));
+                gBB.setNorthLatitude(String.valueOf(temp.getLatNorth()));
+                gBB.setEastLongitude(String.valueOf(temp.getLatSouth()));
+                gf.addBB(bboxes,gBB);
+                djo.setGeoFields(gf);
             } catch (IOException e) {
                 logger.error("Something went wrong trying to call GDAL with " + name);
             }
@@ -77,10 +69,40 @@ public class GDAL {
         return djo;
     }
 
+    private BoundingBox getRaster(String gdalString, DataverseJavaObject djo, boolean isWindows, String name, String filePath) {
+        int start = gdalString.indexOf("Upper Left  (")+12;
+        BoundingBox temp = new BoundingBox();
+        if(start != -1+12) {
+            temp = getLatLongGdalInfo(gdalString, start);
+        }
+        return temp;
+    }
+
+
+
+    private BoundingBox getVector(String gdalString, DataverseJavaObject djo, boolean isWindows, String name, String filePath) throws IOException {
+        int start = gdalString.indexOf("Extent: (")+9;
+        BoundingBox temp = new BoundingBox();
+        if(start != -1+9) {
+            int end = gdalString.indexOf(", ", start);
+            temp = getLatLongOgrInfo(gdalString, start, end);
+            if (temp.hasUTMCoords()) {
+                convertToWGS84(filePath, isWindows, name);
+                gdalString = getGDALInfo(filePath, name, isWindows);
+                start = gdalString.indexOf("Extent: (") + 9;
+                end = gdalString.indexOf(", ", start);
+                temp = getLatLongOgrInfo(gdalString, start, end);
+            }
+        }
+        return temp;
+    }
+
+
+
     private void convertToWGS84(String filePath, boolean isWindows, String name) throws IOException {
         String gdal;
         convertName(filePath,name);
-        if(GeodisyStrings.gdalRasterExtention(name))
+        if(GeodisyStrings.gdalinfoRasterExtention(name))
             gdal = GDAL_TRANSLATE_LOCAL;
         else
             gdal = OGR2OGR_LOCAL;
@@ -117,7 +139,7 @@ public class GDAL {
         String gdal;
         StringBuilder gdalString = new StringBuilder();
         Process process;
-        if(GeodisyStrings.gdalRasterExtention(name))
+        if(GeodisyStrings.gdalinfoRasterExtention(name))
             gdal = GDALINFO_LOCAL;
         else
             gdal = OGRINFO_LOCAL;
@@ -151,22 +173,42 @@ public class GDAL {
         return fullExtent;
     }
 
-    private BoundingBox getLatLong(String gdalString, int start, int end, DataverseJavaObject djo) {
-        String long1 = gdalString.substring(start,end);
+    private BoundingBox getLatLongOgrInfo(String gdalString, int start, int end) {
+        String long1 = gdalString.substring(start,end).trim();
         start = end+2;
         end = gdalString.indexOf(")",start);
-        String lat1 = gdalString.substring(start,end);
+        String lat1 = gdalString.substring(start,end).trim();
         start = gdalString.indexOf("- (",end)+3;
         end = gdalString.indexOf(", ",start);
-        String long2 = gdalString.substring(start,end);
+        String long2 = gdalString.substring(start,end).trim();
         start = end+2;
         end = gdalString.indexOf(")",start);
-        String lat2 = gdalString.substring(start,end);
+        String lat2 = gdalString.substring(start,end).trim();
         BoundingBox bb =  new BoundingBox();
         bb.setLongWest(long2);
         bb.setLongEast(long1);
         bb.setLatNorth(lat2);
         bb.setLatSouth(lat1);;
+        return bb;
+    }
+    //TODO make sure that the coordinate order is correct grabbing from the gdalinfo output. Is it really long then lat?
+    private BoundingBox getLatLongGdalInfo(String gdalString, int start) {
+        int end = gdalString.indexOf(",",start);
+        String long1 = gdalString.substring(start,end).trim();
+        start = end+2;
+        end = gdalString.indexOf(")",start);
+        String lat1 = gdalString.substring(start,end).trim();
+        start = gdalString.indexOf("Lower Right (")+12;
+        end = gdalString.indexOf(",",start);
+        String long2 = gdalString.substring(start,end).trim();
+        start = end+2;
+        end = gdalString.indexOf(")",start);
+        String lat2 = gdalString.substring(start,end).trim();
+        BoundingBox bb =  new BoundingBox();
+        bb.setLongWest(long1);
+        bb.setLongEast(long2);
+        bb.setLatNorth(lat1);
+        bb.setLatSouth(lat2);
         return bb;
     }
 }
