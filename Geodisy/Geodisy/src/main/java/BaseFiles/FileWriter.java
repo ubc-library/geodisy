@@ -50,9 +50,11 @@ public class FileWriter {
      * @throws ClassNotFoundException
      */
     public ExistingSearches readExistingSearches(String path) throws IOException {
-        ExistingSearches es;
+        ExistingSearches es = ExistingSearches.getExistingSearches();
         try {
             File file = new File(path);
+            File directory = new File(file.getParentFile().getAbsolutePath());
+            directory.mkdirs();
             if(file.createNewFile())
                 return ExistingSearches.getExistingSearches();
             FileInputStream f = new FileInputStream(file);
