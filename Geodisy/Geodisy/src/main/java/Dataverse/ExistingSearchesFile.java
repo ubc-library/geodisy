@@ -1,5 +1,7 @@
-package BaseFiles;
+package Dataverse;
 
+import BaseFiles.FileWriter;
+import BaseFiles.GeoLogger;
 import Dataverse.ExistingSearches;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,7 +34,7 @@ public class ExistingSearchesFile {
     }
 
     public void writeExistingSearches(ExistingSearches existingSearches) throws IOException {
-        FileWriter writer = new FileWriter();
+        BaseFiles.FileWriter writer = new FileWriter();
         writer.writeObjectToFile(existingSearches,path);
         }
 

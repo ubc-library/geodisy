@@ -1,5 +1,7 @@
-package BaseFiles;
+package Dataverse;
 
+import BaseFiles.FileWriter;
+import BaseFiles.GeoLogger;
 import Dataverse.ExistingCallsToCheck;
 import Dataverse.ExistingSearches;
 import org.apache.logging.log4j.LogManager;

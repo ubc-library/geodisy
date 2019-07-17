@@ -1,6 +1,6 @@
 package tests;
 
-import BaseFiles.ExistingSearchesFile;
+import Dataverse.ExistingSearchesFile;
 import Dataverse.ExistingSearches;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.junit.Test;
