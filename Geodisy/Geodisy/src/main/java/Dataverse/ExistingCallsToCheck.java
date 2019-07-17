@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class ExistingCallsToCheck implements Serializable{
     private static final long serialVersionUID = 5416853597895403102L;
-    HashMap<String, DataverseRecordInfo> records;
+    private HashMap<String, DataverseRecordInfo> records;
     private static ExistingCallsToCheck single_instance = null;
 
 
@@ -28,7 +28,7 @@ public class ExistingCallsToCheck implements Serializable{
         records.put(name,dRI);
     }
 
-    private boolean hasRecord(String doi){
+    public boolean hasRecord(String doi){
         return records.containsKey(doi);
     }
 
@@ -43,6 +43,11 @@ public class ExistingCallsToCheck implements Serializable{
 
     public boolean isNewerRecord(DataverseRecordInfo dataverseRecordInfo){
         return dataverseRecordInfo.younger(records.get(dataverseRecordInfo.getDoi()));
+    }
+
+    public boolean isNewerRecord(DataverseRecordInfo dataverseRecordInfo, String loggerName){
+        DataverseRecordInfo driSaved = records.get(dataverseRecordInfo.getDoi());
+        return dataverseRecordInfo.younger(driSaved) && loggerName.equals(driSaved.getLoggerName());
     }
 
 

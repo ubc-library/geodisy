@@ -1,5 +1,6 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 
+import Dataverse.DataverseJavaObject;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,9 @@ class GeographicFieldsTest {
     @Test
     void setBoundingBox() {
         String fakeDOI = "10.10.10";
-        GeographicFields gf = new GeographicFields(fakeDOI);
+        String fakeServer = "noRealServer";
+        GeographicFields gf = new GeographicFields(new DataverseJavaObject(fakeServer));
+        gf.setDoi(fakeDOI);
         List<GeographicBoundingBox> bboxes = gf.getGeoBBoxes();
         GeographicBoundingBox gBB =  new GeographicBoundingBox(fakeDOI);
         gBB.setEastLongitude(-10);

@@ -14,7 +14,7 @@ import static BaseFiles.GeodisyStrings.EXISTING_RECORDS;
  */
 public class ExistingSearchesFile {
     private String path = EXISTING_RECORDS;
-    Logger logger = LogManager.getLogger(this.getClass());
+    GeoLogger logger = new GeoLogger(this.getClass());
 
     /**
      * Constructor to use for production environment;

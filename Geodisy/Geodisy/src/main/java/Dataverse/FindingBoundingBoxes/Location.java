@@ -1,5 +1,6 @@
 package Dataverse.FindingBoundingBoxes;
 
+import BaseFiles.GeoLogger;
 import Crosswalking.JSONParsing.DataverseParser;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.apache.commons.text.WordUtils;
@@ -10,7 +11,7 @@ public class Location implements GeographicPoliticalUnit {
     protected String name;
     protected BoundingBox boundingBox;
     protected final String NO_NAME= "no name";
-    Logger logger = LogManager.getLogger(DataverseParser.class);
+    GeoLogger logger = new GeoLogger(this.getClass());
 
 
     public Location(String name) {

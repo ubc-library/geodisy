@@ -16,7 +16,7 @@ import java.net.URL;
  */
 public class HTTPCaller {
     String searchUrl;
-    Logger logger = LogManager.getLogger(this.getClass());
+    GeoLogger logger = new GeoLogger(this.getClass());
 
     public HTTPCaller(String searchUrl) {
         this.searchUrl = searchUrl;

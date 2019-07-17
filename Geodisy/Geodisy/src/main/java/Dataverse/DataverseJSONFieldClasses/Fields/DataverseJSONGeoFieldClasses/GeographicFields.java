@@ -1,6 +1,9 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 
+import BaseFiles.GeoLogger;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
+import Dataverse.DataverseJavaObject;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,15 +21,21 @@ public class GeographicFields extends MetadataType {
     List<GeographicUnit> geoUnits;
     BoundingBox fullBB; //The single bounding box that includes all listed bounding box extents
     protected String doi;
-    Logger logger = LogManager.getLogger(GeographicFields.class);
+    private DataverseJavaObject djo;
+    GeoLogger logger = new GeoLogger(this.getClass());
 
-    public GeographicFields(String doi) {
+    public GeographicFields(DataverseJavaObject djo) {
+        this.djo = djo;
         this.geoCovers = new LinkedList<>();
         this.geoBBoxes = new LinkedList<>();
         this.geoUnits = new LinkedList<>();
         fullBB = new BoundingBox();
-        this.doi = doi;
+        this.doi = djo.getDOI();
     }
+
+    //Placeholder GeographicFields constructor
+    public GeographicFields(){}
+
     @Override
     public void setFields(JSONObject field) {
         String title = field.getString(TYPE_NAME);
@@ -125,9 +134,13 @@ public class GeographicFields extends MetadataType {
     public String getDoi() {
         return doi;
     }
+
     @Override
     public void setDoi(String doi) {
         this.doi = doi;
+        CitationFields cf = djo.getCitationFields();
+        cf.setDoi(doi);
+        djo.setCitationFields(cf);
     }
 
     /**
@@ -184,7 +197,8 @@ public class GeographicFields extends MetadataType {
         west = (west==181) ? altWest : west;
         east = (east==-181)? altEast : east;
         if(west == 181 || east == -181 || north == -181 || south == 181) {
-            logger.info("Something went wrong with the bounding box for record " + doi);
+            //TODO create check to make sure logger isn't logging info logged about this record before
+            logger.info("Something went wrong with the bounding box for record " + doi, djo);
             logger.error("Something went wrong with the bounding box for record " + doi);
             west = 361;
             east = 361;

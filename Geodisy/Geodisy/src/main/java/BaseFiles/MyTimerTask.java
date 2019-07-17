@@ -24,7 +24,7 @@ import static BaseFiles.GeodisyStrings.*;
  * @author pdante
  */
 public class MyTimerTask extends TimerTask {
-    Logger logger = LogManager.getLogger(this.getClass());
+    GeoLogger logger = new GeoLogger(this.getClass());
     public MyTimerTask() {
     }
 /**
@@ -47,7 +47,7 @@ public class MyTimerTask extends TimerTask {
             ExistingSearches existingSearches = fW.readExistingSearches(EXISTING_RECORDS);
             List<SourceJavaObject> dJOs = geo.harvestDataverse(existingSearches);
             for(SourceJavaObject dJO : dJOs) {
-                existingSearches.addOrReplaceRecord(new DataverseRecordInfo(dJO));
+                existingSearches.addOrReplaceRecord(new DataverseRecordInfo(dJO, logger.getName()));
             }
 
             endRecsToCheck = trimErrors();

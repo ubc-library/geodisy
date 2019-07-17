@@ -15,7 +15,7 @@ import java.util.Properties;
 
 
 public class SendMail {
-    Logger logger = LogManager.getLogger(this.getClass());
+    GeoLogger logger = new GeoLogger(this.getClass());
 
     public boolean send(String recipient, String doi){
         String sender = "Geodisy.Info@ubc.ca";

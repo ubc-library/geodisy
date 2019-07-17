@@ -1,5 +1,6 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONAstroFieldClasses;
 
+import BaseFiles.GeoLogger;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.apache.logging.log4j.LogManager;
@@ -19,7 +20,7 @@ public class AstroFields extends MetadataType {
     private Temporal temporalFields;
     private Redshift redshiftFields;
     protected String doi;
-    Logger logger = LogManager.getLogger(AstroFields.class);
+    GeoLogger logger = new GeoLogger(AstroFields.class);
 
     public AstroFields(String doi) {
         this.doi = doi;

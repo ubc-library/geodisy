@@ -1,5 +1,6 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONJournalFieldClasses;
 
+import BaseFiles.GeoLogger;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.apache.logging.log4j.LogManager;
@@ -16,7 +17,7 @@ public class JournalFields extends MetadataType {
     private String journalArticleType;
     private List<JournalVolIssue> journalVolIssues;
     protected String doi;
-    private Logger logger = LogManager.getLogger(JournalFields.class);
+    private GeoLogger logger = new GeoLogger(JournalFields.class);
 
     public JournalFields(String doi) {
         this.journalArticleType = "";

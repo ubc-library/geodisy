@@ -1,5 +1,6 @@
 package tests;
 
+import BaseFiles.GeoLogger;
 import BaseFiles.MyTimerTask;
 import Crosswalking.JSONParsing.DataverseParser;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Author;
@@ -79,9 +80,9 @@ public class DataverseParserTest {
         citationFields.addDsDescription(d);
         citationFields.addSubject("Earth and Environmental Sciences");
         dataverseJavaObject.setCitationFields(citationFields);
-        Logger logger = LogManager.getLogger(DataverseParserTest.class);
+        GeoLogger logger = new GeoLogger(DataverseParserTest.class);
         logger.error("Testing an error");
-        logger.info("Testing an info");
+        logger.info("Testing an info", dataverseJavaObject);
 
         return dataverseJavaObject;
     }

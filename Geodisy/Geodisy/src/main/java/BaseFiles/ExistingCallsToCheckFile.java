@@ -15,7 +15,7 @@ import static BaseFiles.GeodisyStrings.EXISTING_CALL_TO_CHECK;
 public class ExistingCallsToCheckFile {
 
     private String path = EXISTING_CALL_TO_CHECK;
-    Logger logger = LogManager.getLogger(this.getClass());
+    GeoLogger logger = new GeoLogger(this.getClass());
 
     /**
      * Constructor to use for production environment;

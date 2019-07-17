@@ -1,5 +1,6 @@
 package GeoServer;
 
+import BaseFiles.GeoLogger;
 import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseRecordFile;
 import org.apache.logging.log4j.LogManager;
@@ -16,7 +17,7 @@ import java.util.zip.ZipInputStream;
  * and then deleting the unzipped files after the upload process is finished
  */
 public class Unzip {
-    Logger logger = LogManager.getLogger(Unzip.class);
+    GeoLogger logger = new GeoLogger(Unzip.class);
     //TODO call unzip when adding zipped files to Geoserver and then call deleteUnzippedFiles() after upload is done to save space
     public void unzip(String filePath, DataverseRecordFile dRF) {
         String destPath = filePath.substring(0,filePath.length()-4);

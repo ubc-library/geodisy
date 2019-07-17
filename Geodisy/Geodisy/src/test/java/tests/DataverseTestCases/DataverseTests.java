@@ -1,6 +1,7 @@
 package tests.DataverseTestCases;
 
 
+import BaseFiles.GeoLogger;
 import Crosswalking.JSONParsing.DataverseParser;
 import Dataverse.SourceJavaObject;
 import org.apache.logging.log4j.LogManager;
@@ -16,7 +17,7 @@ import java.net.URL;
 
 public abstract class DataverseTests {
     protected String doi;
-    protected Logger logger = LogManager.getLogger(DataverseTests.class);
+    protected GeoLogger logger = new GeoLogger(DataverseTests.class);
     protected SourceJavaObject dJO;
 
     //https://206-12-90-131.cloud.computecanada.ca/api/datasets/export?exporter=dataverse_json&persistentId=doi:10.5072/FK2/QZIPVK

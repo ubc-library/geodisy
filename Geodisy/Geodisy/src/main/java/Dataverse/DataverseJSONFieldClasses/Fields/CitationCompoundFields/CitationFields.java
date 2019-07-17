@@ -1,5 +1,6 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields;
 
+import BaseFiles.GeoLogger;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Date;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
@@ -33,7 +34,7 @@ public class CitationFields extends MetadataType {
     private Series series;
     private List<Software> softwares;
     private List<String> relatedMaterials, relatedDatasets, otherReferences, dataSources, kindsOfData, languages, subjects;
-    Logger logger = LogManager.getLogger(CitationFields.class);
+    GeoLogger logger = new GeoLogger(CitationFields.class);
 
     public CitationFields() {
         this.simpleCitationFields = new SimpleCitationFields();
@@ -211,7 +212,7 @@ public class CitationFields extends MetadataType {
                     setSubjects(getList(ja));
                     break;
                 default:
-                    logger.error("Something went wrong parsing a compound field. Label is %s", label);
+                    logger.error("Something went wrong parsing a compound field. Label is " + label);
                     System.out.println("Something wrong parsing a compound field");
             }
         }
@@ -315,7 +316,7 @@ public class CitationFields extends MetadataType {
             case DATE_OF_COLLECT:
                 return datesOfCollection;
             default:
-                logger.error("Something went wrong parsing a compound field. Label is %s", fieldName);
+                logger.error("Something went wrong parsing a compound field. Label is " + fieldName);
                 System.out.println("Something wrong parsing a compound field");
                 return new LinkedList();
         }
@@ -501,7 +502,7 @@ public class CitationFields extends MetadataType {
         else if(current.has("datasetVersion"))
             return current.getJSONObject("datasetVersion");
         else{
-            logger.error("missing a _____Version field in the dataverseJson in $s", current.toString());
+            logger.error("missing a _____Version field in the dataverseJson in " + current.toString());
             return new JSONObject();
         }
     }

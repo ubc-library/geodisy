@@ -1,5 +1,6 @@
 package Dataverse;
 
+import BaseFiles.GeoLogger;
 import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
@@ -13,7 +14,7 @@ import java.util.List;
 import static BaseFiles.GeodisyStrings.*;
 
 public class GDAL {
-    Logger logger = LogManager.getLogger(this.getClass());
+    GeoLogger logger = new GeoLogger(this.getClass());
 
     public DataverseJavaObject generateBB(DataverseJavaObject djo) {
         String doi = djo.getDOI();

@@ -1,5 +1,6 @@
 package Crosswalking.JSONParsing;
 
+import BaseFiles.GeoLogger;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordInfo;
@@ -17,7 +18,7 @@ import static Dataverse.DVFieldNameStrings.*;
 
 public class DataverseParser implements JSONParser {
 
-    static Logger logger = LogManager.getLogger(DataverseParser.class);
+    static GeoLogger logger = new GeoLogger(DataverseParser.class);
 
 
     /**
@@ -45,7 +46,7 @@ public class DataverseParser implements JSONParser {
             if (metadata.has(GEOSPATIAL))
                 dJO.parseGeospatialFields(metadata.getJSONObject(GEOSPATIAL).getJSONArray(FIELDS));
             else
-                dJO.setGeoFields(new GeographicFields(dJO.getDOI()));
+                dJO.setGeoFields(new GeographicFields(dJO));
             String prodPlace = dJO.getSimpleFieldVal(PROD_PLACE);
             if (!prodPlace.matches("") && !dJO.hasBoundingBox()) {
                 GeographicFields gf = dJO.getGeoFields();
@@ -63,7 +64,7 @@ public class DataverseParser implements JSONParser {
     // the manual check log
     private BoundingBox getBBFromProdPlace(String prodPlace, DataverseJavaObject dJO) {
         BoundingBox b = new BoundingBox();
-        logger.info("The following record has no geographic location info other than a Production Place. Please manually check: %s", dJO.getDOI());
+        logger.info("The following record has no geographic location info other than a Production Place. Please manually check: " + dJO.getDOI(), dJO, logger.getName());
         return b;
     }
 

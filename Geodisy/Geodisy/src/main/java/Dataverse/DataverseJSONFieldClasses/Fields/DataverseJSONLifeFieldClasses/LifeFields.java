@@ -1,5 +1,6 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONLifeFieldClasses;
 
+import BaseFiles.GeoLogger;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.apache.logging.log4j.LogManager;
@@ -17,7 +18,7 @@ public class LifeFields extends MetadataType {
             studyAssayMeasurementType, studyAssayOtherMeasurmentType, studyAssayTechnologyType,
             studyAssayPlatform, studyAssayCellType;
     protected String doi;
-    private Logger logger = LogManager.getLogger(this.getClass());
+    private GeoLogger logger = new GeoLogger(this.getClass());
 
     public LifeFields(String doi) {
         this.studyDesignType = new LinkedList<>();

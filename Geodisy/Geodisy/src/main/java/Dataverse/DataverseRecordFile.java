@@ -1,5 +1,6 @@
 package Dataverse;
 
+import BaseFiles.GeoLogger;
 import GeoServer.Unzip;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,9 +21,10 @@ public class DataverseRecordFile {
     String doi = "N/A";
     int dbID;
     String server;
-    Logger logger = LogManager.getLogger(this.getClass());
+    GeoLogger logger = new GeoLogger(this.getClass());
     String recordURL;
     String datasetDOI;
+    DataverseJavaObject djo;
 
     /**
      * Creates a DataverseRecordFile when there is a File-specific doi.
@@ -32,7 +34,8 @@ public class DataverseRecordFile {
      * @param server
      * @param datasetDOI
      */
-    public DataverseRecordFile(String title, String doi, int dbID, String server, String datasetDOI){
+    public DataverseRecordFile(String title, String doi, int dbID, String server, String datasetDOI, DataverseJavaObject djo){
+        this.djo = djo;
         this.title = title;
         this.doi = doi;
         this.dbID = dbID;
@@ -83,7 +86,7 @@ public class DataverseRecordFile {
             }
         } catch (FileNotFoundException e){
             logger.error(String.format("This dataset file %s couldn't be found from dataset %s", dbID, doi));
-            logger.info("Check out dataset " + datasetDOI);
+            logger.info("Check out dataset " + datasetDOI, djo, logger.getName());
         }catch (MalformedURLException e) {
             logger.error(String.format("Something is wonky with the DOI " + doi + " or the dbID " + dbID));
         } catch (IOException e) {

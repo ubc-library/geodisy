@@ -1,5 +1,6 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses;
 
+import BaseFiles.GeoLogger;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.apache.logging.log4j.LogManager;
@@ -16,7 +17,7 @@ public class SocialFields extends MetadataType {
     private TargetSampleSize targetSampleSize;
     private SocialScienceNotes socialScienceNotes;
     protected String doi;
-    private Logger logger = LogManager.getLogger(this.getClass());
+    private GeoLogger logger = new GeoLogger(this.getClass());
 
     public SocialFields(String doi) {
         this.simpleSocialFields = new SimpleSocialFields();

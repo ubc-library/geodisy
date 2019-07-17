@@ -1,6 +1,7 @@
 package Dataverse.FindingBoundingBoxes;
 
 import BaseFiles.HTTPCaller;
+import Dataverse.DataverseJavaObject;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.City;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
@@ -23,9 +24,17 @@ public class Geonames extends FindBoundBox {
     Countries countries;
     HashMap<String, BoundingBox> bBoxes;
     String doi;
+    public DataverseJavaObject djo;
 
     public Geonames(String doi) {
         this.doi = doi;
+        this.countries = Countries.getCountry();
+        this.bBoxes = countries.getBoundingBoxes();
+    }
+
+    public Geonames(DataverseJavaObject djo){
+        this.djo = djo;
+        doi = this.djo.getDOI();
         this.countries = Countries.getCountry();
         this.bBoxes = countries.getBoundingBoxes();
     }
@@ -44,7 +53,7 @@ public class Geonames extends FindBoundBox {
          else
              country = countries.getCountryByName(countryName);
         if(country.getCountryCode().matches("_JJ")){
-            logger.info(countryName + " is not a valid country name in record at DOI: " + doi + ", so no bounding box could be automatically generated. Check this record manually ");
+            logger.info(countryName + " is not a valid country name in record at DOI: " + doi + ", so no bounding box could be automatically generated. Check this record manually ", djo);
 
             return new BoundingBox();
         }
@@ -79,7 +88,7 @@ public class Geonames extends FindBoundBox {
             // Can be safely ignored because UTF-8 is always supported
         }
         String searchString = state + addParameters(parameters);
-        box = readResponse(getJSONString(searchString),doi);
+        box = readResponse(getJSONString(searchString),doi, djo);
         if(box.getLongWest()==361)
             return getDVBoundingBox(country);
         Province p = new Province(unURLedState, country);
@@ -122,7 +131,7 @@ public class Geonames extends FindBoundBox {
             // Can be safely ignored because UTF-8 is always supported
         }
         String searchString = city + "%2C%20" + state + addParameters(parameters);
-            box = readResponse(getJSONString(searchString),doi);
+            box = readResponse(getJSONString(searchString),doi, djo);
         if(box.getLongWest()==361)
             return getDVBoundingBox(country,state);
         City cit = new City(city,state,country);
@@ -173,7 +182,7 @@ public class Geonames extends FindBoundBox {
         else
             box = getDVBoundingBox(country);*/
         if(box.getLatSouth() == 361)
-            logger.info("Record with DOI: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" );
+            logger.info("Record with DOI: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" ,djo);
         return box;
 
     }
@@ -218,7 +227,7 @@ public class Geonames extends FindBoundBox {
         else
             box = getDVBoundingBoxOther(country, other);*/
         if(box.getLatSouth() == 361)
-            logger.info("Record with DOI: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" );
+            logger.info("Record with DOI: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" ,djo);
         return box;
     }
 

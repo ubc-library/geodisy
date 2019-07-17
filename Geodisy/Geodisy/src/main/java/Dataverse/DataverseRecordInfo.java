@@ -13,6 +13,7 @@ public class DataverseRecordInfo implements Serializable {
     private int minor;
     private int version;
     private String doi;
+    private String loggerName;
 
     /**
      * A blank Dataverse Record info object
@@ -24,11 +25,12 @@ public class DataverseRecordInfo implements Serializable {
      * Create a Dataverse Record Info object from a Dataverse Java Object
      * @param dataverseJavaObject
      */
-    public DataverseRecordInfo(SourceJavaObject dataverseJavaObject){
+    public DataverseRecordInfo(SourceJavaObject dataverseJavaObject, String loggerName){
         doi = dataverseJavaObject.getDOI();
         version = dataverseJavaObject.getVersion();
         setMajor(version/1000);
         setMinor(version%1000);
+        this.loggerName = loggerName;
     }
 
     @Override
@@ -64,6 +66,8 @@ public class DataverseRecordInfo implements Serializable {
     public String getDoi() {
         return doi;
     }
+
+    public String getLoggerName(){return loggerName;}
 
     @Override
     public int hashCode()

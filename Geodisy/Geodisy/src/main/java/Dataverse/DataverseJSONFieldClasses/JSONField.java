@@ -1,15 +1,15 @@
 package Dataverse.DataverseJSONFieldClasses;
 
+import BaseFiles.GeoLogger;
 import Crosswalking.JSONParsing.DataverseParser;
 
 import org.apache.commons.validator.routines.UrlValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
 
 public abstract class JSONField {
-    protected Logger logger = LogManager.getLogger(DataverseParser.class);
+    protected GeoLogger logger = new GeoLogger(DataverseParser.class.toString());
 
     /**
      * @param value String that hopefully is a properly formated URL
@@ -35,12 +35,12 @@ public abstract class JSONField {
     public abstract String getField(String fieldName);
 
     public void errorParsing(String className, String fieldName){
-        logger.error("Something wrong parsing %s. Title is %s", className, fieldName);
+        logger.error("Something wrong parsing "+ className + ". Title is " + fieldName);
         System.out.println("Something wrong with " + className + " parsing.");
     }
 
     public void errorGettingValue(String className, String fieldName){
-        logger.error("Something wrong getting field from %s. Field name is %s", className, fieldName);
+        logger.error("Something wrong getting field from "+ className + ". Field name is " + fieldName);
         System.out.println("Something wrong with " + className + " getting value.");
     }
 

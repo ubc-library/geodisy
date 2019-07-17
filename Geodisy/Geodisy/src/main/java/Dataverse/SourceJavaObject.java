@@ -28,7 +28,7 @@ public abstract class SourceJavaObject {
     public SourceJavaObject(String server) {
         this.citationFields = new CitationFields();
         this.dataFiles = new LinkedList<>();
-        this.geoFields = new GeographicFields("placeholder");
+        this.geoFields = new GeographicFields();
         this.server = server;
         hasContent = false;
     }

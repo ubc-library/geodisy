@@ -8,6 +8,7 @@ package Dataverse;
 
 
 import BaseFiles.FileWriter;
+import BaseFiles.GeoLogger;
 import BaseFiles.HTTPCaller;
 import Crosswalking.JSONParsing.DataverseParser;
 import org.apache.logging.log4j.LogManager;
@@ -31,7 +32,7 @@ import static Dataverse.DVFieldNameStrings.BASE_DV_URL;
 public class DataverseAPI extends SourceAPI {
     private final String dvName;
     private Set<DataverseRecordInfo> records;
-    Logger logger = LogManager.getLogger(this.getClass());
+    GeoLogger logger = new GeoLogger(this.getClass());
 
     public DataverseAPI(String dvName) {
 
@@ -91,7 +92,7 @@ public class DataverseAPI extends SourceAPI {
     }
 
     private boolean hasNewInfo(DataverseJavaObject djo, ExistingSearches es) {
-        DataverseRecordInfo dri = new DataverseRecordInfo(djo);
+        DataverseRecordInfo dri = new DataverseRecordInfo(djo, logger.getName());
         return dri.younger(es.getRecordInfo(djo.getDOI()));
     }
 

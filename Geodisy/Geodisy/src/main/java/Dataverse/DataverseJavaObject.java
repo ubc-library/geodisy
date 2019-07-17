@@ -2,6 +2,7 @@ package Dataverse;
 
 
 
+import BaseFiles.GeoLogger;
 import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
 import Dataverse.FindingBoundingBoxes.Geonames;
@@ -27,7 +28,7 @@ import static Dataverse.DVFieldNameStrings.*;
  */
 
 public class DataverseJavaObject extends SourceJavaObject {
-    private Logger logger = LogManager.getLogger(DataverseJavaObject.class);
+    private GeoLogger logger = new GeoLogger(this.getClass());
 
 
     public DataverseJavaObject(String server) {
@@ -48,7 +49,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             citationFields.setFields(jo);
         }
         hasContent=true;
-        geoFields = new GeographicFields(citationFields.getDOI());
+        geoFields = new GeographicFields(this);
     }
 
     /**
@@ -62,7 +63,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             this.geoFields.setFields(jo);
         }
         List<BoundingBox> bb = new LinkedList<>();
-        Geonames geonames = new Geonames(getDOI());
+        Geonames geonames = new Geonames(this);
         if(!geoFields.hasBB()){
             List<GeographicCoverage> coverages = geoFields.getListField(GEOGRAPHIC_COVERAGE);
             if(!coverages.isEmpty())
@@ -103,7 +104,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             //Some Dataverses don't have individual DOIs for files, so for those I will use the database's file id instead
             if(dataFile.has(DOI)&& !dataFile.getString(DOI).equals("")) {
                 String doi = dataFile.getString(DOI);
-                dRF = new DataverseRecordFile(title, doi,dataFile.getInt("id"), server, citationFields.getDOI());
+                dRF = new DataverseRecordFile(title, doi,dataFile.getInt("id"), server, citationFields.getDOI(), this);
             }else{
                 int dbID = (int) dataFile.get("id");
                 dRF = new DataverseRecordFile(title,dbID,server,citationFields.getDOI());
@@ -119,7 +120,7 @@ public class DataverseJavaObject extends SourceJavaObject {
         else if(current.has("datasetVersion"))
             return current.getJSONObject("datasetVersion");
         else{
-            logger.error("missing a _____Version field in the dataverseJson in $s", current.toString());
+            logger.error("missing a _____Version field in the dataverseJson in " + current.toString());
             return new JSONObject();
         }
     }
