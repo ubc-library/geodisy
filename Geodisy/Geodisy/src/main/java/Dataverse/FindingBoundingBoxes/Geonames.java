@@ -6,7 +6,6 @@ import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.City;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Province;
-
 import java.io.UnsupportedEncodingException;
 import java.net.*;
 import java.util.HashMap;

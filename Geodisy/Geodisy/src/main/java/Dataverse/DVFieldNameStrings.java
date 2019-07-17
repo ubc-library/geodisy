@@ -246,10 +246,4 @@ public class DVFieldNameStrings {
     public final static String SOCIAL_SCIENCE_NOTES_TYPE = "socialScienceNotesType";
     public final static String SOCIAL_SCIENCE_NOTES_SUBJECT = "socialScienceNotesSubject";
     public final static String SOCIAL_SCIENCE_NOTES_TEXT = "socialScienceNotesText";
-
-
-
-
-
-
 }

@@ -5,12 +5,8 @@ import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.*;
 import java.util.List;
-
 import static BaseFiles.GeodisyStrings.*;
 
 public class GDAL {

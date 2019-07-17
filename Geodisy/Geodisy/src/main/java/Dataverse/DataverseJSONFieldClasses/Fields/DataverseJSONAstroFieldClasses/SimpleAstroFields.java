@@ -2,7 +2,6 @@ package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONAstroFieldClasse
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -71,7 +70,6 @@ public class SimpleAstroFields extends CompoundJSONField {
         }
     }
 
-
     private void setAstroType(String astroType) {
         this.astroType.add(astroType);
     }
@@ -95,7 +93,6 @@ public class SimpleAstroFields extends CompoundJSONField {
     private void setPolarization(String polarization) {
         this.polarization = polarization;
     }
-
 
     private void setDepth(float depth) {
         this.depth = depth;

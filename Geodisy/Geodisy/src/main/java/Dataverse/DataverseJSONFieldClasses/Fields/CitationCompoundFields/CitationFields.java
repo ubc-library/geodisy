@@ -6,14 +6,10 @@ import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Date;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.LinkedList;
 import java.util.List;
-
 import static Dataverse.DVFieldNameStrings.*;
 
 public class CitationFields extends MetadataType {

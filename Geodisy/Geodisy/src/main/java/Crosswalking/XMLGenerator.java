@@ -7,13 +7,10 @@ import Dataverse.DataverseJavaObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.util.LinkedList;
-
 import static BaseFiles.GeodisyStrings.CHARACTER;
 import static BaseFiles.GeodisyStrings.XMLNS;
 import static Dataverse.DVFieldNameStrings.*;
@@ -44,7 +41,6 @@ public class XMLGenerator {
 
     //TODO keep working on this
     public Document generateXMLFile(){
-
 
             // root element
             Element rootElement = doc.createElement("gmd:MD_Metadata");
@@ -79,11 +75,11 @@ public class XMLGenerator {
     }
     //TODO complete
     private Element getCI_Citation(Element ci_Citation) {
-        ci_Citation = setCIChild(ci_Citation,"title", simpleCitationFields.getField(TITLE), CHARACTER);
         String subtitleVal = simpleCitationFields.getField(SUBTITLE);
+        String title = simpleCitationFields.getField(TITLE);
         if(!subtitleVal.isEmpty())
-            ci_Citation = setCIChild(ci_Citation,"title", subtitleVal, CHARACTER);
-
+            title += ":" + subtitleVal;
+        ci_Citation = setCIChild(ci_Citation,"title", title, CHARACTER);
         String altTitleVal = simpleCitationFields.getField(ALT_TITLE);
         if(!altTitleVal.isEmpty())
             ci_Citation = setCIChild(ci_Citation,"alternateTitle", subtitleVal, CHARACTER);
@@ -116,7 +112,6 @@ public class XMLGenerator {
     //TODO need more input from Mark
     private Element getIdentifier(Element ci_citation) {
         LinkedList otherIDs = (LinkedList) citationFields.getOtherIDs();
-
 
 
         return ci_citation;

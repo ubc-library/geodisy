@@ -17,8 +17,6 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
-
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -51,8 +49,6 @@ public class ISO_19115 extends ISO_Schema {
             System.out.println(io.getMessage());
             logger.error("Something went wrong trying to create XML file: " + fileName);
     }
-
-
 
 }
 //TODO
