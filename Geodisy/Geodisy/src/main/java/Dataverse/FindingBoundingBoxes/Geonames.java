@@ -248,5 +248,11 @@ public class Geonames extends FindBoundBox {
         return answer;
     }
 
+    public DataverseJavaObject getDJO(){
+        return djo;
+    }
 
+    public void setDJO(DataverseJavaObject djo){
+        this.djo = djo;
+    }
 }

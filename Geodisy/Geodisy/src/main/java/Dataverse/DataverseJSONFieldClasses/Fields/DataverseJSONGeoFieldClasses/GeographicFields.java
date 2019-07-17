@@ -34,7 +34,12 @@ public class GeographicFields extends MetadataType {
     }
 
     //Placeholder GeographicFields constructor
-    public GeographicFields(){}
+    public GeographicFields(){
+        this.geoCovers = new LinkedList<>();
+        this.geoBBoxes = new LinkedList<>();
+        this.geoUnits = new LinkedList<>();
+        fullBB = new BoundingBox();
+    }
 
     @Override
     public void setFields(JSONObject field) {
@@ -197,7 +202,6 @@ public class GeographicFields extends MetadataType {
         west = (west==181) ? altWest : west;
         east = (east==-181)? altEast : east;
         if(west == 181 || east == -181 || north == -181 || south == 181) {
-            //TODO create check to make sure logger isn't logging info logged about this record before
             logger.info("Something went wrong with the bounding box for record " + doi, djo, logger.getName());
             west = 361;
             east = 361;

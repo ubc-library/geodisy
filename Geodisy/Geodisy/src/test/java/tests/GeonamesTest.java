@@ -1,5 +1,6 @@
 package tests;
 
+import Dataverse.DataverseJavaObject;
 import Dataverse.FindingBoundingBoxes.Geonames;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +11,7 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GeonamesTest {
-    Geonames geonames = new Geonames("fake doi val for test");
+    Geonames geonames = new Geonames(new DataverseJavaObject("fakeServer"));
     private String USER_NAME = "geodisy";
     HashMap<String, String> parameters;
 
@@ -20,6 +21,7 @@ class GeonamesTest {
         parameters = new HashMap<>();
         parameters.put("username", USER_NAME);
         parameters.put("style","FULL");
+
 
     }
 
