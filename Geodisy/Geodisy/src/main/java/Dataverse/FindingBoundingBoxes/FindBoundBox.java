@@ -26,7 +26,7 @@ public abstract class FindBoundBox {
         int tooFar = responseString.indexOf("</geoname>");
         int start = responseString.indexOf("<west>");
         if(start==-1||start>tooFar) {
-            logger.info("Record with DOI of "+ doi + "could not have a bounding box found in geonames. Please doublecheck the geospatial coverage field values", djo);
+            logger.info("Record with DOI of "+ doi + "could not have a bounding box found in geonames. Please doublecheck the geospatial coverage field values", djo, logger.getName());
             return box;
         }
         int end = responseString.indexOf("</west>");

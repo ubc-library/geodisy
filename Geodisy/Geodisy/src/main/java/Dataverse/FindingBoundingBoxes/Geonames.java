@@ -53,7 +53,7 @@ public class Geonames extends FindBoundBox {
          else
              country = countries.getCountryByName(countryName);
         if(country.getCountryCode().matches("_JJ")){
-            logger.info(countryName + " is not a valid country name in record at DOI: " + doi + ", so no bounding box could be automatically generated. Check this record manually ", djo);
+            logger.info(countryName + " is not a valid country name in record at DOI: " + doi + ", so no bounding box could be automatically generated. Check this record manually ", djo, logger.getName());
 
             return new BoundingBox();
         }
@@ -182,7 +182,7 @@ public class Geonames extends FindBoundBox {
         else
             box = getDVBoundingBox(country);*/
         if(box.getLatSouth() == 361)
-            logger.info("Record with DOI: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" ,djo);
+            logger.info("Record with DOI: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" ,djo, logger.getName());
         return box;
 
     }
@@ -227,7 +227,7 @@ public class Geonames extends FindBoundBox {
         else
             box = getDVBoundingBoxOther(country, other);*/
         if(box.getLatSouth() == 361)
-            logger.info("Record with DOI: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" ,djo);
+            logger.info("Record with DOI: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" ,djo, logger.getName());
         return box;
     }
 

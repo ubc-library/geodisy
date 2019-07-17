@@ -21,7 +21,7 @@ public abstract class JSONField {
 
         if(urlValidator.isValid(value))
             return value;
-        logger.error("Malformed URL error (%s), returning blank String", value);
+        logger.error("Malformed URL error " + value + ", returning blank String");
         return "";
     }
 

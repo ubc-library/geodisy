@@ -85,8 +85,7 @@ public class DataverseRecordFile {
                 }
             }
         } catch (FileNotFoundException e){
-            logger.error(String.format("This dataset file %s couldn't be found from dataset %s", dbID, doi));
-            logger.info("Check out dataset " + datasetDOI, djo, logger.getName());
+            logger.info(String.format("This dataset file %s couldn't be found from dataset %s. ", dbID, doi) + "Check out dataset " + datasetDOI, djo, logger.getName());
         }catch (MalformedURLException e) {
             logger.error(String.format("Something is wonky with the DOI " + doi + " or the dbID " + dbID));
         } catch (IOException e) {

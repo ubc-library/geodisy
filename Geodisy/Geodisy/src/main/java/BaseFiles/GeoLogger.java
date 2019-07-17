@@ -28,10 +28,12 @@ public class GeoLogger {
         DataverseRecordInfo dri = new DataverseRecordInfo(djo, loggerName);
         if(!efc.hasRecord(djo.getDOI())){
             logger.info(message);
+            logger.error(message);
             efc.addOrReplaceRecord(dri);
-        }else if(efc.isNewerRecord(dri))
+        }else if(efc.isNewerRecord(dri,loggerName))
         {
             logger.info("UPDATED RECORD: " + message);
+            logger.error("UPDATED RECORD: " + message);
             efc.addOrReplaceRecord(dri);
         }
     }

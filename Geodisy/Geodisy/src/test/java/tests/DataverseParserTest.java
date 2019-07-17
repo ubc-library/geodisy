@@ -82,7 +82,7 @@ public class DataverseParserTest {
         dataverseJavaObject.setCitationFields(citationFields);
         GeoLogger logger = new GeoLogger(DataverseParserTest.class);
         logger.error("Testing an error");
-        logger.info("Testing an info", dataverseJavaObject);
+        logger.info("Testing an info", dataverseJavaObject, logger.getName());
 
         return dataverseJavaObject;
     }
