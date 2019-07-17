@@ -5,6 +5,7 @@ public class GeodisyStrings {
     //File paths
     public final static String EXISTING_RECORDS = "./savedFiles/ExisitingRecords.txt";
     public final static String RECORDS_TO_CHECK = "./logs/recordsToCheck.log";
+    public final static String EXISTING_CALL_TO_CHECK = "./logs/existingCallToCheck.txt";
     public final static String ERROR_LOG = "./logs/error.log";
     public final static String XMLNS = "http://www.isotc211.org/2005/";
 
@@ -23,6 +24,16 @@ public class GeodisyStrings {
     public final static String GDAL_TRANSLATE_LOCAL = "C:\\Program Files\\GDAL\\gdal_translate -t_srs EPSG:4326 ";
     public final static String OGR2OGR_CLOUD = "ogr2ogr -t_srs EPSG:4326 ";
     public final static String GDAL_TRANSLATE_CLOUD = "gdal_translate -t_srs EPSG:4326 ";
+
+    //XML value types
+    public final static String CHARACTER = "CharacterString";
+    public final static String DATE = "Date";
+    public final static String INTEGER = "Integer";
+    public final static String BOOLEAN = "Boolean";
+    public final static String DECIMAL = "Decimal";
+    public final static String MEASURE = "Measure";
+    public final static String LOCAL_NAME = "LocalName";
+
 
     public static boolean fileToIgnore(String title){
         for (String s : GeodisyStrings.FILE_TYPES_TO_IGNORE) {
