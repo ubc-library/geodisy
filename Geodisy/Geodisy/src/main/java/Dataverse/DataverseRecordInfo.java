@@ -11,6 +11,7 @@ public class DataverseRecordInfo implements Serializable {
     private static final long serialVersionUID = -3342760939630407200L;
     private int major;
     private int minor;
+    private int version;
     private String doi;
 
     /**
@@ -25,7 +26,7 @@ public class DataverseRecordInfo implements Serializable {
      */
     public DataverseRecordInfo(SourceJavaObject dataverseJavaObject){
         doi = dataverseJavaObject.getDOI();
-        int version = dataverseJavaObject.getVersion();
+        version = dataverseJavaObject.getVersion();
         setMajor(version/1000);
         setMinor(version%1000);
     }
@@ -37,8 +38,7 @@ public class DataverseRecordInfo implements Serializable {
             return false;
         if (obj == this)
             return true;
-        return this.getMajor()==((DataverseRecordInfo) obj).getMajor()
-                && this.getMinor()==((DataverseRecordInfo) obj).getMinor();
+        return this.getVersion()==((DataverseRecordInfo) obj).getVersion();
     }
 
     public boolean younger(Object obj) {
@@ -49,7 +49,7 @@ public class DataverseRecordInfo implements Serializable {
         if (obj == this)
             return false;
 
-        return this.getMajor() >((DataverseRecordInfo) obj).getMajor();
+        return (this.getMajor()*100 + this.getMinor()) >(((DataverseRecordInfo) obj).getMajor()*10 +((DataverseRecordInfo) obj).getMinor());
     }
 
     public int getMajor() {
@@ -59,6 +59,7 @@ public class DataverseRecordInfo implements Serializable {
     public int getMinor() {
         return minor;
     }
+    public int getVersion(){return version; }
 
     public String getDoi() {
         return doi;
@@ -83,6 +84,9 @@ public class DataverseRecordInfo implements Serializable {
     }
 
     public void setMinor(String minor){this.minor = Integer.parseInt(minor);}
+
+    public void setVersion(int version){this.version = version;}
+    public void setVersion(String version){this.version = Integer.parseInt(version);}
 
     public void setDoi(String doi) {
         this.doi = doi;
