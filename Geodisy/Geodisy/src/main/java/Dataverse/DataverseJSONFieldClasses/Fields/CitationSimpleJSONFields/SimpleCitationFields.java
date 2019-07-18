@@ -35,6 +35,15 @@ public class SimpleCitationFields extends JSONField {
         this.versionMinor = 0;
     }
 
+    public boolean hasField(String fieldName){
+        if(fieldName.equals(MAJOR_VERSION)||fieldName.equals(MINOR_VERSION))
+            if(!getField(MAJOR_VERSION).equals("0"))
+                return true;
+            else
+                return false;
+        return !getField(fieldName).equals("");
+
+    }
     /**
      *
      * @param label Field name label

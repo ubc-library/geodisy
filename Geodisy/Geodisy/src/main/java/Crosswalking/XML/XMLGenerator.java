@@ -1,15 +1,14 @@
-package Crosswalking;
+package Crosswalking.XML;
 
+import Crosswalking.Crosswalking;
+import Crosswalking.XML.XMLDocument;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJavaObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
+
 import java.util.LinkedList;
 import static BaseFiles.GeodisyStrings.CHARACTER;
 import static BaseFiles.GeodisyStrings.XMLNS;
@@ -20,7 +19,7 @@ public class XMLGenerator {
     CitationFields citationFields;
     GeographicFields geographicFields;
     SimpleCitationFields simpleCitationFields;
-    Document doc;
+    XMLDocument doc;
 
     //TODO write catch block
     public XMLGenerator(DataverseJavaObject djo) {
@@ -28,22 +27,13 @@ public class XMLGenerator {
         this.citationFields = djo.getCitationFields();
         this.geographicFields=djo.getGeoFields();
         this.simpleCitationFields = citationFields.getSimpleCitationFields();
-        try {
-            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder docBuilder = null;
-            docBuilder = docFactory.newDocumentBuilder();
-
-        doc = docBuilder.newDocument();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        }
     }
 
     //TODO keep working on this
     public Document generateXMLFile(){
 
             // root element
-            Element rootElement = doc.createElement("gmd:MD_Metadata");
+            Element rootElement = doc.createGMDElement("MD_Metadata");
             rootElement.setAttribute("xmlns",XMLNS + "gmd");
             rootElement.setAttribute("xmlns:gco",XMLNS + "gco");
             rootElement.setAttribute("xmlns:gts",XMLNS + "gts");
@@ -52,21 +42,42 @@ public class XMLGenerator {
             rootElement.setAttribute("xmlns:xlink","http://www.w3.org/1999/xlink");
             rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
         rootElement.appendChild(createIdentificationInfo());
-        return doc;
+        SimpleCitationFields simple = djo.getSimpleFields();
+        if(simple.hasField(ACCESS_TO_SOURCES)||simple.hasField(ORIG_OF_SOURCES)||simple.hasField(CHAR_OF_SOURCES)||simple.hasField(DATA_SOURCE))
+            rootElement.appendChild(createDataQualityInfo(simple));
+        
+        
+        return doc.getDoc();
+    }
+    private Element createDataQualityInfo(SimpleCitationFields simple){
+        Element root = doc.createGMDElement("dataQualityInfo");
+        Element levelA = doc.createGMDElement("DQ_DataQuality");
+        Element levelB = doc.createGMDElement("scope");
+        Element levelC = doc.createGMDElement("resourceLineage");
+        Element levelD = doc.createGMDElement("LI_Lineage");
+        if(simple.hasField(DATA_SOURCE))
+            levelD.appendChild(doc.addVal("statement",CHARACTER));
+        if(simple.hasField(ORIG_OF_SOURCES)) {
+            doc.stackElement(doc.createGMDElement("processStep"));
+            doc.stackElement(doc.createGMDElement("LI_ProcessStep"));
+            doc.stackElement(doc.createGMDElement("description"));
+            doc.stackElement(doc.addVal(simple.getField(ORIG_OF_SOURCES),CHARACTER));
+            //TODO need to unzip and then put the lower stack onto Stack plus still need to stack the lower values listed above
+        }
     }
 
     private Element createIdentificationInfo(){
-        Element identInfo = doc.createElement("identificationInfo");
+        Element identInfo = doc.createGMDElement("identificationInfo");
         identInfo.appendChild(getMDIdent());
         return identInfo;
     }
     //TODO add sections for other sublevels of MD_DataIdentification
     private Element getMDIdent() {
-        Element md_DataIdent = doc.createElement("MD_DataIdentification");
+        Element md_DataIdent = doc.createGMDElement("MD_DataIdentification");
         if(!simpleCitationFields.getField(TITLE).isEmpty())
         {
-            Element citation = doc.createElement("citation");
-            Element ci_Citation = doc.createElement("CI_Citation");
+            Element citation = doc.createGMDElement("citation");
+            Element ci_Citation = doc.createGMDElement("CI_Citation");
             citation.appendChild(getCI_Citation(ci_Citation));
             md_DataIdent.appendChild(citation);
         }
@@ -86,7 +97,7 @@ public class XMLGenerator {
 
         String altUrlVal = simpleCitationFields.getField(ALT_URL);
         if(!altUrlVal.isEmpty()) {
-            Element altURL = doc.createElement(addGMD("onlineResource"));
+            Element altURL = doc.createGMDElement("onlineResource");
             altURL = getOnlineResource(altURL,altUrlVal);
             ci_Citation.appendChild(altURL);
         }
@@ -95,19 +106,14 @@ public class XMLGenerator {
     }
 
     private Element setCIChild(Element ci_Citation, String title, String subtitleVal, String valType) {
-        Element subTitle = doc.createElement(addGMD(title));
-        subTitle.appendChild(addVal(subtitleVal, valType));
+        Element subTitle = doc.createGMDElement(title);
+        subTitle.appendChild(doc.addVal(subtitleVal, valType));
         ci_Citation.appendChild(subTitle);
 
         return ci_Citation;
     }
 
-    //Adds the element at the lowest level of the hierarchy that holds the value
-    private Node addVal(String altTitleVal, String label) {
-        Element val = doc.createElement(addGCO(label));
-        val.setNodeValue(altTitleVal);
-        return val;
-    }
+
 
     //TODO need more input from Mark
     private Element getIdentifier(Element ci_citation) {
@@ -118,9 +124,9 @@ public class XMLGenerator {
     }
 
     private Element getOnlineResource(Element onlineResouce, String altUrlVal) {
-        Element ciOnline = doc.createElement(addGMD("CI_OnlineResource"));
-        Element linkage = doc.createElement(addGMD("linkage"));
-        Element url = doc.createElement(addGMD("URL"));
+        Element ciOnline = doc.createGMDElement("CI_OnlineResource");
+        Element linkage = doc.createGMDElement("linkage");
+        Element url = doc.createGMDElement("URL");
         url.setNodeValue(altUrlVal);
         linkage.appendChild(url);
         ciOnline.appendChild(linkage);
@@ -129,8 +135,8 @@ public class XMLGenerator {
     }
 
     private Element roleCode(String val){
-        Element role = doc.createElement(addGMD("role"));
-        Element ci = doc.createElement(addGMD("CI_RoleCode"));
+        Element role = doc.createGMDElement("role");
+        Element ci = doc.createGMDElement("CI_RoleCode");
         ci.setNodeValue(val);
         role.appendChild(ci);
         return role;
@@ -142,24 +148,17 @@ public class XMLGenerator {
     }
 
     private Element descriptiveKeywards(LinkedList<String> keywords, String type, String thesaurus){
-        Element descriptiveK = doc.createElement(addGMD("descriptiveKeywords"));
+        Element descriptiveK = doc.createGMDElement("descriptiveKeywords");
         for(String s: keywords){
-            Element keyword = doc.createElement(addGMD("keyword"));
-            Element charString = doc.createElement(addGCO("CharacterString"));
-            charString.setNodeValue(s);
+            Element keyword = doc.createGMDElement("keyword");
+            Element charString = doc.addVal(s,CHARACTER);
             keyword.appendChild(charString);
             descriptiveK.appendChild(keyword);
         }
-        Element typeEl = doc.createElement("type");
+        Element typeEl = doc.createGMDElement("type");
         return descriptiveK;
     }
 
-    // GCO indicates generally a value rather than a description
-    private String addGCO(String s) {
-        return "gco:" + s;
-    }
-    // GMD is either a description or parent element w/o a value
-    private String addGMD(String s){
-        return "gmd:" + s;
-    }
+
+    
 }
