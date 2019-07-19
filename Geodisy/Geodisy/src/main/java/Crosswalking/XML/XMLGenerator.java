@@ -31,16 +31,7 @@ public class XMLGenerator {
 
     //TODO keep working on this
     public Document generateXMLFile(){
-
-            // root element
-            Element rootElement = doc.createGMDElement("MD_Metadata");
-            rootElement.setAttribute("xmlns",XMLNS + "gmd");
-            rootElement.setAttribute("xmlns:gco",XMLNS + "gco");
-            rootElement.setAttribute("xmlns:gts",XMLNS + "gts");
-            rootElement.setAttribute("xmlns:srv",XMLNS + "srv");
-            rootElement.setAttribute("xmlns:gml",XMLNS + "gml");
-            rootElement.setAttribute("xmlns:xlink","http://www.w3.org/1999/xlink");
-            rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+        Element rootElement = getRoot();
         rootElement.appendChild(createIdentificationInfo());
         SimpleCitationFields simple = djo.getSimpleFields();
         if(simple.hasField(ACCESS_TO_SOURCES)||simple.hasField(ORIG_OF_SOURCES)||simple.hasField(CHAR_OF_SOURCES)||simple.hasField(DATA_SOURCE))
@@ -49,7 +40,22 @@ public class XMLGenerator {
         
         return doc.getDoc();
     }
+
+    private Element getRoot() {
+        // root element
+        Element rootElement = doc.createGMDElement("MD_Metadata");
+        rootElement.setAttribute("xmlns",XMLNS + "gmd");
+        rootElement.setAttribute("xmlns:gco",XMLNS + "gco");
+        rootElement.setAttribute("xmlns:gts",XMLNS + "gts");
+        rootElement.setAttribute("xmlns:srv",XMLNS + "srv");
+        rootElement.setAttribute("xmlns:gml",XMLNS + "gml");
+        rootElement.setAttribute("xmlns:xlink","http://www.w3.org/1999/xlink");
+        rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+        return rootElement;
+    }
+
     private Element createDataQualityInfo(SimpleCitationFields simple){
+        Element temp;
         Element root = doc.createGMDElement("dataQualityInfo");
         Element levelA = doc.createGMDElement("DQ_DataQuality");
         Element levelB = doc.createGMDElement("scope");
@@ -61,9 +67,34 @@ public class XMLGenerator {
             doc.stackElement(doc.createGMDElement("processStep"));
             doc.stackElement(doc.createGMDElement("LI_ProcessStep"));
             doc.stackElement(doc.createGMDElement("description"));
-            doc.stackElement(doc.addVal(simple.getField(ORIG_OF_SOURCES),CHARACTER));
-            //TODO need to unzip and then put the lower stack onto Stack plus still need to stack the lower values listed above
+            doc.stackElement(doc.addVal(simple.getField(ORIG_OF_SOURCES), CHARACTER));
+            temp = doc.stack.zip();
+            if (!temp.getTagName().equals("__no elements__"))
+                levelD.appendChild(temp);
         }
+        if(simple.hasField(CHAR_OF_SOURCES)) {
+            doc.stackElement(doc.createGMDElement("source"));
+            doc.stackElement(doc.createGMDElement("LI_Source"));
+            doc.stackElement(doc.createGMDElement("description"));
+            doc.stackElement(doc.addVal(simple.getField(CHAR_OF_SOURCES), CHARACTER));
+            temp = doc.stack.zip();
+            if (!temp.getTagName().equals("__no elements__"))
+                levelD.appendChild(temp);
+        }
+        if(simple.hasField(ACCESS_TO_SOURCES)){
+            doc.stackElement(doc.createGMDElement("additionalDocumentation"));
+            doc.stackElement(doc.createGMDElement("processStep"));
+            doc.stackElement(doc.createGMDElement("otherCitationDetails"));
+            doc.stackElement(doc.addVal(simple.getField(ACCESS_TO_SOURCES), CHARACTER));
+            temp = doc.stack.zip();
+            if (!temp.getTagName().equals("__no elements__"))
+                levelD.appendChild(temp);
+        }
+        levelC.appendChild(levelD);
+        levelB.appendChild(levelC);
+        levelA.appendChild(levelB);
+        root.appendChild(levelA);
+        return root;
     }
 
     private Element createIdentificationInfo(){
