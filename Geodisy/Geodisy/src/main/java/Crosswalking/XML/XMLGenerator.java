@@ -1,15 +1,18 @@
 package Crosswalking.XML;
 
-import Crosswalking.Crosswalking;
-import Crosswalking.XML.XMLDocument;
-import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
+
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJavaObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import sun.awt.image.ImageWatched;
 
 import java.util.LinkedList;
+import java.util.List;
+
 import static BaseFiles.GeodisyStrings.CHARACTER;
 import static BaseFiles.GeodisyStrings.XMLNS;
 import static Dataverse.DVFieldNameStrings.*;
@@ -36,9 +39,98 @@ public class XMLGenerator {
         SimpleCitationFields simple = djo.getSimpleFields();
         if(simple.hasField(ACCESS_TO_SOURCES)||simple.hasField(ORIG_OF_SOURCES)||simple.hasField(CHAR_OF_SOURCES)||simple.hasField(DATA_SOURCE))
             rootElement.appendChild(createDataQualityInfo(simple));
-        
-        
+        CitationFields cf = djo.getCitationFields();
+        LinkedList<Distributor> distributors = (LinkedList) cf.getListField(DISTRIB);
+        if(distributors.size()>0||simpleCitationFields.hasField(DEPOSITOR))
+            rootElement.appendChild(getDistribInfo(distributors));
+        IdentificationInfo ii =  new IdentificationInfo(djo, doc, rootElement);
+
+        rootElement = ii.generateIdentInfo();
+
+
+
+        if(otherIds.size()>0)
         return doc.getDoc();
+    }
+
+    private Element getDistribInfo(List<Distributor> distributors) {
+        Element temp;
+        String tempString;
+        Element root = doc.createGMDElement("distributionInfo");
+        Element levelA = doc.createGMDElement("MD_Distribution");
+        for (Distributor d : distributors) {
+            Element levelB = doc.createGMDElement("distributor");
+            Element levelC = doc.createGMDElement("MD_Distributor");
+            Element levelD = doc.createGMDElement("distributorContact");
+            Element levelE = doc.createGMDElement("CI_Responsibility");
+            Element levelF = doc.createGMDElement("party");
+            Element levelG = doc.createGMDElement("CI_Organization");
+            tempString = d.getDistributorName();
+            if(!d.getDistributorName().isEmpty()) {
+                temp = doc.createGMDElement("name");
+                temp.appendChild(doc.addGCOVal(tempString,CHARACTER));
+                levelG.appendChild(temp);
+            }
+            tempString = d.getDistributorAffiliation();
+            if(!d.getDistributorName().isEmpty()) {
+                temp = doc.createGMDElement("name");
+                temp.appendChild(doc.addGCOVal(tempString,CHARACTER));
+                levelG.appendChild(temp);
+            }
+            if(!d.getDistributorLogoURL().isEmpty()||!d.getDistributorURL().isEmpty()){
+                if(!d.getDistributorURL().isEmpty()) {
+                    doc.stackElement(doc.createGMDElement("contactInfo"));
+                    doc.stackElement(doc.createGMDElement("CI_Contact"));
+                    doc.stackElement(doc.createGMDElement("onlineResource"));
+                    doc.stackElement(doc.createGMDElement("CI_OnlineResource"));
+                    doc.stackElement(doc.createGMDElement("linkage"));
+                    doc.stackElement(doc.addGCOVal(d.getDistributorURL(),CHARACTER));
+                    levelG.appendChild(doc.zip());
+                }
+                if(!d.getDistributorLogoURL().isEmpty()){
+                    doc.stackElement(doc.createGMDElement("logo"));
+                    doc.stackElement(doc.createGMDElement("MD_BrowseGraphic"));
+                    doc.stackElement(doc.createGMDElement("linkage"));
+                    doc.stackElement(doc.addGCOVal(d.getDistributorLogoURL(),CHARACTER));
+                    levelG.appendChild(doc.zip());
+                }
+            }
+            levelF.appendChild(levelG);
+            levelE.appendChild(levelF);
+            Element levelRoleCode = doc.create_Element("role");
+            levelRoleCode.appendChild(doc.addRoleCode("distributor"));
+            levelE.appendChild(levelRoleCode);
+
+            levelD.appendChild(levelE);
+            levelC.appendChild(levelD);
+            levelB.appendChild(levelC);
+            levelA.appendChild(levelB);
+        }
+        if(simpleCitationFields.hasField(DEPOSITOR))
+            levelA.appendChild(getDepositor(simpleCitationFields.getField(DEPOSITOR)));
+        root.appendChild(levelA);
+        return root;
+    }
+
+    private Element getDepositor(String depositorName) {
+        Element levelB = doc.createGMDElement("distributor");
+        Element levelC = doc.createGMDElement("MD_Distributor");
+        Element levelD = doc.createGMDElement("distributorContact");
+        Element levelE = doc.createGMDElement("CI_Responsibility");
+        Element levelF = doc.createGMDElement("party");
+        Element levelG = doc.createGMDElement("CI_Organization");
+        Element levelH = doc.createGMDElement("name");
+        levelH.appendChild(doc.addGCOVal(depositorName,CHARACTER));
+        levelG.appendChild(levelH);
+        levelF.appendChild(levelG);
+        levelE.appendChild(levelF);
+        Element levelRoleCode = doc.create_Element("role");
+        levelRoleCode.appendChild(doc.addRoleCode("distributor"));
+        levelE.appendChild(levelRoleCode);
+        levelD.appendChild(levelE);
+        levelC.appendChild(levelD);
+        levelB.appendChild(levelC);
+        return levelB;
     }
 
     private Element getRoot() {
@@ -62,12 +154,12 @@ public class XMLGenerator {
         Element levelC = doc.createGMDElement("resourceLineage");
         Element levelD = doc.createGMDElement("LI_Lineage");
         if(simple.hasField(DATA_SOURCE))
-            levelD.appendChild(doc.addVal("statement",CHARACTER));
+            levelD.appendChild(doc.addGCOVal("statement",CHARACTER));
         if(simple.hasField(ORIG_OF_SOURCES)) {
             doc.stackElement(doc.createGMDElement("processStep"));
             doc.stackElement(doc.createGMDElement("LI_ProcessStep"));
             doc.stackElement(doc.createGMDElement("description"));
-            doc.stackElement(doc.addVal(simple.getField(ORIG_OF_SOURCES), CHARACTER));
+            doc.stackElement(doc.addGCOVal(simple.getField(ORIG_OF_SOURCES), CHARACTER));
             temp = doc.stack.zip();
             if (!temp.getTagName().equals("__no elements__"))
                 levelD.appendChild(temp);
@@ -76,7 +168,7 @@ public class XMLGenerator {
             doc.stackElement(doc.createGMDElement("source"));
             doc.stackElement(doc.createGMDElement("LI_Source"));
             doc.stackElement(doc.createGMDElement("description"));
-            doc.stackElement(doc.addVal(simple.getField(CHAR_OF_SOURCES), CHARACTER));
+            doc.stackElement(doc.addGCOVal(simple.getField(CHAR_OF_SOURCES), CHARACTER));
             temp = doc.stack.zip();
             if (!temp.getTagName().equals("__no elements__"))
                 levelD.appendChild(temp);
@@ -85,7 +177,7 @@ public class XMLGenerator {
             doc.stackElement(doc.createGMDElement("additionalDocumentation"));
             doc.stackElement(doc.createGMDElement("processStep"));
             doc.stackElement(doc.createGMDElement("otherCitationDetails"));
-            doc.stackElement(doc.addVal(simple.getField(ACCESS_TO_SOURCES), CHARACTER));
+            doc.stackElement(doc.addGCOVal(simple.getField(ACCESS_TO_SOURCES), CHARACTER));
             temp = doc.stack.zip();
             if (!temp.getTagName().equals("__no elements__"))
                 levelD.appendChild(temp);
@@ -115,34 +207,9 @@ public class XMLGenerator {
 
         return md_DataIdent;
     }
-    //TODO complete
-    private Element getCI_Citation(Element ci_Citation) {
-        String subtitleVal = simpleCitationFields.getField(SUBTITLE);
-        String title = simpleCitationFields.getField(TITLE);
-        if(!subtitleVal.isEmpty())
-            title += ":" + subtitleVal;
-        ci_Citation = setCIChild(ci_Citation,"title", title, CHARACTER);
-        String altTitleVal = simpleCitationFields.getField(ALT_TITLE);
-        if(!altTitleVal.isEmpty())
-            ci_Citation = setCIChild(ci_Citation,"alternateTitle", subtitleVal, CHARACTER);
 
-        String altUrlVal = simpleCitationFields.getField(ALT_URL);
-        if(!altUrlVal.isEmpty()) {
-            Element altURL = doc.createGMDElement("onlineResource");
-            altURL = getOnlineResource(altURL,altUrlVal);
-            ci_Citation.appendChild(altURL);
-        }
-        ci_Citation = getIdentifier(ci_Citation);
-        return ci_Citation;
-    }
 
-    private Element setCIChild(Element ci_Citation, String title, String subtitleVal, String valType) {
-        Element subTitle = doc.createGMDElement(title);
-        subTitle.appendChild(doc.addVal(subtitleVal, valType));
-        ci_Citation.appendChild(subTitle);
 
-        return ci_Citation;
-    }
 
 
 
@@ -154,16 +221,7 @@ public class XMLGenerator {
         return ci_citation;
     }
 
-    private Element getOnlineResource(Element onlineResouce, String altUrlVal) {
-        Element ciOnline = doc.createGMDElement("CI_OnlineResource");
-        Element linkage = doc.createGMDElement("linkage");
-        Element url = doc.createGMDElement("URL");
-        url.setNodeValue(altUrlVal);
-        linkage.appendChild(url);
-        ciOnline.appendChild(linkage);
-        onlineResouce.appendChild(ciOnline);
-        return onlineResouce;
-    }
+
 
     private Element roleCode(String val){
         Element role = doc.createGMDElement("role");
@@ -182,7 +240,7 @@ public class XMLGenerator {
         Element descriptiveK = doc.createGMDElement("descriptiveKeywords");
         for(String s: keywords){
             Element keyword = doc.createGMDElement("keyword");
-            Element charString = doc.addVal(s,CHARACTER);
+            Element charString = doc.addGCOVal(s,CHARACTER);
             keyword.appendChild(charString);
             descriptiveK.appendChild(keyword);
         }

@@ -3,6 +3,7 @@ package Dataverse;
 import BaseFiles.GeoLogger;
 import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
 import Dataverse.FindingBoundingBoxes.Geonames;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
@@ -43,6 +44,7 @@ public class DataverseJavaObject extends SourceJavaObject {
         }
         hasContent=true;
         geoFields = new GeographicFields(this);
+        socialFields = new SocialFields(citationFields.getDOI());
     }
 
     /**

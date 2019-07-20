@@ -4,6 +4,7 @@ import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,6 +16,7 @@ import java.util.List;
 public abstract class SourceJavaObject {
     protected CitationFields citationFields;
     protected GeographicFields geoFields;
+    protected SocialFields socialFields;
     protected List<DataverseRecordFile> dataFiles; //Stores the datafiles
     protected String server;
     protected boolean hasContent;
@@ -134,5 +136,9 @@ public abstract class SourceJavaObject {
 
     public boolean hasContent(){
         return hasContent;
+    }
+
+    public SocialFields getSocialFields(){
+        return socialFields;
     }
 }
