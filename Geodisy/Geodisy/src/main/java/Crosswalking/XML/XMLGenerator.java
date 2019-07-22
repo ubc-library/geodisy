@@ -21,7 +21,7 @@ public class XMLGenerator {
     DataverseJavaObject djo;
     CitationFields citationFields;
     GeographicFields geographicFields;
-    SimpleCitationFields simpleCitationFields;
+    SimpleCitationFields simple;
     XMLDocument doc;
 
     //TODO write catch block
@@ -29,22 +29,22 @@ public class XMLGenerator {
         this.djo = djo;
         this.citationFields = djo.getCitationFields();
         this.geographicFields=djo.getGeoFields();
-        this.simpleCitationFields = citationFields.getSimpleCitationFields();
+        this.simple = citationFields.getSimpleCitationFields();
     }
 
     //TODO keep working on this
     public Document generateXMLFile(){
         Element rootElement = getRoot();
-        rootElement.appendChild(createIdentificationInfo());
-        SimpleCitationFields simple = djo.getSimpleFields();
+        rootElement.appendChild(createIdentificationInfo(rootElement));
         if(simple.hasField(ACCESS_TO_SOURCES)||simple.hasField(ORIG_OF_SOURCES)||simple.hasField(CHAR_OF_SOURCES)||simple.hasField(DATA_SOURCE))
             rootElement.appendChild(createDataQualityInfo(simple));
         CitationFields cf = djo.getCitationFields();
         LinkedList<Distributor> distributors = (LinkedList) cf.getListField(DISTRIB);
-        if(distributors.size()>0||simpleCitationFields.hasField(DEPOSITOR))
-            rootElement.appendChild(getDistribInfo(distributors));
+        if(distributors.size()>0||simple.hasField(DEPOSITOR)) {
+            DistributionInfo distribInfo = new DistributionInfo(djo,doc,rootElement,simple, distributors);
+            rootElement.appendChild(distribInfo.getDistribInfo());
+        }
         IdentificationInfo ii =  new IdentificationInfo(djo, doc, rootElement);
-
         rootElement = ii.generateIdentInfo();
 
 
@@ -53,85 +53,7 @@ public class XMLGenerator {
         return doc.getDoc();
     }
 
-    private Element getDistribInfo(List<Distributor> distributors) {
-        Element temp;
-        String tempString;
-        Element root = doc.createGMDElement("distributionInfo");
-        Element levelA = doc.createGMDElement("MD_Distribution");
-        for (Distributor d : distributors) {
-            Element levelB = doc.createGMDElement("distributor");
-            Element levelC = doc.createGMDElement("MD_Distributor");
-            Element levelD = doc.createGMDElement("distributorContact");
-            Element levelE = doc.createGMDElement("CI_Responsibility");
-            Element levelF = doc.createGMDElement("party");
-            Element levelG = doc.createGMDElement("CI_Organization");
-            tempString = d.getDistributorName();
-            if(!d.getDistributorName().isEmpty()) {
-                temp = doc.createGMDElement("name");
-                temp.appendChild(doc.addGCOVal(tempString,CHARACTER));
-                levelG.appendChild(temp);
-            }
-            tempString = d.getDistributorAffiliation();
-            if(!d.getDistributorName().isEmpty()) {
-                temp = doc.createGMDElement("name");
-                temp.appendChild(doc.addGCOVal(tempString,CHARACTER));
-                levelG.appendChild(temp);
-            }
-            if(!d.getDistributorLogoURL().isEmpty()||!d.getDistributorURL().isEmpty()){
-                if(!d.getDistributorURL().isEmpty()) {
-                    doc.stackElement(doc.createGMDElement("contactInfo"));
-                    doc.stackElement(doc.createGMDElement("CI_Contact"));
-                    doc.stackElement(doc.createGMDElement("onlineResource"));
-                    doc.stackElement(doc.createGMDElement("CI_OnlineResource"));
-                    doc.stackElement(doc.createGMDElement("linkage"));
-                    doc.stackElement(doc.addGCOVal(d.getDistributorURL(),CHARACTER));
-                    levelG.appendChild(doc.zip());
-                }
-                if(!d.getDistributorLogoURL().isEmpty()){
-                    doc.stackElement(doc.createGMDElement("logo"));
-                    doc.stackElement(doc.createGMDElement("MD_BrowseGraphic"));
-                    doc.stackElement(doc.createGMDElement("linkage"));
-                    doc.stackElement(doc.addGCOVal(d.getDistributorLogoURL(),CHARACTER));
-                    levelG.appendChild(doc.zip());
-                }
-            }
-            levelF.appendChild(levelG);
-            levelE.appendChild(levelF);
-            Element levelRoleCode = doc.create_Element("role");
-            levelRoleCode.appendChild(doc.addRoleCode("distributor"));
-            levelE.appendChild(levelRoleCode);
 
-            levelD.appendChild(levelE);
-            levelC.appendChild(levelD);
-            levelB.appendChild(levelC);
-            levelA.appendChild(levelB);
-        }
-        if(simpleCitationFields.hasField(DEPOSITOR))
-            levelA.appendChild(getDepositor(simpleCitationFields.getField(DEPOSITOR)));
-        root.appendChild(levelA);
-        return root;
-    }
-
-    private Element getDepositor(String depositorName) {
-        Element levelB = doc.createGMDElement("distributor");
-        Element levelC = doc.createGMDElement("MD_Distributor");
-        Element levelD = doc.createGMDElement("distributorContact");
-        Element levelE = doc.createGMDElement("CI_Responsibility");
-        Element levelF = doc.createGMDElement("party");
-        Element levelG = doc.createGMDElement("CI_Organization");
-        Element levelH = doc.createGMDElement("name");
-        levelH.appendChild(doc.addGCOVal(depositorName,CHARACTER));
-        levelG.appendChild(levelH);
-        levelF.appendChild(levelG);
-        levelE.appendChild(levelF);
-        Element levelRoleCode = doc.create_Element("role");
-        levelRoleCode.appendChild(doc.addRoleCode("distributor"));
-        levelE.appendChild(levelRoleCode);
-        levelD.appendChild(levelE);
-        levelC.appendChild(levelD);
-        levelB.appendChild(levelC);
-        return levelB;
-    }
 
     private Element getRoot() {
         // root element
@@ -149,12 +71,12 @@ public class XMLGenerator {
     private Element createDataQualityInfo(SimpleCitationFields simple){
         Element temp;
         Element root = doc.createGMDElement("dataQualityInfo");
-        Element levelA = doc.createGMDElement("DQ_DataQuality");
-        Element levelB = doc.createGMDElement("scope");
-        Element levelC = doc.createGMDElement("resourceLineage");
-        Element levelD = doc.createGMDElement("LI_Lineage");
+        Element levelK = doc.createGMDElement("DQ_DataQuality");
+        Element levelL = doc.createGMDElement("scope");
+        Element levelM = doc.createGMDElement("resourceLineage");
+        Element levelN = doc.createGMDElement("LI_Lineage");
         if(simple.hasField(DATA_SOURCE))
-            levelD.appendChild(doc.addGCOVal("statement",CHARACTER));
+            levelN.appendChild(doc.addGCOVal("statement",CHARACTER));
         if(simple.hasField(ORIG_OF_SOURCES)) {
             doc.stackElement(doc.createGMDElement("processStep"));
             doc.stackElement(doc.createGMDElement("LI_ProcessStep"));
@@ -162,7 +84,7 @@ public class XMLGenerator {
             doc.stackElement(doc.addGCOVal(simple.getField(ORIG_OF_SOURCES), CHARACTER));
             temp = doc.stack.zip();
             if (!temp.getTagName().equals("__no elements__"))
-                levelD.appendChild(temp);
+                levelN.appendChild(temp);
         }
         if(simple.hasField(CHAR_OF_SOURCES)) {
             doc.stackElement(doc.createGMDElement("source"));
@@ -171,7 +93,7 @@ public class XMLGenerator {
             doc.stackElement(doc.addGCOVal(simple.getField(CHAR_OF_SOURCES), CHARACTER));
             temp = doc.stack.zip();
             if (!temp.getTagName().equals("__no elements__"))
-                levelD.appendChild(temp);
+                levelN.appendChild(temp);
         }
         if(simple.hasField(ACCESS_TO_SOURCES)){
             doc.stackElement(doc.createGMDElement("additionalDocumentation"));
@@ -180,35 +102,20 @@ public class XMLGenerator {
             doc.stackElement(doc.addGCOVal(simple.getField(ACCESS_TO_SOURCES), CHARACTER));
             temp = doc.stack.zip();
             if (!temp.getTagName().equals("__no elements__"))
-                levelD.appendChild(temp);
+                levelN.appendChild(temp);
         }
-        levelC.appendChild(levelD);
-        levelB.appendChild(levelC);
-        levelA.appendChild(levelB);
-        root.appendChild(levelA);
+        levelM.appendChild(levelN);
+        levelL.appendChild(levelM);
+        levelK.appendChild(levelL);
+        root.appendChild(levelK);
         return root;
     }
 
-    private Element createIdentificationInfo(){
-        Element identInfo = doc.createGMDElement("identificationInfo");
-        identInfo.appendChild(getMDIdent());
-        return identInfo;
+    private Element createIdentificationInfo(Element root){
+        IdentificationInfo ident = new IdentificationInfo(djo, doc, root);
+        root = ident.generateIdentInfo();
+        return root;
     }
-    //TODO add sections for other sublevels of MD_DataIdentification
-    private Element getMDIdent() {
-        Element md_DataIdent = doc.createGMDElement("MD_DataIdentification");
-        if(!simpleCitationFields.getField(TITLE).isEmpty())
-        {
-            Element citation = doc.createGMDElement("citation");
-            Element ci_Citation = doc.createGMDElement("CI_Citation");
-            citation.appendChild(getCI_Citation(ci_Citation));
-            md_DataIdent.appendChild(citation);
-        }
-
-        return md_DataIdent;
-    }
-
-
 
 
 

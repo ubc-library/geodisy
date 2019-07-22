@@ -5,9 +5,8 @@ import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Simpl
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
 import Dataverse.DataverseJavaObject;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
+
 
 import java.util.LinkedList;
 
@@ -15,7 +14,7 @@ import static BaseFiles.GeodisyStrings.CHARACTER;
 import static Dataverse.DVFieldNameStrings.*;
 import static Dataverse.DVFieldNameStrings.SOFTWARE;
 
-public class IdentificationInfo {
+public class IdentificationInfo extends SubElement{
     LinkedList<OtherID> otherIds;
     LinkedList<Author> authors;
     LinkedList<DatasetContact> datasetContacts;
@@ -43,9 +42,7 @@ public class IdentificationInfo {
     String noteText, language, distDate;
 
     public IdentificationInfo(DataverseJavaObject djo, XMLDocument doc, Element root) {
-        this.djo = djo;
-        this.doc = doc;
-        this.root = root;
+        super(djo,doc,root);
         cf = djo.getCitationFields();
         scf = djo.getSimpleFields();
         gf = djo.getGeoFields();
@@ -73,14 +70,23 @@ public class IdentificationInfo {
     public Element generateIdentInfo() {
         if(empty())
             return root;
-        Element levelA = doc.createGMDElement("identificationInfo");
-        Element levelB = doc.createGMDElement("DataIdentification");
-        Element levelC1 = getCitation();
-        levelC1 = getOtherIds(levelC1);
+        Element levelK = doc.createGMDElement("identificationInfo");
+        Element levelL = doc.createGMDElement("DataIdentification");
+        Element levelM = doc.createGMDElement("citation");
+        levelM.appendChild(getCitation());
+        levelL.appendChild(levelM);
+        levelM = doc.createGMDElement("pointOfContact");
+        levelM.appendChild(getPointOfContact());
+        levelM1 = getOtherIds(levelM1);
 
         
-        Element levelC = doc.createGMDElement("citation");
-        Element levelD = doc.createGMDElement("CI_Citation")
+
+        Element levelN = doc.createGMDElement("CI_Citation");
+
+
+        //TODO finish fleshing out
+        root.appendChild(levelK);
+        return root;
     }
 
     private Element getCitation() {
@@ -98,17 +104,12 @@ public class IdentificationInfo {
             Element altURL = doc.createGMDElement("onlineResource");
             altURL = getOnlineResource(altURL,altUrlVal);
             ci_Citation.appendChild(altURL);
+            ci_Citation = getOtherIds(ci_Citation);
+            ci_Citation = getAuthor(ci_Citation);
         }
         return ci_Citation;
     }
-    //Creates the label and value elements of a parent and returns the parent
-    private Element setValChild(Element parent, String title, String val, String valType) {
-        Element subTitle = doc.createGMDElement(title);
-        subTitle.appendChild(doc.addGCOVal(val, valType));
-        parent.appendChild(subTitle);
 
-        return parent;
-    }
 
     private Element getOnlineResource(Element onlineResouce, String altUrlVal) {
         Element ciOnline = doc.createGMDElement("CI_OnlineResource");
@@ -123,6 +124,9 @@ public class IdentificationInfo {
 
     //TODO
     private Element getOtherIds(Element ci_Citation) {
+        Element id = doc.createGMDElement("identifier");
+        Element md_Identifier =  doc.createGMDElement("MD_Identifier");
+
         
     }
 
