@@ -44,8 +44,6 @@ public class XMLGenerator {
             DistributionInfo distribInfo = new DistributionInfo(djo,doc,rootElement,simple, distributors);
             rootElement.appendChild(distribInfo.getDistribInfo());
         }
-        IdentificationInfo ii =  new IdentificationInfo(djo, doc, rootElement);
-        rootElement = ii.generateIdentInfo();
 
 
 
