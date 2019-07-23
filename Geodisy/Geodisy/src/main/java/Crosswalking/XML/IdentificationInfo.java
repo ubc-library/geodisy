@@ -69,21 +69,20 @@ public class IdentificationInfo extends SubElement{
     }
 
     public Element generateIdentInfo() {
-        Element levelK = doc.createGMDElement("identificationInfo");
-        Element levelL = doc.createGMDElement("DataIdentification");
-        Element levelM = doc.createGMDElement("citation");
-        levelM.appendChild(getCitation());
-        levelL.appendChild(levelM);
-        if(djo.getCitationFields().getOtherIDs().size()>0)
-            levelL.appendChild(getOtherIds());
+        Element levelI = doc.createGMDElement("identificationInfo");
+        Element levelJ = doc.createGMDElement("DataIdentification");
+
+        levelJ.appendChild(getCitation());
+        if(datasetContacts.size()>0)
+            levelJ.appendChild(getPointOfContact());
         
 
 
 
 
         //TODO finish fleshing out
-        levelK.appendChild(levelL);
-        root.appendChild(levelK);
+        levelI.appendChild(levelJ);
+        root.appendChild(levelI);
         return root;
     }
 
@@ -143,8 +142,10 @@ public class IdentificationInfo extends SubElement{
     }
 
     private Element getCitation() {
+        Element levelK = doc.createGMDElement("citation");
         Element levelL = doc.createGMDElement("CI_Citation");
         String subtitleVal = sf.getField(SUBTITLE);
+        levelL.appendChild(getSystemGeneratedFields());
         String title = sf.getField(TITLE);
         //Title
         if(!subtitleVal.isEmpty())
@@ -167,8 +168,14 @@ public class IdentificationInfo extends SubElement{
         //AUTHORs
         if(!authors.isEmpty())
             levelL.appendChild(getAuthor());
+        levelK.appendChild(levelL);
+        return levelK;
+    }
 
-        return levelL;
+    private Element getSystemGeneratedFields() {
+        //TODO get Dataset Publisher, Publication Date, Version, Version Date
+
+        return null;
     }
 
     private Element getAuthor() {

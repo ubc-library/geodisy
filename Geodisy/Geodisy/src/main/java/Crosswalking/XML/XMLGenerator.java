@@ -36,8 +36,10 @@ public class XMLGenerator {
     public Document generateXMLFile(){
         Element rootElement = getRoot();
         rootElement.appendChild(createIdentificationInfo(rootElement));
-        if(simple.hasField(ACCESS_TO_SOURCES)||simple.hasField(ORIG_OF_SOURCES)||simple.hasField(CHAR_OF_SOURCES)||simple.hasField(DATA_SOURCE))
-            rootElement.appendChild(createDataQualityInfo(simple));
+        if(simple.hasField(ACCESS_TO_SOURCES)||simple.hasField(ORIG_OF_SOURCES)||simple.hasField(CHAR_OF_SOURCES)||citationFields.getListField(DATA_SOURCE).size()>0) {
+            DataQualityInfo dqi = new DataQualityInfo(djo, doc, rootElement);
+            rootElement.appendChild(dqi.getDataQualityInfo(simple, citationFields));
+        }
         CitationFields cf = djo.getCitationFields();
         LinkedList<Distributor> distributors = (LinkedList) cf.getListField(DISTRIB);
         if(distributors.size()>0||simple.hasField(DEPOSITOR)) {
@@ -47,7 +49,8 @@ public class XMLGenerator {
 
 
 
-        if(otherIds.size()>0)
+        //TODO check the following line. I think dealing with other IDs happens elsewhere.
+        //if(otherIds.size()>0)
         return doc.getDoc();
     }
 
@@ -66,48 +69,6 @@ public class XMLGenerator {
         return rootElement;
     }
 
-    private Element createDataQualityInfo(SimpleCitationFields simple){
-        Element temp;
-        Element root = doc.createGMDElement("dataQualityInfo");
-        Element levelK = doc.createGMDElement("DQ_DataQuality");
-        Element levelL = doc.createGMDElement("scope");
-        Element levelM = doc.createGMDElement("resourceLineage");
-        Element levelN = doc.createGMDElement("LI_Lineage");
-        if(simple.hasField(DATA_SOURCE))
-            levelN.appendChild(doc.addGCOVal("statement",CHARACTER));
-        if(simple.hasField(ORIG_OF_SOURCES)) {
-            doc.stackElement(doc.createGMDElement("processStep"));
-            doc.stackElement(doc.createGMDElement("LI_ProcessStep"));
-            doc.stackElement(doc.createGMDElement("description"));
-            doc.stackElement(doc.addGCOVal(simple.getField(ORIG_OF_SOURCES), CHARACTER));
-            temp = doc.stack.zip();
-            if (!temp.getTagName().equals("__no elements__"))
-                levelN.appendChild(temp);
-        }
-        if(simple.hasField(CHAR_OF_SOURCES)) {
-            doc.stackElement(doc.createGMDElement("source"));
-            doc.stackElement(doc.createGMDElement("LI_Source"));
-            doc.stackElement(doc.createGMDElement("description"));
-            doc.stackElement(doc.addGCOVal(simple.getField(CHAR_OF_SOURCES), CHARACTER));
-            temp = doc.stack.zip();
-            if (!temp.getTagName().equals("__no elements__"))
-                levelN.appendChild(temp);
-        }
-        if(simple.hasField(ACCESS_TO_SOURCES)){
-            doc.stackElement(doc.createGMDElement("additionalDocumentation"));
-            doc.stackElement(doc.createGMDElement("processStep"));
-            doc.stackElement(doc.createGMDElement("otherCitationDetails"));
-            doc.stackElement(doc.addGCOVal(simple.getField(ACCESS_TO_SOURCES), CHARACTER));
-            temp = doc.stack.zip();
-            if (!temp.getTagName().equals("__no elements__"))
-                levelN.appendChild(temp);
-        }
-        levelM.appendChild(levelN);
-        levelL.appendChild(levelM);
-        levelK.appendChild(levelL);
-        root.appendChild(levelK);
-        return root;
-    }
 
     private Element createIdentificationInfo(Element root){
         IdentificationInfo ident = new IdentificationInfo(djo, doc, root);
