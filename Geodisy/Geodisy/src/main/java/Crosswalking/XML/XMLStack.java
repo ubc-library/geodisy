@@ -1,16 +1,13 @@
 package Crosswalking.XML;
 
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.util.Stack;
 
 public class XMLStack{
     Stack<Element> stack;
-    XMLDocument doc;
 
-    public XMLStack(XMLDocument doc) {
-        this.doc = doc;
+    public XMLStack() {
         stack = new Stack<>();
     }
 

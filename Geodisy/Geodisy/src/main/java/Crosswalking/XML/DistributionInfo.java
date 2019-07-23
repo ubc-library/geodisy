@@ -3,7 +3,6 @@ package Crosswalking.XML;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Distributor;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJavaObject;
-import org.json.XML;
 import org.w3c.dom.Element;
 import java.util.LinkedList;
 
@@ -23,7 +22,7 @@ public class DistributionInfo extends SubElement {
     public Element getFields() {
         Element temp;
         String tempString;
-        XMLStack outterStack = new XMLStack(doc);
+        XMLStack outterStack = new XMLStack();
         Element levelI = doc.createGMDElement("distributionInfo");
         Element levelJ = doc.createGMDElement("MD_Distribution");
         Element levelK = doc.createGMDElement("distributor");
@@ -50,7 +49,7 @@ public class DistributionInfo extends SubElement {
                 levelP.appendChild(temp);
             }
             if (!d.getDistributorLogoURL().isEmpty() || !d.getDistributorURL().isEmpty()) {
-                XMLStack stack = new XMLStack(doc);
+                XMLStack stack = new XMLStack();
                 if (!d.getDistributorURL().isEmpty()) {
                     stack.push(levelP);
                     stack = doc.createGMDElement("contactInfo", stack);
@@ -80,7 +79,7 @@ public class DistributionInfo extends SubElement {
     }
 
     private Element getDepositor(String depositorName) {
-        XMLStack stack = new XMLStack(doc);
+        XMLStack stack = new XMLStack();
         stack = doc.createGMDElement("CI_Responsibility", stack);
         stack = doc.createGMDElement("party", stack);
         stack = doc.createGMDElement("CI_Organization", stack);

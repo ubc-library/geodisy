@@ -13,19 +13,17 @@ import javax.xml.parsers.ParserConfigurationException;
  */
 public class XMLDocument {
     Document doc;
-    XMLStack stack;
+
 
     public XMLDocument() {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder docBuilder = null;
-            docBuilder = docFactory.newDocumentBuilder();
-
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             doc = docBuilder.newDocument();
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
-        stack = new XMLStack(this);
+
     }
 
     public Document getDoc(){
@@ -79,11 +77,4 @@ public class XMLDocument {
         return val;
     }
 
-    public void stackElement(Element e){
-        stack.push(e);
-    }
-    //return the bottom element of the stack, which each higher up stack element being assigned as a child of the element below it
-    public Element zip(Element e){
-        return stack.zip(e);
-    }
 }
