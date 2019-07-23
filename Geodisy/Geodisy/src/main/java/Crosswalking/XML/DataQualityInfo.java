@@ -16,7 +16,9 @@ public class DataQualityInfo extends SubElement {
         super(djo, doc, root);
     }
 
-    public Element getDataQualityInfo(SimpleCitationFields simple, CitationFields cf){
+    public Element getFields(){
+        SimpleCitationFields simple = djo.getSimpleFields();
+        CitationFields cf = djo.getCitationFields();
         Element temp;
         Element levelI = doc.createGMDElement("dataQualityInfo");
         Element levelJ = doc.createGMDElement("DQ_DataQuality");

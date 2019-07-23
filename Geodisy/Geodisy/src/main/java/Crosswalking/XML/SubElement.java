@@ -13,7 +13,7 @@ public abstract class SubElement {
         this.djo = djo;
         this.root = root;
     }
-
+    public abstract Element getFields();
     //Creates the label and value elements of a parent and returns the parent
     protected Element setValChild(Element parent, String title, String val, String valType) {
         Element subTitle = doc.createGMDElement(title);

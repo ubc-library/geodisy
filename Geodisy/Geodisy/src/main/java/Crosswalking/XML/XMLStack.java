@@ -1,26 +1,28 @@
 package Crosswalking.XML;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.util.Stack;
 
-public class XMLStack extends ElementOrStack {
-    Stack<ElementOrStack> stack;
+public class XMLStack{
+    Stack<Element> stack;
+    XMLDocument doc;
 
     public XMLStack(XMLDocument doc) {
-        super(doc);
+        this.doc = doc;
         stack = new Stack<>();
     }
 
-    public ElementOrStack pop(){
+    public Element pop(){
         return stack.pop();
     }
 
-    public void push(ElementOrStack e){
+    public void push(Element e){
         stack.push(e);
     }
 
-    public ElementOrStack peek(){
+    public Element peek(){
         return stack.peek();
     }
 
@@ -28,17 +30,13 @@ public class XMLStack extends ElementOrStack {
         return stack.isEmpty();
     }
 
-    public Element zip(){
-        if(stack.peek().getClass().isInstance(XMLStack.class))
-            return doc.create_Element("__no elements__");
-        XMLElement temp = (XMLElement) stack.pop();
-        Element e = temp.getElement();
-        while(stack.peek().getClass().isInstance(XMLElement.class)){
-            XMLElement parent = (XMLElement) stack.pop();
-            Element parentE = parent.getElement();
-            parentE.appendChild(e);
-            e = parentE;
+    public Element zip(Element child) {
+        Element parent;
+        while (!stack.empty()) {
+            parent = stack.pop();
+            parent.appendChild(child);
+            child = parent;
         }
-        return e;
+        return child;
     }
 }

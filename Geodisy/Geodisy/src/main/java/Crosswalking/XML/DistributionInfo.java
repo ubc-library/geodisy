@@ -3,6 +3,7 @@ package Crosswalking.XML;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Distributor;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJavaObject;
+import org.json.XML;
 import org.w3c.dom.Element;
 import java.util.LinkedList;
 
@@ -18,14 +19,19 @@ public class DistributionInfo extends SubElement {
         this.simple = simple;
         this.distributors = distributors;
     }
-
-    public Element getDistribInfo() {
+    @Override
+    public Element getFields() {
         Element temp;
         String tempString;
-        Element root = doc.createGMDElement("distributionInfo");
+        XMLStack outterStack = new XMLStack(doc);
+        Element levelI = doc.createGMDElement("distributionInfo");
         Element levelJ = doc.createGMDElement("MD_Distribution");
         Element levelK = doc.createGMDElement("distributor");
         Element levelL = doc.createGMDElement("MD_Distributor");
+        outterStack.push(levelI);
+        outterStack.push(levelJ);
+        outterStack.push(levelK);
+        outterStack.push(levelL);
         Element levelM = doc.createGMDElement("distributorContact");
         Element levelN = doc.createGMDElement("CI_Responsibility");
         Element levelO = doc.createGMDElement("party");
@@ -44,21 +50,22 @@ public class DistributionInfo extends SubElement {
                 levelP.appendChild(temp);
             }
             if (!d.getDistributorLogoURL().isEmpty() || !d.getDistributorURL().isEmpty()) {
+                XMLStack stack = new XMLStack(doc);
                 if (!d.getDistributorURL().isEmpty()) {
-                    doc.stackElement(doc.createGMDElement("contactInfo"));
-                    doc.stackElement(doc.createGMDElement("CI_Contact"));
-                    doc.stackElement(doc.createGMDElement("onlineResource"));
-                    doc.stackElement(doc.createGMDElement("CI_OnlineResource"));
-                    doc.stackElement(doc.createGMDElement("linkage"));
-                    doc.stackElement(doc.addGCOVal(d.getDistributorURL(), CHARACTER));
-                    levelP.appendChild(doc.zip());
+                    stack.push(levelP);
+                    stack = doc.createGMDElement("contactInfo", stack);
+                    stack = doc.createGMDElement("CI_Contact", stack);
+                    stack = doc.createGMDElement("onlineResource", stack);
+                    stack = doc.createGMDElement("CI_OnlineResource", stack);
+                    stack = doc.createGMDElement("linkage", stack);
+                    levelP = stack.zip(doc.addGCOVal(d.getDistributorURL(), CHARACTER));
                 }
                 if (!d.getDistributorLogoURL().isEmpty()) {
-                    doc.stackElement(doc.createGMDElement("logo"));
-                    doc.stackElement(doc.createGMDElement("MD_BrowseGraphic"));
-                    doc.stackElement(doc.createGMDElement("linkage"));
-                    doc.stackElement(doc.addGCOVal(d.getDistributorLogoURL(), CHARACTER));
-                    levelP.appendChild(doc.zip());
+                    stack.push(levelP);
+                    stack = doc.createGMDElement("logo", stack);
+                    stack = doc.createGMDElement("MD_BrowseGraphic", stack);
+                    stack = doc.createGMDElement("linkage", stack);
+                    levelP = stack.zip(doc.addGCOVal(d.getDistributorLogoURL(), CHARACTER));
                 }
             }
             levelO.appendChild(levelP);
@@ -68,23 +75,17 @@ public class DistributionInfo extends SubElement {
         levelM.appendChild(levelN);
         if(simple.hasField(DEPOSITOR))
             levelM.appendChild(getDepositor(simple.getField(DEPOSITOR)));
-        levelL.appendChild(levelM);
-        levelK.appendChild(levelL);
-        levelJ.appendChild(levelK);
-        root.appendChild(levelJ);
-        return root;
+        levelI = outterStack.zip(levelM);
+        return levelI;
     }
 
     private Element getDepositor(String depositorName) {
-
-        Element levelN = doc.createGMDElement("CI_Responsibility");
-        Element levelO = doc.createGMDElement("party");
-        Element levelP = doc.createGMDElement("CI_Organization");
-        Element levelQ = doc.createGMDElement("name");
-        levelQ.appendChild(doc.addGCOVal(depositorName,CHARACTER));
-        levelP.appendChild(levelQ);
-        levelO.appendChild(levelP);
-        levelN.appendChild(levelO);
+        XMLStack stack = new XMLStack(doc);
+        stack = doc.createGMDElement("CI_Responsibility", stack);
+        stack = doc.createGMDElement("party", stack);
+        stack = doc.createGMDElement("CI_Organization", stack);
+        stack = doc.createGMDElement("name", stack);
+        Element levelN = stack.zip(doc.addGCOVal(depositorName,CHARACTER));
         levelN.appendChild(levelRoleCode("originator"));
         return levelN;
     }

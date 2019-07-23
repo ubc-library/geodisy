@@ -7,11 +7,8 @@ import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.G
 import Dataverse.DataverseJavaObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import sun.awt.image.ImageWatched;
 
 import java.util.LinkedList;
-import java.util.List;
 
 import static BaseFiles.GeodisyStrings.CHARACTER;
 import static BaseFiles.GeodisyStrings.XMLNS;
@@ -35,16 +32,17 @@ public class XMLGenerator {
     //TODO keep working on this
     public Document generateXMLFile(){
         Element rootElement = getRoot();
-        rootElement.appendChild(createIdentificationInfo(rootElement));
+        IdentificationInfo ident = new IdentificationInfo(djo, doc, rootElement);
+        rootElement.appendChild(ident.getFields());
         if(simple.hasField(ACCESS_TO_SOURCES)||simple.hasField(ORIG_OF_SOURCES)||simple.hasField(CHAR_OF_SOURCES)||citationFields.getListField(DATA_SOURCE).size()>0) {
             DataQualityInfo dqi = new DataQualityInfo(djo, doc, rootElement);
-            rootElement.appendChild(dqi.getDataQualityInfo(simple, citationFields));
+            rootElement.appendChild(dqi.getFields());
         }
         CitationFields cf = djo.getCitationFields();
         LinkedList<Distributor> distributors = (LinkedList) cf.getListField(DISTRIB);
         if(distributors.size()>0||simple.hasField(DEPOSITOR)) {
-            DistributionInfo distribInfo = new DistributionInfo(djo,doc,rootElement,simple, distributors);
-            rootElement.appendChild(distribInfo.getDistribInfo());
+            DistributionInfo distribution = new DistributionInfo(djo,doc,rootElement,simple, distributors);
+            rootElement.appendChild(distribution.getFields());
         }
 
 
@@ -72,7 +70,7 @@ public class XMLGenerator {
 
     private Element createIdentificationInfo(Element root){
         IdentificationInfo ident = new IdentificationInfo(djo, doc, root);
-        root = ident.generateIdentInfo();
+        root = ident.getFields();
         return root;
     }
 

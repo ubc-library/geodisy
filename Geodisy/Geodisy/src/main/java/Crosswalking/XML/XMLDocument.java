@@ -35,9 +35,17 @@ public class XMLDocument {
     public Element createGMDElement(String s){
         return doc.createElement(addGMD(s));
     }
+    public XMLStack createGMDElement(String s, XMLStack stack){
+        stack.push(doc.createElement(addGMD(s)));
+        return stack;
+    }
 
     public Element createGCOElement(String s){
         return doc.createElement(addGCO(s));
+    }
+    public XMLStack creatGCOElement(String s, XMLStack stack){
+        stack.push(doc.createElement(addGCO(s)));
+        return stack;
     }
     public Element create_Element(String s){
         return doc.createElement(s);
@@ -72,11 +80,10 @@ public class XMLDocument {
     }
 
     public void stackElement(Element e){
-        XMLElement x = new XMLElement(this,e);
-        stack.push(x);
+        stack.push(e);
     }
     //return the bottom element of the stack, which each higher up stack element being assigned as a child of the element below it
-    public Element zip(){
-        return stack.zip();
+    public Element zip(Element e){
+        return stack.zip(e);
     }
 }
