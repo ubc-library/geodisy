@@ -19,7 +19,6 @@ public class DataQualityInfo extends SubElement {
     public Element getFields(){
         SimpleCitationFields simple = djo.getSimpleFields();
         CitationFields cf = djo.getCitationFields();
-        Element temp;
         Element levelI = doc.createGMDElement("dataQualityInfo");
         Element levelJ = doc.createGMDElement("DQ_DataQuality");
         Element levelK = doc.createGMDElement("scope");
@@ -34,31 +33,30 @@ public class DataQualityInfo extends SubElement {
             }
         }
         if(!simple.getField(ORIG_OF_SOURCES).isEmpty()) {
-            doc.stackElement(doc.createGMDElement("processStep"));
-            doc.stackElement(doc.createGMDElement("LI_ProcessStep"));
-            doc.stackElement(doc.createGMDElement("description"));
-            doc.stackElement(doc.addGCOVal(simple.getField(ORIG_OF_SOURCES), CHARACTER));
-            temp = doc.stack.zip();
-            if (!temp.getTagName().equals("__no elements__"))
-                levelM.appendChild(temp);
+            XMLStack stack = new XMLStack();
+            stack.push(levelM);
+            stack.push(doc.createGMDElement("processStep")); //N
+            stack.push(doc.createGMDElement("LI_ProcessStep")); //O
+            stack.push(doc.createGMDElement("description")); //P
+            levelM = stack.zip(doc.addGCOVal(simple.getField(ORIG_OF_SOURCES), CHARACTER));
         }
         if(!simple.getField(CHAR_OF_SOURCES).isEmpty()) {
-            doc.stackElement(doc.createGMDElement("source"));
-            doc.stackElement(doc.createGMDElement("LI_Source"));
-            doc.stackElement(doc.createGMDElement("description"));
-            doc.stackElement(doc.addGCOVal(simple.getField(CHAR_OF_SOURCES), CHARACTER));
-            temp = doc.stack.zip();
-            if (!temp.getTagName().equals("__no elements__"))
-                levelM.appendChild(temp);
+            XMLStack stack = new XMLStack();
+            stack.push(levelM);
+            stack.push(doc.createGMDElement("source")); //N
+            stack.push(doc.createGMDElement("LI_Source")); //O
+            stack.push(doc.createGMDElement("description")); //P
+            levelM = stack.zip(doc.addGCOVal(simple.getField(CHAR_OF_SOURCES), CHARACTER));
+
         }
         if(!simple.getField(ACCESS_TO_SOURCES).isEmpty()){
-            doc.stackElement(doc.createGMDElement("additionalDocumentation"));
-            doc.stackElement(doc.createGMDElement("CI_Citation"));
-            doc.stackElement(doc.createGMDElement("otherCitationDetails"));
-            doc.stackElement(doc.addGCOVal(simple.getField(ACCESS_TO_SOURCES), CHARACTER));
-            temp = doc.stack.zip();
-            if (!temp.getTagName().equals("__no elements__"))
-                levelM.appendChild(temp);
+            XMLStack stack = new XMLStack();
+            stack.push(levelM);
+            stack.push(doc.createGMDElement("additionalDocumentation"));
+            stack.push(doc.createGMDElement("CI_Citation"));
+            stack.push(doc.createGMDElement("otherCitationDetails"));
+            levelM = stack.zip(doc.addGCOVal(simple.getField(ACCESS_TO_SOURCES), CHARACTER));
+
         }
         levelL.appendChild(levelM);
         levelK.appendChild(levelL);
