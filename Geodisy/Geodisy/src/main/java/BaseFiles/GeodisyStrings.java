@@ -28,6 +28,7 @@ public class GeodisyStrings {
     //XML value types
     public final static String CHARACTER = "CharacterString";
     public final static String DATE = "Date";
+    public final static String DATE_TIME = "DateTime";
     public final static String INTEGER = "Integer";
     public final static String BOOLEAN = "Boolean";
     public final static String DECIMAL = "Decimal";
