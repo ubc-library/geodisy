@@ -7,11 +7,13 @@ public abstract class SubElement {
     protected XMLDocument doc;
     protected DataverseJavaObject djo;
     protected Element root;
+    protected XMLStack stack;
 
     public SubElement(DataverseJavaObject djo, XMLDocument doc, Element root) {
         this.doc = doc;
         this.djo = djo;
         this.root = root;
+        stack = new XMLStack();
     }
     public abstract Element getFields();
     //Creates the label and value elements of a parent and returns the parent

@@ -33,7 +33,7 @@ public class DataQualityInfo extends SubElement {
             }
         }
         if(!simple.getField(ORIG_OF_SOURCES).isEmpty()) {
-            XMLStack stack = new XMLStack();
+            stack = new XMLStack();
             stack.push(levelM);
             stack.push(doc.createGMDElement("processStep")); //N
             stack.push(doc.createGMDElement("LI_ProcessStep")); //O
@@ -41,7 +41,7 @@ public class DataQualityInfo extends SubElement {
             levelM = stack.zip(doc.addGCOVal(simple.getField(ORIG_OF_SOURCES), CHARACTER));
         }
         if(!simple.getField(CHAR_OF_SOURCES).isEmpty()) {
-            XMLStack stack = new XMLStack();
+            stack = new XMLStack();
             stack.push(levelM);
             stack.push(doc.createGMDElement("source")); //N
             stack.push(doc.createGMDElement("LI_Source")); //O
@@ -50,7 +50,7 @@ public class DataQualityInfo extends SubElement {
 
         }
         if(!simple.getField(ACCESS_TO_SOURCES).isEmpty()){
-            XMLStack stack = new XMLStack();
+            stack = new XMLStack();
             stack.push(levelM);
             stack.push(doc.createGMDElement("additionalDocumentation"));
             stack.push(doc.createGMDElement("CI_Citation"));

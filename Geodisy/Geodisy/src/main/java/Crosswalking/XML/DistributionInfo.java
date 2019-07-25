@@ -38,18 +38,18 @@ public class DistributionInfo extends SubElement {
             Element levelP = doc.createGMDElement("CI_Organization");
             tempString = d.getDistributorName();
             if (!d.getDistributorName().isEmpty()) {
-                temp = doc.createGMDElement("name");
+                temp = doc.createGMDElement("name"); //Q
                 temp.appendChild(doc.addGCOVal(tempString, CHARACTER));
                 levelP.appendChild(temp);
             }
             tempString = d.getDistributorAffiliation();
             if (!d.getDistributorName().isEmpty()) {
-                temp = doc.createGMDElement("name");
+                temp = doc.createGMDElement("name"); //Q
                 temp.appendChild(doc.addGCOVal(tempString, CHARACTER));
                 levelP.appendChild(temp);
             }
             if (!d.getDistributorLogoURL().isEmpty() || !d.getDistributorURL().isEmpty()) {
-                XMLStack stack = new XMLStack();
+                stack = new XMLStack();
                 if (!d.getDistributorURL().isEmpty()) {
                     stack.push(levelP);
                     stack = doc.createGMDElement("contactInfo", stack);
@@ -79,7 +79,7 @@ public class DistributionInfo extends SubElement {
     }
 
     private Element getDepositor(String depositorName) {
-        XMLStack stack = new XMLStack();
+        stack = new XMLStack();
         stack = doc.createGMDElement("CI_Responsibility", stack);
         stack = doc.createGMDElement("party", stack);
         stack = doc.createGMDElement("CI_Organization", stack);
