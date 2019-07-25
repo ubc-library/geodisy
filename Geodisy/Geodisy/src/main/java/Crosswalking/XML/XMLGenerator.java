@@ -27,21 +27,23 @@ public class XMLGenerator {
         this.citationFields = djo.getCitationFields();
         this.geographicFields=djo.getGeoFields();
         this.simple = citationFields.getSimpleCitationFields();
+        doc = new XMLDocument();
     }
 
     //TODO keep working on this
     public Document generateXMLFile(){
         Element rootElement = getRoot();
-        IdentificationInfo ident = new IdentificationInfo(djo, doc, rootElement);
+        doc.addRoot(rootElement);
+        SubElement ident = new IdentificationInfo(djo, doc, rootElement);
         rootElement.appendChild(ident.getFields());
-        if(simple.hasField(ACCESS_TO_SOURCES)||simple.hasField(ORIG_OF_SOURCES)||simple.hasField(CHAR_OF_SOURCES)||citationFields.getListField(DATA_SOURCE).size()>0) {
-            DataQualityInfo dqi = new DataQualityInfo(djo, doc, rootElement);
+        if(simple.hasField(ACCESS_TO_SOURCES)||simple.hasField(ORIG_OF_SOURCES)||simple.hasField(CHAR_OF_SOURCES)||citationFields.getListField(DATA_SOURCES).size()>0) {
+            SubElement dqi = new DataQualityInfo(djo, doc, rootElement);
             rootElement.appendChild(dqi.getFields());
         }
         CitationFields cf = djo.getCitationFields();
         LinkedList<Distributor> distributors = (LinkedList) cf.getListField(DISTRIB);
         if(distributors.size()>0||simple.hasField(DEPOSITOR)) {
-            DistributionInfo distribution = new DistributionInfo(djo,doc,rootElement,simple, distributors);
+            SubElement distribution = new DistributionInfo(djo,doc,rootElement,simple, distributors);
             rootElement.appendChild(distribution.getFields());
         }
 
@@ -67,12 +69,6 @@ public class XMLGenerator {
         return rootElement;
     }
 
-
-    private Element createIdentificationInfo(Element root){
-        IdentificationInfo ident = new IdentificationInfo(djo, doc, root);
-        root = ident.getFields();
-        return root;
-    }
 
 
 

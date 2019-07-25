@@ -51,7 +51,7 @@ public class Keyword extends CompoundJSONField {
             case KEYWORD_VOCAB:
                 setKeywordVocabulary(value);
                 break;
-            case KEYWORD_VOCAB_URL:
+            case KEYWORD_VOCAB_URI:
                 setKeywordVocabularyURL(value);
                 break;
             default:
@@ -66,7 +66,7 @@ public class Keyword extends CompoundJSONField {
                 return getKeywordValue();
             case KEYWORD_VOCAB:
                 return getKeywordVocabulary();
-            case KEYWORD_VOCAB_URL:
+            case KEYWORD_VOCAB_URI:
                 return getKeywordVocabularyURL();
             default:
                 errorGettingValue(this.getClass().getName(),title);

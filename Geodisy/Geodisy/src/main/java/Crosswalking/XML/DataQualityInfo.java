@@ -24,7 +24,7 @@ public class DataQualityInfo extends SubElement {
         Element levelK = doc.createGMDElement("scope");
         Element levelL = doc.createGMDElement("resourceLineage");
         Element levelM = doc.createGMDElement("LI_Lineage");
-        LinkedList<String> dataSources = (LinkedList) cf.getListField(DATA_SOURCE);
+        LinkedList<String> dataSources = (LinkedList) cf.getListField(DATA_SOURCES);
         if(dataSources.size()>0) {
             for(String s: dataSources) {
                 Element levelN =  doc.createGMDElement("statement");

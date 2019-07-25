@@ -59,22 +59,26 @@ public class XMLDocument {
     }
 
     //Adds the element at the lowest level of the hierarchy that holds the value
-    public Element addGCOVal(String altTitleVal, String label) {
+    public Element addGCOVal(String value, String label) {
         Element val = doc.createElement(addGCO(label));
-        val.setNodeValue(altTitleVal);
+        val.setTextContent(value);
         return val;
     }
 
-    public Element addGMDVal(String altTitleVal, String label) {
+    public Element addGMDVal(String value, String label) {
         Element val = doc.createElement(addGMD(label));
-        val.setNodeValue(altTitleVal);
+        val.setTextContent(value);
         return val;
     }
 
     public Element addRoleCode(String altTitleVal) {
         Element val = doc.createElement(addGMD("CI_RoleCode"));
-        val.setNodeValue(altTitleVal);
+        val.setTextContent(altTitleVal);
         return val;
+    }
+
+    public void addRoot(Element root){
+        doc.adoptNode(root);
     }
 
 }

@@ -30,5 +30,9 @@ public abstract class SubElement {
         levelRoleCode.appendChild(doc.addRoleCode(name));
         return levelRoleCode;
     }
+
+    public XMLDocument getDoc(){
+        return doc;
+    }
 }
 

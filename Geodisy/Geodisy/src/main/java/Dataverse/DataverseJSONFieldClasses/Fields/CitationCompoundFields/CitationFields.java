@@ -186,7 +186,7 @@ public class CitationFields extends MetadataType {
                 case SERIES:
                     series.parseCompoundData(jobj);
                     break;
-                case DATA_SOURCE:
+                case DATA_SOURCES:
                     setDataSources(getList(ja));
                     break;
                 case KIND_OF_DATA:
@@ -220,7 +220,7 @@ public class CitationFields extends MetadataType {
 
     public void setBaseFields(JSONObject current){
 
-        simpleCitationFields.setField(ALT_URL,parseSimpleValue( current,"persistentUrl"));
+        simpleCitationFields.setField(DOI,parseSimpleValue( current,"persistentUrl"));
         simpleCitationFields.setField(PUB_DATE, getValueDate(current,PUB_DATE));
         simpleCitationFields.setField(PUBLISHER, parseSimpleValue(current,PUBLISHER));
         current = getVersionSection(current);
@@ -295,7 +295,7 @@ public class CitationFields extends MetadataType {
                 return timePeriodsCovered;
             case SOFTWARE:
                 return softwares;
-            case DATA_SOURCE:
+            case DATA_SOURCES:
                 return dataSources;
             case KIND_OF_DATA:
                 return kindsOfData;
@@ -318,7 +318,7 @@ public class CitationFields extends MetadataType {
         }
     }
 
-    public CompoundJSONField getSeries(){
+    public Series getSeries(){
         return series;
     }
 

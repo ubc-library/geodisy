@@ -14,11 +14,12 @@ public class SimpleCitationFields extends JSONField {
      *  * Publication Date : String : Publication Date
      *  * OtherLocation ID : OtherID : otherID
      */
-    private String title, subtitle, alternativeTitle, alternativeURL, license,notesText,productionPlace,depositor, accessToSources, publisher,originOfSources, characteristicOfSources;
+    private String title, subtitle, alternativeTitle, alternativeURL, license,notesText,productionPlace,depositor, accessToSources, publisher,originOfSources, characteristicOfSources, doi;
     private Date productionDate,distributionDate,dateOfDeposit, publicationDate;
     private int versionMajor, versionMinor;
 
     public SimpleCitationFields() {
+        this.doi = "";
         this.title = "";
         this.subtitle = "";
         this.alternativeTitle = "";
@@ -53,6 +54,9 @@ public class SimpleCitationFields extends JSONField {
      */
     public void setField(String label, String value){
         switch(label) {
+            case DOI:
+                setDoi(value);
+                break;
             case TITLE:
                 setTitle(value);
                 break;
@@ -112,10 +116,11 @@ public class SimpleCitationFields extends JSONField {
         }
     }
 
-
     @Override
     public String getField(String fieldName) {
         switch (fieldName) {
+            case DOI:
+                return getDOI();
             case TITLE:
                 return getTitle();
             case SUBTITLE:
@@ -164,6 +169,16 @@ public class SimpleCitationFields extends JSONField {
         int minor = Integer.parseInt(getVersionMinor());
         return major*1000+minor;
     }
+
+    private void setDoi(String doi) {
+        String filteredDOI = filterURL(doi);
+        if(filteredDOI.isEmpty()) {
+            this.doi = filteredDOI;
+            logger.error("Something went wrong as the DOI us wonky: " + doi);
+        }else
+            this.doi = filteredDOI.substring(16);
+    }
+
     private void setTitle(String title) {
         this.title = title;
     }
@@ -177,7 +192,9 @@ public class SimpleCitationFields extends JSONField {
     }
 
     private void setAlternativeURL(String alternativeURL) {
-        this.alternativeURL = filterURL(alternativeURL).substring(16);
+        alternativeURL = filterURL(alternativeURL);
+        this.alternativeURL = alternativeURL;
+
     }
 
     private void setLicense(String license) {
@@ -301,7 +318,7 @@ public class SimpleCitationFields extends JSONField {
     }
 
     public String getDOI(){
-        return getAlternativeURL();
+        return doi;
     }
 
     public String getVersionMajor() {

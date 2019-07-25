@@ -9,49 +9,48 @@ import org.w3c.dom.Element;
 
 
 import java.util.LinkedList;
+import java.util.List;
 
 import static BaseFiles.GeodisyStrings.*;
 import static Dataverse.DVFieldNameStrings.*;
 import static Dataverse.DVFieldNameStrings.SOFTWARE;
 
 public class IdentificationInfo extends SubElement{
-    LinkedList<OtherID> otherIds;
-    LinkedList<Author> authors;
-    LinkedList<DatasetContact> datasetContacts;
-    LinkedList<Description> descriptions;
-    LinkedList<Keyword> keywords;
-    LinkedList<TopicClassification> topicClassifications;
-    LinkedList<RelatedPublication> relatedPublications;
+    List<OtherID> otherIds;
+    List<Author> authors;
+    List<DatasetContact> datasetContacts;
+    List<Description> descriptions;
+    List<Keyword> keywords;
+    List<TopicClassification> topicClassifications;
+    List<RelatedPublication> relatedPublications;
     //NOTESTEXT
     //LANGUAGE
-    LinkedList<Producer> producers;
-    LinkedList<Contributor> contributors;
-    LinkedList<GrantNumber> grantNumbers;
+    List<Producer> producers;
+    List<Contributor> contributors;
+    List<GrantNumber> grantNumbers;
     //DistributionDate
-    LinkedList<TimePeriodCovered> timePeriodCovereds;
-    LinkedList<DateOfCollection> datesOfCollection;
-    LinkedList<Series> series;
-    LinkedList<Software> software;
-    LinkedList<String> subjects;
-    LinkedList<String> relatedMaterials;
-    LinkedList<String> relatedDatasets;
-    LinkedList<String> otherReferences;
-    Element root;
-    DataverseJavaObject djo;
+    List<TimePeriodCovered> timePeriodCovereds;
+    List<DateOfCollection> datesOfCollection;
+    Series series;
+    List<Software> software;
+    List<String> subjects;
+    List<String> relatedMaterials;
+    List<String> relatedDatasets;
+    List<String> otherReferences;
+    List<String> languages;
     CitationFields cf;
-    XMLDocument doc;
-    SimpleCitationFields scf;
-    GeographicFields gf;
-    SocialFields sf;
-    String noteText, language, distDate;
+    SimpleCitationFields simpleCF;
+    GeographicFields geoCF;
+    SocialFields socialCF;
+    String noteText,  distDate;
     XMLStack stack;
 
     public IdentificationInfo(DataverseJavaObject djo, XMLDocument doc, Element root) {
         super(djo,doc,root);
         cf = djo.getCitationFields();
-        scf = djo.getSimpleFields();
-        gf = djo.getGeoFields();
-        sf = djo.getSocialFields();
+        simpleCF = djo.getSimpleFields();
+        geoCF = djo.getGeoFields();
+        socialCF = djo.getSocialFields();
 
         otherIds= (LinkedList) cf.getListField(OTHER_ID);
         authors = (LinkedList) cf.getListField(AUTHOR);
@@ -60,15 +59,15 @@ public class IdentificationInfo extends SubElement{
         keywords = (LinkedList) cf.getListField(KEYWORD);
         topicClassifications = (LinkedList) cf.getListField(TOPIC_CLASS);
         relatedPublications = (LinkedList) cf.getListField(PUBLICATION);
-        noteText = scf.getField(NOTES_TEXT);
-        language = scf.getField(LANGUAGE);
+        noteText = simpleCF.getField(NOTES_TEXT);
+        languages = cf.getListField(LANGUAGE);
         producers = (LinkedList) cf.getListField(PRODUCER);
         contributors = (LinkedList) cf.getListField(CONTRIB);
         grantNumbers = (LinkedList) cf.getListField(GRANT_NUM);
-        distDate = scf.getField(DIST_DATE);
+        distDate = simpleCF.getField(DIST_DATE);
         timePeriodCovereds = (LinkedList) cf.getListField(TIME_PER_COV);
         datesOfCollection = (LinkedList) cf.getListField(DATE_OF_COLLECT);
-        series = (LinkedList) cf.getListField(SERIES);
+        series = cf.getSeries();
         software = (LinkedList) cf.getListField(SOFTWARE);
         subjects = (LinkedList) cf.getListField(SUBJECT);
         relatedMaterials = (LinkedList) cf.getListField(RELATED_MATERIAL);
@@ -95,7 +94,7 @@ public class IdentificationInfo extends SubElement{
             levelK.appendChild(doc.addGCOVal(noteText,CHARACTER));
             levelJ.appendChild(levelK);
         }
-        if(!language.isEmpty()){
+        if(!languages.isEmpty()){
             levelJ = getLanguage(levelJ);
         }
         if(datasetContacts.size()>0)
@@ -105,7 +104,7 @@ public class IdentificationInfo extends SubElement{
             levelJ = getSoftware(levelJ);
         }
 
-        if(relatedMaterials.size()>0||relatedDatasets.size()>0||otherReferences.size()>0||series.size()>0){
+        if(relatedMaterials.size()>0||relatedDatasets.size()>0||otherReferences.size()>0||!series.getSeriesName().isEmpty()){
             levelJ = getAdditionalDocs(levelJ);
         }
         if(contributors.size()>0){
@@ -116,7 +115,7 @@ public class IdentificationInfo extends SubElement{
         }
         levelJ = getTimePeriods(levelJ);
         GeographicInfo gi = new GeographicInfo(djo, doc, levelJ);
-        levelJ = gi.getFields();
+        //levelJ = gi.getFields();
         
 
 
@@ -217,14 +216,12 @@ public class IdentificationInfo extends SubElement{
         stack.push(levelJ);
         stack.push(doc.createGMDElement("additionalDocumentation")); //K
         Element levelL = doc.createGMDElement("CI_Citation");
-        if(series.size()>0) {
+        if(series != null) {
             Element levelM = doc.createGMDElement("series");
             Element levelN = doc.createGMDElement("CI_Series");
-            for (Series s : series) {
-                Element levelO = doc.createGMDElement("name");
-                levelO.appendChild(doc.addGCOVal(s.getSeriesName(),CHARACTER));
-                levelN.appendChild(levelO);
-            }
+            Element levelO = doc.createGMDElement("name");
+            levelO.appendChild(doc.addGCOVal(series.getSeriesName(),CHARACTER));
+            levelN.appendChild(levelO);
             levelM.appendChild(levelN);
             levelL.appendChild(levelM);
         }
@@ -264,11 +261,15 @@ public class IdentificationInfo extends SubElement{
     private Element getLanguage(Element levelJ) {
         stack = new XMLStack();
         stack.push(levelJ);
-        stack.push(doc.createGMDElement("defaultLocale"));
-        stack.push(doc.createGMDElement("PT_Locale"));
-        Element localN = doc.createGMDElement("defaultLocale");
-        localN.appendChild(doc.addGCOVal(language,"LanguageCode"));
-        levelJ = stack.zip(localN);
+        stack.push(doc.createGMDElement("defaultLocale")); //K
+        Element levelL = doc.createGMDElement("PT_Locale");
+        Element levelM = null;
+        for(String s:languages) {
+            levelM = doc.createGMDElement("defaultLocale");
+            levelM.appendChild(doc.addGCOVal(s, "LanguageCode"));
+            levelL.appendChild(levelM);
+        }
+        levelJ = stack.zip(levelL);
         return levelJ;
     }
 
@@ -406,7 +407,7 @@ public class IdentificationInfo extends SubElement{
     }
 
     private Element getPointOfContact() {
-        LinkedList<DatasetContact> datasetContacts = (LinkedList) cf.getListField(DS_CONTACT);
+        List<DatasetContact> datasetContacts = (LinkedList) cf.getListField(DS_CONTACT);
         Element levelK = doc.createGMDElement("pointOfContact");
         Element levelL = doc.create_Element("CI_Responsibility");
         Element levelM;
@@ -454,7 +455,7 @@ public class IdentificationInfo extends SubElement{
             levelL.appendChild(levelM);
         }
         levelL.appendChild(levelRoleCode("pointOfContact"));
-        levelL.appendChild(getProducer(levelL));
+        levelL = getProducer(levelL);
         levelK.appendChild(levelL);
         return levelK;
     }
@@ -472,7 +473,6 @@ public class IdentificationInfo extends SubElement{
                 levelM = stack.zip(doc.addGCOVal(p.getProducerName(), CHARACTER));
             }
             if(!p.getProducerAffiliation().isEmpty()||!p.getProducerURL().isEmpty()||!p.getProducerLogoURL().isEmpty()) {
-                stack.push(levelM);
                 levelN = doc.createGMDElement("CI_Organisation");
                 if (!p.getProducerAffiliation().isEmpty()) {
                     stack.push(levelN);
@@ -512,17 +512,17 @@ public class IdentificationInfo extends SubElement{
         levelL.appendChild(getDOI());
         //System generated Dates/Info
         levelL = getSystemVals(levelL);
-        String subtitleVal = sf.getField(SUBTITLE);
-        String title = sf.getField(TITLE);
+        String subtitleVal = simpleCF.getField(SUBTITLE);
+        String title = simpleCF.getField(TITLE);
         //Title
         if(!subtitleVal.isEmpty())
             title += ":" + subtitleVal;
         levelL = setValChild(levelL,"title",title,CHARACTER);
-        String altTitleVal = sf.getField(ALT_TITLE);
+        String altTitleVal = simpleCF.getField(ALT_TITLE);
         //Alt Title
         if(!altTitleVal.isEmpty())
             levelL = setValChild(levelL,"alternateTitle", subtitleVal, CHARACTER);
-        String altUrlVal = sf.getField(ALT_URL);
+        String altUrlVal = simpleCF.getField(ALT_URL);
         //Alt URL
         if(!altUrlVal.isEmpty()) {
             Element altURL = doc.createGMDElement("onlineResource");
@@ -545,29 +545,29 @@ public class IdentificationInfo extends SubElement{
         stack = new XMLStack();
         Element levelM = doc.createGMDElement("date");
         stack.push(levelM);
-        stack.push(doc.createGMDElement("CI_Date"));
-        stack.push(doc.createGMDElement("date"));
-        levelM = stack.zip(doc.addGCOVal(scf.getField(DIST_DATE),DATE_TIME));
+        stack.push(doc.createGMDElement("CI_Date")); //N
+        stack.push(doc.createGMDElement("date")); //O
+        levelM = stack.zip(doc.addGCOVal(simpleCF.getField(DIST_DATE),DATE_TIME));
         stack.push(levelM);
-        stack.push(doc.createGMDElement("CI_Date"));
+        stack.push(doc.createGMDElement("CI_Date")); //N
         levelM = stack.zip(doc.addGMDVal("publication","CI_DateTypeCode" ));
         levelL.appendChild(levelM);
         stack.push(levelM);
-        stack.push(doc.createGMDElement("CI_Date"));
-        stack.push(doc.createGMDElement("date"));
-        levelM = stack.zip(doc.addGCOVal(scf.getField(PUB_DATE),DATE_TIME));
+        stack.push(doc.createGMDElement("CI_Date")); //N
+        stack.push(doc.createGMDElement("date")); //O
+        levelM = stack.zip(doc.addGCOVal(simpleCF.getField(PUB_DATE),DATE_TIME));
         stack.push(levelM);
-        stack.push(doc.createGMDElement("CI_Date"));
+        stack.push(doc.createGMDElement("CI_Date")); //N
         levelM = stack.zip(doc.addGMDVal("distribution","CI_DateTypeCode" ));
         levelL.appendChild(levelM);
         levelM = doc.createGMDElement("edition");
-        levelM.appendChild(doc.addGCOVal(Integer.toString(scf.getVersion()),CHARACTER));
+        levelM.appendChild(doc.addGCOVal(Integer.toString(simpleCF.getVersion()),CHARACTER));
         levelL.appendChild(levelM);
         levelM = doc.createGMDElement("editionDate");
         stack.push(levelM);
-        stack.push(doc.createGMDElement("CI_Date"));
-        stack.push(doc.createGMDElement("date"));
-        levelM = stack.zip(doc.addGCOVal(scf.getField(PROD_DATE),CHARACTER));
+        stack.push(doc.createGMDElement("CI_Date")); //N
+        stack.push(doc.createGMDElement("date")); //O
+        levelM = stack.zip(doc.addGCOVal(simpleCF.getField(PROD_DATE),CHARACTER));
         levelL.appendChild(levelM);
         return levelL;
     }
@@ -652,7 +652,7 @@ public class IdentificationInfo extends SubElement{
         outerStack.push(levelP);
         outerStack.push(levelQ);
         Element levelR = doc.createGMDElement("CI_Responsibility");
-        LinkedList<OtherID> otherIDS = (LinkedList) djo.getCitationFields().getOtherIDs();
+        List<OtherID> otherIDS = djo.getCitationFields().getOtherIDs();
         for(OtherID otherID: otherIDS) {
             stack = new XMLStack();
             Element levelS = doc.createGMDElement("party");
@@ -684,8 +684,8 @@ public class IdentificationInfo extends SubElement{
     }
 
     private boolean empty() {
-        boolean simple = noteText.isEmpty() && language.isEmpty() && distDate.isEmpty();
-        boolean complex = otherIds.isEmpty() && authors.isEmpty() && datasetContacts.isEmpty() && descriptions.isEmpty() && keywords.isEmpty() && topicClassifications.isEmpty() && relatedPublications.isEmpty() && producers.isEmpty() && contributors.isEmpty() && grantNumbers.isEmpty() && timePeriodCovereds.isEmpty() && datesOfCollection.isEmpty() && series.isEmpty() && software.isEmpty();
+        boolean simple = noteText.isEmpty() && languages.isEmpty() && distDate.isEmpty();
+        boolean complex = otherIds.isEmpty() && authors.isEmpty() && datasetContacts.isEmpty() && descriptions.isEmpty() && keywords.isEmpty() && topicClassifications.isEmpty() && relatedPublications.isEmpty() && producers.isEmpty() && contributors.isEmpty() && grantNumbers.isEmpty() && timePeriodCovereds.isEmpty() && datesOfCollection.isEmpty() && series.getSeriesName().isEmpty() && software.isEmpty();
         return simple && complex;
     }
 }

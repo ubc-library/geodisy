@@ -7,6 +7,8 @@ import org.apache.commons.validator.routines.UrlValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static org.apache.commons.validator.routines.UrlValidator.ALLOW_ALL_SCHEMES;
+
 
 public abstract class JSONField {
     protected GeoLogger logger = new GeoLogger(DataverseParser.class.toString());
@@ -17,7 +19,7 @@ public abstract class JSONField {
      */
     protected String filterURL(String value) {
         //String URLFILTER = "^((?i)((http|https):\\/\\/(www))|(www))?.(?i)([\\w]+\\.)+(\\/[\\w\\/]*)*\\??([\\&a-z1-9=]*)?";
-        UrlValidator urlValidator = new UrlValidator();
+        UrlValidator urlValidator = new UrlValidator(ALLOW_ALL_SCHEMES);
 
         if(urlValidator.isValid(value))
             return value;

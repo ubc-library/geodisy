@@ -51,7 +51,7 @@ public class TopicClassification extends CompoundJSONField {
             case TOPIC_CLASS_VOCAB:
                 setTopicClassVocab(value);
                 break;
-            case TOPIC_CLASS_VOCAB_URL:
+            case TOPIC_CLASS_VOCAB_URI:
                 setTopicClassVocabURL(value);
                 break;
             default:
@@ -66,7 +66,7 @@ public class TopicClassification extends CompoundJSONField {
                 return getTopicClassValue();
             case TOPIC_CLASS_VOCAB:
                 return getTopicClassVocab();
-            case TOPIC_CLASS_VOCAB_URL:
+            case TOPIC_CLASS_VOCAB_URI:
                return getTopicClassVocabURL();
             default:
                 errorParsing(this.getClass().getName(),fieldName);

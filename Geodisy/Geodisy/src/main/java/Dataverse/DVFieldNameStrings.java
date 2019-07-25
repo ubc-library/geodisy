@@ -44,7 +44,7 @@ public class DVFieldNameStrings {
     public final static String RELATED_MATERIAL = "relatedMaterial";
     public final static String RELATED_DATASETS = "relatedDatasets";
     public final static String OTHER_REFERENCES = "otherReferences";
-    public final static String DATA_SOURCE = "dataSource";
+    public final static String DATA_SOURCES = "dataSources";
     public final static String KIND_OF_DATA = "kindOfData";
     public final static String LANGUAGE = "language";
     public final static String SUBJECT = "subject";
@@ -94,7 +94,7 @@ public class DVFieldNameStrings {
     public final static String KEYWORD = "keyword";
     public final static String KEYWORD_VAL = "keywordValue";
     public final static String KEYWORD_VOCAB = "keywordVocabulary";
-    public final static String KEYWORD_VOCAB_URL = "keywordVocabularyURL";
+    public final static String KEYWORD_VOCAB_URI = "keywordVocabularyURI";
 
     //OtherLocation ID Field Names
     public final static String OTHER_ID = "otherId";
@@ -135,7 +135,7 @@ public class DVFieldNameStrings {
     public final static String TOPIC_CLASS = "topicClassification";
     public final static String TOPIC_CLASS_VAL = "topicClassValue";
     public final static String TOPIC_CLASS_VOCAB = "topicClassVocab";
-    public final static String TOPIC_CLASS_VOCAB_URL = "topicClassVocabURL";
+    public final static String TOPIC_CLASS_VOCAB_URI = "topicClassVocabURI";
 
     //Geographic___________________________________________________________________________________________
     //Geospatial Metadata Fields
