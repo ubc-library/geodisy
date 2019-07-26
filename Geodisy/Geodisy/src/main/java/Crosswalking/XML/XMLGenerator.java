@@ -86,7 +86,7 @@ public class XMLGenerator {
     private Element roleCode(String val){
         Element role = doc.createGMDElement("role");
         Element ci = doc.createGMDElement("CI_RoleCode");
-        ci.setNodeValue(val);
+        ci.setTextContent(val);
         role.appendChild(ci);
         return role;
     }

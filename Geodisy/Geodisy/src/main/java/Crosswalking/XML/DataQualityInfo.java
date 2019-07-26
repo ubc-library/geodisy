@@ -31,6 +31,7 @@ public class DataQualityInfo extends SubElement {
                 levelN.appendChild(doc.addGCOVal(s, CHARACTER));
                 levelM.appendChild(levelN);
             }
+            levelL.appendChild(levelM);
         }
         if(!simple.getField(ORIG_OF_SOURCES).isEmpty()) {
             stack = new XMLStack();
@@ -39,6 +40,7 @@ public class DataQualityInfo extends SubElement {
             stack.push(doc.createGMDElement("LI_ProcessStep")); //O
             stack.push(doc.createGMDElement("description")); //P
             levelM = stack.zip(doc.addGCOVal(simple.getField(ORIG_OF_SOURCES), CHARACTER));
+            levelL.appendChild(levelM);
         }
         if(!simple.getField(CHAR_OF_SOURCES).isEmpty()) {
             stack = new XMLStack();
@@ -47,7 +49,7 @@ public class DataQualityInfo extends SubElement {
             stack.push(doc.createGMDElement("LI_Source")); //O
             stack.push(doc.createGMDElement("description")); //P
             levelM = stack.zip(doc.addGCOVal(simple.getField(CHAR_OF_SOURCES), CHARACTER));
-
+            levelL.appendChild(levelM);
         }
         if(!simple.getField(ACCESS_TO_SOURCES).isEmpty()){
             stack = new XMLStack();
@@ -56,9 +58,8 @@ public class DataQualityInfo extends SubElement {
             stack.push(doc.createGMDElement("CI_Citation"));
             stack.push(doc.createGMDElement("otherCitationDetails"));
             levelM = stack.zip(doc.addGCOVal(simple.getField(ACCESS_TO_SOURCES), CHARACTER));
-
+            levelL.appendChild(levelM);
         }
-        levelL.appendChild(levelM);
         levelK.appendChild(levelL);
         levelJ.appendChild(levelK);
         levelI.appendChild(levelJ);

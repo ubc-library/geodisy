@@ -1,40 +1,197 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <gmd:MD_Metadata xmlns="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.isotc211.org/2005/gml" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <gmd:identificationInfo>
-        <gmd:additionalDocumentation>
-            <gmd:CI_Citation>
-                <gmd:otherCitationDetails>
-                    <gco:CharacterString>Ain't nothing like this</gco:CharacterString>
-                </gmd:otherCitationDetails>
-                <gmd:identifier>
-                    <gmd:MD_Identifier>
-                        <gmd:codeSpace>
-                            <gco:CharacterString>bibcode</gco:CharacterString>
-                        </gmd:codeSpace>
-                    </gmd:MD_Identifier>
-                    <gmd:MD_Identifier>
-                        <gmd:code>
-                            <gco:CharacterString>123123</gco:CharacterString>
-                        </gmd:code>
-                    </gmd:MD_Identifier>
-                </gmd:identifier>
-            </gmd:CI_Citation>
-            <gmd:CI_Citation>
-                <gmd:onlineResource>
-                    <gmd:CI_OnlineResource>
-                        <gmd:linkage>
-                            <gco:CharacterString>http://I.dont.know.related.pub.url.com</gco:CharacterString>
-                        </gmd:linkage>
-                    </gmd:CI_OnlineResource>
-                </gmd:onlineResource>
-            </gmd:CI_Citation>
+        <gmd:MD_DataIdentification>
+            <gmd:citation>
+                <gmd:CI_Citation>
+                    <gmd:identifier>
+                        <gmd:MD_Identifier>
+                            <gmd:code>
+                                <gco:CharacterString>10.5072/FK2/GMKLWX</gco:CharacterString>
+                            </gmd:code>
+                        </gmd:MD_Identifier>
+                    </gmd:identifier>
+                    <gmd:date>
+                        <gmd:CI_Date>
+                            <gmd:date>
+                                <gco:DateTime>2009-12-20</gco:DateTime>
+                            </gmd:date>
+                        </gmd:CI_Date>
+                        <gmd:CI_Date>
+                            <gmd:CI_DateTypeCode>publication</gmd:CI_DateTypeCode>
+                        </gmd:CI_Date>
+                        <gmd:CI_Date>
+                            <gmd:date>
+                                <gco:DateTime>2019-03-13</gco:DateTime>
+                            </gmd:date>
+                        </gmd:CI_Date>
+                        <gmd:CI_Date>
+                            <gmd:CI_DateTypeCode>distribution</gmd:CI_DateTypeCode>
+                        </gmd:CI_Date>
+                    </gmd:date>
+                    <gmd:edition>
+                        <gco:CharacterString>2002</gco:CharacterString>
+                    </gmd:edition>
+                    <gmd:editionDate>
+                        <gmd:CI_Date>
+                            <gmd:date>
+                                <gco:CharacterString>2001-02-13</gco:CharacterString>
+                            </gmd:date>
+                        </gmd:CI_Date>
+                    </gmd:editionDate>
+                    <gmd:title>
+                        <gco:CharacterString>Title: This is the subtitle</gco:CharacterString>
+                    </gmd:title>
+                    <gmd:alternateTitle>
+                        <gco:CharacterString>This is the subtitle</gco:CharacterString>
+                    </gmd:alternateTitle>
+                    <gmd:onlineResource>
+                        <gmd:CI_OnlineResource>
+                            <gmd:linkage>
+                                <gmd:URL>http://fake.alternative.url.com</gmd:URL>
+                            </gmd:linkage>
+                        </gmd:CI_OnlineResource>
+                    </gmd:onlineResource>
+                    <gmd:identifier>
+                        <gmd:MD_Identifier>
+                            <gmd:authority>
+                                <gmd:CI_Citation>
+                                    <gmd:citedResponsibility>
+                                        <gmd:CI_Responsibility>
+                                            <gmd:party>
+                                                <gmd:CI_Organisation>
+                                                    <gmd:name>
+                                                        <gco:CharacterString>Agency of Agencies</gco:CharacterString>
+                                                    </gmd:name>
+                                                    <gmd:partyIdentifier>
+                                                        <gmd:MD_Identifier>
+                                                            <gmd:code>
+                                                                <gco:CharacterString>AgencyID 123</gco:CharacterString>
+                                                            </gmd:code>
+                                                        </gmd:MD_Identifier>
+                                                    </gmd:partyIdentifier>
+                                                </gmd:CI_Organisation>
+                                            </gmd:party>
+                                            <gmd:party>
+                                                <gmd:CI_Organisation>
+                                                    <gmd:name>
+                                                        <gco:CharacterString>second agency of agencies</gco:CharacterString>
+                                                    </gmd:name>
+                                                    <gmd:partyIdentifier>
+                                                        <gmd:MD_Identifier>
+                                                            <gmd:code>
+                                                                <gco:CharacterString>second agency id 21412s4432</gco:CharacterString>
+                                                            </gmd:code>
+                                                        </gmd:MD_Identifier>
+                                                    </gmd:partyIdentifier>
+                                                </gmd:CI_Organisation>
+                                            </gmd:party>
+                                            <role>
+                                                <gmd:CI_RoleCode>resourceProvider</gmd:CI_RoleCode>
+                                            </role>
+                                        </gmd:CI_Responsibility>
+                                    </gmd:citedResponsibility>
+                                </gmd:CI_Citation>
+                            </gmd:authority>
+                        </gmd:MD_Identifier>
+                    </gmd:identifier>
+                    <gmd:citeResponsibleParty>
+                        <gmd:CI_Responsibility>
+                            <role>
+                                <gmd:CI_RoleCode>author</gmd:CI_RoleCode>
+                            </role>
+                        </gmd:CI_Responsibility>
+                    </gmd:citeResponsibleParty>
+                </gmd:CI_Citation>
+            </gmd:citation>
+            <gmd:abstract>
+                <gco:CharacterString>Description text box</gco:CharacterString>
+            </gmd:abstract>
+            <gmd:descriptiveKeywords>
+                <gmd:MD_Keywords>
+                    <gmd:keyword>
+                        <gco:CharacterString>Earth and Environmental Sciences</gco:CharacterString>
+                    </gmd:keyword>
+                    <gmd:keyword>
+                        <gco:CharacterString>Keyword</gco:CharacterString>
+                    </gmd:keyword>
+                    <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>keyword vocab</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:onlineResource>
+                                <gco:CharacterString>http://keyword.the.url.of.my.brain.ca</gco:CharacterString>
+                            </gmd:onlineResource>
+                        </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                    <gmd:MD_KeywordTypeCode>
+                        <gmd:type>
+                            <gmd:MD_KeywordTypeCode>theme</gmd:MD_KeywordTypeCode>
+                        </gmd:type>
+                    </gmd:MD_KeywordTypeCode>
+                </gmd:MD_Keywords>
+                <gmd:MD_Keywords>
+                    <gmd:keyword>
+                        <gco:CharacterString>topic class</gco:CharacterString>
+                    </gmd:keyword>
+                    <gmd:thesaurusName>
+                        <gmd:CI_Citation>
+                            <gmd:title>
+                                <gco:CharacterString>topic class vocab</gco:CharacterString>
+                            </gmd:title>
+                            <gmd:onlineResource>
+                                <gmd:CI_OnlineResource>
+                                    <gmd:linkage>
+                                        <gco:CharacterString>http://topic.class.duh.com</gco:CharacterString>
+                                    </gmd:linkage>
+                                </gmd:CI_OnlineResource>
+                            </gmd:onlineResource>
+                        </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                </gmd:MD_Keywords>
+                <gmd:type>
+                    <gmd:MD_KeywordTypeCode>theme</gmd:MD_KeywordTypeCode>
+                </gmd:type>
+            </gmd:descriptiveKeywords>
+            <gmd:additionalDocumentation>
+                <gmd:CI_Citation>
+                    <gmd:otherCitationDetails>
+                        <gco:CharacterString>Related pub citation</gco:CharacterString>
+                    </gmd:otherCitationDetails>
+                    <gmd:identifier>
+                        <gmd:MD_Identifier>
+                            <gmd:codeSpace>
+                                <gco:CharacterString>bibcode</gco:CharacterString>
+                            </gmd:codeSpace>
+                        </gmd:MD_Identifier>
+                        <gmd:MD_Identifier>
+                            <gmd:code>
+                                <gco:CharacterString>related pub id number123123</gco:CharacterString>
+                            </gmd:code>
+                        </gmd:MD_Identifier>
+                    </gmd:identifier>
+                </gmd:CI_Citation>
+                <gmd:CI_Citation>
+                    <gmd:onlineResource>
+                        <gmd:CI_OnlineResource>
+                            <gmd:linkage>
+                                <gco:CharacterString>http://related.pub.url.com</gco:CharacterString>
+                            </gmd:linkage>
+                        </gmd:CI_OnlineResource>
+                    </gmd:onlineResource>
+                </gmd:CI_Citation>
+            </gmd:additionalDocumentation>
             <gmd:supplementalInformation>
-                <gco:CharacterString>Created this records specifically for testing. That's the only note.</gco:CharacterString>
+                <gco:CharacterString>Notes text box</gco:CharacterString>
             </gmd:supplementalInformation>
             <gmd:defaultLocale>
                 <gmd:PT_Locale>
                     <gmd:defaultLocale>
                         <gco:LanguageCode>Akan</gco:LanguageCode>
+                    </gmd:defaultLocale>
+                    <gmd:defaultLocale>
+                        <gco:LanguageCode>English</gco:LanguageCode>
                     </gmd:defaultLocale>
                 </gmd:PT_Locale>
             </gmd:defaultLocale>
@@ -43,14 +200,14 @@
                     <gmd:party>
                         <gmd:CI_Individual>
                             <gmd:name>
-                                <gco:CharacterString>Admin, Dataverse</gco:CharacterString>
+                                <gco:CharacterString>Contact</gco:CharacterString>
                             </gmd:name>
                             <gmd:contactInfo>
                                 <gmd:CI_Contact>
                                     <gmd:address>
                                         <gmd:CI_Address>
                                             <gmd:electronicMailAddress>
-                                                <gco:CharacterString>dataverse@mailinator.com</gco:CharacterString>
+                                                <gco:CharacterString>contact@mailinator.com</gco:CharacterString>
                                             </gmd:electronicMailAddress>
                                         </gmd:CI_Address>
                                     </gmd:address>
@@ -59,7 +216,7 @@
                         </gmd:CI_Individual>
                         <gmd:CI_Organisation>
                             <gmd:name>
-                                <gco:CharacterString>Dataverse.org</gco:CharacterString>
+                                <gco:CharacterString>contact affiliation</gco:CharacterString>
                             </gmd:name>
                             <gmd:name>
                                 <gco:CharacterString>Geodisy Sandbox</gco:CharacterString>
@@ -72,19 +229,19 @@
                     <gmd:party>
                         <gmd:CI_Individual>
                             <gmd:name>
-                                <gco:CharacterString>Dante, Paul (Producer)</gco:CharacterString>
+                                <gco:CharacterString>Producer</gco:CharacterString>
                             </gmd:name>
                         </gmd:CI_Individual>
                         <gmd:CI_Organisation>
                             <gmd:name>
-                                <gco:CharacterString>UBC</gco:CharacterString>
+                                <gco:CharacterString>Prodcer affiliation UBC</gco:CharacterString>
                             </gmd:name>
                             <gmd:contactInfo>
                                 <gmd:CI_Contact>
                                     <gmd:onlineResource>
                                         <gmd:CI_OnlineResource>
                                             <gmd:linkage>
-                                                <gco:CharacterString>Producer Abrev</gco:CharacterString>
+                                                <gco:CharacterString>http://producer.url.com</gco:CharacterString>
                                             </gmd:linkage>
                                         </gmd:CI_OnlineResource>
                                     </gmd:onlineResource>
@@ -93,7 +250,7 @@
                             <gmd:logo>
                                 <gmd:MD_BrowseGraphic>
                                     <gmd:linkage>
-                                        <gco:CharacterString>Producer Abrev</gco:CharacterString>
+                                        <gco:CharacterString>http://producer.logo.url.com</gco:CharacterString>
                                     </gmd:linkage>
                                 </gmd:MD_BrowseGraphic>
                             </gmd:logo>
@@ -105,10 +262,10 @@
                 </CI_Responsibility>
             </gmd:pointOfContact>
             <gmd:environmentDescription>
-                <gco:CharacterString>Firefox</gco:CharacterString>
+                <gco:CharacterString>Software Name</gco:CharacterString>
             </gmd:environmentDescription>
             <gmd:environmentDescription>
-                <gco:CharacterString>23.2</gco:CharacterString>
+                <gco:CharacterString>Software Version</gco:CharacterString>
             </gmd:environmentDescription>
             <gmd:additionalDocumentation>
                 <gmd:CI_Citation>
@@ -120,21 +277,21 @@
                         </gmd:CI_Series>
                     </gmd:series>
                     <gmd:otherCitationDetails>
-                        <gco:CharacterString>Related Material is for the lonely</gco:CharacterString>
+                        <gco:CharacterString>Related Material text box</gco:CharacterString>
                     </gmd:otherCitationDetails>
                     <gmd:otherCitationDetails>
-                        <gco:CharacterString>No dataset is related</gco:CharacterString>
+                        <gco:CharacterString>Related Datasets text box</gco:CharacterString>
                     </gmd:otherCitationDetails>
                     <gmd:otherCitationDetails>
-                        <gco:CharacterString>The references other test datasets</gco:CharacterString>
+                        <gco:CharacterString>Other References</gco:CharacterString>
                     </gmd:otherCitationDetails>
                 </gmd:CI_Citation>
             </gmd:additionalDocumentation>
             <gmd:credit>
-                <gco:CharacterString>Dante, Paul (Contributor):Researcher</gco:CharacterString>
+                <gco:CharacterString>Contributor: Researcher</gco:CharacterString>
             </gmd:credit>
             <gmd:credit>
-                <gco:CharacterString>The Feds:0978974</gco:CharacterString>
+                <gco:CharacterString>GrantAgency: GrantNumber 0978974</gco:CharacterString>
             </gmd:credit>
             <gmd:extent>
                 <gmd:EX_Extent>
@@ -142,21 +299,21 @@
                         <gmd:EX_TemporalExtent>
                             <gmd:extent>
                                 <gmd:TimePeriod>
-                                    <gmd:beginPosition/>
-                                    <gmd:endPosition/>
+                                    <gmd:beginPosition>1900</gmd:beginPosition>
+                                    <gmd:endPosition>1921</gmd:endPosition>
                                 </gmd:TimePeriod>
                             </gmd:extent>
                             <gmd:extent>
                                 <gmd:TimePeriod>
-                                    <gmd:beginPosition/>
-                                    <gmd:endPosition/>
+                                    <gmd:beginPosition>1999-01-03</gmd:beginPosition>
+                                    <gmd:endPosition>1999-04-30</gmd:endPosition>
                                 </gmd:TimePeriod>
                             </gmd:extent>
                         </gmd:EX_TemporalExtent>
                     </gmd:temporalElement>
                 </gmd:EX_Extent>
             </gmd:extent>
-        </gmd:additionalDocumentation>
+        </gmd:MD_DataIdentification>
     </gmd:identificationInfo>
     <gmd:dataQualityInfo>
         <gmd:DQ_DataQuality>
@@ -164,26 +321,26 @@
                 <gmd:resourceLineage>
                     <gmd:LI_Lineage>
                         <gmd:statement>
-                            <gco:CharacterString>The data source is exclusively my head</gco:CharacterString>
+                            <gco:CharacterString>The data source text box</gco:CharacterString>
                         </gmd:statement>
                         <gmd:processStep>
                             <gmd:LI_ProcessStep>
                                 <gmd:description>
-                                    <gco:CharacterString>How is this origin of sources different than data source?</gco:CharacterString>
+                                    <gco:CharacterString>Origin of sources text box</gco:CharacterString>
                                 </gmd:description>
                             </gmd:LI_ProcessStep>
                         </gmd:processStep>
                         <gmd:source>
                             <gmd:LI_Source>
                                 <gmd:description>
-                                    <gco:CharacterString>They are fluffy</gco:CharacterString>
+                                    <gco:CharacterString>characteristic of sources noted text box</gco:CharacterString>
                                 </gmd:description>
                             </gmd:LI_Source>
                         </gmd:source>
                         <gmd:additionalDocumentation>
                             <gmd:CI_Citation>
                                 <gmd:otherCitationDetails>
-                                    <gco:CharacterString>Free access to all, according to this documentation</gco:CharacterString>
+                                    <gco:CharacterString>Documentation and Access to sources text box</gco:CharacterString>
                                 </gmd:otherCitationDetails>
                             </gmd:CI_Citation>
                         </gmd:additionalDocumentation>
@@ -234,7 +391,7 @@
                             <gmd:party>
                                 <gmd:CI_Organization>
                                     <gmd:name>
-                                        <gco:CharacterString>Admin, Dataverse</gco:CharacterString>
+                                        <gco:CharacterString>Depositor</gco:CharacterString>
                                     </gmd:name>
                                 </gmd:CI_Organization>
                             </gmd:party>
