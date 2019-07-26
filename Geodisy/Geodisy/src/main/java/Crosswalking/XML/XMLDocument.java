@@ -78,7 +78,7 @@ public class XMLDocument {
     }
 
     public void addRoot(Element root){
-        doc.adoptNode(root);
+        doc.appendChild(root);
     }
 
 }

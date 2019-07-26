@@ -8,6 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 
 public class CitationXMLTest {
@@ -38,9 +41,24 @@ DataverseJavaObject djo;
     }
     @Test
     public void testDJO(){
+        try {
         System.out.println(djo.getBoundingBox().getLatNorth());
         XMLGenerator xmlGenerator = new XMLGenerator(djo);
         Document xmlFile = xmlGenerator.generateXMLFile();
-        xmlFile.toString();
+        DOMSource source = new DOMSource(xmlFile);
+        StreamResult result = new StreamResult(new File("xmlTestDJO.xml"));
+
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = null;
+
+            transformer = transformerFactory.newTransformer();
+
+        // Beautify the format of the resulted XML
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+        transformer.transform(source, result);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
     }
 }

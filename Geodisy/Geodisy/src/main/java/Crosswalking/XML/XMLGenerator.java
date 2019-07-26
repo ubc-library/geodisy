@@ -33,9 +33,8 @@ public class XMLGenerator {
     //TODO keep working on this
     public Document generateXMLFile(){
         Element rootElement = getRoot();
-        doc.addRoot(rootElement);
         SubElement ident = new IdentificationInfo(djo, doc, rootElement);
-        rootElement.appendChild(ident.getFields());
+        rootElement = ident.getFields();
         if(simple.hasField(ACCESS_TO_SOURCES)||simple.hasField(ORIG_OF_SOURCES)||simple.hasField(CHAR_OF_SOURCES)||citationFields.getListField(DATA_SOURCES).size()>0) {
             SubElement dqi = new DataQualityInfo(djo, doc, rootElement);
             rootElement.appendChild(dqi.getFields());
@@ -51,6 +50,7 @@ public class XMLGenerator {
 
         //TODO check the following line. I think dealing with other IDs happens elsewhere.
         //if(otherIds.size()>0)
+        doc.addRoot(rootElement);
         return doc.getDoc();
     }
 
