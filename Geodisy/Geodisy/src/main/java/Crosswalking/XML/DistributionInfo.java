@@ -35,7 +35,7 @@ public class DistributionInfo extends SubElement {
         Element levelN = doc.createGMDElement("CI_Responsibility");
         Element levelO = doc.createGMDElement("party");
         for(Distributor d:distributors) {
-            Element levelP = doc.createGMDElement("CI_Organization");
+            Element levelP = doc.createGMDElement("CI_Organisation");
             tempString = d.getDistributorName();
             if (!d.getDistributorName().isEmpty()) {
                 temp = doc.createGMDElement("name"); //Q
@@ -82,7 +82,7 @@ public class DistributionInfo extends SubElement {
         stack = new XMLStack();
         stack = doc.createGMDElement("CI_Responsibility", stack);
         stack = doc.createGMDElement("party", stack);
-        stack = doc.createGMDElement("CI_Organization", stack);
+        stack = doc.createGMDElement("CI_Organisation", stack);
         stack = doc.createGMDElement("name", stack);
         Element levelN = stack.zip(doc.addGCOVal(depositorName,CHARACTER));
         levelN.appendChild(levelRoleCode("originator"));
