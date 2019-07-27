@@ -35,7 +35,7 @@
                     <gmd:editionDate>
                         <gmd:CI_Date>
                             <gmd:date>
-                                <gco:CharacterString>2001-02-13</gco:CharacterString>
+                                <gco:CharacterString>2009-12-20</gco:CharacterString>
                             </gmd:date>
                         </gmd:CI_Date>
                     </gmd:editionDate>
@@ -43,7 +43,7 @@
                         <gco:CharacterString>Title: This is the subtitle</gco:CharacterString>
                     </gmd:title>
                     <gmd:alternateTitle>
-                        <gco:CharacterString>This is the subtitle</gco:CharacterString>
+                        <gco:CharacterString>An alternate title would be this</gco:CharacterString>
                     </gmd:alternateTitle>
                     <gmd:onlineResource>
                         <gmd:CI_OnlineResource>
@@ -96,6 +96,58 @@
                         </gmd:MD_Identifier>
                     </gmd:identifier>
                     <gmd:citeResponsibleParty>
+                        <gmd:CI_Responsibility>
+                            <gmd:party>
+                                <gmd:CI_Individual>
+                                    <gmd:name>
+                                        <gco:CharacterString>Author</gco:CharacterString>
+                                    </gmd:name>
+                                    <gmd:partyIdentifier>
+                                        <gmd:MD_Identifier>
+                                            <gmd:codeSpace>
+                                                <gco:CharacterString>ORCID</gco:CharacterString>
+                                            </gmd:codeSpace>
+                                            <gmd:code>
+                                                <gco:CharacterString>author identifier</gco:CharacterString>
+                                            </gmd:code>
+                                        </gmd:MD_Identifier>
+                                    </gmd:partyIdentifier>
+                                </gmd:CI_Individual>
+                            </gmd:party>
+                            <gmd:party>
+                                <gmd:CI_Organisation>
+                                    <gmd:name>
+                                        <gco:CharacterString>Author affiliation</gco:CharacterString>
+                                    </gmd:name>
+                                </gmd:CI_Organisation>
+                            </gmd:party>
+                        </gmd:CI_Responsibility>
+                        <gmd:CI_Responsibility>
+                            <gmd:party>
+                                <gmd:CI_Individual>
+                                    <gmd:name>
+                                        <gco:CharacterString>author 2</gco:CharacterString>
+                                    </gmd:name>
+                                    <gmd:partyIdentifier>
+                                        <gmd:MD_Identifier>
+                                            <gmd:codeSpace>
+                                                <gco:CharacterString>LCNA</gco:CharacterString>
+                                            </gmd:codeSpace>
+                                            <gmd:code>
+                                                <gco:CharacterString>author 2 identifier asdasd2312</gco:CharacterString>
+                                            </gmd:code>
+                                        </gmd:MD_Identifier>
+                                    </gmd:partyIdentifier>
+                                </gmd:CI_Individual>
+                            </gmd:party>
+                            <gmd:party>
+                                <gmd:CI_Organisation>
+                                    <gmd:name>
+                                        <gco:CharacterString>author 2 affiliation</gco:CharacterString>
+                                    </gmd:name>
+                                </gmd:CI_Organisation>
+                            </gmd:party>
+                        </gmd:CI_Responsibility>
                         <gmd:CI_Responsibility>
                             <role>
                                 <gmd:CI_RoleCode>author</gmd:CI_RoleCode>
@@ -356,7 +408,7 @@
                     <gmd:distributorContact>
                         <gmd:CI_Responsibility>
                             <gmd:party>
-                                <gmd:CI_Organization>
+                                <gmd:CI_Organisation>
                                     <gmd:name>
                                         <gco:CharacterString>El Distributor</gco:CharacterString>
                                     </gmd:name>
@@ -381,7 +433,7 @@
                                             </gmd:linkage>
                                         </gmd:MD_BrowseGraphic>
                                     </gmd:logo>
-                                </gmd:CI_Organization>
+                                </gmd:CI_Organisation>
                             </gmd:party>
                             <role>
                                 <gmd:CI_RoleCode>distributor</gmd:CI_RoleCode>
@@ -389,11 +441,11 @@
                         </gmd:CI_Responsibility>
                         <gmd:CI_Responsibility>
                             <gmd:party>
-                                <gmd:CI_Organization>
+                                <gmd:CI_Organisation>
                                     <gmd:name>
                                         <gco:CharacterString>Depositor</gco:CharacterString>
                                     </gmd:name>
-                                </gmd:CI_Organization>
+                                </gmd:CI_Organisation>
                             </gmd:party>
                             <role>
                                 <gmd:CI_RoleCode>originator</gmd:CI_RoleCode>

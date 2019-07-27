@@ -522,7 +522,7 @@ public class IdentificationInfo extends SubElement{
         String altTitleVal = simpleCF.getField(ALT_TITLE);
         //Alt Title
         if(!altTitleVal.isEmpty())
-            levelL = setValChild(levelL,"alternateTitle", subtitleVal, CHARACTER);
+            levelL = setValChild(levelL,"alternateTitle", altTitleVal, CHARACTER);
         String altUrlVal = simpleCF.getField(ALT_URL);
         //Alt URL
         if(!altUrlVal.isEmpty()) {
@@ -548,27 +548,28 @@ public class IdentificationInfo extends SubElement{
         stack.push(levelM);
         stack.push(doc.createGMDElement("CI_Date")); //N
         stack.push(doc.createGMDElement("date")); //O
-        levelM = stack.zip(doc.addGCOVal(simpleCF.getField(DIST_DATE),DATE_TIME));
+        levelM = stack.zip(doc.addGCOVal(simpleCF.getField(PUB_DATE),DATE_TIME));
         stack.push(levelM);
         stack.push(doc.createGMDElement("CI_Date")); //N
         levelM = stack.zip(doc.addGMDVal("publication","CI_DateTypeCode" ));
         levelL.appendChild(levelM);
-        stack.push(levelM);
-        stack.push(doc.createGMDElement("CI_Date")); //N
-        stack.push(doc.createGMDElement("date")); //O
-        levelM = stack.zip(doc.addGCOVal(simpleCF.getField(PUB_DATE),DATE_TIME));
-        stack.push(levelM);
-        stack.push(doc.createGMDElement("CI_Date")); //N
-        levelM = stack.zip(doc.addGMDVal("distribution","CI_DateTypeCode" ));
+
+        //Version
         levelL.appendChild(levelM);
         levelM = doc.createGMDElement("edition");
         levelM.appendChild(doc.addGCOVal(Integer.toString(simpleCF.getVersion()),CHARACTER));
         levelL.appendChild(levelM);
         levelM = doc.createGMDElement("editionDate");
+        //version date
         stack.push(levelM);
         stack.push(doc.createGMDElement("CI_Date")); //N
         stack.push(doc.createGMDElement("date")); //O
-        levelM = stack.zip(doc.addGCOVal(simpleCF.getField(PROD_DATE),CHARACTER));
+        levelM = stack.zip(doc.addGCOVal(simpleCF.getField(DIST_DATE),CHARACTER));
+        levelL.appendChild(levelM);
+        levelM = doc.createGMDElement("editionDate");
+        stack.push(levelM);
+        stack.push(doc.createGMDElement("CI_Date"));
+        levelM = stack.zip(doc.addGMDVal("lastUpdate","CI_DateTypeCode" ));
         levelL.appendChild(levelM);
         return levelL;
     }
@@ -583,8 +584,9 @@ public class IdentificationInfo extends SubElement{
 
     private Element getAuthor() {
         Element levelM = doc.createGMDElement("citeResponsibleParty");
-        Element levelN = doc.createGMDElement("CI_Responsibility");
+        Element levelN = null;
         for(Author a: authors){
+            levelN = doc.createGMDElement("CI_Responsibility");
             Element levelO = doc.createGMDElement("party");
             Element levelP =  doc.createGMDElement("CI_Individual");
             Element levelQ;
@@ -614,14 +616,19 @@ public class IdentificationInfo extends SubElement{
                 levelP.appendChild(levelQ);
             }
             levelO.appendChild(levelP);
+            levelN.appendChild(levelO);
             if(!a.getField(AUTHOR_AFFIL).isEmpty()) {
+                levelO = doc.createGMDElement("party");
                 levelP = doc.createGMDElement("CI_Organisation");
                 levelQ = doc.createGMDElement("name");
                 levelQ.appendChild(doc.addGCOVal(a.getField(AUTHOR_AFFIL), CHARACTER));
                 levelP.appendChild(levelQ);
                 levelO.appendChild(levelP);
+                levelN.appendChild(levelO);
             }
+            levelM.appendChild(levelN);
         }
+        levelN = doc.createGMDElement("CI_Responsibility");
         levelN.appendChild(levelRoleCode("author"));
         levelM.appendChild(levelN);
         return levelM;
