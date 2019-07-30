@@ -2,6 +2,7 @@ package Dataverse.FindingBoundingBoxes;
 
 import BaseFiles.GeoLogger;
 import DataSourceLocations.Dataverse;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicCoverage;
 import Dataverse.DataverseJavaObject;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 
@@ -19,6 +20,17 @@ public abstract class FindBoundBox {
 
     protected BoundingBox readResponse(String responseString, String doi, DataverseJavaObject djo){
         return parseXMLString(responseString, doi, djo);
+    }
+
+    protected String readCoverageCountry(String responseString, String doi, DataverseJavaObject djo){
+        int tooFar = responseString.indexOf("</geoname>");
+        int start = responseString.indexOf("<countryName>");
+        if(start==-1||start>tooFar) {
+            logger.info("Record with DOI of "+ doi + "could not have information found  in geonames. Please doublecheck the geospatial coverage field values", djo, logger.getName());
+            return "";
+        }
+        int end = responseString.indexOf("</countryName>");
+        return responseString.substring(start+14,end);
     }
 
     protected  BoundingBox parseXMLString(String responseString, String doi, DataverseJavaObject djo){
