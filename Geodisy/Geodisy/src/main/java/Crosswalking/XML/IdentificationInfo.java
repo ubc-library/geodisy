@@ -115,7 +115,7 @@ public class IdentificationInfo extends SubElement{
         }
         levelJ = getTimePeriods(levelJ);
         GeographicInfo gi = new GeographicInfo(djo, doc, levelJ);
-        //levelJ = gi.getFields();
+        levelJ = gi.getFields();
         
 
 

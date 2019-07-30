@@ -47,7 +47,6 @@ public class XMLGenerator {
         }
 
 
-
         //TODO check the following line. I think dealing with other IDs happens elsewhere.
         //if(otherIds.size()>0)
         doc.addRoot(rootElement);

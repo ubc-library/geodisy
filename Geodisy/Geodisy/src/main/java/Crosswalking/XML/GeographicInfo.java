@@ -6,11 +6,16 @@ import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.G
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicUnit;
 import Dataverse.DataverseJavaObject;
+import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Element;
 
 
 import java.util.List;
+
+import static BaseFiles.GeodisyStrings.CHARACTER;
+import static BaseFiles.GeodisyStrings.DECIMAL;
+import static Dataverse.DVFieldNameStrings.GEOGRAPHIC_UNIT;
 
 public class GeographicInfo extends SubElement {
 GeographicFields gf;
@@ -30,31 +35,69 @@ GeoLogger logger;
     //TODO complete
     @Override
     public Element getFields() {
-        stack.push(root); //J
-        Element levelK = doc.createGMDElement("extent");
-        Element levelL = doc.createGMDElement("EX_extent");
-        for(GeographicCoverage gc: geoCovers){
 
+        for(GeographicCoverage gc: geoCovers){
+            stack.push(root); //J
+            stack.push(doc.createGMDElement("extent")); //K
+            stack.push(doc.createGMDElement("EX_extent")); //L
+            stack.push(doc.createGMDElement("description")); //M
+            String country = gc.getCountry();
+            String city = gc.getCity();
+            String province = gc.getState();
+            String other = gc.getOtherGeographicCoverage();
+            String name;
+            name = country;
+            if(!province.isEmpty())
+                name = name + ", " + province;
+            if(!city.isEmpty())
+                name = name + ", " + city;
+            if(!other.isEmpty())
+                name = name + ", " + other;
+            root = stack.zip(doc.addGCOVal(name,CHARACTER));
         }
         for(GeographicUnit gu: geoUnits){
-
-
+            stack.push(root);
+            stack.push(doc.createGMDElement("extent")); //K
+            stack.push(doc.createGMDElement("EX_extent")); //L
+            stack.push(doc.createGMDElement("description")); //M
+            root = stack.zip(doc.addGCOVal(gu.getField(GEOGRAPHIC_UNIT),CHARACTER));
         }
-        Boolean noBoundingBox = true;
-        for(GeographicBoundingBox gBB: geoBBs){
-            if(gBB.getSouthLatDub()==-361)
-                continue;
-           noBoundingBox = false;
-        }
-        if(noBoundingBox)
+
+        BoundingBox gbb = gf.getBoundingBox();
+        if(gbb.getLatSouth()==-361||gbb.getLatSouth()==361)
             logger.error("Record with DOI: " + djo.getDOI() + ", got to the creating XML stage without a valid bounding box.");
+        stack.push(root);
+        stack.push(doc.createGMDElement("extent")); //K
+        XMLStack lowerStack = new XMLStack();
+        Element levelL = doc.createGMDElement("EX_extent"); //L
+        //West
+        lowerStack.push(levelL);
+        lowerStack.push(doc.createGMDElement("geographicElement"));
+        lowerStack.push(doc.createGMDElement("EX_GeographicBoundingBox"));
+        lowerStack.push(doc.createGMDElement("westBoundLongitude"));
+        levelL = lowerStack.zip(doc.addGCOVal( Double.toString(gbb.getLongWest()),DECIMAL));
 
+        //East
+        lowerStack.push(levelL);
+        lowerStack.push(doc.createGMDElement("geographicElement"));
+        lowerStack.push(doc.createGMDElement("EX_GeographicBoundingBox"));
+        lowerStack.push(doc.createGMDElement("eastBoundLongitude"));
+        levelL = lowerStack.zip(doc.addGCOVal( Double.toString(gbb.getLongEast()),DECIMAL));
 
+        //North
+        lowerStack.push(levelL);
+        lowerStack.push(doc.createGMDElement("geographicElement"));
+        lowerStack.push(doc.createGMDElement("EX_GeographicBoundingBox"));
+        lowerStack.push(doc.createGMDElement("northBoundLatitude"));
+        levelL = lowerStack.zip(doc.addGCOVal( Double.toString(gbb.getLatNorth()),DECIMAL));
 
+        //South
+        lowerStack.push(levelL);
+        lowerStack.push(doc.createGMDElement("geographicElement"));
+        lowerStack.push(doc.createGMDElement("EX_GeographicBoundingBox"));
+        lowerStack.push(doc.createGMDElement("southBoundLatitude"));
 
-
-
-
+        root = stack.zip(lowerStack.zip(doc.addGCOVal( Double.toString(gbb.getLatSouth()),DECIMAL)));
         return root;
     }
 }
