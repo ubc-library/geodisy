@@ -16,8 +16,6 @@ public class GeographicFields extends MetadataType {
     List<GeographicBoundingBox> geoBBoxes;
     List<GeographicUnit> geoUnits;
     BoundingBox fullBB; //The single bounding box that includes all listed bounding box extents
-    protected String doi;
-    private DataverseJavaObject djo;
     GeoLogger logger = new GeoLogger(this.getClass());
 
     public GeographicFields(DataverseJavaObject djo) {
@@ -218,11 +216,12 @@ public class GeographicFields extends MetadataType {
         box.setLatSouth(south);
         fullBB = box;
     }
-    @Override
+
     public boolean hasBB(){
         return fullBB.getLongWest() != 361;
     }
-    @Override
+
+
     public BoundingBox getBoundingBox(){
         return fullBB;
     }

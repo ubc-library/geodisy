@@ -8,6 +8,7 @@ import org.w3c.dom.Element;
 import java.util.LinkedList;
 
 import static BaseFiles.GeodisyStrings.CHARACTER;
+import static Crosswalking.XML.XMLStrings.*;
 import static Dataverse.DVFieldNameStrings.*;
 import static Dataverse.DVFieldNameStrings.ACCESS_TO_SOURCES;
 
@@ -38,7 +39,7 @@ public class DataQualityInfo extends SubElement {
             stack.push(levelM);
             stack.push(doc.createGMDElement("processStep")); //N
             stack.push(doc.createGMDElement("LI_ProcessStep")); //O
-            stack.push(doc.createGMDElement("description")); //P
+            stack.push(doc.createGMDElement(DESCRIP)); //P
             levelM = stack.zip(doc.addGCOVal(simple.getField(ORIG_OF_SOURCES), CHARACTER));
             levelL.appendChild(levelM);
         }
@@ -47,16 +48,16 @@ public class DataQualityInfo extends SubElement {
             stack.push(levelM);
             stack.push(doc.createGMDElement("source")); //N
             stack.push(doc.createGMDElement("LI_Source")); //O
-            stack.push(doc.createGMDElement("description")); //P
+            stack.push(doc.createGMDElement(DESCRIP)); //P
             levelM = stack.zip(doc.addGCOVal(simple.getField(CHAR_OF_SOURCES), CHARACTER));
             levelL.appendChild(levelM);
         }
         if(!simple.getField(ACCESS_TO_SOURCES).isEmpty()){
             stack = new XMLStack();
             stack.push(levelM);
-            stack.push(doc.createGMDElement("additionalDocumentation"));
-            stack.push(doc.createGMDElement("CI_Citation"));
-            stack.push(doc.createGMDElement("otherCitationDetails"));
+            stack.push(doc.createGMDElement(ADDITIONAL_DOCS));
+            stack.push(doc.createGMDElement(CI_CITE));
+            stack.push(doc.createGMDElement(OTHER_CITE_DEETS));
             levelM = stack.zip(doc.addGCOVal(simple.getField(ACCESS_TO_SOURCES), CHARACTER));
             levelL.appendChild(levelM);
         }

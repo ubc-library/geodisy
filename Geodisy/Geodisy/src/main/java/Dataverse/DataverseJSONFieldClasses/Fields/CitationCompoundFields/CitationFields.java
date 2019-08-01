@@ -1,11 +1,9 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields;
 
 import BaseFiles.GeoLogger;
-import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Date;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
-import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.LinkedList;
@@ -331,18 +329,6 @@ public class CitationFields extends MetadataType {
     public void setDoi(String doi) {
         simpleCitationFields.setField(DOI,doi);
 
-    }
-
-    @Override
-    public boolean hasBB() {
-        logger.debug("Somehow trying to find a bounding box in the citation metadata");
-        return false;
-    }
-
-    @Override
-    public BoundingBox getBoundingBox() {
-        logger.debug("Somehow trying to find a bounding box in the citation metadata");
-        return new BoundingBox();
     }
 
     public List<OtherID> getOtherIDs() {
