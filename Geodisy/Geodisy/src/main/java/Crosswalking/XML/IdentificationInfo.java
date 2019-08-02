@@ -3,6 +3,7 @@ package Crosswalking.XML;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONJournalFieldClasses.JournalFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
 import Dataverse.DataverseJavaObject;
 import org.w3c.dom.Element;
@@ -12,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static BaseFiles.GeodisyStrings.*;
+import static Crosswalking.XML.XMLStrings.*;
 import static Dataverse.DVFieldNameStrings.*;
 import static Dataverse.DVFieldNameStrings.SOFTWARE;
 
@@ -42,6 +44,7 @@ public class IdentificationInfo extends SubElement{
     SimpleCitationFields simpleCF;
     GeographicFields geoCF;
     SocialFields socialCF;
+    JournalFields journalCF;
     String noteText,  distDate;
     XMLStack stack;
 
@@ -51,6 +54,7 @@ public class IdentificationInfo extends SubElement{
         simpleCF = djo.getSimpleFields();
         geoCF = djo.getGeoFields();
         socialCF = djo.getSocialFields();
+        journalCF = djo.getJournalFields();
 
         otherIds= (LinkedList) cf.getListField(OTHER_ID);
         authors = (LinkedList) cf.getListField(AUTHOR);
@@ -78,8 +82,8 @@ public class IdentificationInfo extends SubElement{
     }
     @Override
     public Element getFields() {
-        Element levelI = doc.createGMDElement("identificationInfo");
-        Element levelJ = doc.createGMDElement("MD_DataIdentification");
+        Element levelI = doc.createGMDElement(IDENT_INFO);
+        Element levelJ = doc.createGMDElement(MD_DATA_IDENT);
 
         levelJ.appendChild(getCitation());
         if(descriptions.size()>0){
@@ -116,6 +120,9 @@ public class IdentificationInfo extends SubElement{
         levelJ = getTimePeriods(levelJ);
         GeographicInfo gi = new GeographicInfo(djo, doc, levelJ);
         levelJ = gi.getFields();
+
+        SocialFieldInfo sfi = new SocialFieldInfo(djo, doc, levelJ);
+        levelJ =  sfi.getFields();
         
 
 
@@ -130,28 +137,28 @@ public class IdentificationInfo extends SubElement{
     private Element getTimePeriods(Element levelJ) {
         stack = new XMLStack();
         stack.push(levelJ);
-        stack.push(doc.createGMDElement("extent")); //K
-        stack.push(doc.createGMDElement("EX_Extent")); //L
+        stack.push(doc.createGMDElement(EXTENT)); //K
+        stack.push(doc.createGMDElement(EX_EXTENT)); //L
         stack.push(doc.createGMDElement("temporalElement")); //M
         Element levelN = doc.createGMDElement("EX_TemporalExtent");
         for(TimePeriodCovered tpc: timePeriodCovereds){
             if(!tpc.getTimePeriodCoveredStart().isEmpty()) {
-                Element levelO = doc.createGMDElement("extent");
-                Element levelP = doc.createGMDElement("TimePeriod");
-                Element levelQ = doc.createGMDElement("beginPosition");
+                Element levelO = doc.createGMDElement(EXTENT);
+                Element levelP = doc.createGMDElement(TIME_PERIOD);
+                Element levelQ = doc.createGMDElement(BEGIN_POSITION);
                 levelQ.setTextContent(tpc.getTimePeriodCoveredStart());
                 levelP.appendChild(levelQ);
                 if(!tpc.getTimePeriodCoveredEnd().isEmpty()){
-                    levelQ = doc.createGMDElement("endPosition");
+                    levelQ = doc.createGMDElement(END_POSITION);
                     levelQ.setTextContent(tpc.getTimePeriodCoveredEnd());
                     levelP.appendChild(levelQ);
                 }
                 levelO.appendChild(levelP);
                 levelN.appendChild(levelO);
             }else{
-                Element levelO = doc.createGMDElement("extent");
-                Element levelP = doc.createGMDElement("TimePeriod");
-                Element levelQ = doc.createGMDElement("endPosition");
+                Element levelO = doc.createGMDElement(EXTENT);
+                Element levelP = doc.createGMDElement(TIME_PERIOD);
+                Element levelQ = doc.createGMDElement(END_POSITION);
                 levelQ.setTextContent(tpc.getTimePeriodCoveredEnd());
                 levelP.appendChild(levelQ);
                 levelO.appendChild(levelP);
@@ -160,22 +167,22 @@ public class IdentificationInfo extends SubElement{
         }
         for(DateOfCollection dc: datesOfCollection){
             if(!dc.getDateOfCollectionStart().isEmpty()) {
-                Element levelO = doc.createGMDElement("extent");
-                Element levelP = doc.createGMDElement("TimePeriod");
-                Element levelQ = doc.createGMDElement("beginPosition");
+                Element levelO = doc.createGMDElement(EXTENT);
+                Element levelP = doc.createGMDElement(TIME_PERIOD);
+                Element levelQ = doc.createGMDElement(BEGIN_POSITION);
                 levelQ.setTextContent(dc.getDateOfCollectionStart());
                 levelP.appendChild(levelQ);
                 if(!dc.getDateOfCollectionEnd().isEmpty()){
-                    levelQ = doc.createGMDElement("endPosition");
+                    levelQ = doc.createGMDElement(END_POSITION);
                     levelQ.setTextContent(dc.getDateOfCollectionEnd());
                     levelP.appendChild(levelQ);
                 }
                 levelO.appendChild(levelP);
                 levelN.appendChild(levelO);
             }else{
-                Element levelO = doc.createGMDElement("extent");
-                Element levelP = doc.createGMDElement("TimePeriod");
-                Element levelQ = doc.createGMDElement("endPosition");
+                Element levelO = doc.createGMDElement(EXTENT);
+                Element levelP = doc.createGMDElement(TIME_PERIOD);
+                Element levelQ = doc.createGMDElement(END_POSITION);
                 levelQ.setTextContent(dc.getDateOfCollectionEnd());
                 levelP.appendChild(levelQ);
                 levelO.appendChild(levelP);
@@ -214,29 +221,29 @@ public class IdentificationInfo extends SubElement{
     private Element getAdditionalDocs(Element levelJ) {
         stack = new XMLStack();
         stack.push(levelJ);
-        stack.push(doc.createGMDElement("additionalDocumentation")); //K
-        Element levelL = doc.createGMDElement("CI_Citation");
+        stack.push(doc.createGMDElement(ADDITIONAL_DOCS)); //K
+        Element levelL = doc.createGMDElement(CI_CITE);
         if(series != null) {
             Element levelM = doc.createGMDElement("series");
             Element levelN = doc.createGMDElement("CI_Series");
-            Element levelO = doc.createGMDElement("name");
+            Element levelO = doc.createGMDElement(NAME);
             levelO.appendChild(doc.addGCOVal(series.getSeriesName(),CHARACTER));
             levelN.appendChild(levelO);
             levelM.appendChild(levelN);
             levelL.appendChild(levelM);
         }
         for(String s: relatedMaterials) {
-            Element levelM = doc.createGMDElement("otherCitationDetails");
+            Element levelM = doc.createGMDElement(OTHER_CITE_DEETS);
             levelM.appendChild(doc.addGCOVal(s,CHARACTER));
             levelL.appendChild(levelM);
         }
         for(String s: relatedDatasets) {
-            Element levelM = doc.createGMDElement("otherCitationDetails");
+            Element levelM = doc.createGMDElement(OTHER_CITE_DEETS);
             levelM.appendChild(doc.addGCOVal(s,CHARACTER));
             levelL.appendChild(levelM);
         }
         for(String s: otherReferences) {
-            Element levelM = doc.createGMDElement("otherCitationDetails");
+            Element levelM = doc.createGMDElement(OTHER_CITE_DEETS);
             levelM.appendChild(doc.addGCOVal(s,CHARACTER));
             levelL.appendChild(levelM);
         }
@@ -274,26 +281,26 @@ public class IdentificationInfo extends SubElement{
     }
 
     private Element getRelatedPubs(Element levelJ) {
-        Element levelK = doc.createGMDElement("additionalDocumentation");
-        Element levelL = doc.createGMDElement("CI_Citation");
+        Element levelK = doc.createGMDElement(ADDITIONAL_DOCS);
+        Element levelL = doc.createGMDElement(CI_CITE);
         for(RelatedPublication rp: relatedPublications){
-            Element levelM = doc.createGMDElement("otherCitationDetails");
+            Element levelM = doc.createGMDElement(OTHER_CITE_DEETS);
             levelM.appendChild(doc.addGCOVal(rp.getPublicationCitation(),CHARACTER));
             levelL.appendChild(levelM);
             if(!rp.getPublicationIDType().isEmpty()||!rp.getPublicationIDNumber().isEmpty()){
-                levelM = doc.createGMDElement("identifier");
+                levelM = doc.createGMDElement(IDENT);
                 Element levelN;
                 Element levelO;
                 if(!rp.getPublicationIDType().isEmpty()){
-                    levelN = doc.createGMDElement("MD_Identifier");
+                    levelN = doc.createGMDElement(MD_IDENT);
                     levelO = doc.createGMDElement("codeSpace");
                     levelO.appendChild(doc.addGCOVal(rp.getPublicationIDType(),CHARACTER));
                     levelN.appendChild(levelO);
                     levelM.appendChild(levelN);
                 }
                 if(!rp.getPublicationIDNumber().isEmpty()){
-                    levelN = doc.createGMDElement("MD_Identifier");
-                    levelO = doc.createGMDElement("code");
+                    levelN = doc.createGMDElement(MD_IDENT);
+                    levelO = doc.createGMDElement(CODE);
                     levelO.appendChild(doc.addGCOVal(rp.getPublicationIDNumber(),CHARACTER));
                     levelN.appendChild(levelO);
                     levelM.appendChild(levelN);
@@ -304,10 +311,10 @@ public class IdentificationInfo extends SubElement{
             if(!rp.getPublicationURL().isEmpty()){
                 stack = new XMLStack();
                 stack.push(levelK);
-                stack.push(doc.createGMDElement("CI_Citation")); //L
-                stack.push(doc.createGMDElement("onlineResource")); //M
-                stack.push(doc.createGMDElement("CI_OnlineResource")); //N
-                Element levelO = doc.createGMDElement("linkage");
+                stack.push(doc.createGMDElement(CI_CITE)); //L
+                stack.push(doc.createGMDElement(ONLINE_RES)); //M
+                stack.push(doc.createGMDElement(CI_ONLINE_RES)); //N
+                Element levelO = doc.createGMDElement(LINKAGE);
                 levelO.appendChild(doc.addGCOVal(rp.getPublicationURL(),CHARACTER));
                 levelK = stack.zip(levelO);
             }
@@ -335,7 +342,7 @@ public class IdentificationInfo extends SubElement{
             }
             if(!k.getKeywordVocabulary().isEmpty()){
                 levelM = doc.createGMDElement("thesaurusName");
-                levelN = doc.createGMDElement("CI_Citation");
+                levelN = doc.createGMDElement(CI_CITE);
                 levelO = doc.createGMDElement("title");
                 levelO.appendChild(doc.addGCOVal(k.getKeywordVocabulary(),CHARACTER));
                 levelN.appendChild(levelO);
@@ -374,15 +381,15 @@ public class IdentificationInfo extends SubElement{
             stack = new XMLStack();
             if(!tc.getTopicClassVocab().isEmpty()){
                 levelM = doc.createGMDElement("thesaurusName");
-                levelN = doc.createGMDElement("CI_Citation");
+                levelN = doc.createGMDElement(CI_CITE);
                 levelO = doc.createGMDElement("title");
                 levelO.appendChild(doc.addGCOVal(tc.getTopicClassVocab(),CHARACTER));
                 levelN.appendChild(levelO);
                 if(!tc.getTopicClassVocabURL().isEmpty()){
                     stack.push(levelN); //N
-                    stack.push(doc.createGMDElement("onlineResource")); //O
-                    stack.push(doc.createGMDElement("CI_OnlineResource")); //P
-                    levelQ = doc.createGMDElement("linkage");
+                    stack.push(doc.createGMDElement(ONLINE_RES)); //O
+                    stack.push(doc.createGMDElement(CI_ONLINE_RES)); //P
+                    levelQ = doc.createGMDElement(LINKAGE);
                     levelQ.appendChild(doc.addGCOVal(tc.getTopicClassVocabURL(),CHARACTER));
                     levelN = stack.zip(levelQ);
 
@@ -409,25 +416,25 @@ public class IdentificationInfo extends SubElement{
 
     private Element getPointOfContact() {
         List<DatasetContact> datasetContacts = (LinkedList) cf.getListField(DS_CONTACT);
-        Element levelK = doc.createGMDElement("pointOfContact");
-        Element levelL = doc.create_Element("CI_Responsibility");
+        Element levelK = doc.createGMDElement(P_OF_CONTACT);
+        Element levelL = doc.create_Element(CI_RESPONSIBILITY);
         Element levelM;
         stack = new XMLStack();
         for(DatasetContact dc: datasetContacts) {
-            levelM = doc.createGMDElement("party");
+            levelM = doc.createGMDElement(PARTY);
             String dsContactName = dc.getDatasetContactName();
             String dsContactEmail = dc.getDatasetContactEmail();
             if(!dsContactName.isEmpty()||!dsContactEmail.isEmpty()) {
-                Element levelN = doc.createGMDElement("CI_Individual");
+                Element levelN = doc.createGMDElement(CI_INDIV);
                 if(!dsContactName.isEmpty()){
-                    Element levelO = doc.createGMDElement("name");
+                    Element levelO = doc.createGMDElement(NAME);
                     levelO.appendChild(doc.addGCOVal(dsContactName,CHARACTER));
                     levelN.appendChild(levelO);
                 }
                 if(!dsContactEmail.isEmpty()){
                     stack.push(levelN);
                     stack = doc.createGMDElement("contactInfo", stack); //O
-                    stack = doc.createGMDElement("CI_Contact", stack); //P
+                    stack = doc.createGMDElement(CI_CITE, stack); //P
                     stack = doc.createGMDElement("address", stack); //Q
                     stack = doc.createGMDElement("CI_Address", stack); //R
                     stack = doc.createGMDElement("electronicMailAddress", stack); //S
@@ -439,15 +446,15 @@ public class IdentificationInfo extends SubElement{
             String dsContactAffil = dc.getDatasetContactAffiliation();
             String dsPublisher = djo.getSimpleFieldVal(PUBLISHER);
             if(!dsContactAffil.isEmpty()||!dsPublisher.isEmpty()){
-                Element levelN = doc.createGMDElement("CI_Organisation");
+                Element levelN = doc.createGMDElement(CI_ORG);
                 Element levelO;
                 if(!dsContactAffil.isEmpty()){
-                    levelO = doc.createGMDElement("name");
+                    levelO = doc.createGMDElement(NAME);
                     levelO.appendChild(doc.addGCOVal(dsContactAffil,CHARACTER));
                     levelN.appendChild(levelO);
                 }
                 if(!dsPublisher.isEmpty()){
-                    levelO = doc.createGMDElement("name");
+                    levelO = doc.createGMDElement(NAME);
                     levelO.appendChild(doc.addGCOVal(dsPublisher,CHARACTER));
                     levelN.appendChild(levelO);
                 }
@@ -455,7 +462,7 @@ public class IdentificationInfo extends SubElement{
             }
             levelL.appendChild(levelM);
         }
-        levelL.appendChild(levelRoleCode("pointOfContact"));
+        levelL.appendChild(levelRoleCode(P_OF_CONTACT));
         levelL = getProducer(levelL);
         levelK.appendChild(levelL);
         return levelK;
@@ -464,36 +471,36 @@ public class IdentificationInfo extends SubElement{
     private Element getProducer(Element levelL) {
         Element levelM = null;
         for(Producer p: producers){
-            levelM = doc.createGMDElement("party");
+            levelM = doc.createGMDElement(PARTY);
             Element levelN;
             stack = new XMLStack();
             if(!p.getProducerName().isEmpty()) {
                 stack.push(levelM);
-                stack = doc.createGMDElement("CI_Individual", stack); //N
-                stack = doc.createGMDElement("name", stack); //O
+                stack = doc.createGMDElement(CI_INDIV, stack); //N
+                stack = doc.createGMDElement(NAME, stack); //O
                 levelM = stack.zip(doc.addGCOVal(p.getProducerName(), CHARACTER));
             }
             if(!p.getProducerAffiliation().isEmpty()||!p.getProducerURL().isEmpty()||!p.getProducerLogoURL().isEmpty()) {
-                levelN = doc.createGMDElement("CI_Organisation");
+                levelN = doc.createGMDElement(CI_ORG);
                 if (!p.getProducerAffiliation().isEmpty()) {
                     stack.push(levelN);
-                    stack = doc.createGMDElement("name", stack); //O
+                    stack = doc.createGMDElement(NAME, stack); //O
                     levelN = stack.zip(doc.addGCOVal(p.getProducerAffiliation(), CHARACTER));
                 }
                 if (!p.getProducerURL().isEmpty()) {
                     stack.push(levelN);
                     stack = doc.createGMDElement("contactInfo", stack); //O
-                    stack = doc.createGMDElement("CI_Contact", stack); //P
-                    stack = doc.createGMDElement("onlineResource", stack); //Q
-                    stack = doc.createGMDElement("CI_OnlineResource", stack); //R
-                    stack = doc.createGMDElement("linkage", stack); //S
+                    stack = doc.createGMDElement(CI_CITE, stack); //P
+                    stack = doc.createGMDElement(ONLINE_RES, stack); //Q
+                    stack = doc.createGMDElement(CI_ONLINE_RES, stack); //R
+                    stack = doc.createGMDElement(LINKAGE, stack); //S
                     levelN = stack.zip(doc.addGCOVal(p.getProducerURL(), CHARACTER));
                 }
                 if (!p.getProducerLogoURL().isEmpty()) {
                     stack.push(levelN);
                     stack = doc.createGMDElement("logo",stack); //O
                     stack = doc.createGMDElement("MD_BrowseGraphic",stack); //P
-                    stack = doc.createGMDElement("linkage", stack); //Q
+                    stack = doc.createGMDElement(LINKAGE, stack); //Q
                     levelN = stack.zip(doc.addGCOVal(p.getProducerLogoURL(), CHARACTER));
                 }
                 levelM.appendChild(levelN);
@@ -509,7 +516,7 @@ public class IdentificationInfo extends SubElement{
 
     private Element getCitation() {
         Element levelK = doc.createGMDElement("citation");
-        Element levelL = doc.createGMDElement("CI_Citation");
+        Element levelL = doc.createGMDElement(CI_CITE);
         levelL.appendChild(getDOI());
         //System generated Dates/Info
         levelL = getSystemVals(levelL);
@@ -544,13 +551,13 @@ public class IdentificationInfo extends SubElement{
 
     private Element getSystemVals(Element levelL) {
         stack = new XMLStack();
-        Element levelM = doc.createGMDElement("date");
+        Element levelM = doc.createGMDElement(XMLDATE);
         stack.push(levelM);
-        stack.push(doc.createGMDElement("CI_Date")); //N
-        stack.push(doc.createGMDElement("date")); //O
+        stack.push(doc.createGMDElement(CI_DATE)); //N
+        stack.push(doc.createGMDElement(XMLDATE)); //O
         levelM = stack.zip(doc.addGCOVal(simpleCF.getField(PUB_DATE),DATE_TIME));
         stack.push(levelM);
-        stack.push(doc.createGMDElement("CI_Date")); //N
+        stack.push(doc.createGMDElement(CI_DATE)); //N
         levelM = stack.zip(doc.addGMDVal("publication","CI_DateTypeCode" ));
         levelL.appendChild(levelM);
 
@@ -562,13 +569,13 @@ public class IdentificationInfo extends SubElement{
         levelM = doc.createGMDElement("editionDate");
         //version date
         stack.push(levelM);
-        stack.push(doc.createGMDElement("CI_Date")); //N
-        stack.push(doc.createGMDElement("date")); //O
+        stack.push(doc.createGMDElement(CI_DATE)); //N
+        stack.push(doc.createGMDElement(XMLDATE)); //O
         levelM = stack.zip(doc.addGCOVal(simpleCF.getField(DIST_DATE),CHARACTER));
         levelL.appendChild(levelM);
         levelM = doc.createGMDElement("editionDate");
         stack.push(levelM);
-        stack.push(doc.createGMDElement("CI_Date"));
+        stack.push(doc.createGMDElement(CI_DATE));
         levelM = stack.zip(doc.addGMDVal("lastUpdate","CI_DateTypeCode" ));
         levelL.appendChild(levelM);
         return levelL;
@@ -576,9 +583,9 @@ public class IdentificationInfo extends SubElement{
 
     private Element getDOI() {
         stack = new XMLStack();
-        stack.push(doc.createGMDElement("identifier")); //M
-        stack.push(doc.createGMDElement("MD_Identifier")); //N
-        stack.push(doc.createGMDElement("code")); //O
+        stack.push(doc.createGMDElement(IDENT)); //M
+        stack.push(doc.createGMDElement(MD_IDENT)); //N
+        stack.push(doc.createGMDElement(CODE)); //O
         return stack.zip(doc.addGCOVal(djo.getDOI(),CHARACTER));
     }
 
@@ -586,29 +593,29 @@ public class IdentificationInfo extends SubElement{
         Element levelM = doc.createGMDElement("citeResponsibleParty");
         Element levelN = null;
         for(Author a: authors){
-            levelN = doc.createGMDElement("CI_Responsibility");
-            Element levelO = doc.createGMDElement("party");
-            Element levelP =  doc.createGMDElement("CI_Individual");
+            levelN = doc.createGMDElement(CI_RESPONSIBILITY);
+            Element levelO = doc.createGMDElement(PARTY);
+            Element levelP =  doc.createGMDElement(CI_INDIV);
             Element levelQ;
             Element levelR;
             Element levelS;
             if(!a.getField(AUTHOR_NAME).isEmpty()) {
-                levelQ = doc.createGMDElement("name");
+                levelQ = doc.createGMDElement(NAME);
                 levelQ.appendChild(doc.addGCOVal(a.getField(AUTHOR_NAME), CHARACTER));
                 levelP.appendChild(levelQ);
             }
             String authorIDScheme = a.getField(AUTHOR_ID_SCHEME);
             String authorID = a.getField(AUTHOR_ID);
             if(!authorIDScheme.isEmpty()||!authorID.isEmpty()) {
-                levelQ = doc.createGMDElement("partyIdentifier");
-                levelR = doc.createGMDElement("MD_Identifier");
+                levelQ = doc.createGMDElement(PARTY_IDENT);
+                levelR = doc.createGMDElement(MD_IDENT);
                 if(!authorIDScheme.isEmpty()) {
                     levelS = doc.createGMDElement("codeSpace");
                     levelS.appendChild(doc.addGCOVal(authorIDScheme, CHARACTER));
                     levelR.appendChild(levelS);
                 }
                 if(!authorID.isEmpty()){
-                    levelS = doc.createGMDElement("code");
+                    levelS = doc.createGMDElement(CODE);
                     levelS.appendChild(doc.addGCOVal(authorID,CHARACTER));
                     levelR.appendChild(levelS);
                 }
@@ -618,9 +625,9 @@ public class IdentificationInfo extends SubElement{
             levelO.appendChild(levelP);
             levelN.appendChild(levelO);
             if(!a.getField(AUTHOR_AFFIL).isEmpty()) {
-                levelO = doc.createGMDElement("party");
-                levelP = doc.createGMDElement("CI_Organisation");
-                levelQ = doc.createGMDElement("name");
+                levelO = doc.createGMDElement(PARTY);
+                levelP = doc.createGMDElement(CI_ORG);
+                levelQ = doc.createGMDElement(NAME);
                 levelQ.appendChild(doc.addGCOVal(a.getField(AUTHOR_AFFIL), CHARACTER));
                 levelP.appendChild(levelQ);
                 levelO.appendChild(levelP);
@@ -628,7 +635,7 @@ public class IdentificationInfo extends SubElement{
             }
             levelM.appendChild(levelN);
         }
-        levelN = doc.createGMDElement("CI_Responsibility");
+        levelN = doc.createGMDElement(CI_RESPONSIBILITY);
         levelN.appendChild(levelRoleCode("author"));
         levelM.appendChild(levelN);
         return levelM;
@@ -636,8 +643,8 @@ public class IdentificationInfo extends SubElement{
 
 
     private Element getOnlineResource(Element onlineResouce, String altUrlVal) {
-        Element ciOnline = doc.createGMDElement("CI_OnlineResource");
-        Element linkage = doc.createGMDElement("linkage");
+        Element ciOnline = doc.createGMDElement(CI_ONLINE_RES);
+        Element linkage = doc.createGMDElement(LINKAGE);
         Element url = doc.createGMDElement("URL");
         url.setTextContent(altUrlVal);
         linkage.appendChild(url);
@@ -649,38 +656,38 @@ public class IdentificationInfo extends SubElement{
     //TODO
     private Element getOtherIds() {
         XMLStack outerStack = new XMLStack();
-        Element levelM = doc.createGMDElement("identifier");
-        Element levelN =  doc.createGMDElement("MD_Identifier");
+        Element levelM = doc.createGMDElement(IDENT);
+        Element levelN =  doc.createGMDElement(MD_IDENT);
         Element levelO = doc.createGMDElement("authority");
-        Element levelP = doc.createGMDElement("CI_Citation");
+        Element levelP = doc.createGMDElement(CI_CITE);
         Element levelQ = doc.createGMDElement("citedResponsibility");
         outerStack.push(levelM);
         outerStack.push(levelN);
         outerStack.push(levelO);
         outerStack.push(levelP);
         outerStack.push(levelQ);
-        Element levelR = doc.createGMDElement("CI_Responsibility");
+        Element levelR = doc.createGMDElement(CI_RESPONSIBILITY);
         List<OtherID> otherIDS = djo.getCitationFields().getOtherIDs();
         for(OtherID otherID: otherIDS) {
             stack = new XMLStack();
-            Element levelS = doc.createGMDElement("party");
-            Element levelT = doc.createGMDElement("CI_Organisation");
+            Element levelS = doc.createGMDElement(PARTY);
+            Element levelT = doc.createGMDElement(CI_ORG);
             stack.push(levelT);
             if (!otherID.getOtherIdAgency().isEmpty()) {
-                stack.push(doc.createGMDElement("name")); //U
+                stack.push(doc.createGMDElement(NAME)); //U
                 levelT = stack.zip(doc.addGCOVal(otherID.getOtherIdAgency(), CHARACTER));
                 if (!otherID.getOtherIdValue().isEmpty()) {
                     stack.push(levelT);
-                    stack.push(doc.createGMDElement("partyIdentifier")); //U
-                    stack.push(doc.createGMDElement("MD_Identifier")); //V
-                    stack.push(doc.createGMDElement("code"));//W
+                    stack.push(doc.createGMDElement(PARTY_IDENT)); //U
+                    stack.push(doc.createGMDElement(MD_IDENT)); //V
+                    stack.push(doc.createGMDElement(CODE));//W
                     levelT = stack.zip(doc.addGCOVal(otherID.getOtherIdValue(), CHARACTER));
                 }
             } else if (!otherID.getOtherIdValue().isEmpty()) {
 
-                stack.push(doc.createGMDElement("partyIdentifier")); //U
-                stack.push(doc.createGMDElement("MD_Identifier")); //V
-                stack.push(doc.createGMDElement("code")); //W
+                stack.push(doc.createGMDElement(PARTY_IDENT)); //U
+                stack.push(doc.createGMDElement(MD_IDENT)); //V
+                stack.push(doc.createGMDElement(CODE)); //W
                 levelT = stack.zip(doc.addGCOVal(otherID.getOtherIdValue(), CHARACTER));
             }
             levelS.appendChild(levelT);

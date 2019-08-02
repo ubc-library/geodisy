@@ -2,6 +2,7 @@ package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONJournalFieldClas
 
 import BaseFiles.GeoLogger;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
+import Dataverse.DataverseJavaObject;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,13 +17,21 @@ import static Dataverse.DVFieldNameStrings.*;
 public class JournalFields extends MetadataType {
     private String journalArticleType;
     private List<JournalVolIssue> journalVolIssues;
-    protected String doi;
+
+
     private GeoLogger logger = new GeoLogger(JournalFields.class);
 
-    public JournalFields(String doi) {
+    public JournalFields(DataverseJavaObject djo) {
+        this.djo = djo;
+        this.doi = djo.getDOI();
         this.journalArticleType = "";
         this.journalVolIssues = new LinkedList<>();
-        this.doi = doi;
+    }
+
+    //placeholder JournalField
+    public JournalFields() {
+        this.journalArticleType = "";
+        this.journalVolIssues = new LinkedList<>();
     }
 
     @Override
@@ -52,15 +61,6 @@ public class JournalFields extends MetadataType {
         return new LinkedList();
     }
 
-    public String getField(String fieldName){
-        if(fieldName.equals(JOURNAL_ARTICLE_TYPE))
-            return journalArticleType;
-        if(fieldName.equals("doi"))
-            return doi;
-        logger.error("Tried to get a field, " + fieldName +", that either isn't a String or isn't a real field");
-        return "Error getting value from Journal Fields";
-    }
-
     @Override
     public String getDoi() {
         return doi;
@@ -71,15 +71,11 @@ public class JournalFields extends MetadataType {
         this.doi = doi;
     }
 
-    @Override
-    public boolean hasBB() {
-        logger.error("Tried to get a bounding box from Journal metadata with doi: " + doi);
-        return false;
-    }
 
-    @Override
-    public BoundingBox getBoundingBox() {
-        logger.error("Tried to get a bounding box from Journal metadata with doi: " + doi);
-        return new BoundingBox();
+    public String getField(String fieldName){
+        if(fieldName.equals(JOURNAL_ARTICLE_TYPE))
+            return journalArticleType;
+        logger.error("Tried to get a field, " + fieldName +", that either isn't a String or isn't a real field");
+        return "Error getting value from Journal Fields";
     }
 }

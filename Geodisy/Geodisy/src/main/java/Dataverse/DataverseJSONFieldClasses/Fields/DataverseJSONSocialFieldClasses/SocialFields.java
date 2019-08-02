@@ -2,6 +2,7 @@ package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClass
 
 import BaseFiles.GeoLogger;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
+import Dataverse.DataverseJavaObject;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,14 +17,20 @@ public class SocialFields extends MetadataType {
     private SimpleSocialFields simpleSocialFields;
     private TargetSampleSize targetSampleSize;
     private SocialScienceNotes socialScienceNotes;
-    protected String doi;
     private GeoLogger logger = new GeoLogger(this.getClass());
 
-    public SocialFields(String doi) {
+    public SocialFields(DataverseJavaObject djo) {
+        this.djo = djo;
+        this.doi = djo.getDOI();
         this.simpleSocialFields = new SimpleSocialFields();
         this.targetSampleSize = new TargetSampleSize();
         this.socialScienceNotes = new SocialScienceNotes();
-        this.doi = doi;
+    }
+    //Placeholder constructor
+    public SocialFields() {
+        this.simpleSocialFields = new SimpleSocialFields();
+        this.targetSampleSize = new TargetSampleSize();
+        this.socialScienceNotes = new SocialScienceNotes();
     }
 
     @Override
@@ -60,13 +67,4 @@ public class SocialFields extends MetadataType {
         this.doi=doi;
     }
 
-    @Override
-    public boolean hasBB() {
-        logger.error("Tried to access the bounding box in the social metadata fields"); return false;
-    }
-
-    @Override
-    public BoundingBox getBoundingBox() {
-        logger.error("Tried to access the bounding box in the social metadata fields"); return null;
-    }
 }

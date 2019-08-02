@@ -44,7 +44,7 @@ public class DataverseJavaObject extends SourceJavaObject {
         }
         hasContent=true;
         geoFields = new GeographicFields(this);
-        socialFields = new SocialFields(citationFields.getDOI());
+        socialFields = new SocialFields(this);
     }
 
     /**
@@ -82,7 +82,24 @@ public class DataverseJavaObject extends SourceJavaObject {
                 }
         }
     }
+    //TODO fill this method
+    @Override
+    public void parseSocialFields(JSONArray socialFieldsArray){
+        for(Object o: socialFieldsArray){
+            JSONObject jo = (JSONObject) o;
+            this.socialFields.setFields(jo);
+        }
 
+    }
+
+    //TODO fill this method
+    @Override
+    public void parseJournalFields(JSONArray journalFieldsArray) {
+        for (Object o : journalFieldsArray) {
+            JSONObject jo = (JSONObject) o;
+            this.journalFields.setFields(jo);
+        }
+    }
     /**
      * Gets the File metadata for the record.
      * @param fileFieldsArray
