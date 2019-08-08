@@ -224,7 +224,7 @@ public class DVFieldNameStrings {
     public final static String UNIVERSE = "universe";
     public final static String TIME_METHOD = "timeMethod";
     public final static String DATA_COLLECTOR = "dataCollector";
-    public final static String COLLECTOR_TRAINER = "collectorTrainer";
+    public final static String COLLECTOR_TRAINING = "collectorTraining";
     public final static String FREQUENCY_OF_DATA_COLLECTION = "frequencyOfDataCollection";
     public final static String SAMPLING_PROCEDURE = "samplingProcedure";
     public final static String TARGET_SAMPLE_SIZE_FIELDS = "targetSampleSize";
@@ -234,17 +234,18 @@ public class DVFieldNameStrings {
     public final static String COLLECTION_MODE = "collectionMode";
     public final static String RESEARCH_INSTRUMENT = "researchInstrument";
     public final static String DATA_COLLECTION_SITUATION = "dataCollectionSituation";
-    public final static String ACTIONS_TO_MINIMIZE_LOSS = "actionsToMimimizeLoss";
+    public final static String ACTIONS_TO_MINIMIZE_LOSS = "actionsToMinimizeLoss";
     public final static String CONTROL_OPERATIONS = "controlOperations";
     public final static String WEIGHTING = "weighting";
     public final static String CLEANING_OPERATIONS = "cleaningOperations";
     public final static String DATASET_LEVEL_ERROR_NOTES = "datasetLevelErrorNotes";
     public final static String RESPONSE_RATE = "responseRate";
-    public final static String SAMPLING_ERROR_ESTIMATES = "samplingErrorEstimate";
+    public final static String SAMPLING_ERROR_ESTIMATES = "samplingErrorEstimates";
     public final static String OTHER_DATA_APPRAISAL = "otherDataAppraisal";
     public final static String SOCIAL_SCIENCE_NOTES_FIELDS = "socialScienceNotes";
     public final static String SOCIAL_SCIENCE_NOTES_TYPE = "socialScienceNotesType";
     public final static String SOCIAL_SCIENCE_NOTES_SUBJECT = "socialScienceNotesSubject";
     public final static String SOCIAL_SCIENCE_NOTES_TEXT = "socialScienceNotesText";
+    public final static List<String> SOCIAL_SIENCE_NOTES_ALL_FIELDS = Arrays.asList(SOCIAL_SCIENCE_NOTES_TEXT, SOCIAL_SCIENCE_NOTES_SUBJECT,SOCIAL_SCIENCE_NOTES_TEXT);
     public final static String SOCIAL_SCIENCE = "socialscience";
 }

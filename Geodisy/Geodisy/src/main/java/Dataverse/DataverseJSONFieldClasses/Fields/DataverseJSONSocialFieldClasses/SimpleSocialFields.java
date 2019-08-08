@@ -52,7 +52,7 @@ public class SimpleSocialFields extends CompoundJSONField {
                 case DATA_COLLECTOR:
                     this.dataCollector = val;
                     break;
-                case COLLECTOR_TRAINER:
+                case COLLECTOR_TRAINING:
                     this.collectorTraining = val;
                     break;
                 case FREQUENCY_OF_DATA_COLLECTION:
@@ -121,7 +121,7 @@ public class SimpleSocialFields extends CompoundJSONField {
         switch (fieldName) {
             case TIME_METHOD: return timeMethod;
             case DATA_COLLECTOR: return dataCollector;
-            case COLLECTOR_TRAINER: return collectorTraining;
+            case COLLECTOR_TRAINING: return collectorTraining;
             case FREQUENCY_OF_DATA_COLLECTION: return frequencyOfDataCollection;
             case SAMPLING_PROCEDURE: return samplingProcedure;
             case DEVIATIONS_FROM_SAMPLE_DESIGN: return deviationsFromSampleDesign;
