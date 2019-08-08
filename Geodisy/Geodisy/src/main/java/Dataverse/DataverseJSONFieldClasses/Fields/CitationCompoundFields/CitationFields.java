@@ -3,14 +3,15 @@ package Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields;
 import BaseFiles.GeoLogger;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Date;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
-import Dataverse.DataverseJSONFieldClasses.MetadataType;
+
+import Dataverse.DataverseJSONFieldClasses.MetadataWSimple;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 import static Dataverse.DVFieldNameStrings.*;
 
-public class CitationFields extends MetadataType {
+public class CitationFields extends MetadataWSimple {
     private SimpleCitationFields simpleCitationFields;
     private List<OtherID> otherIDs;
     private List<Author> authors;
@@ -215,6 +216,14 @@ public class CitationFields extends MetadataType {
             simpleCitationFields.setField(label, value);
         }
     }
+    @Override
+    public String getField(String fieldName) {
+        if(SIMPLE_FIELD_NAMES.contains(fieldName))
+            return simpleCitationFields.getField(fieldName);
+        else
+            logger.error("Asking for a fieldname that doesn't exist here");
+        return null;
+    }
 
     public void setBaseFields(JSONObject current){
 
@@ -315,6 +324,7 @@ public class CitationFields extends MetadataType {
                 return new LinkedList();
         }
     }
+
 
     public Series getSeries(){
         return series;

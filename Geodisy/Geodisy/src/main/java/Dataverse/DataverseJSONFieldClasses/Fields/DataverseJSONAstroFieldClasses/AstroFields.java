@@ -2,6 +2,7 @@ package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONAstroFieldClasse
 
 import BaseFiles.GeoLogger;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
+import Dataverse.DataverseJSONFieldClasses.MetadataWSimple;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +14,7 @@ import java.util.List;
 
 import static Dataverse.DVFieldNameStrings.*;
 
-public class AstroFields extends MetadataType {
+public class AstroFields extends MetadataWSimple {
     private SimpleAstroFields simpleAstroFields;
     private Spatial spatialFields;
     private Spectral spectralFields;
@@ -46,7 +47,7 @@ public class AstroFields extends MetadataType {
         else
             simpleAstroFields.setFields((JSONArray) val);
     }
-
+    @Override
     public String getField(String field){
         String fieldName = field.toLowerCase();
         if(fieldName.contains(REDSHIFT_FIELDS))
@@ -82,15 +83,5 @@ public class AstroFields extends MetadataType {
         this.doi = doi;
     }
 
-    @Override
-    public boolean hasBB() {
-        logger.error("Somehow the AstroFields got called for a bounding box check.");
-        return false;
-    }
 
-    @Override
-    public BoundingBox getBoundingBox() {
-        logger.error("Somehow the AstroFields got called for a bounding box.");
-        return new BoundingBox();
-    }
 }
