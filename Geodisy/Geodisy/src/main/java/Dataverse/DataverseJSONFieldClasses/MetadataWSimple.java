@@ -1,4 +1,5 @@
 package Dataverse.DataverseJSONFieldClasses;
 
-public class MetadataWSimple {
+public abstract class MetadataWSimple extends MetadataType{
+    public abstract String getField(String fieldName);
 }
