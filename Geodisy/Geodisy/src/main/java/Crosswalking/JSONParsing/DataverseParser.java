@@ -54,8 +54,9 @@ public class DataverseParser implements JSONParser {
             }
             if(metadata.has(SOCIAL_SCIENCE))
                 dJO.parseSocialFields(metadata.getJSONObject(SOCIAL_SCIENCE).getJSONArray(FIELDS));
-            if(metadata.has(JOURNAL_FIELDS))
-                dJO.parseJournalFields(metadata.getJSONObject(JOURNAL_FIELDS).getJSONArray(FIELDS));
+            //Doesn't make sense to use these fields; will check with team
+            /*if(metadata.has(JOURNAL_FIELDS))
+                dJO.parseJournalFields(metadata.getJSONObject(JOURNAL_FIELDS).getJSONArray(FIELDS));*/
             if(dJO.getVersionSection(current).has("files"))
                 dJO.parseFiles((JSONArray) dJO.getVersionSection(current).get("files"));
         }catch (JSONException e){

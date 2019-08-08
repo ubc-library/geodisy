@@ -18,7 +18,7 @@ public abstract class SourceJavaObject {
     protected CitationFields citationFields;
     protected GeographicFields geoFields;
     protected SocialFields socialFields;
-    protected JournalFields journalFields;
+    //protected JournalFields journalFields;
     protected List<DataverseRecordFile> dataFiles; //Stores the datafiles
     protected String server;
     protected boolean hasContent;
@@ -36,7 +36,7 @@ public abstract class SourceJavaObject {
         this.dataFiles = new LinkedList<>();
         this.geoFields = new GeographicFields();
         this.socialFields = new SocialFields();
-        this.journalFields = new JournalFields();
+        //this.journalFields = new JournalFields();
         this.server = server;
         hasContent = false;
     }
@@ -148,5 +148,5 @@ public abstract class SourceJavaObject {
         return socialFields;
     }
 
-    public JournalFields getJournalFields(){ return journalFields;}
+    //public JournalFields getJournalFields(){ return journalFields;}
 }

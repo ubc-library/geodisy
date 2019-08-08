@@ -122,8 +122,9 @@ public class IdentificationInfo extends SubElement{
         SocialFieldInfo sfi = new SocialFieldInfo(djo, doc, levelJ);
         levelJ =  sfi.getFields();
 
-        JournalInfo ji = new JournalInfo(djo,doc,levelJ);
-        levelJ = ji.getFields();
+        //Journal metadata is for Journal Dataverses
+/*        JournalInfo ji = new JournalInfo(djo,doc,levelJ);
+        levelJ = ji.getFields();*/
         
 
 
