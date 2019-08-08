@@ -52,9 +52,7 @@ public class IdentificationInfo extends SubElement{
         super(djo,doc,root);
         cf = djo.getCitationFields();
         simpleCF = djo.getSimpleFields();
-        geoCF = djo.getGeoFields();
-        socialCF = djo.getSocialFields();
-        journalCF = djo.getJournalFields();
+
 
         otherIds= (LinkedList) cf.getListField(OTHER_ID);
         authors = (LinkedList) cf.getListField(AUTHOR);
@@ -123,6 +121,9 @@ public class IdentificationInfo extends SubElement{
 
         SocialFieldInfo sfi = new SocialFieldInfo(djo, doc, levelJ);
         levelJ =  sfi.getFields();
+
+        JournalInfo ji = new JournalInfo(djo,doc,levelJ);
+        levelJ = ji.getFields();
         
 
 
