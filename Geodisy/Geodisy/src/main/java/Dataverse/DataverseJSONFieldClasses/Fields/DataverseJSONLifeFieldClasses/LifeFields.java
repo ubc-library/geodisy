@@ -90,15 +90,4 @@ public class LifeFields extends MetadataType {
         this.doi = doi;
     }
 
-    @Override
-    public boolean hasBB() {
-        logger.error("Tried to access a bounding box in Life Sciences with doi: " + doi);
-        return false;
-    }
-
-    @Override
-    public BoundingBox getBoundingBox() {
-        logger.error("Tried to access a bounding box in Life Sciences with doi: " + doi);
-        return new BoundingBox();
-    }
 }
