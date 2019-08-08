@@ -11,7 +11,6 @@ public abstract class MetadataType{
     protected DataverseJavaObject djo;
 
     public abstract void setFields(JSONObject jo);
-    public abstract String getField(String fieldName);
     public abstract List getListField(String fieldName);
     public abstract String getDoi();
     public abstract void setDoi(String doi);
