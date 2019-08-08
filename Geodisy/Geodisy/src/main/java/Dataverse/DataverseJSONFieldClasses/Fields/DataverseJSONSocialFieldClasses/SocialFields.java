@@ -37,12 +37,12 @@ public class SocialFields extends MetadataType {
     public void setFields(JSONObject jo) {
         String fieldName = jo.getString(TYPE_NAME);
         if(fieldName.contains(TARGET_SAMPLE_SIZE_FIELDS)) {
-            JSONArray a = (JSONArray) jo.get(VAL);
-            targetSampleSize.setFields(a);
+            JSONObject o = (JSONObject) jo.get(VAL);
+            targetSampleSize.setField(o);
         }
         else if(fieldName.contains(SOCIAL_SCIENCE_NOTES_FIELDS)) {
-            JSONArray a = (JSONArray) jo.get(VAL);
-            socialScienceNotes.setFields(a);
+            JSONObject a = jo.getJSONObject(VAL);
+            socialScienceNotes.setField(a);
         }
         else
             simpleSocialFields.setField(jo);

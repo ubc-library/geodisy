@@ -15,15 +15,16 @@ public class TargetSampleSize extends CompoundJSONField {
     }
     @Override
     public void setField(JSONObject field) {
-        String fieldName =  field.getString(TYPE_NAME);
-        String val = field.getString(VAL);
-
-        if(fieldName.equals(TARGET_SAMPLE_ACTUAL_SIZE))
-            actualSize = Integer.getInteger(val);
-        else if(fieldName.equals(TARGET_SAMPLE_SIZE_FORMULA))
+        if(field.has(TARGET_SAMPLE_ACTUAL_SIZE)){
+            String val = field.getJSONObject(TARGET_SAMPLE_ACTUAL_SIZE).getString(VAL);
+            actualSize = Integer.parseInt(val);
+        }
+        if(field.has(TARGET_SAMPLE_SIZE_FORMULA)){
+            String val = field.getJSONObject(TARGET_SAMPLE_SIZE_FORMULA).getString(VAL);
             forumla = val;
-        else
-            errorParsing(this.getClass().toString(),fieldName);
+        }
+        if(actualSize==0 && forumla.equals(""))
+            errorParsing(this.getClass().toString(),"Tried to set a field that doesn't exist.");
     }
 
     @Override
