@@ -31,10 +31,11 @@ public class XMLGenerator {
         this.geographicFields=djo.getGeoFields();
         this.simple = citationFields.getSimpleCitationFields();
         doc = new XMLDocument();
+        doc.setDoi(djo.getDOI());
     }
 
     //TODO keep working on this
-    public Document generateXMLFile(){
+    public XMLDocument generateXMLFile(){
         Element rootElement = getRoot();
         SubElement ident = new IdentificationInfo(djo, doc, rootElement);
         rootElement = ident.getFields();
@@ -53,7 +54,7 @@ public class XMLGenerator {
         //TODO check the following line. I think dealing with other IDs happens elsewhere.
         //if(otherIds.size()>0)
         doc.addRoot(rootElement);
-        return doc.getDoc();
+        return doc;
     }
 
 

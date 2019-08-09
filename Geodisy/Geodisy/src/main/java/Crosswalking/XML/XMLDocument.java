@@ -13,6 +13,7 @@ import javax.xml.parsers.ParserConfigurationException;
  */
 public class XMLDocument {
     Document doc;
+    String doi;
 
 
     public XMLDocument() {
@@ -80,5 +81,9 @@ public class XMLDocument {
     public void addRoot(Element root){
         doc.appendChild(root);
     }
+
+    public String getDoi(){return doi;}
+
+    public void setDoi(String doi){this.doi = doi;}
 
 }
