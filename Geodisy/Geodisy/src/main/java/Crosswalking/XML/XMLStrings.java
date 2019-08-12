@@ -30,4 +30,7 @@ public class XMLStrings {
     public final static String EX_GEO_BB =  "EX_GeographicBoundingBox";
     public final static String GEO_ELEMENT = "geographicElement";
     public final static String P_OF_CONTACT = "pointOfContact";
+
+    //OPEN METADATA
+    public final static String OPEN_METADATA_LOCAL_REPO = "./XMLFiles";
 }
