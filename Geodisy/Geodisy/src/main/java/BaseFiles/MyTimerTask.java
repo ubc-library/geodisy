@@ -6,9 +6,6 @@ import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordInfo;
 import Dataverse.ExistingSearches;
 import Dataverse.SourceJavaObject;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.w3c.dom.Document;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -51,7 +48,7 @@ public class MyTimerTask extends TimerTask {
                 existingSearches.addOrReplaceRecord(new DataverseRecordInfo(dJO, logger.getName()));
 
             }
-            LinkedList<XMLDocument> docs = generateXML(dJOs);
+            LinkedList<XMLDocument> docs = generateXMLDoc(dJOs);
             sendXMLToGeoserver(docs);
             endRecsToCheck = trimErrors();
             endErrorLog = trimInfo();
@@ -86,7 +83,7 @@ public class MyTimerTask extends TimerTask {
      * Create ISO XML for the new/updated records
      * @param dJOs
      */
-    private LinkedList<XMLDocument> generateXML(List<SourceJavaObject> dJOs) {
+    private LinkedList<XMLDocument> generateXMLDoc(List<SourceJavaObject> dJOs) {
         LinkedList<XMLDocument> documents = new LinkedList<>();
         for(SourceJavaObject sjo : dJOs) {
             DataverseJavaObject djo = (DataverseJavaObject) sjo;
