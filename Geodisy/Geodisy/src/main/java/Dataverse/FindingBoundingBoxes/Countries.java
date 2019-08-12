@@ -1,7 +1,6 @@
 package Dataverse.FindingBoundingBoxes;
 
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
-import Dataverse.FindingBoundingBoxes.LocationTypes.City;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Province;
 import org.w3c.dom.Document;
@@ -9,7 +8,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -17,11 +15,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.text.WordUtils;
-
 
 /**
  * A basically static class that opens a file that holds all the Country codes and bounding box values
@@ -69,9 +63,7 @@ public class Countries {
         }
     }
 
-
     private void getCountry(Node node) {
-
         if (node.getNodeType() == Node.ELEMENT_NODE) {
             Element element = (Element) node;
             String name = getTagValue("countryName", element);
@@ -117,7 +109,6 @@ public class Countries {
         else
             return "_JJ";
         return country.getCountryCode();
-
     }
 
     public boolean isCountryCode(String code){
@@ -142,7 +133,6 @@ public class Countries {
         return new BoundingBox();
     }
 
-
     public HashMap getBoundingBoxes(){
         return boundingBoxes;
     }
@@ -150,5 +140,4 @@ public class Countries {
     public void setBoundingBoxes(HashMap<String, BoundingBox> bBoxes){
         this.boundingBoxes = bBoxes;
     }
-
 }

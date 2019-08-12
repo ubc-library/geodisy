@@ -1,6 +1,6 @@
 package tests;
 
-import BaseFiles.ExistingSearchesFile;
+import Dataverse.ExistingSearchesFile;
 import Dataverse.ExistingSearches;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.junit.Test;
@@ -32,7 +32,7 @@ public class ReadWriteToFileTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        assertEquals(es.numberOfBBoxes(),2);
+        assertEquals(es.numberOfBBoxes(),1);
         es.deleteBBox(location);
         try{
             eSF.writeExistingSearches(es);
@@ -40,7 +40,8 @@ public class ReadWriteToFileTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        assertEquals(es.numberOfBBoxes(),0);
         es = ExistingSearches.getExistingSearches();
-        assertEquals(es.numberOfBBoxes(),1);
+        assertEquals(es.numberOfBBoxes(),0);
     }
 }

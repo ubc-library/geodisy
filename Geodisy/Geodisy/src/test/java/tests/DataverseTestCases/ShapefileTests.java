@@ -54,6 +54,6 @@ public class ShapefileTests extends DataverseTests{
     public void shapeWithXML(){
         doi = "NEED TO FIND";
         SourceJavaObject val = dataverseCallTest();
-        assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
+        assertEquals(val.getSimpleCitationFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
     }*/
 }

@@ -10,7 +10,7 @@ import java.util.HashMap;
  */
 public class ExistingSearches implements Serializable {
     private static final long serialVersionUID = 8947943825774008362L;
-    HashMap<String, BoundingBox> bBoxes;
+    static HashMap<String, BoundingBox> bBoxes;
     HashMap<String, DataverseRecordInfo> recordVersions;
     private static ExistingSearches single_instance = null;
 
@@ -45,7 +45,7 @@ public class ExistingSearches implements Serializable {
     }
 
     public int numberOfBBoxes(){
-        return bBoxes.size();
+        return bBoxes.size()-1;
     }
 
     public int numberOfRecords(){

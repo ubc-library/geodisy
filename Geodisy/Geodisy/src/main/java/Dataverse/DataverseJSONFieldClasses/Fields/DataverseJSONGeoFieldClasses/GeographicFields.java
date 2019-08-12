@@ -1,19 +1,14 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 
-import Dataverse.DVFieldNameStrings;
-import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
-import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.CitationFields;
-import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.Series;
+import BaseFiles.GeoLogger;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
+import Dataverse.DataverseJavaObject;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.LinkedList;
 import java.util.List;
-
 import static Dataverse.DVFieldNameStrings.*;
 
 public class GeographicFields extends MetadataType {
@@ -21,16 +16,25 @@ public class GeographicFields extends MetadataType {
     List<GeographicBoundingBox> geoBBoxes;
     List<GeographicUnit> geoUnits;
     BoundingBox fullBB; //The single bounding box that includes all listed bounding box extents
-    protected String doi;
-    Logger logger = LogManager.getLogger(GeographicFields.class);
+    GeoLogger logger = new GeoLogger(this.getClass());
 
-    public GeographicFields(String doi) {
+    public GeographicFields(DataverseJavaObject djo) {
+        this.djo = djo;
         this.geoCovers = new LinkedList<>();
         this.geoBBoxes = new LinkedList<>();
         this.geoUnits = new LinkedList<>();
         fullBB = new BoundingBox();
-        this.doi = doi;
+        this.doi = djo.getDOI();
     }
+
+    //Placeholder GeographicFields constructor
+    public GeographicFields(){
+        this.geoCovers = new LinkedList<>();
+        this.geoBBoxes = new LinkedList<>();
+        this.geoUnits = new LinkedList<>();
+        fullBB = new BoundingBox();
+    }
+
     @Override
     public void setFields(JSONObject field) {
         String title = field.getString(TYPE_NAME);
@@ -129,9 +133,13 @@ public class GeographicFields extends MetadataType {
     public String getDoi() {
         return doi;
     }
+
     @Override
     public void setDoi(String doi) {
         this.doi = doi;
+        CitationFields cf = djo.getCitationFields();
+        cf.setDoi(doi);
+        djo.setCitationFields(cf);
     }
 
     /**
@@ -188,8 +196,7 @@ public class GeographicFields extends MetadataType {
         west = (west==181) ? altWest : west;
         east = (east==-181)? altEast : east;
         if(west == 181 || east == -181 || north == -181 || south == 181) {
-            logger.info("Something went wrong with the bounding box for record " + doi);
-            logger.error("Something went wrong with the bounding box for record " + doi);
+            logger.info("Something went wrong with the bounding box for record " + doi, djo, logger.getName());
             west = 361;
             east = 361;
             north = 361;
@@ -209,11 +216,12 @@ public class GeographicFields extends MetadataType {
         box.setLatSouth(south);
         fullBB = box;
     }
-    @Override
+
     public boolean hasBB(){
         return fullBB.getLongWest() != 361;
     }
-    @Override
+
+
     public BoundingBox getBoundingBox(){
         return fullBB;
     }
@@ -246,6 +254,5 @@ public class GeographicFields extends MetadataType {
         }else
             bboxes.add(gBB);
         setGeoBBoxes(bboxes);
-
     }
 }

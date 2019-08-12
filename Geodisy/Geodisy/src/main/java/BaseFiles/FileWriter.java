@@ -50,14 +50,21 @@ public class FileWriter {
      * @throws ClassNotFoundException
      */
     public ExistingSearches readExistingSearches(String path) throws IOException {
-        ExistingSearches es;
+        ExistingSearches es = ExistingSearches.getExistingSearches();
         try {
-            FileInputStream f = new FileInputStream(path);
+            File file = new File(path);
+            File directory = new File(file.getParentFile().getAbsolutePath());
+            directory.mkdirs();
+            if(file.createNewFile())
+                return ExistingSearches.getExistingSearches();
+            FileInputStream f = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(f);
             es = (ExistingSearches) ois.readObject();
         } catch (FileNotFoundException e) {
             es = ExistingSearches.getExistingSearches();
-            writeObjectToFile(es,path);
+            writeObjectToFile(es, path);
+        } catch (EOFException e) {
+            return ExistingSearches.getExistingSearches();
         } catch (ClassNotFoundException e){
             System.out.println("something went wonky loading the existing searches from the file");
             return ExistingSearches.getExistingSearches();

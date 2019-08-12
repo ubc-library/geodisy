@@ -14,4 +14,6 @@ import Dataverse.SourceJavaObject;
 public interface MetadataSchema {
     //TODO create interface for metadata crosswalks
     public void generateXML(SourceJavaObject s);
+
+    void crosswalk(SourceJavaObject sJO);
 }

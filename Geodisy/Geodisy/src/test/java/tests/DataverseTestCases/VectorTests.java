@@ -1,28 +1,32 @@
 package tests.DataverseTestCases;
 
+import Dataverse.DVFieldNameStrings;
+import Dataverse.SourceJavaObject;
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 
 public class VectorTests extends DataverseTests{
 
     //TODO still need to add doi's
-    /*@Test
+    @Test
     public void lineVector(){
-        doi = "still need to add";
+        doi = "doi:10.5072/FK2/ZWAV7Z";
         SourceJavaObject val = dataverseCallTest();
-        assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
+        assertEquals(val.getBoundingBox().getLongWest(),Double.parseDouble("-148.0229187011718750"),13);
     }
 
     @Test
     public void pointVector(){
-        doi = "still need to add";
+        doi = "doi:10.5072/FK2/73OWOX";
         SourceJavaObject val = dataverseCallTest();
-        assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
+        assertEquals(val.getBoundingBox().getLatNorth(),Double.parseDouble("83.6769430484155379"),13);
     }
 
     @Test
     public void polygonVector(){
-        doi = "still need to add";
+        doi = "doi:10.5072/FK2/2KQIL0";
         SourceJavaObject val = dataverseCallTest();
-        assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
-    }*/
+        assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"GeoJSON polygon features");
+    }
 }

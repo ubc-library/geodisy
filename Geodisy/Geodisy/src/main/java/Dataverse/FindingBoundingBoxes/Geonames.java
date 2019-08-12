@@ -1,11 +1,11 @@
 package Dataverse.FindingBoundingBoxes;
 
 import BaseFiles.HTTPCaller;
+import Dataverse.DataverseJavaObject;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.City;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Province;
-
 import java.io.UnsupportedEncodingException;
 import java.net.*;
 import java.util.HashMap;
@@ -23,9 +23,17 @@ public class Geonames extends FindBoundBox {
     Countries countries;
     HashMap<String, BoundingBox> bBoxes;
     String doi;
+    public DataverseJavaObject djo;
 
     public Geonames(String doi) {
         this.doi = doi;
+        this.countries = Countries.getCountry();
+        this.bBoxes = countries.getBoundingBoxes();
+    }
+
+    public Geonames(DataverseJavaObject djo){
+        this.djo = djo;
+        doi = this.djo.getDOI();
         this.countries = Countries.getCountry();
         this.bBoxes = countries.getBoundingBoxes();
     }
@@ -44,7 +52,7 @@ public class Geonames extends FindBoundBox {
          else
              country = countries.getCountryByName(countryName);
         if(country.getCountryCode().matches("_JJ")){
-            logger.info(countryName + " is not a valid country name in record at DOI: " + doi + ", so no bounding box could be automatically generated. Check this record manually ");
+            logger.info(countryName + " is not a valid country name in record at DOI: " + doi + ", so no bounding box could be automatically generated. Check this record manually ", djo, logger.getName());
 
             return new BoundingBox();
         }
@@ -79,7 +87,8 @@ public class Geonames extends FindBoundBox {
             // Can be safely ignored because UTF-8 is always supported
         }
         String searchString = state + addParameters(parameters);
-        box = readResponse(getJSONString(searchString),doi);
+        String responseString = getJSONString(searchString);
+        box = readResponse(responseString,doi, djo);
         if(box.getLongWest()==361)
             return getDVBoundingBox(country);
         Province p = new Province(unURLedState, country);
@@ -122,7 +131,8 @@ public class Geonames extends FindBoundBox {
             // Can be safely ignored because UTF-8 is always supported
         }
         String searchString = city + "%2C%20" + state + addParameters(parameters);
-            box = readResponse(getJSONString(searchString),doi);
+        String responseString = getJSONString(searchString);
+        box = readResponse(responseString,doi, djo);
         if(box.getLongWest()==361)
             return getDVBoundingBox(country,state);
         City cit = new City(city,state,country);
@@ -172,7 +182,8 @@ public class Geonames extends FindBoundBox {
             bBoxes.put(addDelimiter(country,unURLedOther),box);
         else
             box = getDVBoundingBox(country);*/
-        logger.info("Record with DOI: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" );
+        if(box.getLatSouth() == 361)
+            logger.info("Record with DOI: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" ,djo, logger.getName());
         return box;
 
     }
@@ -216,7 +227,8 @@ public class Geonames extends FindBoundBox {
             bBoxes.put(addDelimiter(country,unURLedState,unURLedOther),box);
         else
             box = getDVBoundingBoxOther(country, other);*/
-        logger.info("Record with DOI: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" );
+        if(box.getLatSouth() == 361)
+            logger.info("Record with DOI: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" ,djo, logger.getName());
         return box;
     }
 
@@ -237,5 +249,11 @@ public class Geonames extends FindBoundBox {
         return answer;
     }
 
+    public DataverseJavaObject getDJO(){
+        return djo;
+    }
 
+    public void setDJO(DataverseJavaObject djo){
+        this.djo = djo;
+    }
 }

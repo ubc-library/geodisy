@@ -1,5 +1,6 @@
 package Crosswalking.JSONParsing;
 
+import BaseFiles.GeoLogger;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordInfo;
@@ -17,7 +18,7 @@ import static Dataverse.DVFieldNameStrings.*;
 
 public class DataverseParser implements JSONParser {
 
-    static Logger logger = LogManager.getLogger(DataverseParser.class);
+    static GeoLogger logger = new GeoLogger(DataverseParser.class);
 
 
     /**
@@ -45,12 +46,17 @@ public class DataverseParser implements JSONParser {
             if (metadata.has(GEOSPATIAL))
                 dJO.parseGeospatialFields(metadata.getJSONObject(GEOSPATIAL).getJSONArray(FIELDS));
             else
-                dJO.setGeoFields(new GeographicFields(dJO.getDOI()));
+                dJO.setGeoFields(new GeographicFields(dJO));
             String prodPlace = dJO.getSimpleFieldVal(PROD_PLACE);
             if (!prodPlace.matches("") && !dJO.hasBoundingBox()) {
                 GeographicFields gf = dJO.getGeoFields();
                 gf.setFullBB(getBBFromProdPlace(prodPlace,dJO));
             }
+            if(metadata.has(SOCIAL_SCIENCE))
+                dJO.parseSocialFields(metadata.getJSONObject(SOCIAL_SCIENCE).getJSONArray(FIELDS));
+            //Doesn't make sense to use these fields; will check with team
+            /*if(metadata.has(JOURNAL_FIELDS))
+                dJO.parseJournalFields(metadata.getJSONObject(JOURNAL_FIELDS).getJSONArray(FIELDS));*/
             if(dJO.getVersionSection(current).has("files"))
                 dJO.parseFiles((JSONArray) dJO.getVersionSection(current).get("files"));
         }catch (JSONException e){
@@ -63,7 +69,7 @@ public class DataverseParser implements JSONParser {
     // the manual check log
     private BoundingBox getBBFromProdPlace(String prodPlace, DataverseJavaObject dJO) {
         BoundingBox b = new BoundingBox();
-        logger.info("The following record has no geographic location info other than a Production Place. Please manually check: %s", dJO.getDOI());
+        logger.info("The following record has no geographic location info other than a Production Place. Please manually check: " + dJO.getDOI(), dJO, logger.getName());
         return b;
     }
 

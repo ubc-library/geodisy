@@ -21,6 +21,6 @@ public class CSVTests extends DataverseTests {
     public void CSVCityNames(){
         doi = "206-12-90-131.cloud.computecanada.ca/dataverse/bam";
         SourceJavaObject val = dataverseCallTest();
-        assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
+        assertEquals(val.getSimpleCitationFields().getField(DVFieldNameStrings.TITLE),"not entered yet");
     }*/
 }

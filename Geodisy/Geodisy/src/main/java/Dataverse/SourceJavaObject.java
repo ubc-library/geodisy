@@ -1,9 +1,11 @@
 package Dataverse;
 
 import BaseFiles.GeodisyStrings;
-import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.CitationFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
-import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONJournalFieldClasses.JournalFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,12 +17,16 @@ import java.util.List;
 public abstract class SourceJavaObject {
     protected CitationFields citationFields;
     protected GeographicFields geoFields;
+    protected SocialFields socialFields;
+    //protected JournalFields journalFields;
     protected List<DataverseRecordFile> dataFiles; //Stores the datafiles
     protected String server;
     protected boolean hasContent;
 
     public abstract void parseCitationFields(JSONObject citationFieldsArray);
     public abstract void parseGeospatialFields(JSONArray geoFieldsArray);
+    public abstract void parseSocialFields(JSONArray socialFieldsArray);
+    public abstract void parseJournalFields(JSONArray journalFieldsArray);
     public abstract void parseFiles(JSONArray fileFieldsArray);
     public abstract JSONObject getVersionSection(JSONObject current);
     public abstract void downloadFiles();
@@ -28,15 +34,17 @@ public abstract class SourceJavaObject {
     public SourceJavaObject(String server) {
         this.citationFields = new CitationFields();
         this.dataFiles = new LinkedList<>();
-        this.geoFields = new GeographicFields("placeholder");
+        this.geoFields = new GeographicFields();
+        this.socialFields = new SocialFields();
+        //this.journalFields = new JournalFields();
         this.server = server;
         hasContent = false;
     }
-    public SimpleFields getSimpleFields(){
-        return citationFields.getSimpleFields();
+    public SimpleCitationFields getSimpleFields(){
+        return citationFields.getSimpleCitationFields();
     }
 
-    protected boolean fileTypeToIgnore(String title) {
+    public boolean fileTypeToIgnore(String title) {
         for (String s : GeodisyStrings.FILE_TYPES_TO_IGNORE) {
             if (title.endsWith(s))
                 return true;
@@ -118,21 +126,27 @@ public abstract class SourceJavaObject {
         return geoFields.hasBB();
     }
 
-    public void setSimpleFields(SimpleFields simpleFields) {
-        citationFields.setSimpleFields(simpleFields);
+    public void setSimpleFields(SimpleCitationFields simpleCitationFields) {
+        citationFields.setSimpleCitationFields(simpleCitationFields);
     }
 
     public void setSimpleFieldVal (String fieldName, String fieldValue){
-        SimpleFields simpleFields = getSimpleFields();
-        simpleFields.setField(fieldName,fieldValue);
-        citationFields.setSimpleFields(simpleFields);
+        SimpleCitationFields simpleCitationFields = getSimpleFields();
+        simpleCitationFields.setField(fieldName,fieldValue);
+        citationFields.setSimpleCitationFields(simpleCitationFields);
     }
     public String getSimpleFieldVal(String fieldName){
-        SimpleFields simpleFields = getSimpleFields();
-        return simpleFields.getField(fieldName);
+        SimpleCitationFields simpleCitationFields = getSimpleFields();
+        return simpleCitationFields.getField(fieldName);
     }
 
     public boolean hasContent(){
         return hasContent;
     }
+
+    public SocialFields getSocialFields(){
+        return socialFields;
+    }
+
+    //public JournalFields getJournalFields(){ return journalFields;}
 }

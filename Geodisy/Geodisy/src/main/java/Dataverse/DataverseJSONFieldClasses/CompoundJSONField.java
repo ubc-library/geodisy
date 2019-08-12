@@ -1,5 +1,6 @@
 package Dataverse.DataverseJSONFieldClasses;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.Set;
@@ -33,5 +34,9 @@ abstract public class CompoundJSONField extends JSONField {
 
     public abstract String getField(String fieldName);
 
-
+    public void setFields(JSONArray ja){
+        for(Object o: ja){
+            setField((JSONObject) o);
+        }
+    }
 }

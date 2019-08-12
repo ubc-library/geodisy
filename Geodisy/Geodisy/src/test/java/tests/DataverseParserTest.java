@@ -1,12 +1,13 @@
 package tests;
 
+import BaseFiles.GeoLogger;
 import BaseFiles.MyTimerTask;
 import Crosswalking.JSONParsing.DataverseParser;
-import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.Author;
-import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.CitationFields;
-import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.DatasetContact;
-import Dataverse.DataverseJSONFieldClasses.Fields.CompoundFields.Description;
-import Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.SimpleFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Author;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.DatasetContact;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Description;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJavaObject;
 
 
@@ -52,7 +53,7 @@ public class DataverseParserTest {
     }
 
     private DataverseJavaObject setValues(DataverseJavaObject dataverseJavaObject) {
-        SimpleFields sf = new SimpleFields();
+        SimpleCitationFields sf = new SimpleCitationFields();
         sf.setField(ALT_URL,"https://doi.org/10.5072/FK2/OVQBMK");
         sf.setField(PUBLISHER,"Demo Dataverse");
         sf.setField(PUB_DATE,"2015-07-13");
@@ -79,9 +80,9 @@ public class DataverseParserTest {
         citationFields.addDsDescription(d);
         citationFields.addSubject("Earth and Environmental Sciences");
         dataverseJavaObject.setCitationFields(citationFields);
-        Logger logger = LogManager.getLogger(DataverseParserTest.class);
+        GeoLogger logger = new GeoLogger(DataverseParserTest.class);
         logger.error("Testing an error");
-        logger.info("Testing an info");
+        logger.info("Testing an info", dataverseJavaObject, logger.getName());
 
         return dataverseJavaObject;
     }

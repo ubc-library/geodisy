@@ -8,6 +8,7 @@ package Dataverse;
 
 
 import BaseFiles.FileWriter;
+import BaseFiles.GeoLogger;
 import BaseFiles.HTTPCaller;
 import Crosswalking.JSONParsing.DataverseParser;
 import org.apache.logging.log4j.LogManager;
@@ -16,13 +17,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.imageio.IIOException;
-import java.io.IOException;
+import javax.mail.Folder;
+import java.io.File;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-import static BaseFiles.GeodisyStrings.EXISTING_RECORDS;
 import static Dataverse.DVFieldNameStrings.BASE_DV_URL;
 
 /**
@@ -32,7 +32,7 @@ import static Dataverse.DVFieldNameStrings.BASE_DV_URL;
 public class DataverseAPI extends SourceAPI {
     private final String dvName;
     private Set<DataverseRecordInfo> records;
-    Logger logger = LogManager.getLogger(this.getClass());
+    GeoLogger logger = new GeoLogger(this.getClass());
 
     public DataverseAPI(String dvName) {
 
@@ -51,14 +51,38 @@ public class DataverseAPI extends SourceAPI {
         for(JSONObject jo:jsons){
             DataverseJavaObject djo = parser.parse(jo,dvName);
             if(djo.hasContent()&& hasNewInfo(djo, es)) {
-                if(djo.getBoundingBox().getLongEast()==361)
+                djo.downloadFiles();
+                if(!djo.hasBoundingBox())
                     djo = generateBoundingBox(djo);
-                answers.add(djo);
+                if(djo.hasBoundingBox())
+                    answers.add(djo);
+                else{
+                    String doi = djo.getDOI();
+                    String folderizedDOI = doi.replaceAll("\\.","_");
+                    folderizedDOI = folderizedDOI.replaceAll("/","_");
+                    File folderToDelete = new File("./datasetFiles/" + folderizedDOI);
+                    deleteFolder(folderToDelete);
+                }
             }
+
         }
         if(answers.size()>0)
             System.out.println("Updated or added " + answers.size() + " records.");
         return answers;
+    }
+
+    private void deleteFolder(File folder) {
+        File[] files = folder.listFiles();
+        if(files!=null) { //some JVMs return null for empty dirs
+            for(File f: files) {
+                if(f.isDirectory()) {
+                    deleteFolder(f);
+                } else {
+                    f.delete();
+                }
+            }
+        }
+        folder.delete();
     }
 
     private DataverseJavaObject generateBoundingBox(DataverseJavaObject djo) {
@@ -68,7 +92,7 @@ public class DataverseAPI extends SourceAPI {
     }
 
     private boolean hasNewInfo(DataverseJavaObject djo, ExistingSearches es) {
-        DataverseRecordInfo dri = new DataverseRecordInfo(djo);
+        DataverseRecordInfo dri = new DataverseRecordInfo(djo, logger.getName());
         return dri.younger(es.getRecordInfo(djo.getDOI()));
     }
 

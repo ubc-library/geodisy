@@ -1,19 +1,17 @@
 package BaseFiles;
 
+import Crosswalking.XML.XMLDocument;
+import Crosswalking.XML.XMLGenerator;
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordInfo;
 import Dataverse.ExistingSearches;
 import Dataverse.SourceJavaObject;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.TimerTask;
+import java.util.*;
 
 import static BaseFiles.GeodisyStrings.*;
 
@@ -24,7 +22,7 @@ import static BaseFiles.GeodisyStrings.*;
  * @author pdante
  */
 public class MyTimerTask extends TimerTask {
-    Logger logger = LogManager.getLogger(this.getClass());
+    GeoLogger logger = new GeoLogger(this.getClass());
     public MyTimerTask() {
     }
 /**
@@ -47,9 +45,11 @@ public class MyTimerTask extends TimerTask {
             ExistingSearches existingSearches = fW.readExistingSearches(EXISTING_RECORDS);
             List<SourceJavaObject> dJOs = geo.harvestDataverse(existingSearches);
             for(SourceJavaObject dJO : dJOs) {
-                existingSearches.addOrReplaceRecord(new DataverseRecordInfo(dJO));
-            }
+                existingSearches.addOrReplaceRecord(new DataverseRecordInfo(dJO, logger.getName()));
 
+            }
+            LinkedList<XMLDocument> docs = generateXMLDoc(dJOs);
+            sendXMLToGeoserver(docs);
             endRecsToCheck = trimErrors();
             endErrorLog = trimInfo();
             if(!startRecsToCheck.equals(endRecsToCheck)) {
@@ -68,6 +68,29 @@ public class MyTimerTask extends TimerTask {
             Long total = end.getTimeInMillis()-startTime;
             System.out.println("Finished a run at: " + end.getTime() + " after " + total + " milliseconds");
         }
+    }
+
+    /**
+     * Send all the new ISO XML files to Geoserver database
+     * @param docs
+     */
+    //TODO actually create the XML files and send them to GeoCombine/other location
+    private void sendXMLToGeoserver(LinkedList<XMLDocument> docs) {
+
+    }
+
+    /**
+     * Create ISO XML for the new/updated records
+     * @param dJOs
+     */
+    private LinkedList<XMLDocument> generateXMLDoc(List<SourceJavaObject> dJOs) {
+        LinkedList<XMLDocument> documents = new LinkedList<>();
+        for(SourceJavaObject sjo : dJOs) {
+            DataverseJavaObject djo = (DataverseJavaObject) sjo;
+            XMLGenerator xmlGenerator = new XMLGenerator(djo);
+            documents.add(xmlGenerator.generateXMLFile());
+        }
+        return documents;
     }
 
     /**

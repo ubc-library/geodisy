@@ -1,5 +1,6 @@
 package Dataverse.FindingBoundingBoxes;
 
+import BaseFiles.GeoLogger;
 import Crosswalking.JSONParsing.DataverseParser;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.apache.commons.text.WordUtils;
@@ -10,7 +11,7 @@ public class Location implements GeographicPoliticalUnit {
     protected String name;
     protected BoundingBox boundingBox;
     protected final String NO_NAME= "no name";
-    Logger logger = LogManager.getLogger(DataverseParser.class);
+    GeoLogger logger = new GeoLogger(this.getClass());
 
 
     public Location(String name) {
@@ -31,7 +32,7 @@ public class Location implements GeographicPoliticalUnit {
     public double getLatSouth() {
         double answer= boundingBox.getLatSouth();
         if(answer==361)
-            logger.error("No latSouth for %s, returning 361", name);
+            logger.error("No latSouth for "+ name + ", returning 361");
         return answer;
     }
 
@@ -45,7 +46,7 @@ public class Location implements GeographicPoliticalUnit {
     public double getLatNorth() {
         double answer= boundingBox.getLatNorth();
         if(answer==361)
-            logger.error("No latNorth for %s, returning 361", name);
+            logger.error("No latNorth for "+ name + ", returning 361");
         return answer;
     }
 
@@ -60,7 +61,7 @@ public class Location implements GeographicPoliticalUnit {
     public double getLongWest() {
         double answer= boundingBox.getLongWest();
         if(answer==361)
-            logger.error("No longWest for %s, returning 361", name);
+            logger.error("No longWest for for "+ name + ", returning 361");
         return answer;
     }
 
@@ -78,7 +79,7 @@ public class Location implements GeographicPoliticalUnit {
     public double getLongEast() {
         double answer= boundingBox.getLongEast();
         if(answer==361)
-            logger.error("No longEast for %s, returning 361", name);
+            logger.error("No longEast for "+ name + ", returning 361");
         return answer;
     }
 

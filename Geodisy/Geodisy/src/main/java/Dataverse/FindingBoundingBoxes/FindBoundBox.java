@@ -1,8 +1,10 @@
 package Dataverse.FindingBoundingBoxes;
 
+import BaseFiles.GeoLogger;
+import DataSourceLocations.Dataverse;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicCoverage;
+import Dataverse.DataverseJavaObject;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 
@@ -14,18 +16,29 @@ public abstract class FindBoundBox {
     abstract BoundingBox getDVBoundingBoxOther(String country, String other);
     abstract BoundingBox getDVBoundingBoxOther(String country,String state, String other);
     abstract String getJSONString(String search);
-    Logger logger = LogManager.getLogger(FindBoundBox.class.getName());
+    GeoLogger logger = new GeoLogger(FindBoundBox.class);
 
-    protected BoundingBox readResponse(String responseString, String doi){
-        return parseXMLString(responseString, doi);
+    protected BoundingBox readResponse(String responseString, String doi, DataverseJavaObject djo){
+        return parseXMLString(responseString, doi, djo);
     }
 
-    protected  BoundingBox parseXMLString(String responseString, String doi){
+    protected String readCoverageCountry(String responseString, String doi, DataverseJavaObject djo){
+        int tooFar = responseString.indexOf("</geoname>");
+        int start = responseString.indexOf("<countryName>");
+        if(start==-1||start>tooFar) {
+            logger.info("Record with DOI of "+ doi + "could not have information found  in geonames. Please doublecheck the geospatial coverage field values", djo, logger.getName());
+            return "";
+        }
+        int end = responseString.indexOf("</countryName>");
+        return responseString.substring(start+14,end);
+    }
+
+    protected  BoundingBox parseXMLString(String responseString, String doi, DataverseJavaObject djo){
         BoundingBox box = new BoundingBox();
         int tooFar = responseString.indexOf("</geoname>");
         int start = responseString.indexOf("<west>");
         if(start==-1||start>tooFar) {
-            logger.info("Record with DOI of "+ doi + "could not have a bounding box found in geonames. Please doublecheck the geospatial coverage field values");
+            logger.info("Record with DOI of "+ doi + "could not have a bounding box found in geonames. Please doublecheck the geospatial coverage field values", djo, logger.getName());
             return box;
         }
         int end = responseString.indexOf("</west>");

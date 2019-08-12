@@ -11,7 +11,9 @@ public class DataverseRecordInfo implements Serializable {
     private static final long serialVersionUID = -3342760939630407200L;
     private int major;
     private int minor;
+    private int version;
     private String doi;
+    private String loggerName;
 
     /**
      * A blank Dataverse Record info object
@@ -23,11 +25,12 @@ public class DataverseRecordInfo implements Serializable {
      * Create a Dataverse Record Info object from a Dataverse Java Object
      * @param dataverseJavaObject
      */
-    public DataverseRecordInfo(SourceJavaObject dataverseJavaObject){
+    public DataverseRecordInfo(SourceJavaObject dataverseJavaObject, String loggerName){
         doi = dataverseJavaObject.getDOI();
-        int version = dataverseJavaObject.getVersion();
+        version = dataverseJavaObject.getVersion();
         setMajor(version/1000);
         setMinor(version%1000);
+        this.loggerName = loggerName;
     }
 
     @Override
@@ -37,8 +40,7 @@ public class DataverseRecordInfo implements Serializable {
             return false;
         if (obj == this)
             return true;
-        return this.getMajor()==((DataverseRecordInfo) obj).getMajor()
-                && this.getMinor()==((DataverseRecordInfo) obj).getMinor();
+        return this.getVersion()==((DataverseRecordInfo) obj).getVersion();
     }
 
     public boolean younger(Object obj) {
@@ -49,7 +51,7 @@ public class DataverseRecordInfo implements Serializable {
         if (obj == this)
             return false;
 
-        return this.getMajor() >((DataverseRecordInfo) obj).getMajor();
+        return (this.getVersion()) >((DataverseRecordInfo) obj).getVersion();
     }
 
     public int getMajor() {
@@ -59,10 +61,13 @@ public class DataverseRecordInfo implements Serializable {
     public int getMinor() {
         return minor;
     }
+    public int getVersion(){return version; }
 
     public String getDoi() {
         return doi;
     }
+
+    public String getLoggerName(){return loggerName;}
 
     @Override
     public int hashCode()
@@ -83,6 +88,9 @@ public class DataverseRecordInfo implements Serializable {
     }
 
     public void setMinor(String minor){this.minor = Integer.parseInt(minor);}
+
+    public void setVersion(int version){this.version = version;}
+    public void setVersion(String version){this.version = Integer.parseInt(version);}
 
     public void setDoi(String doi) {
         this.doi = doi;

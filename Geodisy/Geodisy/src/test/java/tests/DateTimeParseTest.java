@@ -2,7 +2,7 @@ package tests;
 
 import org.junit.Test;
 
-import static Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields.Date.checkDateString;
+import static Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Date.checkDateString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DateTimeParseTest{
