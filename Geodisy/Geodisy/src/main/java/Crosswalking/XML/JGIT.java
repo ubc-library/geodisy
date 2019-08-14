@@ -54,11 +54,16 @@ public class JGIT {
      */
     private void pushXMLToGit() {
         //TODO write this code
-
-
     }
-
-    //TODO
+    public void testgenerateNewXMLFile(LinkedList<XMLDocument> docs){
+        try {
+            generateNewXMLFile(docs);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        } catch (GitAPIException e) {
+            e.printStackTrace();
+        }
+    }
     private void generateNewXMLFile(LinkedList<XMLDocument> docs) throws TransformerException, GitAPIException {
         for(XMLDocument doc: docs){
             //TODO figure out if XML file name should be what is currently in xMLFileName
