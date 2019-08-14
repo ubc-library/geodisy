@@ -32,5 +32,9 @@ public class XMLStrings {
     public final static String P_OF_CONTACT = "pointOfContact";
 
     //OPEN METADATA
-    public final static String OPEN_METADATA_LOCAL_REPO = "./XMLFiles";
+    public final static String OPEN_METADATA_LOCAL_REPO = "./XMLFiles/";
+    //TODO get remote repo location
+    public final static String OPEN_METADATA_REMOTE_REPO = "Need to set still";
+    public final static String OPEN_METADATA_REMOTE_USERNAME = "FAKE USERNAME";
+    public final static String OPEN_METADATA_REMOTE_PASSWORD = "FAKE PASSWORD";
 }
