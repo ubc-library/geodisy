@@ -34,7 +34,7 @@ public class XMLStrings {
     //OPEN METADATA
     public final static String OPEN_METADATA_LOCAL_REPO = "./XMLFiles/";
     //TODO get remote repo location
-    public final static String OPEN_METADATA_REMOTE_REPO = "Need to set still";
+    public final static String OPEN_METADATA_REMOTE_REPO = "https://github.com/OpenGeoMetadata/ca.ubc/";
     public final static String OPEN_METADATA_REMOTE_USERNAME = "FAKE USERNAME";
     public final static String OPEN_METADATA_REMOTE_PASSWORD = "FAKE PASSWORD";
 }
