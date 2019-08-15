@@ -92,14 +92,14 @@ public class DataverseJavaObject extends SourceJavaObject {
 
     }
 
-    //TODO fill this method
+   /* //Uncomment if we decide to include the Journal Field Metadata block
     @Override
     public void parseJournalFields(JSONArray journalFieldsArray) {
         for (Object o : journalFieldsArray) {
             JSONObject jo = (JSONObject) o;
             this.journalFields.setFields(jo);
         }
-    }
+    }*/
     /**
      * Gets the File metadata for the record.
      * @param fileFieldsArray
