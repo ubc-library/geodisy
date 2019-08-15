@@ -1,18 +1,13 @@
 package BaseFiles;
 
 import Crosswalking.XML.GeoCombine;
-import Crosswalking.XML.JGIT;
+import Crosswalking.XML.JGit;
 import Crosswalking.XML.XMLDocument;
 import Crosswalking.XML.XMLGenerator;
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordInfo;
 import Dataverse.ExistingSearches;
 import Dataverse.SourceJavaObject;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -83,9 +78,12 @@ public class MyTimerTask extends TimerTask {
      */
     //TODO actually create the XML files and send them to GeoCombine/other location
     private void sendXMLToGit(LinkedList<XMLDocument> docs) {
-        JGIT jgit = new JGIT();
+        JGit jgit = new JGit();
         jgit.updateXML(docs);
         GeoCombine geoCombine =  new GeoCombine();
+        for(XMLDocument doc:docs){
+            geoCombine.generateGeoBlacklightXML(doc.getDoi());
+        }
         geoCombine.call();
     }
 

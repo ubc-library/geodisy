@@ -9,7 +9,6 @@ import org.eclipse.jgit.dircache.DirCache;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
@@ -23,15 +22,16 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.LinkedList;
+import java.util.Queue;
 
 import static Crosswalking.XML.XMLStrings.*;
 
-public class JGIT {
+public class JGit {
     private Git git;
     private Repository xmlRepo;
     private GeoLogger logger;
 
-    public JGIT() {
+    public JGit() {
         logger = new GeoLogger(this.getClass());
         //Make the directory if it doesn't already exist
         File directory = new File(OPEN_METADATA_LOCAL_REPO);
@@ -64,7 +64,7 @@ public class JGIT {
      */
     public void updateXML(LinkedList<XMLDocument> docs){
         try {
-            generateNewXMLFile(docs);
+            generateNewXMLFiles(docs);
             pushXMLToGit();
             System.out.println("Pushed from repository: " + xmlRepo.getDirectory() + " to remote repository at " + "[Insert remote repo address");
         } catch (GitAPIException | TransformerException e) {
@@ -84,17 +84,17 @@ public class JGIT {
     }
     public void testgenerateNewXMLFile(LinkedList<XMLDocument> docs){
         try {
-            generateNewXMLFile(docs);
+            generateNewXMLFiles(docs);
         } catch (GitAPIException e) {
             logger.error("Something went wrong creating new XML files.");
         } catch (TransformerException e) {
             e.printStackTrace();
         }
     }
-    private void generateNewXMLFile(LinkedList<XMLDocument> docs) throws GitAPIException, TransformerException {
+    private void generateNewXMLFiles(LinkedList<XMLDocument> docs) throws GitAPIException, TransformerException {
         for(XMLDocument doc: docs){
             //TODO figure out if XML file name should be what is currently in xMLFileName
-            String xMLFileName =OPEN_METADATA_LOCAL_REPO + doc.doi + ".xml";
+            String xMLFileName =getFilePath(doc.doi) + ".xml";
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource domSource = new DOMSource(doc.getDoc());
@@ -113,5 +113,37 @@ public class JGIT {
             e.printStackTrace();
         }
     }
+    public String getFilePath(String doiName){
+        String current = doiName;
+        String filePath = OPEN_METADATA_LOCAL_REPO;
+        filePath += "doi/";
+        checkDir(filePath);
+        Queue<String> pathQueue = new LinkedList<>();
+        pathQueue.add("doi/");
+        current = current.substring(current.indexOf("doi.org" + 16));
+        String temp = current.substring(0,current.indexOf("/")+1);
+        checkDir(temp);
+        pathQueue.add(temp);
+        current = current.substring(current.indexOf("/")+1);
+        temp = current.substring(0,current.indexOf("/")+1);
+        checkDir(temp);
+        pathQueue.add(temp);
+        current = current.substring(current.indexOf("/")+1);
+        checkDir(current+"/");
+        pathQueue.add(current+"/");
 
+        while(!pathQueue.isEmpty()){
+            filePath+= pathQueue.poll();
+        }
+        if(filePath.isEmpty())
+            logger.error("something is wrong with the doi in filename: " + doiName);
+        return filePath;
+    }
+
+    private void checkDir(String filePath) {
+        File directory = new File(filePath);
+        if (! directory.exists()) {
+            directory.mkdir();
+        }
+    }
 }
