@@ -1,10 +1,6 @@
 package BaseFiles;
 
-import Crosswalking.XML.GeoCombine;
-import Crosswalking.XML.JGit;
-import Crosswalking.XML.XMLDocument;
-import Crosswalking.XML.XMLGenerator;
-import Dataverse.DataverseJavaObject;
+import Crosswalking.Crosswalk;
 import Dataverse.DataverseRecordInfo;
 import Dataverse.ExistingSearches;
 import Dataverse.SourceJavaObject;
@@ -45,13 +41,13 @@ public class MyTimerTask extends TimerTask {
             FileWriter fW = new FileWriter();
 
             ExistingSearches existingSearches = fW.readExistingSearches(EXISTING_RECORDS);
-            List<SourceJavaObject> dJOs = geo.harvestDataverse(existingSearches);
-            for(SourceJavaObject dJO : dJOs) {
-                existingSearches.addOrReplaceRecord(new DataverseRecordInfo(dJO, logger.getName()));
-
+            List<SourceJavaObject> sJOs = geo.harvestDataverse(existingSearches);
+            for(SourceJavaObject sJO : sJOs) {
+                existingSearches.addOrReplaceRecord(new DataverseRecordInfo(sJO, logger.getName()));
             }
-            LinkedList<XMLDocument> docs = generateXMLDoc(dJOs);
-            sendXMLToGit(docs);
+
+            crosswalkSJOstoXML(sJOs);
+
             endRecsToCheck = trimErrors();
             endErrorLog = trimInfo();
             if(!startRecsToCheck.equals(endRecsToCheck)) {
@@ -73,36 +69,12 @@ public class MyTimerTask extends TimerTask {
     }
 
     /**
-     * Send all the new ISO XML files to Geoserver database
-     * @param docs
+     * Create ISO XML files and run Geocombine on them to push them to GeoBlacklight
+     * @param sJOs
      */
-    //TODO actually create the XML files and send them to GeoCombine/other location
-    private void sendXMLToGit(LinkedList<XMLDocument> docs) {
-        JGit jgit = new JGit();
-        jgit.updateXML(docs);
-        GeoCombine geoCombine =  new GeoCombine();
-        for(XMLDocument doc:docs){
-            geoCombine.generateGeoBlacklightXML(doc.getDoi());
-        }
-        geoCombine.call();
-    }
-
-
-
-
-
-    /**
-     * Create ISO XML for the new/updated records
-     * @param dJOs
-     */
-    private LinkedList<XMLDocument> generateXMLDoc(List<SourceJavaObject> dJOs) {
-        LinkedList<XMLDocument> documents = new LinkedList<>();
-        for(SourceJavaObject sjo : dJOs) {
-            DataverseJavaObject djo = (DataverseJavaObject) sjo;
-            XMLGenerator xmlGenerator = new XMLGenerator(djo);
-            documents.add(xmlGenerator.generateXMLFile());
-        }
-        return documents;
+    private void crosswalkSJOstoXML(List<SourceJavaObject> sJOs) {
+        Crosswalk crosswalk = new Crosswalk();
+        crosswalk.convertSJOs(sJOs);
     }
 
     /**

@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import static Crosswalking.XML.XMLStrings.*;
@@ -62,7 +63,7 @@ public class JGit {
      * Creates new ISO XML files, saves them to the local OpenMetadata repo, commits the changes, and pushes to the remote OpenMetadataRepo
      * @param docs = XML document objects that need to be used to create actual XML files
      */
-    public void updateXML(LinkedList<XMLDocument> docs){
+    public void updateXML(List<XMLDocument> docs){
         try {
             generateNewXMLFiles(docs);
             pushXMLToGit();
@@ -91,7 +92,7 @@ public class JGit {
             e.printStackTrace();
         }
     }
-    private void generateNewXMLFiles(LinkedList<XMLDocument> docs) throws GitAPIException, TransformerException {
+    private void generateNewXMLFiles(List<XMLDocument> docs) throws GitAPIException, TransformerException {
         for(XMLDocument doc: docs){
             //TODO figure out if XML file name should be what is currently in xMLFileName
             String xMLFileName =getFilePath(doc.doi) + ".xml";
