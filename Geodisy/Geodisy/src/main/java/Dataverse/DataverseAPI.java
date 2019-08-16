@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import javax.mail.Folder;
 import java.io.File;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
@@ -46,10 +47,13 @@ public class DataverseAPI extends SourceAPI {
         HashSet<String> dois = searchDV();
         LinkedList<JSONObject> jsons = downloadMetadata(dois);
         LinkedList<SourceJavaObject> answers =  new LinkedList<>();
+        HashMap<String, DataverseRecordInfo> deletedRecords = es.recordVersions;
         DataverseParser parser = new DataverseParser();
         System.out.println("This is using the " + dvName + " dataverse for getting files, should it be changed to something else?");
         for(JSONObject jo:jsons){
             DataverseJavaObject djo = parser.parse(jo,dvName);
+            if(djo.hasContent&& es.hasRecord(djo.getDOI()))
+                deletedRecords.remove(djo.getDOI());
             if(djo.hasContent()&& hasNewInfo(djo, es)) {
                 djo.downloadFiles();
                 if(!djo.hasBoundingBox())
@@ -68,7 +72,12 @@ public class DataverseAPI extends SourceAPI {
         }
         if(answers.size()>0)
             System.out.println("Updated or added " + answers.size() + " records.");
+        removeDeletedRecords(deletedRecords,es);
         return answers;
+    }
+    //TODO remove record from es and delete local file
+    private void removeDeletedRecords(HashMap<String, DataverseRecordInfo> deletedRecords, ExistingSearches es) {
+
     }
 
     private void deleteFolder(File folder) {
