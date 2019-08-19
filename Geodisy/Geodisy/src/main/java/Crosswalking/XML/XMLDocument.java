@@ -10,6 +10,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * Wrapper for the Document class so I can control it more easily
+ * This Class generates the XMLDocument Object (not an XML file)
  */
 public class XMLDocument {
     Document doc;
