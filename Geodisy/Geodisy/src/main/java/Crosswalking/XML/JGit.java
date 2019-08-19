@@ -70,7 +70,8 @@ public class JGit {
     public void updateXML(List<XMLDocument> docs){
         try {
             generateNewXMLFiles(docs);
-            pushToGit();
+            //TODO uncomment this in production
+            //pushToGit();
             System.out.println("Pushed from repository: " + xmlRepo.getDirectory() + " to remote repository at " + "[Insert remote repo address");
         } catch (GitAPIException | TransformerException e) {
             logger.error("Something went wrong with Git when either connecting to .");
@@ -120,7 +121,8 @@ public class JGit {
             addXMLFileToIndex(xMLFileName);
         }
         RevCommit commit = git.commit().setMessage(docs.size() + " ISO XML files created").call();
-        pushToGit();
+        //TODO uncomment this in production
+        //pushToGit();
     }
 
     /**
@@ -182,11 +184,13 @@ public class JGit {
         } catch (GitAPIException e) {
             logger.error("Something went wrong trying to delete file: " + badname);
         }
-        try {
+        //TODO uncomment this in production
+        /*try {
+
             pushToGit();
         } catch (GitAPIException e) {
             logger.error("Something went wrong pushing to Github after deleting XML files");
-        }
+        }*/
 
 
     }
