@@ -24,9 +24,13 @@ import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 import static Crosswalking.XML.XMLStrings.*;
 
+/**
+ * Class for dealing with creating XML files from XML Docs, deleting files, and keeping Github up to date
+ */
 public class JGit {
     private Git git;
     private Repository xmlRepo;
@@ -41,8 +45,8 @@ public class JGit {
         }
 
         try {
-            Repository localRepo = new FileRepository(OPEN_METADATA_LOCAL_REPO);
-            Git git = new Git(localRepo);
+            xmlRepo = new FileRepository(OPEN_METADATA_LOCAL_REPO);
+            git = new Git(xmlRepo);
 
             //add remote repo
             RemoteAddCommand remoteAddCommand = git.remoteAdd();
@@ -66,7 +70,7 @@ public class JGit {
     public void updateXML(List<XMLDocument> docs){
         try {
             generateNewXMLFiles(docs);
-            pushXMLToGit();
+            pushToGit();
             System.out.println("Pushed from repository: " + xmlRepo.getDirectory() + " to remote repository at " + "[Insert remote repo address");
         } catch (GitAPIException | TransformerException e) {
             logger.error("Something went wrong with Git when either connecting to .");
@@ -77,12 +81,17 @@ public class JGit {
     /**
      * Pushes new XML files to the OpenMetadata Repo to be then harvested by Geocombine and sent to SOLR
      */
-    private void pushXMLToGit() throws GitAPIException {
+    private void pushToGit() throws GitAPIException {
         //TODO is this really all I need?
         PushCommand pushCommand = git.push();
         pushCommand.setCredentialsProvider(new UsernamePasswordCredentialsProvider(OPEN_METADATA_REMOTE_USERNAME,OPEN_METADATA_REMOTE_PASSWORD));
         pushCommand.call();
     }
+
+    /**
+     * Used only for testing
+     * @param docs
+     */
     public void testgenerateNewXMLFile(LinkedList<XMLDocument> docs){
         try {
             generateNewXMLFiles(docs);
@@ -92,10 +101,17 @@ public class JGit {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Creates XML files from the XML Docs, adds them to the git index, and pushes them to the remote repo
+     * @param docs
+     * @throws GitAPIException
+     * @throws TransformerException
+     */
     private void generateNewXMLFiles(List<XMLDocument> docs) throws GitAPIException, TransformerException {
         for(XMLDocument doc: docs){
             //TODO figure out if XML file name should be what is currently in xMLFileName
-            String xMLFileName =getFilePath(doc.doi) + ".xml";
+            String xMLFileName = getXMLLocalFilePath(doc.doi) + ".xml";
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource domSource = new DOMSource(doc.getDoc());
@@ -104,9 +120,13 @@ public class JGit {
             addXMLFileToIndex(xMLFileName);
         }
         RevCommit commit = git.commit().setMessage(docs.size() + " ISO XML files created").call();
-        pushXMLToGit();
+        pushToGit();
     }
 
+    /**
+     * XML files need to be added to the index in order to be git committed
+     * @param fileName
+     */
     private void addXMLFileToIndex(String fileName){
         try {
             DirCache index = git.add().addFilepattern(OPEN_METADATA_LOCAL_REPO + fileName).call();
@@ -114,7 +134,13 @@ public class JGit {
             e.printStackTrace();
         }
     }
-    public String getFilePath(String doiName){
+
+    /**
+     * Creates a string with the path to where the XML file should go
+     * @param doiName
+     * @return
+     */
+    public String getXMLLocalFilePath(String doiName){
         String current = doiName;
         String filePath = OPEN_METADATA_LOCAL_REPO;
         filePath += "doi/";
@@ -141,6 +167,34 @@ public class JGit {
         return filePath;
     }
 
+    /**
+     * Delete XML files locally and in repo if they got deleted from harvested data repository
+     * @param dois
+     */
+    public void deleteXMLFiles(Set<String> dois){
+        String badname = "";
+        try {
+            //add setCached(false). if files are not getting deleted from the working directory
+            for(String name: dois) {
+                badname = name;
+                DirCache index = git.rm().addFilepattern(getXMLLocalFilePath(name) + ".xml").call();
+            }
+        } catch (GitAPIException e) {
+            logger.error("Something went wrong trying to delete file: " + badname);
+        }
+        try {
+            pushToGit();
+        } catch (GitAPIException e) {
+            logger.error("Something went wrong pushing to Github after deleting XML files");
+        }
+
+
+    }
+
+    /**
+     * Create a directory if it doesn't already exist
+     * @param filePath
+     */
     private void checkDir(String filePath) {
         File directory = new File(filePath);
         if (! directory.exists()) {
