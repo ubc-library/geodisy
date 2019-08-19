@@ -30,4 +30,11 @@ public class XMLStrings {
     public final static String EX_GEO_BB =  "EX_GeographicBoundingBox";
     public final static String GEO_ELEMENT = "geographicElement";
     public final static String P_OF_CONTACT = "pointOfContact";
+
+    //OPEN METADATA
+    public final static String OPEN_METADATA_LOCAL_REPO = "./XMLFiles/";
+    //TODO get remote repo location
+    public final static String OPEN_METADATA_REMOTE_REPO = "https://github.com/OpenGeoMetadata/ca.ubc/";
+    public final static String OPEN_METADATA_REMOTE_USERNAME = "FAKE USERNAME";
+    public final static String OPEN_METADATA_REMOTE_PASSWORD = "FAKE PASSWORD";
 }

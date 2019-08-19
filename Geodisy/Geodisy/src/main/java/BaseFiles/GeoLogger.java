@@ -4,6 +4,9 @@ import Dataverse.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Shell on top of a log4j logger
+ */
 public class GeoLogger {
     public Logger logger;
     private ExistingCallsToCheck efc;

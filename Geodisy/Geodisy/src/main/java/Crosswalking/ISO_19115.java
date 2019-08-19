@@ -5,20 +5,20 @@
  */
 package Crosswalking;
 
+import Crosswalking.XML.XMLDocument;
+import Crosswalking.XML.XMLGenerator;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONAstroFieldClasses.AstroFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONJournalFieldClasses.JournalFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONLifeFieldClasses.LifeFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
+import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordFile;
 import Dataverse.SourceJavaObject;
-import org.jdom2.Document;
 import org.jdom2.Element;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
-import java.io.FileWriter;
-import java.io.IOException;
+
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -29,26 +29,14 @@ import java.util.List;
 public class ISO_19115 extends ISO_Schema {
     //TODO Create ISO_19115 schema
     @Override
-    public void generateXML(SourceJavaObject sJO) {
-        String fileName = "need to grab this from the sJO";
-        try {
-            Element root = new Element("temp val");
-            Document doc = new Document();
-            doc.setRootElement(root);
-            doc.getRootElement().addContent(getCitation(sJO.getCitationFields()));
-            doc.getRootElement().addContent(getGeoFields(sJO.getGeoFields()));
-            doc.getRootElement().addContent(getFileFields(sJO.getDataFiles()));
-
-            // new XMLOutputter().output(doc, System.out);
-            XMLOutputter xmlOutput = new XMLOutputter();
-
-            // display nice nice
-            xmlOutput.setFormat(Format.getPrettyFormat());
-            xmlOutput.output(doc, new FileWriter(fileName));
-        }catch (IOException io) {
-            System.out.println(io.getMessage());
-            logger.error("Something went wrong trying to create XML file: " + fileName);
-    }
+    public LinkedList<XMLDocument> generateXML(List<SourceJavaObject> sJOs) {
+        LinkedList<XMLDocument> documents = new LinkedList<>();
+        for(SourceJavaObject sjo : sJOs) {
+            DataverseJavaObject djo = (DataverseJavaObject) sjo;
+            XMLGenerator xmlGenerator = new XMLGenerator(djo);
+            documents.add(xmlGenerator.generateXMLFile());
+        }
+        return documents;
 
 }
 //TODO

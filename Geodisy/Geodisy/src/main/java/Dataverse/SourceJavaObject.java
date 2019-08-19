@@ -26,7 +26,8 @@ public abstract class SourceJavaObject {
     public abstract void parseCitationFields(JSONObject citationFieldsArray);
     public abstract void parseGeospatialFields(JSONArray geoFieldsArray);
     public abstract void parseSocialFields(JSONArray socialFieldsArray);
-    public abstract void parseJournalFields(JSONArray journalFieldsArray);
+    //Uncomment if we decide to include Journal Fields metadata block
+    // public abstract void parseJournalFields(JSONArray journalFieldsArray);
     public abstract void parseFiles(JSONArray fileFieldsArray);
     public abstract JSONObject getVersionSection(JSONObject current);
     public abstract void downloadFiles();

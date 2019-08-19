@@ -11,6 +11,7 @@ import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
 import BaseFiles.HTTPCaller;
 import Crosswalking.JSONParsing.DataverseParser;
+import Crosswalking.XML.JGit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
@@ -19,6 +20,7 @@ import org.json.JSONObject;
 
 import javax.mail.Folder;
 import java.io.File;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
@@ -46,10 +48,13 @@ public class DataverseAPI extends SourceAPI {
         HashSet<String> dois = searchDV();
         LinkedList<JSONObject> jsons = downloadMetadata(dois);
         LinkedList<SourceJavaObject> answers =  new LinkedList<>();
+        HashMap<String, DataverseRecordInfo> deletedRecords = es.recordVersions;
         DataverseParser parser = new DataverseParser();
         System.out.println("This is using the " + dvName + " dataverse for getting files, should it be changed to something else?");
         for(JSONObject jo:jsons){
             DataverseJavaObject djo = parser.parse(jo,dvName);
+            if(djo.hasContent&& es.hasRecord(djo.getDOI()))
+                deletedRecords.remove(djo.getDOI());
             if(djo.hasContent()&& hasNewInfo(djo, es)) {
                 djo.downloadFiles();
                 if(!djo.hasBoundingBox())
@@ -58,9 +63,7 @@ public class DataverseAPI extends SourceAPI {
                     answers.add(djo);
                 else{
                     String doi = djo.getDOI();
-                    String folderizedDOI = doi.replaceAll("\\.","_");
-                    folderizedDOI = folderizedDOI.replaceAll("/","_");
-                    File folderToDelete = new File("./datasetFiles/" + folderizedDOI);
+                    File folderToDelete = new File(folderizedDOI(doi));
                     deleteFolder(folderToDelete);
                 }
             }
@@ -68,7 +71,25 @@ public class DataverseAPI extends SourceAPI {
         }
         if(answers.size()>0)
             System.out.println("Updated or added " + answers.size() + " records.");
+        removeDeletedRecords(deletedRecords,es);
         return answers;
+    }
+
+    /**
+     * Deletes an existing record if that record is later deleted from Dataverse
+     * @param deletedRecords
+     * @param es
+     */
+    private void removeDeletedRecords(HashMap<String, DataverseRecordInfo> deletedRecords, ExistingSearches es) {
+        Set<String> keySet = deletedRecords.keySet();
+        for(String key:keySet){
+            String doi = deletedRecords.get(key).getDoi();
+            deleteFolder(new File(folderizedDOI(doi)));
+            es.deleteRecord(doi);
+            //TODO delete dataset and metadata from Geoserver and OpenGeoMetadata
+        }
+        JGit git = new JGit();
+        git.deleteXMLFiles(keySet);
     }
 
     private void deleteFolder(File folder) {
@@ -157,5 +178,9 @@ public class DataverseAPI extends SourceAPI {
         }
         return answers;
     }
-
+    protected String folderizedDOI(String doi){
+        String folderizedDOI = doi.replaceAll("\\.","_");
+        folderizedDOI = folderizedDOI.replaceAll("/","_");
+        return "./datasetFiles/" + folderizedDOI;
+    }
 }

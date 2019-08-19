@@ -15,7 +15,7 @@ import static BaseFiles.GeodisyStrings.EXISTING_RECORDS;
  * Class for getting the list of records that have already been downloaded
  */
 public class ExistingSearchesFile {
-    private String path = EXISTING_RECORDS;
+    private String path;
     GeoLogger logger = new GeoLogger(this.getClass());
 
     /**
@@ -34,17 +34,21 @@ public class ExistingSearchesFile {
     }
 
     public void writeExistingSearches(ExistingSearches existingSearches) throws IOException {
-        BaseFiles.FileWriter writer = new FileWriter();
+        FileWriter writer = new FileWriter();
         writer.writeObjectToFile(existingSearches,path);
         }
 
-
+    /**
+     * Get the existing searches, if some exist. Otherwise call the ExistingSearch constructor
+     * @return
+     * @throws IOException
+     */
     public ExistingSearches readExistingSearches() throws IOException {
         ExistingSearches es;
+        FileWriter writer = new FileWriter();
         try {
-            FileInputStream f = new FileInputStream(path);
-            ObjectInputStream ois = new ObjectInputStream(f);
-            es = (ExistingSearches) ois.readObject();
+
+            es = (ExistingSearches) writer.readSavedObject(path);
         } catch (FileNotFoundException e) {
             es = ExistingSearches.getExistingSearches();
             writeExistingSearches(es);

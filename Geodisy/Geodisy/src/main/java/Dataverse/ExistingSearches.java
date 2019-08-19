@@ -75,5 +75,10 @@ public class ExistingSearches implements Serializable {
         return recordVersions.containsKey(doi);
     }
 
+    public void deleteRecord(String doi){
+        bBoxes.remove(doi);
+        recordVersions.remove(doi);
+    }
+
 
 }

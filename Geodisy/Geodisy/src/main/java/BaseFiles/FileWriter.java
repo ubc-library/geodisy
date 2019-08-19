@@ -15,6 +15,12 @@ public class FileWriter {
     public FileWriter() {
     }
 
+    /**
+     * Saves a file on the local machine to the path provided
+     * @param objectToSave
+     * @param path
+     * @throws IOException
+     */
     public void writeObjectToFile(Object objectToSave, String path) throws IOException {
         verifyFileExistence(path);
         FileOutputStream f =  new FileOutputStream(new File(path));
@@ -23,6 +29,14 @@ public class FileWriter {
         o.close();
         f.close();
     }
+
+    /**
+     * Reads a local file at the path provided
+     * @param path
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public Object readSavedObject(String path) throws IOException, ClassNotFoundException {
         if (!verifyFileExistence(path))
             throw new FileNotFoundException();

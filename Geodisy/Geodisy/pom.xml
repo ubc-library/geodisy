@@ -102,5 +102,17 @@
             <artifactId>mail</artifactId>
             <version>1.4.7</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.eclipse.jgit/org.eclipse.jgit -->
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit</artifactId>
+            <version>5.4.0.201906121030-r</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.eclipse.jgit/org.eclipse.jgit.junit -->
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit.junit</artifactId>
+            <version>5.4.0.201906121030-r</version>
+        </dependency>
     </dependencies>
 </project>

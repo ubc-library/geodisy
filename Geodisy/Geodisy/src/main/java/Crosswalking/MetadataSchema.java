@@ -5,7 +5,11 @@
  */
 package Crosswalking;
 
+import Crosswalking.XML.XMLDocument;
 import Dataverse.SourceJavaObject;
+
+
+import java.util.List;
 
 /**
  * Interface for the output metadata schema side of a crosswalk
@@ -13,7 +17,7 @@ import Dataverse.SourceJavaObject;
  */
 public interface MetadataSchema {
     //TODO create interface for metadata crosswalks
-    public void generateXML(SourceJavaObject s);
+    public List<XMLDocument> generateXML(List<SourceJavaObject> dJOs);
 
     void crosswalk(SourceJavaObject sJO);
 }
