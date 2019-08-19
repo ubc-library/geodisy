@@ -13,7 +13,7 @@ public class GeoCombine {
     public void generateGeoBlacklightXML(String fileName){
         ProcessBuilder processBuilder = new ProcessBuilder();
         JGit jgit = new JGit();
-        String filePath = jgit.getFilePath(fileName);
+        String filePath = jgit.getXMLLocalFilePath(fileName);
         processBuilder.command("bash","GeoCombine::Iso19139.new(" + filePath + fileName + ".xml).to_geoblacklight.to_json");
     }
 
