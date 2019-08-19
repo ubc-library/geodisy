@@ -30,6 +30,8 @@ public class XMLStrings {
     public final static String EX_GEO_BB =  "EX_GeographicBoundingBox";
     public final static String GEO_ELEMENT = "geographicElement";
     public final static String P_OF_CONTACT = "pointOfContact";
+    //TODO update this with the actual validation file name
+    public final static String ISO_19115_VALIDATION_FILE_PATH = "./XMLValid/ISO19115.xsd";
 
     //OPEN METADATA
     public final static String OPEN_METADATA_LOCAL_REPO = "./XMLFiles/";
