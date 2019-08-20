@@ -8,6 +8,8 @@ import BaseFiles.GeoLogger;
 import org.xml.sax.SAXException;
 import java.io.IOException;
 
+import static Crosswalking.XML.XMLStrings.ISO_19115_VALIDATION_FILE_PATH;
+
 public class XMLValidator {
     GeoLogger logger =  new GeoLogger(this.getClass());
 
