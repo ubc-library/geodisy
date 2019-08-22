@@ -12,12 +12,12 @@ import javax.xml.parsers.ParserConfigurationException;
  * Wrapper for the Document class so I can control it more easily
  * This Class generates the XMLDocument Object (not an XML file)
  */
-public class XMLDocument {
+public class XMLDocObject {
     Document doc;
     String doi;
 
 
-    public XMLDocument() {
+    public XMLDocObject() {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -35,17 +35,9 @@ public class XMLDocument {
     public Element createGMDElement(String s){
         return doc.createElement(addGMD(s));
     }
-    public XMLStack createGMDElement(String s, XMLStack stack){
-        stack.push(doc.createElement(addGMD(s)));
-        return stack;
-    }
 
     public Element createGCOElement(String s){
         return doc.createElement(addGCO(s));
-    }
-    public XMLStack creatGCOElement(String s, XMLStack stack){
-        stack.push(doc.createElement(addGCO(s)));
-        return stack;
     }
     public Element create_Element(String s){
         return doc.createElement(s);

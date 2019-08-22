@@ -4,12 +4,12 @@ import Dataverse.DataverseJavaObject;
 import org.w3c.dom.Element;
 
 public abstract class SubElement {
-    protected XMLDocument doc;
+    protected XMLDocObject doc;
     protected DataverseJavaObject djo;
     protected Element root;
     protected XMLStack stack;
 
-    public SubElement(DataverseJavaObject djo, XMLDocument doc, Element root) {
+    public SubElement(DataverseJavaObject djo, XMLDocObject doc, Element root) {
         this.doc = doc;
         this.djo = djo;
         this.root = root;
@@ -31,7 +31,7 @@ public abstract class SubElement {
         return levelRoleCode;
     }
 
-    public XMLDocument getDoc(){
+    public XMLDocObject getDoc(){
         return doc;
     }
 }

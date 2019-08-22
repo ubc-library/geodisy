@@ -15,7 +15,7 @@ public class JournalInfo extends SubElement  {
     List<JournalVolIssue> journalVolIssues;
     String doi;
 
-    public JournalInfo(DataverseJavaObject djo, XMLDocument doc, Element root) {
+    public JournalInfo(DataverseJavaObject djo, XMLDocObject doc, Element root) {
         super(djo, doc, root);
         //Uncomment if we decide to include Journal Fields metadata block
         // journalFields = djo.getJournalFields();
