@@ -5,6 +5,7 @@ import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Simpl
 import Dataverse.DataverseJavaObject;
 import org.w3c.dom.Element;
 import java.util.LinkedList;
+import java.util.List;
 
 
 import static BaseFiles.GeodisyStrings.CHARACTER;
@@ -13,8 +14,8 @@ import static Dataverse.DVFieldNameStrings.DEPOSITOR;
 
 public class DistributionInfo extends SubElement {
     SimpleCitationFields simple;
-    LinkedList<Distributor> distributors;
-    public DistributionInfo(DataverseJavaObject djo, XMLDocument doc, Element root, SimpleCitationFields simple, LinkedList<Distributor> distributors) {
+    List<Distributor> distributors;
+    public DistributionInfo(DataverseJavaObject djo, XMLDocObject doc, Element root, SimpleCitationFields simple, List<Distributor> distributors) {
         super(djo, doc, root);
         this.simple = simple;
         this.distributors = distributors;
@@ -53,18 +54,18 @@ public class DistributionInfo extends SubElement {
                 stack = new XMLStack();
                 if (!d.getDistributorURL().isEmpty()) {
                     stack.push(levelP);
-                    stack = doc.createGMDElement("contactInfo", stack);
-                    stack = doc.createGMDElement(CI_CITE, stack);
-                    stack = doc.createGMDElement(ONLINE_RES, stack);
-                    stack = doc.createGMDElement(CI_ONLINE_RES, stack);
-                    stack = doc.createGMDElement(LINKAGE, stack);
+                    stack.push(doc.createGMDElement("contactInfo"));
+                    stack.push(doc.createGMDElement(CI_CITE));
+                    stack.push(doc.createGMDElement(ONLINE_RES));
+                    stack.push(doc.createGMDElement(CI_ONLINE_RES));
+                    stack.push(doc.createGMDElement(LINKAGE));
                     levelP = stack.zip(doc.addGCOVal(d.getDistributorURL(), CHARACTER));
                 }
                 if (!d.getDistributorLogoURL().isEmpty()) {
                     stack.push(levelP);
-                    stack = doc.createGMDElement("logo", stack);
-                    stack = doc.createGMDElement("MD_BrowseGraphic", stack);
-                    stack = doc.createGMDElement(LINKAGE, stack);
+                    stack.push(doc.createGMDElement("logo"));
+                    stack.push(doc.createGMDElement("MD_BrowseGraphic"));
+                    stack.push(doc.createGMDElement(LINKAGE));
                     levelP = stack.zip(doc.addGCOVal(d.getDistributorLogoURL(), CHARACTER));
                 }
             }
@@ -81,10 +82,10 @@ public class DistributionInfo extends SubElement {
 
     private Element getDepositor(String depositorName) {
         stack = new XMLStack();
-        stack = doc.createGMDElement(CI_RESPONSIBILITY, stack);
-        stack = doc.createGMDElement(PARTY, stack);
-        stack = doc.createGMDElement(CI_ORG, stack);
-        stack = doc.createGMDElement(NAME, stack);
+        stack.push(doc.createGMDElement(CI_RESPONSIBILITY));
+        stack.push(doc.createGMDElement(PARTY));
+        stack.push(doc.createGMDElement(CI_ORG));
+        stack.push(doc.createGMDElement(NAME));
         Element levelN = stack.zip(doc.addGCOVal(depositorName,CHARACTER));
         levelN.appendChild(levelRoleCode("originator"));
         return levelN;

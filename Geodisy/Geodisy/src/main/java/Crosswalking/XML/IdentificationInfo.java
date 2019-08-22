@@ -48,7 +48,7 @@ public class IdentificationInfo extends SubElement{
     String noteText,  distDate;
     XMLStack stack;
 
-    public IdentificationInfo(DataverseJavaObject djo, XMLDocument doc, Element root) {
+    public IdentificationInfo(DataverseJavaObject djo, XMLDocObject doc, Element root) {
         super(djo,doc,root);
         cf = djo.getCitationFields();
         simpleCF = djo.getSimpleFields();
@@ -435,11 +435,11 @@ public class IdentificationInfo extends SubElement{
                 }
                 if(!dsContactEmail.isEmpty()){
                     stack.push(levelN);
-                    stack = doc.createGMDElement("contactInfo", stack); //O
-                    stack = doc.createGMDElement(CI_CITE, stack); //P
-                    stack = doc.createGMDElement("address", stack); //Q
-                    stack = doc.createGMDElement("CI_Address", stack); //R
-                    stack = doc.createGMDElement("electronicMailAddress", stack); //S
+                    stack.push(doc.createGMDElement("contactInfo")); //O
+                    stack.push(doc.createGMDElement(CI_CITE)); //P
+                    stack.push(doc.createGMDElement("address")); //Q
+                    stack.push(doc.createGMDElement("CI_Address")); //R
+                    stack.push(doc.createGMDElement("electronicMailAddress")); //S
                     levelN = stack.zip(doc.addGCOVal(dsContactEmail,CHARACTER));
 
                 }
@@ -478,31 +478,31 @@ public class IdentificationInfo extends SubElement{
             stack = new XMLStack();
             if(!p.getProducerName().isEmpty()) {
                 stack.push(levelM);
-                stack = doc.createGMDElement(CI_INDIV, stack); //N
-                stack = doc.createGMDElement(NAME, stack); //O
+                stack.push(doc.createGMDElement(CI_INDIV)); //N
+                stack.push(doc.createGMDElement(NAME)); //O
                 levelM = stack.zip(doc.addGCOVal(p.getProducerName(), CHARACTER));
             }
             if(!p.getProducerAffiliation().isEmpty()||!p.getProducerURL().isEmpty()||!p.getProducerLogoURL().isEmpty()) {
                 levelN = doc.createGMDElement(CI_ORG);
                 if (!p.getProducerAffiliation().isEmpty()) {
                     stack.push(levelN);
-                    stack = doc.createGMDElement(NAME, stack); //O
+                    stack.push(doc.createGMDElement(NAME)); //O
                     levelN = stack.zip(doc.addGCOVal(p.getProducerAffiliation(), CHARACTER));
                 }
                 if (!p.getProducerURL().isEmpty()) {
                     stack.push(levelN);
-                    stack = doc.createGMDElement("contactInfo", stack); //O
-                    stack = doc.createGMDElement(CI_CITE, stack); //P
-                    stack = doc.createGMDElement(ONLINE_RES, stack); //Q
-                    stack = doc.createGMDElement(CI_ONLINE_RES, stack); //R
-                    stack = doc.createGMDElement(LINKAGE, stack); //S
+                    stack.push(doc.createGMDElement("contactInfo")); //O
+                    stack.push(doc.createGMDElement(CI_CITE)); //P
+                    stack.push(doc.createGMDElement(ONLINE_RES)); //Q
+                    stack.push(doc.createGMDElement(CI_ONLINE_RES)); //R
+                    stack.push(doc.createGMDElement(LINKAGE)); //S
                     levelN = stack.zip(doc.addGCOVal(p.getProducerURL(), CHARACTER));
                 }
                 if (!p.getProducerLogoURL().isEmpty()) {
                     stack.push(levelN);
-                    stack = doc.createGMDElement("logo",stack); //O
-                    stack = doc.createGMDElement("MD_BrowseGraphic",stack); //P
-                    stack = doc.createGMDElement(LINKAGE, stack); //Q
+                    stack.push(doc.createGMDElement("logo")); //O
+                    stack.push(doc.createGMDElement("MD_BrowseGraphic")); //P
+                    stack.push(doc.createGMDElement(LINKAGE)); //Q
                     levelN = stack.zip(doc.addGCOVal(p.getProducerLogoURL(), CHARACTER));
                 }
                 levelM.appendChild(levelN);
