@@ -2,11 +2,9 @@ package Crosswalking;
 
 import Crosswalking.XML.GeoCombine;
 import Crosswalking.XML.JGit;
-import Crosswalking.XML.XMLDocument;
-import Dataverse.DataverseJavaObject;
+import Crosswalking.XML.XMLDocObject;
 import Dataverse.SourceJavaObject;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class Crosswalk implements CrosswalkInterface {
@@ -18,11 +16,11 @@ public class Crosswalk implements CrosswalkInterface {
     }
 
     @Override
-    public void sendXMLToGit(List<XMLDocument> docs) {
+    public void sendXMLToGit(List<XMLDocObject> docs) {
         JGit jgit = new JGit();
         jgit.updateXML(docs);
         GeoCombine geoCombine =  new GeoCombine();
-        for(XMLDocument doc:docs){
+        for(XMLDocObject doc:docs){
             geoCombine.generateGeoBlacklightXML(doc.getDoi());
         }
         geoCombine.call();

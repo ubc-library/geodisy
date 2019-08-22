@@ -5,7 +5,7 @@
  */
 package Crosswalking;
 
-import Crosswalking.XML.XMLDocument;
+import Crosswalking.XML.XMLDocObject;
 import Crosswalking.XML.XMLGenerator;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONAstroFieldClasses.AstroFields;
@@ -29,8 +29,8 @@ import java.util.List;
 public class ISO_19115 extends ISO_Schema {
     //TODO Create ISO_19115 schema
     @Override
-    public LinkedList<XMLDocument> generateXML(List<SourceJavaObject> sJOs) {
-        LinkedList<XMLDocument> documents = new LinkedList<>();
+    public LinkedList<XMLDocObject> generateXML(List<SourceJavaObject> sJOs) {
+        LinkedList<XMLDocObject> documents = new LinkedList<>();
         for(SourceJavaObject sjo : sJOs) {
             DataverseJavaObject djo = (DataverseJavaObject) sjo;
             XMLGenerator xmlGenerator = new XMLGenerator(djo);

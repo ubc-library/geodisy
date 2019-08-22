@@ -67,7 +67,7 @@ public class JGit {
      * Creates new ISO XML files, saves them to the local OpenMetadata repo, commits the changes, and pushes to the remote OpenMetadataRepo
      * @param docs = XML document objects that need to be used to create actual XML files
      */
-    public void updateXML(List<XMLDocument> docs){
+    public void updateXML(List<XMLDocObject> docs){
         try {
             generateNewXMLFiles(docs);
             //TODO uncomment this in production
@@ -93,7 +93,7 @@ public class JGit {
      * Used only for testing
      * @param docs
      */
-    public void testgenerateNewXMLFile(LinkedList<XMLDocument> docs){
+    public void testgenerateNewXMLFile(LinkedList<XMLDocObject> docs){
         try {
             generateNewXMLFiles(docs);
         } catch (GitAPIException e) {
@@ -109,8 +109,8 @@ public class JGit {
      * @throws GitAPIException
      * @throws TransformerException
      */
-    private void generateNewXMLFiles(List<XMLDocument> docs) throws GitAPIException, TransformerException {
-        for(XMLDocument doc: docs){
+    private void generateNewXMLFiles(List<XMLDocObject> docs) throws GitAPIException, TransformerException {
+        for(XMLDocObject doc: docs){
             //TODO figure out if XML file name should be what is currently in xMLFileName
             String xMLFileName = getXMLLocalFilePath(doc.doi) + ".xml";
             TransformerFactory transformerFactory = TransformerFactory.newInstance();

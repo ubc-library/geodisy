@@ -1,13 +1,12 @@
 package tests.XMLTestCases;
 
 import Crosswalking.JSONParsing.DataverseParser;
-import Crosswalking.XML.XMLDocument;
+import Crosswalking.XML.XMLDocObject;
 import Crosswalking.XML.XMLGenerator;
 import Dataverse.DataverseJavaObject;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-import org.w3c.dom.Document;
 
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
@@ -45,7 +44,7 @@ DataverseJavaObject djo;
         try {
         System.out.println(djo.getBoundingBox().getLatNorth());
         XMLGenerator xmlGenerator = new XMLGenerator(djo);
-        XMLDocument xmlFile = xmlGenerator.generateXMLFile();
+        XMLDocObject xmlFile = xmlGenerator.generateXMLFile();
         DOMSource source = new DOMSource(xmlFile.getDoc());
         StreamResult result = new StreamResult(new File("xmlTestDJO.xml"));
 

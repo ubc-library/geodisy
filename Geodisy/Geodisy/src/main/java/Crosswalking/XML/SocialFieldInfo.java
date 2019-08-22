@@ -14,7 +14,7 @@ public class SocialFieldInfo extends SubElement {
     String dataCollector;
     String doi;
 
-    public SocialFieldInfo(DataverseJavaObject djo, XMLDocument doc, Element root) {
+    public SocialFieldInfo(DataverseJavaObject djo, XMLDocObject doc, Element root) {
         super(djo, doc, root);
         this.djo = djo;
         sf = djo.getSocialFields();

@@ -4,25 +4,23 @@ package Crosswalking.XML;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
-import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONJournalFieldClasses.JournalFields;
-import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
 import Dataverse.DataverseJavaObject;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import static BaseFiles.GeodisyStrings.CHARACTER;
 import static BaseFiles.GeodisyStrings.XMLNS;
 import static Dataverse.DVFieldNameStrings.*;
 
 public class XMLGenerator {
-    DataverseJavaObject djo;
-    CitationFields citationFields;
-    GeographicFields geographicFields;
-    SimpleCitationFields simple;
+    private DataverseJavaObject djo;
+    private CitationFields citationFields;
+    private GeographicFields geographicFields;
+    private SimpleCitationFields simple;
 
-    XMLDocument doc;
+    XMLDocObject doc;
 
     //TODO write catch block
     public XMLGenerator(DataverseJavaObject djo) {
@@ -30,12 +28,12 @@ public class XMLGenerator {
         this.citationFields = djo.getCitationFields();
         this.geographicFields=djo.getGeoFields();
         this.simple = citationFields.getSimpleCitationFields();
-        doc = new XMLDocument();
+        doc = new XMLDocObject();
         doc.setDoi(djo.getDOI());
     }
 
     //TODO keep working on this
-    public XMLDocument generateXMLFile(){
+    public XMLDocObject generateXMLFile(){
         Element rootElement = getRoot();
         SubElement ident = new IdentificationInfo(djo, doc, rootElement);
         rootElement = ident.getFields();
@@ -43,8 +41,7 @@ public class XMLGenerator {
             SubElement dqi = new DataQualityInfo(djo, doc, rootElement);
             rootElement.appendChild(dqi.getFields());
         }
-        CitationFields cf = djo.getCitationFields();
-        LinkedList<Distributor> distributors = (LinkedList) cf.getListField(DISTRIB);
+        List distributors = citationFields.getListField(DISTRIB);
         if(distributors.size()>0||simple.hasField(DEPOSITOR)) {
             SubElement distribution = new DistributionInfo(djo,doc,rootElement,simple, distributors);
             rootElement.appendChild(distribution.getFields());

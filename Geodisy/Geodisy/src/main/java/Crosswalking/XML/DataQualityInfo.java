@@ -13,7 +13,7 @@ import static Dataverse.DVFieldNameStrings.*;
 import static Dataverse.DVFieldNameStrings.ACCESS_TO_SOURCES;
 
 public class DataQualityInfo extends SubElement {
-    public DataQualityInfo(DataverseJavaObject djo, XMLDocument doc, Element root) {
+    public DataQualityInfo(DataverseJavaObject djo, XMLDocObject doc, Element root) {
         super(djo, doc, root);
     }
 

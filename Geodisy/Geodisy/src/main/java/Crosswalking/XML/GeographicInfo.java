@@ -7,7 +7,6 @@ import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.G
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicUnit;
 import Dataverse.DataverseJavaObject;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
-import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Element;
 
 
@@ -25,7 +24,7 @@ List<GeographicBoundingBox> geoBBs;
 List<GeographicUnit> geoUnits;
 GeoLogger logger;
 
-    public GeographicInfo(DataverseJavaObject djo, XMLDocument doc, Element root) {
+    public GeographicInfo(DataverseJavaObject djo, XMLDocObject doc, Element root) {
         super(djo, doc, root);
         gf = djo.getGeoFields();
         geoCovers = gf.getGeoCovers();

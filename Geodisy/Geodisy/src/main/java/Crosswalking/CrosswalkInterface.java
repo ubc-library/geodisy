@@ -5,12 +5,9 @@
  */
 package Crosswalking;
 
-import Crosswalking.XML.XMLDocument;
-import Dataverse.DataverseJavaObject;
+import Crosswalking.XML.XMLDocObject;
 import Dataverse.SourceJavaObject;
-import org.w3c.dom.Document;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -30,5 +27,5 @@ public interface CrosswalkInterface {
      * Send all the new ISO XML files to Geocombine
      * @param docs
      */
-    void sendXMLToGit(List<XMLDocument> docs);
+    void sendXMLToGit(List<XMLDocObject> docs);
 }
