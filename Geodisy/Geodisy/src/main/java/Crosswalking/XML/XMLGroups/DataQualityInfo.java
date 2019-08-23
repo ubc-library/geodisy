@@ -1,5 +1,8 @@
-package Crosswalking.XML;
+package Crosswalking.XML.XMLGroups;
 
+import Crosswalking.XML.XMLTools.SubElement;
+import Crosswalking.XML.XMLTools.XMLDocObject;
+import Crosswalking.XML.XMLTools.XMLStack;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJavaObject;
@@ -8,7 +11,7 @@ import org.w3c.dom.Element;
 import java.util.LinkedList;
 
 import static BaseFiles.GeodisyStrings.CHARACTER;
-import static Crosswalking.XML.XMLStrings.*;
+import static Crosswalking.XML.XMLTools.XMLStrings.*;
 import static Dataverse.DVFieldNameStrings.*;
 import static Dataverse.DVFieldNameStrings.ACCESS_TO_SOURCES;
 

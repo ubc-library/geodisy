@@ -1,4 +1,4 @@
-package Crosswalking.XML;
+package Crosswalking.XML.XMLTools;
 import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
@@ -8,7 +8,7 @@ import BaseFiles.GeoLogger;
 import org.xml.sax.SAXException;
 import java.io.IOException;
 
-import static Crosswalking.XML.XMLStrings.ISO_19115_VALIDATION_FILE_PATH;
+import static Crosswalking.XML.XMLTools.XMLStrings.ISO_19115_VALIDATION_FILE_PATH;
 
 public class XMLValidator {
     GeoLogger logger =  new GeoLogger(this.getClass());

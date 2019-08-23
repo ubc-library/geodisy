@@ -7,18 +7,14 @@ package Dataverse;
 
 
 
-import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
 import BaseFiles.HTTPCaller;
 import Crosswalking.JSONParsing.DataverseParser;
-import Crosswalking.XML.JGit;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import Crosswalking.XML.XMLTools.JGit;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.mail.Folder;
 import java.io.File;
 import java.util.HashMap;
 import java.util.HashSet;

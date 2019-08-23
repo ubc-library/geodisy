@@ -1,16 +1,17 @@
-package Crosswalking.XML;
+package Crosswalking.XML.XMLTools;
 
 
+import Crosswalking.XML.XMLGroups.DataQualityInfo;
+import Crosswalking.XML.XMLGroups.DistributionInfo;
+import Crosswalking.XML.XMLGroups.IdentificationInfo;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJavaObject;
 import org.w3c.dom.Element;
 
-import java.util.LinkedList;
 import java.util.List;
 
-import static BaseFiles.GeodisyStrings.CHARACTER;
 import static BaseFiles.GeodisyStrings.XMLNS;
 import static Dataverse.DVFieldNameStrings.*;
 
@@ -32,9 +33,11 @@ public class XMLGenerator {
         doc.setDoi(djo.getDOI());
     }
 
-    //TODO keep working on this
+
     public XMLDocObject generateXMLFile(){
         Element rootElement = getRoot();
+
+        //DataIdentification Fields (most of the fields)
         SubElement ident = new IdentificationInfo(djo, doc, rootElement);
         rootElement = ident.getFields();
 
@@ -57,7 +60,7 @@ public class XMLGenerator {
         doc.addRoot(rootElement);
         return doc;
     }
-    
+
     private Element getRoot() {
         // root element
         Element rootElement = doc.createGMDElement("MD_Metadata");

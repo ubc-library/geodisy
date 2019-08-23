@@ -1,8 +1,7 @@
-package Crosswalking.XML;
+package Crosswalking.XML.XMLTools;
 
 import BaseFiles.GeoLogger;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.PushCommand;
 import org.eclipse.jgit.api.RemoteAddCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.dircache.DirCache;
@@ -10,7 +9,6 @@ import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.transport.URIish;
-import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 
 import javax.xml.transform.Transformer;
@@ -26,7 +24,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
-import static Crosswalking.XML.XMLStrings.*;
+import static Crosswalking.XML.XMLTools.XMLStrings.*;
 
 /**
  * Class for dealing with creating XML files from XML Docs, deleting files, and keeping Github up to date
@@ -70,8 +68,7 @@ public class JGit {
     public void updateXML(List<XMLDocObject> docs){
         try {
             generateNewXMLFiles(docs);
-            //TODO uncomment this in production
-            //pushToGit();
+            pushToGit();
             System.out.println("Pushed from repository: " + xmlRepo.getDirectory() + " to remote repository at " + "[Insert remote repo address");
         } catch (GitAPIException | TransformerException e) {
             logger.error("Something went wrong with Git when either connecting to .");
@@ -82,11 +79,17 @@ public class JGit {
     /**
      * Pushes new XML files to the OpenMetadata Repo to be then harvested by Geocombine and sent to SOLR
      */
-    private void pushToGit() throws GitAPIException {
+    public void pushToGit() {
         //TODO is this really all I need?
+        //TODO uncomment in production environment
+        /*
         PushCommand pushCommand = git.push();
         pushCommand.setCredentialsProvider(new UsernamePasswordCredentialsProvider(OPEN_METADATA_REMOTE_USERNAME,OPEN_METADATA_REMOTE_PASSWORD));
-        pushCommand.call();
+        try {
+            pushCommand.call();
+        } catch (GitAPIException e) {
+            logger.error("Soemthing went wrong trying to push to repo");
+        }*/
     }
 
     /**
@@ -121,15 +124,14 @@ public class JGit {
             addXMLFileToIndex(xMLFileName);
         }
         RevCommit commit = git.commit().setMessage(docs.size() + " ISO XML files created").call();
-        //TODO uncomment this in production
-        //pushToGit();
+        pushToGit();
     }
 
     /**
      * XML files need to be added to the index in order to be git committed
      * @param fileName
      */
-    private void addXMLFileToIndex(String fileName){
+    public void addXMLFileToIndex(String fileName){
         try {
             DirCache index = git.add().addFilepattern(OPEN_METADATA_LOCAL_REPO + fileName).call();
         } catch (GitAPIException e) {
@@ -184,13 +186,9 @@ public class JGit {
         } catch (GitAPIException e) {
             logger.error("Something went wrong trying to delete file: " + badname);
         }
-        //TODO uncomment this in production
-        /*try {
 
-            pushToGit();
-        } catch (GitAPIException e) {
-            logger.error("Something went wrong pushing to Github after deleting XML files");
-        }*/
+        pushToGit();
+
 
 
     }
@@ -205,4 +203,5 @@ public class JGit {
             directory.mkdir();
         }
     }
+
 }

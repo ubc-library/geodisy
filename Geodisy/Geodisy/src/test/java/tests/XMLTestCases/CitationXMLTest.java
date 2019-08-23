@@ -1,8 +1,8 @@
 package tests.XMLTestCases;
 
 import Crosswalking.JSONParsing.DataverseParser;
-import Crosswalking.XML.XMLDocObject;
-import Crosswalking.XML.XMLGenerator;
+import Crosswalking.XML.XMLTools.XMLDocObject;
+import Crosswalking.XML.XMLTools.XMLGenerator;
 import Dataverse.DataverseJavaObject;
 import org.json.JSONObject;
 import org.junit.Before;

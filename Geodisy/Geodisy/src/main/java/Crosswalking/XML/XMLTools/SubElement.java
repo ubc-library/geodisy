@@ -1,4 +1,4 @@
-package Crosswalking.XML;
+package Crosswalking.XML.XMLTools;
 
 import Dataverse.DataverseJavaObject;
 import org.w3c.dom.Element;

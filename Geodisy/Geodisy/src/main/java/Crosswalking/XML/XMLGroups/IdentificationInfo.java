@@ -1,5 +1,8 @@
-package Crosswalking.XML;
+package Crosswalking.XML.XMLGroups;
 
+import Crosswalking.XML.XMLTools.SubElement;
+import Crosswalking.XML.XMLTools.XMLDocObject;
+import Crosswalking.XML.XMLTools.XMLStack;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
@@ -13,11 +16,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static BaseFiles.GeodisyStrings.*;
-import static Crosswalking.XML.XMLStrings.*;
+import static Crosswalking.XML.XMLTools.XMLStrings.*;
 import static Dataverse.DVFieldNameStrings.*;
 import static Dataverse.DVFieldNameStrings.SOFTWARE;
 
-public class IdentificationInfo extends SubElement{
+public class IdentificationInfo extends SubElement {
     List<OtherID> otherIds;
     List<Author> authors;
     List<DatasetContact> datasetContacts;
@@ -655,7 +658,6 @@ public class IdentificationInfo extends SubElement{
         return onlineResouce;
     }
 
-    //TODO
     private Element getOtherIds() {
         XMLStack outerStack = new XMLStack();
         Element levelM = doc.createGMDElement(IDENT);

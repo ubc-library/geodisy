@@ -1,12 +1,14 @@
-package Crosswalking.XML;
+package Crosswalking.XML.XMLGroups;
 
 
+import Crosswalking.XML.XMLTools.SubElement;
+import Crosswalking.XML.XMLTools.XMLDocObject;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
 import Dataverse.DataverseJavaObject;
 import org.w3c.dom.Element;
 
 import static BaseFiles.GeodisyStrings.CHARACTER;
-import static Crosswalking.XML.XMLStrings.*;
+import static Crosswalking.XML.XMLTools.XMLStrings.*;
 import static Dataverse.DVFieldNameStrings.DATA_COLLECTOR;
 
 public class SocialFieldInfo extends SubElement {

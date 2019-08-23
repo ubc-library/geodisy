@@ -5,7 +5,7 @@
  */
 package Crosswalking;
 
-import Crosswalking.XML.XMLDocObject;
+import Crosswalking.XML.XMLTools.XMLDocObject;
 import Dataverse.SourceJavaObject;
 
 

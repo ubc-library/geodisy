@@ -1,4 +1,4 @@
-package Crosswalking.XML;
+package Crosswalking.XML.XMLTools;
 
 import org.w3c.dom.Element;
 

@@ -5,8 +5,8 @@
  */
 package Crosswalking;
 
-import Crosswalking.XML.XMLDocObject;
-import Crosswalking.XML.XMLGenerator;
+import Crosswalking.XML.XMLTools.XMLDocObject;
+import Crosswalking.XML.XMLTools.XMLGenerator;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONAstroFieldClasses.AstroFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONJournalFieldClasses.JournalFields;

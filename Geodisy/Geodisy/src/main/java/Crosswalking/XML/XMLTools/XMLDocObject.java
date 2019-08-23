@@ -1,4 +1,4 @@
-package Crosswalking.XML;
+package Crosswalking.XML.XMLTools;
 
 
 import org.w3c.dom.Document;
@@ -36,9 +36,11 @@ public class XMLDocObject {
         return doc.createElement(addGMD(s));
     }
 
+    //May never get used
     public Element createGCOElement(String s){
         return doc.createElement(addGCO(s));
     }
+
     public Element create_Element(String s){
         return doc.createElement(s);
     }

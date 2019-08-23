@@ -1,6 +1,9 @@
-package Crosswalking.XML;
+package Crosswalking.XML.XMLGroups;
 
 import BaseFiles.GeoLogger;
+import Crosswalking.XML.XMLTools.SubElement;
+import Crosswalking.XML.XMLTools.XMLDocObject;
+import Crosswalking.XML.XMLTools.XMLStack;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicCoverage;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
@@ -14,7 +17,7 @@ import java.util.List;
 
 import static BaseFiles.GeodisyStrings.CHARACTER;
 import static BaseFiles.GeodisyStrings.DECIMAL;
-import static Crosswalking.XML.XMLStrings.*;
+import static Crosswalking.XML.XMLTools.XMLStrings.*;
 import static Dataverse.DVFieldNameStrings.GEOGRAPHIC_UNIT;
 
 public class GeographicInfo extends SubElement {

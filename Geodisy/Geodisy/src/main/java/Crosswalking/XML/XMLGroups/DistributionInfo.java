@@ -1,15 +1,18 @@
-package Crosswalking.XML;
+package Crosswalking.XML.XMLGroups;
 
+import Crosswalking.XML.XMLTools.SubElement;
+import Crosswalking.XML.XMLTools.XMLDocObject;
+import Crosswalking.XML.XMLTools.XMLStack;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Distributor;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJavaObject;
 import org.w3c.dom.Element;
-import java.util.LinkedList;
+
 import java.util.List;
 
 
 import static BaseFiles.GeodisyStrings.CHARACTER;
-import static Crosswalking.XML.XMLStrings.*;
+import static Crosswalking.XML.XMLTools.XMLStrings.*;
 import static Dataverse.DVFieldNameStrings.DEPOSITOR;
 
 public class DistributionInfo extends SubElement {

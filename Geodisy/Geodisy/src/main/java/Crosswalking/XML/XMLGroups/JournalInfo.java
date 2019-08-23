@@ -1,5 +1,8 @@
-package Crosswalking.XML;
+package Crosswalking.XML.XMLGroups;
 
+import Crosswalking.XML.XMLTools.SubElement;
+import Crosswalking.XML.XMLTools.XMLDocObject;
+import Crosswalking.XML.XMLTools.XMLStack;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONJournalFieldClasses.JournalFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONJournalFieldClasses.JournalVolIssue;
 import Dataverse.DataverseJavaObject;
@@ -10,7 +13,7 @@ import java.util.List;
 import static BaseFiles.GeodisyStrings.CHARACTER;
 import static Dataverse.DVFieldNameStrings.*;
 
-public class JournalInfo extends SubElement  {
+public class JournalInfo extends SubElement {
     JournalFields journalFields;
     List<JournalVolIssue> journalVolIssues;
     String doi;

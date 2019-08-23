@@ -1,4 +1,4 @@
-package Crosswalking.XML;
+package Crosswalking.XML.XMLTools;
 
 public class XMLStrings {
     public final static String CI_RESPONSIBILITY = "CI_Responsibility";
