@@ -1,8 +1,9 @@
 package Crosswalking;
 
-import Crosswalking.XML.GeoCombine;
-import Crosswalking.XML.JGit;
-import Crosswalking.XML.XMLDocObject;
+
+import Crosswalking.XML.XMLTools.GeoCombine;
+import Crosswalking.XML.XMLTools.JGit;
+import Crosswalking.XML.XMLTools.XMLDocObject;
 import Dataverse.SourceJavaObject;
 
 import java.util.List;
@@ -17,12 +18,20 @@ public class Crosswalk implements CrosswalkInterface {
 
     @Override
     public void sendXMLToGit(List<XMLDocObject> docs) {
+
+        //Make sure local files are up to date
+        GeoCombine geoCombine =  new GeoCombine();
+        geoCombine.call();
+
         JGit jgit = new JGit();
         jgit.updateXML(docs);
-        GeoCombine geoCombine =  new GeoCombine();
+
         for(XMLDocObject doc:docs){
-            geoCombine.generateGeoBlacklightXML(doc.getDoi());
+            geoCombine.generateGeoBlacklightXML(doc.getDoi(), jgit);
         }
-        geoCombine.call();
+
+        jgit.pushToGit();
+
+
     }
 }
