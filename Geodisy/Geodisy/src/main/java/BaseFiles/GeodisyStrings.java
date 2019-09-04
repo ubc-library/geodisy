@@ -59,4 +59,8 @@ public class GeodisyStrings {
         }
         return false;
     }
+
+    public static boolean hasGeospatialFile(String title){
+        return gdalinfoRasterExtention(title)||ogrinfoVectorExtension(title);
+    }
 }

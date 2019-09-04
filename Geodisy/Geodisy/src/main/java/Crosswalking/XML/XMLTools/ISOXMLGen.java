@@ -6,7 +6,6 @@ import Crosswalking.XML.XMLGroups.DistributionInfo;
 import Crosswalking.XML.XMLGroups.IdentificationInfo;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
-import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJavaObject;
 import org.w3c.dom.Element;
 
@@ -15,25 +14,21 @@ import java.util.List;
 import static BaseFiles.GeodisyStrings.XMLNS;
 import static Dataverse.DVFieldNameStrings.*;
 
-public class XMLGenerator {
-    private DataverseJavaObject djo;
+public class ISOXMLGen extends DjoXMLGenerator {
     private CitationFields citationFields;
-    private GeographicFields geographicFields;
     private SimpleCitationFields simple;
 
     XMLDocObject doc;
 
-    //TODO write catch block
-    public XMLGenerator(DataverseJavaObject djo) {
+    public ISOXMLGen(DataverseJavaObject djo) {
         this.djo = djo;
         this.citationFields = djo.getCitationFields();
-        this.geographicFields=djo.getGeoFields();
         this.simple = citationFields.getSimpleCitationFields();
         doc = new XMLDocObject();
         doc.setDoi(djo.getDOI());
     }
 
-
+    @Override
     public XMLDocObject generateXMLFile(){
         Element rootElement = getRoot();
 
@@ -60,8 +55,8 @@ public class XMLGenerator {
         doc.addRoot(rootElement);
         return doc;
     }
-
-    private Element getRoot() {
+    @Override
+    protected Element getRoot() {
         // root element
         Element rootElement = doc.createGMDElement("MD_Metadata");
         rootElement.setAttribute("xmlns",XMLNS + "gmd");

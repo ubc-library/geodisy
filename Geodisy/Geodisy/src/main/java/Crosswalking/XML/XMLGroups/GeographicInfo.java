@@ -35,7 +35,6 @@ GeoLogger logger;
         geoUnits = gf.getGeoUnits();
         logger = new GeoLogger(this.getClass());
     }
-    //TODO complete
     @Override
     public Element getFields() {
 

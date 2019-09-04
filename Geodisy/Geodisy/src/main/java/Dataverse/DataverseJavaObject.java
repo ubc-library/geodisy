@@ -161,6 +161,8 @@ public class DataverseJavaObject extends SourceJavaObject {
             if(GeodisyStrings.fileToIgnore(dRF.title))
                 continue;
             dRF.getFile();
+            if(GeodisyStrings.hasGeospatialFile(dRF.title))
+                hasGeospatialFile = true;
         }
         if(f.list() != null && f.list().length==0)
             f.delete();
