@@ -82,7 +82,6 @@ public class DataverseJavaObject extends SourceJavaObject {
                 }
         }
     }
-    //TODO fill this method
     @Override
     public void parseSocialFields(JSONArray socialFieldsArray){
         for(Object o: socialFieldsArray){

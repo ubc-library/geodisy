@@ -16,7 +16,6 @@ public class CSVTests extends DataverseTests {
         assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"CSV file that is not geospatial data");
     }
 
-    //TODO this seems like an invalid doi
     /*@Test
     public void CSVCityNames(){
         doi = "206-12-90-131.cloud.computecanada.ca/dataverse/bam";

@@ -45,7 +45,6 @@ public class Software extends CompoundJSONField {
                 errorParsing(this.getClass().getName(),title);
         }
     }
-    //TODO make get more universal
     @Override
     public String getField(String title) {
         switch (title) {

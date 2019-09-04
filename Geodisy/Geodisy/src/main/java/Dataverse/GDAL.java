@@ -185,10 +185,9 @@ public class GDAL {
         bb.setLongWest(long2);
         bb.setLongEast(long1);
         bb.setLatNorth(lat2);
-        bb.setLatSouth(lat1);;
+        bb.setLatSouth(lat1);
         return bb;
     }
-    //TODO make sure that the coordinate order is correct grabbing from the gdalinfo output. Is it really long then lat?
     private BoundingBox getLatLongGdalInfo(String gdalString, int start) {
         int end = gdalString.indexOf(",",start);
         String long1 = gdalString.substring(start,end).trim();

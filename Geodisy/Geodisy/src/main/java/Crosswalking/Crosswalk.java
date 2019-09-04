@@ -9,7 +9,6 @@ import Dataverse.SourceJavaObject;
 import java.util.List;
 
 public class Crosswalk implements CrosswalkInterface {
-    //TODO write the crosswalk class
     @Override
     public void convertSJOs(List<SourceJavaObject> records) {
         MetadataSchema metadata = new ISO_19115();

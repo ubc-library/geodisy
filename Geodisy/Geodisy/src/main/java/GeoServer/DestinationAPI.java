@@ -12,5 +12,5 @@ import BaseFiles.API;
  * @author pdante
  */
 public abstract class DestinationAPI implements API {
-    //TODO write any abstract code
+
 }

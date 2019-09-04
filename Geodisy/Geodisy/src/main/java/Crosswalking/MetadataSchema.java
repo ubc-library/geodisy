@@ -16,8 +16,6 @@ import java.util.List;
  * @author pdante
  */
 public interface MetadataSchema {
-    //TODO create interface for metadata crosswalks
     public List<XMLDocObject> generateXML(List<SourceJavaObject> dJOs);
 
-    void crosswalk(SourceJavaObject sJO);
 }
