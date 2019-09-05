@@ -13,13 +13,17 @@ public class SimpleCitationFields extends JSONField {
      *  * Publisher : String : publisher
      *  * Publication Date : String : Publication Date
      *  * OtherLocation ID : OtherID : otherID
+     *  * Authority : String : authority   (organization number in DOI)
+     *  * Identifier : String : identifier (record identifier in DOI)
      */
-    private String title, subtitle, alternativeTitle, alternativeURL, license,notesText,productionPlace,depositor, accessToSources, publisher,originOfSources, characteristicOfSources, doi;
+    private String title, subtitle, alternativeTitle, alternativeURL, license,notesText,productionPlace,depositor, accessToSources, publisher,originOfSources, characteristicOfSources, doi, authority, identifier;
     private Date productionDate,distributionDate,dateOfDeposit, publicationDate;
     private int versionMajor, versionMinor;
 
     public SimpleCitationFields() {
         this.doi = "";
+        this.authority = "";
+        this.identifier = "";
         this.title = "";
         this.subtitle = "";
         this.alternativeTitle = "";
@@ -111,10 +115,18 @@ public class SimpleCitationFields extends JSONField {
             case MINOR_VERSION:
                 setVersionMinor(Integer.parseInt(value));
                 break;
+            case IDENTIFIER:
+                setIdentifier(value);
+                break;
+            case AUTHORITY:
+                setAuthority(value);
+                break;
             default:
                 errorParsing(this.getClass().getName(),label);
         }
     }
+
+
 
     @Override
     public String getField(String fieldName) {
@@ -157,6 +169,10 @@ public class SimpleCitationFields extends JSONField {
                 return getVersionMajor();
             case MINOR_VERSION:
                 return getVersionMinor();
+            case AUTHORITY:
+                return authority;
+            case IDENTIFIER:
+                return identifier;
             default:
                 errorParsing(this.getClass().getName(), fieldName);
                 return "Bad Field Name";
@@ -327,5 +343,13 @@ public class SimpleCitationFields extends JSONField {
 
     public String getVersionMinor() {
         return String.valueOf(versionMinor);
+    }
+
+    private void setIdentifier(String value) {
+        identifier = value;
+    }
+
+    private void setAuthority(String value){
+        authority = value;
     }
 }
