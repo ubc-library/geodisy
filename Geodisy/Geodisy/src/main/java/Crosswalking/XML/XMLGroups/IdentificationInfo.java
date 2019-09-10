@@ -506,6 +506,8 @@ public class IdentificationInfo extends SubElement {
                     stack.push(doc.createGMDElement("logo")); //O
                     stack.push(doc.createGMDElement("MD_BrowseGraphic")); //P
                     stack.push(doc.createGMDElement(LINKAGE)); //Q
+                    stack.push(doc.createGMDElement(CI_ONLINE_RES)); //R
+                    stack.push(doc.createGMDElement(LINKAGE)); //S
                     levelN = stack.zip(doc.addGCOVal(p.getProducerLogoURL(), CHARACTER));
                 }
                 levelM.appendChild(levelN);

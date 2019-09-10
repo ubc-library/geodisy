@@ -57,18 +57,20 @@ public class DistributionInfo extends SubElement {
                 stack = new XMLStack();
                 if (!d.getDistributorURL().isEmpty()) {
                     stack.push(levelP);
-                    stack.push(doc.createGMDElement("contactInfo"));
-                    stack.push(doc.createGMDElement(CI_CITE));
-                    stack.push(doc.createGMDElement(ONLINE_RES));
-                    stack.push(doc.createGMDElement(CI_ONLINE_RES));
-                    stack.push(doc.createGMDElement(LINKAGE));
+                    stack.push(doc.createGMDElement("contactInfo")); //Q
+                    stack.push(doc.createGMDElement(CI_CITE)); //R
+                    stack.push(doc.createGMDElement(ONLINE_RES)); //S
+                    stack.push(doc.createGMDElement(CI_ONLINE_RES)); //T
+                    stack.push(doc.createGMDElement(LINKAGE)); //U
                     levelP = stack.zip(doc.addGCOVal(d.getDistributorURL(), CHARACTER));
                 }
                 if (!d.getDistributorLogoURL().isEmpty()) {
                     stack.push(levelP);
-                    stack.push(doc.createGMDElement("logo"));
-                    stack.push(doc.createGMDElement("MD_BrowseGraphic"));
-                    stack.push(doc.createGMDElement(LINKAGE));
+                    stack.push(doc.createGMDElement("logo")); //Q
+                    stack.push(doc.createGMDElement("MD_BrowseGraphic")); //R
+                    stack.push(doc.createGMDElement(LINKAGE)); //S
+                    stack.push(doc.createGMDElement(CI_ONLINE_RES)); //T
+                    stack.push(doc.createGMDElement(LINKAGE)); // U
                     levelP = stack.zip(doc.addGCOVal(d.getDistributorLogoURL(), CHARACTER));
                 }
             }
