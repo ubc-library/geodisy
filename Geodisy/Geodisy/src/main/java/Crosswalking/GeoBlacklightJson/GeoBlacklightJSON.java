@@ -6,6 +6,9 @@ import org.json.JSONObject;
 
 import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.*;
 
+/**
+ * Takes a SourceJavaObject and creates a GeoBlacklight JSON from it
+ */
 public abstract class GeoBlacklightJSON implements JSONCreator {
     protected SourceJavaObject javaObject;
     protected String geoBlacklightJson;
