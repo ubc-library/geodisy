@@ -240,7 +240,7 @@ public class CitationFields extends MetadataWSimple {
         getTOSAndAccessFields();
 
     }
-
+    //TODO write the method to grab these fields if they exist
     private void getTOSAndAccessFields() {
 
     }
