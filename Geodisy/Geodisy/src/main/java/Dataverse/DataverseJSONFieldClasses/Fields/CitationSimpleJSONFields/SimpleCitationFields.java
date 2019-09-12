@@ -15,8 +15,26 @@ public class SimpleCitationFields extends JSONField {
      *  * OtherLocation ID : OtherID : otherID
      *  * Authority : String : authority   (organization number in DOI)
      *  * Identifier : String : identifier (record identifier in DOI)
+     *
+     *  ___________________________________________________________
+     *  Terms of Use and Access Fields
+     *  * Terms Of Use : String : termsOfUse
+     *  * Confidentiality Declaration : String : confidDec
+     *  * Availability Status : String : availabStat
+     *  * Special Permissions : String : specialPerms
+     *  * Restrictions : String : restrictions
+     *  * Citation Requirements : String : citationRequs
+     *  * Depositor Requirements : String : depositReqs
+     *  * Conditions : String : conditions
+     *  * Disclaimer : String : disclaimer
+     *  * Terms of Access : String : termsOfAcc
+     *  * Data Access Place : String : dataAccPlace
+     *  * Original Archive : String : origlArch
+     *  * Contact for Access : String : contactForAcc
+     *  * Size of Collection : String : sizeOfColl
+     *  * Study Completion : String : studyComp
      */
-    private String title, subtitle, alternativeTitle, alternativeURL, license,notesText,productionPlace,depositor, accessToSources, publisher,originOfSources, characteristicOfSources, doi, authority, identifier;
+    private String title, subtitle, alternativeTitle, alternativeURL, license,notesText,productionPlace,depositor, accessToSources, publisher,originOfSources, characteristicOfSources, doi, authority, identifier, termsOfUse, confidDec, availabStat, specialPerms, restrictions, citationReqs, depositReqs, conditions, disclaimer, termsOfAcc, dataAccPlace, origArch, contactForAcc, sizeOfColl, studyComp;
     private Date productionDate,distributionDate,dateOfDeposit, publicationDate;
     private int versionMajor, versionMinor;
 
@@ -38,6 +56,21 @@ public class SimpleCitationFields extends JSONField {
         this.publisher = "";
         this.versionMajor = 0;
         this.versionMinor = 0;
+        this.termsOfUse = "";
+        this.confidDec = "";
+        this.availabStat = "";
+        this.specialPerms = "";
+        this.restrictions = "";
+        this.citationReqs = "";
+        this.depositReqs = "";
+        this.conditions = "";
+        this.disclaimer = "";
+        this.termsOfAcc = "";
+        this.dataAccPlace = "";
+        this.origArch = "";
+        this.contactForAcc = "";
+        this.sizeOfColl = "";
+        this.studyComp = "";
     }
 
     public boolean hasField(String fieldName){
@@ -122,10 +155,61 @@ public class SimpleCitationFields extends JSONField {
                 setAuthority(value);
                 break;
             default:
-                errorParsing(this.getClass().getName(),label);
+                setTermsAndAccField(label,value);
         }
     }
 
+    private void setTermsAndAccField(String label, String value) {
+        switch(label) {
+            case TERMS_OF_USE:
+                setTermsOfUse(value);
+                break;
+            case CONFID_DEC:
+                setConfidDec(value);
+                break;
+            case AVALIB_STATUS:
+                setAvailabStat(value);
+                break;
+            case SPECIAL_PERMS:
+                setSpecialPerms(value);
+                break;
+            case RESTRICTIONS:
+                setRestrictions(value);
+                break;
+            case CITATION_REQUIREMENTS:
+                setCitationReqs(value);
+                break;
+            case DEPOSIT_REQUIREMENTS:
+                setDepositReqs(value);
+                break;
+            case CONDITIONS:
+                setConditions(value);
+                break;
+            case DISCLAIMER:
+                setDisclaimer(value);
+                break;
+            case TERMS_OF_ACCESS:
+                setTermsOfAcc(value);
+                break;
+            case DATA_ACC_PLACE:
+                setDataAccPlace(value);
+                break;
+            case ORIG_ARCHIVE:
+                setOrigArch(value);
+                break;
+            case CONTACT_FOR_ACCESS:
+                setContactForAcc(value);
+                break;
+            case SIZE_OF_COLLECTION:
+                setSizeOfColl(value);
+                break;
+            case STUDY_COMPLETION:
+                setStudyComp(value);
+                break;
+            default:
+                errorParsing(this.getClass().getName(),label);
+    }
+    }
 
 
     @Override
@@ -174,12 +258,47 @@ public class SimpleCitationFields extends JSONField {
             case IDENTIFIER:
                 return identifier;
             default:
-                errorParsing(this.getClass().getName(), fieldName);
-                return "Bad Field Name";
+                return getTermsAndAccessField(fieldName);
         }
 
     }
-
+    private String getTermsAndAccessField(String fieldName) {
+        switch (fieldName) {
+            case TERMS_OF_USE:
+                return termsOfUse;
+            case CONFID_DEC:
+                return confidDec;
+            case AVALIB_STATUS:
+                return availabStat;
+            case SPECIAL_PERMS:
+                return specialPerms;
+            case RESTRICTIONS:
+                return restrictions;
+            case CITATION_REQUIREMENTS:
+                return citationReqs;
+            case DEPOSIT_REQUIREMENTS:
+                return depositReqs;
+            case CONDITIONS:
+                return conditions;
+            case DISCLAIMER:
+                return disclaimer;
+            case TERMS_OF_ACCESS:
+                return termsOfAcc;
+            case DATA_ACC_PLACE:
+                return dataAccPlace;
+            case ORIG_ARCHIVE:
+                return origArch;
+            case CONTACT_FOR_ACCESS:
+                return contactForAcc;
+            case SIZE_OF_COLLECTION:
+                return sizeOfColl;
+            case STUDY_COMPLETION:
+                return studyComp;
+            default:
+            errorParsing(this.getClass().getName(), fieldName);
+            return "Bad Field Name";
+        }
+    }
     public int getVersion(){
         int major = Integer.parseInt(getVersionMajor());
         int minor = Integer.parseInt(getVersionMinor());
@@ -351,5 +470,79 @@ public class SimpleCitationFields extends JSONField {
 
     private void setAuthority(String value){
         authority = value;
+    }
+
+
+    public void setTermsOfUse(String termsOfUse) {
+        this.termsOfUse = termsOfUse;
+    }
+
+
+    public void setConfidDec(String confidDec) {
+        this.confidDec = confidDec;
+    }
+
+
+    public void setAvailabStat(String availabStat) {
+        this.availabStat = availabStat;
+    }
+
+
+    public void setSpecialPerms(String specialPerms) {
+        this.specialPerms = specialPerms;
+    }
+
+
+    public void setRestrictions(String restrictions) {
+        this.restrictions = restrictions;
+    }
+
+
+    public void setCitationReqs(String citationReqs) {
+        this.citationReqs = citationReqs;
+    }
+
+
+    public void setDepositReqs(String depositReqs) {
+        this.depositReqs = depositReqs;
+    }
+
+
+    public void setConditions(String conditions) {
+        this.conditions = conditions;
+    }
+
+
+    public void setDisclaimer(String disclaimer) {
+        this.disclaimer = disclaimer;
+    }
+
+
+    public void setTermsOfAcc(String termsOfAcc) {
+        this.termsOfAcc = termsOfAcc;
+    }
+
+
+    public void setDataAccPlace(String dataAccPlace) {
+        this.dataAccPlace = dataAccPlace;
+    }
+
+
+    public void setOrigArch(String origArch) {
+        this.origArch = origArch;
+    }
+
+
+    public void setContactForAcc(String contactForAcc) {
+        this.contactForAcc = contactForAcc;
+    }
+
+
+    public void setSizeOfColl(String sizeOfColl) {
+        this.sizeOfColl = sizeOfColl;
+    }
+
+    public void setStudyComp(String studyComp) {
+        this.studyComp = studyComp;
     }
 }

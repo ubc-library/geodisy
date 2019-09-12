@@ -31,7 +31,6 @@ public class DVFieldNameStrings {
     public final static String DEPOS_DATE = "dateOfDeposit";
     public final static String DEPOSITOR = "depositor";
     public final static String DIST_DATE = "distributionDate";
-    public final static String LICENSE = "license";
     public final static String NOTES_TEXT = "notesText";
     public final static String ORIG_OF_SOURCES = "originOfSources";
     public final static String PROD_DATE = "productionDate";
@@ -40,6 +39,24 @@ public class DVFieldNameStrings {
     public final static String PUBLISHER = "publisher";
     public final static String TITLE = "title";
     public final static String SUBTITLE = "subtitle";
+
+    //Terms of Use and Access______________________________________________________________________
+    public final static String LICENSE = "license";
+    public final static String TERMS_OF_USE = "termsOfUse";
+    public final static String CONFID_DEC = "confidentialityDeclaration";
+    public final static String AVALIB_STATUS = "availabilityStatus";
+    public final static String SPECIAL_PERMS = "specialPermissions";
+    public final static String RESTRICTIONS = "restrictions";
+    public final static String CITATION_REQUIREMENTS = "citationRequirements";
+    public final static String DEPOSIT_REQUIREMENTS = "depositorRequirements";
+    public final static String CONDITIONS = "conditions";
+    public final static String DISCLAIMER = "disclaimer";
+    public final static String TERMS_OF_ACCESS = "termsOfAccess";
+    public final static String DATA_ACC_PLACE = "dataAccessPlace";
+    public final static String ORIG_ARCHIVE = "originalArchive";
+    public final static String CONTACT_FOR_ACCESS = "contactForAccess";
+    public final static String SIZE_OF_COLLECTION = "sizeOfCollection";
+    public final static String STUDY_COMPLETION = "studyCompletion";
     public final static List<String> SIMPLE_FIELD_NAMES = Arrays.asList(ACCESS_TO_SOURCES,ALT_TITLE,ALT_URL,CHAR_OF_SOURCES,DEPOS_DATE,DEPOSITOR,DIST_DATE,LICENSE,NOTES_TEXT,ORIG_OF_SOURCES,PROD_DATE,PROD_PLACE,PUB_DATE,PUBLISHER,TITLE,SUBTITLE, AUTHORITY, IDENTIFIER);
 
     //String List Field Names
@@ -221,7 +238,7 @@ public class DVFieldNameStrings {
     public final static String STUDY_ASSAY_PLATFORM = "studyAssayPlatform";
     public final static String STUDY_ASSAY_CELL_TYPE = "studyAssayCellType";
 
-    //Social
+    //Social__________________________________________________________________________________________
     public final static String UNIT_OF_ANALYSIS = "unitOfAnalysis";
     public final static String UNIVERSE = "universe";
     public final static String TIME_METHOD = "timeMethod";
@@ -250,4 +267,6 @@ public class DVFieldNameStrings {
     public final static String SOCIAL_SCIENCE_NOTES_TEXT = "socialScienceNotesText";
     public final static List<String> SOCIAL_SIENCE_NOTES_ALL_FIELDS = Arrays.asList(SOCIAL_SCIENCE_NOTES_TEXT, SOCIAL_SCIENCE_NOTES_SUBJECT,SOCIAL_SCIENCE_NOTES_TEXT);
     public final static String SOCIAL_SCIENCE = "socialscience";
+
+
 }
