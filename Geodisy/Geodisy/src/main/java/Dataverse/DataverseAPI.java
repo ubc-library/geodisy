@@ -11,6 +11,7 @@ import BaseFiles.GeoLogger;
 import BaseFiles.HTTPCaller;
 import Crosswalking.JSONParsing.DataverseParser;
 import Crosswalking.XML.XMLTools.JGit;
+import GeoServer.GeoServerAPI;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -82,8 +83,9 @@ public class DataverseAPI extends SourceAPI {
             String doi = deletedRecords.get(key).getDoi();
             deleteFolder(new File(folderizedDOI(doi)));
             es.deleteRecord(doi);
-            //TODO delete dataset and metadata from Geoserver and OpenGeoMetadata
+            //TODO delete dataset and metadata from Geoserver
         }
+        GeoServerAPI geoserver = new GeoServerAPI();
         JGit git = new JGit();
         git.deleteXMLFiles(keySet);
     }
@@ -157,7 +159,7 @@ public class DataverseAPI extends SourceAPI {
 
     }
     
-    //interate through the dOI to get JSONObjects for each metadata record
+    //iterate through the dOI to get JSONObjects for each metadata record
     @Override
     protected LinkedList<JSONObject> downloadMetadata(HashSet<String> dOIs) {
         HTTPCaller getMetadata;

@@ -19,6 +19,8 @@ public class DVFieldNameStrings {
     public final static String DOI = "persistentId";
     public final static String MAJOR_VERSION = "versionNumber";
     public final static String MINOR_VERSION = "versionMinorNumber";
+    public final static String AUTHORITY = "authority";
+    public final static String IDENTIFIER = "identifier";
 
 
     //Simple Field Names
@@ -38,7 +40,7 @@ public class DVFieldNameStrings {
     public final static String PUBLISHER = "publisher";
     public final static String TITLE = "title";
     public final static String SUBTITLE = "subtitle";
-    public final static List<String> SIMPLE_FIELD_NAMES = Arrays.asList(ACCESS_TO_SOURCES,ALT_TITLE,ALT_URL,CHAR_OF_SOURCES,DEPOS_DATE,DEPOSITOR,DIST_DATE,LICENSE,NOTES_TEXT,ORIG_OF_SOURCES,PROD_DATE,PROD_PLACE,PUB_DATE,PUBLISHER,TITLE,SUBTITLE);
+    public final static List<String> SIMPLE_FIELD_NAMES = Arrays.asList(ACCESS_TO_SOURCES,ALT_TITLE,ALT_URL,CHAR_OF_SOURCES,DEPOS_DATE,DEPOSITOR,DIST_DATE,LICENSE,NOTES_TEXT,ORIG_OF_SOURCES,PROD_DATE,PROD_PLACE,PUB_DATE,PUBLISHER,TITLE,SUBTITLE, AUTHORITY, IDENTIFIER);
 
     //String List Field Names
     public final static String RELATED_MATERIAL = "relatedMaterial";

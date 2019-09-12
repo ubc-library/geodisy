@@ -22,6 +22,7 @@ public abstract class SourceJavaObject {
     protected List<DataverseRecordFile> dataFiles; //Stores the datafiles
     protected String server;
     protected boolean hasContent;
+    public boolean hasGeospatialFile;
 
     public abstract void parseCitationFields(JSONObject citationFieldsArray);
     public abstract void parseGeospatialFields(JSONArray geoFieldsArray);
@@ -40,6 +41,7 @@ public abstract class SourceJavaObject {
         //this.journalFields = new JournalFields();
         this.server = server;
         hasContent = false;
+        hasGeospatialFile = false;
     }
     public SimpleCitationFields getSimpleFields(){
         return citationFields.getSimpleCitationFields();

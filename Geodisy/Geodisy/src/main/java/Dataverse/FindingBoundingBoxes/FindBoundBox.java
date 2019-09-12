@@ -7,6 +7,7 @@ import Dataverse.DataverseJavaObject;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 
 import java.io.*;
+import java.util.Map;
 
 
 public abstract class FindBoundBox {
@@ -15,7 +16,7 @@ public abstract class FindBoundBox {
     abstract BoundingBox getDVBoundingBox(String country, String state, String city);
     abstract BoundingBox getDVBoundingBoxOther(String country, String other);
     abstract BoundingBox getDVBoundingBoxOther(String country,String state, String other);
-    abstract String getJSONString(String search);
+    abstract String getJSONString(String search, String country, String fcode);
     GeoLogger logger = new GeoLogger(FindBoundBox.class);
 
     protected BoundingBox readResponse(String responseString, String doi, DataverseJavaObject djo){

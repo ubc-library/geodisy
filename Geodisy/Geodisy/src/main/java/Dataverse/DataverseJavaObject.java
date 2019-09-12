@@ -4,7 +4,7 @@ import BaseFiles.GeoLogger;
 import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
-import Dataverse.FindingBoundingBoxes.Geonames;
+import Dataverse.FindingBoundingBoxes.GeonamesBBs;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -58,7 +58,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             this.geoFields.setFields(jo);
         }
         List<BoundingBox> bb = new LinkedList<>();
-        Geonames geonames = new Geonames(this);
+        GeonamesBBs geonames = new GeonamesBBs(this);
         if(!geoFields.hasBB()){
             List<GeographicCoverage> coverages = geoFields.getListField(GEOGRAPHIC_COVERAGE);
             if(!coverages.isEmpty())
@@ -161,6 +161,8 @@ public class DataverseJavaObject extends SourceJavaObject {
             if(GeodisyStrings.fileToIgnore(dRF.title))
                 continue;
             dRF.getFile();
+            if(GeodisyStrings.hasGeospatialFile(dRF.title))
+                hasGeospatialFile = true;
         }
         if(f.list() != null && f.list().length==0)
             f.delete();

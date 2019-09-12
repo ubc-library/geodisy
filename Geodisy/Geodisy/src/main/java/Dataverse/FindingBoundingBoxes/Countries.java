@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import org.apache.commons.text.WordUtils;
 
+import static BaseFiles.GeodisyStrings.COUNTRY_VALS;
+
 /**
  * A basically static class that opens a file that holds all the Country codes and bounding box values
  * This can then be accessed to quickly grab a bounding box for a dataset that has a country label but
@@ -36,8 +38,7 @@ public class Countries {
     }
 
     private Countries(){
-        String countryBoundingBoxesXML = "./Geoname_countries.xml";
-        File xmlFile = new File(countryBoundingBoxesXML);
+        File xmlFile = new File(COUNTRY_VALS);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder;
         countries = new HashMap<>();

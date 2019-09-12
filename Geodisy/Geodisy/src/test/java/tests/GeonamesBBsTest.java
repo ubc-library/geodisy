@@ -1,7 +1,7 @@
 package tests;
 
 import Dataverse.DataverseJavaObject;
-import Dataverse.FindingBoundingBoxes.Geonames;
+import Dataverse.FindingBoundingBoxes.GeonamesBBs;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,8 +10,8 @@ import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GeonamesTest {
-    Geonames geonames = new Geonames(new DataverseJavaObject("fakeServer"));
+class GeonamesBBsTest {
+    GeonamesBBs geonames = new GeonamesBBs(new DataverseJavaObject("fakeServer"));
     private String USER_NAME = "geodisy";
     HashMap<String, String> parameters;
 

@@ -132,5 +132,6 @@ public class DataverseRecordFile {
         public String getFileIdentifier(){
         return doi;
     }
+        public String getTitle(){return title; }
 
 }
