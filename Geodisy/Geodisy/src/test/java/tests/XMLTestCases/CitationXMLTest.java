@@ -3,8 +3,10 @@ package tests.XMLTestCases;
 import Crosswalking.JSONParsing.DataverseParser;
 import Crosswalking.XML.XMLTools.XMLDocObject;
 import Crosswalking.XML.XMLTools.ISOXMLGen;
+import Crosswalking.XML.XMLTools.XMLValidator;
 import Dataverse.DataverseJavaObject;
 import org.json.JSONObject;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,13 +15,16 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 
+import static BaseFiles.GeodisyStrings.*;
+import static org.junit.Assert.assertTrue;
+
 public class CitationXMLTest {
 DataverseJavaObject djo;
     @Before public void initialize(){
         InputStream is = null;
 
         try {
-            is = new FileInputStream("./AllCitationMetadata.json");
+            is = new FileInputStream(ALL_CITATION_METADATA);
 
             BufferedReader buf = new BufferedReader(new InputStreamReader(is));
 
@@ -46,7 +51,7 @@ DataverseJavaObject djo;
         ISOXMLGen xmlGenerator = new ISOXMLGen(djo);
         XMLDocObject xmlFile = xmlGenerator.generateXMLFile();
         DOMSource source = new DOMSource(xmlFile.getDoc());
-        StreamResult result = new StreamResult(new File("xmlTestDJO.xml"));
+        StreamResult result = new StreamResult(new File(XMLTestFile));
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = null;
@@ -60,5 +65,10 @@ DataverseJavaObject djo;
         } catch (TransformerException e) {
             e.printStackTrace();
         }
+    }
+    @Test
+    public void testXMLValidation(){
+        XMLValidator xmlValidator = new XMLValidator();
+        assertTrue(xmlValidator.validateXML(new File(XMLTestFile)));
     }
 }

@@ -237,12 +237,13 @@ public class CitationFields extends MetadataWSimple {
         simpleCitationFields.setField(LICENSE,parseSimpleValue(current,LICENSE));
         simpleCitationFields.setField(MAJOR_VERSION,parseSimpleValue(current,MAJOR_VERSION));
         simpleCitationFields.setField(MINOR_VERSION,parseSimpleValue(current,MINOR_VERSION));
-        getTOSAndAccessFields();
+        getTOSAndAccessFields(current);
 
     }
-    //TODO write the method to grab these fields if they exist
-    private void getTOSAndAccessFields() {
 
+    private void getTOSAndAccessFields(JSONObject current) {
+        for(String field: TERMS_AND_ACCESS_NAME)
+            simpleCitationFields.setField(field, parseSimpleValue(current,field));
     }
 
     /**
