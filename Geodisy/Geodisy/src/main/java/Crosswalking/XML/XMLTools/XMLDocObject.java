@@ -32,8 +32,8 @@ public class XMLDocObject {
         return doc;
     }
 
-    public Element createGMDElement(String s){
-        return doc.createElement(addGMD(s));
+    public Element createMDBElement(String s){
+        return doc.createElement(addMDB(s));
     }
 
     //May never get used
@@ -44,9 +44,11 @@ public class XMLDocObject {
     public Element create_Element(String s){
         return doc.createElement(s);
     }
-    // GMD is either a description or parent element w/o a value
-    private String addGMD(String s){
-        return "gmd:" + s;
+
+    // MDB is either a description or parent element w/o a value
+    private String addMDB(String s){
+        return "mdb:" + s;
+
     }
 
     // GCO indicates generally a value rather than a description
@@ -61,14 +63,14 @@ public class XMLDocObject {
         return val;
     }
 
-    public Element addGMDVal(String value, String label) {
-        Element val = doc.createElement(addGMD(label));
+    public Element addMDBVal(String value, String label) {
+        Element val = doc.createElement(addMDB(label));
         val.setTextContent(value);
         return val;
     }
 
     public Element addRoleCode(String altTitleVal) {
-        Element val = doc.createElement(addGMD("CI_RoleCode"));
+        Element val = doc.createElement(addMDB("CI_RoleCode"));
         val.setTextContent(altTitleVal);
         return val;
     }

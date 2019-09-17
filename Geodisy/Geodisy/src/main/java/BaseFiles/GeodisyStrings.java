@@ -7,10 +7,10 @@ public class GeodisyStrings {
     public final static String RECORDS_TO_CHECK = "./logs/recordsToCheck.log";
     public final static String EXISTING_CALL_TO_CHECK = "./logs/existingCallToCheck.txt";
     public final static String ERROR_LOG = "./logs/error.log";
-    public final static String XMLNS = "http://www.isotc211.org/2005/";
+    public final static String XML_NS = "https://standards.iso.org/iso/19115/-3/";
     public final static String COUNTRY_VALS =  "./geodisyFiles/Geoname_countries.xml";
     public final static String ALL_CITATION_METADATA = "./geodisyFiles/AllCitationMetadata.json";
-    public final static String XMLTestFile = "./geodisyFiles/XMLTestDJO.xml";
+    public final static String XML_TEST_FILE = "./geodisyFiles/XMLTestDJO.xml";
 
     //Unused file type extensions
     public final static String[] FILE_TYPES_TO_IGNORE = {".txt",".doc",".csv",".pdf",".jpg", ".docx",".las",".xml"};

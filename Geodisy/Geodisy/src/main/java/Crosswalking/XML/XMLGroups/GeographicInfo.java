@@ -40,9 +40,9 @@ GeoLogger logger;
 
         for(GeographicCoverage gc: geoCovers){
             stack.push(root); //J
-            stack.push(doc.createGMDElement(EXTENT)); //K
-            stack.push(doc.createGMDElement(EX_EXTENT)); //L
-            stack.push(doc.createGMDElement(DESCRIP)); //M
+            stack.push(doc.createMDBElement(EXTENT)); //K
+            stack.push(doc.createMDBElement(EX_EXTENT)); //L
+            stack.push(doc.createMDBElement(DESCRIP)); //M
             String country = gc.getCountry();
             String city = gc.getCity();
             String province = gc.getState();
@@ -59,9 +59,9 @@ GeoLogger logger;
         }
         for(GeographicUnit gu: geoUnits){
             stack.push(root);
-            stack.push(doc.createGMDElement(EXTENT)); //K
-            stack.push(doc.createGMDElement(EX_EXTENT)); //L
-            stack.push(doc.createGMDElement(DESCRIP)); //M
+            stack.push(doc.createMDBElement(EXTENT)); //K
+            stack.push(doc.createMDBElement(EX_EXTENT)); //L
+            stack.push(doc.createMDBElement(DESCRIP)); //M
             root = stack.zip(doc.addGCOVal(gu.getField(GEOGRAPHIC_UNIT),CHARACTER));
         }
 
@@ -69,35 +69,35 @@ GeoLogger logger;
         if(gbb.getLatSouth()==-361||gbb.getLatSouth()==361)
             logger.error("Record with DOI: " + djo.getDOI() + ", got to the creating XML stage without a valid bounding box.");
         stack.push(root);
-        stack.push(doc.createGMDElement(EXTENT)); //K
+        stack.push(doc.createMDBElement(EXTENT)); //K
         XMLStack lowerStack = new XMLStack();
-        Element levelL = doc.createGMDElement(EX_EXTENT); //L
+        Element levelL = doc.createMDBElement(EX_EXTENT); //L
         //West
         lowerStack.push(levelL);
-        lowerStack.push(doc.createGMDElement(GEO_ELEMENT));
-        lowerStack.push(doc.createGMDElement(EX_GEO_BB));
-        lowerStack.push(doc.createGMDElement("westBoundLongitude"));
+        lowerStack.push(doc.createMDBElement(GEO_ELEMENT));
+        lowerStack.push(doc.createMDBElement(EX_GEO_BB));
+        lowerStack.push(doc.createMDBElement("westBoundLongitude"));
         levelL = lowerStack.zip(doc.addGCOVal( Double.toString(gbb.getLongWest()),DECIMAL));
 
         //East
         lowerStack.push(levelL);
-        lowerStack.push(doc.createGMDElement(GEO_ELEMENT));
-        lowerStack.push(doc.createGMDElement(EX_GEO_BB));
-        lowerStack.push(doc.createGMDElement("eastBoundLongitude"));
+        lowerStack.push(doc.createMDBElement(GEO_ELEMENT));
+        lowerStack.push(doc.createMDBElement(EX_GEO_BB));
+        lowerStack.push(doc.createMDBElement("eastBoundLongitude"));
         levelL = lowerStack.zip(doc.addGCOVal( Double.toString(gbb.getLongEast()),DECIMAL));
 
         //North
         lowerStack.push(levelL);
-        lowerStack.push(doc.createGMDElement(GEO_ELEMENT));
-        lowerStack.push(doc.createGMDElement(EX_GEO_BB));
-        lowerStack.push(doc.createGMDElement("northBoundLatitude"));
+        lowerStack.push(doc.createMDBElement(GEO_ELEMENT));
+        lowerStack.push(doc.createMDBElement(EX_GEO_BB));
+        lowerStack.push(doc.createMDBElement("northBoundLatitude"));
         levelL = lowerStack.zip(doc.addGCOVal( Double.toString(gbb.getLatNorth()),DECIMAL));
 
         //South
         lowerStack.push(levelL);
-        lowerStack.push(doc.createGMDElement(GEO_ELEMENT));
-        lowerStack.push(doc.createGMDElement(EX_GEO_BB));
-        lowerStack.push(doc.createGMDElement("southBoundLatitude"));
+        lowerStack.push(doc.createMDBElement(GEO_ELEMENT));
+        lowerStack.push(doc.createMDBElement(EX_GEO_BB));
+        lowerStack.push(doc.createMDBElement("southBoundLatitude"));
 
         root = stack.zip(lowerStack.zip(doc.addGCOVal( Double.toString(gbb.getLatSouth()),DECIMAL)));
         return root;

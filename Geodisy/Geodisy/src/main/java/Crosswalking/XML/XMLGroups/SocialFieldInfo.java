@@ -27,16 +27,16 @@ public class SocialFieldInfo extends SubElement {
     @Override
     public Element getFields() {
         stack.push(root); //J
-        stack.push(doc.createGMDElement(P_OF_CONTACT)); //K
-        stack.push((doc.createGMDElement(CI_RESPONSIBILITY))); //L
-        stack.push(doc.createGMDElement(PARTY)); //M
-        stack.push(doc.createGMDElement(CI_ORG)); //N
-        stack.push(doc.createGMDElement(NAME)); //O
+        stack.push(doc.createMDBElement(P_OF_CONTACT)); //K
+        stack.push((doc.createMDBElement(CI_RESPONSIBILITY))); //L
+        stack.push(doc.createMDBElement(PARTY)); //M
+        stack.push(doc.createMDBElement(CI_ORG)); //N
+        stack.push(doc.createMDBElement(NAME)); //O
         root = stack.zip(doc.addGCOVal(dataCollector,CHARACTER)); //P
 
         stack.push(root); //J
-        stack.push(doc.createGMDElement(P_OF_CONTACT)); //K
-        stack.push((doc.createGMDElement(CI_RESPONSIBILITY))); //L
+        stack.push(doc.createMDBElement(P_OF_CONTACT)); //K
+        stack.push((doc.createMDBElement(CI_RESPONSIBILITY))); //L
         root = stack.zip(doc.addRoleCode("contributor"));
         return root;
     }

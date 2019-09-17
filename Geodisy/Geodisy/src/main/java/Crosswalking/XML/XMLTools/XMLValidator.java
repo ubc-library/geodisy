@@ -1,33 +1,60 @@
 package Crosswalking.XML.XMLTools;
 import javax.xml.XMLConstants;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.*;
 import java.io.File;
 import BaseFiles.GeoLogger;
-import org.xml.sax.SAXException;
+import org.xml.sax.*;
+
 import java.io.IOException;
 
-import static Crosswalking.XML.XMLTools.XMLStrings.ISO_19115_VALIDATION_FILE_PATH;
+
 
 public class XMLValidator {
     GeoLogger logger =  new GeoLogger(this.getClass());
 
-    public boolean validateXML(File fileName) {
-        File schemaFile = new File(ISO_19115_VALIDATION_FILE_PATH); // etc.
-
-        Source xmlFile = new StreamSource(fileName);
-        SchemaFactory schemaFactory = SchemaFactory
-                .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+    public boolean validateXML(String fileName) {
         try {
-            Schema schema = schemaFactory.newSchema(schemaFile);
-            Validator validator = schema.newValidator();
-            validator.validate(xmlFile);
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            factory.setValidating(true);
+            factory.setNamespaceAware(true);
+
+            SAXParser parser = factory.newSAXParser();
+            parser.setProperty("http://java.sun.com/xml/jaxp/properties/schemaLanguage",
+                    "http://www.w3.org/2001/XMLSchema");
+
+            XMLReader reader = parser.getXMLReader();
+            reader.setErrorHandler(
+                    new ErrorHandler() {
+                        public void warning(SAXParseException e) throws SAXException {
+                            System.out.println("WARNING: " + e.getMessage()); // do nothing
+                        }
+
+                        public void error(SAXParseException e) throws SAXException {
+                            System.out.println("ERROR: " + e.getMessage());
+                            throw e;
+                        }
+
+                        public void fatalError(SAXParseException e) throws SAXException {
+                            System.out.println("FATAL: " + e.getMessage());
+                            throw e;
+                        }
+                    }
+            );
+            reader.parse(new InputSource(fileName));
             return true;
-        } catch (SAXException e) {
+        } catch (ParserConfigurationException pce) {
+            logger.error("Something went wrong with the parser configuration with file: " + fileName);
             return false;
-        } catch (IOException e) {
-            logger.error("Something went wrong validating the file: " + fileName);
+        } catch (IOException io) {
+            logger.error("Something went wrong with an IO exception for file: " + fileName);
+            return false;
+        } catch (SAXException se) {
+            logger.warn("XML file " + fileName + " could not be validated.");
             return false;
         }
     }

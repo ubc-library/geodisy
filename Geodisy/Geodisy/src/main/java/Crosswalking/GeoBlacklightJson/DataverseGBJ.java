@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import static BaseFiles.GeodisyStrings.XML_NS;
 import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.EXTERNAL_SERVICES;
 import static Dataverse.DVFieldNameStrings.*;
 
@@ -41,10 +42,12 @@ public class DataverseGBJ extends GeoBlacklightJSON{
     @Override
     protected void addMetadataDownloadOptions() {
         JSONArray ja = jo.getJSONArray(EXTERNAL_SERVICES);
-        ja.put("http://www.isotc211.org/schemas/2005/gmd/"); //ISO 19139
+        ja.put(XML_NS + "mdb/2.0"); //ISO 19139
         ja.put("http://www.opengis.net/cat/csw/csdgm/");
         ja.put("http://www.loc.gov/mods/v3");
         ja.put("http://www.w3.org/1999/xhtml");
+        ja.put(("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""));
+        ja.put("xsi:schemaLocation=\"http://standards.iso.org/iso/19115/-3/mdb/2.0/mdb.xsd\">");
         jo.put(EXTERNAL_SERVICES,ja);
     }
 

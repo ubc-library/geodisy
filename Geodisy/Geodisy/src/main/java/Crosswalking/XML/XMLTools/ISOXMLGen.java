@@ -11,7 +11,7 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-import static BaseFiles.GeodisyStrings.XMLNS;
+import static BaseFiles.GeodisyStrings.XML_NS;
 import static Dataverse.DVFieldNameStrings.*;
 
 public class ISOXMLGen extends DjoXMLGenerator {
@@ -58,14 +58,21 @@ public class ISOXMLGen extends DjoXMLGenerator {
     @Override
     protected Element getRoot() {
         // root element
-        Element rootElement = doc.createGMDElement("MD_Metadata");
-        rootElement.setAttribute("xmlns",XMLNS + "gmd");
-        rootElement.setAttribute("xmlns:gco",XMLNS + "gco");
-        rootElement.setAttribute("xmlns:gts",XMLNS + "gts");
-        rootElement.setAttribute("xmlns:srv",XMLNS + "srv");
-        rootElement.setAttribute("xmlns:gml",XMLNS + "gml");
-        rootElement.setAttribute("xmlns:xlink","http://www.w3.org/1999/xlink");
-        rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+        Element rootElement = doc.createMDBElement("MD_Metadata");
+        rootElement.setAttribute(xmlNSElement(),XML_NS + "mdb/2.0");
+        rootElement.setAttribute(xmlNSElement("gco"), XML_NS + "gco/1.0");
+        rootElement.setAttribute(xmlNSElement("mdb"),XML_NS + "mdb/2.0");
+        rootElement.setAttribute(xmlNSElement("srv"), XML_NS + "srv/2.0");
+        rootElement.setAttribute(xmlNSElement("xlink"),"http://www.w3.org/1999/xlink");
+        rootElement.setAttribute(xmlNSElement("xsi"), "http://www.w3.org/2001/XMLSchema-instance");
         return rootElement;
+    }
+
+    private String xmlNSElement() {
+        return "xmlns";
+    }
+
+    private String xmlNSElement(String s) {
+        return "xmlns:" + s;
     }
 }

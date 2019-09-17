@@ -28,28 +28,28 @@ public class DistributionInfo extends SubElement {
         Element temp;
         String tempString;
         XMLStack outterStack = new XMLStack();
-        Element levelI = doc.createGMDElement("distributionInfo");
-        Element levelJ = doc.createGMDElement(MD_DIST);
-        Element levelK = doc.createGMDElement("distributor");
-        Element levelL = doc.createGMDElement(MD_DIST);
+        Element levelI = doc.createMDBElement("distributionInfo");
+        Element levelJ = doc.createMDBElement(MD_DIST);
+        Element levelK = doc.createMDBElement("distributor");
+        Element levelL = doc.createMDBElement(MD_DIST);
         outterStack.push(levelI);
         outterStack.push(levelJ);
         outterStack.push(levelK);
         outterStack.push(levelL);
-        Element levelM = doc.createGMDElement("distributorContact");
-        Element levelN = doc.createGMDElement(CI_RESPONSIBILITY);
-        Element levelO = doc.createGMDElement(PARTY);
+        Element levelM = doc.createMDBElement("distributorContact");
+        Element levelN = doc.createMDBElement(CI_RESPONSIBILITY);
+        Element levelO = doc.createMDBElement(PARTY);
         for(Distributor d:distributors) {
-            Element levelP = doc.createGMDElement(CI_ORG);
+            Element levelP = doc.createMDBElement(CI_ORG);
             tempString = d.getDistributorName();
             if (!d.getDistributorName().isEmpty()) {
-                temp = doc.createGMDElement(NAME); //Q
+                temp = doc.createMDBElement(NAME); //Q
                 temp.appendChild(doc.addGCOVal(tempString, CHARACTER));
                 levelP.appendChild(temp);
             }
             tempString = d.getDistributorAffiliation();
             if (!d.getDistributorName().isEmpty()) {
-                temp = doc.createGMDElement(NAME); //Q
+                temp = doc.createMDBElement(NAME); //Q
                 temp.appendChild(doc.addGCOVal(tempString, CHARACTER));
                 levelP.appendChild(temp);
             }
@@ -57,20 +57,20 @@ public class DistributionInfo extends SubElement {
                 stack = new XMLStack();
                 if (!d.getDistributorURL().isEmpty()) {
                     stack.push(levelP);
-                    stack.push(doc.createGMDElement("contactInfo")); //Q
-                    stack.push(doc.createGMDElement(CI_CITE)); //R
-                    stack.push(doc.createGMDElement(ONLINE_RES)); //S
-                    stack.push(doc.createGMDElement(CI_ONLINE_RES)); //T
-                    stack.push(doc.createGMDElement(LINKAGE)); //U
+                    stack.push(doc.createMDBElement("contactInfo")); //Q
+                    stack.push(doc.createMDBElement(CI_CITE)); //R
+                    stack.push(doc.createMDBElement(ONLINE_RES)); //S
+                    stack.push(doc.createMDBElement(CI_ONLINE_RES)); //T
+                    stack.push(doc.createMDBElement(LINKAGE)); //U
                     levelP = stack.zip(doc.addGCOVal(d.getDistributorURL(), CHARACTER));
                 }
                 if (!d.getDistributorLogoURL().isEmpty()) {
                     stack.push(levelP);
-                    stack.push(doc.createGMDElement("logo")); //Q
-                    stack.push(doc.createGMDElement("MD_BrowseGraphic")); //R
-                    stack.push(doc.createGMDElement(LINKAGE)); //S
-                    stack.push(doc.createGMDElement(CI_ONLINE_RES)); //T
-                    stack.push(doc.createGMDElement(LINKAGE)); // U
+                    stack.push(doc.createMDBElement("logo")); //Q
+                    stack.push(doc.createMDBElement("MD_BrowseGraphic")); //R
+                    stack.push(doc.createMDBElement(LINKAGE)); //S
+                    stack.push(doc.createMDBElement(CI_ONLINE_RES)); //T
+                    stack.push(doc.createMDBElement(LINKAGE)); // U
                     levelP = stack.zip(doc.addGCOVal(d.getDistributorLogoURL(), CHARACTER));
                 }
             }
@@ -87,10 +87,10 @@ public class DistributionInfo extends SubElement {
 
     private Element getDepositor(String depositorName) {
         stack = new XMLStack();
-        stack.push(doc.createGMDElement(CI_RESPONSIBILITY));
-        stack.push(doc.createGMDElement(PARTY));
-        stack.push(doc.createGMDElement(CI_ORG));
-        stack.push(doc.createGMDElement(NAME));
+        stack.push(doc.createMDBElement(CI_RESPONSIBILITY));
+        stack.push(doc.createMDBElement(PARTY));
+        stack.push(doc.createMDBElement(CI_ORG));
+        stack.push(doc.createMDBElement(NAME));
         Element levelN = stack.zip(doc.addGCOVal(depositorName,CHARACTER));
         levelN.appendChild(levelRoleCode("originator"));
         return levelN;

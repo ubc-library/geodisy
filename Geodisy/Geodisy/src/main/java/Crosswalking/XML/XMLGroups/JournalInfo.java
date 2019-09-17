@@ -29,14 +29,14 @@ public class JournalInfo extends SubElement {
     public Element getFields() {
 
         stack.push(root);
-        Element levelK = doc.createGMDElement("additionalDocumentation");
+        Element levelK = doc.createMDBElement("additionalDocumentation");
         stack.push(levelK);
-        Element levelL = doc.createGMDElement("CI_Citation");
+        Element levelL = doc.createMDBElement("CI_Citation");
         XMLStack innerStack = new XMLStack();
         String journal;
         for(JournalVolIssue jvl: journalVolIssues){
             innerStack.push(levelL);
-            innerStack.push(doc.createGMDElement("otherCitationDetails"));
+            innerStack.push(doc.createMDBElement("otherCitationDetails"));
             journal = "Volume: " + jvl.getField(JOURNAL_VOLUME);
             if(!jvl.getField(JOURNAL_ISSUE).isEmpty())
                 journal += ", Issue: " + jvl.getField(JOURNAL_ISSUE);

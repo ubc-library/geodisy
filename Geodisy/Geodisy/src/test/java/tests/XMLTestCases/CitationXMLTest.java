@@ -6,7 +6,6 @@ import Crosswalking.XML.XMLTools.ISOXMLGen;
 import Crosswalking.XML.XMLTools.XMLValidator;
 import Dataverse.DataverseJavaObject;
 import org.json.JSONObject;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,7 +50,7 @@ DataverseJavaObject djo;
         ISOXMLGen xmlGenerator = new ISOXMLGen(djo);
         XMLDocObject xmlFile = xmlGenerator.generateXMLFile();
         DOMSource source = new DOMSource(xmlFile.getDoc());
-        StreamResult result = new StreamResult(new File(XMLTestFile));
+        StreamResult result = new StreamResult(new File(XML_TEST_FILE));
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = null;
@@ -69,6 +68,6 @@ DataverseJavaObject djo;
     @Test
     public void testXMLValidation(){
         XMLValidator xmlValidator = new XMLValidator();
-        assertTrue(xmlValidator.validateXML(new File(XMLTestFile)));
+        assertTrue(xmlValidator.validateXML(XML_TEST_FILE));
     }
 }
