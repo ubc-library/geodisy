@@ -1,38 +1,46 @@
 package Dataverse.FindingBoundingBoxes;
 
 import BaseFiles.GeoLogger;
-import Crosswalking.JSONParsing.DataverseParser;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
-import org.apache.commons.text.WordUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class Location implements GeographicPoliticalUnit {
-    protected String name;
+    protected String givenName;
+    protected String commonName;
     protected BoundingBox boundingBox;
     protected final String NO_NAME= "no name";
+    protected GeonamesJSON geonamesLocationJson;
     GeoLogger logger = new GeoLogger(this.getClass());
 
 
-    public Location(String name) {
-        this.name = WordUtils.capitalizeFully(name);
-        this.boundingBox = new BoundingBox();
+    public Location(String givenName) {
+        this.givenName = givenName;
+        this.commonName = this.geonamesLocationJson.getCommonName();
+        this.boundingBox = this.geonamesLocationJson.getBoundingBox();
     }
 
-    public String getName() {
-        if(name.matches(NO_NAME))
+    protected void setCommonName(){
+        commonName = this.geonamesLocationJson.getCommonName();
+        setBoundingBoxFromJSON();
+    }
+
+    protected void setBoundingBoxFromJSON() {
+        boundingBox = this.geonamesLocationJson.getBoundingBox();
+    }
+
+    public String getGivenName() {
+        if(givenName.matches(NO_NAME))
             return "";
-        return name;
+        return givenName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setGivenName(String givenName) {
+        this.givenName = givenName;
     }
 
     public double getLatSouth() {
         double answer= boundingBox.getLatSouth();
         if(answer==361)
-            logger.error("No latSouth for "+ name + ", returning 361");
+            logger.error("No latSouth for "+ givenName + ", returning 361");
         return answer;
     }
 
@@ -46,7 +54,7 @@ public class Location implements GeographicPoliticalUnit {
     public double getLatNorth() {
         double answer= boundingBox.getLatNorth();
         if(answer==361)
-            logger.error("No latNorth for "+ name + ", returning 361");
+            logger.error("No latNorth for "+ givenName + ", returning 361");
         return answer;
     }
 
@@ -61,7 +69,7 @@ public class Location implements GeographicPoliticalUnit {
     public double getLongWest() {
         double answer= boundingBox.getLongWest();
         if(answer==361)
-            logger.error("No longWest for for "+ name + ", returning 361");
+            logger.error("No longWest for for "+ givenName + ", returning 361");
         return answer;
     }
 
@@ -79,7 +87,7 @@ public class Location implements GeographicPoliticalUnit {
     public double getLongEast() {
         double answer= boundingBox.getLongEast();
         if(answer==361)
-            logger.error("No longEast for "+ name + ", returning 361");
+            logger.error("No longEast for "+ givenName + ", returning 361");
         return answer;
     }
 
@@ -101,4 +109,10 @@ public class Location implements GeographicPoliticalUnit {
     public void setBoundingBox(BoundingBox boundingBox) {
         this.boundingBox = boundingBox;
     }
+
+    public boolean hasGeoRecord(){
+        return geonamesLocationJson.hasGeoRecord();
+    }
+
+
 }

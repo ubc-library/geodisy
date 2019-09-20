@@ -2,12 +2,15 @@ package Dataverse;
 
 import BaseFiles.GeoLogger;
 import BaseFiles.GeodisyStrings;
+import Crosswalking.XML.XMLGroups.GeographicInfo;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
 import Dataverse.FindingBoundingBoxes.GeonamesBBs;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
@@ -64,19 +67,19 @@ public class DataverseJavaObject extends SourceJavaObject {
             if(!coverages.isEmpty())
 
                 for(GeographicCoverage gc: coverages){
-                    String country = gc.getCountry();
-                    String state = gc.getState();
-                    String city = gc.getCity();
-                    if(country.equals(""))
+                    String country = GeographicInfo.getGeoCovPrimeName(gc.getCountryList());
+                    String province = GeographicInfo.getGeoCovPrimeName(gc.getProvinceList());
+                    String city = GeographicInfo.getGeoCovPrimeName(gc.getCityList());
+                    if(country.isEmpty())
                         continue;
                     else{
-                        if(state.equals(""))
-                            bb.add(geonames.getDVBoundingBox(country));
+                        if(province.isEmpty())
+                            bb.add(gc.getCountryObject().getBoundingBox());
                         else{
-                            if(city.equals(""))
-                                bb.add(geonames.getDVBoundingBox(country,state));
+                            if(city.isEmpty())
+                                bb.add(gc.getProvinceObject().getBoundingBox());
                             else
-                                bb.add(geonames.getDVBoundingBox(country,state,city));
+                                bb.add(gc.getCityObject().getBoundingBox());
                         }
                     }
                 }

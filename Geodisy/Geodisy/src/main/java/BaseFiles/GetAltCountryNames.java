@@ -44,17 +44,15 @@ public class GetAltCountryNames {
                         continue;
                     String name = getElement(eElement,"countryName");
                     Geonames geo = new Geonames();
-                    String countryFullString = geo.callGeonames(name, "PCL*");
+                    String countryFullString = geo.getGeonamesCountry(name);
                     if(countryFullString.isEmpty()){
                         for(int i = 0; i<5; i++){
-                            countryFullString = geo.callGeonames(name, "PCL*");
+                            countryFullString = geo.getGeonamesCountry(name);
                             if(!countryFullString.isEmpty())
                                 break;
                         }
                         continue;
                     }
-                    if(countryFullString.contains("<totalResultsCount>0</totalResultsCount>"))
-                        countryFullString = geo.callGeonames(name, "TERR");
                     System.out.println(name + ": " + countryFullString.substring(0,15));
                     Document countryFullDoc = geo.getXMLDoc(countryFullString);
                     countryFullDoc.getDocumentElement().normalize();

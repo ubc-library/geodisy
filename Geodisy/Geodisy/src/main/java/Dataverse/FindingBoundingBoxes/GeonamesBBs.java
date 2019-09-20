@@ -1,7 +1,6 @@
 package Dataverse.FindingBoundingBoxes;
 
 import BaseFiles.Geonames;
-import BaseFiles.HTTPCaller;
 import Dataverse.DataverseJavaObject;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.City;
@@ -10,7 +9,6 @@ import Dataverse.FindingBoundingBoxes.LocationTypes.Province;
 import java.io.UnsupportedEncodingException;
 import java.net.*;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * GeonamesBBs collects a bounding box for a record that has enough geospatial fields filled out.
@@ -42,7 +40,7 @@ public class GeonamesBBs extends FindBoundBox {
     /**
      *
      * @param countryName
-     * Country name is compared to list of country bounding boxes in Geonames_countries.xml
+     * Country givenName is compared to list of country bounding boxes in Geonames_countries.xml
      * @return value from xml file, or a 361 lat/long bounding box if the country can't be found
      */
     @Override
@@ -53,7 +51,7 @@ public class GeonamesBBs extends FindBoundBox {
          else
              country = countries.getCountryByName(countryName);
         if(country.getCountryCode().matches("_JJ")){
-            logger.info(countryName + " is not a valid country name in record at DOI: " + doi + ", so no bounding box could be automatically generated. Check this record manually ", djo, logger.getName());
+            logger.info(countryName + " is not a valid country givenName in record at DOI: " + doi + ", so no bounding box could be automatically generated. Check this record manually ", djo, logger.getName());
 
             return new BoundingBox();
         }
@@ -64,32 +62,31 @@ public class GeonamesBBs extends FindBoundBox {
      * Get the bounding box from GeonamesBBs when Country and State/Province/Etc is known
      * For other GeonamesBBs Feature Codes [fcode] see: https://www.geonames.org/export/codes.html
      * @param country
-     * @param state
+     * @param province
      * @return a Bounding box with N/S/E/W extents
      *
      * If bounding box can't be found in geonames, return a search for just the country.
      */
     @Override
-    public BoundingBox getDVBoundingBox(String country, String state)  {
-        BoundingBox box = countries.getExistingBB(country, state);
+    public BoundingBox getDVBoundingBox(String country, String province)  {
+        BoundingBox box = countries.getExistingBB(country, province);
         if(box.getLongWest()!=361)
             return box;
 
-        String fcode = "ADM";
-        String unURLedState =state;
+        String unURLedProvince =province;
         try {
-            state = URLEncoder.encode(state, "UTF-8");
+            province = URLEncoder.encode(province, "UTF-8");
         } catch (UnsupportedEncodingException ignored) {
             // Can be safely ignored because UTF-8 is always supported
         }
-        String searchString = state;
-        String responseString = getJSONString(searchString, country, fcode);
+        String searchString = province;
+        String responseString = getJSONString(searchString, country);
         box = readResponse(responseString,doi, djo);
         if(box.getLongWest()==361)
             return getDVBoundingBox(country);
-        Province p = new Province(unURLedState, country);
+        Province p = new Province(unURLedProvince, country);
         p.setBoundingBox(box);
-        bBoxes.put(addDelimiter(country,unURLedState), box);
+        bBoxes.put(addDelimiter(country,unURLedProvince), box);
         countries.setBoundingBoxes(bBoxes);
         return box;
     }
@@ -100,36 +97,36 @@ public class GeonamesBBs extends FindBoundBox {
      * Get the bounding box from GeonamesBBs when Country, State/Province/Etc, and city are known
      *      * For other GeonamesBBs Feature Codes [fcode] see: https://www.geonames.org/export/codes.html
      * @param country
-     * @param state
+     * @param province
      * @param city
      * @return a Bounding box with N/S/E/W extents
      *
-     * If bounding box cannot be found in geonames, run search with just country and state/province
+     * If bounding box cannot be found in geonames, run search with just country and province/province
      */
 
     @Override
-    public BoundingBox getDVBoundingBox(String country, String state, String city) {
-        BoundingBox box = countries.getExistingBB(country, state, city);
+    public BoundingBox getDVBoundingBox(String country, String province, String city) {
+        BoundingBox box = countries.getExistingBB(country, province, city);
         if(box.getLongWest()!=361)
             return box;
         String fcode = "PPL*";
 
-        String unURLedState = state;
+        String unURLedProvince = province;
         String unURLedCity = city;
         try {
             city = URLEncoder.encode(city, "UTF-8");
-            state = URLEncoder.encode(state, "UTF-8");
+            province = URLEncoder.encode(province, "UTF-8");
         } catch (UnsupportedEncodingException ignored) {
             // Can be safely ignored because UTF-8 is always supported
         }
-        String searchString = city + "%2C%20" + state;
-        String responseString = getJSONString(searchString, country, fcode);
+        String searchString = city + "%2C%20" + province;
+        String responseString = getJSONString(searchString, country);
         box = readResponse(responseString,doi, djo);
         if(box.getLongWest()==361)
-            return getDVBoundingBox(country,state);
-        City cit = new City(city,state,country);
+            return getDVBoundingBox(country,province);
+        City cit = new City(city,province,country);
         cit.setBoundingBox(box);
-        bBoxes.put(addDelimiter(country,unURLedState,unURLedCity),box);
+        bBoxes.put(addDelimiter(country,unURLedProvince,unURLedCity),box);
         countries.setBoundingBoxes(bBoxes);
 
         return box;
@@ -182,7 +179,7 @@ public class GeonamesBBs extends FindBoundBox {
     /**
      *
      * @param country
-     * @param state
+     * @param province
      * @param other
      * @return a bounding box with likely no real values
      *
@@ -190,8 +187,8 @@ public class GeonamesBBs extends FindBoundBox {
      * the geographic coverage.
      */
     @Override
-    BoundingBox getDVBoundingBoxOther(String country, String state, String other) {
-        BoundingBox box =  countries.getExistingBB(country, state, other);
+    BoundingBox getDVBoundingBoxOther(String country, String province, String other) {
+        BoundingBox box =  countries.getExistingBB(country, province, other);
         /*if(box.getLongWest()!=361)
             return box;
         Map<String, String> parameters = new HashMap<>();
@@ -200,14 +197,14 @@ public class GeonamesBBs extends FindBoundBox {
         String countryCode = countries.isCountryCode(country) ? country : countries.getCountryCode(country);
         parameters.put("country",countryCode);
         String unURLedOther = other;
-        String unURLedState = state;
+        String unURLedProvince = province;
         try {
             other = URLEncoder.encode(other, "UTF-8");
-            state = URLEncoder.encode(state, "UTF-8");
+            province = URLEncoder.encode(province, "UTF-8");
         } catch (UnsupportedEncodingException ignored) {
             // Can be safely ignored because UTF-8 is always supported
         }
-        String urlString  = other + "%2C%20" + state + addParameters(parameters);
+        String urlString  = other + "%2C%20" + province + addParameters(parameters);
         HttpURLConnection con = getHttpURLConnection(urlString);
 
         try {
@@ -216,7 +213,7 @@ public class GeonamesBBs extends FindBoundBox {
             logger.error("something went wrong with the http request for a bounding box");
         }
         if(box.getLongWest()!=361)
-            bBoxes.put(addDelimiter(country,unURLedState,unURLedOther),box);
+            bBoxes.put(addDelimiter(country,unURLedProvince,unURLedOther),box);
         else
             box = getDVBoundingBoxOther(country, other);*/
         if(box.getLatSouth() == 361)
@@ -225,9 +222,9 @@ public class GeonamesBBs extends FindBoundBox {
     }
 
     @Override
-    public String getJSONString(String searchValue, String country, String fcode) {
+    public String getJSONString(String searchValue, String country) {
         Geonames geo = new Geonames();
-        return geo.callGeonames(searchValue,country,fcode);
+        return geo.getGeonamesProvince(searchValue,country);
     }
 
 

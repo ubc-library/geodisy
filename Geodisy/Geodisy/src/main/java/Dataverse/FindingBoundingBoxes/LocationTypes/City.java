@@ -1,18 +1,23 @@
 package Dataverse.FindingBoundingBoxes.LocationTypes;
 
+import BaseFiles.Geonames;
+import Dataverse.FindingBoundingBoxes.GeonamesJSON;
 import Dataverse.FindingBoundingBoxes.Location;
 
 public class City extends Location {
     private Province province;
-
+    //TODO deal with higher levels of the location hierarchy if the lower level does or does not find a bounding box
     public City(String name, String provinceName, String countryName) {
         super(name);
         province = new Province(provinceName,countryName);
+        geonamesLocationJson = new GeonamesJSON(new Geonames().getGeonamesCity(name,provinceName,countryName));
+        setCommonName();
     }
 
     public City(String name, String countryName){
         super(name);
-        province = new Province("no name", countryName);
+        province = new Province("no givenName", countryName);
+
     }
 
     @Override

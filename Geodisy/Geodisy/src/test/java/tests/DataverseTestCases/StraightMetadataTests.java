@@ -16,7 +16,7 @@ public class StraightMetadataTests extends DataverseTests{
         assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"UBC Research Data Management Survey: Humanities and Social Sciences");
     }
     @Test
-    public void metadataCityStateCountry(){
+    public void metadataCityProvinceCountry(){
         doi = "doi:10.5072/FK2/U174JA";
         SourceJavaObject val = dataverseCallTest();
         assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"UBC Research Data Management Survey: Humanities and Social Sciences");
@@ -24,7 +24,7 @@ public class StraightMetadataTests extends DataverseTests{
     }
 
     @Test
-    public void metadataStateCountry(){
+    public void metadataProvinceCountry(){
         doi = "doi:10.5072/FK2/8O2NUZ";
         SourceJavaObject val = dataverseCallTest();
         assertEquals(val.getSimpleFields().getField(DVFieldNameStrings.TITLE),"Forum Research Political Poll – Municipal Issues (Toronto) 2013");
