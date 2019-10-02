@@ -32,7 +32,7 @@ public class Scheduler {
     private final static int MINUTE_TO_START_RUN = 0;
     private final static TimeUnit UNIT_BETWEEN_RUNS = TimeUnit.DAYS;
     private long testDelay = 0;
-    private long testPeriod = 120000;
+    private long testPeriod = 300000;
     
     //for testing the timer
     //private final static TimeUnit UNIT_BETWEEN_RUNS = TimeUnit.SECONDS;

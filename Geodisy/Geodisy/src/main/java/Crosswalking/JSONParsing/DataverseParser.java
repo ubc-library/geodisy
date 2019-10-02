@@ -48,7 +48,7 @@ public class DataverseParser implements JSONParser {
             else
                 dJO.setGeoFields(new GeographicFields(dJO));
             String prodPlace = dJO.getSimpleFieldVal(PROD_PLACE);
-            if (!prodPlace.matches("") && !dJO.hasBoundingBox()) {
+            if (!prodPlace.isEmpty() && !dJO.hasBoundingBox()) {
                 GeographicFields gf = dJO.getGeoFields();
                 gf.setFullBB(getBBFromProdPlace(prodPlace,dJO));
             }
