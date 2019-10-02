@@ -39,23 +39,27 @@ GeoLogger logger;
     public Element getFields() {
 
         for(GeographicCoverage gc: geoCovers){
-            stack.push(root); //J
-            stack.push(doc.createGMDElement(EXTENT)); //K
-            stack.push(doc.createGMDElement(EX_EXTENT)); //L
-            stack.push(doc.createGMDElement(DESCRIP)); //M
             List<String> country = gc.getCountryList();
             List<String> city = gc.getCityList();
             List<String> province = gc.getProvinceList();
             List<String> other = gc.getOtherGeographicCoverage();
             String name;
-            name = country.get(country.size()-1);
-            if(!province.isEmpty())
-                name = name + ", " + getGeoCovPrimeName(province);
-            if(!city.isEmpty())
-                name = name + ", " + getGeoCovPrimeName(city);
-            if(!other.isEmpty())
-                name = name + ", " + other.get(0);
-            root = stack.zip(doc.addGCOVal(name,CHARACTER));
+            //if the researcher uses an alternative name for the country, province, and/or city, then two geographic coverage units will be created from the single coverage unit
+            int numberOfOptions = (country.size()>1 || province.size()>1 || city.size()>1) ? 2:1;
+            for(int i = 0; i<numberOfOptions; i++) {
+                stack.push(root); //J
+                stack.push(doc.createGMDElement(EXTENT)); //K
+                stack.push(doc.createGMDElement(EX_EXTENT)); //L
+                stack.push(doc.createGMDElement(DESCRIP)); //M
+                name = (country.size()==2 && i==1) ? country.get(1) : country.get(0);
+                if (!province.isEmpty())
+                    name = name + ", " + ((province.size()==2 && i==1) ? province.get(1) : province.get(0));
+                if (!city.isEmpty())
+                    name = name + ", " + ((city.size()==2 && i==1) ? city.get(1) : city.get(0));
+                if (!other.isEmpty())
+                    name = name + ", " + other.get(0);
+                root = stack.zip(doc.addGCOVal(name,CHARACTER));
+            }
         }
         for(GeographicUnit gu: geoUnits){
             stack.push(root);

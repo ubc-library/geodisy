@@ -50,13 +50,11 @@ public class Countries {
             doc = dBuilder.parse(xmlFile);
             doc.getDocumentElement().normalize();
             System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
-            NodeList nodeList = doc.getElementsByTagName("country");
-            for (int i = 0; i <nodeList.getLength(); i++){
-                getCountry(nodeList.item(i));
+            NodeList nodeList = doc.getDocumentElement().getElementsByTagName("country");
+            int nodeListLen = nodeList.getLength();
+            for(int i = 0; i<nodeListLen; i++){
+                setCountry(nodeList.item(i));
             }
-            Country junk = new Country("Junk");
-            junk.setCountryCode("_JJ");
-            countries.put("Junk", junk);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException | ParserConfigurationException | SAXException e) {
@@ -64,27 +62,17 @@ public class Countries {
         }
     }
 
-    private void getCountry(Node node) {
+    private void setCountry(Node node) {
         if (node.getNodeType() == Node.ELEMENT_NODE) {
             Element element = (Element) node;
-            String name = getTagValue("countryName", element);
-            Country country = new Country(name);
-            String cCode = getTagValue("countryCode", element);
-            country.setCountryCode(cCode);
-            country.setLongEast(getTagValue("east", element));
-            country.setLongWest(getTagValue("west", element));
-            country.setLatSouth(getTagValue("south", element));
-            country.setLatNorth(getTagValue("north", element));
-            countries.put(country.getName(),country);
-            countryCodes.put(cCode,name);
+            String commonName = Location.getTagValue("countryName", element);
+            Country country = new Country(element, commonName);
+            countries.put(WordUtils.capitalizeFully(commonName),country);
+            countryCodes.put(country.getCountryCode(),country.getGivenName());
         }
     }
 
-    private String getTagValue(String tag, Element element) {
-        NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
-        Node node = nodeList.item(0);
-        return node.getNodeValue();
-    }
+
 
     public Country getCountryByName(String name){
         String capName = WordUtils.capitalizeFully(name);

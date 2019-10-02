@@ -18,7 +18,7 @@ public class CountryCodes {
         return countries;
     }
     public static String getCountryCode(String country){
-        if(countries.containsKey(country))
+        if(countries.containsKey(country.toUpperCase()))
             return countries.get(country);
         else
             return "";

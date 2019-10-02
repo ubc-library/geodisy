@@ -1,7 +1,7 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 
-import BaseFiles.Geonames;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
+import Dataverse.FindingBoundingBoxes.Countries;
 import Dataverse.FindingBoundingBoxes.LocationTypes.City;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Province;
@@ -18,7 +18,7 @@ public class GeographicCoverage extends CompoundJSONField {
     private Country countryObject;
     private Province provinceObject;
     private City cityObject;
-    Geonames geo = new Geonames();
+
 
     public GeographicCoverage(String doi) {
         this.doi = doi;
@@ -29,7 +29,7 @@ public class GeographicCoverage extends CompoundJSONField {
         this.altCountry = "";
         this.altProvince = "";
         this.altCity = "";
-        this.countryObject = new Country("");
+        this.countryObject = new Country();
 
     }
 
@@ -59,7 +59,7 @@ public class GeographicCoverage extends CompoundJSONField {
 
     public void setCountry(String country) {
         this.country = country;
-        countryObject = new Country(country);
+        countryObject = Countries.getCountry().getCountryByName(country);
         altCountry = countryObject.getGivenName();
     }
 

@@ -2,29 +2,46 @@ package Dataverse.FindingBoundingBoxes;
 
 import BaseFiles.GeoLogger;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.StringWriter;
 
 public class Location implements GeographicPoliticalUnit {
     protected String givenName;
     protected String commonName;
     protected BoundingBox boundingBox;
     protected final String NO_NAME= "no name";
-    protected GeonamesJSON geonamesLocationJson;
-    GeoLogger logger = new GeoLogger(this.getClass());
+    protected String altNames;
+    protected GeonamesJSON geonamesJSON;
+    protected GeoLogger logger = new GeoLogger(this.getClass());
 
 
-    public Location(String givenName) {
+    public Location(String givenName, GeonamesJSON geonamesJSON) {
+        this.geonamesJSON = geonamesJSON;
         this.givenName = givenName;
-        this.commonName = this.geonamesLocationJson.getCommonName();
-        this.boundingBox = this.geonamesLocationJson.getBoundingBox();
+        this.commonName = this.geonamesJSON.getCommonName();
+        boundingBox = geonamesJSON.getBoundingBox();
+        altNames = geonamesJSON.getAltNames();
+
     }
 
-    protected void setCommonName(){
-        commonName = this.geonamesLocationJson.getCommonName();
-        setBoundingBoxFromJSON();
+    public Location(String givenName, Element element){
+        this.geonamesJSON = new GeonamesJSON(elementToString(element));
+        this.givenName = givenName;
+        this.commonName = this.geonamesJSON.getCommonName();
+        boundingBox = geonamesJSON.getBoundingBox();
     }
+    //Placeholder location constructor
+    public Location(){
 
-    protected void setBoundingBoxFromJSON() {
-        boundingBox = this.geonamesLocationJson.getBoundingBox();
     }
 
     public String getGivenName() {
@@ -110,9 +127,34 @@ public class Location implements GeographicPoliticalUnit {
         this.boundingBox = boundingBox;
     }
 
-    public boolean hasGeoRecord(){
-        return geonamesLocationJson.hasGeoRecord();
+    public String getCommonName(){
+        return commonName;
     }
 
+    public void setAltNames(String altNames){
+        this.altNames = altNames;
+    }
 
+    public static String getTagValue(String tag, Element element) {
+        NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
+        Node node = nodeList.item(0);
+        return node.getNodeValue();
+    }
+
+    protected String elementToString(Element element) {
+        String json = "";
+        try {
+            TransformerFactory transFactory = TransformerFactory.newInstance();
+            Transformer transformer = transFactory.newTransformer();
+            StringWriter buffer = new StringWriter();
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            transformer.transform(new DOMSource(element),
+                    new StreamResult(buffer));
+            json = buffer.toString();
+
+        } catch (TransformerException e) {
+            logger.error("Something went wrong when trying to convert" + element + "to a string");
+        }
+        return json;
+    }
 }
