@@ -20,7 +20,8 @@ public class GeoCombine {
         ProcessBuilder processBuilder = new ProcessBuilder();
         String filePath = jgit.getXMLLocalFilePath(fileName);
         processBuilder.command("bash","GeoCombine::Iso19139.new(" + filePath + fileName + ".xml).to_geoblacklight.to_json");
-        jgit.addXMLFileToIndex(filePath + fileName + ".json");
+        //TODO uncommnet once I've got JGit working
+        //jgit.addXMLFileToIndex(filePath + fileName + ".json");
     }
 
 }

@@ -13,6 +13,7 @@ public class Crosswalk implements CrosswalkInterface {
     public void convertSJOs(List<SourceJavaObject> records) {
         MetadataSchema metadata = new ISO_19115();
         sendXMLToGit(metadata.generateXML(records));
+        System.out.println("Finished Creating XML files");
     }
 
     @Override
@@ -20,9 +21,10 @@ public class Crosswalk implements CrosswalkInterface {
 
         //Make sure local files are up to date
         GeoCombine geoCombine =  new GeoCombine();
-        geoCombine.call();
+        //geoCombine.call();
 
-        JGit jgit = new JGit();
+        //TODO uncomment once I've got JGit working
+        /*JGit jgit = new JGit();
         jgit.updateXML(docs);
 
         for(XMLDocObject doc:docs){
@@ -30,7 +32,7 @@ public class Crosswalk implements CrosswalkInterface {
         }
 
         jgit.pushToGit();
-
+        */
 
     }
 }
