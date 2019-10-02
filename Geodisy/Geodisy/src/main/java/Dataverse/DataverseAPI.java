@@ -12,11 +12,13 @@ import BaseFiles.HTTPCaller;
 import Crosswalking.JSONParsing.DataverseParser;
 import Crosswalking.XML.XMLTools.JGit;
 import GeoServer.GeoServerAPI;
+import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -41,17 +43,34 @@ public class DataverseAPI extends SourceAPI {
     }
 
     @Override
-    public LinkedList<SourceJavaObject> harvest(ExistingSearches es) {
+    public LinkedList<SourceJavaObject> harvest() {
+        ExistingSearches es = ExistingSearches.getExistingSearches();
         HashSet<String> dois = searchDV();
         LinkedList<JSONObject> jsons = downloadMetadata(dois);
         LinkedList<SourceJavaObject> answers =  new LinkedList<>();
-        HashMap<String, DataverseRecordInfo> deletedRecords = es.recordVersions;
+        HashMap<String, DataverseRecordInfo> recordsThatNoLongerExist = es.getRecordVersions();
         DataverseParser parser = new DataverseParser();
         System.out.println("This is using the " + dvName + " dataverse for getting files, should it be changed to something else?");
         for(JSONObject jo:jsons){
+            String doi ="";
+            try {
+                doi = jo.getString("authority") + "/" + jo.getString("identifier");
+                if(es.hasRecord(doi)) {
+                    JSONObject joInfo = jo.getJSONObject("datasetVersion");
+                    int version = joInfo.getInt("versionNumber") * 1000 + joInfo.getInt("versionMinorNumber");
+                    if (es.getRecordInfo(doi).getVersion() == version) {
+                        recordsThatNoLongerExist.remove(doi);
+                        continue;
+                    }
+                }
+            }catch (JSONException j){
+                logger.error("Tried to get a record but I got a blank JSONObject");
+                continue;
+            }
             DataverseJavaObject djo = parser.parse(jo,dvName);
+            doi = djo.getDOI();
             if(djo.hasContent&& es.hasRecord(djo.getDOI()))
-                deletedRecords.remove(djo.getDOI());
+                recordsThatNoLongerExist.remove(djo.getDOI());
             if(djo.hasContent()&& hasNewInfo(djo, es)) {
                 djo.downloadFiles();
                 if(!djo.hasBoundingBox())
@@ -59,7 +78,7 @@ public class DataverseAPI extends SourceAPI {
                 if(djo.hasBoundingBox())
                     answers.add(djo);
                 else{
-                    String doi = djo.getDOI();
+                    es.addOrReplaceRecord(new DataverseRecordInfo(djo,logger.getName()));
                     File folderToDelete = new File(folderizedDOI(doi));
                     deleteFolder(folderToDelete);
                 }
@@ -68,27 +87,51 @@ public class DataverseAPI extends SourceAPI {
         }
         if(answers.size()>0)
             System.out.println("Updated or added " + answers.size() + " records.");
-        removeDeletedRecords(deletedRecords,es);
+        removeDeletedRecords(recordsThatNoLongerExist,es);
+        for(SourceJavaObject djo: answers){
+            DataverseRecordInfo dri = new DataverseRecordInfo(djo,logger.getName());
+            es.addOrReplaceRecord(dri);
+            es.addBBox(djo.getDOI(),djo.getBoundingBox());
+        }
         return answers;
+    }
+
+    @Override
+    protected void deleteMetadata(String doi) {
+
+        try {
+            FileUtils.deleteDirectory(new File(folderizedDOI(doi)));
+        } catch (IOException e) {
+            logger.error("Tried to delete records at " + doi);
+        }
+    }
+    //TODO figure out how to delete files from Geoserver
+    @Override
+    protected void deleteFromGeoserver(String dio) {
+
     }
 
     /**
      * Deletes an existing record if that record is later deleted from Dataverse
-     * @param deletedRecords
+     * @param recordsToDelete
      * @param es
      */
-    private void removeDeletedRecords(HashMap<String, DataverseRecordInfo> deletedRecords, ExistingSearches es) {
-        Set<String> keySet = deletedRecords.keySet();
-        for(String key:keySet){
-            String doi = deletedRecords.get(key).getDoi();
+    private void removeDeletedRecords(HashMap<String, DataverseRecordInfo> recordsToDelete, ExistingSearches es) {
+        Set<String> keySet = recordsToDelete.keySet();
+        Object[] keys = keySet.toArray();
+        for(Object key:keys){
+            String doi = (String) key;
             deleteFolder(new File(folderizedDOI(doi)));
-            es.deleteRecord(doi);
+            deleteFromGeoserver(doi);
+            deleteMetadata(doi);
             //TODO delete dataset and metadata from Geoserver
         }
         GeoServerAPI geoserver = new GeoServerAPI();
-        JGit git = new JGit();
-        git.deleteXMLFiles(keySet);
+        //TODO uncomment once I've got JGIT working
+        //JGit git = new JGit();
+        //git.deleteXMLFiles(keySet);
     }
+
 
     private void deleteFolder(File folder) {
         File[] files = folder.listFiles();

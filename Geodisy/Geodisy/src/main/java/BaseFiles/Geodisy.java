@@ -39,7 +39,7 @@ public class Geodisy {
         SourceAPI dVAPI;
         for (String s : dvs) {
             dVAPI = new DataverseAPI(s);
-            records = dVAPI.harvest(es);
+            records = dVAPI.harvest();
         }
         return records;
     }

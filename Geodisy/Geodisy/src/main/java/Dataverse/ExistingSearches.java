@@ -1,18 +1,26 @@
 package Dataverse;
 
+import BaseFiles.FileWriter;
+import BaseFiles.GeoLogger;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 
+import java.io.EOFException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
+
+import static BaseFiles.GeodisyStrings.EXISTING_BBOXES;
+import static BaseFiles.GeodisyStrings.EXISTING_RECORDS;
 
 /**
  * Class that holds bounding boxes that have already been found and what versions of records have already been downloaded.
  */
 public class ExistingSearches implements Serializable {
     private static final long serialVersionUID = 8947943825774008362L;
-    static HashMap<String, BoundingBox> bBoxes;
-    HashMap<String, DataverseRecordInfo> recordVersions;
+    private static HashMap<String, BoundingBox> bBoxes;
+    private static HashMap<String, DataverseRecordInfo> recordVersions;
     private static ExistingSearches single_instance = null;
+    static GeoLogger logger;
 
 
     public static ExistingSearches getExistingSearches() {
@@ -24,6 +32,7 @@ public class ExistingSearches implements Serializable {
     }
 
     private ExistingSearches(){
+        logger = new GeoLogger(this.getClass());
         bBoxes = new HashMap<>();
         recordVersions = new HashMap<>();
     }
@@ -76,9 +85,57 @@ public class ExistingSearches implements Serializable {
     }
 
     public void deleteRecord(String doi){
-        bBoxes.remove(doi);
-        recordVersions.remove(doi);
+        if(bBoxes.containsKey(doi))
+            bBoxes.remove(doi);
+        if(recordVersions.containsKey(doi))
+            recordVersions.remove(doi);
     }
 
+    public void saveExistingSearchs(){
+        FileWriter fw  = new FileWriter();
+        try {
+            fw.writeObjectToFile(recordVersions,EXISTING_RECORDS);
+        } catch (IOException e) {
+            logger.error("Something went wrong saving existing searches");
+        }
+        try {
+            fw.writeObjectToFile(bBoxes,EXISTING_BBOXES);
+        } catch (IOException e) {
+            logger.error("Something went wrong saving existing bboxes");
+        }
+    }
 
+    public static ExistingSearches readExistingSearches(){
+        ExistingSearches es = ExistingSearches.getExistingSearches();
+        FileWriter fw = new FileWriter();
+        try {
+            es.recordVersions = (HashMap<String, DataverseRecordInfo>) fw.readSavedObject(EXISTING_RECORDS);
+        } catch (IOException e) {
+            logger.error("Something went wrong reading the Existing Searches file");
+            return es;
+        } catch (ClassNotFoundException e) {
+            logger.error("Something went wrong parsing the Existing Searches file");
+            return es;
+        }
+        try {
+            bBoxes = (HashMap<String, BoundingBox>) fw.readSavedObject(EXISTING_BBOXES);
+        } catch (IOException e) {
+            logger.error("Something went wrong reading the Existing bBoxes file");
+            recordVersions = new HashMap<>();
+            return es;
+        } catch (ClassNotFoundException e) {
+            logger.error("Something went wrong parsing the Existing BBoxes file");
+            recordVersions = new HashMap<>();
+            return es;
+        }
+        return es;
+    }
+
+    public HashMap<String, BoundingBox> getbBoxes() {
+        return bBoxes;
+    }
+
+    public  HashMap<String, DataverseRecordInfo> getRecordVersions() {
+        return recordVersions;
+    }
 }

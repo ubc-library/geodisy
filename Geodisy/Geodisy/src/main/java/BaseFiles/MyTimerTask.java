@@ -3,6 +3,7 @@ package BaseFiles;
 import Crosswalking.Crosswalk;
 import Dataverse.DataverseRecordInfo;
 import Dataverse.ExistingSearches;
+import Dataverse.FindingBoundingBoxes.Countries;
 import Dataverse.SourceJavaObject;
 
 import java.io.*;
@@ -33,6 +34,7 @@ public class MyTimerTask extends TimerTask {
        String startErrorLog;
        String endErrorLog;
        long startTime = Calendar.getInstance().getTimeInMillis();
+        Countries.getCountry();
         try {
             startRecsToCheck = new String(Files.readAllBytes(Paths.get(RECORDS_TO_CHECK)));
             startErrorLog = new String(Files.readAllBytes(Paths.get(ERROR_LOG)));
@@ -40,24 +42,24 @@ public class MyTimerTask extends TimerTask {
             Geodisy geo = new Geodisy();
             FileWriter fW = new FileWriter();
 
-            ExistingSearches existingSearches = fW.readExistingSearches(EXISTING_RECORDS);
+            ExistingSearches existingSearches = ExistingSearches.readExistingSearches();
             List<SourceJavaObject> sJOs = geo.harvestDataverse(existingSearches);
             for(SourceJavaObject sJO : sJOs) {
                 existingSearches.addOrReplaceRecord(new DataverseRecordInfo(sJO, logger.getName()));
             }
 
-            crosswalkSJOstoXML(sJOs);
+            crosswalkSJOsToXML(sJOs);
 
             endRecsToCheck = trimErrors();
             endErrorLog = trimInfo();
             if(!startRecsToCheck.equals(endRecsToCheck)) {
                 emailCheckRecords();
-                fW.writeObjectToFile(endRecsToCheck,RECORDS_TO_CHECK);
+                fW.writeStringToFile(endRecsToCheck,RECORDS_TO_CHECK);
             }
             if(!startErrorLog.equals(endErrorLog)){
-                fW.writeObjectToFile(endErrorLog,ERROR_LOG);
+                fW.writeStringToFile(endErrorLog,ERROR_LOG);
             }
-            fW.writeObjectToFile(existingSearches, EXISTING_RECORDS);
+            existingSearches.saveExistingSearchs();
 
         } catch (IOException  e) {
             logger.error("Something went wrong trying to read permanent file ExistingRecords.txt!");
@@ -72,7 +74,7 @@ public class MyTimerTask extends TimerTask {
      * Create ISO XML files and run Geocombine on them to push them to GeoBlacklight
      * @param sJOs
      */
-    private void crosswalkSJOstoXML(List<SourceJavaObject> sJOs) {
+    private void crosswalkSJOsToXML(List<SourceJavaObject> sJOs) {
         Crosswalk crosswalk = new Crosswalk();
         crosswalk.convertSJOs(sJOs);
     }

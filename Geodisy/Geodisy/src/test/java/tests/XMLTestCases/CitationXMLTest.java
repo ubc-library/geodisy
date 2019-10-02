@@ -1,5 +1,8 @@
 package tests.XMLTestCases;
 
+import Crosswalking.GeoBlacklightJson.DataGBJSON;
+import Crosswalking.GeoBlacklightJson.GeoBlacklightJSON;
+import Crosswalking.ISO_19115;
 import Crosswalking.JSONParsing.DataverseParser;
 import Crosswalking.XML.XMLTools.XMLDocObject;
 import Crosswalking.XML.XMLTools.ISOXMLGen;
@@ -69,5 +72,20 @@ DataverseJavaObject djo;
     public void testXMLValidation(){
         XMLValidator xmlValidator = new XMLValidator();
         assertTrue(xmlValidator.validateXML(XML_TEST_FILE));
+    }
+
+    @Test
+    public void testXMLSave(){
+        ISOXMLGen xmlGenerator = new ISOXMLGen(djo);
+        XMLDocObject xmlFile = xmlGenerator.generateXMLFile();
+        ISO_19115 iso = new ISO_19115();
+        iso.saveXMLToFile(xmlFile.getDoc(), xmlFile.getDoi());
+    }
+
+    @Test
+    public void testJSONSave(){
+        DataGBJSON dataGBJSON = new DataGBJSON(djo);
+        ISO_19115 iso = new ISO_19115();
+        iso.saveJSONToTestFile(dataGBJSON.createJson(),dataGBJSON.getDoi());
     }
 }
