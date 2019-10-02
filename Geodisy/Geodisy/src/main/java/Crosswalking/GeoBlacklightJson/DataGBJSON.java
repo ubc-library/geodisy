@@ -14,11 +14,12 @@ import static BaseFiles.GeodisyStrings.XML_NS;
 import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.EXTERNAL_SERVICES;
 import static Dataverse.DVFieldNameStrings.*;
 
-public class DataverseGBJ extends GeoBlacklightJSON{
-    public DataverseGBJ(DataverseJavaObject djo) {
+public class DataGBJSON extends GeoBlacklightJSON{
+    public DataGBJSON(DataverseJavaObject djo) {
         super();
         javaObject = djo;
         geoBlacklightJson = "";
+        doi = djo.getDOI();
     }
 
     @Override
@@ -41,7 +42,7 @@ public class DataverseGBJ extends GeoBlacklightJSON{
 
     @Override
     protected void addMetadataDownloadOptions() {
-        JSONArray ja = jo.getJSONArray(EXTERNAL_SERVICES);
+        JSONArray ja = new JSONArray();
         ja.put(XML_NS + "mdb/2.0"); //ISO 19139
         ja.put("http://www.opengis.net/cat/csw/csdgm/");
         ja.put("http://www.loc.gov/mods/v3");

@@ -5,6 +5,7 @@
  */
 package Crosswalking;
 
+import Crosswalking.GeoBlacklightJson.DataGBJSON;
 import Crosswalking.XML.XMLTools.XMLDocObject;
 import Crosswalking.XML.XMLTools.ISOXMLGen;
 import Dataverse.DataverseJavaObject;
@@ -25,7 +26,11 @@ public class ISO_19115 extends ISO_Schema {
         for(SourceJavaObject sjo : sJOs) {
             DataverseJavaObject djo = (DataverseJavaObject) sjo;
             ISOXMLGen xmlGenerator = new ISOXMLGen(djo);
-            documents.add(xmlGenerator.generateXMLFile());
+            XMLDocObject xmlDocObject = xmlGenerator.generateXMLFile();
+            saveXMLToFile(xmlDocObject.getDoc(),xmlDocObject.getDoi());
+            documents.add(xmlDocObject);
+            DataGBJSON dataGBJSON = new DataGBJSON(djo);
+            saveJSONToFile(dataGBJSON.createJson(),dataGBJSON.getDoi());
         }
         return documents;
 
