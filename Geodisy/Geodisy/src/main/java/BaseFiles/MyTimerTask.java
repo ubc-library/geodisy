@@ -43,7 +43,7 @@ public class MyTimerTask extends TimerTask {
             FileWriter fW = new FileWriter();
 
             ExistingSearches existingSearches = ExistingSearches.readExistingSearches();
-            List<SourceJavaObject> sJOs = geo.harvestDataverse(existingSearches);
+            List<SourceJavaObject> sJOs = geo.harvestDataverse();
             for(SourceJavaObject sJO : sJOs) {
                 existingSearches.addOrReplaceRecord(new DataverseRecordInfo(sJO, logger.getName()));
             }

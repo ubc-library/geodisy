@@ -19,10 +19,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
+import java.util.*;
 
 import static Dataverse.DVFieldNameStrings.BASE_DV_URL;
 
@@ -48,7 +45,11 @@ public class DataverseAPI extends SourceAPI {
         HashSet<String> dois = searchDV();
         LinkedList<JSONObject> jsons = downloadMetadata(dois);
         LinkedList<SourceJavaObject> answers =  new LinkedList<>();
-        HashMap<String, DataverseRecordInfo> recordsThatNoLongerExist = es.getRecordVersions();
+        HashMap<String, DataverseRecordInfo> recordsThatNoLongerExist = new HashMap<>();
+        HashMap<String, DataverseRecordInfo> recs = es.getRecordVersions();
+        for(String key: recs.keySet()){
+            recordsThatNoLongerExist.put(key, recs.get(key));
+        }
         DataverseParser parser = new DataverseParser();
         System.out.println("This is using the " + dvName + " dataverse for getting files, should it be changed to something else?");
         for(JSONObject jo:jsons){
@@ -78,16 +79,16 @@ public class DataverseAPI extends SourceAPI {
                 if(djo.hasBoundingBox())
                     answers.add(djo);
                 else{
-                    es.addOrReplaceRecord(new DataverseRecordInfo(djo,logger.getName()));
                     File folderToDelete = new File(folderizedDOI(doi));
                     deleteFolder(folderToDelete);
                 }
+                es.addOrReplaceRecord(new DataverseRecordInfo(djo,logger.getName()));
             }
 
         }
         if(answers.size()>0)
             System.out.println("Updated or added " + answers.size() + " records.");
-        removeDeletedRecords(recordsThatNoLongerExist,es);
+        removeDeletedRecords(recordsThatNoLongerExist);
         for(SourceJavaObject djo: answers){
             DataverseRecordInfo dri = new DataverseRecordInfo(djo,logger.getName());
             es.addOrReplaceRecord(dri);
@@ -114,14 +115,14 @@ public class DataverseAPI extends SourceAPI {
     /**
      * Deletes an existing record if that record is later deleted from Dataverse
      * @param recordsToDelete
-     * @param es
      */
-    private void removeDeletedRecords(HashMap<String, DataverseRecordInfo> recordsToDelete, ExistingSearches es) {
+    private void removeDeletedRecords(HashMap<String, DataverseRecordInfo> recordsToDelete) {
         Set<String> keySet = recordsToDelete.keySet();
         Object[] keys = keySet.toArray();
         for(Object key:keys){
             String doi = (String) key;
-            deleteFolder(new File(folderizedDOI(doi)));
+            String folderizedDOI = folderizedDOI(doi);
+            deleteFolder(new File(folderizedDOI));
             deleteFromGeoserver(doi);
             deleteMetadata(doi);
             //TODO delete dataset and metadata from Geoserver
