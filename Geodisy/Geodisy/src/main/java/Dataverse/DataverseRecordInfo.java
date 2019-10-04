@@ -43,7 +43,7 @@ public class DataverseRecordInfo implements Serializable {
         return this.getVersion()==((DataverseRecordInfo) obj).getVersion();
     }
 
-    public boolean younger(Object obj) {
+    public boolean newer(Object obj) {
         if (obj == null) return true;
         DataverseRecordInfo dRI = (DataverseRecordInfo) obj;
         if(dRI.getDoi()==null)
@@ -61,7 +61,8 @@ public class DataverseRecordInfo implements Serializable {
     public int getMinor() {
         return minor;
     }
-    public int getVersion(){return version; }
+    public int getVersion(){
+        return major*1000 + minor; }
 
     public String getDoi() {
         return doi;

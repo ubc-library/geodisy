@@ -10,7 +10,6 @@ package Dataverse;
 import BaseFiles.GeoLogger;
 import BaseFiles.HTTPCaller;
 import Crosswalking.JSONParsing.DataverseParser;
-import Crosswalking.XML.XMLTools.JGit;
 import GeoServer.GeoServerAPI;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
@@ -70,7 +69,7 @@ public class DataverseAPI extends SourceAPI {
             }
             DataverseJavaObject djo = parser.parse(jo,dvName);
             doi = djo.getDOI();
-            if(djo.hasContent&& es.hasRecord(djo.getDOI()))
+            if(djo.hasContent && es.hasRecord(djo.getDOI()))
                 recordsThatNoLongerExist.remove(djo.getDOI());
             if(djo.hasContent()&& hasNewInfo(djo, es)) {
                 djo.downloadFiles();
@@ -156,7 +155,7 @@ public class DataverseAPI extends SourceAPI {
 
     private boolean hasNewInfo(DataverseJavaObject djo, ExistingSearches es) {
         DataverseRecordInfo dri = new DataverseRecordInfo(djo, logger.getName());
-        return dri.younger(es.getRecordInfo(djo.getDOI()));
+        return dri.newer(es.getRecordInfo(djo.getDOI()));
     }
 
     private HashSet<String> getRecords(String searchURL) {

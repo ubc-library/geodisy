@@ -2,7 +2,6 @@ package Dataverse.FindingBoundingBoxes;
 
 import BaseFiles.GeoLogger;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
 
@@ -19,10 +18,11 @@ public class GeonamesJSON {
             if (geonameString.contains("<totalResultsCount>0</totalResultsCount>"))
                 jo = new JSONObject();
             else {
-                JSONArray geonameJSON = new JSONArray(geonameString);
-                this.jo = (JSONObject) geonameJSON.get(0);
+                jo = (JSONObject) XML.toJSONObject(geonameString).get("geonames");
+                jo = (JSONObject)jo.get("geoname");
             }
         }else{
+            logger.warn("Not sure why there wasn't a totalResultsCount in the geonames XML string. See " + geonameString);
             jo = XML.toJSONObject(geonameString);
             if(jo.has("country"))
                 jo = jo.getJSONObject("country");
@@ -45,11 +45,22 @@ public class GeonamesJSON {
         BoundingBox bb =  new BoundingBox();
         if(!jo.has("south"))
             return bb;
+        bb.setLongWest(getDoubleLatLongVal(jo,"west"));
+        bb.setLatNorth(getDoubleLatLongVal(jo,"north"));
+        bb.setLongEast(getDoubleLatLongVal(jo,"east"));
+        bb.setLatSouth(getDoubleLatLongVal(jo,"south"));
+        return bb;
+    }
 
-        bb.setLongWest(getDoubleVal("west"));
-        bb.setLatNorth(getDoubleVal("north"));
-        bb.setLongEast(getDoubleVal("east"));
-        bb.setLatSouth(getDoubleVal("south"));
+    public BoundingBox parseGeonamesBoundingBox(){
+        BoundingBox bb =  new BoundingBox();
+        if(!jo.has("bbox"))
+            return bb;
+        JSONObject bbox = (JSONObject) jo.get("bbox");
+        bb.setLongWest(getDoubleLatLongVal(bbox,"west"));
+        bb.setLatNorth(getDoubleLatLongVal(bbox,"north"));
+        bb.setLongEast(getDoubleLatLongVal(bbox,"east"));
+        bb.setLatSouth(getDoubleLatLongVal(bbox,"south"));
         return bb;
     }
 
@@ -69,7 +80,7 @@ public class GeonamesJSON {
         return jo.has(label)? jo.getString(label):"";
     }
 
-    private double getDoubleVal(String label){
-        return jo.has(label)? jo.getDouble(label):-361;
+    private double getDoubleLatLongVal(JSONObject ob, String label){
+        return ob.has(label)? ob.getDouble(label):361;
     }
 }

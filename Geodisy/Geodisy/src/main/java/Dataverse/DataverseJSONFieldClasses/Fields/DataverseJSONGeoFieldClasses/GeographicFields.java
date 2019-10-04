@@ -49,7 +49,11 @@ public class GeographicFields extends MetadataType {
             case GEOGRAPHIC_COVERAGE:
                 for(Object o: (JSONArray) field.get("value")) {
                     JSONObject jo = (JSONObject) o;
-                    geoCovers.add(addGeoCover(jo));
+                    GeographicCoverage geographicCoverage = addGeoCover(jo);
+                    geoCovers.add(geographicCoverage);
+                    BoundingBox bb = geographicCoverage.getBoundingBox();
+                    if(bb.hasBoundingBox())
+                        geoBBoxes.add(new GeographicBoundingBox(doi,geographicCoverage.getBoundingBox()));
                 }
                 break;
             case GEOGRAPHIC_UNIT:
@@ -218,7 +222,7 @@ public class GeographicFields extends MetadataType {
     }
 
     public boolean hasBB(){
-        return fullBB.getLongWest() != 361;
+        return fullBB.hasBoundingBox();
     }
 
 

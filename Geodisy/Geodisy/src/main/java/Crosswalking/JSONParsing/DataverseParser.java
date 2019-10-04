@@ -6,8 +6,6 @@ import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordInfo;
 import Dataverse.ExistingSearches;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +37,7 @@ public class DataverseParser implements JSONParser {
             dJO.parseCitationFields(current);
             ExistingSearches es = ExistingSearches.getExistingSearches();
             DataverseRecordInfo dRI = dJO.generateDRI();
-            if(!dRI.younger(es.getRecordInfo(dRI.getDoi())))
+            if(!dRI.newer(es.getRecordInfo(dRI.getDoi())))
                 return new DataverseJavaObject("");
             JSONObject metadata;
             metadata = dJO.getVersionSection(current).getJSONObject("metadataBlocks");

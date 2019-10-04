@@ -2,6 +2,7 @@ package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.FindingBoundingBoxes.Countries;
+import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.City;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Province;
@@ -137,5 +138,19 @@ public class GeographicCoverage extends CompoundJSONField {
                 errorParsing(this.getClass().getName(), fieldName);
                 return Arrays.asList("Bad FieldName");
         }
+    }
+
+    public BoundingBox getBoundingBox(){
+        if(this.cityObject!=null){
+            if(cityObject.hasBoundingBox())
+                return cityObject.getBoundingBox();
+        }else if(provinceObject!=null){
+            if(provinceObject.hasBoundingBox())
+                return provinceObject.getBoundingBox();
+        }else if(countryObject.hasBoundingBox()) {
+            return countryObject.getBoundingBox();
+        }
+
+        return new BoundingBox();
     }
 }

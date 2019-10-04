@@ -42,12 +42,12 @@ public class ExistingCallsToCheck implements Serializable{
     }
 
     public boolean isNewerRecord(DataverseRecordInfo dataverseRecordInfo){
-        return dataverseRecordInfo.younger(records.get(dataverseRecordInfo.getDoi()));
+        return dataverseRecordInfo.newer(records.get(dataverseRecordInfo.getDoi()));
     }
 
     public boolean isNewerRecord(DataverseRecordInfo dataverseRecordInfo, String loggerName){
         DataverseRecordInfo driSaved = records.get(dataverseRecordInfo.getDoi());
-        return dataverseRecordInfo.younger(driSaved) && loggerName.equals(driSaved.getLoggerName());
+        return dataverseRecordInfo.newer(driSaved) && loggerName.equals(driSaved.getLoggerName());
     }
 
 

@@ -28,7 +28,7 @@ public class Location implements GeographicPoliticalUnit {
         this.geonamesJSON = geonamesJSON;
         this.givenName = givenName;
         this.commonName = this.geonamesJSON.getCommonName();
-        boundingBox = geonamesJSON.getBoundingBox();
+        boundingBox = geonamesJSON.parseGeonamesBoundingBox();
         altNames = geonamesJSON.getAltNames();
 
     }
@@ -121,6 +121,10 @@ public class Location implements GeographicPoliticalUnit {
 
     public BoundingBox getBoundingBox() {
         return boundingBox;
+    }
+
+    public boolean hasBoundingBox(){
+        return boundingBox.hasBoundingBox();
     }
 
     public void setBoundingBox(BoundingBox boundingBox) {

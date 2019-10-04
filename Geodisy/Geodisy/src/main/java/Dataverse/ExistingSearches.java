@@ -4,7 +4,6 @@ import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -66,7 +65,7 @@ public class ExistingSearches implements Serializable {
     }
 
     public boolean isNewerRecord(DataverseRecordInfo dataverseRecordInfo){
-        return dataverseRecordInfo.younger(recordVersions.get(dataverseRecordInfo.getDoi()));
+        return dataverseRecordInfo.newer(recordVersions.get(dataverseRecordInfo.getDoi()));
     }
 
 
