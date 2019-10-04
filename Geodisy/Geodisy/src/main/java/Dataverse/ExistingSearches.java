@@ -120,11 +120,9 @@ public class ExistingSearches implements Serializable {
             bBoxes = (HashMap<String, BoundingBox>) fw.readSavedObject(EXISTING_BBOXES);
         } catch (IOException e) {
             logger.error("Something went wrong reading the Existing bBoxes file");
-            recordVersions = new HashMap<>();
             return es;
         } catch (ClassNotFoundException e) {
             logger.error("Something went wrong parsing the Existing BBoxes file");
-            recordVersions = new HashMap<>();
             return es;
         }
         return es;

@@ -44,7 +44,7 @@ public class GeographicFields extends MetadataType {
                     JSONObject jo = (JSONObject) o;
                     geoBBoxes.add(parseGeoBBox(jo));
                 }
-                setBoundingBox();
+                setFullBoundingBox();
                 break;
             case GEOGRAPHIC_COVERAGE:
                 for(Object o: (JSONArray) field.get("value")) {
@@ -101,7 +101,7 @@ public class GeographicFields extends MetadataType {
 
     public void setGeoBBoxes(List<GeographicBoundingBox> geoBBoxes) {
         this.geoBBoxes = geoBBoxes;
-        setBoundingBox();
+        setFullBoundingBox();
     }
 
     public void setGeoUnits(List<GeographicUnit> geoUnits) {
@@ -152,7 +152,7 @@ public class GeographicFields extends MetadataType {
      * two bounding boxes, I can then calculate if I should merge them across the meridian or the other direction when
      * creating a final single bounding box to encompass all the smaller bounding boxes.
      */
-    public void setBoundingBox(){
+    public void setFullBoundingBox(){
         double north = -181;
         double south = 181;
         double east = -181;
@@ -222,6 +222,7 @@ public class GeographicFields extends MetadataType {
     }
 
     public boolean hasBB(){
+        setFullBoundingBox();
         return fullBB.hasBoundingBox();
     }
 
@@ -237,7 +238,7 @@ public class GeographicFields extends MetadataType {
         g.setNorthLatitude(String.valueOf(b.getLatNorth()));
         g.setSouthLatitude(String.valueOf(b.getLatSouth()));
         geoBBoxes.add(g);
-        setBoundingBox();
+        setFullBoundingBox();
     }
 
     public void addBB(List<GeographicBoundingBox> bboxes, GeographicBoundingBox gBB) {
