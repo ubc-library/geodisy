@@ -13,6 +13,7 @@ public abstract class GeoBlacklightJSON implements JSONCreator {
     protected SourceJavaObject javaObject;
     protected String geoBlacklightJson;
     protected JSONObject jo;
+    protected String doi;
     boolean wms = false;
     boolean wfs = false;
     boolean download = false;
@@ -25,6 +26,7 @@ public abstract class GeoBlacklightJSON implements JSONCreator {
     public String createJson() {
         getRequiredFields();
         getOptionalFields();
+        geoBlacklightJson = jo.toString();
         return geoBlacklightJson;
     }
 
@@ -75,7 +77,9 @@ public abstract class GeoBlacklightJSON implements JSONCreator {
             download = true;
         }
     }
-
+    public String getDoi(){
+        return doi;
+    }
     protected abstract void addWebService();
     protected abstract JSONObject getRequiredFields();
     protected abstract JSONObject getOptionalFields();

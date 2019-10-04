@@ -15,7 +15,6 @@ public class ReadWriteToFileTest {
         try {
             ExistingSearchesFile eSF = new ExistingSearchesFile();
             ExistingSearches es = eSF.readExistingSearches();
-            int i = 1;//
         } catch (IOException e) {
             e.printStackTrace();
         }

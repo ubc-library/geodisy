@@ -1,7 +1,8 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 
-import BaseFiles.Geonames;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
+import Dataverse.FindingBoundingBoxes.Countries;
+import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.City;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Province;
@@ -18,7 +19,7 @@ public class GeographicCoverage extends CompoundJSONField {
     private Country countryObject;
     private Province provinceObject;
     private City cityObject;
-    Geonames geo = new Geonames();
+
 
     public GeographicCoverage(String doi) {
         this.doi = doi;
@@ -29,7 +30,7 @@ public class GeographicCoverage extends CompoundJSONField {
         this.altCountry = "";
         this.altProvince = "";
         this.altCity = "";
-        this.countryObject = new Country("");
+        this.countryObject = new Country();
 
     }
 
@@ -59,7 +60,7 @@ public class GeographicCoverage extends CompoundJSONField {
 
     public void setCountry(String country) {
         this.country = country;
-        countryObject = new Country(country);
+        countryObject = Countries.getCountry().getCountryByName(country);
         altCountry = countryObject.getGivenName();
     }
 
@@ -137,5 +138,19 @@ public class GeographicCoverage extends CompoundJSONField {
                 errorParsing(this.getClass().getName(), fieldName);
                 return Arrays.asList("Bad FieldName");
         }
+    }
+
+    public BoundingBox getBoundingBox(){
+        if(this.cityObject!=null){
+            if(cityObject.hasBoundingBox())
+                return cityObject.getBoundingBox();
+        }else if(provinceObject!=null){
+            if(provinceObject.hasBoundingBox())
+                return provinceObject.getBoundingBox();
+        }else if(countryObject.hasBoundingBox()) {
+            return countryObject.getBoundingBox();
+        }
+
+        return new BoundingBox();
     }
 }

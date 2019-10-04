@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.*;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -39,14 +40,16 @@ public class HTTPCaller {
         }
         return null;
     }
-
+    //TODO something is going wrong here
     private URL getURLSafeString() throws MalformedURLException, URISyntaxException, UnsupportedEncodingException {
-        int location = searchUrl.indexOf("?q=") + 3;
-        String search = URLEncoder.encode(searchUrl.substring(location),"UTF-8");
-        String urlString = searchUrl.substring(0,location);
+        int location = searchUrl.indexOf("?q=")!=-1? searchUrl.indexOf("?q=")+ 3 : searchUrl.indexOf("?exporter=") + 10; //call list of dois or call for metadata records
+        String search = URLEncoder.encode(searchUrl.substring(location), StandardCharsets.UTF_8.toString());
+        String urlString = searchUrl.substring(0, location);
         urlString = urlString + search;
-        urlString = urlString.replaceAll("%26","&");
+        urlString = urlString.replaceAll("%26", "&");
         urlString = urlString.replaceAll("%3D", "=");
+        if(urlString.contains("doi%3"))
+            urlString = urlString.replaceAll("%2F","/");
         URL url = new URL(urlString);
         return url;
     }

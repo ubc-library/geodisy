@@ -33,17 +33,27 @@ public class JGit {
     private Git git;
     private Repository xmlRepo;
     private GeoLogger logger;
+    private String localRepoLocation;
 
     public JGit() {
-        logger = new GeoLogger(this.getClass());
         //Make the directory if it doesn't already exist
-        File directory = new File(OPEN_METADATA_LOCAL_REPO);
+        localRepoLocation = OPEN_METADATA_LOCAL_REPO;
+        secondaryPartOfConstructor();
+    }
+
+    public JGit(String localRepoLocation){
+        this.localRepoLocation = localRepoLocation;
+        secondaryPartOfConstructor();
+    }
+    private void secondaryPartOfConstructor(){
+        logger = new GeoLogger(this.getClass());
+        File directory = new File(localRepoLocation);
         if (! directory.exists()) {
             directory.mkdir();
         }
 
         try {
-            xmlRepo = new FileRepository(OPEN_METADATA_LOCAL_REPO);
+            xmlRepo = new FileRepository(localRepoLocation);
             git = new Git(xmlRepo);
 
             //add remote repo
@@ -60,7 +70,6 @@ public class JGit {
             logger.error("Something wrong with the URI");
         }
     }
-
     /**
      * Creates new ISO XML files, saves them to the local OpenMetadata repo, commits the changes, and pushes to the remote OpenMetadataRepo
      * @param docs = XML document objects that need to be used to create actual XML files
@@ -133,7 +142,7 @@ public class JGit {
      */
     public void addXMLFileToIndex(String fileName){
         try {
-            DirCache index = git.add().addFilepattern(OPEN_METADATA_LOCAL_REPO + fileName).call();
+            DirCache index = git.add().addFilepattern(localRepoLocation + fileName).call();
         } catch (GitAPIException e) {
             e.printStackTrace();
         }
@@ -146,7 +155,7 @@ public class JGit {
      */
     public String getXMLLocalFilePath(String doiName){
         String current = doiName;
-        String filePath = OPEN_METADATA_LOCAL_REPO;
+        String filePath = localRepoLocation;
         filePath += "doi/";
         checkDir(filePath);
         Queue<String> pathQueue = new LinkedList<>();

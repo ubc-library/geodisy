@@ -2,6 +2,7 @@ package BaseFiles;
 
 
 import Dataverse.ExistingSearches;
+import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -30,6 +31,12 @@ public class FileWriter {
         f.close();
     }
 
+    public void writeStringToFile(String stringToSave, String path) throws IOException{
+        verifyFileExistence(path);
+        File file = new File(path);
+        FileUtils.writeStringToFile(file, stringToSave,"UTF-8");
+    }
+
     /**
      * Reads a local file at the path provided
      * @param path
@@ -37,20 +44,26 @@ public class FileWriter {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public Object readSavedObject(String path) throws IOException, ClassNotFoundException {
+    public Object readSavedObject(String path) throws ClassNotFoundException,IOException {
         if (!verifyFileExistence(path))
             throw new FileNotFoundException();
-        FileInputStream fi =  new FileInputStream(new File(path));
-        ObjectInputStream oi;
-        try{
-            oi =  new ObjectInputStream(fi);
-        } catch (EOFException e){
-            ExistingSearches es = ExistingSearches.getExistingSearches();
-            writeObjectToFile(ExistingSearches.getExistingSearches(),path);
+        FileInputStream fi = null;
+        try {
+            fi = new FileInputStream(new File(path));
+        } catch (FileNotFoundException e) {
             fi.close();
-            return es;
+            throw new FileNotFoundException();
         }
-        Object answer = oi.readObject();
+        ObjectInputStream oi;
+        oi =  new ObjectInputStream(fi);
+        Object answer = null;
+        try {
+            answer = oi.readObject();
+        } catch (ClassNotFoundException e) {
+            oi.close();
+            fi.close();
+            throw new ClassNotFoundException();
+        }
         oi.close();
         fi.close();
         return answer;

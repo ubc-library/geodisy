@@ -47,7 +47,7 @@ public class IdentificationInfo extends SubElement {
     SimpleCitationFields simpleCF;
     GeographicFields geoCF;
     SocialFields socialCF;
-    JournalFields journalCF;
+    //JournalFields journalCF;
     String noteText,  distDate;
     XMLStack stack;
 

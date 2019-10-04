@@ -44,12 +44,16 @@ public class GeographicFields extends MetadataType {
                     JSONObject jo = (JSONObject) o;
                     geoBBoxes.add(parseGeoBBox(jo));
                 }
-                setBoundingBox();
+                setFullBoundingBox();
                 break;
             case GEOGRAPHIC_COVERAGE:
                 for(Object o: (JSONArray) field.get("value")) {
                     JSONObject jo = (JSONObject) o;
-                    geoCovers.add(addGeoCover(jo));
+                    GeographicCoverage geographicCoverage = addGeoCover(jo);
+                    geoCovers.add(geographicCoverage);
+                    BoundingBox bb = geographicCoverage.getBoundingBox();
+                    if(bb.hasBoundingBox())
+                        geoBBoxes.add(new GeographicBoundingBox(doi,geographicCoverage.getBoundingBox()));
                 }
                 break;
             case GEOGRAPHIC_UNIT:
@@ -97,7 +101,7 @@ public class GeographicFields extends MetadataType {
 
     public void setGeoBBoxes(List<GeographicBoundingBox> geoBBoxes) {
         this.geoBBoxes = geoBBoxes;
-        setBoundingBox();
+        setFullBoundingBox();
     }
 
     public void setGeoUnits(List<GeographicUnit> geoUnits) {
@@ -148,7 +152,7 @@ public class GeographicFields extends MetadataType {
      * two bounding boxes, I can then calculate if I should merge them across the meridian or the other direction when
      * creating a final single bounding box to encompass all the smaller bounding boxes.
      */
-    public void setBoundingBox(){
+    public void setFullBoundingBox(){
         double north = -181;
         double south = 181;
         double east = -181;
@@ -195,7 +199,7 @@ public class GeographicFields extends MetadataType {
         BoundingBox box = new BoundingBox();
         west = (west==181) ? altWest : west;
         east = (east==-181)? altEast : east;
-        if(west == 181 || east == -181 || north == -181 || south == 181) {
+        if(west >= 181 || east <= -181 || north <= -181 || south >= 181) {
             logger.info("Something went wrong with the bounding box for record " + doi, djo, logger.getName());
             west = 361;
             east = 361;
@@ -218,7 +222,8 @@ public class GeographicFields extends MetadataType {
     }
 
     public boolean hasBB(){
-        return fullBB.getLongWest() != 361;
+        setFullBoundingBox();
+        return fullBB.hasBoundingBox();
     }
 
 
@@ -233,7 +238,7 @@ public class GeographicFields extends MetadataType {
         g.setNorthLatitude(String.valueOf(b.getLatNorth()));
         g.setSouthLatitude(String.valueOf(b.getLatSouth()));
         geoBBoxes.add(g);
-        setBoundingBox();
+        setFullBoundingBox();
     }
 
     public void addBB(List<GeographicBoundingBox> bboxes, GeographicBoundingBox gBB) {

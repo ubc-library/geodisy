@@ -32,14 +32,14 @@ public class Geodisy {
      * Front side of middleware, this part harvests data from Dataverse
      */
 
-    public List<SourceJavaObject> harvestDataverse(ExistingSearches es) {
+    public List<SourceJavaObject> harvestDataverse() {
         Dataverse dv = new Dataverse();
         String[] dvs = dv.getDataLocationURLs();
         LinkedList<SourceJavaObject> records = new LinkedList<>();
         SourceAPI dVAPI;
         for (String s : dvs) {
             dVAPI = new DataverseAPI(s);
-            records = dVAPI.harvest(es);
+            records = dVAPI.harvest();
         }
         return records;
     }

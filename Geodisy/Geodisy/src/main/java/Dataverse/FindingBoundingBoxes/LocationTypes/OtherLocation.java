@@ -1,11 +1,14 @@
 package Dataverse.FindingBoundingBoxes.LocationTypes;
 
+import BaseFiles.Geonames;
 import Dataverse.FindingBoundingBoxes.Location;
-
+/**
+ * Shouldn't worry too much about OtherLocation as this needs to be manually checked anyways
+ *
 public class OtherLocation extends Location {
     private City city;
     public OtherLocation(String name) {
-        super(name);
+        super(name, new Geonames());
         city = new City(NO_NAME,NO_NAME);
     }
 
@@ -60,3 +63,4 @@ public class OtherLocation extends Location {
             return answer;
     }
 }
+*/

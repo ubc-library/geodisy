@@ -25,7 +25,9 @@ public class BoundingBox implements Serializable {
             return 361;
         return longitude;
     }
-
+    public boolean hasBoundingBox(){
+        return latSouth!=361 && latNorth!=361 && longEast!=361 && longWest!=361;
+    }
     public boolean hasUTMCoords(){
         return latSouth <-90 || latNorth > 361 || Math.abs(longEast) > 361 || Math.abs(longWest) > 361;
     }

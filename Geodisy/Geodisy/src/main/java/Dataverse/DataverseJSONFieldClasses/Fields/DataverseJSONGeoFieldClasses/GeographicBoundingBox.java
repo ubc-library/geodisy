@@ -15,6 +15,11 @@ public class GeographicBoundingBox extends CompoundJSONField {
         this.bb = new BoundingBox();
     }
 
+    public GeographicBoundingBox(String doi, BoundingBox bb){
+        this.doi = doi;
+        this.bb = bb;
+    }
+
     public String getWestLongitude() {
         checkCoords(bb);
         return String.valueOf(bb.getLongWest());

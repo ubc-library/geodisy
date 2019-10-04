@@ -4,6 +4,7 @@ public class GeodisyStrings {
 
     //File paths
     public final static String EXISTING_RECORDS = "./savedFiles/ExisitingRecords.txt";
+    public final static String EXISTING_BBOXES = "./savedFiles/ExistingBBoxes.txt";
     public final static String RECORDS_TO_CHECK = "./logs/recordsToCheck.log";
     public final static String EXISTING_CALL_TO_CHECK = "./logs/existingCallToCheck.txt";
     public final static String ERROR_LOG = "./logs/error.log";
@@ -11,6 +12,7 @@ public class GeodisyStrings {
     public final static String COUNTRY_VALS =  "./geodisyFiles/Geoname_countries.xml";
     public final static String ALL_CITATION_METADATA = "./geodisyFiles/AllCitationMetadata.json";
     public final static String XML_TEST_FILE = "./geodisyFiles/XMLTestDJO.xml";
+
 
     //Unused file type extensions
     public final static String[] FILE_TYPES_TO_IGNORE = {".txt",".doc",".csv",".pdf",".jpg", ".docx",".las",".xml"};

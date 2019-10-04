@@ -88,4 +88,8 @@ settings\.zip
 
 Geodisy/Geodisy/xmlTestDJO\.xml
 
+Geodisy/Geodisy/XMLFiles/
+Geodisy/Geodisy/XMLFilesTest/
+Geodisy/Geodisy/savedFiles/
+*.log
 Geodisy/Geodisy/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/

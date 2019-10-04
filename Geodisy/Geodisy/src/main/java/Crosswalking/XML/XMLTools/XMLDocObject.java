@@ -1,11 +1,20 @@
 package Crosswalking.XML.XMLTools;
 
 
+import BaseFiles.GeoLogger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import static Crosswalking.XML.XMLTools.XMLStrings.OPEN_METADATA_LOCAL_REPO;
 
 
 /**
@@ -15,6 +24,7 @@ import javax.xml.parsers.ParserConfigurationException;
 public class XMLDocObject {
     Document doc;
     String doi;
+    GeoLogger logger = new GeoLogger(this.getClass());
 
 
     public XMLDocObject() {
@@ -82,5 +92,6 @@ public class XMLDocObject {
     public String getDoi(){return doi;}
 
     public void setDoi(String doi){this.doi = doi;}
+
 
 }
