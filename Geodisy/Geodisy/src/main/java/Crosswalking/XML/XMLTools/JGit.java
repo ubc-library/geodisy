@@ -5,9 +5,9 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.RemoteAddCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.dircache.DirCache;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.URIish;
 
 
@@ -51,9 +51,12 @@ public class JGit {
         if (! directory.exists()) {
             directory.mkdir();
         }
-
+        FileRepositoryBuilder repositoryBuilder = new FileRepositoryBuilder();
+        repositoryBuilder.addCeilingDirectory(directory);
+        repositoryBuilder.findGitDir( new File(OPEN_METADATA_REMOTE_REPO) );
+        repositoryBuilder.setMustExist(true);
         try {
-            xmlRepo = new FileRepository(localRepoLocation);
+            xmlRepo = repositoryBuilder.build();
             git = new Git(xmlRepo);
 
             //add remote repo

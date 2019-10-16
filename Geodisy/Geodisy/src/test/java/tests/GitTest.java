@@ -1,26 +1,27 @@
 package tests;
 
-import Crosswalking.XML.XMLTools.JGit;
-import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidRemoteException;
-import org.eclipse.jgit.api.errors.TransportException;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryCache;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import org.eclipse.jgit.util.FS;
-import org.junit.Before;
+import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.Date;
+
+import static BaseFiles.PrivateStrings.GIT_PASSWORD;
 
 
 public class GitTest {
 
-    private String TEST_REMOTE_REPO = "https://github.com/pdante-ubc/GeodisyTestGit.git";
-    private String TEST_LOCAL_REPO = "XMLFilesTest/GeodisyTestGit/";
+    private static String TEST_REMOTE_REPO = "https://github.com/pdante-ubc/GeodisyTestGit.git";
+    private static String TEST_LOCAL_REPO = "XMLFilesTest/GeodisyTestGit/";
     private Repository repo;
 
     @BeforeEach
@@ -48,8 +49,10 @@ public class GitTest {
             // Open an existing repository
             FileRepositoryBuilder repositoryBuilder = new FileRepositoryBuilder();
             repositoryBuilder.setMustExist( true );
-            repositoryBuilder.setGitDir(gitFile);
+            repositoryBuilder.addCeilingDirectory(new File(repoPath));
+            repositoryBuilder.findGitDir(new File(repoPath + "GeodisyTestGit/"));
             repo = repositoryBuilder.build();
+
         } else {
             // Create a new repository
             repo = FileRepositoryBuilder.create(
@@ -57,6 +60,36 @@ public class GitTest {
             repo.create(true);
         }
         System.out.println(repo.getDirectory());
+        Git git = new Git(repo);
+        AddCommand add = git.add();
+        add.addFilepattern("XMLFilesTest/GeodisyTestGit/GeodisyTestGit/Temp.txt");
+        CommitCommand commit = git.commit();
+
+        try {
+            commit.setMessage("test:" + new Date()).call();
+        } catch (GitAPIException e) {
+            e.printStackTrace();
+        }
+        RemoteAddCommand remote = git.remoteAdd();
+        remote.setName("origin");
+        try {
+            remote.setUri(new URIish(TEST_REMOTE_REPO));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        try {
+            remote.call();
+        } catch (GitAPIException e) {
+            e.printStackTrace();
+        }
+        PushCommand push = git.push();
+        try {
+            push.setCredentialsProvider(new UsernamePasswordCredentialsProvider("pdante-ubc", GIT_PASSWORD));
+            push.call();
+        } catch (GitAPIException e) {
+            e.printStackTrace();
+        }
         return repo;
     }
+
 }
