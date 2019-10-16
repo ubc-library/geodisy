@@ -23,7 +23,7 @@ public class SendMail {
         String subject = "Please update you dataset if you want map-based searching for it";
         Properties props = System.getProperties();
         props.put("mail.smtp.host", host);
-        String msgBody = "Geodisy is trying to allow for your dataset to be found via FRDR's map-based research data search, but there is something wrong with the dataset at DOI: " + doi + ". Please either manually enter a bounding box in the geospatial metadata area or add (country)/(country and state)/(country, state, and city) to the appropriate fields in the geospatial metadata. Thank you, The Geodisy Team";
+        String msgBody = "Geodisy is trying to allow for your dataset to be found via FRDR's map-based research data search, but there is something wrong with the dataset at PERSISTENT_ID: " + doi + ". Please either manually enter a bounding box in the geospatial metadata area or add (country)/(country and state)/(country, state, and city) to the appropriate fields in the geospatial metadata. Thank you, The Geodisy Team";
         Session session = Session.getInstance(props, null);
         try {
 

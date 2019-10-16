@@ -227,7 +227,7 @@ public class CitationFields extends MetadataWSimple {
 
     public void setBaseFields(JSONObject current){
 
-        simpleCitationFields.setField(DOI,parseSimpleValue( current,"persistentUrl"));
+        simpleCitationFields.setField(PERSISTENT_ID,parseSimpleValue( current,"persistentUrl"));
         simpleCitationFields.setField(PUB_DATE, getValueDate(current,PUB_DATE));
         simpleCitationFields.setField(PUBLISHER, parseSimpleValue(current,PUBLISHER));
         current = getVersionSection(current);
@@ -343,7 +343,7 @@ public class CitationFields extends MetadataWSimple {
 
     @Override
     public void setDoi(String doi) {
-        simpleCitationFields.setField(DOI,doi);
+        simpleCitationFields.setField(PERSISTENT_ID,doi);
 
     }
 

@@ -71,7 +71,7 @@ GeoLogger logger;
 
         BoundingBox gbb = gf.getBoundingBox();
         if(gbb.getLatSouth()==-361||gbb.getLatSouth()==361)
-            logger.error("Record with DOI: " + djo.getDOI() + ", got to the creating XML stage without a valid bounding box.");
+            logger.error("Record with PERSISTENT_ID: " + djo.getDOI() + ", got to the creating XML stage without a valid bounding box.");
         stack.push(root);
         stack.push(doc.createGMDElement(EXTENT)); //K
         XMLStack lowerStack = new XMLStack();

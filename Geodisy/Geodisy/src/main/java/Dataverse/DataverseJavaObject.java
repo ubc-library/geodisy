@@ -116,8 +116,8 @@ public class DataverseJavaObject extends SourceJavaObject {
             JSONObject dataFile = (JSONObject) jo.get("dataFile");
             DataverseRecordFile dRF;
             //Some Dataverses don't have individual DOIs for files, so for those I will use the database's file id instead
-            if(dataFile.has(DOI)&& !dataFile.getString(DOI).equals("")) {
-                String doi = dataFile.getString(DOI);
+            if(dataFile.has(PERSISTENT_ID)&& !dataFile.getString(PERSISTENT_ID).equals("")) {
+                String doi = dataFile.getString(PERSISTENT_ID);
                 dRF = new DataverseRecordFile(title, doi,dataFile.getInt("id"), server, citationFields.getDOI(), this);
             }else{
                 int dbID = (int) dataFile.get("id");

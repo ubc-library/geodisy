@@ -13,8 +13,8 @@ public class SimpleCitationFields extends JSONField {
      *  * Publisher : String : publisher
      *  * Publication Date : String : Publication Date
      *  * OtherLocation ID : OtherID : otherID
-     *  * Authority : String : authority   (organization number in DOI)
-     *  * Identifier : String : identifier (record identifier in DOI)
+     *  * Authority : String : authority   (organization number in PERSISTENT_ID)
+     *  * Identifier : String : identifier (record identifier in PERSISTENT_ID)
      *
      *  ___________________________________________________________
      *  Terms of Use and Access Fields
@@ -91,7 +91,7 @@ public class SimpleCitationFields extends JSONField {
      */
     public void setField(String label, String value){
         switch(label) {
-            case DOI:
+            case PERSISTENT_ID:
                 setDoi(value);
                 break;
             case TITLE:
@@ -215,7 +215,7 @@ public class SimpleCitationFields extends JSONField {
     @Override
     public String getField(String fieldName) {
         switch (fieldName) {
-            case DOI:
+            case PERSISTENT_ID:
                 return getDOI();
             case TITLE:
                 return getTitle();
@@ -309,7 +309,7 @@ public class SimpleCitationFields extends JSONField {
         String filteredDOI = filterURL(doi);
         if(filteredDOI.isEmpty()) {
             this.doi = filteredDOI;
-            logger.error("Something went wrong as the DOI us wonky: " + doi);
+            logger.error("Something went wrong as the PERSISTENT_ID us wonky: " + doi);
         }else
             this.doi = filteredDOI.substring(16);
     }
