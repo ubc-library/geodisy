@@ -10,7 +10,9 @@ import Dataverse.DataverseJavaObject;
 import org.w3c.dom.Element;
 
 import java.util.List;
+import java.util.UUID;
 
+import static BaseFiles.GeodisyStrings.CHARACTER;
 import static BaseFiles.GeodisyStrings.XML_NS;
 import static Dataverse.DVFieldNameStrings.*;
 
@@ -65,6 +67,27 @@ public class ISOXMLGen extends DjoXMLGenerator {
         rootElement.setAttribute(xmlNSElement("srv"), XML_NS + "srv/2.0");
         rootElement.setAttribute(xmlNSElement("xlink"),"http://www.w3.org/1999/xlink");
         rootElement.setAttribute(xmlNSElement("xsi"), "http://www.w3.org/2001/XMLSchema-instance");
+        return getMDMetadata(rootElement);
+
+    }
+
+    private Element getMDMetadata(Element rootElement) {
+        Element levelI = doc.createGMDElement("metadataIdentifier");
+        Element levelJ = doc.createGMDElement("MD_Identifier");
+        Element levelK = doc.createGMDElement("codeSpace");
+        UUID uuid = UUID.randomUUID();
+        Element levelL = doc.addGCOVal(uuid.toString(),CHARACTER);
+        levelK.appendChild(levelL);
+        levelJ.appendChild(levelK);
+        levelI.appendChild(levelJ);
+        rootElement.appendChild(levelI);
+        rootElement = getParentMetadata(rootElement);
+        return rootElement;
+    }
+    //TODO create the second part of the Geodisy metadata for ISO
+    private Element getParentMetadata(Element rootElement) {
+
+
         return rootElement;
     }
 
