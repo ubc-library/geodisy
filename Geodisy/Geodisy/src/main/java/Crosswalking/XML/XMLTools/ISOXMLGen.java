@@ -14,6 +14,7 @@ import java.util.UUID;
 
 import static BaseFiles.GeodisyStrings.CHARACTER;
 import static BaseFiles.GeodisyStrings.XML_NS;
+import static Crosswalking.XML.XMLTools.XMLStrings.*;
 import static Dataverse.DVFieldNameStrings.*;
 
 public class ISOXMLGen extends DjoXMLGenerator {
@@ -85,10 +86,44 @@ public class ISOXMLGen extends DjoXMLGenerator {
         return rootElement;
     }
     //TODO create the second part of the Geodisy metadata for ISO
-    private Element getParentMetadata(Element rootElement) {
+    private Element getParentMetadata(Element mdMetadata) {
+        Element levelI = doc.createGMDElement("parentMetadata");
+        Element levelJ = doc.createGMDElement(CI_CITE);
+        XMLStack stack = new XMLStack();
+        stack.push(levelJ);
+        stack.push(doc.createGMDElement(TITLE)); //Level K
+        levelJ = stack.zip(doc.addGCOVal(djo.getSimpleFieldVal(TITLE) + ":" + djo.getSimpleFieldVal(SUBTITLE),CHARACTER)); //Level L
+        stack.push(levelJ);
+        stack.push(doc.createGMDElement(IDENTIFIER)); //Level K
+        Element levelL = doc.createGMDElement(MD_IDENT);
+        XMLStack innerStack = new XMLStack();
+        innerStack.push(levelL);
+        innerStack.push(doc.createGMDElement(CODE));
+        levelL = innerStack.zip(doc.addGCOVal(djo.getDOI(),CHARACTER));
+        innerStack.push(levelL);
+        innerStack.push(doc.createGMDElement(CODE));
+        levelL = innerStack.zip(doc.addGCOVal(djo.getDOIProtocal(),CHARACTER));
+        levelJ = stack.zip(levelL);
+        stack.push(levelJ);
+        stack.push(doc.createGMDElement(ONLINE_RES)); //Level K
+        stack.push(doc.createGMDElement(CI_ONLINE_RES)); //Level L
+        stack.push(doc.createGMDElement(LINKAGE)); //Level M
+        levelJ = stack.zip(doc.addGCOVal(djo.getDOI(),CHARACTER)); //Level N
+        stack.push(levelJ);
+        stack.push(doc.createGMDElement("citedResponsibilityParty"));
 
-
-        return rootElement;
+        levelL = doc.createGMDElement(CI_RESPONSIBILITY);
+        innerStack.push(levelL);
+        innerStack.push(doc.createGMDElement(PARTY));
+        innerStack.push(doc.createGMDElement(CI_ORG));
+        innerStack.push(doc.createGMDElement(NAME));
+        levelL = innerStack.zip(doc.addGCOVal(djo.getSimpleFieldVal(PUBLISHER),CHARACTER));
+        stack.push(levelL);
+        stack.push(doc.createGMDElement("role"));
+        levelJ = stack.zip(doc.addRoleCode(PUBLISHER));
+        levelI.appendChild(levelJ);
+        mdMetadata.appendChild(levelI);
+        return mdMetadata;
     }
 
     private String xmlNSElement() {

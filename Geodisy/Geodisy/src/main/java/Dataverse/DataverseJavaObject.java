@@ -172,4 +172,13 @@ public class DataverseJavaObject extends SourceJavaObject {
             f.delete();
 
     }
+    @Override
+    public String getDOIProtocal(){
+        String answer = super.getDOIProtocal();
+        if(answer.equals("Error")){
+            logger.warn("Unknown persistant URL protocal used with record: " + getDOI());
+            return "";
+        } else
+            return answer;
+    }
 }

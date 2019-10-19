@@ -151,5 +151,18 @@ public abstract class SourceJavaObject {
         return socialFields;
     }
 
+    public String getDOIProtocal(){
+        String persistentURL = getDOI();
+        if(persistentURL.contains("https://doi.org/")||persistentURL.contains("doi:"))
+            return "DOI";
+        if(persistentURL.contains("handle")||persistentURL.contains("hdl:"))
+            return "Handle";
+        if(persistentURL.contains("ark:"))
+            return "ARK";
+        if(persistentURL.contains("urn:"))
+            return "URN";
+        return "Error";
+    }
+
     //public JournalFields getJournalFields(){ return journalFields;}
 }
