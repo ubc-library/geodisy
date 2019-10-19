@@ -1,6 +1,8 @@
 package BaseFiles;
 
 import Crosswalking.Crosswalk;
+import Crosswalking.GeoBlacklightJson.DataGBJSON;
+import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordInfo;
 import Dataverse.ExistingSearches;
 import Dataverse.FindingBoundingBoxes.Countries;
@@ -47,7 +49,7 @@ public class MyTimerTask extends TimerTask {
             for(SourceJavaObject sJO : sJOs) {
                 existingSearches.addOrReplaceRecord(new DataverseRecordInfo(sJO, logger.getName()));
             }
-
+            crosswalkSJOsToGeoBlackJSON(sJOs);
             crosswalkSJOsToXML(sJOs);
 
             endRecsToCheck = trimErrors();
@@ -67,6 +69,14 @@ public class MyTimerTask extends TimerTask {
             Calendar end =  Calendar.getInstance();
             Long total = end.getTimeInMillis()-startTime;
             System.out.println("Finished a run at: " + end.getTime() + " after " + total + " milliseconds");
+        }
+    }
+
+    private void crosswalkSJOsToGeoBlackJSON(List<SourceJavaObject> sJOs) {
+        for(SourceJavaObject sjo: sJOs){
+            DataverseJavaObject djo = (DataverseJavaObject) sjo;
+            DataGBJSON dataGBJSON = new DataGBJSON(djo);
+            dataGBJSON.createJson();
         }
     }
 

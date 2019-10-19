@@ -1,16 +1,19 @@
 package Crosswalking.GeoBlacklightJson;
 
-import Dataverse.SourceJavaObject;
+import Crosswalking.MetadataSchema;
+import Dataverse.DataverseJavaObject;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.File;
 
 import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.*;
 
 /**
- * Takes a SourceJavaObject and creates a GeoBlacklight JSON from it
+ * Takes a DataverseJavaObject and creates a GeoBlacklight JSON from it
  */
-public abstract class GeoBlacklightJSON implements JSONCreator {
-    protected SourceJavaObject javaObject;
+public abstract class GeoBlacklightJSON implements JSONCreator, MetadataSchema {
+    protected DataverseJavaObject javaObject;
     protected String geoBlacklightJson;
     protected JSONObject jo;
     protected String doi;
@@ -23,11 +26,11 @@ public abstract class GeoBlacklightJSON implements JSONCreator {
     }
 
     @Override
-    public String createJson() {
+    public void createJson() {
         getRequiredFields();
         getOptionalFields();
         geoBlacklightJson = jo.toString();
-        return geoBlacklightJson;
+        saveJSONToFile(geoBlacklightJson,getDoi());
     }
 
     protected boolean addWMS() {
@@ -77,6 +80,13 @@ public abstract class GeoBlacklightJSON implements JSONCreator {
             download = true;
         }
     }
+    public File genDirs(String doi, String localRepoPath) {
+        File fileDir = new File("./"+localRepoPath + doi);
+        if(!fileDir.exists())
+            fileDir.mkdirs();
+        return fileDir;
+    }
+
     public String getDoi(){
         return doi;
     }
@@ -84,4 +94,5 @@ public abstract class GeoBlacklightJSON implements JSONCreator {
     protected abstract JSONObject getRequiredFields();
     protected abstract JSONObject getOptionalFields();
     protected abstract void addMetadataDownloadOptions();
+    protected abstract void saveJSONToFile(String json, String doi);
 }

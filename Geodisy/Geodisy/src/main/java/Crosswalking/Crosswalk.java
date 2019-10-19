@@ -11,7 +11,7 @@ import java.util.List;
 public class Crosswalk implements CrosswalkInterface {
     @Override
     public void convertSJOs(List<SourceJavaObject> records) {
-        MetadataSchema metadata = new ISO_19115();
+        XMLSchema metadata = new ISO_19115();
         sendXMLToGit(metadata.generateXML(records));
         System.out.println("Finished Creating XML files");
     }

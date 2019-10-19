@@ -20,8 +20,7 @@ import java.util.List;
  * @author pdante
  */
 public class ISO_19115 extends ISO_Schema {
-    @Override
-    public LinkedList<XMLDocObject> generateXML(List<SourceJavaObject> sJOs) {
+    public List<XMLDocObject> generateXML(List<SourceJavaObject> sJOs) {
         LinkedList<XMLDocObject> documents = new LinkedList<>();
         for(SourceJavaObject sjo : sJOs) {
             DataverseJavaObject djo = (DataverseJavaObject) sjo;
@@ -29,8 +28,7 @@ public class ISO_19115 extends ISO_Schema {
             XMLDocObject xmlDocObject = xmlGenerator.generateXMLFile();
             saveXMLToFile(xmlDocObject.getDoc(),xmlDocObject.getDoi());
             documents.add(xmlDocObject);
-            DataGBJSON dataGBJSON = new DataGBJSON(djo);
-            saveJSONToFile(dataGBJSON.createJson(),dataGBJSON.getDoi());
+
         }
         return documents;
 

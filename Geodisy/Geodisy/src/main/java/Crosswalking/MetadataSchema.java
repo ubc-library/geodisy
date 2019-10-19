@@ -9,6 +9,7 @@ import Crosswalking.XML.XMLTools.XMLDocObject;
 import Dataverse.SourceJavaObject;
 
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -16,6 +17,6 @@ import java.util.List;
  * @author pdante
  */
 public interface MetadataSchema {
-    public List<XMLDocObject> generateXML(List<SourceJavaObject> dJOs);
+    File genDirs(String doi, String localRepoPath);
 
 }

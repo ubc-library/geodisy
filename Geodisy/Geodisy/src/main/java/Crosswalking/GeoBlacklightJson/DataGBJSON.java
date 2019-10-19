@@ -1,5 +1,6 @@
 package Crosswalking.GeoBlacklightJson;
 
+import BaseFiles.GeoLogger;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Author;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Description;
 import Dataverse.DataverseJavaObject;
@@ -8,18 +9,23 @@ import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.List;
 
 import static BaseFiles.GeodisyStrings.XML_NS;
 import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.EXTERNAL_SERVICES;
+import static Crosswalking.XML.XMLTools.XMLStrings.OPEN_METADATA_LOCAL_REPO;
+import static Crosswalking.XML.XMLTools.XMLStrings.TEST_OPEN_METADATA_LOCAL_REPO;
 import static Dataverse.DVFieldNameStrings.*;
 
 public class DataGBJSON extends GeoBlacklightJSON{
+    GeoLogger logger;
     public DataGBJSON(DataverseJavaObject djo) {
         super();
         javaObject = djo;
         geoBlacklightJson = "";
         doi = djo.getDOI();
+        logger = new GeoLogger(this.getClass());
     }
 
     @Override
@@ -123,5 +129,27 @@ public class DataGBJSON extends GeoBlacklightJSON{
             title = drf.getTitle().toLowerCase();
             checkReferences(title);
         }
+    }
+
+    public void saveJSONToFile(String json, String doi){
+        genDirs(doi, OPEN_METADATA_LOCAL_REPO);
+        BaseFiles.FileWriter file = new BaseFiles.FileWriter();
+        try {
+            file.writeStringToFile(json,"./"+OPEN_METADATA_LOCAL_REPO + doi + "/" + "geoblacklight.json");
+        } catch (IOException e) {
+            logger.error("Something went wrong trying to create a JSON file with doi:" + doi);
+        }
+
+    }
+
+    public void saveJSONToTestFile(String json, String doi){
+        genDirs(doi, TEST_OPEN_METADATA_LOCAL_REPO);
+        BaseFiles.FileWriter file = new BaseFiles.FileWriter();
+        try {
+            file.writeStringToFile(json,"./"+TEST_OPEN_METADATA_LOCAL_REPO + doi + "/" + "geoblacklight.json");
+        } catch (IOException e) {
+            logger.error("Something went wrong trying to create a JSON file with doi:" + doi);
+        }
+
     }
 }

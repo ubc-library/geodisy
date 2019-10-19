@@ -19,7 +19,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import static Crosswalking.XML.XMLTools.XMLStrings.OPEN_METADATA_LOCAL_REPO;
-import static Crosswalking.XML.XMLTools.XMLStrings.TEST_OPEN_METADATA_LOCAL_REPO;
+
 
 
 /**
@@ -27,7 +27,7 @@ import static Crosswalking.XML.XMLTools.XMLStrings.TEST_OPEN_METADATA_LOCAL_REPO
  * Geodisy can more easily be extended to other ISO formats in the future, if necessary.
  * @author pdante
  */
-public abstract class ISO_Schema implements MetadataSchema {
+public abstract class ISO_Schema implements XMLSchema {
     GeoLogger logger = new GeoLogger(this.getClass());
 
     public void saveXMLToFile(Document doc, String doi) {
@@ -52,36 +52,19 @@ public abstract class ISO_Schema implements MetadataSchema {
     }
 
     private String safeDOI(String doi) {
-        return doi.replaceAll("/","_");
+        return doi.replaceAll("/", "_");
     }
-
-    private File genDirs(String doi, String localRepoPath) {
-        File fileDir = new File("./"+localRepoPath + doi);
-        if(!fileDir.exists())
-            fileDir.mkdirs();
-        return fileDir;
-    }
-
-    public void saveJSONToFile(String json, String doi){
-        genDirs(doi, OPEN_METADATA_LOCAL_REPO);
-        BaseFiles.FileWriter file = new BaseFiles.FileWriter();
-        try {
-            file.writeStringToFile(json,"./"+OPEN_METADATA_LOCAL_REPO + doi + "/" + "geoblacklight.json");
-        } catch (IOException e) {
-            logger.error("Something went wrong trying to create a JSON file with doi:" + doi);
+    public File genDirs(String doi, String localRepoPath) {
+        {
+            File fileDir = new File("./" + localRepoPath + doi);
+            if (!fileDir.exists())
+                fileDir.mkdirs();
+            return fileDir;
         }
-
     }
 
-    public void saveJSONToTestFile(String json, String doi){
-        genDirs(doi, TEST_OPEN_METADATA_LOCAL_REPO);
-        BaseFiles.FileWriter file = new BaseFiles.FileWriter();
-        try {
-            file.writeStringToFile(json,"./"+TEST_OPEN_METADATA_LOCAL_REPO + doi + "/" + "geoblacklight.json");
-        } catch (IOException e) {
-            logger.error("Something went wrong trying to create a JSON file with doi:" + doi);
-        }
 
-    }
+
+
 
 }
