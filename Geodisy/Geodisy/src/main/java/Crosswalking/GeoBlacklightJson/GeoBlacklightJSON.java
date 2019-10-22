@@ -43,13 +43,8 @@ public abstract class GeoBlacklightJSON implements JSONCreator, MetadataSchema {
                 getRequiredFields(drf, total, count);
                 getOptionalFields();
                 geoBlacklightJson = jo.toString();
-                try {
-                    saveJSONToFile(geoBlacklightJson, drf.getDoi(), drf.getUUID(doi + drf.getTitle()));
-                } catch (UnsupportedEncodingException e) {
-                    GeoLogger logger = new GeoLogger(this.getClass());
-                    logger.error("Something went wrong trying to generate the UUID from: " + doi+ drf.getTitle());
-                    saveJSONToFile(geoBlacklightJson, drf.getDoi(), UUID.randomUUID().toString());
-                }
+                saveJSONToFile(geoBlacklightJson, drf.getDoi(), drf.getUUID(doi + drf.getTitle()));
+
                 count++;
             }
         }
