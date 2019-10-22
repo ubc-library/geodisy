@@ -1,11 +1,16 @@
 package Crosswalking.GeoBlacklightJson;
 
+import BaseFiles.GeoLogger;
 import Crosswalking.MetadataSchema;
 import Dataverse.DataverseJavaObject;
+import Dataverse.DataverseRecordFile;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.UUID;
 
 import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.*;
 
@@ -17,9 +22,8 @@ public abstract class GeoBlacklightJSON implements JSONCreator, MetadataSchema {
     protected String geoBlacklightJson;
     protected JSONObject jo;
     protected String doi;
-    boolean wms = false;
-    boolean wfs = false;
     boolean download = false;
+    List<DataverseRecordFile> files;
 
     public GeoBlacklightJSON() {
         this.jo = new JSONObject();
@@ -27,59 +31,44 @@ public abstract class GeoBlacklightJSON implements JSONCreator, MetadataSchema {
 
     @Override
     public void createJson() {
-        getRequiredFields();
-        getOptionalFields();
-        geoBlacklightJson = jo.toString();
-        saveJSONToFile(geoBlacklightJson,getDoi());
+        int count = 1;
+        int total = javaObject.getGeoDataFiles().size();
+        if(total == 0){
+            getRequiredFields();
+            getOptionalFields();
+            geoBlacklightJson = jo.toString();
+            saveJSONToFile(geoBlacklightJson, doi);
+        }else {
+            for (DataverseRecordFile drf : javaObject.getGeoDataFiles()) {
+                getRequiredFields(drf, total, count);
+                getOptionalFields();
+                geoBlacklightJson = jo.toString();
+                try {
+                    saveJSONToFile(geoBlacklightJson, drf.getDoi(), drf.getUUID(doi + drf.getTitle()));
+                } catch (UnsupportedEncodingException e) {
+                    GeoLogger logger = new GeoLogger(this.getClass());
+                    logger.error("Something went wrong trying to generate the UUID from: " + doi+ drf.getTitle());
+                    saveJSONToFile(geoBlacklightJson, drf.getDoi(), UUID.randomUUID().toString());
+                }
+                count++;
+            }
+        }
     }
 
-    protected boolean addWMS() {
-        if (!wms) {
+    protected void addWMS() {
             JSONArray ja = jo.getJSONArray(EXTERNAL_SERVICES);
             ja.put("http://www.opengis.net/def/serviceType/ogc/wms");
             ja.put(GEOSERVER_WMS_LOCATION);
             jo.put(EXTERNAL_SERVICES, ja);
-            wms = true;
-        }
-        return wms;
     }
 
-    protected boolean addWFS() {
-        if (!wfs) {
+    protected void addWFS() {
             JSONArray ja = jo.getJSONArray(EXTERNAL_SERVICES);
             ja.put("http://www.opengis.net/def/serviceType/ogc/wfs");
             ja.put(GEOSERVER_WFS_LOCATION);
             jo.put(EXTERNAL_SERVICES, ja);
-            wfs = true;
-        }
-        return wfs;
     }
 
-    protected boolean checkWMS(String title) {
-        if (title.endsWith("kmz") || title.endsWith("geotiff"))
-            return addWMS();
-        return false;
-    }
-
-    protected boolean checkWFS(String title) {
-        if (title.endsWith("shp") || title.endsWith("geojson"))
-            return addWFS();
-        return false;
-    }
-
-    protected void checkReferences(String title) {
-        if (checkWMS(title) || checkWFS(title))
-            addDownload();
-    }
-
-    protected void addDownload() {
-        if (!download) {
-            JSONArray ja = jo.getJSONArray(EXTERNAL_SERVICES);
-            ja.put("http://schema.org/downloadUrl");
-            jo.put(EXTERNAL_SERVICES, ja);
-            download = true;
-        }
-    }
     public File genDirs(String doi, String localRepoPath) {
         File fileDir = new File("./"+localRepoPath + doi);
         if(!fileDir.exists())
@@ -90,9 +79,15 @@ public abstract class GeoBlacklightJSON implements JSONCreator, MetadataSchema {
     public String getDoi(){
         return doi;
     }
-    protected abstract void addWebService();
+    protected abstract JSONObject getRequiredFields(DataverseRecordFile drf, int total, int thisFile);
     protected abstract JSONObject getRequiredFields();
+
+
+
     protected abstract JSONObject getOptionalFields();
-    protected abstract void addMetadataDownloadOptions();
+    protected abstract void addMetadataDownloadOptions(DataverseRecordFile drf); //for records with datasetfiles
+    protected abstract void addMetadataDownloadOptions(); //for records with only metadata
+    protected abstract JSONArray addBaseMetadataDownloadOptions(); //adds the base metadata external services that all records need regardless of existance of datafiles
+    protected abstract void saveJSONToFile(String json, String doi, String uuid);
     protected abstract void saveJSONToFile(String json, String doi);
 }

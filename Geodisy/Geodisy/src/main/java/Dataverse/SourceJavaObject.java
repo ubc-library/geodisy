@@ -20,6 +20,7 @@ public abstract class SourceJavaObject {
     protected SocialFields socialFields;
     //protected JournalFields journalFields;
     protected List<DataverseRecordFile> dataFiles; //Stores the datafiles
+    protected List<DataverseRecordFile> geoDataFiles; //Stores the datafiles that are geospatial in nature
     protected String server;
     protected boolean hasContent;
     public boolean hasGeospatialFile;
@@ -36,6 +37,7 @@ public abstract class SourceJavaObject {
     public SourceJavaObject(String server) {
         this.citationFields = new CitationFields();
         this.dataFiles = new LinkedList<>();
+        this.geoDataFiles = new LinkedList<>();
         this.geoFields = new GeographicFields();
         this.socialFields = new SocialFields();
         //this.journalFields = new JournalFields();
@@ -99,6 +101,18 @@ public abstract class SourceJavaObject {
 
     public void setDataFiles(List<DataverseRecordFile> dataFiles) {
         this.dataFiles = dataFiles;
+    }
+
+    public List<DataverseRecordFile> getGeoDataFiles() {
+        return geoDataFiles;
+    }
+
+    public void setGeoDataFiles(List<DataverseRecordFile> geoDataFiles) {
+        this.geoDataFiles = geoDataFiles;
+    }
+
+    public void addGeoDataFile(DataverseRecordFile drf){
+        geoDataFiles.add(drf);
     }
 
     public String getServer() {

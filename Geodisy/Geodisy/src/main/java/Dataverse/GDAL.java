@@ -65,6 +65,24 @@ public class GDAL {
         }
         return djo;
     }
+    public BoundingBox generateBoundingBoxFromCSV(File file, DataverseJavaObject djo){
+        String path = djo.getDOI().replace("/","_");
+        path = path.replace(".","_");
+        String filePath = "./datasetFiles/" + path + "/" + file.getName();
+        String name = file.getName();
+        boolean isWindows = System.getProperty("os.name")
+                .toLowerCase().startsWith("windows");
+        String ogrString = null;
+        try {
+            ogrString = getGDALInfo(filePath, name, isWindows);
+
+        BoundingBox temp = getVector(ogrString,djo, isWindows, name, filePath);
+        return temp;
+        } catch (IOException e) {
+            logger.error("Something went wrong trying to check " + name + " from record " + djo.getDOI());
+        }
+        return new BoundingBox();
+    }
 
     private BoundingBox getRaster(String gdalString, DataverseJavaObject djo, boolean isWindows, String name, String filePath) {
         int start = gdalString.indexOf("Upper Left  (")+12;

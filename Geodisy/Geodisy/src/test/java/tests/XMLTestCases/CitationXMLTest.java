@@ -85,7 +85,6 @@ DataverseJavaObject djo;
     @Test
     public void testJSONSave(){
         DataGBJSON dataGBJSON = new DataGBJSON(djo);
-        ISO_19115 iso = new ISO_19115();
         dataGBJSON.createJson();
     }
 }

@@ -161,15 +161,19 @@ public class DataverseJavaObject extends SourceJavaObject {
     public void downloadFiles() {
         File f = new File("datasetFiles\\\\" + urlized(citationFields.getDOI()));
         deleteDir(f);
+        List<DataverseRecordFile> temp = new LinkedList<>();
         for (DataverseRecordFile dRF : dataFiles) {
             if(GeodisyStrings.fileToIgnore(dRF.title))
                 continue;
             dRF.getFile();
+
             if(GeodisyStrings.hasGeospatialFile(dRF.title))
                 hasGeospatialFile = true;
         }
         if(f.list() != null && f.list().length==0)
             f.delete();
+        if(geoDataFiles.size()>0)
+            hasGeospatialFile = true;
 
     }
     @Override

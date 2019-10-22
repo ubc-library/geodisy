@@ -24,7 +24,8 @@ public class GeodisyStrings {
     public final static String GDALINFO_CLOUD = "gdalinfo -approx_stats ";
     public final static String OGRINFO_CLOUD = "ogrinfo -ro -al -so ";
     public final static String[] GDALINFO_RASTER_FILE_EXTENSIONS = { ".tif", ".nc", ".png"};
-    public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = {".geojason",".shp", ".csv"};
+    public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = {".geojason",".shp", "kmz"}; //also .csv, but need to check if the csv is actually geospatial in nature
+    public final static String[] PREVIEWABLE_FILE_EXTENSIONS = {".tif", ".kmz"};
     public final static String OGR2OGR_LOCAL = "C:\\Program Files\\GDAL\\ogr2ogr -t_srs EPSG:4326 ";
     public final static String GDAL_TRANSLATE_LOCAL = "C:\\Program Files\\GDAL\\gdal_translate -t_srs EPSG:4326 ";
     public final static String OGR2OGR_CLOUD = "ogr2ogr -t_srs EPSG:4326 ";
@@ -67,5 +68,13 @@ public class GeodisyStrings {
 
     public static boolean hasGeospatialFile(String title){
         return gdalinfoRasterExtention(title)||ogrinfoVectorExtension(title);
+    }
+
+    public static boolean isPreviewable(String title){
+        for(String s : PREVIEWABLE_FILE_EXTENSIONS){
+            if(title.endsWith(s))
+                return true;
+        }
+        return false;
     }
 }

@@ -1,6 +1,7 @@
 package Crosswalking.XML.XMLTools;
 
 
+import BaseFiles.GeoLogger;
 import Crosswalking.XML.XMLGroups.DataQualityInfo;
 import Crosswalking.XML.XMLGroups.DistributionInfo;
 import Crosswalking.XML.XMLGroups.IdentificationInfo;
@@ -9,6 +10,7 @@ import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Simpl
 import Dataverse.DataverseJavaObject;
 import org.w3c.dom.Element;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.UUID;
 
@@ -76,7 +78,7 @@ public class ISOXMLGen extends DjoXMLGenerator {
         Element levelI = doc.createGMDElement("metadataIdentifier");
         Element levelJ = doc.createGMDElement("MD_Identifier");
         Element levelK = doc.createGMDElement("codeSpace");
-        UUID uuid = UUID.randomUUID();
+        UUID uuid = getUUID(djo.getDOI());
         Element levelL = doc.addGCOVal(uuid.toString(),CHARACTER);
         levelK.appendChild(levelL);
         levelJ.appendChild(levelK);
@@ -85,6 +87,19 @@ public class ISOXMLGen extends DjoXMLGenerator {
         rootElement = getParentMetadata(rootElement);
         return rootElement;
     }
+
+    //getUUID also in DataverseRecordFile, so change there if changed here
+    private UUID getUUID(String name) {
+        try {
+            byte[] bytes = name.getBytes("UTF-8");
+            return UUID.nameUUIDFromBytes(bytes);
+        } catch (UnsupportedEncodingException e) {
+            GeoLogger logger = new GeoLogger(this.getClass());
+            logger.error("Something went wrong trying to generate the UUID from: " + name);
+        }
+        return UUID.randomUUID();
+    }
+
     //TODO create the second part of the Geodisy metadata for ISO
     private Element getParentMetadata(Element mdMetadata) {
         Element levelI = doc.createGMDElement("parentMetadata");
