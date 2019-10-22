@@ -36,12 +36,8 @@ public class DataGBJSON extends GeoBlacklightJSON{
     protected JSONObject getRequiredFields(DataverseRecordFile drf, int totalFiles, int thisFile) {
         jo.put("geoblacklight_version","1.0");
         jo.put("dc_identifier_s", javaObject.getDOI());
-        try {
-            jo.put("layer_slug_s",drf.getUUID(doi + drf.getTitle()));
-        } catch (UnsupportedEncodingException e) {
-            logger.error("Something went wrong trying to generate the UUID from: " + doi + drf.getTitle());
-            jo.put("layer_slug_s", UUID.randomUUID());
-        }
+        jo.put("layer_slug_s",drf.getUUID(doi + drf.getTitle()));
+
         String fileCount = "";
         if(totalFiles>1){
             fileCount = " (" + thisFile + " of " + totalFiles + ")";
@@ -58,13 +54,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
     protected JSONObject getRequiredFields(){
         jo.put("geoblacklight_version","1.0");
         jo.put("dc_identifier_s", javaObject.getDOI());
-        try {
-            jo.put("layer_slug_s", DataverseRecordFile.getUUID(getDoi()));
-
-        } catch (UnsupportedEncodingException e) {
-            logger.error("Something went wrong trying to generate the UUID from: " + doi);
-            jo.put("layer_slug_s", UUID.randomUUID());
-        }
+        jo.put("layer_slug_s", DataverseRecordFile.getUUID(getDoi()));
         jo.put("dc_title_s",javaObject.getSimpleFields().getField(TITLE));
         jo.put("dc_rights_s",javaObject.getSimpleFields().getField(LICENSE));
         jo.put("dct_provenance_s",javaObject.getSimpleFields().getField(PUBLISHER));

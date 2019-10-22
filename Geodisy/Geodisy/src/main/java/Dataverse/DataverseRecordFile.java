@@ -12,6 +12,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.Stack;
 import java.util.UUID;
 
@@ -165,9 +166,9 @@ public class DataverseRecordFile {
 }
     public String getTitle(){return title; }
     //getUUID is also in ISOXMLGen, so change there if changed here
-    public static String getUUID(String name) throws UnsupportedEncodingException {
+    public static String getUUID(String name) {
 
-        byte[] bytes = name.getBytes("UTF-8");
+        byte[] bytes = name.getBytes(Charset.forName("UTF-8"));
         return UUID.nameUUIDFromBytes(bytes).toString();
     }
     public String getDoi(){return doi;}

@@ -11,6 +11,7 @@ import Dataverse.DataverseJavaObject;
 import org.w3c.dom.Element;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.UUID;
 
@@ -90,14 +91,9 @@ public class ISOXMLGen extends DjoXMLGenerator {
 
     //getUUID also in DataverseRecordFile, so change there if changed here
     private UUID getUUID(String name) {
-        try {
-            byte[] bytes = name.getBytes("UTF-8");
-            return UUID.nameUUIDFromBytes(bytes);
-        } catch (UnsupportedEncodingException e) {
-            GeoLogger logger = new GeoLogger(this.getClass());
-            logger.error("Something went wrong trying to generate the UUID from: " + name);
-        }
-        return UUID.randomUUID();
+        byte[] bytes = name.getBytes(Charset.forName("UTF-8"));
+        return UUID.nameUUIDFromBytes(bytes);
+
     }
 
     //TODO create the second part of the Geodisy metadata for ISO
