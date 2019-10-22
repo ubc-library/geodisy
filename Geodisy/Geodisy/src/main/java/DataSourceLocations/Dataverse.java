@@ -5,7 +5,7 @@
  */
 package DataSourceLocations;
 
-import static Dataverse.DVFieldNameStrings.BASE_DV_URL;
+import static BaseFiles.GeodisyStrings.DATAVERSE_URLS;
 
 /**
  * Class holds the list of all the dataverse urls that are being harvested from
@@ -16,7 +16,7 @@ public class Dataverse implements DataLocation {
 
     public Dataverse() {
         //enter dataverse urls into brackets including http/https part, comma separated
-        dataverseURLs = new String[]{BASE_DV_URL};
+        dataverseURLs = DATAVERSE_URLS;
     }
     @Override
     public String[] getDataLocationURLs() {

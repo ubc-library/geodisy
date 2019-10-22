@@ -2,44 +2,53 @@ package BaseFiles;
 
 public class GeodisyStrings {
 
+
+    //Repositories (add new repository URLS to a appropriate repository URL array below)
+        // New Repository Types need new URL Arrays [Geodisy 2]
+        public final static String SANDBOX_DV_URL = "https://206-12-90-131.cloud.computecanada.ca/"; //currently our sandbox
+
+        public final static String[] DATAVERSE_URLS = new String[]{SANDBOX_DV_URL};
+
+
+
     //File paths
-    public final static String EXISTING_RECORDS = "./savedFiles/ExisitingRecords.txt";
-    public final static String EXISTING_BBOXES = "./savedFiles/ExistingBBoxes.txt";
-    public final static String RECORDS_TO_CHECK = "./logs/recordsToCheck.log";
-    public final static String EXISTING_CALL_TO_CHECK = "./logs/existingCallToCheck.txt";
-    public final static String ERROR_LOG = "./logs/error.log";
-    public final static String XML_NS = "http://www.isotc211.org/2005/";
-    public final static String COUNTRY_VALS =  "./geodisyFiles/Geoname_countries.xml";
-    public final static String ALL_CITATION_METADATA = "./geodisyFiles/AllCitationMetadata.json";
-    public final static String XML_TEST_FILE = "./geodisyFiles/XMLTestDJO.xml";
+        public final static String EXISTING_RECORDS = "./savedFiles/ExisitingRecords.txt";
+        public final static String EXISTING_BBOXES = "./savedFiles/ExistingBBoxes.txt";
+        public final static String RECORDS_TO_CHECK = "./logs/recordsToCheck.log";
+        public final static String EXISTING_CALL_TO_CHECK = "./logs/existingCallToCheck.txt";
+        public final static String ERROR_LOG = "./logs/error.log";
+        public final static String XML_NS = "http://www.isotc211.org/2005/";
+        public final static String COUNTRY_VALS =  "./geodisyFiles/Geoname_countries.xml";
+        public final static String ALL_CITATION_METADATA = "./geodisyFiles/AllCitationMetadata.json";
+        public final static String XML_TEST_FILE = "./geodisyFiles/XMLTestDJO.xml";
 
 
     //Unused file type extensions
-    public final static String[] FILE_TYPES_TO_IGNORE = {".txt",".doc",".csv",".pdf",".jpg", ".docx",".las",".xml"};
+        public final static String[] FILE_TYPES_TO_IGNORE = {".txt",".doc",".csv",".pdf",".jpg", ".docx",".las",".xml"};
 
     //TODO Change GDAL location to where it is when on Cloud instance
     //GDAL
-    public final static String GDALINFO_LOCAL = "C:\\Program Files\\GDAL\\gdalinfo -approx_stats ";
-    public final static String OGRINFO_LOCAL = "C:\\Program Files\\GDAL\\ogrinfo -ro -al -so ";
-    public final static String GDALINFO_CLOUD = "gdalinfo -approx_stats ";
-    public final static String OGRINFO_CLOUD = "ogrinfo -ro -al -so ";
-    public final static String[] GDALINFO_RASTER_FILE_EXTENSIONS = { ".tif", ".nc", ".png"};
-    public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = {".geojason",".shp", "kmz"}; //also .csv, but need to check if the csv is actually geospatial in nature
-    public final static String[] PREVIEWABLE_FILE_EXTENSIONS = {".tif", ".kmz"};
-    public final static String OGR2OGR_LOCAL = "C:\\Program Files\\GDAL\\ogr2ogr -t_srs EPSG:4326 ";
-    public final static String GDAL_TRANSLATE_LOCAL = "C:\\Program Files\\GDAL\\gdal_translate -t_srs EPSG:4326 ";
-    public final static String OGR2OGR_CLOUD = "ogr2ogr -t_srs EPSG:4326 ";
-    public final static String GDAL_TRANSLATE_CLOUD = "gdal_translate -t_srs EPSG:4326 ";
+        public final static String GDALINFO_LOCAL = "C:\\Program Files\\GDAL\\gdalinfo -approx_stats ";
+        public final static String OGRINFO_LOCAL = "C:\\Program Files\\GDAL\\ogrinfo -ro -al -so ";
+        public final static String GDALINFO_CLOUD = "gdalinfo -approx_stats ";
+        public final static String OGRINFO_CLOUD = "ogrinfo -ro -al -so ";
+        public final static String[] GDALINFO_RASTER_FILE_EXTENSIONS = { ".tif", ".nc", ".png"};
+        public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = {".geojason",".shp", "kmz"}; //also .csv, but need to check if the csv is actually geospatial in nature
+        public final static String[] PREVIEWABLE_FILE_EXTENSIONS = {".tif", ".kmz"};
+        public final static String OGR2OGR_LOCAL = "C:\\Program Files\\GDAL\\ogr2ogr -t_srs EPSG:4326 ";
+        public final static String GDAL_TRANSLATE_LOCAL = "C:\\Program Files\\GDAL\\gdal_translate -t_srs EPSG:4326 ";
+        public final static String OGR2OGR_CLOUD = "ogr2ogr -t_srs EPSG:4326 ";
+        public final static String GDAL_TRANSLATE_CLOUD = "gdal_translate -t_srs EPSG:4326 ";
 
     //XML value types
-    public final static String CHARACTER = "CharacterString";
-    public final static String DATE = "Date";
-    public final static String DATE_TIME = "DateTime";
-    public final static String INTEGER = "Integer";
-    public final static String BOOLEAN = "Boolean";
-    public final static String DECIMAL = "Decimal";
-    public final static String MEASURE = "Measure";
-    public final static String LOCAL_NAME = "LocalName";
+        public final static String CHARACTER = "CharacterString";
+        public final static String DATE = "Date";
+        public final static String DATE_TIME = "DateTime";
+        public final static String INTEGER = "Integer";
+        public final static String BOOLEAN = "Boolean";
+        public final static String DECIMAL = "Decimal";
+        public final static String MEASURE = "Measure";
+        public final static String LOCAL_NAME = "LocalName";
 
 
     public static boolean fileToIgnore(String title){

@@ -45,6 +45,8 @@ public class MyTimerTask extends TimerTask {
             FileWriter fW = new FileWriter();
 
             ExistingSearches existingSearches = ExistingSearches.readExistingSearches();
+
+            //This section is the initial search for new records in the repositories. We will need to add a new harvest call for each new repository type [Geodisy 2]
             List<SourceJavaObject> sJOs = geo.harvestDataverse();
             for(SourceJavaObject sJO : sJOs) {
                 existingSearches.addOrReplaceRecord(new DataverseRecordInfo(sJO, logger.getName()));

@@ -20,20 +20,18 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-import static Dataverse.DVFieldNameStrings.BASE_DV_URL;
-
 /**
  *  Search Dataverse for datasets
  * @author pdante
  */
 public class DataverseAPI extends SourceAPI {
-    private final String dvName;
+    private final String dvURL;
     private Set<DataverseRecordInfo> records;
     GeoLogger logger = new GeoLogger(this.getClass());
 
-    public DataverseAPI(String dvName) {
+    public DataverseAPI(String dvURL) {
 
-        this.dvName = dvName;
+        this.dvURL = dvURL;
         records = new HashSet<>();
 
     }
@@ -50,7 +48,7 @@ public class DataverseAPI extends SourceAPI {
             recordsThatNoLongerExist.put(key, recs.get(key));
         }
         DataverseParser parser = new DataverseParser();
-        System.out.println("This is using the " + dvName + " dataverse for getting files, should it be changed to something else?");
+        System.out.println("This is using the " + dvURL + " dataverse for getting files, should it be changed to something else?");
         for(JSONObject jo:jsons){
             String doi ="";
             try {
@@ -67,7 +65,7 @@ public class DataverseAPI extends SourceAPI {
                 logger.error("Tried to get a record but I got a blank JSONObject");
                 continue;
             }
-            DataverseJavaObject djo = parser.parse(jo,dvName);
+            DataverseJavaObject djo = parser.parse(jo, dvURL);
             doi = djo.getDOI();
             if(djo.hasContent && es.hasRecord(djo.getDOI()))
                 recordsThatNoLongerExist.remove(djo.getDOI());
@@ -197,7 +195,7 @@ public class DataverseAPI extends SourceAPI {
     //Find all the datasets and create a HashSet of their DOIs
     @Override
     protected HashSet<String> searchDV() {
-        String searchURL = dvName + "api/search?q=*&type=dataset&show_entity_id=true&rows=1000";
+        String searchURL = dvURL + "api/search?q=*&type=dataset&show_entity_id=true&rows=1000";
         return getRecords(searchURL);
 
     }
@@ -207,7 +205,7 @@ public class DataverseAPI extends SourceAPI {
     protected LinkedList<JSONObject> downloadMetadata(HashSet<String> dOIs) {
         HTTPCaller getMetadata;
         //TODO set base URL programmatically
-        String baseURL = BASE_DV_URL + "api/datasets/export?exporter=dataverse_json&persistentId=";
+        String baseURL = dvURL + "api/datasets/export?exporter=dataverse_json&persistentId=";
         LinkedList<JSONObject> answers =  new LinkedList<>();
         for(String s: dOIs){
             getMetadata = new HTTPCaller(baseURL+s);
