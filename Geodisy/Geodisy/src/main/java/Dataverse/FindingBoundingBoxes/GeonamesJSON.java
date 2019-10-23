@@ -41,7 +41,7 @@ public class GeonamesJSON {
         return !jo.isEmpty();
     }
 
-    public BoundingBox getBoundingBox(){
+    public BoundingBox getBBFromGeonamesBBElementString(){
         BoundingBox bb =  new BoundingBox();
         if(!jo.has("south"))
             return bb;
@@ -49,10 +49,11 @@ public class GeonamesJSON {
         bb.setLatNorth(getDoubleLatLongVal(jo,"north"));
         bb.setLongEast(getDoubleLatLongVal(jo,"east"));
         bb.setLatSouth(getDoubleLatLongVal(jo,"south"));
+        bb.setGenerated(true);
         return bb;
     }
 
-    public BoundingBox parseGeonamesBoundingBox(){
+    public BoundingBox getBBFromGeonamesJSON(){
         BoundingBox bb =  new BoundingBox();
         if(!jo.has("bbox"))
             return bb;
@@ -61,6 +62,7 @@ public class GeonamesJSON {
         bb.setLatNorth(getDoubleLatLongVal(bbox,"north"));
         bb.setLongEast(getDoubleLatLongVal(bbox,"east"));
         bb.setLatSouth(getDoubleLatLongVal(bbox,"south"));
+        bb.setGenerated(true);
         return bb;
     }
 

@@ -13,6 +13,7 @@ import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.w3c.dom.Element;
 
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static BaseFiles.GeodisyStrings.CHARACTER;
@@ -68,43 +69,61 @@ GeoLogger logger;
             stack.push(doc.createGMDElement(DESCRIP)); //M
             root = stack.zip(doc.addGCOVal(gu.getField(GEOGRAPHIC_UNIT),CHARACTER));
         }
+        List<GeographicBoundingBox> gbbs = determineWhichBBs();
 
-        BoundingBox gbb = gf.getBoundingBox();
-        if(gbb.getLatSouth()==-361||gbb.getLatSouth()==361)
+        if(gbbs.size()==0)
             logger.error("Record with PERSISTENT_ID: " + djo.getDOI() + ", got to the creating XML stage without a valid bounding box.");
-        stack.push(root);
-        stack.push(doc.createGMDElement(EXTENT)); //K
-        XMLStack lowerStack = new XMLStack();
-        Element levelL = doc.createGMDElement(EX_EXTENT); //L
-        //West
-        lowerStack.push(levelL);
-        lowerStack.push(doc.createGMDElement(GEO_ELEMENT));
-        lowerStack.push(doc.createGMDElement(EX_GEO_BB));
-        lowerStack.push(doc.createGMDElement("westBoundLongitude"));
-        levelL = lowerStack.zip(doc.addGCOVal( Double.toString(gbb.getLongWest()),DECIMAL));
+        else {
+            stack.push(root);
+            stack.push(doc.createGMDElement(EXTENT)); //K
+            XMLStack lowerStack = new XMLStack();
+            stack.push(doc.createGMDElement(EX_EXTENT)); //L
+            Element levelM = doc.createGMDElement(GEO_ELEMENT); //M
+            Element levelN;
+            for(GeographicBoundingBox gbb:gbbs) {
 
-        //East
-        lowerStack.push(levelL);
-        lowerStack.push(doc.createGMDElement(GEO_ELEMENT));
-        lowerStack.push(doc.createGMDElement(EX_GEO_BB));
-        lowerStack.push(doc.createGMDElement("eastBoundLongitude"));
-        levelL = lowerStack.zip(doc.addGCOVal( Double.toString(gbb.getLongEast()),DECIMAL));
+                //West
+                levelN = doc.createGMDElement(EX_GEO_BB);
+                lowerStack.push(levelN);
+                lowerStack.push(doc.createGMDElement("westBoundLongitude"));
+                levelN = lowerStack.zip(doc.addGCOVal(gbb.getWestLongitude(), DECIMAL));
 
-        //North
-        lowerStack.push(levelL);
-        lowerStack.push(doc.createGMDElement(GEO_ELEMENT));
-        lowerStack.push(doc.createGMDElement(EX_GEO_BB));
-        lowerStack.push(doc.createGMDElement("northBoundLatitude"));
-        levelL = lowerStack.zip(doc.addGCOVal( Double.toString(gbb.getLatNorth()),DECIMAL));
+                //East
+                lowerStack.push(levelN);
+                lowerStack.push(doc.createGMDElement("eastBoundLongitude"));
+                levelN = lowerStack.zip(doc.addGCOVal(gbb.getEastLongitude(), DECIMAL));
 
-        //South
-        lowerStack.push(levelL);
-        lowerStack.push(doc.createGMDElement(GEO_ELEMENT));
-        lowerStack.push(doc.createGMDElement(EX_GEO_BB));
-        lowerStack.push(doc.createGMDElement("southBoundLatitude"));
+                //North
+                lowerStack.push(levelN);
+                lowerStack.push(doc.createGMDElement("northBoundLatitude"));
+                levelN = lowerStack.zip(doc.addGCOVal(gbb.getNorthLatitude(), DECIMAL));
 
-        root = stack.zip(lowerStack.zip(doc.addGCOVal( Double.toString(gbb.getLatSouth()),DECIMAL)));
+                //South
+                lowerStack.push(levelN);
+                lowerStack.push(doc.createGMDElement("southBoundLatitude"));
+                levelN = lowerStack.zip(doc.addGCOVal(gbb.getSouthLatitude(), DECIMAL));
+
+                levelM.appendChild(levelN);
+            }
+            root = stack.zip(levelM);
+        }
         return root;
+    }
+
+    private List<GeographicBoundingBox> determineWhichBBs() {
+        List<GeographicBoundingBox> geoBBs = gf.getGeoBBoxes();
+        List<GeographicBoundingBox> entered = new LinkedList<>();
+        List<GeographicBoundingBox> generated = new LinkedList<>();
+        for(GeographicBoundingBox geoBB: geoBBs){
+            BoundingBox bb = geoBB.getbb();
+            if(!bb.hasBoundingBox())
+                continue;
+            if(bb.isGenerated())
+                generated.add(geoBB);
+            else
+                entered.add(geoBB);
+        }
+        return entered.size()<=generated.size()? generated : entered;
     }
 
     public static String getGeoCovPrimeName(List<String> field){

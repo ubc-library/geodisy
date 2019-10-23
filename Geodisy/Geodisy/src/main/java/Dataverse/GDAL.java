@@ -45,10 +45,10 @@ public class GDAL {
             try {
                 gdalString = getGDALInfo(filePath, name, isWindows);
                 if(gdalInfo)
-                    temp = getRaster(gdalString,djo, isWindows, name, filePath);
+                    temp = getRaster(gdalString);
                 else
-                    temp = getVector(gdalString,djo, isWindows, name, filePath);
-
+                    temp = getVector(gdalString, isWindows, name, filePath);
+                temp.setGenerated(true);
                 GeographicFields gf = djo.getGeoFields();
                 List<GeographicBoundingBox> bboxes = gf.getGeoBBoxes();
                 GeographicBoundingBox gBB =  new GeographicBoundingBox(djo.getDOI());
@@ -76,7 +76,8 @@ public class GDAL {
         try {
             ogrString = getGDALInfo(filePath, name, isWindows);
 
-        BoundingBox temp = getVector(ogrString,djo, isWindows, name, filePath);
+        BoundingBox temp = getVector(ogrString, isWindows, name, filePath);
+        temp.setGenerated(true);
         return temp;
         } catch (IOException e) {
             logger.error("Something went wrong trying to check " + name + " from record " + djo.getDOI());
@@ -84,7 +85,7 @@ public class GDAL {
         return new BoundingBox();
     }
 
-    private BoundingBox getRaster(String gdalString, DataverseJavaObject djo, boolean isWindows, String name, String filePath) {
+    private BoundingBox getRaster(String gdalString) {
         int start = gdalString.indexOf("Upper Left  (")+12;
         BoundingBox temp = new BoundingBox();
         if(start != -1+12) {
@@ -95,7 +96,7 @@ public class GDAL {
 
 
 
-    private BoundingBox getVector(String gdalString, DataverseJavaObject djo, boolean isWindows, String name, String filePath) throws IOException {
+    private BoundingBox getVector(String gdalString, boolean isWindows, String name, String filePath) throws IOException {
         int start = gdalString.indexOf("Extent: (")+9;
         BoundingBox temp = new BoundingBox();
         if(start != -1+9) {
@@ -204,6 +205,7 @@ public class GDAL {
         bb.setLongEast(long1);
         bb.setLatNorth(lat2);
         bb.setLatSouth(lat1);
+        bb.setGenerated(true);
         return bb;
     }
     private BoundingBox getLatLongGdalInfo(String gdalString, int start) {
@@ -223,6 +225,7 @@ public class GDAL {
         bb.setLongEast(long2);
         bb.setLatNorth(lat1);
         bb.setLatSouth(lat2);
+        bb.setGenerated(true);
         return bb;
     }
 }

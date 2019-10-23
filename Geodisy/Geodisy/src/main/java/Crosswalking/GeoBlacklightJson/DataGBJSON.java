@@ -32,6 +32,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         files = djo.getGeoDataFiles();
     }
     //TODO check if Dataverse publisher field be included in the slug?
+    //TODO create number of GeoBlacklightJSON based on boundingboxes (check generated vs entered)
     @Override
     protected JSONObject getRequiredFields(DataverseRecordFile drf, int totalFiles, int thisFile) {
         jo.put("geoblacklight_version","1.0");

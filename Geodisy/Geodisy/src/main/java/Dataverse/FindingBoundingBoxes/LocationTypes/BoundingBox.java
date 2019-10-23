@@ -7,6 +7,7 @@ public class BoundingBox implements Serializable {
     private double latNorth = 361;
     private double longWest = 361;
     private double longEast = 361;
+    private boolean generated = false;
 
     /**
      *
@@ -106,4 +107,11 @@ public class BoundingBox implements Serializable {
         this.longEast = getDoubleLong(longEast);
     }
 
+    public boolean isGenerated() {
+        return generated;
+    }
+
+    public void setGenerated(boolean generated) {
+        this.generated = generated;
+    }
 }

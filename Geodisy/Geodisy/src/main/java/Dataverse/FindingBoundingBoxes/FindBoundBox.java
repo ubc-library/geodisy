@@ -53,6 +53,7 @@ public abstract class FindBoundBox {
         start = responseString.indexOf("<south>");
         end = responseString.indexOf("</south>");
         box.setLatSouth(responseString.substring(start+7, end));
+        box.setGenerated(true);
 
         return box;
     }

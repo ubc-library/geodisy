@@ -146,4 +146,8 @@ public class GeographicBoundingBox extends CompoundJSONField {
             bb.setLongWest(361);
         }
     }
+
+    public BoundingBox getbb(){
+        return bb;
+    }
 }
