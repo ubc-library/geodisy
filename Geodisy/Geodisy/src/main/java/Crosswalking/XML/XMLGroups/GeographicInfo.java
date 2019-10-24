@@ -19,7 +19,7 @@ import java.util.List;
 import static BaseFiles.GeodisyStrings.CHARACTER;
 import static BaseFiles.GeodisyStrings.DECIMAL;
 import static Crosswalking.XML.XMLTools.XMLStrings.*;
-import static Dataverse.DVFieldNameStrings.GEOGRAPHIC_UNIT;
+import static Dataverse.DVFieldNameStrings.*;
 
 public class GeographicInfo extends SubElement {
 GeographicFields gf;
@@ -40,25 +40,31 @@ GeoLogger logger;
     public Element getFields() {
 
         for(GeographicCoverage gc: geoCovers){
-            List<String> country = gc.getCountryList();
-            List<String> city = gc.getCityList();
-            List<String> province = gc.getProvinceList();
-            List<String> other = gc.getOtherGeographicCoverage();
+            String commonCountry = gc.getField(COMMON_COUNTRY);
+            String givenCountry = gc.getField(COUNTRY);
+            String commonProvince = gc.getField(COMMON_PROVINCE);
+            String givenProvince = gc.getField(PROVINCE);
+            String commonCity = gc.getField(COMMON_CITY);
+            String givenCity = gc.getField(CITY);
+            String other = gc.getField(OTHER_GEO_COV);
             String name;
             //if the researcher uses an alternative name for the country, province, and/or city, then two geographic coverage units will be created from the single coverage unit
-            int numberOfOptions = (country.size()>1 || province.size()>1 || city.size()>1) ? 2:1;
+            boolean twoCountryOptions = !commonCountry.equals(givenCountry);
+            boolean twoProvinceOptions = !commonProvince.equals(givenProvince);
+            boolean twoCityOptions = !commonCity.equals(givenCity);
+            int numberOfOptions = (twoCountryOptions || twoProvinceOptions || twoCityOptions) ? 2:1;
             for(int i = 0; i<numberOfOptions; i++) {
                 stack.push(root); //J
                 stack.push(doc.createGMDElement(EXTENT)); //K
                 stack.push(doc.createGMDElement(EX_EXTENT)); //L
                 stack.push(doc.createGMDElement(DESCRIP)); //M
-                name = (country.size()==2 && i==1) ? country.get(1) : country.get(0);
-                if (!province.isEmpty())
-                    name = name + ", " + ((province.size()==2 && i==1) ? province.get(1) : province.get(0));
-                if (!city.isEmpty())
-                    name = name + ", " + ((city.size()==2 && i==1) ? city.get(1) : city.get(0));
+                name = (twoCountryOptions && i==1) ? commonCountry : givenCountry;
+                if (!givenProvince.isEmpty())
+                    name = name + ", " + ((twoProvinceOptions && i==1) ? commonProvince : givenProvince);
+                if (!givenCity.isEmpty())
+                    name = name + ", " + ((twoCityOptions && i==1) ? commonCity : givenCity);
                 if (!other.isEmpty())
-                    name = name + ", " + other.get(0);
+                    name = name + ", " + other;
                 root = stack.zip(doc.addGCOVal(name,CHARACTER));
             }
         }

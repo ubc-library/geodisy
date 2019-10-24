@@ -1,4 +1,4 @@
-country,ISO3166 country code,longmin,latmin,longmax,latmax,Wrapped
+givenCountry,ISO3166 givenCountry code,longmin,latmin,longmax,latmax,Wrapped
 Aruba,ABW,-70.983,12.4,-69.85,12.617,
 Antigua and Barbuda,ATG,-62.417,16.817,-61.65,17.75,
 United Arab Emirates,AE,45,22.167,59.25,26.133,

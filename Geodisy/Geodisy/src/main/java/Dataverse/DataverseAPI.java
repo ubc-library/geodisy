@@ -8,6 +8,7 @@ package Dataverse;
 
 
 import BaseFiles.GeoLogger;
+import BaseFiles.Geonames;
 import BaseFiles.HTTPCaller;
 import Crosswalking.JSONParsing.DataverseParser;
 import GeoServer.GeoServerAPI;
@@ -71,8 +72,10 @@ public class DataverseAPI extends SourceAPI {
                 recordsThatNoLongerExist.remove(djo.getDOI());
             if(djo.hasContent()&& hasNewInfo(djo, es)) {
                 djo.downloadFiles();
+                djo = generateBoundingBox(djo);
                 if(!djo.hasBoundingBox())
-                    djo = generateBoundingBox(djo);
+                    if(djo.hasGeoGraphicCoverage())
+                        getBBFromGeonames(djo);
                 if(djo.hasBoundingBox())
                     answers.add(djo);
                 else{
@@ -107,6 +110,12 @@ public class DataverseAPI extends SourceAPI {
     @Override
     protected void deleteFromGeoserver(String dio) {
 
+    }
+
+    @Override
+    protected void getBBFromGeonames(SourceJavaObject djo) {
+        Geonames geonames = new Geonames();
+        geonames.getBoundingBox(djo);
     }
 
     /**

@@ -49,7 +49,6 @@ public class GeonamesJSON {
         bb.setLatNorth(getDoubleLatLongVal(jo,"north"));
         bb.setLongEast(getDoubleLatLongVal(jo,"east"));
         bb.setLatSouth(getDoubleLatLongVal(jo,"south"));
-        bb.setGenerated(true);
         return bb;
     }
 
@@ -62,7 +61,6 @@ public class GeonamesJSON {
         bb.setLatNorth(getDoubleLatLongVal(bbox,"north"));
         bb.setLongEast(getDoubleLatLongVal(bbox,"east"));
         bb.setLatSouth(getDoubleLatLongVal(bbox,"south"));
-        bb.setGenerated(true);
         return bb;
     }
 

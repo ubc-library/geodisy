@@ -173,11 +173,14 @@ public class DVFieldNameStrings {
     public final static String SOUTH_LAT_LONG = "southLongitude";
 
     //Geographic Coverage Field Names
-    public final static String COUNTRY = "country";
-    public final static String STATE = "state";
-    public final static String CITY = "city";
+    public final static String COUNTRY = "givenCountry";
+    public final static String PROVINCE = "givenProvince";
+    public final static String CITY = "givenCity";
+    public final static String COMMON_COUNTRY = "commonCountry";
+    public final static String COMMON_PROVINCE = "commonProvice";
+    public final static String COMMON_CITY = "commonCity";
     public final static String OTHER_GEO_COV = "otherGeographicCoverage";
-    public final static List<String> GEO_META_FIELDS = Arrays.asList(GEOGRAPHIC_COVERAGE, GEOGRAPHIC_BBOX, GEOGRAPHIC_UNIT, WEST_LONG, EAST_LONG, NORTH_LAT, NORTH_LAT_LONG, SOUTH_LAT, SOUTH_LAT_LONG, COUNTRY, STATE, CITY, OTHER_GEO_COV);
+    public final static List<String> GEO_META_FIELDS = Arrays.asList(GEOGRAPHIC_COVERAGE, GEOGRAPHIC_BBOX, GEOGRAPHIC_UNIT, WEST_LONG, EAST_LONG, NORTH_LAT, NORTH_LAT_LONG, SOUTH_LAT, SOUTH_LAT_LONG, COUNTRY, PROVINCE, CITY, OTHER_GEO_COV);
 
     //Astrophysics_________________________________________________________________________________
     // Spatial Field Names

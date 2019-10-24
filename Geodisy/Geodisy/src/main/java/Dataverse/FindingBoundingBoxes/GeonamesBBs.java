@@ -1,6 +1,8 @@
 package Dataverse.FindingBoundingBoxes;
 
 import BaseFiles.Geonames;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicCoverage;
 import Dataverse.DataverseJavaObject;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.City;
@@ -9,6 +11,9 @@ import Dataverse.FindingBoundingBoxes.LocationTypes.Province;
 import java.io.UnsupportedEncodingException;
 import java.net.*;
 import java.util.HashMap;
+import java.util.List;
+
+import static Dataverse.DVFieldNameStrings.*;
 
 /**
  * GeonamesBBs collects a bounding box for a record that has enough geospatial fields filled out.
@@ -235,5 +240,45 @@ public class GeonamesBBs extends FindBoundBox {
 
     public void setDJO(DataverseJavaObject djo){
         this.djo = djo;
+    }
+
+    public List<GeographicBoundingBox> getDVBoundingBox(GeographicCoverage geoCoverage, List<GeographicBoundingBox> geoBBs ) {
+        String givenCountry = geoCoverage.getField(COUNTRY);
+        String givenProvince = geoCoverage.getField(PROVINCE);
+        String givenCity = geoCoverage.getField(CITY);
+        String commonCountry = geoCoverage.getField(COMMON_COUNTRY);
+        String commonProvince = geoCoverage.getField(COMMON_PROVINCE);
+        String commonCity = geoCoverage.getField(COMMON_CITY);
+        Boolean second = !givenCountry.equals(commonCountry) || !givenProvince.equals(commonProvince) || !givenCity.equals(commonCity);
+        if(!givenCountry.isEmpty()) {
+            if (!givenProvince.isEmpty()){
+                if(!givenCity.isEmpty()) {
+                    GeographicBoundingBox bb = new GeographicBoundingBox(doi, getDVBoundingBox(givenCountry, givenProvince, givenCity));
+                    geoBBs.add(bb);
+                    if(second){
+                        bb = new GeographicBoundingBox(doi, getDVBoundingBox(commonCountry, commonProvince, commonCity));
+                        geoBBs.add(bb);
+                    }
+                }else {
+                    GeographicBoundingBox bb = new GeographicBoundingBox(doi, getDVBoundingBox(givenCountry, givenProvince));
+                    geoBBs.add(bb);
+                    if (second) {
+                        bb = new GeographicBoundingBox(doi, getDVBoundingBox(commonCountry, commonProvince));
+                        geoBBs.add(bb);
+                    }
+                }
+            }else {
+                GeographicBoundingBox bb = new GeographicBoundingBox(doi, getDVBoundingBox(givenCountry));
+                geoBBs.add(bb);
+                if (second) {
+                    bb = new GeographicBoundingBox(doi, getDVBoundingBox(commonCountry));
+                    geoBBs.add(bb);
+                }
+            }
+        }else{
+            logger.warn("Somehow got to calling Geonames without there being anything in the geographic coverage for" + doi);
+
+        }
+        return geoBBs;
     }
 }

@@ -178,5 +178,10 @@ public abstract class SourceJavaObject {
         return "Error";
     }
 
+    public boolean hasGeoGraphicCoverage(){
+        GeographicFields gf = geoFields;
+        return gf.getGeoCovers().size()>0;
+    }
+
     //public JournalFields getJournalFields(){ return journalFields;}
 }
