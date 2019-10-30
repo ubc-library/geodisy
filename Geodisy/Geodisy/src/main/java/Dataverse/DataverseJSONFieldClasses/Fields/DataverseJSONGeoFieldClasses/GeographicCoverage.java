@@ -165,10 +165,10 @@ public class GeographicCoverage extends CompoundJSONField {
         }else if(provinceObject!=null){
             if(provinceObject.hasBoundingBox())
                 return provinceObject.getBoundingBox();
-        }else if(countryObject.hasBoundingBox()) {
-            return countryObject.getBoundingBox();
+        }else if(countryObject!=null){
+            if(countryObject.hasBoundingBox())
+                return countryObject.getBoundingBox();
         }
-
         return new BoundingBox();
     }
 }

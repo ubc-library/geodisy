@@ -18,7 +18,7 @@ public class GeodisyStrings {
         public final static String EXISTING_CALL_TO_CHECK = "./logs/existingCallToCheck.txt";
         public final static String ERROR_LOG = "./logs/error.log";
         public final static String XML_NS = "http://www.isotc211.org/2005/";
-        public final static String COUNTRY_VALS =  "./geodisyFiles/Geoname_countries.xml";
+        public final static String COUNTRY_VALS =  "geodisyFiles/Geoname_countries.xml";
         public final static String ALL_CITATION_METADATA = "./geodisyFiles/AllCitationMetadata.json";
         public final static String XML_TEST_FILE = "./geodisyFiles/XMLTestDJO.xml";
 

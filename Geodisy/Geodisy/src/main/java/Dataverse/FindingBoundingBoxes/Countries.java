@@ -50,7 +50,7 @@ public class Countries {
             doc = dBuilder.parse(xmlFile);
             doc.getDocumentElement().normalize();
             System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
-            NodeList nodeList = doc.getDocumentElement().getElementsByTagName("country");
+            NodeList nodeList = doc.getDocumentElement().getElementsByTagName("givenCountry");
             int nodeListLen = nodeList.getLength();
             for(int i = 0; i<nodeListLen; i++){
                 setCountry(nodeList.item(i));

@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class HTTPCaller {
     String searchUrl;
     GeoLogger logger = new GeoLogger(this.getClass());
+    String responseCode;
 
     public HTTPCaller(String searchUrl) {
         this.searchUrl = searchUrl;
@@ -25,7 +26,7 @@ public class HTTPCaller {
     private HttpURLConnection getHttpURLConnection() {
         try {
 
-            URL url = getURLSafeString();
+            URL url = new URL(searchUrl);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setConnectTimeout(20000);
@@ -33,14 +34,14 @@ public class HTTPCaller {
             return con;
         } catch (ProtocolException e) {
             logger.error("Something went wrong making the HTTP URL connection, Protocol exception");
-        } catch (MalformedURLException | URISyntaxException e) {
+        } catch (MalformedURLException e) {
             logger.error("Something went wrong making the HTTP URL connection, URL was malformed");
         } catch (IOException e) {
             logger.error("Something went wrong making the HTTP URL connection, IOException");
         }
         return null;
     }
-    //TODO something is going wrong here
+    //TODO don't think I need this
     private URL getURLSafeString() throws MalformedURLException, URISyntaxException, UnsupportedEncodingException {
         int location = searchUrl.indexOf("?q=")!=-1? searchUrl.indexOf("?q=")+ 3 : searchUrl.indexOf("?exporter=") + 10; //call list of dois or call for metadata records
         String search = URLEncoder.encode(searchUrl.substring(location), StandardCharsets.UTF_8.toString());
@@ -48,9 +49,10 @@ public class HTTPCaller {
         urlString = urlString + search;
         urlString = urlString.replaceAll("%26", "&");
         urlString = urlString.replaceAll("%3D", "=");
+        urlString = urlString.replaceAll("%252C%2520","%2C%20");
         if(urlString.contains("doi%3"))
             urlString = urlString.replaceAll("%2F","/");
-        URL url = new URL(urlString);
+        URL url = new URL(searchUrl);
         return url;
     }
 
@@ -74,6 +76,7 @@ public class HTTPCaller {
 
             } else {
                 logger.error("GET request didn't work");
+                return "BAD_RESPONSE";
             }
         } catch (SocketTimeoutException s) {
             answer = retryReading(con);
@@ -110,6 +113,7 @@ public class HTTPCaller {
 
                 } else {
                     logger.error("GET request didn't work");
+                    return "BAD_RESPONSE";
                 }
             } catch (SocketTimeoutException s) {
                 continue;
@@ -130,6 +134,7 @@ public class HTTPCaller {
         HttpURLConnection h = getHttpURLConnection();
         if(h==null)
             return "HTTP Fail";
-        return readResponse(h);
+        String answer = readResponse(h);
+        return (answer.equals("BAD_RESPONSE")? "HTTP Fail":answer);
     }
 }

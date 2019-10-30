@@ -28,23 +28,7 @@ public class Geonames {
         this.countries = Countries.getCountry();
     }
 
-    public String getGeonamesProvince(String province, String country) {
-        Map<String, String> parameters = getBaseParameters(country);
-        parameters.put("fcode","ADM1*");
-        province +=  addParameters(parameters);
-        String urlString = "http://api.geonames.org/search?q=" + province;
-        HTTPCaller caller = new HTTPCaller(urlString);
-        String answer = "";
-        answer = caller.getJSONString();
 
-        if(answer.contains("<totalResultsCount>0</totalResultsCount>"))
-            answer = getGeonamesCountry(province);
-
-        if(answer.contains("<totalResultsCount>0</totalResultsCount>"))
-            answer = getGeonamesCountry(country);
-
-        return answer;
-    }
 
     public String getGeonamesCity(String city, String province, String country){
         Map<String, String> parameters = getBaseParameters(country);
@@ -55,9 +39,32 @@ public class Geonames {
         HTTPCaller caller = new HTTPCaller(urlString);
         String answer = "";
         answer = caller.getJSONString();
-
         if(answer.contains("<totalResultsCount>0</totalResultsCount>"))
             answer = getGeonamesProvince(province,country);
+        return answer;
+    }
+
+    public String getGeonamesProvince(String province, String country) {
+        Map<String, String> parameters = getBaseParameters(country);
+        parameters.put("fcode","ADM1*");
+        String search = province + addParameters(parameters);
+        String urlString = "http://api.geonames.org/search?q=" + search;
+        HTTPCaller caller = new HTTPCaller(urlString);
+        String answer = "";
+        answer = caller.getJSONString();
+
+        //Check territory if province (US state level) doesn't work. TERR is between Province and Country
+        if(answer.contains("<totalResultsCount>0</totalResultsCount>")) {
+            parameters = getBaseParameters(country);
+            parameters.put("fcode", "TERR");
+            search = province + addParameters(parameters);
+            urlString = "http://api.geonames.org/search?q=" + search;
+            caller = new HTTPCaller(urlString);
+            answer = caller.getJSONString();
+        }
+        if(answer.contains("<totalResultsCount>0</totalResultsCount>"))
+            answer = getGeonamesCountry(country);
+
         return answer;
     }
 
@@ -134,5 +141,11 @@ public class Geonames {
         for(GeographicCoverage geoCoverage: djo.getGeoFields().getGeoCovers()){
             djo.getGeoFields().setGeoBBoxes(geonamesBBs.getDVBoundingBox(geoCoverage,djo.getGeoFields().getGeoBBoxes()));
         }
+    }
+
+    public String getCountryCode(String countryName){
+        if(countries.isCountryCode(countryName))
+            return countryName;
+        return countries.getCountryCode(countryName);
     }
 }

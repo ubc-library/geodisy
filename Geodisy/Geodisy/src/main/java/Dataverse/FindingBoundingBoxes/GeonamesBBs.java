@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static Dataverse.DVFieldNameStrings.*;
+import static Dataverse.FindingBoundingBoxes.CountryCodes.getCountryByCode;
 
 /**
  * GeonamesBBs collects a bounding box for a record that has enough geospatial fields filled out.
@@ -28,11 +29,13 @@ public class GeonamesBBs extends FindBoundBox {
     HashMap<String, BoundingBox> bBoxes;
     String doi;
     public DataverseJavaObject djo;
+    Geonames geo;
 
     public GeonamesBBs(String doi) {
         this.doi = doi;
         this.countries = Countries.getCountry();
         this.bBoxes = countries.getBoundingBoxes();
+        geo = new Geonames();
     }
 
     public GeonamesBBs(DataverseJavaObject djo){
@@ -40,6 +43,7 @@ public class GeonamesBBs extends FindBoundBox {
         doi = this.djo.getDOI();
         this.countries = Countries.getCountry();
         this.bBoxes = countries.getBoundingBoxes();
+        geo = new Geonames();
     }
 
     /**
@@ -84,15 +88,14 @@ public class GeonamesBBs extends FindBoundBox {
         } catch (UnsupportedEncodingException ignored) {
             // Can be safely ignored because UTF-8 is always supported
         }
-        String searchString = province;
-        String responseString = getJSONString(searchString, country);
+        String responseString = geo.getGeonamesProvince(province,country);
         box = readResponse(responseString,doi, djo);
-        if(box.getLongWest()==361)
-            return getDVBoundingBox(country);
-        Province p = new Province(unURLedProvince, country);
-        p.setBoundingBox(box);
-        bBoxes.put(addDelimiter(country,unURLedProvince), box);
-        countries.setBoundingBoxes(bBoxes);
+        if(box.getLongWest()!=361) {
+            Province p = new Province(unURLedProvince, country);
+            p.setBoundingBox(box);
+            bBoxes.put(addDelimiter(country, unURLedProvince), box);
+            countries.setBoundingBoxes(bBoxes);
+        }
         return box;
     }
 
@@ -114,8 +117,6 @@ public class GeonamesBBs extends FindBoundBox {
         BoundingBox box = countries.getExistingBB(country, province, city);
         if(box.getLongWest()!=361)
             return box;
-        String fcode = "PPL*";
-
         String unURLedProvince = province;
         String unURLedCity = city;
         try {
@@ -124,15 +125,15 @@ public class GeonamesBBs extends FindBoundBox {
         } catch (UnsupportedEncodingException ignored) {
             // Can be safely ignored because UTF-8 is always supported
         }
-        String searchString = city + "%2C%20" + province;
-        String responseString = getJSONString(searchString, country);
+
+        String responseString = geo.getGeonamesCity(city,province, country);
         box = readResponse(responseString,doi, djo);
-        if(box.getLongWest()==361)
-            return getDVBoundingBox(country,province);
-        City cit = new City(city,province,country);
-        cit.setBoundingBox(box);
-        bBoxes.put(addDelimiter(country,unURLedProvince,unURLedCity),box);
-        countries.setBoundingBoxes(bBoxes);
+        if(box.getLongWest()==361) {
+            City cit = new City(city, province, country);
+            cit.setBoundingBox(box);
+            bBoxes.put(addDelimiter(country, unURLedProvince, unURLedCity), box);
+            countries.setBoundingBoxes(bBoxes);
+        }
 
         return box;
     }
@@ -156,7 +157,7 @@ public class GeonamesBBs extends FindBoundBox {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("username", USER_NAME);
         parameters.put("style","FULL");
-        String countryCode = countries.isCountryCode(country) ? country : countries.getCountryCode(country);
+        String countryCode = countries.isCountryCode(country) ? country : countries.getCountryByCode(country);
         parameters.put("country",countryCode);
         String unURLedOther = other;
         try {
@@ -199,7 +200,7 @@ public class GeonamesBBs extends FindBoundBox {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("username", USER_NAME);
         parameters.put("style","FULL");
-        String countryCode = countries.isCountryCode(country) ? country : countries.getCountryCode(country);
+        String countryCode = countries.isCountryCode(country) ? country : countries.getCountryByCode(country);
         parameters.put("country",countryCode);
         String unURLedOther = other;
         String unURLedProvince = province;
@@ -224,12 +225,6 @@ public class GeonamesBBs extends FindBoundBox {
         if(box.getLatSouth() == 361)
             logger.info("Record with PERSISTENT_ID: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" ,djo, logger.getName());
         return box;
-    }
-
-    @Override
-    public String getJSONString(String searchValue, String country) {
-        Geonames geo = new Geonames();
-        return geo.getGeonamesProvince(searchValue,country);
     }
 
 

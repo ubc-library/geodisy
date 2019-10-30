@@ -16,7 +16,7 @@ public abstract class FindBoundBox {
     abstract BoundingBox getDVBoundingBox(String country, String province, String city);
     abstract BoundingBox getDVBoundingBoxOther(String country, String other);
     abstract BoundingBox getDVBoundingBoxOther(String country,String province, String other);
-    abstract String getJSONString(String search, String country);
+
     GeoLogger logger = new GeoLogger(FindBoundBox.class);
 
     protected BoundingBox readResponse(String responseString, String doi, DataverseJavaObject djo){

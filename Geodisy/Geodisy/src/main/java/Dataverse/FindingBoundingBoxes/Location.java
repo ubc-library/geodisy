@@ -41,7 +41,7 @@ public class Location implements GeographicPoliticalUnit {
     }
     //Placeholder location constructor
     public Location(){
-
+        boundingBox = new BoundingBox();
     }
 
     public String getGivenName() {

@@ -2,7 +2,6 @@ package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 
 import Dataverse.DataverseJavaObject;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;

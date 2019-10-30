@@ -47,7 +47,7 @@ public class ExistingSearchesFile {
         ExistingSearches es;
         FileWriter writer = new FileWriter();
         try {
-
+            //TODO something is going wrong here. Says it's trying to convert a HashMap to Dataverse.ExistingSearches. Maybe save the maps separately?
             es = (ExistingSearches) writer.readSavedObject(path);
         } catch (FileNotFoundException e) {
             es = ExistingSearches.getExistingSearches();

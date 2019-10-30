@@ -43,6 +43,7 @@ public class GeonamesJSON {
 
     public BoundingBox getBBFromGeonamesBBElementString(){
         BoundingBox bb =  new BoundingBox();
+        jo = jo.getJSONObject("givenCountry");
         if(!jo.has("south"))
             return bb;
         bb.setLongWest(getDoubleLatLongVal(jo,"west"));
