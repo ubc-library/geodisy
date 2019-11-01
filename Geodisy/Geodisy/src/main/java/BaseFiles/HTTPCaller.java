@@ -50,6 +50,7 @@ public class HTTPCaller {
         urlString = urlString.replaceAll("%26", "&");
         urlString = urlString.replaceAll("%3D", "=");
         urlString = urlString.replaceAll("%252C%2520","%2C%20");
+        urlString = urlString.replaceAll(" ", "%20");
         if(urlString.contains("doi%3"))
             urlString = urlString.replaceAll("%2F","/");
         URL url = new URL(searchUrl);

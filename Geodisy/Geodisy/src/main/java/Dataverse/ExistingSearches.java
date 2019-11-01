@@ -135,4 +135,12 @@ public class ExistingSearches implements Serializable {
     public  HashMap<String, DataverseRecordInfo> getRecordVersions() {
         return recordVersions;
     }
+
+    public void setbBoxes(HashMap<String, BoundingBox> bboxes){
+        bBoxes = bboxes;
+    }
+
+    public void setRecords(HashMap<String,DataverseRecordInfo> records){
+        recordVersions = records;
+    }
 }

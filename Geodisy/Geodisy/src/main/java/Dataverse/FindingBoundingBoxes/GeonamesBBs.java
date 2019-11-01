@@ -238,9 +238,9 @@ public class GeonamesBBs extends FindBoundBox {
     }
 
     public List<GeographicBoundingBox> getDVBoundingBox(GeographicCoverage geoCoverage, List<GeographicBoundingBox> geoBBs ) {
-        String givenCountry = geoCoverage.getField(COUNTRY);
-        String givenProvince = geoCoverage.getField(PROVINCE);
-        String givenCity = geoCoverage.getField(CITY);
+        String givenCountry = geoCoverage.getField(GIVEN_COUNTRY);
+        String givenProvince = geoCoverage.getField(GIVEN_PROVINCE);
+        String givenCity = geoCoverage.getField(GIVEN_CITY);
         String commonCountry = geoCoverage.getField(COMMON_COUNTRY);
         String commonProvince = geoCoverage.getField(COMMON_PROVINCE);
         String commonCity = geoCoverage.getField(COMMON_CITY);

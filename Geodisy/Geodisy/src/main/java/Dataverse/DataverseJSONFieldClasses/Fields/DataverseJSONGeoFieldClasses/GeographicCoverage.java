@@ -105,6 +105,7 @@ public class GeographicCoverage extends CompoundJSONField {
                     setGivenCountry(value);
                     break;
                 case PROVINCE:
+                case STATE:
                     setGivenProvince(value);
                     break;
                 case CITY:
@@ -122,11 +123,11 @@ public class GeographicCoverage extends CompoundJSONField {
     @Override
     public String getField(String fieldName) {
         switch (fieldName) {
-            case COUNTRY:
+            case GIVEN_COUNTRY:
                 return givenCountry;
-            case PROVINCE:
+            case GIVEN_PROVINCE:
                 return givenProvince;
-            case CITY:
+            case GIVEN_CITY:
                 return givenCity;
             case OTHER_GEO_COV:
                 return getOtherGeographicCoverage();
@@ -144,11 +145,11 @@ public class GeographicCoverage extends CompoundJSONField {
     //TODO remove when non-list version completely implemented
     public List<String> getListField(String fieldName) {
         switch (fieldName) {
-            case COUNTRY:
+            case GIVEN_COUNTRY:
                 return getCountryList();
-            case PROVINCE:
+            case GIVEN_PROVINCE:
                 return getProvinceList();
-            case CITY:
+            case GIVEN_CITY:
                 return getCityList();
             //case OTHER_GEO_COV:
                 //return getOtherGeographicCoverage();

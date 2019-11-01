@@ -5,7 +5,6 @@ import BaseFiles.GeodisyStrings;
 import Crosswalking.XML.XMLGroups.GeographicInfo;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
-import Dataverse.FindingBoundingBoxes.GeonamesBBs;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -61,7 +60,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             this.geoFields.setFields(jo);
         }
         List<BoundingBox> bb = new LinkedList<>();
-        GeonamesBBs geonames = new GeonamesBBs(this);
+        //GeonamesBBs geonames = new GeonamesBBs(this);
         if(!geoFields.hasBB()){
             List<GeographicCoverage> coverages = geoFields.getListField(GEOGRAPHIC_COVERAGE);
             if(!coverages.isEmpty())
@@ -159,6 +158,7 @@ public class DataverseJavaObject extends SourceJavaObject {
      */
     @Override
     public void downloadFiles() {
+        //TODO something is going wrong with record 10_5072_FK2_GMKLWX
         File f = new File("datasetFiles\\\\" + urlized(citationFields.getDOI()));
         deleteDir(f);
         List<DataverseRecordFile> temp = new LinkedList<>();
