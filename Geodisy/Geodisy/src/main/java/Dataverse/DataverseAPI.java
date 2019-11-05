@@ -9,7 +9,7 @@ package Dataverse;
 
 import BaseFiles.GeoLogger;
 import BaseFiles.Geonames;
-import BaseFiles.HTTPCaller;
+import BaseFiles.HTTPCallerGeoNames;
 import Crosswalking.JSONParsing.DataverseParser;
 import GeoServer.GeoServerAPI;
 import org.apache.commons.io.FileUtils;
@@ -171,8 +171,8 @@ public class DataverseAPI extends SourceAPI {
         int start = 0;
         String result;
         while(moreEntries){
-            HTTPCaller hC = new HTTPCaller(searchURL+"&start="+ start);
-            result = hC.getJSONString();
+            HTTPCallerGeoNames hC = new HTTPCallerGeoNames(searchURL+"&start="+ start);
+            result = hC.callHTTP();
             if(result.equals("HTTP Fail"))
                 break;
             moreEntries = parseResponseForDOIs(result,start, answer);
@@ -212,13 +212,13 @@ public class DataverseAPI extends SourceAPI {
     //iterate through the dOI to get JSONObjects for each metadata record
     @Override
     protected LinkedList<JSONObject> downloadMetadata(HashSet<String> dOIs) {
-        HTTPCaller getMetadata;
+        HTTPCallerGeoNames getMetadata;
         //TODO set base URL programmatically
         String baseURL = dvURL + "api/datasets/export?exporter=dataverse_json&persistentId=";
         LinkedList<JSONObject> answers =  new LinkedList<>();
         for(String s: dOIs){
-            getMetadata = new HTTPCaller(baseURL+s);
-            String dataverseJSON = getMetadata.getJSONString();
+            getMetadata = new HTTPCallerGeoNames(baseURL+s);
+            String dataverseJSON = getMetadata.callHTTP();
             if(dataverseJSON.equals("HTTP Fail"))
                 continue;
             JSONObject jo = new JSONObject(dataverseJSON);

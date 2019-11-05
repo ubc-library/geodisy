@@ -36,9 +36,9 @@ public class Geonames {
         String searchValue = city + "%2C%20" + province;
         searchValue +=  addParameters(parameters);
         String urlString = "http://api.geonames.org/search?q=" + searchValue;
-        HTTPCaller caller = new HTTPCaller(urlString);
+        HTTPCallerGeoNames caller = new HTTPCallerGeoNames();
         String answer = "";
-        answer = caller.getJSONString();
+        answer = caller.callHTTP(urlString);
         if(answer.contains("<totalResultsCount>0</totalResultsCount>"))
             answer = getGeonamesProvince(province,country);
         return answer;
@@ -49,9 +49,9 @@ public class Geonames {
         parameters.put("fcode","ADM1*");
         String search = province + addParameters(parameters);
         String urlString = "http://api.geonames.org/search?q=" + search;
-        HTTPCaller caller = new HTTPCaller(urlString);
+        HTTPCallerGeoNames caller = new HTTPCallerGeoNames();
         String answer = "";
-        answer = caller.getJSONString();
+        answer = caller.callHTTP(urlString);
 
         //Check territory if province (US state level) doesn't work. TERR is between Province and Country
         if(answer.contains("<totalResultsCount>0</totalResultsCount>")) {
@@ -59,8 +59,8 @@ public class Geonames {
             parameters.put("fcode", "TERR");
             search = province + addParameters(parameters);
             urlString = "http://api.geonames.org/search?q=" + search;
-            caller = new HTTPCaller(urlString);
-            answer = caller.getJSONString();
+            caller = new HTTPCallerGeoNames();
+            answer = caller.callHTTP(urlString);
         }
         if(answer.contains("<totalResultsCount>0</totalResultsCount>"))
             answer = getGeonamesCountry(country);
@@ -74,9 +74,9 @@ public class Geonames {
         parameters.put("fcode","PCL*");
         searchString +=  addParameters(parameters);
         String urlString = "http://api.geonames.org/search?q=" + searchString;
-        HTTPCaller caller = new HTTPCaller(urlString);
+        HTTPCallerGeoNames caller = new HTTPCallerGeoNames();
         String answer ="";
-        answer = caller.getJSONString();
+        answer = caller.callHTTP(urlString);
 
         if(answer.contains("<totalResultsCount>0</totalResultsCount>"))
             answer = getGeonamesTerritory(country);
@@ -89,9 +89,9 @@ public class Geonames {
         parameters.put("fcode","TERR");
         searchString +=  addParameters(parameters);
         String urlString = "http://api.geonames.org/search?q=" + searchString;
-        HTTPCaller caller = new HTTPCaller(urlString);
+        HTTPCallerGeoNames caller = new HTTPCallerGeoNames();
         String answer ="";
-        answer = caller.getJSONString();
+        answer = caller.callHTTP(urlString);
         return answer;
     }
 

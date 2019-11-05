@@ -1,29 +1,23 @@
 package BaseFiles;
 
-import com.sun.jndi.toolkit.url.Uri;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.*;
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Class for making HTTP calls and getting JSON string responses
- */
-public class HTTPCaller {
-    String searchUrl;
-    GeoLogger logger = new GeoLogger(this.getClass());
-    String responseCode;
+public abstract class HTTPCaller {
+    protected GeoLogger logger;
 
-    public HTTPCaller(String searchUrl) {
-        this.searchUrl = searchUrl;
-
+    public String callHTTP(String searchUrl) {
+        HttpURLConnection h = getHttpURLConnection(searchUrl);
+        if(h==null)
+            return "HTTP Fail";
+        String answer = readResponse(h);
+        return (answer.equals("BAD_RESPONSE")? "HTTP Fail":answer);
     }
 
-    private HttpURLConnection getHttpURLConnection() {
+    protected HttpURLConnection getHttpURLConnection(String searchUrl) {
         try {
 
             URL url = new URL(searchUrl);
@@ -41,23 +35,8 @@ public class HTTPCaller {
         }
         return null;
     }
-    //TODO don't think I need this
-    private URL getURLSafeString() throws MalformedURLException, URISyntaxException, UnsupportedEncodingException {
-        int location = searchUrl.indexOf("?q=")!=-1? searchUrl.indexOf("?q=")+ 3 : searchUrl.indexOf("?exporter=") + 10; //call list of dois or call for metadata records
-        String search = URLEncoder.encode(searchUrl.substring(location), StandardCharsets.UTF_8.toString());
-        String urlString = searchUrl.substring(0, location);
-        urlString = urlString + search;
-        urlString = urlString.replaceAll("%26", "&");
-        urlString = urlString.replaceAll("%3D", "=");
-        urlString = urlString.replaceAll("%252C%2520","%2C%20");
-        urlString = urlString.replaceAll(" ", "%20");
-        if(urlString.contains("doi%3"))
-            urlString = urlString.replaceAll("%2F","/");
-        URL url = new URL(searchUrl);
-        return url;
-    }
 
-    private String readResponse(HttpURLConnection con) {
+    protected String readResponse(HttpURLConnection con) {
         con.setDoOutput(true);
         int responseCode = 0;
         String answer = "";
@@ -83,12 +62,11 @@ public class HTTPCaller {
             answer = retryReading(con);
         }catch (IOException e) {
             e.printStackTrace();
-            logger.error("Something went wrong getting a bounding box from an external source");
+            ioError();
         }
         return answer;
     }
-
-    private String retryReading(HttpURLConnection con) {
+    protected String retryReading(HttpURLConnection con) {
         con.setDoOutput(true);
         int responseCode = 0;
         String answer = "";
@@ -120,7 +98,7 @@ public class HTTPCaller {
                 continue;
             } catch (IOException e) {
                 e.printStackTrace();
-                logger.error("Something went wrong getting a bounding box from an external source");
+
                 continue;
             }
             if(!answer.isEmpty())
@@ -131,11 +109,5 @@ public class HTTPCaller {
         return answer;
     }
 
-    public String getJSONString() {
-        HttpURLConnection h = getHttpURLConnection();
-        if(h==null)
-            return "HTTP Fail";
-        String answer = readResponse(h);
-        return (answer.equals("BAD_RESPONSE")? "HTTP Fail":answer);
-    }
+    protected abstract void ioError();
 }
