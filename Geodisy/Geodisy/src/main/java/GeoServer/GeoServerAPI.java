@@ -5,9 +5,14 @@
  */
 package GeoServer;
 
+import BaseFiles.FileWriter;
+import BaseFiles.GeoLogger;
 import Dataverse.SourceJavaObject;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
 
 import static GeoServer.GeoserverStrings.*;
 
@@ -23,29 +28,38 @@ public class GeoServerAPI extends DestinationAPI {
     public GeoServerAPI(SourceJavaObject sjo) {
         this.sjo = sjo;
         caller = new HTTPCallerGeosever();
+        logger =  new GeoLogger(this.getClass());
     }
 
-    public String upload(String name){
+    public String upload(){
         String response = "";
         String doi = sjo.getDOI();
         String workspace = (doi.length()>10? doi.substring(doi.length()-10):doi);
-        String jsonString = createJSON(name, workspace);
+        String jsonString = createJSON(workspace);
         if(!jsonString.isEmpty())
             saveJsonToFile(jsonString);
             caller.callHTTP(generateLayerUploadCall(workspace));
         return response;
     }
-    //TODO save json to temp file named import.json
     private void saveJsonToFile(String jsonString) {
+        FileWriter fileWriter = new FileWriter();
+        String doi = sjo.getDOI();
+        String doiPath = doi.replaceAll(".","_").replaceAll("/","_");
+        String filePath = "datasetFiles/"+ doiPath + "/import.json";
+        try {
+            fileWriter.writeStringToFile(jsonString,filePath);
+        } catch (IOException e) {
+            logger.error("Something went wrong trying to create the temp json for uploading to geoserver");
+        }
     }
 
     private String generateLayerUploadCall(String workspace) {
-        String curlCall = "curl -u " + USERNAME + ":" + PASSWORD + " -XPOST -H \"Content-type: application/json\" -d @import.json \"http://localhost:8080/geoserver/rest/imports\"";
+        String curlCall = "curl -u " + USERNAME + ":" + PASSWORD + " -XPOST -H \"Content-type: application/json\" -d @_tempFiles/import.json \"http://localhost:8080/geoserver/rest/imports\"";
         return curlCall;
     }
 
     //TODO fix this monstrosity
-    private String createJSON(String fileName, String workspace) {
+    private String createJSON(String workspace) {
 
         String jsonModified = "";
         if(generateWorkspace(workspace)) {

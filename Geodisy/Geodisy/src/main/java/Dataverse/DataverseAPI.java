@@ -133,7 +133,8 @@ public class DataverseAPI extends SourceAPI {
             deleteMetadata(doi);
             //TODO delete dataset and metadata from Geoserver
         }
-        GeoServerAPI geoserver = new GeoServerAPI();
+        //TODO change this when geoserver is setup
+        //GeoServerAPI geoserver = new GeoServerAPI();
         //TODO uncomment once I've got JGIT working
         //JGit git = new JGit();
         //git.deleteXMLFiles(keySet);
@@ -171,8 +172,8 @@ public class DataverseAPI extends SourceAPI {
         int start = 0;
         String result;
         while(moreEntries){
-            HTTPCallerGeoNames hC = new HTTPCallerGeoNames(searchURL+"&start="+ start);
-            result = hC.callHTTP();
+            HTTPCallerGeoNames hC = new HTTPCallerGeoNames();
+            result = hC.callHTTP(searchURL+"&start="+ start);
             if(result.equals("HTTP Fail"))
                 break;
             moreEntries = parseResponseForDOIs(result,start, answer);
@@ -217,8 +218,8 @@ public class DataverseAPI extends SourceAPI {
         String baseURL = dvURL + "api/datasets/export?exporter=dataverse_json&persistentId=";
         LinkedList<JSONObject> answers =  new LinkedList<>();
         for(String s: dOIs){
-            getMetadata = new HTTPCallerGeoNames(baseURL+s);
-            String dataverseJSON = getMetadata.callHTTP();
+            getMetadata = new HTTPCallerGeoNames();
+            String dataverseJSON = getMetadata.callHTTP(baseURL+s);
             if(dataverseJSON.equals("HTTP Fail"))
                 continue;
             JSONObject jo = new JSONObject(dataverseJSON);

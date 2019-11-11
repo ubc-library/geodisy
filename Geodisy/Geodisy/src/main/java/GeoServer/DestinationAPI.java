@@ -6,11 +6,13 @@
 package GeoServer;
 
 import BaseFiles.API;
+import BaseFiles.GeoLogger;
 
 /**
  *
  * @author pdante
  */
 public abstract class DestinationAPI implements API {
+    GeoLogger logger;
 
 }
