@@ -1,7 +1,8 @@
 package Crosswalking;
 
 
-import Crosswalking.XML.XMLTools.GeoCombine;
+
+import Crosswalking.GeoBlacklightJson.GeoCombine;
 import Crosswalking.XML.XMLTools.JGit;
 import Crosswalking.XML.XMLTools.XMLDocObject;
 import Dataverse.SourceJavaObject;

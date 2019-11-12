@@ -1,6 +1,7 @@
 package Crosswalking.GeoBlacklightJson;
 
 import BaseFiles.HTTPCaller;
+import Crosswalking.XML.XMLTools.JGit;
 
 public class GeoCombine {
     HTTPCaller caller;
@@ -10,6 +11,12 @@ public class GeoCombine {
     }
 
     public void index(){
-        caller.callHTTP("bundle exec rake geocombine:index")
+        caller.callHTTP("SOLR_URL=http://geo.frdr.ca:8983/solr/collection bundle exec rake geocombine:index");
+    }
+
+    public void updateOpenGeoMetadata(String fileName, JGit jgit){
+        String filePath = jgit.getOpenGeoLocalFilePath(fileName);
+        //TODO uncommnet once I've got JGit working
+        //jgit.addXMLFileToIndex(filePath + fileName + ".json");
     }
 }

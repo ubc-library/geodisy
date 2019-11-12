@@ -127,7 +127,7 @@ public class JGit {
     private void generateNewXMLFiles(List<XMLDocObject> docs) throws GitAPIException, TransformerException {
         for(XMLDocObject doc: docs){
             //TODO figure out if XML file name should be what is currently in xMLFileName
-            String xMLFileName = getXMLLocalFilePath(doc.doi) + ".xml";
+            String xMLFileName = getOpenGeoLocalFilePath(doc.doi) + ".xml";
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource domSource = new DOMSource(doc.getDoc());
@@ -156,7 +156,7 @@ public class JGit {
      * @param doiName
      * @return
      */
-    public String getXMLLocalFilePath(String doiName){
+    public String getOpenGeoLocalFilePath(String doiName){
         String current = doiName;
         String filePath = localRepoLocation;
         filePath += "doi/";
@@ -193,7 +193,7 @@ public class JGit {
             //add setCached(false). if files are not getting deleted from the working directory
             for(String name: dois) {
                 badname = name;
-                DirCache index = git.rm().addFilepattern(getXMLLocalFilePath(name) + ".xml").call();
+                DirCache index = git.rm().addFilepattern(getOpenGeoLocalFilePath(name) + ".xml").call();
             }
         } catch (GitAPIException e) {
             logger.error("Something went wrong trying to delete file: " + badname);
