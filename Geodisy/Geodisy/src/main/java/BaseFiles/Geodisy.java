@@ -13,6 +13,7 @@ import Dataverse.SourceJavaObject;
 
 import DataSourceLocations.Dataverse;
 import Dataverse.ExistingSearches;
+import GeoServer.GeoServerAPI;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -58,7 +59,8 @@ public class Geodisy {
     /**
      * Backside of middleware, this is the part that sends the processed data/metadata to Geoserver
      */
-    public void exportToGeoserver(){
-        //TODO
+    public void exportToGeoserver(SourceJavaObject sjo){
+        GeoServerAPI geoServerAPI = new GeoServerAPI(sjo);
+        geoServerAPI.upload();
     }
 }
