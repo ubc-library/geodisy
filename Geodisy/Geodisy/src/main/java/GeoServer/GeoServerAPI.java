@@ -11,7 +11,6 @@ import Dataverse.SourceJavaObject;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
 
 import static GeoServer.GeoserverStrings.*;
@@ -35,10 +34,10 @@ public class GeoServerAPI extends DestinationAPI {
         String response = "";
         String doi = sjo.getDOI();
         String workspace = (doi.length()>10? doi.substring(doi.length()-10):doi);
-        String jsonString = createJSON(workspace);
+        String jsonString = createDirectoryUploadJSON(workspace, STORENAME);
         if(!jsonString.isEmpty())
             saveJsonToFile(jsonString);
-            caller.callHTTP(generateLayerUploadCall(workspace));
+            caller.callHTTP(generateUploadCall());
         return response;
     }
     private void saveJsonToFile(String jsonString) {
@@ -53,41 +52,68 @@ public class GeoServerAPI extends DestinationAPI {
         }
     }
 
-    private String generateLayerUploadCall(String workspace) {
+    private String generateUploadCall() {
         String curlCall = "curl -u " + USERNAME + ":" + PASSWORD + " -XPOST -H \"Content-type: application/json\" -d @_tempFiles/import.json \"http://localhost:8080/geoserver/rest/imports\"";
         return curlCall;
     }
 
-    //TODO fix this monstrosity
-    private String createJSON(String workspace) {
+    private String createDirectoryUploadJSON(String workspace, String store) {
 
         String jsonModified = "";
         if(generateWorkspace(workspace)) {
             JSONObject root = new JSONObject();
-            JSONArray array = new JSONArray();
-            JSONObject obj3 = new JSONObject();
-            obj3.put("\"name\"", workspace);
-            JSONObject obj2 = new JSONObject();
-            obj2.put("\"workspace\"", obj3);
-            JSONObject obj1 = new JSONObject();
-            obj1.put("\"targetWorkspace\"", obj2);
-            array.put(obj1);
-            JSONObject obj6 = new JSONObject();
-            obj6.put("\"location\"", LOCATION);
-            JSONObject obj5 = new JSONObject();
-            obj5.put("\"type\"", "\"directory\"");
-            JSONObject obj4 = new JSONObject();
-            JSONArray array2 = new JSONArray();
-            array2.put(obj5);
-            array2.put(obj6);
-            obj4.put("\"data\"", array2);
-            array.put(obj4);
+            JSONArray array = addWorkspaceStore(workspace,store);
             root.put("\"import\"", array);
             String json = root.toString();
-            jsonModified = json.replaceAll("\\[", "{");
-            jsonModified = jsonModified.replaceAll("]", "}");
+            jsonModified = jsonArrayBracketChange(json);
         }
         return jsonModified;
+    }
+
+    private String jsonArrayBracketChange(String json) {
+        String answer = json.replaceAll("\\[", "{");
+        return answer.replaceAll("]", "}");
+    }
+
+    private JSONArray addWorkspaceStore(String workspace, String store) {
+        JSONArray array = new JSONArray();
+        array.put(workspaceJSON(workspace));
+        array.put(storeJSON(store));
+        array.put(locationJSON());
+        return array;
+    }
+
+    private JSONObject locationJSON() {
+        JSONObject obj3 = new JSONObject();
+        obj3.put("\"location\"", LOCATION);
+        JSONObject obj2 = new JSONObject();
+        obj2.put("\"type\"", "\"directory\"");
+        JSONArray array = new JSONArray();
+        array.put(obj2);
+        array.put(obj3);
+        JSONObject obj1 = new JSONObject();
+        obj1.put("\"data\"",array);
+        return obj1;
+    }
+
+    private JSONObject workspaceJSON(String workspace) {
+        JSONObject obj3 = new JSONObject();
+        obj3.put("\"name\"", workspace);
+        JSONObject obj2 = new JSONObject();
+        obj2.put("\"workspace\"", obj3);
+        JSONObject obj1 = new JSONObject();
+        obj1.put("\"targetWorkspace\"", obj2);
+        return obj1;
+    }
+
+    private JSONObject storeJSON(String store) {
+        JSONObject obj3 = new JSONObject();
+        obj3.put("\"name\"", store);
+        JSONObject obj2 = new JSONObject();
+        obj2.put("\"dataStore\"", obj3);
+        JSONObject obj1 = new JSONObject();
+        obj1.put("\"targetStore\"", obj2);
+        return obj1;
     }
     //TODO generate new workspace
     private boolean generateWorkspace(String workspaceName) {
@@ -102,4 +128,51 @@ public class GeoServerAPI extends DestinationAPI {
         String response = caller.deleteWorkSpace(callURL);
         return response.contains("HTTP/1.1 200 OK")||response.contains("HTTP/1.1 404 Workspace");
     }
+
+    public String uploadShapeToPostGIS(String workspace,String store,String file){
+        String response = "";
+        String doi = sjo.getDOI();
+        String workspaceName = (doi.length()>10? doi.substring(doi.length()-10):doi);
+        String jsonString = createFileUploadJSON(workspace, store, file);
+        if(!jsonString.isEmpty())
+            saveJsonToFile(jsonString);
+        caller.callHTTP(generateUploadCall());
+        return response;
+    }
+
+    private String createFileUploadJSON(String workspace,String store, String file) {
+        String jsonModified = "";
+        if(generateWorkspace(workspace)) {
+            JSONObject root = new JSONObject();
+            JSONArray array = addWorkspaceStore(workspace,store,file);
+            root.put("\"import\"", array);
+            String json = root.toString();
+            jsonModified = jsonArrayBracketChange(json);
+        }
+        return jsonModified;
+    }
+
+    private JSONArray addWorkspaceStore(String workspace, String store, String file) {
+        JSONArray array = new JSONArray();
+        array.put(workspaceJSON(workspace));
+        array.put(storeJSON(store));
+        array.put(fileJSON(file));
+        return array;
+    }
+
+    private JSONObject fileJSON(String file) {
+        JSONObject obj3 = new JSONObject();
+        obj3.put("\"file\"", file);
+        JSONObject obj2 = new JSONObject();
+        obj2.put("\"type\"", "\"file\"");
+        JSONArray array = new JSONArray();
+        array.put(obj2);
+        array.put(obj3);
+        JSONObject obj1 = new JSONObject();
+        obj1.put("\"data\"",array);
+        return obj1;
+    }
 }
+
+    String curlCall = "curl -u " + USERNAME + ":" + PASSWORD + " -XPOST -H \"Content-type: application/json\" -d @_tempFiles/import.json \"http://localhost:8080/geoserver/rest/imports\"";
+        return curlCall;
