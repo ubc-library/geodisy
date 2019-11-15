@@ -27,7 +27,6 @@ public class Location implements GeographicPoliticalUnit {
     public Location(String givenName, GeonamesJSON geonamesJSON) {
         this.geonamesJSON = geonamesJSON;
         this.givenName = givenName;
-        this.commonName = this.geonamesJSON.getCommonName();
         boundingBox = geonamesJSON.getBBFromGeonamesJSON();
         altNames = geonamesJSON.getAltNames();
 
@@ -36,7 +35,6 @@ public class Location implements GeographicPoliticalUnit {
     public Location(String givenName, Element element){
         this.geonamesJSON = new GeonamesJSON(elementToString(element));
         this.givenName = givenName;
-        this.commonName = this.geonamesJSON.getCommonName();
         boundingBox = geonamesJSON.getBBFromGeonamesBBElementString();
     }
     //Placeholder location constructor

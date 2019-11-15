@@ -13,6 +13,7 @@ public class Province extends Location {
 
     public Province(String name, String countryName) {
         super(name, new GeonamesJSON(new Geonames().getGeonamesProvince(name,countryName)));
+        this.commonName = this.geonamesJSON.getCommonStateName();
         if(countryName.isEmpty())
             country = new Country();
         else
