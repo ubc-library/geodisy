@@ -54,30 +54,21 @@ public class GeographicCoverage extends CompoundJSONField {
         List answer = Arrays.asList(array);
         return answer;
     }
-    //TODO remove once givenCountry and commonCountry implemented
-    public List<String> getCountryList() {
-        return (givenCountry.isEmpty() ? new LinkedList<String>() : getGeoCoverageField(givenCountry, commonCountry));
-    }
+
 
     public void setGivenCountry(String givenCountry) {
         this.givenCountry = givenCountry;
         countryObject = Countries.getCountry().getCountryByName(givenCountry);
         commonCountry = countryObject.getGivenName();
     }
-    //TODO remove once givenProvince and commonProvince implemented
-    public List<String> getProvinceList() {
-        return (givenProvince.isEmpty() ? new LinkedList<String>() : getGeoCoverageField(givenProvince, commonProvince));
-    }
+
 
     public void setGivenProvince(String givenProvince) {
         this.givenProvince = givenProvince;
         provinceObject =  new Province(this.givenProvince, givenCountry);
         commonProvince = provinceObject.getGivenName();
     }
-    //TODO remove once givenCity and commonCity implemented
-    public List<String> getCityList() {
-        return (givenCity.isEmpty() ? new LinkedList<String>() : getGeoCoverageField(givenCity, commonCity));
-    }
+
 
     public void setGivenCity(String givenCity) {
         this.givenCity = givenCity;
@@ -140,22 +131,6 @@ public class GeographicCoverage extends CompoundJSONField {
             default:
                 errorParsing(this.getClass().getName(), fieldName);
                 return "Bad FieldName";
-        }
-    }
-    //TODO remove when non-list version completely implemented
-    public List<String> getListField(String fieldName) {
-        switch (fieldName) {
-            case GIVEN_COUNTRY:
-                return getCountryList();
-            case GIVEN_PROVINCE:
-                return getProvinceList();
-            case GIVEN_CITY:
-                return getCityList();
-            //case OTHER_GEO_COV:
-                //return getOtherGeographicCoverage();
-            default:
-                errorParsing(this.getClass().getName(), fieldName);
-                return Arrays.asList("Bad FieldName");
         }
     }
 

@@ -66,9 +66,9 @@ public class DataverseJavaObject extends SourceJavaObject {
             if(!coverages.isEmpty())
 
                 for(GeographicCoverage gc: coverages){
-                    String country = GeographicInfo.getGeoCovPrimeName(gc.getCountryList());
-                    String province = GeographicInfo.getGeoCovPrimeName(gc.getProvinceList());
-                    String city = GeographicInfo.getGeoCovPrimeName(gc.getCityList());
+                    String country = gc.getField(GIVEN_COUNTRY);
+                    String province = gc.getField(GIVEN_PROVINCE);
+                    String city = gc.getField(GIVEN_CITY);
                     if(country.isEmpty())
                         continue;
                     else{
