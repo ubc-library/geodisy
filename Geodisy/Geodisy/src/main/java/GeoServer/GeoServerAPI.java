@@ -13,6 +13,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import static BaseFiles.PrivateStrings.PASSWORD;
+import static BaseFiles.PrivateStrings.USERNAME;
 import static GeoServer.GeoserverStrings.*;
 
 /**
@@ -173,6 +175,3 @@ public class GeoServerAPI extends DestinationAPI {
         return obj1;
     }
 }
-
-    String curlCall = "curl -u " + USERNAME + ":" + PASSWORD + " -XPOST -H \"Content-type: application/json\" -d @_tempFiles/import.json \"http://localhost:8080/geoserver/rest/imports\"";
-        return curlCall;
