@@ -23,6 +23,7 @@ import static Dataverse.DVFieldNameStrings.*;
 
 public class DataGBJSON extends GeoBlacklightJSON{
     GeoLogger logger;
+    //TODO make individual JSON per Geospatial file or metadata-based bounding box
     public DataGBJSON(DataverseJavaObject djo) {
         super();
         javaObject = djo;
