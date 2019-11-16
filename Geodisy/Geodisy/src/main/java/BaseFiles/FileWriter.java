@@ -32,9 +32,23 @@ public class FileWriter {
     }
 
     public void writeStringToFile(String stringToSave, String path) throws IOException{
+        path = FileWriter.fixPath(path);
         verifyFileExistence(path);
         File file = new File(path);
         FileUtils.writeStringToFile(file, stringToSave,"UTF-8");
+    }
+
+    public static String fixPath(String path) {
+        String answer = path;
+        if (path.contains("doi:")) {
+            answer = path.replace("doi:", "");
+        }
+
+        //TODO figure out what to do with a handle
+        if(path.contains("handle:")){
+            answer = answer.replace("handle:","");
+        }
+        return answer;
     }
 
     /**
@@ -105,6 +119,7 @@ public class FileWriter {
      * @return
      */
     private boolean verifyFileExistence(String path) {
+        path = fixPath(path);
         Path filePath = Paths.get(path);
         try {
             Files.createFile(filePath);
