@@ -14,6 +14,8 @@ public class GeodisyStrings {
     //File paths
         public final static String EXISTING_RECORDS = "./savedFiles/ExisitingRecords.txt";
         public final static String EXISTING_BBOXES = "./savedFiles/ExistingBBoxes.txt";
+        public final static String TEST_EXISTING_RECORDS = "./savedFiles/TestExistingRecords.txt";
+        public final static String TEST_EXISTING_BBOXES = "./savedFiles/TestExistingBBoxes.txt";
         public final static String RECORDS_TO_CHECK = "./logs/recordsToCheck.log";
         public final static String EXISTING_CALL_TO_CHECK = "./logs/existingCallToCheck.txt";
         public final static String ERROR_LOG = "./logs/error.log";
