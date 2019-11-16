@@ -37,6 +37,6 @@ public class XMLStrings {
     public final static String OPEN_METADATA_LOCAL_REPO = "XMLFiles/";
     public final static String TEST_OPEN_METADATA_LOCAL_REPO = "XMLFilesTest/";
     public final static String OPEN_METADATA_REMOTE_REPO = "https://github.com/OpenGeoMetadata/ca.ubc/";
-    public final static String OPEN_METADATA_REMOTE_USERNAME = "FAKE USERNAME";
-    public final static String OPEN_METADATA_REMOTE_PASSWORD = "FAKE PASSWORD";
+    public final static String OPEN_METADATA_REMOTE_USERNAME = "FAKE OPEN_GEO_META_USERNAME";
+    public final static String OPEN_METADATA_REMOTE_PASSWORD = "FAKE OPEN_GEO_META_PASSWORD";
 }
