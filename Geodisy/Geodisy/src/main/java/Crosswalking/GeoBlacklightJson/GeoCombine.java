@@ -16,7 +16,7 @@ public class GeoCombine {
 
     public void updateOpenGeoMetadata(String fileName, JGit jgit){
         String filePath = jgit.getOpenGeoLocalFilePath(fileName);
-        //TODO uncommnet once I've got JGit working
+        //TODO uncomment once I've got JGit working
         //jgit.addXMLFileToIndex(filePath + fileName + ".json");
     }
 }
