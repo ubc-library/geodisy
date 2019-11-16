@@ -93,6 +93,5 @@ Geodisy/Geodisy/XMLFilesTest/
 Geodisy/Geodisy/savedFiles/
 *.log
 Geodisy/Geodisy/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/
-Geodisy/Geodisy/src/main/java/BaseFiles/PrivateStrings.java
 
-Geodisy/Geodisy/src/main/java/GeoServer/GeoserverStrings.java
+Geodisy/Geodisy/src/main/java/BaseFiles/PrivateStrings.java
