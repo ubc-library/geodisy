@@ -10,17 +10,17 @@ import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Descrip
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJavaObject;
 
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 import java.io.IOException;
 
 import static Dataverse.DVFieldNameStrings.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+
 
 public class DataverseParserTest {
 

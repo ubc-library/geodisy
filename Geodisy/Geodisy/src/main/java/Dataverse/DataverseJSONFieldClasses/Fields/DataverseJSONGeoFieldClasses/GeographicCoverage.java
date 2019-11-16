@@ -55,20 +55,17 @@ public class GeographicCoverage extends CompoundJSONField {
         return answer;
     }
 
-
     public void setGivenCountry(String givenCountry) {
         this.givenCountry = givenCountry;
         countryObject = Countries.getCountry().getCountryByName(givenCountry);
         commonCountry = countryObject.getGivenName();
     }
 
-
     public void setGivenProvince(String givenProvince) {
         this.givenProvince = givenProvince;
         provinceObject =  new Province(this.givenProvince, givenCountry);
         commonProvince = provinceObject.getGivenName();
     }
-
 
     public void setGivenCity(String givenCity) {
         this.givenCity = givenCity;

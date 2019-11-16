@@ -1,11 +1,11 @@
 package tests.DataverseTestCases;
 
 import Dataverse.DVFieldNameStrings;
-import Dataverse.DataverseJavaObject;
-import Dataverse.SourceJavaObject;
-import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import Dataverse.SourceJavaObject;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LiDARTests extends DataverseTests{
 

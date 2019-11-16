@@ -1,9 +1,12 @@
 package tests;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Date.checkDateString;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+
 
 public class DateTimeParseTest{
     String dateOnly = "2015-07-13";

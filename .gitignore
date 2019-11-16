@@ -95,3 +95,5 @@ Geodisy/Geodisy/savedFiles/
 Geodisy/Geodisy/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/
 
 Geodisy/Geodisy/src/main/java/BaseFiles/PrivateStrings.java
+
+*.class

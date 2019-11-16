@@ -3,7 +3,8 @@ package tests;
 import Dataverse.ExistingSearchesFile;
 import Dataverse.ExistingSearches;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 import java.io.*;
 import java.time.LocalDateTime;
