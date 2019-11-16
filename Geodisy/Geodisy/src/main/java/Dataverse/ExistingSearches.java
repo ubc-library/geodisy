@@ -8,8 +8,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import static BaseFiles.GeodisyStrings.EXISTING_BBOXES;
-import static BaseFiles.GeodisyStrings.EXISTING_RECORDS;
+import static BaseFiles.GeodisyStrings.*;
 
 /**
  * Class that holds bounding boxes that have already been found and what versions of records have already been downloaded.
@@ -99,6 +98,20 @@ public class ExistingSearches implements Serializable {
         }
         try {
             fw.writeObjectToFile(bBoxes,EXISTING_BBOXES);
+        } catch (IOException e) {
+            logger.error("Something went wrong saving existing bboxes");
+        }
+    }
+
+    public void testSaveExistingSearches(){
+        FileWriter fw  = new FileWriter();
+        try {
+            fw.writeObjectToFile(recordVersions,TEST_EXISTING_RECORDS);
+        } catch (IOException e) {
+            logger.error("Something went wrong saving existing searches");
+        }
+        try {
+            fw.writeObjectToFile(bBoxes,TEST_EXISTING_BBOXES);
         } catch (IOException e) {
             logger.error("Something went wrong saving existing bboxes");
         }
