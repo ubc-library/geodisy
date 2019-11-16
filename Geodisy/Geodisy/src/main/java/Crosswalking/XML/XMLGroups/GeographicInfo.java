@@ -41,11 +41,11 @@ GeoLogger logger;
 
         for(GeographicCoverage gc: geoCovers){
             String commonCountry = gc.getField(COMMON_COUNTRY);
-            String givenCountry = gc.getField(COUNTRY);
+            String givenCountry = gc.getField(GIVEN_COUNTRY);
             String commonProvince = gc.getField(COMMON_PROVINCE);
-            String givenProvince = gc.getField(PROVINCE);
+            String givenProvince = gc.getField(GIVEN_PROVINCE);
             String commonCity = gc.getField(COMMON_CITY);
-            String givenCity = gc.getField(CITY);
+            String givenCity = gc.getField(GIVEN_CITY);
             String other = gc.getField(OTHER_GEO_COV);
             String name;
             //if the researcher uses an alternative name for the country, province, and/or city, then two geographic coverage units will be created from the single coverage unit
