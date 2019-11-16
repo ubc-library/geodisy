@@ -97,3 +97,5 @@ Geodisy/Geodisy/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/
 Geodisy/Geodisy/src/main/java/BaseFiles/PrivateStrings.java
 
 *.class
+Geodisy/Geodisy/src/main/target/classes/META-INF/MANIFEST.MF
+*.iml
