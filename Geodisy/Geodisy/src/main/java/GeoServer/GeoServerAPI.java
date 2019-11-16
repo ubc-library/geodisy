@@ -13,8 +13,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import static BaseFiles.PrivateStrings.PASSWORD;
-import static BaseFiles.PrivateStrings.USERNAME;
+import static BaseFiles.PrivateStrings.GEOSERVER_PASSWORD;
+import static BaseFiles.PrivateStrings.GEOSERVER_USERNAME;
 import static GeoServer.GeoserverStrings.*;
 
 /**
@@ -33,6 +33,8 @@ public class GeoServerAPI extends DestinationAPI {
     }
 
     public String upload(){
+        //TODO figure out the STORENAME
+        String STORENAME = "Figure this out";
         String response = "";
         String doi = sjo.getDOI();
         String workspace = (doi.length()>10? doi.substring(doi.length()-10):doi);
@@ -55,7 +57,7 @@ public class GeoServerAPI extends DestinationAPI {
     }
 
     private String generateUploadCall() {
-        String curlCall = "curl -u " + USERNAME + ":" + PASSWORD + " -XPOST -H \"Content-type: application/json\" -d @_tempFiles/import.json \"http://localhost:8080/geoserver/rest/imports\"";
+        String curlCall = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H \"Content-type: application/json\" -d @_tempFiles/import.json \"http://localhost:8080/geoserver/rest/imports\"";
         return curlCall;
     }
 
@@ -126,7 +128,7 @@ public class GeoServerAPI extends DestinationAPI {
     }
 
     private boolean deleteWorkspace(String workspaceName){
-        String callURL = "curl -v -u "+ USERNAME + ":" + PASSWORD + " -X DELETE http://localhost:8080/geoserver/rest/workspaces/" + workspaceName + "?recurse=true -H \"accept: application/json\" -H \"content-type: application/json\"";
+        String callURL = "curl -v -u "+ GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -X DELETE http://localhost:8080/geoserver/rest/workspaces/" + workspaceName + "?recurse=true -H \"accept: application/json\" -H \"content-type: application/json\"";
         String response = caller.deleteWorkSpace(callURL);
         return response.contains("HTTP/1.1 200 OK")||response.contains("HTTP/1.1 404 Workspace");
     }
