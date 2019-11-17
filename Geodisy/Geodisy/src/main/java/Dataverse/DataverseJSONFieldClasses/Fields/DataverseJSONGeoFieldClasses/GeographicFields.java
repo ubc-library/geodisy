@@ -260,4 +260,18 @@ public class GeographicFields extends MetadataType {
             bboxes.add(gBB);
         setGeoBBoxes(bboxes);
     }
+
+    public LinkedList<GeographicBoundingBox> getBBoxesForJSON(){
+        LinkedList<GeographicBoundingBox> gdal = new LinkedList<>();
+        LinkedList<GeographicBoundingBox> metadata = new LinkedList<>();
+        for(GeographicBoundingBox gb:geoBBoxes){
+            if(gb.isGeneratedFromGeoFile())
+                gdal.add(gb);
+            else
+                metadata.add(gb);
+        }
+        if(gdal.size()>=metadata.size())
+            return gdal;
+        return metadata;
+    }
 }

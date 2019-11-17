@@ -128,10 +128,20 @@ public class GeographicBoundingBox extends CompoundJSONField {
             case SOUTH_LAT:
             case SOUTH_LAT_LONG:
                 return getSouthLatitude();
+            case FILE_NAME:
+                return getFileName();
             default:
                 errorGettingValue(this.getClass().getName(),fieldName);
                 return "Bad fieldName";
         }
+    }
+
+    private String getFileName() {
+        return bb.getFileName();
+    }
+
+    public void setFileName(String name){
+        bb.setFileName(name);
     }
 
     /**
@@ -149,5 +159,8 @@ public class GeographicBoundingBox extends CompoundJSONField {
 
     public BoundingBox getbb(){
         return bb;
+    }
+    public boolean isGeneratedFromGeoFile(){
+        return bb.isGenerated();
     }
 }

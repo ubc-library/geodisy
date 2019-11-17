@@ -4,6 +4,7 @@ import BaseFiles.GeoLogger;
 import DataSourceLocations.Dataverse;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Author;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Description;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordFile;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
@@ -23,7 +24,6 @@ import static Dataverse.DVFieldNameStrings.*;
 
 public class DataGBJSON extends GeoBlacklightJSON{
     GeoLogger logger;
-    //TODO make individual JSON per Geospatial file or metadata-based bounding box
     public DataGBJSON(DataverseJavaObject djo) {
         super();
         javaObject = djo;
@@ -33,34 +33,22 @@ public class DataGBJSON extends GeoBlacklightJSON{
         files = djo.getGeoDataFiles();
     }
     //TODO check if Dataverse publisher field be included in the slug?
-    //TODO create number of GeoBlacklightJSON based on boundingboxes (check generated vs entered)
     @Override
-    protected JSONObject getRequiredFields(DataverseRecordFile drf, int totalFiles, int thisFile) {
-        jo.put("geoblacklight_version","1.0");
-        jo.put("dc_identifier_s", javaObject.getDOI());
-        jo.put("layer_slug_s",drf.getUUID(doi + drf.getTitle()));
-
-        String fileCount = "";
-        if(totalFiles>1){
-            fileCount = " (" + thisFile + " of " + totalFiles + ")";
-        }
-        jo.put("dc_title_s",javaObject.getSimpleFields().getField(TITLE) + fileCount);
-        jo.put("dc_rights_s",javaObject.getSimpleFields().getField(LICENSE));
-        jo.put("dct_provenance_s",javaObject.getSimpleFields().getField(PUBLISHER));
-        jo.put("solr_geom","ENVELOPE" + getBB(drf));
-        addMetadataDownloadOptions(drf);
-        return jo;
-    }
-
-    @Override
-    protected JSONObject getRequiredFields(){
+    protected JSONObject getRequiredFields(GeographicBoundingBox gbb, int number, int total){
         jo.put("geoblacklight_version","1.0");
         jo.put("dc_identifier_s", javaObject.getDOI());
         jo.put("layer_slug_s", DataverseRecordFile.getUUID(getDoi()));
-        jo.put("dc_title_s",javaObject.getSimpleFields().getField(TITLE));
+        String name = gbb.getField(FILE_NAME);
+        if(!name.isEmpty())
+            name = "/" + name;
+        if(total>1) {
+            jo.put("dc_title_s", javaObject.getSimpleFields().getField(TITLE) + name + " (" + number + " of " + total + ")");
+        }
+        else
+            jo.put("dc_title_s",javaObject.getSimpleFields().getField(TITLE) + name);
         jo.put("dc_rights_s",javaObject.getSimpleFields().getField(LICENSE));
         jo.put("dct_provenance_s",javaObject.getSimpleFields().getField(PUBLISHER));
-        jo.put("solr_geom","ENVELOPE" + getBB(javaObject));
+        jo.put("solr_geom","ENVELOPE" + gbb.getbb());
         addMetadataDownloadOptions();
         return jo;
     }
@@ -168,18 +156,6 @@ public class DataGBJSON extends GeoBlacklightJSON{
             logger.error("Something went wrong trying to create a JSON file with doi:" + doi);
         }
 
-    }
-
-
-
-    public void saveJSONToFile(String json, String doi){
-        genDirs(doi + "/" , OPEN_METADATA_LOCAL_REPO);
-        BaseFiles.FileWriter file = new BaseFiles.FileWriter();
-        try {
-            file.writeStringToFile(json,"./"+OPEN_METADATA_LOCAL_REPO + doi + "/" + "/" +"geoblacklight.json");
-        } catch (IOException e) {
-            logger.error("Something went wrong trying to create a JSON file with doi:" + doi);
-        }
     }
 
     public void saveJSONToTestFile(String json, String doi, String uuid){

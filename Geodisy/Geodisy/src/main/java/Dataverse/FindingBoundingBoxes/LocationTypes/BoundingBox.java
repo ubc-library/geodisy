@@ -8,6 +8,7 @@ public class BoundingBox implements Serializable {
     private double longWest = 361;
     private double longEast = 361;
     private boolean generated = false;
+    private String fileName = "";
 
     /**
      *
@@ -113,5 +114,13 @@ public class BoundingBox implements Serializable {
 
     public void setGenerated(boolean generated) {
         this.generated = generated;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

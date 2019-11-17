@@ -56,6 +56,7 @@ public class GDAL {
                 gBB.setWestLongitude(String.valueOf(temp.getLongWest()));
                 gBB.setNorthLatitude(String.valueOf(temp.getLatNorth()));
                 gBB.setEastLongitude(String.valueOf(temp.getLatSouth()));
+                gBB.setFileName(name);
                 gf.addBB(bboxes,gBB);
                 djo.setGeoFields(gf);
             } catch (IOException e) {
