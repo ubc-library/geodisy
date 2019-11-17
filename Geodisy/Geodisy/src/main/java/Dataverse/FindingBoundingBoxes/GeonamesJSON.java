@@ -26,6 +26,8 @@ public class GeonamesJSON {
             jo = XML.toJSONObject(geonameString);
             if(jo.has("country"))
                 jo = jo.getJSONObject("country");
+            else if(jo.has("givenCountry"))
+                jo = jo.getJSONObject("givenCountry");
             else
                 logger.error("Something was wrong with the country XML" + geonameString);
         }
@@ -43,7 +45,8 @@ public class GeonamesJSON {
 
     public BoundingBox getBBFromGeonamesBBElementString(){
         BoundingBox bb =  new BoundingBox();
-        jo = jo.getJSONObject("givenCountry");
+        if(jo.has("givenCountry"))
+            jo = jo.getJSONObject("givenCountry");
         if(!jo.has("south"))
             return bb;
         bb.setLongWest(getDoubleLatLongVal(jo,"west"));

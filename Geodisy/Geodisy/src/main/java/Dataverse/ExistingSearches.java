@@ -33,6 +33,9 @@ public class ExistingSearches implements Serializable {
         logger = new GeoLogger(this.getClass());
         bBoxes = new HashMap<>();
         recordVersions = new HashMap<>();
+        FileWriter fw = new FileWriter();
+        fw.verifyFileExistence(EXISTING_BBOXES);
+        fw.verifyFileExistence(EXISTING_RECORDS);
     }
     public boolean isEmpty(){
         return bBoxes.isEmpty()&&recordVersions.isEmpty();

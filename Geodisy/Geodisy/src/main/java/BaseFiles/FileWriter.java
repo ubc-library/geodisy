@@ -118,7 +118,7 @@ public class FileWriter {
      * @param path
      * @return
      */
-    private boolean verifyFileExistence(String path) {
+    public boolean verifyFileExistence(String path) {
         path = fixPath(path);
         Path filePath = Paths.get(path);
         try {

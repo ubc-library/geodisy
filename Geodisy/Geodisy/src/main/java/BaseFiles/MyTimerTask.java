@@ -39,11 +39,14 @@ public class MyTimerTask extends TimerTask {
        long startTime = Calendar.getInstance().getTimeInMillis();
         Countries.getCountry();
         try {
+            FileWriter fW = new FileWriter();
+            fW.verifyFileExistence(RECORDS_TO_CHECK);
+            fW.verifyFileExistence(ERROR_LOG);
             startRecsToCheck = new String(Files.readAllBytes(Paths.get(RECORDS_TO_CHECK)));
             startErrorLog = new String(Files.readAllBytes(Paths.get(ERROR_LOG)));
 
             Geodisy geo = new Geodisy();
-            FileWriter fW = new FileWriter();
+
 
             ExistingSearches existingSearches = ExistingSearches.readExistingSearches();
 

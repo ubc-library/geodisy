@@ -12,17 +12,18 @@ public class GeodisyStrings {
 
 
     //File paths
-        public final static String EXISTING_RECORDS = "./savedFiles/ExisitingRecords.txt";
-        public final static String EXISTING_BBOXES = "./savedFiles/ExistingBBoxes.txt";
-        public final static String TEST_EXISTING_RECORDS = "./savedFiles/TestExistingRecords.txt";
-        public final static String TEST_EXISTING_BBOXES = "./savedFiles/TestExistingBBoxes.txt";
-        public final static String RECORDS_TO_CHECK = "./logs/recordsToCheck.log";
-        public final static String EXISTING_CALL_TO_CHECK = "./logs/existingCallToCheck.txt";
-        public final static String ERROR_LOG = "./logs/error.log";
+        public final static String GEODISY_PATH_ROOT = "Geodisy/src/main/";
+        public final static String EXISTING_RECORDS = GEODISY_PATH_ROOT + "savedFiles/ExisitingRecords.txt";
+        public final static String EXISTING_BBOXES = GEODISY_PATH_ROOT + "savedFiles/ExistingBBoxes.txt";
+        public final static String TEST_EXISTING_RECORDS = GEODISY_PATH_ROOT + "savedFiles/TestExistingRecords.txt";
+        public final static String TEST_EXISTING_BBOXES = GEODISY_PATH_ROOT + "savedFiles/TestExistingBBoxes.txt";
+        public final static String RECORDS_TO_CHECK = GEODISY_PATH_ROOT + "logs/recordsToCheck.log";
+        public final static String EXISTING_CALL_TO_CHECK = GEODISY_PATH_ROOT + "logs/existingCallToCheck.txt";
+        public final static String ERROR_LOG = GEODISY_PATH_ROOT + "logs/error.log";
         public final static String XML_NS = "http://www.isotc211.org/2005/";
-        public final static String COUNTRY_VALS =  "geodisyFiles/Geoname_countries.xml";
-        public final static String ALL_CITATION_METADATA = "./geodisyFiles/AllCitationMetadata.json";
-        public final static String XML_TEST_FILE = "./geodisyFiles/XMLTestDJO.xml";
+        public final static String COUNTRY_VALS =  GEODISY_PATH_ROOT + "geodisyFiles/Geoname_countries.xml";
+        public final static String ALL_CITATION_METADATA = GEODISY_PATH_ROOT + "geodisyFiles/AllCitationMetadata.json";
+        public final static String XML_TEST_FILE = GEODISY_PATH_ROOT + "geodisyFiles/XMLTestDJO.xml";
 
 
     //Unused file type extensions
