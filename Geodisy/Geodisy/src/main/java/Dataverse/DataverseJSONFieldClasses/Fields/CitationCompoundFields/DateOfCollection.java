@@ -14,23 +14,23 @@ public class DateOfCollection extends CompoundDateJSONField {
         this.dateOfCollectionStart = new Date("6000");
         this.dateOfCollectionEnd = new Date("");
     }
-
+    @Override
     public String getStartDate() {
         return dateOfCollectionStart.getDateAsString();
     }
-
+    @Override
     public void setStartDate(String dateOfCollectionStart) {
         this.dateOfCollectionStart = new Date(dateOfCollectionStart);
     }
-
+    @Override
     public String getEndDate() {
         return dateOfCollectionEnd.getDateAsString();
     }
 
+    @Override
     public void setEndDate(String dateOfCollectionEnd) {
         this.dateOfCollectionEnd = new Date(dateOfCollectionEnd);
     }
-
 
     @Override
     public void setField(JSONObject field) {

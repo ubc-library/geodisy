@@ -14,18 +14,19 @@ public class TimePeriodCovered extends CompoundDateJSONField {
         this.timePeriodCoveredStart = new Date("6000");
         this.timePeriodCoveredEnd = new Date("");
     }
+    @Override
     public String getStartDate() {
         return timePeriodCoveredStart.getDateAsString();
     }
-
+    @Override
     public void setStartDate(String timePeriodCoveredStart) {
         this.timePeriodCoveredStart = new Date(timePeriodCoveredStart);
     }
-
+    @Override
     public String getEndDate() {
         return timePeriodCoveredEnd.getDateAsString();
     }
-
+    @Override
     public void setEndDate(String timePeriodCoveredEnd) {
         this.timePeriodCoveredEnd = new Date(timePeriodCoveredEnd);
     }
