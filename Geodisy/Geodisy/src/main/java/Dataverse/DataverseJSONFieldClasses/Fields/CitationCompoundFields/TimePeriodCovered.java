@@ -1,34 +1,35 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields;
 
+import Dataverse.DataverseJSONFieldClasses.CompoundDateJSONField;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Date;
 import org.json.JSONObject;
 
 import static Dataverse.DVFieldNameStrings.*;
 
-public class TimePeriodCovered extends CompoundJSONField {
+public class TimePeriodCovered extends CompoundDateJSONField {
     private Date timePeriodCoveredStart, timePeriodCoveredEnd;
 
     public TimePeriodCovered() {
         this.timePeriodCoveredStart = new Date("6000");
         this.timePeriodCoveredEnd = new Date("");
     }
-
-    public String getTimePeriodCoveredStart() {
+    public String getStartDate() {
         return timePeriodCoveredStart.getDateAsString();
     }
 
-    public void setTimePeriodCoveredStart(String timePeriodCoveredStart) {
+    public void setStartDate(String timePeriodCoveredStart) {
         this.timePeriodCoveredStart = new Date(timePeriodCoveredStart);
     }
 
-    public String getTimePeriodCoveredEnd() {
+    public String getEndDate() {
         return timePeriodCoveredEnd.getDateAsString();
     }
 
-    public void setTimePeriodCoveredEnd(String timePeriodCoveredEnd) {
+    public void setEndDate(String timePeriodCoveredEnd) {
         this.timePeriodCoveredEnd = new Date(timePeriodCoveredEnd);
     }
+
 
     @Override
     public void setField(JSONObject field) {
@@ -36,10 +37,10 @@ public class TimePeriodCovered extends CompoundJSONField {
         String value = field.getString(VAL);
         switch (title) {
             case TIME_PER_COV_START:
-                setTimePeriodCoveredStart(value);
+                setStartDate(value);
                 break;
             case TIME_PER_COV_END:
-                setTimePeriodCoveredEnd(value);
+                setEndDate(value);
                 break;
             default:
                 errorParsing(this.getClass().getName(),title);
@@ -50,9 +51,9 @@ public class TimePeriodCovered extends CompoundJSONField {
     public String getField(String fieldName) {
         switch (fieldName) {
             case TIME_PER_COV_START:
-                getTimePeriodCoveredStart();
+                getStartDate();
             case TIME_PER_COV_END:
-                getTimePeriodCoveredEnd();
+                getEndDate();
             default:
                 errorGettingValue(this.getClass().getName(), fieldName);
                 return "Bad field name";
