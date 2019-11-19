@@ -45,15 +45,6 @@ public class GeographicCoverage extends CompoundJSONField {
     public City getCityObject(){
         return cityObject;
     }
-    private List<String> getGeoCoverageField(String name, String altName){
-        String[] array;
-        if(name.equalsIgnoreCase(altName))
-            array = new String[]{name};
-        else
-            array = new String[]{name,altName};
-        List answer = Arrays.asList(array);
-        return answer;
-    }
 
     public void setGivenCountry(String givenCountry) {
         this.givenCountry = givenCountry;
@@ -72,14 +63,7 @@ public class GeographicCoverage extends CompoundJSONField {
         cityObject = new City(this.givenCity, givenProvince, givenCountry);
         commonCity = cityObject.getGivenName();
     }
-    //TODO remove once otherGeographicCoverage implemented
-    public String getOtherGeographicCoverage() {
-        return otherGeographicCoverage;
-    }
 
-    public void setOtherGeographicCoverage(String otherGeographicCoverage) {
-        this.otherGeographicCoverage = otherGeographicCoverage;
-    }
 
 
     @Override
@@ -100,7 +84,7 @@ public class GeographicCoverage extends CompoundJSONField {
                     setGivenCity(value);
                     break;
                 case OTHER_GEO_COV:
-                    setOtherGeographicCoverage(value);
+                    this.otherGeographicCoverage = value;
                     break;
                 default:
                     errorParsing(this.getClass().getName(), title);
@@ -118,7 +102,7 @@ public class GeographicCoverage extends CompoundJSONField {
             case GIVEN_CITY:
                 return givenCity;
             case OTHER_GEO_COV:
-                return getOtherGeographicCoverage();
+                return otherGeographicCoverage;
             case COMMON_COUNTRY:
                 return (commonCountry.isEmpty()? givenCountry:commonCountry);
             case COMMON_PROVINCE:

@@ -30,7 +30,6 @@ public class DataverseRecordFile {
     String datasetDOI;
     DataverseJavaObject djo;
     BoundingBox bb;
-    public boolean isGeospatial;
 
     /**
      * Creates a DataverseRecordFile when there is a File-specific doi.
