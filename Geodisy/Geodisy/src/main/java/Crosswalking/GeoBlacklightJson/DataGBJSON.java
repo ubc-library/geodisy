@@ -51,21 +51,13 @@ public class DataGBJSON extends GeoBlacklightJSON{
         jo.put("dc_rights_s",javaObject.getSimpleFields().getField(LICENSE));
         jo.put("dct_provenance_s",javaObject.getSimpleFields().getField(PUBLISHER));
 
-        jo.put("solr_geom","ENVELOPE(" + gbb.getWestLongitude() + ", " + gbb.getEastLongitude() + ", " + gbb.getNorthLatitude() + ", " + gbb.getSouthLatitude() + ")");
+        jo.put("solr_geom","ENVELOPE(" + getBB(gbb) + ")");
         addMetadataDownloadOptions();
         return jo;
     }
-
-    private String getBB(DataverseJavaObject djo) {
-        return getBoxStringFromBB(djo.getBoundingBox());
-    }
-
-    private String getBB(DataverseRecordFile drf){
-        return getBoxStringFromBB(drf.getBb());
-    }
-
-    private String getBoxStringFromBB(BoundingBox bb){
-        return "(" + bb.getLongWest()+ ", " + bb.getLongEast()+ ", " + bb.getLatNorth()+ ", " + bb.getLatSouth() + ")";
+    
+    private String getBB(GeographicBoundingBox gbb){
+        return gbb.getWestLongitude() + ", " + gbb.getEastLongitude() + ", " + gbb.getNorthLatitude() + ", " + gbb.getSouthLatitude();
     }
 
     @Override
