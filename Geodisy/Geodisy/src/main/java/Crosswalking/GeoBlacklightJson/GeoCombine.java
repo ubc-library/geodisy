@@ -3,6 +3,9 @@ package Crosswalking.GeoBlacklightJson;
 import BaseFiles.HTTPCaller;
 import Crosswalking.XML.XMLTools.JGit;
 
+import static BaseFiles.GeodisyStrings.GEOCOMBINE;
+import static BaseFiles.GeodisyStrings.SOLR_PATH;
+
 public class GeoCombine {
     HTTPCaller caller;
 
@@ -11,7 +14,7 @@ public class GeoCombine {
     }
 
     public void index(){
-        caller.callHTTP("SOLR_URL=http://geo.frdr.ca:8983/solr/collection bundle exec rake geocombine:index");
+        caller.callHTTP(GEOCOMBINE);
     }
 
     public void updateOpenGeoMetadata(String fileName, JGit jgit){

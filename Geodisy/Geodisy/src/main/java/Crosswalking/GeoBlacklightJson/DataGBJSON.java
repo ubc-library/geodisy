@@ -18,6 +18,7 @@ import java.util.UUID;
 
 import static BaseFiles.GeodisyStrings.XML_NS;
 import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.EXTERNAL_SERVICES;
+import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.METADATA_DOWNLOAD_SERVICES;
 import static Crosswalking.XML.XMLTools.XMLStrings.OPEN_METADATA_LOCAL_REPO;
 import static Crosswalking.XML.XMLTools.XMLStrings.TEST_OPEN_METADATA_LOCAL_REPO;
 import static Dataverse.DVFieldNameStrings.*;
@@ -37,10 +38,11 @@ public class DataGBJSON extends GeoBlacklightJSON{
     protected JSONObject getRequiredFields(GeographicBoundingBox gbb, int number, int total){
         jo.put("geoblacklight_version","1.0");
         jo.put("dc_identifier_s", javaObject.getDOI());
-        jo.put("layer_slug_s", DataverseRecordFile.getUUID(getDoi()));
         String name = gbb.getField(FILE_NAME);
-        if(!name.isEmpty())
+        if(!name.isEmpty()) {
             name = "/" + name;
+        }
+        jo.put("layer_slug_s", DataverseRecordFile.getUUID(getDoi()+name));
         if(total>1) {
             jo.put("dc_title_s", javaObject.getSimpleFields().getField(TITLE) + name + " (" + number + " of " + total + ")");
         }
@@ -48,7 +50,8 @@ public class DataGBJSON extends GeoBlacklightJSON{
             jo.put("dc_title_s",javaObject.getSimpleFields().getField(TITLE) + name);
         jo.put("dc_rights_s",javaObject.getSimpleFields().getField(LICENSE));
         jo.put("dct_provenance_s",javaObject.getSimpleFields().getField(PUBLISHER));
-        jo.put("solr_geom","ENVELOPE" + gbb.getbb());
+
+        jo.put("solr_geom","ENVELOPE(" + gbb.getWestLongitude() + ", " + gbb.getEastLongitude() + ", " + gbb.getNorthLatitude() + ", " + gbb.getSouthLatitude() + ")");
         addMetadataDownloadOptions();
         return jo;
     }
@@ -82,12 +85,9 @@ public class DataGBJSON extends GeoBlacklightJSON{
     @Override
     protected JSONArray addBaseMetadataDownloadOptions(){
         JSONArray ja = new JSONArray();
-        ja.put(XML_NS + "mdb/2.0"); //ISO 19139
-        ja.put("http://www.opengis.net/cat/csw/csdgm/");
-        ja.put("http://www.loc.gov/mods/v3");
-        ja.put("http://www.w3.org/1999/xhtml");
-        ja.put(("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""));
-        ja.put("xsi:schemaLocation=\"http://standards.iso.org/iso/19115/-3/mdb/2.0/mdb.xsd\">");
+        for(String s:METADATA_DOWNLOAD_SERVICES) {
+         ja.put(s);
+        }
         return ja;
     }
     //TODO, check I am getting all the optional fields I should be

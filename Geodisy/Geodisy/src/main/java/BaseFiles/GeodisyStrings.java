@@ -54,6 +54,11 @@ public class GeodisyStrings {
         public final static String LOCAL_NAME = "LocalName";
 
 
+    //Geocombine
+    private final static String SOLR_PATH_PROD = "SOLR_URL=http://www.example.com:1234/solr/collection ";
+    private final static String SOLR_PATH_TEST = "";
+    private final static String SOLR_PATH = SOLR_PATH_TEST;
+    public final static String GEOCOMBINE = SOLR_PATH + "bundle exec rake geocombine:index";
     public static boolean fileToIgnore(String title){
         for (String s : GeodisyStrings.FILE_TYPES_TO_IGNORE) {
             if (title.endsWith(s))
