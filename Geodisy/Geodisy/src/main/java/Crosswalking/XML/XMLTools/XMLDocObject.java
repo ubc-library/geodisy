@@ -80,8 +80,16 @@ public class XMLDocObject {
     }
 
     public Element addRoleCode(String altTitleVal) {
-        Element val = doc.createElement(addGMD("CI_RoleCode"));
-        val.setTextContent(altTitleVal);
+        return addDescritiveTag("CI_RoleCode",altTitleVal);
+    }
+
+    public Element addDescription(String type){
+        return addDescritiveTag("description",type);
+    }
+
+    public Element addDescritiveTag(String label, String value){
+        Element val = doc.createElement((addGMD(label)));
+        val.setTextContent(value);
         return val;
     }
 

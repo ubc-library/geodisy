@@ -147,8 +147,8 @@ public class IdentificationInfo extends SubElement {
         stack.push(doc.createGMDElement(EX_EXTENT)); //L
         stack.push(doc.createGMDElement("temporalElement")); //M
         Element levelN = doc.createGMDElement("EX_TemporalExtent");
-        levelN = getDateRange(levelN,timePeriodCovereds,"\"Time Period Covered\"");
-        levelN = getDateRange(levelN,datesOfCollection,"\"Date of Collection\"");
+        levelN = getDateRange(levelN,timePeriodCovereds,"Time Period Covered");
+        levelN = getDateRange(levelN,datesOfCollection,"Date of Collection");
         return stack.zip(levelN);
     }
 
@@ -397,8 +397,7 @@ public class IdentificationInfo extends SubElement {
             levelL.appendChild(levelM);
             levelK.appendChild(levelL);
         }
-        levelL = doc.createGMDElement("type");
-        levelL.appendChild(doc.addGMDVal("theme","MD_KeywordTypeCode"));
+        levelL.appendChild(doc.addDescritiveTag("MD_KeywordTypeCode","subTopicCategory,"));
         levelK.appendChild(levelL);
         return levelK;
     }
