@@ -8,11 +8,9 @@ package BaseFiles;/*
 
 import Dataverse.DataverseAPI;
 import Dataverse.SourceAPI;
-import Dataverse.DataverseJavaObject;
 import Dataverse.SourceJavaObject;
 
 import DataSourceLocations.Dataverse;
-import Dataverse.ExistingSearches;
 import GeoServer.GeoServerAPI;
 
 import java.util.LinkedList;
