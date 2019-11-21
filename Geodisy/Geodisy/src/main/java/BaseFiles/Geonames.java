@@ -18,11 +18,12 @@ import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import static BaseFiles.PrivateStrings.GEONAMES_USERNAME;
+
 
 public class Geonames {
     GeoLogger logger =  new GeoLogger(this.getClass());
     Countries countries;
-    private String USER_NAME = "geodisy";
 
     public Geonames() {
         this.countries = Countries.getCountry();
@@ -33,7 +34,10 @@ public class Geonames {
     public String getGeonamesCity(String city, String province, String country){
         Map<String, String> parameters = getBaseParameters(country);
         parameters.put("fcode","PPL*");
-        String searchValue = city + "%2C%20" + province;
+        String searchValue;
+        if(city.isEmpty()||province.isEmpty())
+            return "";
+        searchValue = city + "%2C%20" + province;
         searchValue +=  addParameters(parameters);
         String urlString = "http://api.geonames.org/search?q=" + searchValue;
         HTTPCallerGeoNames caller = new HTTPCallerGeoNames();
@@ -126,7 +130,7 @@ public class Geonames {
 
     private HashMap<String, String> getBaseParameters(String country){
         HashMap<String, String> parameters = new HashMap<>();
-        parameters.put("username", USER_NAME);
+        parameters.put("username", GEONAMES_USERNAME);
         parameters.put("style","FULL");
         parameters.put("maxRows","1");
         String countryCode = countries.isCountryCode(country) ? country : countries.getCountryCode(country);

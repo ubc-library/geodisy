@@ -12,14 +12,16 @@ public class GeodisyStrings {
 
 
     //File paths
-        public final static String GEODISY_PATH_ROOT = "Geodisy/src/main/";
+        public final static String GEODISY_PATH_ROOT = "";
         public final static String EXISTING_RECORDS = GEODISY_PATH_ROOT + "savedFiles/ExisitingRecords.txt";
+        public final static String EXISTING_CHECKS = GEODISY_PATH_ROOT + "savedFiles/ExisitingChecks.txt";
         public final static String EXISTING_BBOXES = GEODISY_PATH_ROOT + "savedFiles/ExistingBBoxes.txt";
         public final static String TEST_EXISTING_RECORDS = GEODISY_PATH_ROOT + "savedFiles/TestExistingRecords.txt";
         public final static String TEST_EXISTING_BBOXES = GEODISY_PATH_ROOT + "savedFiles/TestExistingBBoxes.txt";
         public final static String RECORDS_TO_CHECK = GEODISY_PATH_ROOT + "logs/recordsToCheck.log";
         public final static String EXISTING_CALL_TO_CHECK = GEODISY_PATH_ROOT + "logs/existingCallToCheck.txt";
         public final static String ERROR_LOG = GEODISY_PATH_ROOT + "logs/error.log";
+        public final static String WARNING_LOG = GEODISY_PATH_ROOT + "logs/warning.log";
         public final static String XML_NS = "http://www.isotc211.org/2005/";
         public final static String COUNTRY_VALS =  GEODISY_PATH_ROOT + "geodisyFiles/Geoname_countries.xml";
         public final static String ALL_CITATION_METADATA = GEODISY_PATH_ROOT + "geodisyFiles/AllCitationMetadata.json";
@@ -36,7 +38,7 @@ public class GeodisyStrings {
         public final static String GDALINFO_CLOUD = "gdalinfo -approx_stats ";
         public final static String OGRINFO_CLOUD = "ogrinfo -ro -al -so ";
         public final static String[] GDALINFO_RASTER_FILE_EXTENSIONS = { ".tif", ".nc", ".png"};
-        public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = {".geojason",".shp", "kmz"}; //also .csv, but need to check if the csv is actually geospatial in nature
+        public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = {".geojson",".shp", "kmz"}; //also .csv, but need to check if the csv is actually geospatial in nature
         public final static String[] PREVIEWABLE_FILE_EXTENSIONS = {".tif", ".kmz"};
         public final static String OGR2OGR_LOCAL = "C:\\Program Files\\GDAL\\ogr2ogr -t_srs EPSG:4326 ";
         public final static String GDAL_TRANSLATE_LOCAL = "C:\\Program Files\\GDAL\\gdal_translate -t_srs EPSG:4326 ";
@@ -58,7 +60,9 @@ public class GeodisyStrings {
     private final static String SOLR_PATH_PROD = "SOLR_URL=http://www.example.com:1234/solr/collection ";
     private final static String SOLR_PATH_TEST = "";
     private final static String SOLR_PATH = SOLR_PATH_TEST;
-    public final static String GEOCOMBINE = SOLR_PATH + "bundle exec rake geocombine:index";
+    //TODO set custom path for OGM location (where the GeoBlacklightJson are stored)
+    private final static String OGM_PATH = "OGM_PATH='my/custom/location' ";
+    public final static String GEOCOMBINE = SOLR_PATH + OGM_PATH + "bundle exec rake geocombine:index";
     public static boolean fileToIgnore(String title){
         for (String s : GeodisyStrings.FILE_TYPES_TO_IGNORE) {
             if (title.endsWith(s))

@@ -14,12 +14,11 @@ import java.util.concurrent.TimeUnit;
  * Class for making HTTP calls and getting JSON string responses
  */
 public class HTTPCallerGeoNames extends HTTPCaller {
-    String responseCode;
 
     public HTTPCallerGeoNames() {
         logger = new GeoLogger(this.getClass());
-
     }
+
     @Override
     protected void ioError(){
         logger.error("Something went wrong getting a bounding box from Geonames");

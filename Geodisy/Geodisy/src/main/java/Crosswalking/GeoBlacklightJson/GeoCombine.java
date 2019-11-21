@@ -4,7 +4,6 @@ import BaseFiles.HTTPCaller;
 import Crosswalking.XML.XMLTools.JGit;
 
 import static BaseFiles.GeodisyStrings.GEOCOMBINE;
-import static BaseFiles.GeodisyStrings.SOLR_PATH;
 
 public class GeoCombine {
     HTTPCaller caller;
