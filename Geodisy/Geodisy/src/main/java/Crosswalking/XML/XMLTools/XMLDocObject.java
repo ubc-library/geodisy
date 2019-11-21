@@ -2,6 +2,7 @@ package Crosswalking.XML.XMLTools;
 
 
 import BaseFiles.GeoLogger;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
@@ -24,6 +25,7 @@ import static Crosswalking.XML.XMLTools.XMLStrings.OPEN_METADATA_LOCAL_REPO;
 public class XMLDocObject {
     Document doc;
     String doi;
+    String pURL;
     GeoLogger logger = new GeoLogger(this.getClass());
 
 
@@ -43,7 +45,12 @@ public class XMLDocObject {
     }
 
     public Element createGMDElement(String s){
-        return doc.createElement(addGMD(s));
+        try {
+            return doc.createElement(addGMD(s));
+        }catch (DOMException e){
+            logger.error("There was an invalid/illegal character in string " + s);
+        }
+        return doc.createElement(addGMD("Junk_Dont_Use_This_XML"));
     }
 
     //May never get used
@@ -101,5 +108,6 @@ public class XMLDocObject {
 
     public void setDoi(String doi){this.doi = doi;}
 
+    public void setPURL(String pURL){this.pURL = pURL;}
 
 }

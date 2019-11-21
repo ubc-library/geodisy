@@ -16,6 +16,7 @@ public class XMLStrings {
     public final static String MD_IDENT = "MD_Identifier";
     public final static String PARTY_IDENT = "partyIdentifier";
     public final static String CODE = "code";
+    public final static String CODE_SPACE = "codeSpace";
     public final static String IDENT = "identifier";
     public final static String NAME = "name";
     public final static String CI_ONLINE_RES = "CI_OnlineResource";
@@ -30,6 +31,11 @@ public class XMLStrings {
     public final static String EX_GEO_BB =  "EX_GeographicBoundingBox";
     public final static String GEO_ELEMENT = "geographicElement";
     public final static String P_OF_CONTACT = "pointOfContact";
+    public final static String RESOURCE_CONSTRAINTS = "resourceConstraints";
+    public final static String MD_LEGAL_CONSTRAINTS = "MD_LegalConstraints";
+    public final static String OTHER_CONSTRAINTS = "otherConstraints";
+    public final static String SUPPLEMENTAL_INFO = "supplementalInformation";
+
     //TODO figure out what file(s) to actually use
     public final static String ISO_19115_VALIDATION_FILE_PATH = "./geodisyFiles/gco.xsd";
 

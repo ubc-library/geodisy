@@ -9,6 +9,7 @@ import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Simpl
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
 import Dataverse.DataverseJavaObject;
+import Dataverse.DataverseRecordFile;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -88,6 +89,8 @@ public class IdentificationInfo extends SubElement {
         Element levelJ = doc.createGMDElement(MD_DATA_IDENT);
 
         levelJ.appendChild(getCitation());
+        levelJ.appendChild(getLicense());
+        levelJ.appendChild(getFileNames());
         if(descriptions.size()>0){
             levelJ = getDescriptions(levelJ);
         }
@@ -139,6 +142,34 @@ public class IdentificationInfo extends SubElement {
         root.appendChild(levelI);
         return root;
     }
+
+    private Element getFileNames() {
+        XMLStack stack = new XMLStack();
+        stack.push(doc.createGMDElement(SUPPLEMENTAL_INFO));
+        return stack.zip(doc.addGCOVal(getFileNames(djo.getDataFiles()),CHARACTER));
+    }
+
+    private String getFileNames(List<DataverseRecordFile> dataFiles) {
+        String answer = "";
+        for(DataverseRecordFile drf:dataFiles){
+            int loc = drf.getTitle().indexOf(".");
+            String ext = drf.getTitle().substring(loc);
+            if(!answer.isEmpty())
+                answer = "FileTypes: " + ext;
+            else
+                answer = answer + "," +ext;
+        }
+        return answer;
+    }
+
+    private Element getLicense() {
+        XMLStack stack = new XMLStack();
+        stack.push(doc.createGMDElement(RESOURCE_CONSTRAINTS));
+        stack.push(doc.createGMDElement(MD_LEGAL_CONSTRAINTS));
+        stack.push(doc.createGMDElement(OTHER_CONSTRAINTS));
+        return stack.zip(doc.addGCOVal(djo.getSimpleFieldVal(LICENSE),CHARACTER));
+    }
+
     //TODO Mark needs to figure out how to differentiate TimePeriodCovered and DateOfCollection
     private Element getTimePeriods(Element levelJ) {
         stack = new XMLStack();
@@ -157,34 +188,30 @@ public class IdentificationInfo extends SubElement {
             if(!cJF.getStartDate().isEmpty()) {
                 Element levelO = doc.createGMDElement(EXTENT);
                 Element levelP = doc.createGMDElement(TIME_PERIOD);
-                Element levelQ = doc.createGMDElement(DESCRIP);
-                Element levelR = doc.createGMDElement(dateType);
-                Element levelS = doc.createGMDElement(BEGIN_POSITION);
-                levelS.setTextContent(cJF.getStartDate());
-                levelR.appendChild(levelS);
-                if(!cJF.getEndDate().isEmpty()){
-                    levelS = doc.createGMDElement(END_POSITION);
-                    levelS.setTextContent(cJF.getEndDate());
-                    levelR.appendChild(levelS);
-                }
-                levelQ.appendChild(levelR);
+
+                Element levelQ = doc.createGMDElement(BEGIN_POSITION);
+                levelQ.setTextContent(cJF.getStartDate());
                 levelP.appendChild(levelQ);
+                if(!cJF.getEndDate().isEmpty()){
+                    levelQ = doc.createGMDElement(END_POSITION);
+                    levelQ.setTextContent(cJF.getEndDate());
+                    levelP.appendChild(levelQ);
+                }
                 levelO.appendChild(levelP);
                 levelN.appendChild(levelO);
             }else{
                 Element levelO = doc.createGMDElement(EXTENT);
                 Element levelP = doc.createGMDElement(TIME_PERIOD);
-                Element levelQ = doc.createGMDElement(DESCRIP);
-                Element levelR = doc.createGMDElement(dateType);
-                Element levelS = doc.createGMDElement(END_POSITION);
-                levelS.setTextContent(cJF.getEndDate());
-                levelR.appendChild(levelS);
-                levelQ.appendChild(levelR);
+                Element levelQ = doc.createGMDElement(END_POSITION);
+                levelQ.setTextContent(cJF.getEndDate());
                 levelP.appendChild(levelQ);
                 levelO.appendChild(levelP);
                 levelN.appendChild(levelO);
             }
         }
+        Element level1 = doc.createGMDElement(DESCRIP);
+        level1.setTextContent(dateType);
+        levelN.appendChild(level1);
         return levelN;
     }
 
@@ -516,7 +543,7 @@ public class IdentificationInfo extends SubElement {
     private Element getCitation() {
         Element levelK = doc.createGMDElement("citation");
         Element levelL = doc.createGMDElement(CI_CITE);
-        levelL.appendChild(getDOI());
+        levelL.appendChild(getPURL());
 
         //System generated Dates/Info -removed to get rid of Dataset Publisher, Publication Date, Version, and Version Date
         /*
@@ -587,12 +614,16 @@ public class IdentificationInfo extends SubElement {
         return levelL;
     }
 
-    private Element getDOI() {
+    private Element getPURL() {
         stack = new XMLStack();
-        stack.push(doc.createGMDElement(IDENT)); //M
+        Element levelM = doc.createGMDElement(IDENT); //M
         stack.push(doc.createGMDElement(MD_IDENT)); //N
         stack.push(doc.createGMDElement(CODE)); //O
-        return stack.zip(doc.addGCOVal(djo.getDOI(),CHARACTER));
+        Element levelN =  stack.zip(doc.addGCOVal(djo.getSimpleFieldVal(PERSISTENT_URL),CHARACTER));
+        stack.push(levelN);
+        stack.push(doc.createGMDElement(CODE_SPACE));
+        levelM.appendChild(stack.zip(doc.addGCOVal(djo.getSimpleFieldVal(PROTOCOL),CHARACTER)));
+        return levelM;
     }
 
     private Element getAuthor() {

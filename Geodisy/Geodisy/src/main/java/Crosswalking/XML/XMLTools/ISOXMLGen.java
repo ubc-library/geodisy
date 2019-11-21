@@ -31,7 +31,8 @@ public class ISOXMLGen extends DjoXMLGenerator {
         this.citationFields = djo.getCitationFields();
         this.simple = citationFields.getSimpleCitationFields();
         doc = new XMLDocObject();
-        doc.setDoi(djo.getDOI());
+        doc.setDoi(simple.getField(PERSISTENT_ID));
+        doc.setPURL(simple.getField(PERSISTENT_URL));
     }
 
     @Override

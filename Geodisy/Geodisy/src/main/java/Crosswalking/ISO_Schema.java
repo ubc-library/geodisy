@@ -31,6 +31,7 @@ public abstract class ISO_Schema implements XMLSchema {
     GeoLogger logger = new GeoLogger(this.getClass());
 
     public void saveXMLToFile(Document doc, String doi) {
+        if(!doc.toString().contains("Junk_Dont_Use_This_XML"))
         try {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
