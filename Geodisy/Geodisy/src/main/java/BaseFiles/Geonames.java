@@ -32,6 +32,8 @@ public class Geonames {
 
 
     public String getGeonamesCity(String city, String province, String country){
+        if(country.isEmpty()||province.isEmpty())
+            return "";
         Map<String, String> parameters = getBaseParameters(country);
         parameters.put("fcode","PPL*");
         String searchValue;

@@ -31,10 +31,11 @@ public class GDAL {
         }
         String[] files = folder.list();
         for(String name: files){
+            String lowerName = name.toLowerCase();
             String filePath = DATASET_FILES_PATH + path + "/" + name;
-            if(!GeodisyStrings.gdalinfoRasterExtention(name) && !GeodisyStrings.ogrinfoVectorExtension(name))
+            if(!GeodisyStrings.gdalinfoRasterExtention(lowerName) && !GeodisyStrings.ogrinfoVectorExtension(lowerName))
                 continue;
-            boolean gdalInfo = GeodisyStrings.gdalinfoRasterExtention(name);
+            boolean gdalInfo = GeodisyStrings.gdalinfoRasterExtention(lowerName);
             boolean isWindows = System.getProperty("os.name")
                     .toLowerCase().startsWith("windows");
 
@@ -47,16 +48,16 @@ public class GDAL {
                 else
                     temp = getVector(gdalString, isWindows, name, filePath);
                 temp.setGenerated(true);
-                GeographicFields gf = djo.getGeoFields();
-                List<GeographicBoundingBox> bboxes = gf.getGeoBBoxes();
-                GeographicBoundingBox gBB =  new GeographicBoundingBox(djo.getDOI());
-                gBB.setEastLongitude(String.valueOf(temp.getLongEast()));
-                gBB.setWestLongitude(String.valueOf(temp.getLongWest()));
-                gBB.setNorthLatitude(String.valueOf(temp.getLatNorth()));
-                gBB.setEastLongitude(String.valueOf(temp.getLatSouth()));
-                gBB.setFileName(name);
-                gf.addBB(bboxes,gBB);
-                djo.setGeoFields(gf);
+
+                if(temp.hasBoundingBox()) {
+                    GeographicFields gf = djo.getGeoFields();
+                    List<GeographicBoundingBox> bboxes = gf.getGeoBBoxes();
+                    GeographicBoundingBox gBB =  new GeographicBoundingBox(djo.getDOI());
+                    gBB.setBB(temp);
+                    gBB.setFileName(name);
+                    gf.addBB(bboxes, gBB);
+                    djo.setGeoFields(gf);
+                }
             } catch (IOException e) {
                 logger.error("Something went wrong trying to call GDAL with " + name);
             }
@@ -85,10 +86,11 @@ public class GDAL {
     }
 
     private BoundingBox getRaster(String gdalString) {
-        int start = gdalString.indexOf("Upper Left  (")+12;
+        int start = gdalString.indexOf("Upper Left  (")+13;
         BoundingBox temp = new BoundingBox();
-        if(start != -1+12) {
+        if(start > 12) {
             temp = getLatLongGdalInfo(gdalString, start);
+            temp.setGeometryType(RASTER);
         }
         return temp;
     }
@@ -97,9 +99,10 @@ public class GDAL {
 
     private BoundingBox getVector(String gdalString, boolean isWindows, String name, String filePath) throws IOException {
         int start = gdalString.indexOf("Extent: (")+9;
+        int end;
         BoundingBox temp = new BoundingBox();
         if(start != -1+9) {
-            int end = gdalString.indexOf(", ", start);
+            end = gdalString.indexOf(", ", start);
             temp = getLatLongOgrInfo(gdalString, start, end);
             if (temp.hasUTMCoords()) {
                 convertToWGS84(filePath, isWindows, name);
@@ -108,6 +111,11 @@ public class GDAL {
                 end = gdalString.indexOf(", ", start);
                 temp = getLatLongOgrInfo(gdalString, start, end);
             }
+        }
+        if(gdalString.contains("Geometry:")){
+            start = gdalString.indexOf("Geometry:")+10;
+            end = gdalString.indexOf("Feature Count:");
+            temp.setGeometryType(gdalString.substring(start,end));
         }
         return temp;
     }
@@ -213,7 +221,7 @@ public class GDAL {
         start = end+2;
         end = gdalString.indexOf(")",start);
         String lat1 = gdalString.substring(start,end).trim();
-        start = gdalString.indexOf("Lower Right (")+12;
+        start = gdalString.indexOf("Lower Right (")+13;
         end = gdalString.indexOf(",",start);
         String long2 = gdalString.substring(start,end).trim();
         start = end+2;

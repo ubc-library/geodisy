@@ -14,21 +14,25 @@ public class GeonamesJSON {
     }
 
     public GeonamesJSON(String geonameString){
-        if(geonameString.contains("<totalResultsCount>")) {
-            if (geonameString.contains("<totalResultsCount>0</totalResultsCount>"))
-                jo = new JSONObject();
-            else {
-                jo = (JSONObject) XML.toJSONObject(geonameString).get("geonames");
-                jo = (JSONObject)jo.get("geoname");
-            }
-        }else{
-            jo = XML.toJSONObject(geonameString);
-            if(jo.has("country"))
-                jo = jo.getJSONObject("country");
-            else if(jo.has("givenCountry"))
-                jo = jo.getJSONObject("givenCountry");
-            else
-                logger.error("Something was wrong with the country XML" + geonameString);
+        if(geonameString.isEmpty())
+           jo = new JSONObject();
+        else{
+             if (geonameString.contains("<totalResultsCount>")) {
+                 if (geonameString.contains("<totalResultsCount>0</totalResultsCount>"))
+                    jo = new JSONObject();
+                 else {
+                    jo = (JSONObject) XML.toJSONObject(geonameString).get("geonames");
+                    jo = (JSONObject) jo.get("geoname");
+                }
+             } else {
+                jo = XML.toJSONObject(geonameString);
+                if (jo.has("country"))
+                    jo = jo.getJSONObject("country");
+                else if (jo.has("givenCountry"))
+                    jo = jo.getJSONObject("givenCountry");
+                else
+                    logger.error("Something was wrong with the country XML" + geonameString);
+             }
         }
     }
 

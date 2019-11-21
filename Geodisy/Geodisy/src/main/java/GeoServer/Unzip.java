@@ -21,8 +21,8 @@ public class Unzip {
     //TODO call unzip when adding zipped files to Geoserver and then call deleteUnzippedFiles() after upload is done to save space
     public void unzip(String filePath, DataverseRecordFile dRF) {
         String destPath = filePath.substring(0,filePath.length()-4);
-        File destDir = new File(dRF.getDoi() + destPath);
-
+        File destDir = new File(destPath);
+        destDir.mkdirs();
         Path path = Paths.get(destPath);
 
         byte[] buffer = new byte[1024];
@@ -35,7 +35,6 @@ public class Unzip {
         ZipEntry zipEntry = null;
         try {
             zipEntry = zis.getNextEntry();
-
             while (zipEntry != null) {
                 if(GeodisyStrings.fileToIgnore(zipEntry.getName())){
                     zipEntry = zis.getNextEntry();
@@ -43,6 +42,7 @@ public class Unzip {
                 }
 
                 File newFile = newFile(destDir, zipEntry);
+                destDir.mkdirs();
                 FileOutputStream fos = new FileOutputStream(newFile);
                 int len;
                 while ((len = zis.read(buffer)) > 0) {

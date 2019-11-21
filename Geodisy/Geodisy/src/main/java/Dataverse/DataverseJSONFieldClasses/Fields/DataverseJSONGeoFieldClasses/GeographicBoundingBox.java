@@ -184,8 +184,11 @@ public class GeographicBoundingBox extends CompoundJSONField {
         }
     }
 
-    public BoundingBox getbb(){
+    public BoundingBox getBB(){
         return bb;
+    }
+    public void setBB(BoundingBox b){
+        bb = b;
     }
     public boolean isGeneratedFromGeoFile(){
         return bb.isGenerated();

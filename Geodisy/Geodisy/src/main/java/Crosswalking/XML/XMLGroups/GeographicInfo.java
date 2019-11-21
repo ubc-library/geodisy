@@ -121,7 +121,7 @@ GeoLogger logger;
         List<GeographicBoundingBox> entered = new LinkedList<>();
         List<GeographicBoundingBox> generated = new LinkedList<>();
         for(GeographicBoundingBox geoBB: geoBBs){
-            BoundingBox bb = geoBB.getbb();
+            BoundingBox bb = geoBB.getBB();
             if(!bb.hasBoundingBox())
                 continue;
             if(bb.isGenerated())
