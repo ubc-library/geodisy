@@ -67,7 +67,7 @@ public class DataverseParser implements JSONParser {
     // the manual check log
     private BoundingBox getBBFromProdPlace(String prodPlace, DataverseJavaObject dJO) {
         BoundingBox b = new BoundingBox();
-        logger.info("The following record has no geographic location info other than a Production Place. Please manually check: " + dJO.getDOI(), dJO, logger.getName());
+        logger.info("The following record has no geographic location info other than a Production Place. Please manually check: " + dJO.getDOI(), dJO);
         return b;
     }
 

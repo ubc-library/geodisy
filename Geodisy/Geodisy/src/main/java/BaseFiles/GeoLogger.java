@@ -23,15 +23,15 @@ public class GeoLogger {
     }
 
 
-    public void info(String message, DataverseJavaObject djo, String loggerName){
+    public void info(String message, DataverseJavaObject djo){
         if(djo==null)
             logger.error(message);
         else {
-            DataverseRecordInfo dri = new DataverseRecordInfo(djo, loggerName);
+            DataverseRecordInfo dri = new DataverseRecordInfo(djo, this.getName());
             ExistingCallsToCheck efc = ExistingCallsToCheck.getExistingCallsToCheck();
             if (!efc.hasRecord(djo.getDOI())) {
                 efc.addOrReplaceRecord(dri);
-            } else if (efc.isNewerRecord(dri, loggerName)) {
+            } else if (efc.isNewerRecord(dri, this.getName())) {
                 efc.addOrReplaceRecord(dri);
             }
         }

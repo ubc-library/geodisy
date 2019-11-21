@@ -200,7 +200,7 @@ public class GeographicFields extends MetadataType {
         west = (west==181) ? altWest : west;
         east = (east==-181)? altEast : east;
         if(west >= 181 || east <= -181 || north <= -181 || south >= 181) {
-            logger.info("Something went wrong with the bounding box for record " + doi, djo, logger.getName());
+            logger.info("Something went wrong with the bounding box for record " + doi, djo);
             west = 361;
             east = 361;
             north = 361;

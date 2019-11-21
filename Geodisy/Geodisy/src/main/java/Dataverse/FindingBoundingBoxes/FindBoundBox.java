@@ -27,7 +27,7 @@ public abstract class FindBoundBox {
         int tooFar = responseString.indexOf("</geoname>");
         int start = responseString.indexOf("<countryName>");
         if(start==-1||start>tooFar) {
-            logger.info("Record with PERSISTENT_ID of "+ doi + "could not have information found  in geonames. Please doublecheck the geospatial coverage field values", djo, logger.getName());
+            logger.info("Record with PERSISTENT_ID of "+ doi + "could not have information found  in geonames. Please doublecheck the geospatial coverage field values", djo);
             return "";
         }
         int end = responseString.indexOf("</countryName>");
@@ -39,7 +39,7 @@ public abstract class FindBoundBox {
         int tooFar = responseString.indexOf("</geoname>");
         int start = responseString.indexOf("<west>");
         if(start==-1||start>tooFar) {
-            logger.info("Record with PERSISTENT_ID of "+ doi + "could not have a bounding box found in geonames. Please doublecheck the geospatial coverage field values", djo, logger.getName());
+            logger.info("Record with PERSISTENT_ID of "+ doi + "could not have a bounding box found in geonames. Please doublecheck the geospatial coverage field values", djo);
             return box;
         }
         int end = responseString.indexOf("</west>");

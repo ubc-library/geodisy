@@ -13,7 +13,9 @@ import java.nio.file.Paths;
  * Class used to write things to files (logs and existing records files)
  */
 public class FileWriter {
+    GeoLogger logger;
     public FileWriter() {
+        logger = new GeoLogger(this.getClass());
     }
 
     /**
@@ -123,7 +125,7 @@ public class FileWriter {
         Path filePath = Paths.get(path);
         try {
             Files.createFile(filePath);
-            System.out.println("File " + path + " didn't already exists, so created it");
+            logger.warn("File " + path + " didn't already exists, so created it");
             return false;
         } catch (IOException e) {
             return true;

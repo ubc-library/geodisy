@@ -26,7 +26,6 @@ import static Dataverse.DVFieldNameStrings.*;
 public class DataGBJSON extends GeoBlacklightJSON{
     GeoLogger logger;
     private GeographicBoundingBox gbb;
-    //TODO put "Non-Geospatial" into geometry type for non-GDAL'd files
 
     public DataGBJSON(DataverseJavaObject djo) {
         super();
