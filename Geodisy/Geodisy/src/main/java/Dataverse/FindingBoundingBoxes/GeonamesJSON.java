@@ -22,7 +22,6 @@ public class GeonamesJSON {
                 jo = (JSONObject)jo.get("geoname");
             }
         }else{
-            logger.warn("Not sure why there wasn't a totalResultsCount in the geonames XML string. See " + geonameString);
             jo = XML.toJSONObject(geonameString);
             if(jo.has("country"))
                 jo = jo.getJSONObject("country");

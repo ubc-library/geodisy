@@ -16,24 +16,22 @@ public class GDAL {
         String doi = djo.getDOI();
         String path = doi.replace("/","_");
         path = path.replace(".","_");
-        String folderName = "./datasetFiles/" +path+"/";
+        String folderName = "datasetFiles/" +path+"/";
         File folder = new File(folderName);
-        try {
-            if(folder.createNewFile()) {
-                folder.delete();
-                return djo;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        if(!folder.exists())
+            folder.mkdirs();
+    /*    if(folder.createNewFile()) {
+            folder.delete();
+            return djo;
+        }*/
 
-        if(folder.length()==0) {
+        if(folder.listFiles().length==0) {
             folder.delete();
             return djo;
         }
         String[] files = folder.list();
         for(String name: files){
-            String filePath = "./datasetFiles/" + path + "/" + name;
+            String filePath = "datasetFiles/" + path + "/" + name;
             if(!GeodisyStrings.gdalinfoRasterExtention(name) && !GeodisyStrings.ogrinfoVectorExtension(name))
                 continue;
             boolean gdalInfo = GeodisyStrings.gdalinfoRasterExtention(name);

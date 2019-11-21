@@ -34,12 +34,13 @@ public class SimpleCitationFields extends JSONField {
      *  * Size of Collection : String : sizeOfColl
      *  * Study Completion : String : studyComp
      */
-    private String title, subtitle, alternativeTitle, alternativeURL, license,notesText,productionPlace,depositor, accessToSources, publisher,originOfSources, characteristicOfSources, doi, authority, identifier, termsOfUse, confidDec, availabStat, specialPerms, restrictions, citationReqs, depositReqs, conditions, disclaimer, termsOfAcc, dataAccPlace, origArch, contactForAcc, sizeOfColl, studyComp;
+    private String title, subtitle, alternativeTitle, alternativeURL, license,notesText,productionPlace,depositor, accessToSources, publisher,originOfSources, characteristicOfSources, pID, authority, identifier, termsOfUse, confidDec, availabStat, specialPerms, restrictions, citationReqs, depositReqs, conditions, disclaimer, termsOfAcc, dataAccPlace, origArch, contactForAcc, sizeOfColl, studyComp,protocol, pURL;
     private Date productionDate,distributionDate,dateOfDeposit, publicationDate;
     private int versionMajor, versionMinor;
 
     public SimpleCitationFields() {
-        this.doi = "";
+        this.pID = "";
+        this.pURL = "";
         this.authority = "";
         this.identifier = "";
         this.title = "";
@@ -71,6 +72,7 @@ public class SimpleCitationFields extends JSONField {
         this.contactForAcc = "";
         this.sizeOfColl = "";
         this.studyComp = "";
+        this.protocol = "";
     }
 
     public boolean hasField(String fieldName){
@@ -92,7 +94,7 @@ public class SimpleCitationFields extends JSONField {
     public void setField(String label, String value){
         switch(label) {
             case PERSISTENT_ID:
-                setDoi(value);
+                setPersistentID(value);
                 break;
             case TITLE:
                 setTitle(value);
@@ -154,6 +156,8 @@ public class SimpleCitationFields extends JSONField {
             case AUTHORITY:
                 setAuthority(value);
                 break;
+            case PROTOCOL:
+                setProtocol(value);
             default:
                 setTermsAndAccField(label,value);
         }
@@ -216,7 +220,9 @@ public class SimpleCitationFields extends JSONField {
     public String getField(String fieldName) {
         switch (fieldName) {
             case PERSISTENT_ID:
-                return getDOI();
+                return getPersistentID();
+            case PERSISTENT_URL:
+                return getPersistentURL();
             case TITLE:
                 return getTitle();
             case SUBTITLE:
@@ -257,6 +263,8 @@ public class SimpleCitationFields extends JSONField {
                 return authority;
             case IDENTIFIER:
                 return identifier;
+            case PROTOCOL:
+                return protocol;
             default:
                 return getTermsAndAccessField(fieldName);
         }
@@ -305,13 +313,15 @@ public class SimpleCitationFields extends JSONField {
         return major*1000+minor;
     }
 
-    private void setDoi(String doi) {
-        String filteredDOI = filterURL(doi);
+    private void setPersistentID(String persistentURL) {
+        pURL = persistentURL;
+        String filteredDOI = filterURL(persistentURL);
         if(filteredDOI.isEmpty()) {
-            this.doi = filteredDOI;
-            logger.error("Something went wrong as the PERSISTENT_ID us wonky: " + doi);
-        }else
-            this.doi = filteredDOI.substring(16);
+            this.pID = filteredDOI;
+            logger.error("Something went wrong as the PERSISTENT_ID us wonky: " + persistentURL);
+        }else {
+            this.pID = filteredDOI.substring(filteredDOI.indexOf(getField(AUTHORITY)));
+        }
     }
 
     private void setTitle(String title) {
@@ -452,15 +462,19 @@ public class SimpleCitationFields extends JSONField {
         return publicationDate.getDateAsString();
     }
 
-    public String getDOI(){
-        return doi;
+    public String getPersistentID(){
+        return pID;
     }
 
-    public String getVersionMajor() {
+    public String getPersistentURL(){
+        return pURL;
+    }
+
+    private String getVersionMajor() {
         return String.valueOf(versionMajor);
     }
 
-    public String getVersionMinor() {
+    private String getVersionMinor() {
         return String.valueOf(versionMinor);
     }
 
@@ -473,76 +487,84 @@ public class SimpleCitationFields extends JSONField {
     }
 
 
-    public void setTermsOfUse(String termsOfUse) {
+    private void setTermsOfUse(String termsOfUse) {
         this.termsOfUse = termsOfUse;
     }
 
 
-    public void setConfidDec(String confidDec) {
+    private void setConfidDec(String confidDec) {
         this.confidDec = confidDec;
     }
 
 
-    public void setAvailabStat(String availabStat) {
+    private void setAvailabStat(String availabStat) {
         this.availabStat = availabStat;
     }
 
 
-    public void setSpecialPerms(String specialPerms) {
+    private void setSpecialPerms(String specialPerms) {
         this.specialPerms = specialPerms;
     }
 
 
-    public void setRestrictions(String restrictions) {
+    private void setRestrictions(String restrictions) {
         this.restrictions = restrictions;
     }
 
 
-    public void setCitationReqs(String citationReqs) {
+    private void setCitationReqs(String citationReqs) {
         this.citationReqs = citationReqs;
     }
 
 
-    public void setDepositReqs(String depositReqs) {
+    private void setDepositReqs(String depositReqs) {
         this.depositReqs = depositReqs;
     }
 
 
-    public void setConditions(String conditions) {
+    private void setConditions(String conditions) {
         this.conditions = conditions;
     }
 
 
-    public void setDisclaimer(String disclaimer) {
+    private void setDisclaimer(String disclaimer) {
         this.disclaimer = disclaimer;
     }
 
 
-    public void setTermsOfAcc(String termsOfAcc) {
+    private void setTermsOfAcc(String termsOfAcc) {
         this.termsOfAcc = termsOfAcc;
     }
 
 
-    public void setDataAccPlace(String dataAccPlace) {
+    private void setDataAccPlace(String dataAccPlace) {
         this.dataAccPlace = dataAccPlace;
     }
 
 
-    public void setOrigArch(String origArch) {
+    private void setOrigArch(String origArch) {
         this.origArch = origArch;
     }
 
 
-    public void setContactForAcc(String contactForAcc) {
+    private void setContactForAcc(String contactForAcc) {
         this.contactForAcc = contactForAcc;
     }
 
 
-    public void setSizeOfColl(String sizeOfColl) {
+    private void setSizeOfColl(String sizeOfColl) {
         this.sizeOfColl = sizeOfColl;
     }
 
-    public void setStudyComp(String studyComp) {
+    private void setStudyComp(String studyComp) {
         this.studyComp = studyComp;
+    }
+
+    private String getProtocol() {
+        return protocol;
+    }
+
+    private void setProtocol(String protocol) {
+        this.protocol = protocol;
     }
 }

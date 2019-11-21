@@ -10,10 +10,19 @@ public abstract class HTTPCaller {
     protected GeoLogger logger;
 
     public String callHTTP(String searchUrl) {
-        HttpURLConnection h = getHttpURLConnection(searchUrl);
-        if(h==null)
-            return "HTTP Fail";
-        String answer = readResponse(h);
+        String fixed = searchUrl.replaceAll(" ", "%20");
+        int counter = 0;
+        String answer = "";
+        boolean run = true;
+        while (run && counter<5) {
+            HttpURLConnection h = getHttpURLConnection(fixed);
+            if (h == null)
+                return "HTTP Fail";
+            answer = readResponse(h);
+            if(!answer.contains("Please add a username"))
+                run = false;
+            counter++;
+        }
         return (answer.equals("BAD_RESPONSE")? "HTTP Fail":answer);
     }
 

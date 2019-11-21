@@ -17,10 +17,12 @@ public class DVFieldNameStrings {
     public final static String CITATION = "citation";
 
     public final static String PERSISTENT_ID = "persistentId";
+    public final static String PERSISTENT_URL = "persistentURL";
     public final static String MAJOR_VERSION = "versionNumber";
     public final static String MINOR_VERSION = "versionMinorNumber";
     public final static String AUTHORITY = "authority";
     public final static String IDENTIFIER = "identifier";
+    public final static String PROTOCOL = "protocol";
 
 
     //Simple Field Names
@@ -172,6 +174,7 @@ public class DVFieldNameStrings {
     public final static String NORTH_LAT_LONG = "northLongitude";
     public final static String SOUTH_LAT_LONG = "southLongitude";
     public final static String FILE_NAME = "fileName";
+    public final static String GEOMETRY = "geometryType";
 
     //Geographic Coverage Field Names
     public final static String COUNTRY = "country";

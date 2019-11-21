@@ -155,7 +155,7 @@ public class GeonamesBBs extends FindBoundBox {
         if(box.getLongWest()!=361)
             return box;
         Map<String, String> parameters = new HashMap<>();
-        parameters.put("username", USER_NAME);
+        parameters.put("username", GEONAMES_USERNAME);
         parameters.put("style","FULL");
         String countryCode = countries.isCountryCode(country) ? country : countries.getCountryByCode(country);
         parameters.put("country",countryCode);
@@ -198,7 +198,7 @@ public class GeonamesBBs extends FindBoundBox {
         /*if(box.getLongWest()!=361)
             return box;
         Map<String, String> parameters = new HashMap<>();
-        parameters.put("username", USER_NAME);
+        parameters.put("username", GEONAMES_USERNAME);
         parameters.put("style","FULL");
         String countryCode = countries.isCountryCode(country) ? country : countries.getCountryByCode(country);
         parameters.put("country",countryCode);
@@ -271,7 +271,7 @@ public class GeonamesBBs extends FindBoundBox {
                 }
             }
         }else{
-            logger.warn("Somehow got to calling Geonames without there being anything in the geographic coverage for" + doi);
+            logger.error("Somehow got to calling Geonames without there being anything in the geographic coverage for" + doi);
 
         }
         return geoBBs;

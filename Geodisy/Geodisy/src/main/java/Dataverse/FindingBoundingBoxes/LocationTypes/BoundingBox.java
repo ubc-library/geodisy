@@ -9,6 +9,7 @@ public class BoundingBox implements Serializable {
     private double longEast = 361;
     private boolean generated = false;
     private String fileName = "";
+    private String geometryType = "Non-geospatial";
 
     /**
      *
@@ -122,5 +123,13 @@ public class BoundingBox implements Serializable {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public String getGeometryType() {
+        return geometryType;
+    }
+
+    public void setGeometryType(String geometryType) {
+        this.geometryType = geometryType;
     }
 }

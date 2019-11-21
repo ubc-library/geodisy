@@ -14,6 +14,8 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
+import static Dataverse.DVFieldNameStrings.PROTOCOL;
+
 public abstract class SourceJavaObject {
     protected CitationFields citationFields;
     protected GeographicFields geoFields;
@@ -166,14 +168,14 @@ public abstract class SourceJavaObject {
     }
 
     public String getDOIProtocal(){
-        String persistentURL = getDOI();
-        if(persistentURL.contains("https://doi.org/")||persistentURL.contains("doi:"))
+        String protocol = getSimpleFields().getField(PROTOCOL);
+        if(protocol.contains("doi"))
             return "DOI";
-        if(persistentURL.contains("handle")||persistentURL.contains("hdl:"))
+        if(protocol.contains("handle"))
             return "Handle";
-        if(persistentURL.contains("ark:"))
+        if(protocol.contains("ark"))
             return "ARK";
-        if(persistentURL.contains("urn:"))
+        if(protocol.contains("urn"))
             return "URN";
         return "Error";
     }

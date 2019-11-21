@@ -227,9 +227,12 @@ public class CitationFields extends MetadataWSimple {
 
     public void setBaseFields(JSONObject current){
 
-        simpleCitationFields.setField(PERSISTENT_ID,parseSimpleValue( current,"persistentUrl"));
+        simpleCitationFields.setField(PERSISTENT_ID,parseSimpleValue( current,PERSISTENT_URL));
         simpleCitationFields.setField(PUB_DATE, getValueDate(current,PUB_DATE));
         simpleCitationFields.setField(PUBLISHER, parseSimpleValue(current,PUBLISHER));
+        simpleCitationFields.setField(PROTOCOL,parseSimpleValue(current,PROTOCOL));
+        simpleCitationFields.setField(AUTHORITY,parseSimpleValue(current,AUTHORITY));
+        simpleCitationFields.setField(IDENTIFIER,parseSimpleValue(current,IDENTIFIER));
         current = getVersionSection(current);
         simpleCitationFields.setField(PROD_DATE,getValueDate(current,PROD_DATE));
         simpleCitationFields.setField(DEPOS_DATE,getValueDate(current,"createTime"));
@@ -338,7 +341,7 @@ public class CitationFields extends MetadataWSimple {
 
     @Override
     public String getDoi() {
-        return simpleCitationFields.getDOI();
+        return simpleCitationFields.getPersistentID();
     }
 
     @Override
@@ -490,7 +493,7 @@ public class CitationFields extends MetadataWSimple {
     }
 
     public String getDOI(){
-        return getSimpleCitationFields().getDOI();
+        return getSimpleCitationFields().getPersistentID();
     }
 
     //If you update this method, also update copy in DataverseJavaObject
