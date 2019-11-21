@@ -158,6 +158,7 @@ public class SimpleCitationFields extends JSONField {
                 break;
             case PROTOCOL:
                 setProtocol(value);
+                break;
             default:
                 setTermsAndAccField(label,value);
         }

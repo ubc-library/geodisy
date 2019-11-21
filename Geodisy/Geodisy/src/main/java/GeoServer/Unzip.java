@@ -21,7 +21,7 @@ public class Unzip {
     //TODO call unzip when adding zipped files to Geoserver and then call deleteUnzippedFiles() after upload is done to save space
     public void unzip(String filePath, DataverseRecordFile dRF) {
         String destPath = filePath.substring(0,filePath.length()-4);
-        File destDir = new File(destPath.substring(0,34));
+        File destDir = new File(dRF.getDoi() + destPath);
 
         Path path = Paths.get(destPath);
 

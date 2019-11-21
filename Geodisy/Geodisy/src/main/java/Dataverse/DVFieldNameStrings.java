@@ -17,7 +17,7 @@ public class DVFieldNameStrings {
     public final static String CITATION = "citation";
 
     public final static String PERSISTENT_ID = "persistentId";
-    public final static String PERSISTENT_URL = "persistentURL";
+    public final static String PERSISTENT_URL = "persistentUrl";
     public final static String MAJOR_VERSION = "versionNumber";
     public final static String MINOR_VERSION = "versionMinorNumber";
     public final static String AUTHORITY = "authority";
