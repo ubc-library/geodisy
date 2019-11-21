@@ -25,6 +25,9 @@ import static Dataverse.DVFieldNameStrings.*;
 
 public class DataGBJSON extends GeoBlacklightJSON{
     GeoLogger logger;
+    private GeographicBoundingBox gbb;
+    //TODO put "Non-Geospatial" into geometry type for non-GDAL'd files
+
     public DataGBJSON(DataverseJavaObject djo) {
         super();
         javaObject = djo;
@@ -52,10 +55,11 @@ public class DataGBJSON extends GeoBlacklightJSON{
         jo.put("dct_provenance_s",javaObject.getSimpleFields().getField(PUBLISHER));
 
         jo.put("solr_geom","ENVELOPE(" + getBB(gbb) + ")");
+        jo.put("layer_geom_type_s",gbb.getField(GEOMETRY));
         addMetadataDownloadOptions();
         return jo;
     }
-    
+
     private String getBB(GeographicBoundingBox gbb){
         return gbb.getWestLongitude() + ", " + gbb.getEastLongitude() + ", " + gbb.getNorthLatitude() + ", " + gbb.getSouthLatitude();
     }
@@ -139,11 +143,11 @@ public class DataGBJSON extends GeoBlacklightJSON{
         jo.put("dc_description_s",ja);
     }
 
-    public void saveJSONToFile(String json, String doi, String uuid){
-        genDirs(doi + "/" + uuid, OPEN_METADATA_LOCAL_REPO);
+    public void saveJSONToFile(String json, String doi, String folderName){
+        genDirs(doi + "/" + folderName, OPEN_METADATA_LOCAL_REPO);
         BaseFiles.FileWriter file = new BaseFiles.FileWriter();
         try {
-            file.writeStringToFile(json,"./"+OPEN_METADATA_LOCAL_REPO + doi + "/" + uuid + "/" +"geoblacklight.json");
+            file.writeStringToFile(json,"./"+OPEN_METADATA_LOCAL_REPO + doi + "/" + folderName + "/" +"geoblacklight.json");
         } catch (IOException e) {
             logger.error("Something went wrong trying to create a JSON file with doi:" + doi);
         }

@@ -37,10 +37,13 @@ public abstract class GeoBlacklightJSON implements JSONCreator, MetadataSchema {
         LinkedList<GeographicBoundingBox> gbbs = javaObject.getGeoFields().getBBoxesForJSON();
         int size = gbbs.size();
         for(int i = 0; i<size; i++){
-            getRequiredFields(gbbs.get(i),i,size);
+            getRequiredFields(gbbs.get(i),i+1,size);
             getOptionalFields();
             geoBlacklightJson = jo.toString();
-            saveJSONToFile(geoBlacklightJson, doi, DataverseRecordFile.getUUID(doi + i));
+            if(size>1)
+                saveJSONToFile(geoBlacklightJson, doi, doi + " (File " + (i+1) + " of " + size + ")");
+            else
+                saveJSONToFile(geoBlacklightJson, doi, doi);
         }
     }
 
@@ -77,5 +80,5 @@ public abstract class GeoBlacklightJSON implements JSONCreator, MetadataSchema {
     protected abstract void addMetadataDownloadOptions(DataverseRecordFile drf); //for records with datasetfiles
     protected abstract void addMetadataDownloadOptions(); //for records with only metadata
     protected abstract JSONArray addBaseMetadataDownloadOptions(); //adds the base metadata external services that all records need regardless of existance of datafiles
-    protected abstract void saveJSONToFile(String json, String doi, String uuid);
+    protected abstract void saveJSONToFile(String json, String doi, String folderName);
 }
