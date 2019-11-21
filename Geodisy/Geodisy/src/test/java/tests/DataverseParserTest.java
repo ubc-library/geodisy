@@ -36,7 +36,7 @@ public class DataverseParserTest {
         DataverseJavaObject djo = dataverseParser.parse(jo, "another fake server name");
         MyTimerTask my = new MyTimerTask();
         try {
-            my.trimErrors();
+            my.keepInfo();
         } catch (IOException e) {
             e.printStackTrace();
         }
