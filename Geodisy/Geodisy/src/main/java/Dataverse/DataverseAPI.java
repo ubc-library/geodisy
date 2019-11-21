@@ -11,7 +11,6 @@ import BaseFiles.GeoLogger;
 import BaseFiles.Geonames;
 import BaseFiles.HTTPCallerGeoNames;
 import Crosswalking.JSONParsing.DataverseParser;
-import GeoServer.GeoServerAPI;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +38,7 @@ public class DataverseAPI extends SourceAPI {
 
     @Override
     public LinkedList<SourceJavaObject> harvest() {
-        ExistingSearches es = ExistingSearches.getExistingSearches();
+        ExistingHarvests es = ExistingHarvests.getExistingHarvests();
         HashSet<String> dois = searchDV();
         LinkedList<JSONObject> jsons = downloadMetadata(dois);
         LinkedList<SourceJavaObject> answers =  new LinkedList<>();
@@ -161,7 +160,7 @@ public class DataverseAPI extends SourceAPI {
         return djo;
     }
 
-    private boolean hasNewInfo(DataverseJavaObject djo, ExistingSearches es) {
+    private boolean hasNewInfo(DataverseJavaObject djo, ExistingHarvests es) {
         DataverseRecordInfo dri = new DataverseRecordInfo(djo, logger.getName());
         return dri.newer(es.getRecordInfo(djo.getDOI()));
     }

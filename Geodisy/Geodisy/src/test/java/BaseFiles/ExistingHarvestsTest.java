@@ -3,7 +3,7 @@ package BaseFiles;
 import Crosswalking.JSONParsing.DataverseParser;
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordInfo;
-import Dataverse.ExistingSearches;
+import Dataverse.ExistingHarvests;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -16,7 +16,7 @@ import java.util.HashMap;
 import static BaseFiles.GeodisyStrings.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ExistingSearchesTest {
+public class ExistingHarvestsTest {
     DataverseJavaObject djo;
     @Before
     public void initialize(){
@@ -51,7 +51,7 @@ public class ExistingSearchesTest {
         } catch (IOException e) {
             System.out.println("One of the test files didn't yet exist, so couldn't be destroyed");
         }
-        ExistingSearches es = ExistingSearches.getExistingSearches();
+        ExistingHarvests es = ExistingHarvests.getExistingHarvests();
         HashMap<String, BoundingBox> bboxes = new HashMap<>();
         BoundingBox bbox = new BoundingBox();
         bbox.setLatSouth(81);

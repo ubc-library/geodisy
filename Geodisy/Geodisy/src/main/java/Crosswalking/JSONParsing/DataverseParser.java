@@ -4,7 +4,7 @@ import BaseFiles.GeoLogger;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordInfo;
-import Dataverse.ExistingSearches;
+import Dataverse.ExistingHarvests;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +35,7 @@ public class DataverseParser implements JSONParser {
             else
                 current = dataverseJSON;
             dJO.parseCitationFields(current);
-            ExistingSearches es = ExistingSearches.getExistingSearches();
+            ExistingHarvests es = ExistingHarvests.getExistingHarvests();
             DataverseRecordInfo dRI = dJO.generateDRI();
             if(!dRI.newer(es.getRecordInfo(dRI.getDoi())))
                 return new DataverseJavaObject("");

@@ -3,11 +3,8 @@ package BaseFiles;
 import Crosswalking.Crosswalk;
 import Crosswalking.GeoBlacklightJson.DataGBJSON;
 import Crosswalking.GeoBlacklightJson.GeoCombine;
-import Dataverse.DataverseJavaObject;
-import Dataverse.DataverseRecordInfo;
-import Dataverse.ExistingSearches;
+import Dataverse.*;
 import Dataverse.FindingBoundingBoxes.Countries;
-import Dataverse.SourceJavaObject;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -25,6 +22,8 @@ import static BaseFiles.GeodisyStrings.*;
  */
 public class MyTimerTask extends TimerTask {
     GeoLogger logger = new GeoLogger(this.getClass());
+    ExistingHarvests existingHarvests;
+    ExistingCallsToCheck existingCallsToCheck;
     public MyTimerTask() {
     }
 /**
@@ -36,31 +35,35 @@ public class MyTimerTask extends TimerTask {
        String endRecsToCheck;
        String startErrorLog;
        String endErrorLog;
+       String startWarningLog;
+       String endWarningLog;
        long startTime = Calendar.getInstance().getTimeInMillis();
         Countries.getCountry();
         try {
             FileWriter fW = new FileWriter();
             fW.verifyFileExistence(RECORDS_TO_CHECK);
             fW.verifyFileExistence(ERROR_LOG);
+            fW.verifyFileExistence(WARNING_LOG);
+            existingHarvests = ExistingHarvests.getExistingHarvests();
+            existingCallsToCheck = ExistingCallsToCheck.getExistingCallsToCheck();
             startRecsToCheck = new String(Files.readAllBytes(Paths.get(RECORDS_TO_CHECK)));
             startErrorLog = new String(Files.readAllBytes(Paths.get(ERROR_LOG)));
+            startWarningLog = new String(Files.readAllBytes(Paths.get(WARNING_LOG)));
 
             Geodisy geo = new Geodisy();
-
-
-            ExistingSearches existingSearches = ExistingSearches.readExistingSearches();
 
             //This section is the initial search for new records in the repositories. We will need to add a new harvest call for each new repository type [Geodisy 2]
             List<SourceJavaObject> sJOs = geo.harvestDataverse();
             for(SourceJavaObject sJO : sJOs) {
-                existingSearches.addOrReplaceRecord(new DataverseRecordInfo(sJO, logger.getName()));
+                existingHarvests.addOrReplaceRecord(new DataverseRecordInfo(sJO, logger.getName()));
             }
             crosswalkRecords(sJOs);
-            sendRecordsToGeoBlacklight();
+            //sendRecordsToGeoBlacklight();
 
 
-            endRecsToCheck = trimErrors();
-            endErrorLog = trimInfo();
+            endRecsToCheck = keepInfo();
+            endErrorLog = keepMajErrors();
+            endWarningLog = keepMinErrors();
             if(!startRecsToCheck.equals(endRecsToCheck)) {
                 emailCheckRecords();
                 fW.writeStringToFile(endRecsToCheck,RECORDS_TO_CHECK);
@@ -68,7 +71,12 @@ public class MyTimerTask extends TimerTask {
             if(!startErrorLog.equals(endErrorLog)){
                 fW.writeStringToFile(endErrorLog,ERROR_LOG);
             }
-            existingSearches.saveExistingSearchs();
+            if(!startWarningLog.equals(endWarningLog)){
+                fW.writeStringToFile(endWarningLog,WARNING_LOG);
+            }
+            existingHarvests.saveExistingSearchs(existingHarvests.getRecordVersions(),EXISTING_RECORDS, "ExistingRecords");
+            existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
+
 
         } catch (IOException  e) {
             logger.error("Something went wrong trying to read permanent file ExistingRecords.txt!");
@@ -78,6 +86,8 @@ public class MyTimerTask extends TimerTask {
             System.out.println("Finished a run at: " + end.getTime() + " after " + total + " milliseconds");
         }
     }
+
+
 
     private void sendRecordsToGeoBlacklight() {
         GeoCombine combine = new GeoCombine();
@@ -112,12 +122,12 @@ public class MyTimerTask extends TimerTask {
      * @return String with no INFO messages
      * @throws IOException
      */
-    private String trimInfo()throws IOException {
+    private String keepMajErrors()throws IOException {
         String end = new String(Files.readAllBytes(Paths.get(ERROR_LOG)));
         String[] lines = end.split(System.getProperty("line.separator"));
         StringBuilder sb = new StringBuilder();
         for(String s: lines){
-            if(s.contains("INFO"))
+            if(s.contains("INFO")||s.contains("WARN"))
                 continue;
             sb.append(s+System.lineSeparator());
         }
@@ -129,18 +139,27 @@ public class MyTimerTask extends TimerTask {
      * @return String with no ERROR messages
      * @throws IOException
      */
-    public String trimErrors() throws IOException {
+    public String keepInfo() throws IOException {
         String end = new String(Files.readAllBytes(Paths.get(RECORDS_TO_CHECK)));
         String[] lines = end.split(System.getProperty("line.separator"));
         StringBuilder sb = new StringBuilder();
         for(String s: lines){
-            if(s.contains("ERROR"))
+            if(s.contains("ERROR")||s.contains("WARN"))
                 continue;
             sb.append(s + System.lineSeparator());        }
         return sb.toString();
     }
 
-
+    private String keepMinErrors() throws IOException{
+        String end = new String(Files.readAllBytes(Paths.get(WARNING_LOG)));
+        String[] lines = end.split(System.getProperty("line.separator"));
+        StringBuilder sb = new StringBuilder();
+        for(String s: lines){
+            if(s.contains("ERROR")||s.contains("INFO"))
+                continue;
+            sb.append(s + System.lineSeparator());        }
+        return sb.toString();
+    }
     //TODO setup email system
     private void emailCheckRecords() {
     }

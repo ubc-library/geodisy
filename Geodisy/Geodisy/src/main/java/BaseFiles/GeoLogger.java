@@ -9,17 +9,13 @@ import org.apache.logging.log4j.Logger;
  */
 public class GeoLogger {
     public Logger logger;
-    private ExistingCallsToCheck efc;
 
     public GeoLogger(String className) {
         logger = LogManager.getLogger(className);
-        efc = ExistingCallsToCheck.getExistingCallsToCheck();
     }
 
     public GeoLogger(Class classType){
         logger = LogManager.getLogger(classType);
-        efc = ExistingCallsToCheck.getExistingCallsToCheck();
-
     }
 
     public void error(String message){
@@ -32,13 +28,10 @@ public class GeoLogger {
             logger.error(message);
         else {
             DataverseRecordInfo dri = new DataverseRecordInfo(djo, loggerName);
+            ExistingCallsToCheck efc = ExistingCallsToCheck.getExistingCallsToCheck();
             if (!efc.hasRecord(djo.getDOI())) {
-                logger.info(message);
-                logger.error(message);
                 efc.addOrReplaceRecord(dri);
             } else if (efc.isNewerRecord(dri, loggerName)) {
-                logger.info("UPDATED RECORD: " + message);
-                logger.error("UPDATED RECORD: " + message);
                 efc.addOrReplaceRecord(dri);
             }
         }

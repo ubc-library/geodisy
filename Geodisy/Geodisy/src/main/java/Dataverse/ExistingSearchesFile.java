@@ -2,15 +2,11 @@ package Dataverse;
 
 import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
-import Dataverse.ExistingSearches;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 
 import java.io.*;
 import java.util.HashMap;
-import java.util.Iterator;
 
 import static BaseFiles.GeodisyStrings.EXISTING_BBOXES;
 import static BaseFiles.GeodisyStrings.EXISTING_RECORDS;
@@ -20,13 +16,13 @@ import static BaseFiles.GeodisyStrings.EXISTING_RECORDS;
  */
 public class ExistingSearchesFile {
     GeoLogger logger = new GeoLogger(this.getClass());
-    ExistingSearches es;
+    ExistingHarvests es;
 
     /**
      * Constructor to use for production environment;
      */
     public ExistingSearchesFile(){
-        es = ExistingSearches.getExistingSearches();
+        es = ExistingHarvests.getExistingHarvests();
     }
 
     /**
@@ -34,10 +30,10 @@ public class ExistingSearchesFile {
      * @param path
      */
     public ExistingSearchesFile(String path){
-        es = ExistingSearches.getExistingSearches();
+        es = ExistingHarvests.getExistingHarvests();
     }
 
-    public void writeExistingSearches(ExistingSearches existingSearches) throws IOException {
+    public void writeExistingSearches(ExistingHarvests existingSearches) throws IOException {
         HashMap<String, DataverseRecordInfo> records = new HashMap<>();
         es.getRecordVersions().forEach((key, value)-> records.put(key,value));
         HashMap<String, BoundingBox> bboxes = new HashMap<>();
@@ -52,22 +48,22 @@ public class ExistingSearchesFile {
      * @return
      * @throws IOException
      */
-    public ExistingSearches readExistingSearches() throws IOException {
-        ExistingSearches es;
+    public ExistingHarvests readExistingSearches() throws IOException {
+        ExistingHarvests es;
         FileWriter writer = new FileWriter();
         try {
-            //TODO something is going wrong here. Says it's trying to convert a HashMap to Dataverse.ExistingSearches. Maybe save the maps separately?
+            //TODO something is going wrong here. Says it's trying to convert a HashMap to Dataverse.ExistingHarvests. Maybe save the maps separately?
             HashMap<String, DataverseRecordInfo> records = (HashMap<String, DataverseRecordInfo>) writer.readSavedObject(EXISTING_RECORDS);
             HashMap<String, BoundingBox> bBoxes = (HashMap<String, BoundingBox>) writer.readSavedObject(EXISTING_BBOXES);
-            es = ExistingSearches.getExistingSearches();
+            es = ExistingHarvests.getExistingHarvests();
             es.setbBoxes(bBoxes);
             es.setRecords(records);
         } catch (FileNotFoundException e) {
-            es = ExistingSearches.getExistingSearches();
+            es = ExistingHarvests.getExistingHarvests();
             writeExistingSearches(es);
         } catch (ClassNotFoundException e){
-            logger.warn("something went wonky loading the existing searches from the file");
-            return ExistingSearches.getExistingSearches();
+            logger.error("something went wonky loading the existing searches from the file");
+            return ExistingHarvests.getExistingHarvests();
         }
         return es;
     }

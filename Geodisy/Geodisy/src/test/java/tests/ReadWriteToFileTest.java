@@ -1,7 +1,7 @@
 package tests;
 
+import Dataverse.ExistingHarvests;
 import Dataverse.ExistingSearchesFile;
-import Dataverse.ExistingSearches;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +15,7 @@ public class ReadWriteToFileTest {
     public void getFileTest(){
         try {
             ExistingSearchesFile eSF = new ExistingSearchesFile();
-            ExistingSearches es = eSF.readExistingSearches();
+            ExistingHarvests es = eSF.readExistingSearches();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -23,7 +23,7 @@ public class ReadWriteToFileTest {
     @Test
     public void writeFileTest(){
         ExistingSearchesFile eSF = new ExistingSearchesFile("ExistingRecordsTest.txt");
-        ExistingSearches es =  ExistingSearches.getExistingSearches();
+        ExistingHarvests es =  ExistingHarvests.getExistingHarvests();
         String location = "test"+ LocalDateTime.now();
         es.addBBox(location,new BoundingBox());
         try {
@@ -41,7 +41,7 @@ public class ReadWriteToFileTest {
             e.printStackTrace();
         }
         assertEquals(es.numberOfBBoxes(),0);
-        es = ExistingSearches.getExistingSearches();
+        es = ExistingHarvests.getExistingHarvests();
         assertEquals(es.numberOfBBoxes(),0);
     }
 }

@@ -1,15 +1,20 @@
 package Dataverse;
 
 
+import BaseFiles.FileWriter;
+import BaseFiles.GeoLogger;
+
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import static BaseFiles.GeodisyStrings.EXISTING_CHECKS;
 
-public class ExistingCallsToCheck implements Serializable{
+
+public class ExistingCallsToCheck extends ExistingSearches implements Serializable{
     private static final long serialVersionUID = 5416853597895403102L;
     private HashMap<String, DataverseRecordInfo> records;
     private static ExistingCallsToCheck single_instance = null;
-
 
     public static ExistingCallsToCheck getExistingCallsToCheck() {
         if (single_instance == null) {
@@ -19,7 +24,10 @@ public class ExistingCallsToCheck implements Serializable{
     }
 
     private ExistingCallsToCheck(){
+        logger = new GeoLogger(this.getClass());
         records = new HashMap<>();
+        records = readExistingRecords(EXISTING_CHECKS);
+
     }
     public boolean isEmpty(){
         return records.isEmpty();
@@ -60,7 +68,5 @@ public class ExistingCallsToCheck implements Serializable{
     public void deleteRecords(String location){
         records.remove(location);
     }
-
-
 
 }

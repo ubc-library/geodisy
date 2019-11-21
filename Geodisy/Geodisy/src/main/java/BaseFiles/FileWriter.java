@@ -1,7 +1,7 @@
 package BaseFiles;
 
 
-import Dataverse.ExistingSearches;
+import Dataverse.ExistingHarvests;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
@@ -90,25 +90,25 @@ public class FileWriter {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public ExistingSearches readExistingSearches(String path) throws IOException {
-        ExistingSearches es = ExistingSearches.getExistingSearches();
+    public ExistingHarvests readExistingSearches(String path) throws IOException {
+        ExistingHarvests es = ExistingHarvests.getExistingHarvests();
         try {
             File file = new File(path);
             File directory = new File(file.getParentFile().getAbsolutePath());
             directory.mkdirs();
             if(file.createNewFile())
-                return ExistingSearches.getExistingSearches();
+                return ExistingHarvests.getExistingHarvests();
             FileInputStream f = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(f);
-            es = (ExistingSearches) ois.readObject();
+            es = (ExistingHarvests) ois.readObject();
         } catch (FileNotFoundException e) {
-            es = ExistingSearches.getExistingSearches();
+            es = ExistingHarvests.getExistingHarvests();
             writeObjectToFile(es, path);
         } catch (EOFException e) {
-            return ExistingSearches.getExistingSearches();
+            return ExistingHarvests.getExistingHarvests();
         } catch (ClassNotFoundException e){
             System.out.println("something went wonky loading the existing searches from the file");
-            return ExistingSearches.getExistingSearches();
+            return ExistingHarvests.getExistingHarvests();
         }
         return es;
     }
@@ -123,7 +123,7 @@ public class FileWriter {
         Path filePath = Paths.get(path);
         try {
             Files.createFile(filePath);
-            System.out.println("File didn't already exists, so created it");
+            System.out.println("File " + path + " didn't already exists, so created it");
             return false;
         } catch (IOException e) {
             return true;
