@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import static BaseFiles.GeodisyStrings.DATASET_FILES_PATH;
 import static BaseFiles.PrivateStrings.GEOSERVER_PASSWORD;
 import static BaseFiles.PrivateStrings.GEOSERVER_USERNAME;
 import static GeoServer.GeoserverStrings.*;
@@ -48,7 +49,7 @@ public class GeoServerAPI extends DestinationAPI {
         FileWriter fileWriter = new FileWriter();
         String doi = sjo.getDOI();
         String doiPath = doi.replaceAll(".","_").replaceAll("/","_");
-        String filePath = "datasetFiles/"+ doiPath + "/import.json";
+        String filePath = DATASET_FILES_PATH + doiPath + "/import.json";
         try {
             fileWriter.writeStringToFile(jsonString,filePath);
         } catch (IOException e) {

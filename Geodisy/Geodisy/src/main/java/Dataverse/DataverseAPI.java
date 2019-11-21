@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+import static BaseFiles.GeodisyStrings.DATASET_FILES_PATH;
+
 /**
  *  Search Dataverse for datasets
  * @author pdante
@@ -229,6 +231,6 @@ public class DataverseAPI extends SourceAPI {
     protected String folderizedDOI(String doi){
         String folderizedDOI = doi.replaceAll("\\.","_");
         folderizedDOI = folderizedDOI.replaceAll("/","_");
-        return "./datasetFiles/" + folderizedDOI;
+        return DATASET_FILES_PATH + folderizedDOI;
     }
 }

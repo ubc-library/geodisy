@@ -26,6 +26,7 @@ public class GeodisyStrings {
         public final static String COUNTRY_VALS =  GEODISY_PATH_ROOT + "geodisyFiles/Geoname_countries.xml";
         public final static String ALL_CITATION_METADATA = GEODISY_PATH_ROOT + "geodisyFiles/AllCitationMetadata.json";
         public final static String XML_TEST_FILE = GEODISY_PATH_ROOT + "geodisyFiles/XMLTestDJO.xml";
+        public final static String DATASET_FILES_PATH = "datasetFiles/";
 
 
     //Unused file type extensions

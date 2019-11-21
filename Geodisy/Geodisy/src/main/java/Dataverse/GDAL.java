@@ -16,7 +16,7 @@ public class GDAL {
         String doi = djo.getDOI();
         String path = doi.replace("/","_");
         path = path.replace(".","_");
-        String folderName = "datasetFiles/" +path+"/";
+        String folderName = DATASET_FILES_PATH +path+"/";
         File folder = new File(folderName);
         if(!folder.exists())
             folder.mkdirs();
@@ -31,7 +31,7 @@ public class GDAL {
         }
         String[] files = folder.list();
         for(String name: files){
-            String filePath = "datasetFiles/" + path + "/" + name;
+            String filePath = DATASET_FILES_PATH + path + "/" + name;
             if(!GeodisyStrings.gdalinfoRasterExtention(name) && !GeodisyStrings.ogrinfoVectorExtension(name))
                 continue;
             boolean gdalInfo = GeodisyStrings.gdalinfoRasterExtention(name);
@@ -67,7 +67,7 @@ public class GDAL {
     public BoundingBox generateBoundingBoxFromCSV(File file, DataverseJavaObject djo){
         String path = djo.getDOI().replace("/","_");
         path = path.replace(".","_");
-        String filePath = "./datasetFiles/" + path + "/" + file.getName();
+        String filePath = DATASET_FILES_PATH + path + "/" + file.getName();
         String name = file.getName();
         boolean isWindows = System.getProperty("os.name")
                 .toLowerCase().startsWith("windows");

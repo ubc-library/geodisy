@@ -16,6 +16,8 @@ import java.nio.charset.Charset;
 import java.util.Stack;
 import java.util.UUID;
 
+import static BaseFiles.GeodisyStrings.DATASET_FILES_PATH;
+
 
 /**
  * Info for downloading a geospatial dataset file, and the methods used to download the files.
@@ -70,7 +72,7 @@ public class DataverseRecordFile {
 
     public void getFile() {
         try {
-            String dirPath = "./datasetFiles/" + datasetDOI + "/";
+            String dirPath = DATASET_FILES_PATH + datasetDOI + "/";
             File folder = new File(dirPath);
             folder.mkdirs();
             String filePath = dirPath + title;
