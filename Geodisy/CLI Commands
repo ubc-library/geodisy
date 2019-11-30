@@ -1,0 +1,14 @@
+CLI Commands
+	Secure Transfer of XML/JSON records from my computer to VM
+		 scp -r -i C:/Users/pdante/.ssh/"computer canada cloud - paul pem.pem" "10.5072" centos@206.12.92.97:/home/geoblack/GeoCombine/tmp/opengeometadata
+	
+	GeoCombine 
+		index
+			OGM_PATH=tmp/opengeometadata/10.5072/ bundle exec rake geocombine:index
+			[OGM_PATH is the path to the folder to index]
+	
+	SOLR
+		Delete ALL (need an xml file with <delete><query>*:*</query></delete>, also be in directory /root/solr-8.3.0/bin)
+			./post -c geoblacklight-prod delete_ALL.xml
+			
+
