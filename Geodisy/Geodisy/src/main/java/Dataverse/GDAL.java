@@ -208,10 +208,10 @@ public class GDAL {
         end = gdalString.indexOf(")",start);
         String lat2 = gdalString.substring(start,end).trim();
         BoundingBox bb =  new BoundingBox();
-        bb.setLongWest(long2);
-        bb.setLongEast(long1);
-        bb.setLatNorth(lat2);
-        bb.setLatSouth(lat1);
+        bb.setLongWest(long1);
+        bb.setLongEast(long2);
+        bb.setLatNorth(lat1);
+        bb.setLatSouth(lat2);
         bb.setGenerated(true);
         return bb;
     }

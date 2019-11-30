@@ -4,6 +4,7 @@ import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONObject;
 
+import static BaseFiles.GeodisyStrings.OPEN_GEO_METADATA_BASE;
 import static Dataverse.DVFieldNameStrings.*;
 
 public class GeographicBoundingBox extends CompoundJSONField {
@@ -20,6 +21,17 @@ public class GeographicBoundingBox extends CompoundJSONField {
         this.bb = bb;
     }
 
+    public boolean isWMS(){
+        return bb.isWMS();
+    }
+
+    public boolean isWFS() {
+        return bb.isWFS();
+    }
+    //TODO make sure we create a Geoserver Location for each file
+    public String getGeoserverLocation() {
+        return bb.getGeoserverLocation();
+    }
     public String getWestLongitude() {
         checkCoords(bb);
         return String.valueOf(bb.getLongWest());
@@ -168,6 +180,9 @@ public class GeographicBoundingBox extends CompoundJSONField {
     }
 
     public void setFileName(String name){
+       while(name.startsWith("/")) {
+           name = name.substring(1);
+       }
         bb.setFileName(name);
     }
 
@@ -192,5 +207,27 @@ public class GeographicBoundingBox extends CompoundJSONField {
     }
     public boolean isGeneratedFromGeoFile(){
         return bb.isGenerated();
+    }
+
+
+    public String getOpenGeoMetaLocation() {
+        return OPEN_GEO_METADATA_BASE+folderized(doi)+fileize(doi)+".xml";
+    }
+
+    private String fileize(String doi) {
+        String answer = doi;
+        return answer.replace("/","_");
+    }
+
+    private String folderized(String doi) {
+        String answer = doi;
+        answer = answer.replace(".","/");
+        int loc = answer.lastIndexOf("/");
+        if(loc==-1) {
+            logger.error("Something went wrong with creating a folder structure for the doi using doi: " + doi);
+            return "";
+        }
+        answer = answer.substring(0,loc+1);
+        return answer;
     }
 }

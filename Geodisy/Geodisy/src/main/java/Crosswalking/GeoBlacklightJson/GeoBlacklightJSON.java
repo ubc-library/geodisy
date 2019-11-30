@@ -47,19 +47,6 @@ public abstract class GeoBlacklightJSON implements JSONCreator, MetadataSchema {
         }
     }
 
-    protected void addWMS() {
-            JSONArray ja = jo.getJSONArray(EXTERNAL_SERVICES);
-            ja.put("http://www.opengis.net/def/serviceType/ogc/wms");
-            ja.put(GEOSERVER_WMS_LOCATION);
-            jo.put(EXTERNAL_SERVICES, ja);
-    }
-
-    protected void addWFS() {
-            JSONArray ja = jo.getJSONArray(EXTERNAL_SERVICES);
-            ja.put("http://www.opengis.net/def/serviceType/ogc/wfs");
-            ja.put(GEOSERVER_WFS_LOCATION);
-            jo.put(EXTERNAL_SERVICES, ja);
-    }
 
     public File genDirs(String doi, String localRepoPath) {
         doi = FileWriter.fixPath(doi);
@@ -77,8 +64,7 @@ public abstract class GeoBlacklightJSON implements JSONCreator, MetadataSchema {
 
 
     protected abstract JSONObject getOptionalFields();
-    protected abstract void addMetadataDownloadOptions(DataverseRecordFile drf); //for records with datasetfiles
-    protected abstract void addMetadataDownloadOptions(); //for records with only metadata
-    protected abstract JSONArray addBaseMetadataDownloadOptions(); //adds the base metadata external services that all records need regardless of existance of datafiles
+    protected abstract JSONArray addMetadataDownloadOptions(GeographicBoundingBox gbb, JSONArray ja); //for records with datasetfiles
+    protected abstract JSONArray addBaseRecordInfo(GeographicBoundingBox gbb); //adds the base metadata external services that all records need regardless of existence of datafiles
     protected abstract void saveJSONToFile(String json, String doi, String folderName);
 }

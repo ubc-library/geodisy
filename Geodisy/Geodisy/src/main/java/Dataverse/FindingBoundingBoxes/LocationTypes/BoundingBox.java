@@ -1,6 +1,8 @@
 package Dataverse.FindingBoundingBoxes.LocationTypes;
 import java.io.Serializable;
 
+import static BaseFiles.GeodisyStrings.*;
+
 public class BoundingBox implements Serializable {
     private static final long serialVersionUID = -515599959188846468L;
     private double latSouth = 361;
@@ -10,6 +12,7 @@ public class BoundingBox implements Serializable {
     private boolean generated = false;
     private String fileName = "";
     private String geometryType = "Non-geospatial";
+    private String geoserverLocation;
 
     /**
      *
@@ -61,7 +64,7 @@ public class BoundingBox implements Serializable {
     }
 
     public double getLatSouth() {
-        return latSouth;
+        return latNorth>=latSouth? latSouth:latNorth;
     }
 
     public void setLatSouth(double latSouth) {
@@ -74,7 +77,7 @@ public class BoundingBox implements Serializable {
     }
 
     public double getLatNorth() {
-        return latNorth;
+        return latNorth>=latSouth? latNorth:latSouth;
     }
 
     public void setLatNorth(double latNorth) {
@@ -122,6 +125,8 @@ public class BoundingBox implements Serializable {
     }
 
     public void setFileName(String fileName) {
+        if(fileName.startsWith("/"))
+            fileName = fileName.substring(1);
         this.fileName = fileName;
     }
 
@@ -132,4 +137,29 @@ public class BoundingBox implements Serializable {
     public void setGeometryType(String geometryType) {
         this.geometryType = geometryType;
     }
+
+    public String getGeoserverLocation() {
+        return geoserverLocation;
+    }
+
+    public void setGeoserverLocation(String s){
+        geoserverLocation = s;
+    }
+
+    public boolean isWMS() {
+        for(String s: PREVIEWABLE_FILE_EXTENSIONS) {
+            if (fileName.toLowerCase().endsWith(s))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean isWFS(){
+        for(String s:OGRINFO_VECTOR_FILE_EXTENSIONS){
+            if(fileName.toLowerCase().endsWith(s))
+                return true;
+        }
+        return false;
+    }
+
 }
