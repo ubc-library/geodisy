@@ -27,6 +27,7 @@ public class GeodisyStrings {
         public final static String ALL_CITATION_METADATA = GEODISY_PATH_ROOT + "geodisyFiles/AllCitationMetadata.json";
         public final static String XML_TEST_FILE = GEODISY_PATH_ROOT + "geodisyFiles/XMLTestDJO.xml";
         public final static String DATASET_FILES_PATH = "datasetFiles/";
+        public final static String OPEN_GEO_METADATA_BASE = "https://github.com/OpenGeoMetadata/ca.ubc/";
 
 
     //Unused file type extensions
@@ -39,7 +40,7 @@ public class GeodisyStrings {
         public final static String GDALINFO_CLOUD = "gdalinfo -approx_stats ";
         public final static String OGRINFO_CLOUD = "ogrinfo -ro -al -so ";
         public final static String[] GDALINFO_RASTER_FILE_EXTENSIONS = { ".tif", ".nc", ".png",".xyz"};
-        public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = {".geojson",".shp", "kmz",".csv",".tab"}; //also .csv, but need to check if the csv is actually geospatial in nature
+        public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = {".geojson",".shp", "kmz",".csv",".tab",".gpkg"}; //also .csv, but need to check if the csv is actually geospatial in nature
         public final static String[] PREVIEWABLE_FILE_EXTENSIONS = {".tif", ".kmz"};
         public final static String OGR2OGR_LOCAL = "C:\\Program Files\\GDAL\\ogr2ogr -t_srs EPSG:4326 ";
         public final static String GDAL_TRANSLATE_LOCAL = "C:\\Program Files\\GDAL\\gdal_translate -t_srs EPSG:4326 ";
