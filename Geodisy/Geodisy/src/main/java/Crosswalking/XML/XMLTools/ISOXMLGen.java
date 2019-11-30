@@ -120,7 +120,7 @@ public class ISOXMLGen extends DjoXMLGenerator {
         stack.push(doc.createGMDElement(ONLINE_RES)); //Level K
         stack.push(doc.createGMDElement(CI_ONLINE_RES)); //Level L
         stack.push(doc.createGMDElement(LINKAGE)); //Level M
-        levelJ = stack.zip(doc.addGCOVal(djo.getDOI(),CHARACTER)); //Level N
+        levelJ = stack.zip(doc.addGCOVal(djo.getSimpleFieldVal(PERSISTENT_URL),CHARACTER)); //Level N
         stack.push(levelJ);
         stack.push(doc.createGMDElement("citedResponsibilityParty"));
 
