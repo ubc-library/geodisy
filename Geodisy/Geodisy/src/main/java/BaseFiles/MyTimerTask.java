@@ -95,9 +95,9 @@ public class MyTimerTask extends TimerTask {
 
     }
 
-    private void crosswalkRecords(List<SourceJavaObject> sJOs) {
-        crosswalkSJOsToGeoBlackJSON(sJOs);
+    public void crosswalkRecords(List<SourceJavaObject> sJOs) {
         crosswalkSJOsToXML(sJOs);
+        crosswalkSJOsToGeoBlackJSON(sJOs);
     }
 
     private void crosswalkSJOsToGeoBlackJSON(List<SourceJavaObject> sJOs) {

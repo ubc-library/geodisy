@@ -21,8 +21,16 @@ public class ExistingHarvests extends ExistingSearches implements Serializable {
 
 
     public static ExistingHarvests getExistingHarvests() {
-        if (single_instance == null) {
+        return getExistingHarvests(false);
+    }
+
+    public static ExistingHarvests getExistingHarvests(boolean testing){
+        if(testing)
             single_instance = new ExistingHarvests();
+        else{
+            if (single_instance == null) {
+                single_instance = new ExistingHarvests();
+            }
         }
         return single_instance;
     }

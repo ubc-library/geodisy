@@ -25,8 +25,17 @@ public class DataverseParser implements JSONParser {
      * @throws JSONException
      */
     public DataverseJavaObject parse(JSONObject jo, String server)  {
+        return parse(jo, server, false);
+
+    }
+
+    public DataverseJavaObject parse(JSONObject jo, String server, boolean testing)  {
         DataverseJavaObject dJO = new DataverseJavaObject(server);
         JSONObject dataverseJSON;
+        if(testing) {
+            logger.warn("DJO parse is set to \"testing\", set testing to false if this is a production run");
+            System.out.println("DJO parse is set to \"testing\", set testing to false if this is a production run");
+        }
         try {
             dataverseJSON = jo;
             JSONObject current;
@@ -35,9 +44,9 @@ public class DataverseParser implements JSONParser {
             else
                 current = dataverseJSON;
             dJO.parseCitationFields(current);
-            ExistingHarvests es = ExistingHarvests.getExistingHarvests();
+            ExistingHarvests es = ExistingHarvests.getExistingHarvests(testing);
             DataverseRecordInfo dRI = dJO.generateDRI();
-            if(!dRI.newer(es.getRecordInfo(dRI.getDoi())))
+            if(!testing && !dRI.newer(es.getRecordInfo(dRI.getDoi())))
                 return new DataverseJavaObject("");
             JSONObject metadata;
             metadata = dJO.getVersionSection(current).getJSONObject("metadataBlocks");

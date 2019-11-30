@@ -156,7 +156,7 @@ public class DataverseAPI extends SourceAPI {
         folder.delete();
     }
 
-    private DataverseJavaObject generateBoundingBox(DataverseJavaObject djo) {
+    public DataverseJavaObject generateBoundingBox(DataverseJavaObject djo) {
         GDAL gdal = new GDAL();
         djo = gdal.generateBB(djo);
         return djo;
