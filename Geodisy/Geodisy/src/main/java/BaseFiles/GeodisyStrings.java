@@ -61,11 +61,12 @@ public class GeodisyStrings {
 
 
     //Geocombine
-    private final static String SOLR_PATH_PROD = "SOLR_URL=http://www.example.com:1234/solr/collection ";
-    private final static String SOLR_PATH_TEST = "";
-    private final static String SOLR_PATH = SOLR_PATH_TEST;
+    public final static String SOLR_PATH_PROD = "SOLR_URL=http://www.example.com:1234/solr/collection ";
+    public final static String SOLR_PATH_TEST = "";
+    public final static String SOLR_PATH = SOLR_PATH_TEST;
     //TODO set custom path for OGM location (where the GeoBlacklightJson are stored)
-    private final static String OGM_PATH = "OGM_PATH='my/custom/location' ";
+    public final static String BASE_PATH = "tmp/opengeometadata/";
+    public final static String OGM_PATH = "OGM_PATH=" + BASE_PATH;
     public final static String GEOCOMBINE = SOLR_PATH + OGM_PATH + "bundle exec rake geocombine:index";
     public static boolean fileToIgnore(String title){
         for (String s : GeodisyStrings.FILE_TYPES_TO_IGNORE) {

@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import static BaseFiles.GeodisyStrings.BASE_PATH;
 import static BaseFiles.GeodisyStrings.XML_NS;
 import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.*;
 import static Crosswalking.XML.XMLTools.XMLStrings.OPEN_METADATA_LOCAL_REPO;
@@ -95,6 +96,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
     protected JSONArray addBaseRecordInfo(GeographicBoundingBox gbb){
         JSONArray ja = new JSONArray();
         ja.put(RECORD_URL + stringed(javaObject.getSimpleFieldVal(PERSISTENT_URL)));
+        ja.put(ISO_METADATA + stringed(BASE_PATH + javaObject.getSimpleFieldVal(PERSISTENT_ID) + "/" + ISO_METADATA_FILE));
         return ja;
     }
 
@@ -179,14 +181,26 @@ public class DataGBJSON extends GeoBlacklightJSON{
     }
 
     public void saveJSONToFile(String json, String doi, String folderName){
-        genDirs(doi + "/" + folderName, OPEN_METADATA_LOCAL_REPO);
+        String name = folderName;
+        String end = "";
+        if(folderName.contains("(")){
+            name = folderName.substring(0,folderName.indexOf(" ("));
+            end = "/" + getNumber(folderName);
+        }
+        genDirs(name + end, OPEN_METADATA_LOCAL_REPO);
         BaseFiles.FileWriter file = new BaseFiles.FileWriter();
         try {
-            file.writeStringToFile(json,"./"+OPEN_METADATA_LOCAL_REPO + doi + "/" + folderName + "/" +"geoblacklight.json");
+            file.writeStringToFile(json,"./"+OPEN_METADATA_LOCAL_REPO + name + end + "/" +"geoblacklight.json");
         } catch (IOException e) {
             logger.error("Something went wrong trying to create a JSON file with doi:" + doi);
         }
 
+    }
+
+    private String getNumber(String folderName) {
+        int start = folderName.indexOf("File ") + 5;
+        int end = folderName.indexOf(" of");
+        return folderName.substring(start,end);
     }
 
     public void saveJSONToTestFile(String json, String doi, String uuid){
