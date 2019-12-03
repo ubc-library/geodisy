@@ -82,7 +82,3 @@ public abstract class ISO_Schema implements XMLSchema {
     }
 }
 
-
-
-
-}
