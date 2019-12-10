@@ -14,10 +14,19 @@ import java.nio.file.Paths;
  */
 public class FileWriter {
     GeoLogger logger;
+    java.io.FileWriter fw;
     public FileWriter() {
         logger = new GeoLogger(this.getClass());
     }
 
+    public FileWriter(String path){
+        logger = new GeoLogger(this.getClass());
+        try {
+            fw = new java.io.FileWriter(path);
+        } catch (IOException e) {
+            logger.error("Something was wonky with the given path: " + path);
+        }
+    }
     /**
      * Saves a file on the local machine to the path provided
      * @param objectToSave
@@ -130,5 +139,21 @@ public class FileWriter {
         } catch (IOException e) {
             return true;
         }
+    }
+
+    public boolean write(String obj, String path){
+        try {
+            fw = new java.io.FileWriter(path);
+        } catch (IOException e) {
+            logger.error("Something was wonky with the given path: " + path);
+            return false;
+        }
+        try {
+            fw.write(obj);
+        } catch (IOException e) {
+            logger.error("Something went wrong trying to save the string: " + obj);
+            return false;
+        }
+        return true;
     }
 }
