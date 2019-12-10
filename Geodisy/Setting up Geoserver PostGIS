@@ -1,0 +1,33 @@
+Setting up Geoserver
+
+1) In admin Geoserver GUI:
+   Create Workspace named "geodisy" [worspace name]
+2) In Postgres:
+   a) Create user "geodisy_user"
+   b) Create database "geodisy"
+		-after creating the DB, run the following sql commands:
+			1) CREATE EXTENSION postgis;
+			2) CREATE EXTENSION postgis_raster;
+   c) Set owner of "geodisy" database to "geodisy_user"
+   d) Set a password [g_user_pw] for "geodisy_user"
+3) On command line
+	a) In pg_hba.conf add lines:
+			local   geodisy         geodisy_user                            md5
+			local   geodisy         all                                     md5
+	b) sudo service postgresql-12 restart
+	d) Create geodisy.xml file with the following code inside:
+			<dataStore>
+				<name>geodisyDB</name>
+				<connectionParameters>
+					<host>localhost</host>
+					<port>5432</port>
+					<database>geodisy</database>
+					<user>geodisy_user</user>
+					<passwd>[g_user_pw]</passwd>
+					<dbtype>postgis</dbtype>
+				</connectionParameters>
+			</dataStore>
+	e) Run:
+		curl -v -u admin:[geoserver admin password] -XPOST -T geodisy.xml -H "Content-type: text/xml" http://localhost:8080/geoserver/rest/workspaces/[workspace name]/datastores
+	f) Run to verify that the dataStore was created:	
+		curl -v -u admin:[geoserver admin password] -XGET http://localhost:8080/geoserver/rest/workspaces/[workspace name]/datastores/geodisyDB.xml

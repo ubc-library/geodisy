@@ -7,15 +7,19 @@ package GeoServer;
 
 import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
+import BaseFiles.HTTPCaller;
+import Crosswalking.GeoBlacklightJson.HTTPCombineCaller;
 import Dataverse.SourceJavaObject;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 import static BaseFiles.GeodisyStrings.DATASET_FILES_PATH;
-import static BaseFiles.PrivateStrings.GEOSERVER_PASSWORD;
-import static BaseFiles.PrivateStrings.GEOSERVER_USERNAME;
+import static BaseFiles.GeodisyStrings.PATH_TO_XML_JSON_FILES;
+import static BaseFiles.PrivateStrings.*;
 import static GeoServer.GeoserverStrings.*;
 
 /**
@@ -35,11 +39,11 @@ public class GeoServerAPI extends DestinationAPI {
 
     public String upload(){
         //TODO figure out the STORENAME
-        String STORENAME = "Figure this out";
+        String STORENAME = POSTGIS_BD;
         String response = "";
         String doi = sjo.getDOI();
-        String workspace = (doi.length()>10? doi.substring(doi.length()-10):doi);
-        String jsonString = createDirectoryUploadJSON(workspace, STORENAME);
+        String workspace = WORKSPACE_NAME;
+        String jsonString = createDirectoryUploadJSON(doi, STORENAME, workspace);
         if(!jsonString.isEmpty())
             saveJsonToFile(jsonString);
             caller.callHTTP(generateUploadCall());
@@ -48,7 +52,7 @@ public class GeoServerAPI extends DestinationAPI {
     private void saveJsonToFile(String jsonString) {
         FileWriter fileWriter = new FileWriter();
         String doi = sjo.getDOI();
-        String doiPath = doi.replaceAll(".","_").replaceAll("/","_");
+        String doiPath = doi.replaceAll("/","_");
         String filePath = DATASET_FILES_PATH + doiPath + "/import.json";
         try {
             fileWriter.writeStringToFile(jsonString,filePath);
@@ -62,17 +66,49 @@ public class GeoServerAPI extends DestinationAPI {
         return curlCall;
     }
 
-    private String createDirectoryUploadJSON(String workspace, String store) {
+    private String createDirectoryUploadJSON(String doi, String store, String workspace) {
 
         String jsonModified = "";
         if(generateWorkspace(workspace)) {
-            JSONObject root = new JSONObject();
-            JSONArray array = addWorkspaceStore(workspace,store);
-            root.put("\"import\"", array);
-            String json = root.toString();
-            jsonModified = jsonArrayBracketChange(json);
+            if (addPostGISStore()) {
+                JSONObject root = new JSONObject();
+                JSONArray array = addWorkspaceStore(workspace, store, doi);
+                root.put("\"import\"", array);
+                String json = root.toString();
+                jsonModified = jsonArrayBracketChange(json);
+            }
         }
         return jsonModified;
+    }
+
+    private boolean addPostGISStore() {
+        FileWriter fileWriter = new FileWriter();
+        JSONObject jo = new JSONObject("<dataStore>" +
+                                                    "<name>geodisyDB</name>" +
+                                                    "<connectionParameters>" +
+                                                        "<host>localhost</host>" +
+                                                        "<port>5432</port>" +
+                                                        "<database>geodisy</database>" +
+                                                        "<user>geodisy_user</user>" +
+                                                        "<passwd>"+ POSTGIS_USER_PASSWORD + "</passwd>" +
+                                                        "<dbtype>postgis</dbtype>" +
+                                                    "</connectionParameters>" +
+                                                "</dataStore>");
+        String storePath = PATH_TO_XML_JSON_FILES+"geodisy.xml";
+        fileWriter.write(jo.toString(),storePath);
+        HTTPCaller caller = new HTTPCombineCaller();
+        caller.callHTTP("curl -v -u admin:" + GEOSERVER_PASSWORD + "-XPOST -T "+ storePath +" -H \"Content-type: text/xml\" http://localhost:8080/geoserver/rest/workspaces/"+ WORKSPACE_NAME + "/datastores");
+        return deleteXMLFile(storePath);
+    }
+
+    private boolean deleteXMLFile(String path) {
+        File file = new File(path);
+        try {
+            return Files.deleteIfExists(file.toPath());
+        } catch (IOException e) {
+            logger.error("Something went wrong trying to delete file at: " + path);
+            return false;
+        }
     }
 
     private String jsonArrayBracketChange(String json) {
@@ -82,8 +118,8 @@ public class GeoServerAPI extends DestinationAPI {
 
     private JSONArray addWorkspaceStore(String workspace, String store) {
         JSONArray array = new JSONArray();
-        array.put(workspaceJSON(workspace));
         array.put(storeJSON(store));
+        array.put(workspaceJSON(workspace));
         array.put(locationJSON());
         return array;
     }
@@ -122,7 +158,7 @@ public class GeoServerAPI extends DestinationAPI {
     }
     //TODO generate new workspace
     private boolean generateWorkspace(String workspaceName) {
-        String callURL = "curl -v -u admin:geoserver -XPOST -H \"Content-type: text/xml\" -d \"<workspace><name>" + workspaceName + "</name></workspace>\" http://localhost:8080/geoserver/rest/workspaces";
+        String callURL = "curl -v -u admin:" + GEOSERVER_PASSWORD + "-XPOST -H \"Content-type: text/xml\" -d \"<workspace><name>" + workspaceName + "</name></workspace>\" http://localhost:8080/geoserver/rest/workspaces";
         String response = caller.createWorkSpace(callURL);
         return (response.contains("HTTP/1.1 201 Created")||response.contains("HTTP ERROR 401"));
 
@@ -157,11 +193,11 @@ public class GeoServerAPI extends DestinationAPI {
         return jsonModified;
     }
 
-    private JSONArray addWorkspaceStore(String workspace, String store, String file) {
+    private JSONArray addWorkspaceStore(String workspace, String store, String doi) {
         JSONArray array = new JSONArray();
         array.put(workspaceJSON(workspace));
         array.put(storeJSON(store));
-        array.put(fileJSON(file));
+        array.put(fileJSON(doi));
         return array;
     }
 

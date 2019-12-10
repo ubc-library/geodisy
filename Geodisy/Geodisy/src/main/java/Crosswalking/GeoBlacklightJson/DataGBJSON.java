@@ -22,8 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import static BaseFiles.GeodisyStrings.BASE_PATH;
-import static BaseFiles.GeodisyStrings.XML_NS;
+import static BaseFiles.GeodisyStrings.*;
 import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.*;
 import static Crosswalking.XML.XMLTools.XMLStrings.OPEN_METADATA_LOCAL_REPO;
 import static Crosswalking.XML.XMLTools.XMLStrings.TEST_OPEN_METADATA_LOCAL_REPO;
@@ -96,7 +95,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
     protected JSONArray addBaseRecordInfo(GeographicBoundingBox gbb){
         JSONArray ja = new JSONArray();
         ja.put(RECORD_URL + stringed(javaObject.getSimpleFieldVal(PERSISTENT_URL)));
-        ja.put(ISO_METADATA + stringed(BASE_PATH + javaObject.getSimpleFieldVal(PERSISTENT_ID) + "/" + ISO_METADATA_FILE));
+        ja.put(ISO_METADATA + stringed(PATH_TO_XML_JSON_FILES + javaObject.getSimpleFieldVal(PERSISTENT_ID) + "/" + ISO_METADATA_FILE));
         return ja;
     }
 

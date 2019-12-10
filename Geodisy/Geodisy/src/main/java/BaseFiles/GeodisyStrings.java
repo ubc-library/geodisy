@@ -65,7 +65,8 @@ public class GeodisyStrings {
     public final static String SOLR_PATH_TEST = "";
     public final static String SOLR_PATH = SOLR_PATH_TEST;
     //TODO set custom path for OGM location (where the GeoBlacklightJson are stored)
-    public final static String BASE_PATH = "tmp/opengeometadata/";
+    public final static String BASE_PATH = "/home/geoblack/GeoCombine/tmp/opengeometadata/";
+    public final static String PATH_TO_XML_JSON_FILES = BASE_PATH + "geodisy/";
     public final static String OGM_PATH = "OGM_PATH=" + BASE_PATH;
     public final static String GEOCOMBINE = SOLR_PATH + OGM_PATH + "bundle exec rake geocombine:index";
     public static boolean fileToIgnore(String title){
