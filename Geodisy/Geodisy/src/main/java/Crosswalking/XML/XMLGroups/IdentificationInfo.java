@@ -170,7 +170,6 @@ public class IdentificationInfo extends SubElement {
         return stack.zip(doc.addGCOVal(djo.getSimpleFieldVal(LICENSE),CHARACTER));
     }
 
-    //TODO Mark needs to figure out how to differentiate TimePeriodCovered and DateOfCollection
     private Element getTimePeriods(Element levelJ) {
         stack = new XMLStack();
         stack.push(levelJ);
@@ -544,12 +543,8 @@ public class IdentificationInfo extends SubElement {
         Element levelK = doc.createGMDElement("citation");
         Element levelL = doc.createGMDElement(CI_CITE);
         levelL.appendChild(getPURL());
+        levelL.appendChild(getSystemVals());
 
-        //System generated Dates/Info -removed to get rid of Dataset Publisher, Publication Date, Version, and Version Date
-        /*
-        levelL = getSystemVals(levelL);
-
-         */
         String subtitleVal = simpleCF.getField(SUBTITLE);
         String title = simpleCF.getField(TITLE);
         //Title
@@ -573,13 +568,20 @@ public class IdentificationInfo extends SubElement {
         //AUTHORs
         if(authors.size()>0)
             levelL.appendChild(getAuthor());
-
+        if(simpleCF.getVersion()!=0)
+            levelL.appendChild(getVersion());
 
         levelK.appendChild(levelL);
         return levelK;
     }
 
-    private Element getSystemVals(Element levelL) {
+    private Element getVersion() {
+        Element levelM = doc.createGMDElement("edition");
+        levelM.appendChild(doc.addGCOVal(simpleCF.getField(MAJOR_VERSION) + ":" + simpleCF.getField(MINOR_VERSION),CHARACTER));
+        return levelM;
+    }
+
+    private Element getSystemVals() {
         stack = new XMLStack();
         Element levelM = doc.createGMDElement(XMLDATE);
         stack.push(levelM);
@@ -589,7 +591,6 @@ public class IdentificationInfo extends SubElement {
         stack.push(levelM);
         stack.push(doc.createGMDElement(CI_DATE)); //N
         levelM = stack.zip(doc.addGMDVal("publication","CI_DateTypeCode" ));
-        levelL.appendChild(levelM);
 
         /*
         //Version
@@ -611,7 +612,7 @@ public class IdentificationInfo extends SubElement {
         levelL.appendChild(levelM);
          */
 
-        return levelL;
+        return levelM;
     }
 
     private Element getPURL() {
