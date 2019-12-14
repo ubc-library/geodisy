@@ -8,6 +8,7 @@ import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import java.io.*;
 import java.util.List;
 import static BaseFiles.GeodisyStrings.*;
+import static Dataverse.DVFieldNameStrings.PROJECTION;
 
 public class GDAL {
     GeoLogger logger = new GeoLogger(this.getClass());
@@ -41,12 +42,15 @@ public class GDAL {
 
             String gdalString;
             BoundingBox temp;
+            String projection =  "";
             try {
                 gdalString = getGDALInfo(filePath, name, isWindows);
                 if(gdalInfo)
                     temp = getRaster(gdalString);
-                else
+                else {
                     temp = getVector(gdalString, isWindows, name, filePath);
+                    projection = getProjection(gdalString);
+                }
                 temp.setGenerated(true);
 
                 if(temp.hasBoundingBox()) {
@@ -55,6 +59,7 @@ public class GDAL {
                     GeographicBoundingBox gBB =  new GeographicBoundingBox(djo.getDOI());
                     gBB.setBB(temp);
                     gBB.setFileName(name);
+                    gBB.setField(PROJECTION,projection);
                     gf.addBB(bboxes, gBB);
                     djo.setGeoFields(gf);
                 }
@@ -65,6 +70,20 @@ public class GDAL {
         }
         return djo;
     }
+
+    private String getProjection(String gdalString) {
+        String projection = "";
+        int start = gdalString.indexOf("PROJCS[\"");
+        if(start == -1)
+            start = gdalString.indexOf("GEOGCS[\"");
+        if(start == -1)
+            return projection;
+        String sub = gdalString.substring(start+8);
+        int end = sub.indexOf("\"");
+        projection = sub.substring(0,end);
+        return projection;
+    }
+
     public BoundingBox generateBoundingBoxFromCSV(File file, DataverseJavaObject djo){
         String path = djo.getDOI().replace("/","_");
         path = path.replace(".","_");

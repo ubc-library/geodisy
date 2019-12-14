@@ -32,6 +32,7 @@ public class DataverseRecordFile {
     String datasetDOI;
     DataverseJavaObject djo;
     BoundingBox bb;
+    String projection;
 
     /**
      * Creates a DataverseRecordFile when there is a File-specific doi.
@@ -50,6 +51,7 @@ public class DataverseRecordFile {
         recordURL = server+"api/access/datafile/:persistentId/?persistentId=" + doi + "&format=original";
         this.datasetDOI = datasetDOI.replaceAll("\\.","_").replaceAll("/","_");
         bb = new BoundingBox();
+        projection = "";
     }
 
     /**
@@ -67,7 +69,7 @@ public class DataverseRecordFile {
         recordURL = String.format(server+"api/access/datafile/$d?format=original", dbID);
         this.datasetDOI = datasetDOI;
         bb = new BoundingBox();
-
+        projection = "";
     }
 
     public void getFile() {
@@ -177,5 +179,13 @@ public class DataverseRecordFile {
 
     public boolean isPreviewable() {
         return GeodisyStrings.isPreviewable(title);
+    }
+
+    public String getProjection(){
+        return projection;
+    }
+
+    public void setProjection(String s){
+        projection = s;
     }
 }

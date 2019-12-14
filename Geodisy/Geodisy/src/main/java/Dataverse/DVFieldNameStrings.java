@@ -175,6 +175,7 @@ public class DVFieldNameStrings {
     public final static String SOUTH_LAT_LONG = "southLongitude";
     public final static String FILE_NAME = "fileName";
     public final static String GEOMETRY = "geometryType";
+    public final static String PROJECTION = "projection";
 
     //Geographic Coverage Field Names
     public final static String COUNTRY = "country";

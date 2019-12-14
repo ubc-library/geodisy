@@ -5,7 +5,7 @@
  */
 package Crosswalking;
 
-import BaseFiles.GeoLogger;
+import BaseFiles.*;
 import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Document;
 
@@ -16,8 +16,11 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 import static Crosswalking.XML.XMLTools.XMLStrings.OPEN_METADATA_LOCAL_REPO;
 import static Crosswalking.XML.XMLTools.XMLStrings.TEST_OPEN_METADATA_LOCAL_REPO;
@@ -47,9 +50,11 @@ public abstract class ISO_Schema implements XMLSchema {
                 File fileDir = genBaseDirs(doi, loc);
                 File file = new File(fileDir + "/" + "iso19115.xml");
                 FileWriter writer = new FileWriter(file);
-                StreamResult result = new StreamResult(writer);
+                StreamResult result = new StreamResult(writer.getFw());
 
                 transformer.transform(source, result);
+                Zip zip = new Zip();
+                zip.create(file);
             } catch (IOException e) {
                 logger.error("Something went wrong creating the FileWriter for " + doi);
             } catch (TransformerException e) {

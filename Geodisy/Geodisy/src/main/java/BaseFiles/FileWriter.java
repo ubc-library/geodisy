@@ -27,6 +27,11 @@ public class FileWriter {
             logger.error("Something was wonky with the given path: " + path);
         }
     }
+
+    public FileWriter(File file) throws IOException{
+        logger = new GeoLogger(this.getClass());
+        fw = new java.io.FileWriter(file);
+    }
     /**
      * Saves a file on the local machine to the path provided
      * @param objectToSave
@@ -155,5 +160,9 @@ public class FileWriter {
             return false;
         }
         return true;
+    }
+
+    public java.io.FileWriter getFw(){
+        return fw;
     }
 }

@@ -61,14 +61,27 @@ public class GeodisyStrings {
 
 
     //Geocombine
+    private final static boolean TEST = true; //change this to false when in production
     public final static String SOLR_PATH_PROD = "SOLR_URL=http://www.example.com:1234/solr/collection ";
     public final static String SOLR_PATH_TEST = "";
     public final static String SOLR_PATH = SOLR_PATH_TEST;
     //TODO set custom path for OGM location (where the GeoBlacklightJson are stored)
-    public final static String BASE_PATH = "/home/geoblack/GeoCombine/tmp/opengeometadata/";
+    public final static String VM_BASE_PATH_TEST = "206-12-92-97.cloud.computecanada.ca/";
+    public final static String VM_BASE_PATH_PROD = "tbd";
+    public final static String BASE_PATH = vmToUse(TEST);
     public final static String PATH_TO_XML_JSON_FILES = BASE_PATH + "geodisy/";
     public final static String OGM_PATH = "OGM_PATH=" + BASE_PATH;
     public final static String GEOCOMBINE = SOLR_PATH + OGM_PATH + "bundle exec rake geocombine:index";
+    public final static String OUTSIDE_URL_BASE = "https://206-12-92-97.cloud.computecanada.ca/";
+    public final static String BASE_LOCATION_TO_STORE_METADATA = OUTSIDE_URL_BASE + "/var/www/206-12-92-97.cloud.computecanada.ca/html/";
+
+    public static String vmToUse(boolean test){
+        if(test)
+            return VM_BASE_PATH_TEST;
+        else
+            return VM_BASE_PATH_PROD;
+    }
+
     public static boolean fileToIgnore(String title){
         for (String s : GeodisyStrings.FILE_TYPES_TO_IGNORE) {
             if (title.endsWith(s))

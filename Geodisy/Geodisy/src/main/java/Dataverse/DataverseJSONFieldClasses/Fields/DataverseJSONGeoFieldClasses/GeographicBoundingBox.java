@@ -10,15 +10,18 @@ import static Dataverse.DVFieldNameStrings.*;
 public class GeographicBoundingBox extends CompoundJSONField {
     private BoundingBox bb;
     String doi;
+    String projection;
 
     public GeographicBoundingBox(String doi) {
         this.doi = doi;
         this.bb = new BoundingBox();
+        projection = "";
     }
 
     public GeographicBoundingBox(String doi, BoundingBox bb){
         this.doi = doi;
         this.bb = bb;
+        projection = "";
     }
 
     public boolean isWMS(){
@@ -142,6 +145,9 @@ public class GeographicBoundingBox extends CompoundJSONField {
             case SOUTH_LAT_LONG:
                 setSouthLatitude(value);
                 break;
+            case PROJECTION:
+                setProjection(value);
+                break;
             default:
                 errorParsing(this.getClass().getName(),title);
         }
@@ -165,12 +171,20 @@ public class GeographicBoundingBox extends CompoundJSONField {
                 return getFileName();
             case GEOMETRY:
                 return getGeometry();
+            case PROJECTION:
+                return getProjection();
             default:
                 errorGettingValue(this.getClass().getName(),fieldName);
                 return "Bad fieldName";
         }
     }
 
+    private String getProjection() {
+        return projection;
+    }
+    private void setProjection(String s){
+        projection = s;
+    }
     private String getGeometry() {
         return bb.getGeometryType();
     }

@@ -1,26 +1,19 @@
 package Crosswalking.GeoBlacklightJson;
 
 import BaseFiles.GeoLogger;
-import DataSourceLocations.Dataverse;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Author;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Description;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordFile;
-import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import static BaseFiles.GeodisyStrings.*;
 import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.*;
@@ -95,7 +88,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
     protected JSONArray addBaseRecordInfo(GeographicBoundingBox gbb){
         JSONArray ja = new JSONArray();
         ja.put(RECORD_URL + stringed(javaObject.getSimpleFieldVal(PERSISTENT_URL)));
-        ja.put(ISO_METADATA + stringed(PATH_TO_XML_JSON_FILES + javaObject.getSimpleFieldVal(PERSISTENT_ID) + "/" + ISO_METADATA_FILE));
+        ja.put(ISO_METADATA + stringed(PATH_TO_XML_JSON_FILES + javaObject.getSimpleFieldVal(PERSISTENT_ID) + "/" + ISO_METADATA_FILE_ZIP));
         return ja;
     }
 
