@@ -88,7 +88,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
     protected JSONArray addBaseRecordInfo(GeographicBoundingBox gbb){
         JSONArray ja = new JSONArray();
         ja.put(RECORD_URL + stringed(javaObject.getSimpleFieldVal(PERSISTENT_URL)));
-        ja.put(ISO_METADATA + stringed(PATH_TO_XML_JSON_FILES + javaObject.getSimpleFieldVal(PERSISTENT_ID) + "/" + ISO_METADATA_FILE_ZIP));
+        ja.put(ISO_METADATA + stringed(END_XML_JSON_FILE_PATH + javaObject.getSimpleFieldVal(PERSISTENT_ID) + "/" + ISO_METADATA_FILE_ZIP));
         return ja;
     }
 

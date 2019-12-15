@@ -66,22 +66,31 @@ public class GeodisyStrings {
     public final static String SOLR_PATH_TEST = "";
     public final static String SOLR_PATH = SOLR_PATH_TEST;
     //TODO set custom path for OGM location (where the GeoBlacklightJson are stored)
-    public final static String VM_BASE_PATH_TEST = "206-12-92-97.cloud.computecanada.ca/";
+    public final static String DEV_ADDRESS = "206-12-92-97.cloud.computecanada.ca/";
+    public final static String PROD_ADDRESS = "tbd";
+    public final static String ADDRESS = addressToUse(TEST);
+    public final static String VM_BASE_PATH_DEV = "https://" + DEV_ADDRESS;
     public final static String VM_BASE_PATH_PROD = "tbd";
     public final static String BASE_PATH = vmToUse(TEST);
-    public final static String PATH_TO_XML_JSON_FILES = BASE_PATH + "geodisy/";
+    public final static String END_XML_JSON_FILE_PATH = BASE_PATH + "geodisy/";
+    public final static String PATH_TO_XML_JSON_FILES = BASE_PATH + END_XML_JSON_FILE_PATH;
     public final static String OGM_PATH = "OGM_PATH=" + BASE_PATH;
     public final static String GEOCOMBINE = SOLR_PATH + OGM_PATH + "bundle exec rake geocombine:index";
-    public final static String OUTSIDE_URL_BASE = "https://206-12-92-97.cloud.computecanada.ca/";
-    public final static String BASE_LOCATION_TO_STORE_METADATA = OUTSIDE_URL_BASE + "/var/www/206-12-92-97.cloud.computecanada.ca/html/";
+    public final static String BASE_LOCATION_TO_STORE_METADATA = BASE_PATH + "/var/www/" + ADDRESS  + "/html/";
 
     public static String vmToUse(boolean test){
         if(test)
-            return VM_BASE_PATH_TEST;
+            return VM_BASE_PATH_DEV;
         else
             return VM_BASE_PATH_PROD;
     }
 
+    public static String addressToUse(boolean test){
+        if(test)
+            return DEV_ADDRESS;
+        else
+            return PROD_ADDRESS;
+    }
     public static boolean fileToIgnore(String title){
         for (String s : GeodisyStrings.FILE_TYPES_TO_IGNORE) {
             if (title.endsWith(s))
