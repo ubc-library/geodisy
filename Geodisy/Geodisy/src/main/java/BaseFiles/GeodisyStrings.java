@@ -1,5 +1,9 @@
 package BaseFiles;
 
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.util.Arrays;
+
 public class GeodisyStrings {
 
 
@@ -30,24 +34,28 @@ public class GeodisyStrings {
         public final static String OPEN_GEO_METADATA_BASE = "https://github.com/OpenGeoMetadata/ca.ubc/";
 
 
-    //Unused file type extensions
-        public final static String[] FILE_TYPES_TO_IGNORE = {".txt",".doc",".csv",".pdf",".jpg", ".docx",".las",".xml"};
+
 
     //TODO Change GDAL location to where it is when on Cloud instance
     //GDAL
         public final static String GDALINFO_LOCAL = "C:\\Program Files\\GDAL\\gdalinfo -approx_stats ";
         public final static String OGRINFO_LOCAL = "C:\\Program Files\\GDAL\\ogrinfo -ro -al -so ";
-        public final static String GDALINFO_CLOUD = "gdalinfo -approx_stats ";
-        public final static String OGRINFO_CLOUD = "ogrinfo -ro -al -so ";
-        public final static String[] GDALINFO_RASTER_FILE_EXTENSIONS = { ".tif", ".nc", ".png",".xyz"};
-        public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = {".geojson",".shp", "kmz",".csv",".tab",".gpkg"}; //also .csv, but need to check if the csv is actually geospatial in nature
+        public final static String GDALINFO_CLOUD = "sudo gdalinfo -approx_stats ";
+        public final static String OGRINFO_CLOUD = "sudo ogrinfo -ro -al -so ";
+        public final static String[] GDALINFO_RASTER_FILE_EXTENSIONS = { ".tif", ".tiff", ".nc", ".png",".xyz"};
+        public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = {".geojson",".shp", ".shx", ".kmz",".csv",".tab",".gpkg"}; //also .csv, but need to check if the csv is actually geospatial in nature
         public final static String[] PREVIEWABLE_FILE_EXTENSIONS = {".tif", ".kmz"};
         public final static String OGR2OGR_LOCAL = "C:\\Program Files\\GDAL\\ogr2ogr -t_srs EPSG:4326 ";
         public final static String GDAL_TRANSLATE_LOCAL = "C:\\Program Files\\GDAL\\gdal_translate -t_srs EPSG:4326 ";
         public final static String OGR2OGR_CLOUD = "ogr2ogr -t_srs EPSG:4326 ";
         public final static String GDAL_TRANSLATE_CLOUD = "gdal_translate -t_srs EPSG:4326 ";
 
+    //Unused file type extensions
+    public final static String[] FILE_TYPES_TO_IGNORE = {".txt",".doc",".csv",".pdf",".jpg", ".docx",".las",".xml"};
+    public final static String[] FILE_TYPES_TO_ALLOW = ArrayUtils.addAll(GDALINFO_RASTER_FILE_EXTENSIONS, OGRINFO_VECTOR_FILE_EXTENSIONS);
+
         public final static String RASTER = "Raster Data";
+        public final static String VECTOR = "Vector Data";
 
     //XML value types
         public final static String CHARACTER = "CharacterString";
@@ -93,6 +101,14 @@ public class GeodisyStrings {
     }
     public static boolean fileToIgnore(String title){
         for (String s : GeodisyStrings.FILE_TYPES_TO_IGNORE) {
+            if (title.endsWith(s))
+                return true;
+        }
+        return false;
+    }
+
+    public static boolean fileToAllow(String title){
+        for (String s : GeodisyStrings.FILE_TYPES_TO_ALLOW) {
             if (title.endsWith(s))
                 return true;
         }

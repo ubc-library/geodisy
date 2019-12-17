@@ -19,8 +19,8 @@ import java.util.zip.ZipInputStream;
 public class Unzip {
     GeoLogger logger = new GeoLogger(Unzip.class);
     //TODO call unzip when adding zipped files to Geoserver and then call deleteUnzippedFiles() after upload is done to save space
-    public void unzip(String filePath, DataverseRecordFile dRF) {
-        String destPath = filePath.substring(0,filePath.length()-4);
+    public void unzip(String filePath, String destPath, DataverseRecordFile dRF) {
+        //String destPath = filePath.substring(0,filePath.length()-4);
         File destDir = new File(destPath);
         destDir.mkdirs();
         Path path = Paths.get(destPath);
@@ -36,7 +36,7 @@ public class Unzip {
         try {
             zipEntry = zis.getNextEntry();
             while (zipEntry != null) {
-                if(GeodisyStrings.fileToIgnore(zipEntry.getName())){
+                if(!GeodisyStrings.fileToAllow(zipEntry.getName())){
                     zipEntry = zis.getNextEntry();
                     continue;
                 }
