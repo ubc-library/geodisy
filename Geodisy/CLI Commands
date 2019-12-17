@@ -4,7 +4,7 @@ CLI Commands
 	
 	GeoCombine 
 		index
-			OGM_PATH=tmp/opengeometadata/10.5072/ bundle exec rake geocombine:index
+			OGM_PATH=var/www/206-12-92-97.cloud.computecanada.ca/html/ bundle exec rake geocombine:index
 			[OGM_PATH is the path to the folder to index]
 	
 	SOLR
