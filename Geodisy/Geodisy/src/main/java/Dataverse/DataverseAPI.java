@@ -80,7 +80,7 @@ public class DataverseAPI extends SourceAPI {
                 if(djo.hasBoundingBox())
                     answers.add(djo);
                 else{
-                    File folderToDelete = new File(folderizedDOI(doi));
+                    File folderToDelete = new File(doi);
                     deleteFolder(folderToDelete);
                 }
                 es.addOrReplaceRecord(new DataverseRecordInfo(djo,logger.getName()));

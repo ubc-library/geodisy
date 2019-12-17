@@ -4,8 +4,6 @@ import BaseFiles.GeoLogger;
 import BaseFiles.GeodisyStrings;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import GeoServer.Unzip;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.commons.io.FileUtils;
 
 
@@ -74,7 +72,7 @@ public class DataverseRecordFile {
 
     public void getFile() {
         try {
-            String dirPath = DATASET_FILES_PATH + datasetDOI + "/";
+            String dirPath = DATASET_FILES_PATH + datasetDOI.replace("_","/") + "/";
             File folder = new File(dirPath);
             folder.mkdirs();
             String filePath = dirPath + title;
@@ -85,7 +83,7 @@ public class DataverseRecordFile {
                     120000); //2 minute read timeout
             if(title.endsWith(".zip")) {
                 Unzip zip = new Unzip();
-                zip.unzip(filePath, this);
+                zip.unzip(filePath, dirPath, this);
                 new File(filePath).delete();
             }
 
@@ -100,17 +98,29 @@ public class DataverseRecordFile {
             }
 
             listOfFiles = folder.listFiles();
+            GDALTranslate gdalTranslate = new GDALTranslate();
             for(File f: listOfFiles) {
                 if (f.isFile()) {
-                    String name = f.getName();
+                    String name = f.getName().toLowerCase();
                     DataverseRecordFile drf;
-                    if (GeodisyStrings.ogrinfoVectorExtension(name) || GeodisyStrings.gdalinfoRasterExtention(name)) {
+                    if (GeodisyStrings.ogrinfoVectorExtension(name)&& !name.endsWith("csv")) {
+                        if (!name.endsWith(".geojson")) {
+                            if(name.endsWith(".shx"))
+                                continue;
+                            name = gdalTranslate.vectorTransform(dirPath, f.getName());
+                        }
+                        drf = new DataverseRecordFile(name, this.doi, this.dbID, this.server, this.datasetDOI, this.djo);
+                        djo.addGeoDataFile(drf);
+                    }else if (GeodisyStrings.gdalinfoRasterExtention(f.getName())){
+                        if(!name.endsWith(".tif"))
+                            name = gdalTranslate.rasterTransform(dirPath,f.getName());
                         drf = new DataverseRecordFile(name, this.doi, this.dbID, this.server, this.datasetDOI, this.djo);
                         djo.addGeoDataFile(drf);
                     }else if(name.contains(".csv")){
                         GDAL gdal = new GDAL();
                         BoundingBox temp = gdal.generateBoundingBoxFromCSV(f,djo);
                         if(temp.hasBoundingBox()) {
+                            name = gdalTranslate.vectorTransform(dirPath, f.getName());
                             drf = new DataverseRecordFile(name, this.doi, this.dbID, this.server, this.datasetDOI, this.djo);
                             drf.bb = temp;
                             djo.addGeoDataFile(drf);
