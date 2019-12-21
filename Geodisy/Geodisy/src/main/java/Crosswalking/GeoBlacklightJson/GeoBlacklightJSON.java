@@ -5,6 +5,7 @@ import Crosswalking.MetadataSchema;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordFile;
+import Dataverse.SourceRecordFiles;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -19,16 +20,18 @@ import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.*;
 /**
  * Takes a DataverseJavaObject and creates a GeoBlacklight JSON from it
  */
-public abstract class GeoBlacklightJSON implements JSONCreator, MetadataSchema {
+public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataSchema {
     protected DataverseJavaObject javaObject;
     protected String geoBlacklightJson;
     protected JSONObject jo;
     protected String doi;
     boolean download = false;
-    List<DataverseRecordFile> files;
+    List<DataverseRecordFile> oldFiles;
+    SourceRecordFiles files;
 
     public GeoBlacklightJSON() {
         this.jo = new JSONObject();
+        files = SourceRecordFiles.getSourceRecords();
     }
 
     @Override

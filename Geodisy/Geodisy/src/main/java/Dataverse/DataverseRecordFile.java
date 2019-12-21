@@ -3,6 +3,7 @@ package Dataverse;
 import BaseFiles.GeoLogger;
 import BaseFiles.GeodisyStrings;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
+import GeoServer.GeoServerAPI;
 import GeoServer.Unzip;
 import org.apache.commons.io.FileUtils;
 
@@ -51,7 +52,6 @@ public class DataverseRecordFile {
         bb = new BoundingBox();
         projection = "";
     }
-
     /**
      * Creates a DataverseRecordFile when there is no File-specific doi, only a dataset doi and a database ID.
      * @param title
@@ -71,6 +71,7 @@ public class DataverseRecordFile {
     }
 
     public void getFile() {
+        GeoServerAPI geoserverAPI = new GeoServerAPI(djo);
         try {
             String dirPath = DATASET_FILES_PATH + datasetDOI.replace("_","/") + "/";
             File folder = new File(dirPath);
@@ -104,29 +105,30 @@ public class DataverseRecordFile {
                     String name = f.getName().toLowerCase();
                     DataverseRecordFile drf;
                     if (GeodisyStrings.ogrinfoVectorExtension(name)&& !name.endsWith("csv")) {
-                        if (!name.endsWith(".geojson")) {
+                        if (!name.endsWith(".shp")) {
                             if(name.endsWith(".shx"))
                                 continue;
-                            name = gdalTranslate.vectorTransform(dirPath, f.getName());
+                            name = gdalTranslate.vectorTransform(dirPath, f.getName(),djo);
                         }
                         drf = new DataverseRecordFile(name, this.doi, this.dbID, this.server, this.datasetDOI, this.djo);
                         djo.addGeoDataFile(drf);
                     }else if (GeodisyStrings.gdalinfoRasterExtention(f.getName())){
                         if(!name.endsWith(".tif"))
-                            name = gdalTranslate.rasterTransform(dirPath,f.getName());
+                            name = gdalTranslate.rasterTransform(dirPath,f.getName(), djo);
+                        addRasterToGeoserver(name);
                         drf = new DataverseRecordFile(name, this.doi, this.dbID, this.server, this.datasetDOI, this.djo);
                         djo.addGeoDataFile(drf);
                     }else if(name.contains(".csv")){
                         GDAL gdal = new GDAL();
                         BoundingBox temp = gdal.generateBoundingBoxFromCSV(f,djo);
                         if(temp.hasBoundingBox()) {
-                            name = gdalTranslate.vectorTransform(dirPath, f.getName());
+                            name = gdalTranslate.vectorTransform(dirPath, f.getName(), djo);
                             drf = new DataverseRecordFile(name, this.doi, this.dbID, this.server, this.datasetDOI, this.djo);
                             drf.bb = temp;
+                            addVectorToGeoserver(name);
                             djo.addGeoDataFile(drf);
                         }
                     }
-
                 }
             }
         } catch (FileNotFoundException e){
@@ -138,6 +140,16 @@ public class DataverseRecordFile {
             e.printStackTrace();
         }
 
+    }
+
+    private void addVectorToGeoserver(String name) {
+        GeoServerAPI geoServerAPI =  new GeoServerAPI(djo);
+        geoServerAPI.uploadVector(name);
+    }
+
+    private void addRasterToGeoserver(String name) {
+        GeoServerAPI geoServerAPI =  new GeoServerAPI(djo);
+        geoServerAPI.uploadRaster(name);
     }
 
     public void convertFromTabToCSV(File inputFile, String dirPath, String title) {

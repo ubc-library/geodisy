@@ -31,7 +31,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         geoBlacklightJson = "";
         doi = djo.getDOI();
         logger = new GeoLogger(this.getClass());
-        files = djo.getGeoDataFiles();
+        oldFiles = djo.getGeoDataFiles();
     }
     //TODO check if Dataverse publisher field be included in the slug?
     @Override
@@ -59,7 +59,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         }
         externalServices+="}";
 
-        //TODO uncomment once I have geoserver upload figured out
+        //TODO uncomment once I have geoserver uploadVector figured out
         //ja = addMetadataDownloadOptions(gbb,ja);
 
         jo.put(EXTERNAL_SERVICES,externalServices);
@@ -90,10 +90,6 @@ public class DataGBJSON extends GeoBlacklightJSON{
         ja.put(RECORD_URL + stringed(javaObject.getSimpleFieldVal(PERSISTENT_URL)));
         ja.put(ISO_METADATA + stringed(END_XML_JSON_FILE_PATH + javaObject.getSimpleFieldVal(PERSISTENT_ID) + "/" + ISO_METADATA_FILE_ZIP));
         return ja;
-    }
-
-    private String stringed(String string) {
-        return "\"" + string + "\"";
     }
 
     //TODO, check I am getting all the optional fields I should be

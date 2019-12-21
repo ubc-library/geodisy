@@ -121,6 +121,8 @@ public class DataverseJavaObject extends SourceJavaObject {
                 int dbID = (int) dataFile.get("id");
                 dRF = new DataverseRecordFile(title,dbID,server,citationFields.getDOI());
             }
+            SourceRecordFiles srf = SourceRecordFiles.getSourceRecords();
+            srf.putRecord(dRF.getDoi(),dRF.title,dRF);
             dataFiles.add(dRF);
         }
     }

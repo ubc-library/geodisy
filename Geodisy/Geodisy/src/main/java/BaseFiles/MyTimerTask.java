@@ -10,6 +10,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static BaseFiles.GeodisyStrings.*;
@@ -24,6 +26,7 @@ public class MyTimerTask extends TimerTask {
     GeoLogger logger = new GeoLogger(this.getClass());
     ExistingHarvests existingHarvests;
     ExistingCallsToCheck existingCallsToCheck;
+    SourceRecordFiles srf;
     public MyTimerTask() {
     }
 /**
@@ -31,8 +34,7 @@ public class MyTimerTask extends TimerTask {
  */
     @Override
     public void run() {
-       String startRecsToCheck;
-       String endRecsToCheck;
+       String recsToCheck;
        String startErrorLog;
        String endErrorLog;
        String startWarningLog;
@@ -46,7 +48,8 @@ public class MyTimerTask extends TimerTask {
             fW.verifyFileExistence(WARNING_LOG);
             existingHarvests = ExistingHarvests.getExistingHarvests();
             existingCallsToCheck = ExistingCallsToCheck.getExistingCallsToCheck();
-            startRecsToCheck = new String(Files.readAllBytes(Paths.get(RECORDS_TO_CHECK)));
+            srf = SourceRecordFiles.getSourceRecords();
+
             startErrorLog = new String(Files.readAllBytes(Paths.get(ERROR_LOG)));
             startWarningLog = new String(Files.readAllBytes(Paths.get(WARNING_LOG)));
 
@@ -56,17 +59,27 @@ public class MyTimerTask extends TimerTask {
             List<SourceJavaObject> sJOs = geo.harvestDataverse();
             for(SourceJavaObject sJO : sJOs) {
                 existingHarvests.addOrReplaceRecord(new DataverseRecordInfo(sJO, logger.getName()));
+
             }
             crosswalkRecords(sJOs);
             //sendRecordsToGeoBlacklight();
 
 
-            endRecsToCheck = keepInfo();
             endErrorLog = keepMajErrors();
             endWarningLog = keepMinErrors();
-            if(!startRecsToCheck.equals(endRecsToCheck)) {
-                emailCheckRecords();
-                fW.writeStringToFile(endRecsToCheck,RECORDS_TO_CHECK);
+
+                HashMap<String, String> newRecords = existingCallsToCheck.getNewRecords();
+                if(newRecords.size() != 0){
+                    recsToCheck = new String(Files.readAllBytes(Paths.get(RECORDS_TO_CHECK)));
+                    Set<String> keys = newRecords.keySet();
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                    LocalDateTime now = LocalDateTime.now();
+                    recsToCheck += System.lineSeparator() + dtf.format(now);
+                    for(String k : keys){
+                        recsToCheck += System.lineSeparator() + newRecords.get(k);
+                    }
+                    emailCheckRecords();
+                    fW.writeStringToFile(recsToCheck,RECORDS_TO_CHECK);
             }
             if(!startErrorLog.equals(endErrorLog)){
                 fW.writeStringToFile(endErrorLog,ERROR_LOG);

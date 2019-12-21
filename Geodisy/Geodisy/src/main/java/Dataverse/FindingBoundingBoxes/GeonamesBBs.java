@@ -244,6 +244,9 @@ public class GeonamesBBs extends FindBoundBox {
         String commonCountry = geoCoverage.getField(COMMON_COUNTRY);
         String commonProvince = geoCoverage.getField(COMMON_PROVINCE);
         String commonCity = geoCoverage.getField(COMMON_CITY);
+        String other = geoCoverage.getField(OTHER_GEO_COV);
+        if(!other.equals(""))
+            logger.info("This record had something in the Other field in the geographic coverage. Check out: " + djo.getSimpleFieldVal(PERSISTENT_URL), djo);
         Boolean second = !givenCountry.equals(commonCountry) || !givenProvince.equals(commonProvince) || !givenCity.equals(commonCity);
         if(!givenCountry.isEmpty()) {
             if (!givenProvince.isEmpty()){
