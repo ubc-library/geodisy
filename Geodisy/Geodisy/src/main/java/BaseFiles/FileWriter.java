@@ -146,13 +146,8 @@ public class FileWriter {
         }
     }
 
-    public boolean write(String obj, String path){
-        try {
-            fw = new java.io.FileWriter(path);
-        } catch (IOException e) {
-            logger.error("Something was wonky with the given path: " + path);
-            return false;
-        }
+    public boolean write(String obj){
+
         try {
             fw.write(obj);
         } catch (IOException e) {
@@ -164,5 +159,9 @@ public class FileWriter {
 
     public java.io.FileWriter getFw(){
         return fw;
+    }
+
+    public String getPath(){
+        return fw.toString();
     }
 }

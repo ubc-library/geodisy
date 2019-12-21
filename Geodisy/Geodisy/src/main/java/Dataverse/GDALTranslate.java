@@ -1,30 +1,34 @@
 package Dataverse;
 
 import BaseFiles.GeoLogger;
-import BaseFiles.GeodisyStrings;
+import GeoServer.GeoServerAPI;
+import GeoServer.PostGIS;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
+
 
 import static BaseFiles.GeodisyStrings.*;
 
 public class GDALTranslate {
     GeoLogger logger;
+    DataverseJavaObject djo;
 
     public GDALTranslate() {
         logger = new GeoLogger(this.getClass());
     }
 
-    public String rasterTransform(String dirPath, String name){
+    public String rasterTransform(String dirPath, String name, DataverseJavaObject djo){
+        this.djo = djo;
         process(dirPath,name,RASTER);
 
         int period = name.lastIndexOf(".");
+
         return name.substring(0,period+1) + "tif";
     }
 
-    public String vectorTransform(String dirPath, String name){
+    public String vectorTransform(String dirPath, String name,DataverseJavaObject djo){
+        this.djo = djo;
         process(dirPath,name,VECTOR);
 
         int period = name.lastIndexOf(".");
@@ -51,7 +55,7 @@ public class GDALTranslate {
                 logger.error("Something went wrong converting " + name + " to geotiff");
             }
         } else{
-            call = "ogr2ogr -f GEOJSON " + dirPath + nameStub + "geojson " + dirPath + name;
+            call = "ogr2ogr -f \"ESRI Shapefile\" " + dirPath + nameStub + "shp " + dirPath + name;
             try {
                 if (isWindows) {
                     Runtime.getRuntime().exec(call);
@@ -60,16 +64,34 @@ public class GDALTranslate {
                 }
 
             }catch (IOException e) {
-                logger.error("Something went wrong converting " + name + " to geojson");
+                logger.error("Something went wrong converting " + name + " to shapefile");
             }
-        }
-
-        if(name.endsWith(".shp")) {
-            file = new File(dirPath+nameStub+"shx");
-            file.delete();
         }
         file = new File(dirPath+name);
         file.delete();
+
+        addToPostGIS(nameStub,transformType);
+        addToGeoserver(nameStub,transformType);
+
+
     }
+
+    private void addToGeoserver(String nameStub, String transformType) {
+        GeoServerAPI geoServerAPI = new GeoServerAPI(djo);
+        if(transformType.equals(VECTOR))
+            geoServerAPI.uploadVector(nameStub);
+    }
+
+    private void addToPostGIS(String nameStub, String transformType) {
+        PostGIS postGis = new PostGIS();
+        if(transformType.equals(VECTOR))
+            postGis.addFile2PostGIS(djo,nameStub+"shp",VECTOR, TEST);
+        /* Raster Data is added to Geoserver directly rather than through PostGIS
+        else
+            postGis.addFile2PostGIS(djo,nameStub+"tif",RASTER, TEST);
+         */
+    }
+
+
 
 }

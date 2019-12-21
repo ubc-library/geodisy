@@ -2,10 +2,10 @@ package BaseFiles;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.util.Arrays;
 
 public class GeodisyStrings {
 
+    public final static boolean TEST = true; //change this to false when in production
 
     //Repositories (add new repository URLS to a appropriate repository URL array below)
         // New Repository Types need new URL Arrays [Geodisy 2]
@@ -40,15 +40,15 @@ public class GeodisyStrings {
     //GDAL
         public final static String GDALINFO_LOCAL = "C:\\Program Files\\GDAL\\gdalinfo -approx_stats ";
         public final static String OGRINFO_LOCAL = "C:\\Program Files\\GDAL\\ogrinfo -ro -al -so ";
-        public final static String GDALINFO_CLOUD = "sudo gdalinfo -approx_stats ";
-        public final static String OGRINFO_CLOUD = "sudo ogrinfo -ro -al -so ";
+        public final static String GDALINFO_CLOUD = "sudo /usr/gdal30/bin/gdalinfo -approx_stats ";
+        public final static String OGRINFO_CLOUD = "sudo /usr/gdal30/bin/ogrinfo -ro -al -so ";
         public final static String[] GDALINFO_RASTER_FILE_EXTENSIONS = { ".tif", ".tiff", ".nc", ".png",".xyz"};
         public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = {".geojson",".shp", ".shx", ".kmz",".csv",".tab",".gpkg"}; //also .csv, but need to check if the csv is actually geospatial in nature
         public final static String[] PREVIEWABLE_FILE_EXTENSIONS = {".tif", ".kmz"};
         public final static String OGR2OGR_LOCAL = "C:\\Program Files\\GDAL\\ogr2ogr -t_srs EPSG:4326 ";
         public final static String GDAL_TRANSLATE_LOCAL = "C:\\Program Files\\GDAL\\gdal_translate -t_srs EPSG:4326 ";
-        public final static String OGR2OGR_CLOUD = "ogr2ogr -t_srs EPSG:4326 ";
-        public final static String GDAL_TRANSLATE_CLOUD = "gdal_translate -t_srs EPSG:4326 ";
+        public final static String OGR2OGR_CLOUD = "sudo /usr/gdal30/bin/ogr2ogr -t_srs EPSG:4326 ";
+        public final static String GDAL_TRANSLATE_CLOUD = "sudo /usr/gdal30/bin/gdal_translate -t_srs EPSG:4326 ";
 
     //Unused file type extensions
     public final static String[] FILE_TYPES_TO_IGNORE = {".txt",".doc",".csv",".pdf",".jpg", ".docx",".las",".xml"};
@@ -69,7 +69,7 @@ public class GeodisyStrings {
 
 
     //Geocombine
-    private final static boolean TEST = true; //change this to false when in production
+
     public final static String SOLR_PATH_PROD = "SOLR_URL=http://www.example.com:1234/solr/collection ";
     public final static String SOLR_PATH_TEST = "";
     public final static String SOLR_PATH = SOLR_PATH_TEST;

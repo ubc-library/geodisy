@@ -1,7 +1,11 @@
 package Crosswalking.GeoBlacklightJson;
 
-public interface JSONCreator {
+public abstract class JSONCreator {
 
-    void createJson();
+    protected abstract void createJson();
+
+    protected String stringed(String string) {
+        return "\"" + string + "\"";
+    }
 
 }

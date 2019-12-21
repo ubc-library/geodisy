@@ -4,6 +4,7 @@ public class GeoBlacklightStrings {
 
     //TODO enter in the geoserver wfs location
     public final static String GEOSERVER_BASE = "\"https://206-12-92-97.cloud.computecanada.ca/"; //may need geoserver/web/
+    public final static String GEOSERVER_REST = GEOSERVER_BASE + "geoserver/web/";
     public final static String GEOSERVER_WFS_LOCATION = GEOSERVER_BASE+"geoserver/wfs\"";
     //TODO enter in the geoserver wms location
     public final static String GEOSERVER_WMS_LOCATION = GEOSERVER_BASE+"geoserver/wms\"";

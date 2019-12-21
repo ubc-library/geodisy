@@ -14,11 +14,11 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 /**
  * Class for unzipping a file right before uploading things to Geosever
- * and then deleting the unzipped files after the upload process is finished
+ * and then deleting the unzipped files after the uploadVector process is finished
  */
 public class Unzip {
     GeoLogger logger = new GeoLogger(Unzip.class);
-    //TODO call unzip when adding zipped files to Geoserver and then call deleteUnzippedFiles() after upload is done to save space
+    //TODO call unzip when adding zipped files to Geoserver and then call deleteUnzippedFiles() after uploadVector is done to save space
     public void unzip(String filePath, String destPath, DataverseRecordFile dRF) {
         //String destPath = filePath.substring(0,filePath.length()-4);
         File destDir = new File(destPath);

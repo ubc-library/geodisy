@@ -7,12 +7,13 @@ package GeoServer;
 
 import BaseFiles.API;
 import BaseFiles.GeoLogger;
+import Crosswalking.GeoBlacklightJson.JSONCreator;
 
 /**
  *
  * @author pdante
  */
-public abstract class DestinationAPI implements API {
+public abstract class DestinationAPI extends JSONCreator implements API {
     GeoLogger logger;
 
 }

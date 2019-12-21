@@ -64,7 +64,8 @@ public class DataverseParser implements JSONParser {
             //Doesn't make sense to use these fields; will check with team
             /*if(metadata.has(JOURNAL_FIELDS))
                 dJO.parseJournalFields(metadata.getJSONObject(JOURNAL_FIELDS).getJSONArray(FIELDS));*/
-            if(dJO.getVersionSection(current).has("files"))
+
+            if(dJO.getVersionSection(current).has(FILES))
                 dJO.parseFiles((JSONArray) dJO.getVersionSection(current).get("files"));
         }catch (JSONException e){
             logger.error("Something was malformed with the JSON string returned from Dataverse");

@@ -59,6 +59,6 @@ public class Geodisy {
      */
     public void exportToGeoserver(SourceJavaObject sjo){
         GeoServerAPI geoServerAPI = new GeoServerAPI(sjo);
-        geoServerAPI.upload();
+
     }
 }

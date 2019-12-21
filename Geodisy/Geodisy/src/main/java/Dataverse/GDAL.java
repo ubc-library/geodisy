@@ -5,6 +5,8 @@ import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
+import GeoServer.GeoServerAPI;
+
 import java.io.*;
 import java.util.List;
 import static BaseFiles.GeodisyStrings.*;
@@ -12,7 +14,6 @@ import static Dataverse.DVFieldNameStrings.PROJECTION;
 
 public class GDAL {
     GeoLogger logger = new GeoLogger(this.getClass());
-
     public DataverseJavaObject generateBB(DataverseJavaObject djo) {
         String doi = djo.getDOI();
         String path = doi.replace("/","_");
@@ -43,6 +44,10 @@ public class GDAL {
             String gdalString;
             BoundingBox temp;
             String projection =  "";
+
+            // Convert Rasters to Geotiff and Vector to Shapefiles
+            name = convertToCommonType(gdalInfo,name, path, djo);
+
             try {
                 gdalString = getGDALInfo(filePath, name, isWindows);
                 if(gdalInfo)
@@ -62,6 +67,9 @@ public class GDAL {
                     gBB.setField(PROJECTION,projection);
                     gf.addBB(bboxes, gBB);
                     djo.setGeoFields(gf);
+
+                    GeoServerAPI geoServerAPI = new GeoServerAPI(djo);
+                    geoServerAPI.uploadVector(name);
                 }
             } catch (IOException e) {
                 logger.error("Something went wrong trying to call GDAL with " + name);
@@ -69,6 +77,14 @@ public class GDAL {
 
         }
         return djo;
+    }
+
+    private String convertToCommonType(boolean gdalInfo, String name, String path, DataverseJavaObject djo) {
+        GDALTranslate gdalTranslate = new GDALTranslate();
+        if(gdalInfo)
+            return gdalTranslate.rasterTransform(DATASET_FILES_PATH + path + "/", name, djo);
+        else
+            return gdalTranslate.vectorTransform(DATASET_FILES_PATH + path + "/", name, djo);
     }
 
     private String getProjection(String gdalString) {

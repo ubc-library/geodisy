@@ -11,4 +11,9 @@ CLI Commands
 		Delete ALL (need an xml file with <delete><query>*:*</query></delete>, also be in directory /root/solr-8.3.0/bin)
 			./post -c geoblacklight-prod delete_ALL.xml
 			
+			
+	Geoserver
+		/usr/pgsql-12/bin/shp2pgsql -d "[shapefile.shp]" public.[puid] | /usr/pgsql-12/bin/psql -d geodisy -U geodisy_user
+		/usr/pgsql-12/bin/raster2pgsql -d "[geotiffilename.tif]" public.[puid] | /usr/pgsql-12/bin/psql -d geodisy -U geodisy_user
+
 

@@ -9,17 +9,26 @@ import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
 import BaseFiles.HTTPCaller;
 import Crosswalking.GeoBlacklightJson.HTTPCombineCaller;
+import Dataverse.DataverseJavaObject;
 import Dataverse.SourceJavaObject;
+import it.geosolutions.geoserver.rest.GeoServerRESTPublisher;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Files;
 
-import static BaseFiles.GeodisyStrings.DATASET_FILES_PATH;
-import static BaseFiles.GeodisyStrings.PATH_TO_XML_JSON_FILES;
+import static BaseFiles.GeodisyStrings.*;
 import static BaseFiles.PrivateStrings.*;
+import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.GEOSERVER_BASE;
+import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.GEOSERVER_REST;
+import static Dataverse.DVFieldNameStrings.PERSISTENT_ID;
 import static GeoServer.GeoserverStrings.*;
 
 /**
@@ -36,18 +45,63 @@ public class GeoServerAPI extends DestinationAPI {
         caller = new HTTPCallerGeosever();
         logger =  new GeoLogger(this.getClass());
     }
+        //TODO fix this to access layers from POSTGIS
+    public void uploadVector(String fileName){
+        addVectorToPostGIS(fileName);
+    }
 
-    public String upload(){
-        //TODO figure out the STORENAME
-        String STORENAME = POSTGIS_BD;
-        String response = "";
-        String doi = sjo.getDOI();
-        String workspace = WORKSPACE_NAME;
-        String jsonString = createDirectoryUploadJSON(doi, STORENAME, workspace);
-        if(!jsonString.isEmpty())
-            saveJsonToFile(jsonString);
-            caller.callHTTP(generateUploadCall());
-        return response;
+    private void addVectorToPostGIS(String fileName) {
+        PostGIS postGIS = new PostGIS();
+        postGIS.addFile2PostGIS((DataverseJavaObject) sjo, fileName, TEST);
+        addVectorToGeoserver(fileName);
+    }
+
+    private boolean addVectorToGeoserver(String fileName) {
+        JSONObject jo = new JSONObject();
+        JSONObject outer = new JSONObject();
+        jo.put("name",sjo.getSimpleFieldVal(PERSISTENT_ID));
+        jo.put("title",fileName);
+        outer.put("featureType",jo);
+        createFileUploadJSON(jo);
+        String urlString = GEOSERVER_REST + "workspaces/geodisy/datastores/shapefiles/featuretypes";
+        String command = "curl -U " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type: application/json") + "-d @" + DATASET_FILES_PATH + "import.json" + urlString;
+        try {
+            Process p = Runtime.getRuntime().exec(command);
+        } catch (IOException e) {
+            logger.error("Something went wrong trying to add a vector to geoserver from postGIS. File name was: " + fileName);
+            return false;
+        }
+    return true;
+    }
+
+    private void createFileUploadJSON(JSONObject jo) {
+        FileWriter file = new FileWriter(DATASET_FILES_PATH + "input.json");
+        file.write(jo.toString());
+    }
+
+    public boolean addVectorTest(String fileName){
+        return addVectorToGeoserver(fileName);
+    }
+
+    public void uploadRaster(String fileName){
+        String nameStub = fileName.substring(0,fileName.lastIndexOf("."));
+        String call = "curl -u admin:" + GEOSERVER_PASSWORD + " -XPUT -H " + stringed("Content-type:image/tiff") + " --data-binary @" + DATASET_FILES_PATH + sjo.getSimpleFieldVal(PERSISTENT_ID) + fileName + "  http://localhost:8080/geoserver/rest/workspaces/geodisy/" + sjo.getSimpleFieldVal(PERSISTENT_ID)+nameStub + "/file.geotiff";
+
+        try {
+            Process p = Runtime.getRuntime().exec(call);
+
+            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+            String s = "";
+            String error = "";
+            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            while ((s = stdInput.readLine()) != null) {
+                error+=s;
+            }
+            if(error.contains("405"))
+                logger.warn("Something went wrong trying to upload raster file to Geoserver: " + fileName + " " + sjo.getSimpleFieldVal(PERSISTENT_ID));
+        } catch (IOException e) {
+            logger.error("Something went wrong trying to upload raster file to Geoserver: " + fileName + " " + sjo.getSimpleFieldVal(PERSISTENT_ID));
+        }
     }
     private void saveJsonToFile(String jsonString) {
         FileWriter fileWriter = new FileWriter();
@@ -66,14 +120,14 @@ public class GeoServerAPI extends DestinationAPI {
         return curlCall;
     }
 
-    private String createDirectoryUploadJSON(String doi, String store, String workspace) {
+    private String createDirectoryUploadJSON(String filename, String doi, String store, String workspace) {
 
         String jsonModified = "";
         if(generateWorkspace(workspace)) {
             if (addPostGISStore()) {
                 JSONObject root = new JSONObject();
                 JSONArray array = addWorkspaceStore(workspace, store, doi);
-                root.put("\"import\"", array);
+                root.put(stringed("import"), array);
                 String json = root.toString();
                 jsonModified = jsonArrayBracketChange(json);
             }
@@ -82,7 +136,7 @@ public class GeoServerAPI extends DestinationAPI {
     }
 
     private boolean addPostGISStore() {
-        FileWriter fileWriter = new FileWriter();
+
         JSONObject jo = new JSONObject("<dataStore>" +
                                                     "<name>geodisyDB</name>" +
                                                     "<connectionParameters>" +
@@ -95,7 +149,8 @@ public class GeoServerAPI extends DestinationAPI {
                                                     "</connectionParameters>" +
                                                 "</dataStore>");
         String storePath = PATH_TO_XML_JSON_FILES+"geodisy.xml";
-        fileWriter.write(jo.toString(),storePath);
+        FileWriter fileWriter = new FileWriter(storePath);
+        fileWriter.write(jo.toString());
         HTTPCaller caller = new HTTPCombineCaller();
         caller.callHTTP("curl -v -u admin:" + GEOSERVER_PASSWORD + "-XPOST -T "+ storePath +" -H \"Content-type: text/xml\" http://localhost:8080/geoserver/rest/workspaces/"+ WORKSPACE_NAME + "/datastores");
         return deleteXMLFile(storePath);
@@ -126,34 +181,34 @@ public class GeoServerAPI extends DestinationAPI {
 
     private JSONObject locationJSON() {
         JSONObject obj3 = new JSONObject();
-        obj3.put("\"location\"", LOCATION);
+        obj3.put(stringed("location"), LOCATION);
         JSONObject obj2 = new JSONObject();
-        obj2.put("\"type\"", "\"directory\"");
+        obj2.put(stringed("type"), stringed("directory"));
         JSONArray array = new JSONArray();
         array.put(obj2);
         array.put(obj3);
         JSONObject obj1 = new JSONObject();
-        obj1.put("\"data\"",array);
+        obj1.put(stringed("data"),array);
         return obj1;
     }
 
     private JSONObject workspaceJSON(String workspace) {
         JSONObject obj3 = new JSONObject();
-        obj3.put("\"name\"", workspace);
+        obj3.put(stringed("name"), workspace);
         JSONObject obj2 = new JSONObject();
-        obj2.put("\"workspace\"", obj3);
+        obj2.put(stringed("workspace"), obj3);
         JSONObject obj1 = new JSONObject();
-        obj1.put("\"targetWorkspace\"", obj2);
+        obj1.put(stringed("targetWorkspace"), obj2);
         return obj1;
     }
 
     private JSONObject storeJSON(String store) {
         JSONObject obj3 = new JSONObject();
-        obj3.put("\"name\"", store);
+        obj3.put(stringed("name"), store);
         JSONObject obj2 = new JSONObject();
-        obj2.put("\"dataStore\"", obj3);
+        obj2.put(stringed("dataStore"), obj3);
         JSONObject obj1 = new JSONObject();
-        obj1.put("\"targetStore\"", obj2);
+        obj1.put(stringed("targetStore"), obj2);
         return obj1;
     }
     //TODO generate new workspace
@@ -170,23 +225,13 @@ public class GeoServerAPI extends DestinationAPI {
         return response.contains("HTTP/1.1 200 OK")||response.contains("HTTP/1.1 404 Workspace");
     }
 
-    public String uploadShapeToPostGIS(String workspace,String store,String file){
-        String response = "";
-        String doi = sjo.getDOI();
-        String workspaceName = (doi.length()>10? doi.substring(doi.length()-10):doi);
-        String jsonString = createFileUploadJSON(workspace, store, file);
-        if(!jsonString.isEmpty())
-            saveJsonToFile(jsonString);
-        caller.callHTTP(generateUploadCall());
-        return response;
-    }
 
     private String createFileUploadJSON(String workspace,String store, String file) {
         String jsonModified = "";
         if(generateWorkspace(workspace)) {
             JSONObject root = new JSONObject();
             JSONArray array = addWorkspaceStore(workspace,store,file);
-            root.put("\"import\"", array);
+            root.put(stringed("import"), array);
             String json = root.toString();
             jsonModified = jsonArrayBracketChange(json);
         }
@@ -203,14 +248,17 @@ public class GeoServerAPI extends DestinationAPI {
 
     private JSONObject fileJSON(String file) {
         JSONObject obj3 = new JSONObject();
-        obj3.put("\"file\"", file);
+        obj3.put(stringed("file"), file);
         JSONObject obj2 = new JSONObject();
-        obj2.put("\"type\"", "\"file\"");
+        obj2.put(stringed("type"), stringed("file"));
         JSONArray array = new JSONArray();
         array.put(obj2);
         array.put(obj3);
         JSONObject obj1 = new JSONObject();
-        obj1.put("\"data\"",array);
+        obj1.put(stringed("data"),array);
         return obj1;
     }
+
+    //TODO do I need to create something for this method. Bad coding if no.
+    protected void createJson(){}
 }
