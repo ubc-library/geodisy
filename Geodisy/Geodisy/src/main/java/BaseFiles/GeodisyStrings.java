@@ -51,7 +51,7 @@ public class GeodisyStrings {
         public final static String GDAL_TRANSLATE_CLOUD = "sudo /usr/gdal30/bin/gdal_translate -t_srs EPSG:4326 ";
 
     //Unused file type extensions
-    public final static String[] FILE_TYPES_TO_IGNORE = {".txt",".doc",".csv",".pdf",".jpg", ".docx",".las",".xml"};
+    public final static String[] FILE_TYPES_TO_IGNORE = {".txt",".doc",".pdf",".jpg", ".docx",".las",".xml"};
     public final static String[] FILE_TYPES_TO_ALLOW = ArrayUtils.addAll(GDALINFO_RASTER_FILE_EXTENSIONS, OGRINFO_VECTOR_FILE_EXTENSIONS);
 
         public final static String RASTER = "Raster";
