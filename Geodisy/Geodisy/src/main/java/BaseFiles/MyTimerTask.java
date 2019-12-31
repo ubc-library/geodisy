@@ -59,6 +59,7 @@ public class MyTimerTask extends TimerTask {
             List<SourceJavaObject> sJOs = geo.harvestDataverse();
             for(SourceJavaObject sJO : sJOs) {
                 existingHarvests.addOrReplaceRecord(new DataverseRecordInfo(sJO, logger.getName()));
+                checkFilesForGeo(sJO);
 
             }
             crosswalkRecords(sJOs);
@@ -100,6 +101,9 @@ public class MyTimerTask extends TimerTask {
         }
     }
 
+    private void checkFilesForGeo(SourceJavaObject sJO) {
+
+    }
 
 
     private void sendRecordsToGeoBlacklight() {
