@@ -8,4 +8,8 @@ public abstract class JSONCreator {
         return "\"" + string + "\"";
     }
 
+    protected String endStringed(String string){
+        return string + "\"";
+    }
+
 }
