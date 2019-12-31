@@ -25,13 +25,15 @@ public class DataverseRecordFile {
     String title;
     String doi = "N/A";
     int dbID;
-    String server;
-    GeoLogger logger = new GeoLogger(this.getClass());
-    String recordURL;
-    String datasetDOI;
-    DataverseJavaObject djo;
-    BoundingBox bb;
-    String projection;
+    private String server;
+    private GeoLogger logger = new GeoLogger(this.getClass());
+    private String recordURL;
+    private String datasetDOI;
+    private DataverseJavaObject djo;
+    private BoundingBox bb;
+    private String projection;
+    private int fileNumber = 0;
+    private String geometryType = "";
 
     /**
      * Creates a DataverseRecordFile when there is a File-specific doi.
@@ -216,6 +218,7 @@ public class DataverseRecordFile {
     }
     public String getDoi(){return doi;}
     public BoundingBox getBb(){return bb;}
+    public void setBb(BoundingBox boundingBox){bb=boundingBox;}
 
     public boolean isPreviewable() {
         return GeodisyStrings.isPreviewable(title);
@@ -227,5 +230,30 @@ public class DataverseRecordFile {
 
     public void setProjection(String s){
         projection = s;
+    }
+
+    public void addFileNumber(int i){
+        fileNumber = i;
+    }
+
+    public String getFileNumber(){
+        if(fileNumber==0)
+            return "";
+        else
+            return String.valueOf(fileNumber);
+    }
+
+    public void setGeoserverLabel(String s){
+        BoundingBox boundingBox = getBb();
+        boundingBox.setGeoserverLabel(s);
+        setBb(boundingBox);
+    }
+
+    public String getGeometryType() {
+        return geometryType;
+    }
+
+    public void setGeometryType(String geometryType) {
+        this.geometryType = geometryType;
     }
 }
