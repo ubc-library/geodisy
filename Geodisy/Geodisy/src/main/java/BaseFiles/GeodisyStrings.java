@@ -43,7 +43,7 @@ public class GeodisyStrings {
         public final static String GDALINFO_CLOUD = "sudo /usr/gdal30/bin/gdalinfo -approx_stats ";
         public final static String OGRINFO_CLOUD = "sudo /usr/gdal30/bin/ogrinfo -ro -al -so ";
         public final static String[] GDALINFO_RASTER_FILE_EXTENSIONS = { ".tif", ".tiff", ".nc", ".png",".xyz"};
-        public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = {".geojson",".shp", ".shx", ".kmz",".csv",".tab",".gpkg"}; //also .csv, but need to check if the csv is actually geospatial in nature
+        public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = {".geojson",".shp", ".shx", ".dbf", ".sbn",".kmz",".csv",".tab",".gpkg"}; //also .csv, but need to check if the csv is actually geospatial in nature
         public final static String[] PREVIEWABLE_FILE_EXTENSIONS = {".tif", ".kmz"};
         public final static String OGR2OGR_LOCAL = "C:\\Program Files\\GDAL\\ogr2ogr -t_srs EPSG:4326 ";
         public final static String GDAL_TRANSLATE_LOCAL = "C:\\Program Files\\GDAL\\gdal_translate -t_srs EPSG:4326 ";
@@ -54,8 +54,8 @@ public class GeodisyStrings {
     public final static String[] FILE_TYPES_TO_IGNORE = {".txt",".doc",".csv",".pdf",".jpg", ".docx",".las",".xml"};
     public final static String[] FILE_TYPES_TO_ALLOW = ArrayUtils.addAll(GDALINFO_RASTER_FILE_EXTENSIONS, OGRINFO_VECTOR_FILE_EXTENSIONS);
 
-        public final static String RASTER = "Raster Data";
-        public final static String VECTOR = "Vector Data";
+        public final static String RASTER = "Raster";
+        public final static String VECTOR = "Vector";
 
     //XML value types
         public final static String CHARACTER = "CharacterString";
