@@ -176,6 +176,7 @@ public class DVFieldNameStrings {
     public final static String FILE_NAME = "fileName";
     public final static String GEOMETRY = "geometryType";
     public final static String PROJECTION = "projection";
+    public final static String GEOSERVER = "geoserverLabel";
 
     //Geographic Coverage Field Names
     public final static String COUNTRY = "country";
@@ -281,6 +282,5 @@ public class DVFieldNameStrings {
     public final static List<String> SOCIAL_SIENCE_NOTES_ALL_FIELDS = Arrays.asList(SOCIAL_SCIENCE_NOTES_TEXT, SOCIAL_SCIENCE_NOTES_SUBJECT,SOCIAL_SCIENCE_NOTES_TEXT);
     public final static String SOCIAL_SCIENCE = "socialscience";
     public final static String FILES = "files";
-
 
 }
