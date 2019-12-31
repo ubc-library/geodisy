@@ -5,6 +5,7 @@ import Crosswalking.MetadataSchema;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordFile;
+import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import Dataverse.SourceRecordFiles;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -26,7 +27,7 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
     protected JSONObject jo;
     protected String doi;
     boolean download = false;
-    List<DataverseRecordFile> oldFiles;
+    LinkedList<DataverseRecordFile> oldFiles;
     SourceRecordFiles files;
 
     public GeoBlacklightJSON() {
@@ -37,19 +38,40 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
     @Override
     public void createJson() {
         int count = 1;
-        LinkedList<GeographicBoundingBox> gbbs = javaObject.getGeoFields().getBBoxesForJSON();
-        int size = gbbs.size();
-        for(int i = 0; i<size; i++){
-            getRequiredFields(gbbs.get(i),i+1,size);
+        if (oldFiles.size() > 0) {
+            createJSONFromFiles();
+        } else {
+            LinkedList<GeographicBoundingBox> gbbs = javaObject.getGeoFields().getBBoxesForJSON();
+            int size = gbbs.size();
+            for (int i = 0; i < size; i++) {
+                if(size>1)
+                    getRequiredFields(gbbs.get(i), i + 1, size);
+                else
+                    getRequiredFields(gbbs.get(i), 0, size);
+                getOptionalFields();
+                geoBlacklightJson = jo.toString();
+                if (size > 1)
+                    saveJSONToFile(geoBlacklightJson, doi, doi + " (File " + (i + 1) + " of " + size + ")");
+                else
+                    saveJSONToFile(geoBlacklightJson, doi, doi);
+            }
+        }
+    }
+
+    private void createJSONFromFiles() {
+        int s = 0;
+        int size = oldFiles.size();
+        boolean single = size == 1;
+        for (int i = 0; i < size; i++) {
+            getRequiredFields(oldFiles.get(i).getBb(), i + 1, size);
             getOptionalFields();
             geoBlacklightJson = jo.toString();
-            if(size>1)
-                saveJSONToFile(geoBlacklightJson, doi, doi + " (File " + (i+1) + " of " + size + ")");
+            if (!single)
+                saveJSONToFile(geoBlacklightJson, doi, doi + " (File " + (i + 1) + " of " + size + ")");
             else
                 saveJSONToFile(geoBlacklightJson, doi, doi);
         }
     }
-
 
     public File genDirs(String doi, String localRepoPath) {
         doi = FileWriter.fixPath(doi);
@@ -63,11 +85,12 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
         return doi;
     }
     protected abstract JSONObject getRequiredFields(GeographicBoundingBox gbb, int number, int total);
+    protected abstract JSONObject getRequiredFields(BoundingBox bb, int number, int total);
 
 
 
     protected abstract JSONObject getOptionalFields();
-    protected abstract JSONArray addMetadataDownloadOptions(GeographicBoundingBox gbb, JSONArray ja); //for records with datasetfiles
-    protected abstract JSONArray addBaseRecordInfo(GeographicBoundingBox gbb); //adds the base metadata external services that all records need regardless of existence of datafiles
+    protected abstract JSONArray addMetadataDownloadOptions(BoundingBox bb, JSONArray ja); //for records with datasetfiles
+    protected abstract JSONArray addBaseRecordInfo(); //adds the base metadata external services that all records need regardless of existence of datafiles
     protected abstract void saveJSONToFile(String json, String doi, String folderName);
 }
