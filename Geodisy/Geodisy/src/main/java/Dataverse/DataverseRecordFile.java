@@ -16,6 +16,7 @@ import java.util.Stack;
 import java.util.UUID;
 
 import static BaseFiles.GeodisyStrings.DATASET_FILES_PATH;
+import static Dataverse.DVFieldNameStrings.PERSISTENT_ID;
 
 
 /**
@@ -147,6 +148,13 @@ public class DataverseRecordFile {
                             vector++;
                             addVectorToGeoserver(name);
                             djo.addGeoDataFile(drf);
+                        }
+                        else{
+                            String path = djo.getDOI().replace("/","_");
+                            path = path.replace(".","_");
+                            String badFilesPath = DATASET_FILES_PATH + path + "/" + name;
+                            File file = new File(badFilesPath);
+                            file.delete();
                         }
                     }
                 }
