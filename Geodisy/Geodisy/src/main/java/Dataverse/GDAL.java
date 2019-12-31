@@ -253,24 +253,71 @@ public class GDAL {
         bb.setGenerated(true);
         return bb;
     }
-    private BoundingBox getLatLongGdalInfo(String gdalString, int start) {
-        int end = gdalString.indexOf(",",start);
-        String long1 = gdalString.substring(start,end).trim();
-        start = end+2;
-        end = gdalString.indexOf(")",start);
-        String lat1 = gdalString.substring(start,end).trim();
-        start = gdalString.indexOf("Lower Right (")+13;
-        end = gdalString.indexOf(",",start);
-        String long2 = gdalString.substring(start,end).trim();
-        start = end+2;
-        end = gdalString.indexOf(")",start);
-        String lat2 = gdalString.substring(start,end).trim();
-        BoundingBox bb =  new BoundingBox();
-        bb.setLongWest(long1);
-        bb.setLongEast(long2);
-        bb.setLatNorth(lat1);
-        bb.setLatSouth(lat2);
-        bb.setGenerated(true);
-        return bb;
+    private BoundingBox getLatLongGdalInfo(String gdalStringFull, int start) {
+        try {
+            String gdalString = gdalStringFull.substring(start);
+            start = gdalString.indexOf("(") + 1;
+            int end = gdalString.indexOf(",");
+            String west = parseDecimalDegrees(gdalString.substring(start, end));
+            gdalString = gdalString.substring(end + 1);
+            start = 0;
+            end = gdalString.indexOf(")");
+            String north = parseDecimalDegrees(gdalString.substring(start, end));
+            start = gdalString.indexOf("Lower Right (") + 13;
+            end = gdalString.indexOf(",");
+            String east = parseDecimalDegrees(gdalString.substring(start, end));
+            gdalString = gdalString.substring(end + 1);
+            start = 0;
+            end = gdalString.indexOf(")");
+            String south = parseDecimalDegrees(gdalString.substring(start, end));
+            BoundingBox bb = new BoundingBox();
+            bb.setLongWest(west);
+            bb.setLongEast(east);
+            bb.setLatNorth(north);
+            bb.setLatSouth(south);
+            bb.setGenerated(true);
+            return bb;
+        }catch (IndexOutOfBoundsException | NumberFormatException e){
+            return new BoundingBox();
+        }
+    }
+
+    private String parseDecimalDegrees(String s) throws NumberFormatException{
+        float degrees = Float.parseFloat(s.substring(0,s.indexOf("d")));
+        float minutes = Float.parseFloat(s.substring(s.indexOf("d")+1,s.indexOf("'")))/60;
+        float seconds = Float.parseFloat(s.substring(s.indexOf("'")+1,s.indexOf("\"")))/3600;
+        degrees += minutes + seconds;
+        String direction = s.substring(s.indexOf("\"")+1,s.indexOf("\"")+2);
+        if(direction.equals("W")||direction.equals(("S")))
+            degrees = degrees*-1;
+        return String.valueOf(degrees);
+
+    }
+
+    public DataverseRecordFile parse(File file){
+        String path = file.getAbsolutePath();
+        String name = file.getName();
+        DataverseRecordFile temp = new DataverseRecordFile();
+        boolean isWindows = System.getProperty("os.name")
+                .toLowerCase().startsWith("windows");
+        try {
+            String gdalString = getGDALInfo(path,name,isWindows);
+            temp.setProjection(getProjection(gdalString));
+            temp.setGeometryType(getGeometryType(gdalString));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return temp;
+    }
+
+    private String getGeometryType(String gdalString) {
+        int start = gdalString.indexOf("Geometry: ") + 10;
+        if(start>9){
+            int end = gdalString.indexOf("Feature Count:");
+            if(end!=-1){
+                return gdalString.substring(start,end).trim();
+            }
+        }
+        return "";
     }
 }
