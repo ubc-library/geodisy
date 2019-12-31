@@ -69,6 +69,10 @@ public class DataverseRecordFile {
         bb = new BoundingBox();
         projection = "";
     }
+    /**
+      * Only to be used for temp DRFs
+     */
+    public DataverseRecordFile(){}
 
     public void getFile() {
         GeoServerAPI geoserverAPI = new GeoServerAPI(djo);
@@ -100,6 +104,10 @@ public class DataverseRecordFile {
 
             listOfFiles = folder.listFiles();
             GDALTranslate gdalTranslate = new GDALTranslate();
+            int vector = 1;
+            int raster = 1;
+            GDAL gdal = new GDAL();
+            DataverseRecordFile tempDRF;
             for(File f: listOfFiles) {
                 if (f.isFile()) {
                     String name = f.getName().toLowerCase();
@@ -111,20 +119,30 @@ public class DataverseRecordFile {
                             name = gdalTranslate.vectorTransform(dirPath, f.getName(),djo);
                         }
                         drf = new DataverseRecordFile(name, this.doi, this.dbID, this.server, this.datasetDOI, this.djo);
+                        drf.addFileNumber(vector);
+                        drf.setGeoserverLabel(djo.getSimpleFieldVal(PERSISTENT_ID)+ "v" + vector);
+                        tempDRF =  gdal.parse(f);
+                        drf.setGeometryType(tempDRF.geometryType);
+                        drf.setProjection(tempDRF.projection);
+                        vector++;
                         djo.addGeoDataFile(drf);
                     }else if (GeodisyStrings.gdalinfoRasterExtention(f.getName())){
                         if(!name.endsWith(".tif"))
                             name = gdalTranslate.rasterTransform(dirPath,f.getName(), djo);
                         addRasterToGeoserver(name);
                         drf = new DataverseRecordFile(name, this.doi, this.dbID, this.server, this.datasetDOI, this.djo);
+                        drf.addFileNumber(raster);
+                        drf.setGeoserverLabel(djo.getSimpleFieldVal(PERSISTENT_ID)+ "r" + raster);
+                        raster++;
                         djo.addGeoDataFile(drf);
                     }else if(name.contains(".csv")){
-                        GDAL gdal = new GDAL();
                         BoundingBox temp = gdal.generateBoundingBoxFromCSV(f,djo);
                         if(temp.hasBoundingBox()) {
                             name = gdalTranslate.vectorTransform(dirPath, f.getName(), djo);
                             drf = new DataverseRecordFile(name, this.doi, this.dbID, this.server, this.datasetDOI, this.djo);
                             drf.bb = temp;
+                            drf.addFileNumber(vector);
+                            vector++;
                             addVectorToGeoserver(name);
                             djo.addGeoDataFile(drf);
                         }
