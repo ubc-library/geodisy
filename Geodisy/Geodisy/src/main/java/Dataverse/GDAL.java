@@ -10,7 +10,7 @@ import GeoServer.GeoServerAPI;
 import java.io.*;
 import java.util.List;
 import static BaseFiles.GeodisyStrings.*;
-import static Dataverse.DVFieldNameStrings.PROJECTION;
+import static Dataverse.DVFieldNameStrings.*;
 
 public class GDAL {
     GeoLogger logger = new GeoLogger(this.getClass());
