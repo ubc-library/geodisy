@@ -11,6 +11,7 @@ public class GeographicBoundingBox extends CompoundJSONField {
     private BoundingBox bb;
     String doi;
     String projection;
+    int fileNumber = 0;
 
     public GeographicBoundingBox(String doi) {
         this.doi = doi;
@@ -24,6 +25,15 @@ public class GeographicBoundingBox extends CompoundJSONField {
         projection = "";
     }
 
+    public String getFileNumber(){
+        if(fileNumber==0)
+            return "";
+        return String.valueOf(fileNumber);
+    }
+
+    public void setFileNumber(int i){
+        fileNumber = i;
+    }
     public boolean isWMS(){
         return bb.isWMS();
     }
@@ -33,7 +43,7 @@ public class GeographicBoundingBox extends CompoundJSONField {
     }
     //TODO make sure we create a Geoserver Location for each file
     public String getGeoserverLocation() {
-        return bb.getGeoserverLocation();
+        return bb.getGeoserverLabel();
     }
     public String getWestLongitude() {
         checkCoords(bb);
@@ -148,6 +158,9 @@ public class GeographicBoundingBox extends CompoundJSONField {
             case PROJECTION:
                 setProjection(value);
                 break;
+            case GEOSERVER:
+                setGeoserverLabel(value);
+                break;
             default:
                 errorParsing(this.getClass().getName(),title);
         }
@@ -173,10 +186,20 @@ public class GeographicBoundingBox extends CompoundJSONField {
                 return getGeometry();
             case PROJECTION:
                 return getProjection();
+            case GEOSERVER:
+                return getGeoserverLabel();
             default:
                 errorGettingValue(this.getClass().getName(),fieldName);
                 return "Bad fieldName";
         }
+    }
+
+    private String getGeoserverLabel() {
+        return bb.getGeoserverLabel();
+    }
+
+    private void setGeoserverLabel(String value){
+        bb.setGeoserverLabel(value);
     }
 
     private String getProjection() {
