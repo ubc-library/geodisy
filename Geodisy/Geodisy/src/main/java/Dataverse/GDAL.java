@@ -65,6 +65,9 @@ public class GDAL {
                     gBB.setBB(temp);
                     gBB.setFileName(name);
                     gBB.setField(PROJECTION,projection);
+                    if(name.endsWith(".geojson"))
+                        gBB.setField(GEOSERVER,djo.getSimpleFieldVal(PERSISTENT_ID)+ gBB.getFileNumber());
+
                     gf.addBB(bboxes, gBB);
                     djo.setGeoFields(gf);
 
