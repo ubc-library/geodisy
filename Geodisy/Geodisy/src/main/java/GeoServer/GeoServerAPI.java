@@ -11,7 +11,6 @@ import BaseFiles.HTTPCaller;
 import Crosswalking.GeoBlacklightJson.HTTPCombineCaller;
 import Dataverse.DataverseJavaObject;
 import Dataverse.SourceJavaObject;
-import it.geosolutions.geoserver.rest.GeoServerRESTPublisher;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,13 +19,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
+
 import java.nio.file.Files;
 
 import static BaseFiles.GeodisyStrings.*;
 import static BaseFiles.PrivateStrings.*;
-import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.GEOSERVER_BASE;
 import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.GEOSERVER_REST;
 import static Dataverse.DVFieldNameStrings.PERSISTENT_ID;
 import static GeoServer.GeoserverStrings.*;
@@ -53,7 +50,8 @@ public class GeoServerAPI extends DestinationAPI {
     private void addVectorToPostGIS(String fileName) {
         PostGIS postGIS = new PostGIS();
         postGIS.addFile2PostGIS((DataverseJavaObject) sjo, fileName, TEST);
-        addVectorToGeoserver(fileName);
+        //TODO uncomment this once I have getting the layers from postgis to geoserver
+        //addVectorToGeoserver(fileName);
     }
 
     private boolean addVectorToGeoserver(String fileName) {
