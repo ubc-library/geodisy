@@ -6,6 +6,7 @@ import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Descrip
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordFile;
+import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -36,10 +37,13 @@ public class DataGBJSON extends GeoBlacklightJSON{
     //TODO check if Dataverse publisher field be included in the slug?
     @Override
     protected JSONObject getRequiredFields(GeographicBoundingBox gbb, int number, int total){
+        return getRequiredFields(gbb.getBB(),number,total);
+    }
+    @Override
+    protected JSONObject getRequiredFields(BoundingBox bb, int number, int total){
         jo.put("geoblacklight_version","1.0");
         jo.put("dc_identifier_s", javaObject.getSimpleFieldVal(PERSISTENT_URL));
-        String name = gbb.getField(FILE_NAME);
-        jo.put("layer_slug_s", DataverseRecordFile.getUUID(getDoi()+name));
+        jo.put("layer_slug_s", DataverseRecordFile.getUUID(getDoi() + number));
         if(total>1) {
             jo.put("dc_title_s", javaObject.getSimpleFields().getField(TITLE) + " (" + number + " of " + total + ")");
         }
@@ -48,9 +52,11 @@ public class DataGBJSON extends GeoBlacklightJSON{
         jo.put("dc_rights_s",javaObject.getSimpleFields().getField(LICENSE));
         jo.put("dct_provenance_s",javaObject.getSimpleFields().getField(PUBLISHER));
 
-        jo.put("solr_geom","ENVELOPE(" + getBB(gbb) + ")");
-        jo.put("layer_geom_type_s",gbb.getField(GEOMETRY));
-        JSONArray ja = addBaseRecordInfo(gbb);
+        jo.put("solr_geom","ENVELOPE(" + getBB(bb) + ")");
+        jo.put("layer_geom_type_s",bb.getGeometryType());
+        JSONArray ja = addBaseRecordInfo();
+        if(javaObject.hasGeospatialFile)
+            ja = addMetadataDownloadOptions(bb,ja);
         String externalServices = "{";
         for(Object o:ja){
             if(!externalServices.equals("{"))
@@ -59,24 +65,21 @@ public class DataGBJSON extends GeoBlacklightJSON{
         }
         externalServices+="}";
 
-        //TODO uncomment once I have geoserver uploadVector figured out
-        //ja = addMetadataDownloadOptions(gbb,ja);
-
         jo.put(EXTERNAL_SERVICES,externalServices);
         return jo;
     }
 
-    private String getBB(GeographicBoundingBox gbb){
-        return gbb.getWestLongitude() + ", " + gbb.getEastLongitude() + ", " + gbb.getNorthLatitude() + ", " + gbb.getSouthLatitude();
+    private String getBB(BoundingBox bb){
+        return bb.getLongWest() + ", " + bb.getLongEast() + ", " + bb.getLatNorth() + ", " + bb.getLatSouth();
     }
 
     @Override
-    protected JSONArray addMetadataDownloadOptions(GeographicBoundingBox gbb, JSONArray ja) {
-        if(gbb.isGeneratedFromGeoFile()) {
+    protected JSONArray addMetadataDownloadOptions(BoundingBox bb, JSONArray ja) {
+        if(!bb.getGeometryType().equals("Non-geospatial")) {
             if(gbb.isWMS())
-                ja.put(WMS + stringed(gbb.getGeoserverLocation()));
+                ja.put(WMS + GEOSERVER_WMS_LOCATION);
             if(gbb.isWFS())
-                ja.put(WFS + stringed(gbb.getGeoserverLocation()));
+                ja.put(WFS + GEOSERVER_WFS_LOCATION);
         }
         //TODO uncomment once pushing to OpenGeoMetadata is working
         //ja.put(ISO_METADATA + stringed(gbb.getOpenGeoMetaLocation()));
@@ -85,7 +88,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
     }
 
     @Override
-    protected JSONArray addBaseRecordInfo(GeographicBoundingBox gbb){
+    protected JSONArray addBaseRecordInfo(){
         JSONArray ja = new JSONArray();
         ja.put(RECORD_URL + stringed(javaObject.getSimpleFieldVal(PERSISTENT_URL)));
         ja.put(ISO_METADATA + stringed(END_XML_JSON_FILE_PATH + javaObject.getSimpleFieldVal(PERSISTENT_ID) + "/" + ISO_METADATA_FILE_ZIP));
