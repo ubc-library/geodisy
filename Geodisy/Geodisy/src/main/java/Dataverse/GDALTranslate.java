@@ -72,8 +72,6 @@ public class GDALTranslate {
 
         addToPostGIS(nameStub,transformType);
         addToGeoserver(nameStub,transformType);
-
-
     }
 
     private void addToGeoserver(String nameStub, String transformType) {
