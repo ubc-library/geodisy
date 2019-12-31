@@ -12,7 +12,7 @@ public class BoundingBox implements Serializable {
     private boolean generated = false;
     private String fileName = "";
     private String geometryType = "Non-geospatial";
-    private String geoserverLocation;
+    private String geoserverLabel;
 
     /**
      *
@@ -138,13 +138,14 @@ public class BoundingBox implements Serializable {
         this.geometryType = geometryType;
     }
 
-    public String getGeoserverLocation() {
-        return geoserverLocation;
+    public String getGeoserverLabel() {
+        return geoserverLabel;
     }
 
-    public void setGeoserverLocation(String s){
-        geoserverLocation = s;
+    public void setGeoserverLabel(String s){
+        geoserverLabel = "geodisy:" + s;
     }
+
 
     public boolean isWMS() {
         for(String s: PREVIEWABLE_FILE_EXTENSIONS) {
