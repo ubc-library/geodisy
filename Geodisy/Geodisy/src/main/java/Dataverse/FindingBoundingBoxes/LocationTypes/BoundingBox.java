@@ -13,6 +13,7 @@ public class BoundingBox implements Serializable {
     private String fileName = "";
     private String geometryType = "Non-geospatial";
     private String geoserverLabel;
+    private String doi;
 
     /**
      *
@@ -32,10 +33,10 @@ public class BoundingBox implements Serializable {
         return longitude;
     }
     public boolean hasBoundingBox(){
-        return latSouth!=361 && latNorth!=361 && longEast!=361 && longWest!=361;
+        return latSouth>=-90 && latNorth<=90 && longEast<=180 && longWest>=-180;
     }
     public boolean hasUTMCoords(){
-        return latSouth <-90 || latNorth > 361 || Math.abs(longEast) > 361 || Math.abs(longWest) > 361;
+        return Math.abs(latSouth) > 90 || latNorth > 90 || Math.abs(longEast) > 180 || Math.abs(longWest) > 180;
     }
     /**
      *

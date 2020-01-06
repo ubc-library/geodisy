@@ -53,16 +53,16 @@ public class FileWriter {
         File file = new File(path);
         FileUtils.writeStringToFile(file, stringToSave,"UTF-8");
     }
-
+    //TODO figure out where this is actually getting used
     public static String fixPath(String path) {
         String answer = path;
         if (path.contains("doi:")) {
-            answer = path.replace("doi:", "");
+            answer = path.replace("doi:", "doi/");
         }
 
         //TODO figure out what to do with a handle
         if(path.contains("handle:")){
-            answer = answer.replace("handle:","");
+            answer = answer.replace("handle:","handle/");
         }
         return answer;
     }

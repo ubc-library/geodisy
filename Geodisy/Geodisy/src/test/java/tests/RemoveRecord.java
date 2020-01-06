@@ -31,6 +31,11 @@ public class RemoveRecord {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        file = new File("XMLFiles/" + folderized);
+        try {
+            FileUtils.deleteDirectory(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

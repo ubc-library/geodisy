@@ -1,8 +1,8 @@
 package Dataverse;
 
 import BaseFiles.GeoLogger;
-import GeoServer.GeoServerAPI;
-import GeoServer.PostGIS;
+import BaseFiles.GeodisyStrings;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -32,63 +32,61 @@ public class GDALTranslate {
         process(dirPath,name,VECTOR);
 
         int period = name.lastIndexOf(".");
-        return name.substring(0,period+1) + "geojson";
+        return name.substring(0,period+1) + "shp";
 
     }
     private void process(String dirPath, String name, String transformType) {
+        process(dirPath,dirPath,name,transformType);
+    }
+    public boolean process(String sourcePath, String destPath, String name, String transformType){
         boolean isWindows = System.getProperty("os.name")
                 .toLowerCase().startsWith("windows");
-        if(isWindows)
-            dirPath = dirPath.replace("\\","/");
+        if(transformType.equals(VECTOR))
+            if(GeodisyStrings.otherShapeFilesExtensions(name))
+                return false;
+        sourcePath = GEODISY_PATH_ROOT + sourcePath.replace("/","\\");
+        destPath = GEODISY_PATH_ROOT + destPath.replace("/","\\");
         String call;
-        String nameStub = name.substring(0,name.lastIndexOf(".")+1);
+        String nameStub = name.substring(0,name.lastIndexOf("."));
         File file;
+        GDAL gdal = new GDAL();
+        for(int i = 0; i<8; i++){
         if(transformType.equals(RASTER)) {
-            call = "gdal_translate " + dirPath + name + " " + dirPath + nameStub + "tif";
+            call = "gdal_translate -of GTiff " + sourcePath + name + " " + destPath + nameStub + ".tif";
             try {
+
                 if (isWindows) {
                     Runtime.getRuntime().exec(call);
                 } else {
                     Runtime.getRuntime().exec(String.format("sh %s", call));
                 }
+                String answer = gdal.getGDALInfo(destPath + nameStub + ".tif", name, isWindows);
+                if(answer.contains("successful.Layer name"))
+                    return true;
             } catch (IOException e) {
                 logger.error("Something went wrong converting " + name + " to geotiff");
             }
         } else{
-            call = "ogr2ogr -f \"ESRI Shapefile\" " + dirPath + nameStub + "shp " + dirPath + name;
-            try {
-                if (isWindows) {
-                    Runtime.getRuntime().exec(call);
-                } else {
-                    Runtime.getRuntime().exec(String.format("sh %s", call));
+                call = "ogr2ogr -f \"ESRI Shapefile\" " + destPath + nameStub + ".shp " + sourcePath + name;
+                try {
+                    if (isWindows) {
+                        Runtime.getRuntime().exec(call);
+                    } else {
+                        Runtime.getRuntime().exec(String.format("sh %s", call));
+                    }
+                    String answer = gdal.getGDALInfo(destPath + nameStub + ".shp", name, isWindows);
+                    if(answer.contains("successful.Layer name:"))
+                        return true;
+                } catch (IOException e) {
+                    logger.error("Something went wrong converting " + name + " to shapefile");
                 }
-
-            }catch (IOException e) {
-                logger.error("Something went wrong converting " + name + " to shapefile");
             }
         }
-        file = new File(dirPath+name);
-        file.delete();
-
-        addToPostGIS(nameStub,transformType);
-        addToGeoserver(nameStub,transformType);
+        //file = new File(dirPath+name);
+        //file.delete();
+        return false;
     }
 
-    private void addToGeoserver(String nameStub, String transformType) {
-        GeoServerAPI geoServerAPI = new GeoServerAPI(djo);
-        if(transformType.equals(VECTOR))
-            geoServerAPI.uploadVector(nameStub);
-    }
-
-    private void addToPostGIS(String nameStub, String transformType) {
-        PostGIS postGis = new PostGIS();
-        if(transformType.equals(VECTOR))
-            postGis.addFile2PostGIS(djo,nameStub+"shp",VECTOR, TEST);
-        /* Raster Data is added to Geoserver directly rather than through PostGIS
-        else
-            postGis.addFile2PostGIS(djo,nameStub+"tif",RASTER, TEST);
-         */
-    }
 
 
 

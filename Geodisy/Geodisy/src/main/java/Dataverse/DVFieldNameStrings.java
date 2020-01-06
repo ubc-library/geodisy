@@ -176,7 +176,9 @@ public class DVFieldNameStrings {
     public final static String FILE_NAME = "fileName";
     public final static String GEOMETRY = "geometryType";
     public final static String PROJECTION = "projection";
-    public final static String GEOSERVER = "geoserverLabel";
+    public final static String GEOSERVER_LABEL = "geoserverLabel";
+    public final static String POLYGON = "Polygon";
+
 
     //Geographic Coverage Field Names
     public final static String COUNTRY = "country";

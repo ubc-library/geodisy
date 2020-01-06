@@ -5,7 +5,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 public class GeodisyStrings {
 
-    public final static boolean TEST = true; //change this to false when in production
+    public final static boolean TEST = false; //change this to false when in production
 
     //Repositories (add new repository URLS to a appropriate repository URL array below)
         // New Repository Types need new URL Arrays [Geodisy 2]
@@ -13,10 +13,18 @@ public class GeodisyStrings {
 
         public final static String[] DATAVERSE_URLS = new String[]{SANDBOX_DV_URL};
 
-
+        public static String getRoot(){
+            boolean isWindows = System.getProperty("os.name")
+                    .toLowerCase().startsWith("windows");
+            if(isWindows)
+                return WINDOWS_ROOT;
+            else
+                return "./";
+        }
 
     //File paths
-        public final static String GEODISY_PATH_ROOT = "";
+        public final static String WINDOWS_ROOT = "C:\\geodisy\\Geodisy\\Geodisy\\";
+        public final static String GEODISY_PATH_ROOT = getRoot();
         public final static String EXISTING_RECORDS = GEODISY_PATH_ROOT + "savedFiles/ExisitingRecords.txt";
         public final static String EXISTING_CHECKS = GEODISY_PATH_ROOT + "savedFiles/ExisitingChecks.txt";
         public final static String EXISTING_BBOXES = GEODISY_PATH_ROOT + "savedFiles/ExistingBBoxes.txt";
@@ -42,8 +50,10 @@ public class GeodisyStrings {
         public final static String OGRINFO_LOCAL = "C:\\Program Files\\GDAL\\ogrinfo -ro -al -so ";
         public final static String GDALINFO_CLOUD = "sudo /usr/gdal30/bin/gdalinfo -approx_stats ";
         public final static String OGRINFO_CLOUD = "sudo /usr/gdal30/bin/ogrinfo -ro -al -so ";
-        public final static String[] GDALINFO_RASTER_FILE_EXTENSIONS = { ".tif", ".tiff", ".nc", ".png",".xyz"};
-        public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = {".geojson",".shp", ".shx", ".dbf", ".sbn",".kmz",".csv",".tab",".gpkg"}; //also .csv, but need to check if the csv is actually geospatial in nature
+        public final static String[] GDALINFO_RASTER_FILE_EXTENSIONS = { ".tif", ".tiff",".xyz"};
+        public final static String[] NON_SHP_SHAPEFILE_EXTENSIONS = {".shx", ".dbf", ".sbn",".prj"};
+        public final static String[] OGRINFO_PROCESSABLE_EXTENTIONS = {".geojson",".shp",".kmz",".csv",".tab",".gpkg"}; //also .csv, but need to check if the csv is actually geospatial in nature
+        public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = ArrayUtils.addAll(NON_SHP_SHAPEFILE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS);
         public final static String[] PREVIEWABLE_FILE_EXTENSIONS = {".tif", ".kmz"};
         public final static String OGR2OGR_LOCAL = "C:\\Program Files\\GDAL\\ogr2ogr -t_srs EPSG:4326 ";
         public final static String GDAL_TRANSLATE_LOCAL = "C:\\Program Files\\GDAL\\gdal_translate -t_srs EPSG:4326 ";
@@ -51,7 +61,7 @@ public class GeodisyStrings {
         public final static String GDAL_TRANSLATE_CLOUD = "sudo /usr/gdal30/bin/gdal_translate -t_srs EPSG:4326 ";
 
     //Unused file type extensions
-    public final static String[] FILE_TYPES_TO_IGNORE = {".txt",".doc",".pdf",".jpg", ".docx",".las",".xml"};
+    public final static String[] FILE_TYPES_TO_IGNORE = {".txt",".doc",".pdf",".jpg", ".docx",".las",".xml", ".nc", ".png"};
     public final static String[] FILE_TYPES_TO_ALLOW = ArrayUtils.addAll(GDALINFO_RASTER_FILE_EXTENSIONS, OGRINFO_VECTOR_FILE_EXTENSIONS);
 
         public final static String RASTER = "Raster";
@@ -99,9 +109,9 @@ public class GeodisyStrings {
         else
             return PROD_ADDRESS;
     }
-    public static boolean fileToIgnore(String title){
+    public static boolean fileTypesToIgnore(String title){
         for (String s : GeodisyStrings.FILE_TYPES_TO_IGNORE) {
-            if (title.endsWith(s))
+            if (title.toLowerCase().endsWith(s))
                 return true;
         }
         return false;
@@ -109,7 +119,7 @@ public class GeodisyStrings {
 
     public static boolean fileToAllow(String title){
         for (String s : GeodisyStrings.FILE_TYPES_TO_ALLOW) {
-            if (title.endsWith(s))
+            if (title.toLowerCase().endsWith(s))
                 return true;
         }
         return false;
@@ -117,7 +127,7 @@ public class GeodisyStrings {
 
     public static boolean gdalinfoRasterExtention(String title){
         for(String s : GDALINFO_RASTER_FILE_EXTENSIONS) {
-            if (title.endsWith(s))
+            if (title.toLowerCase().endsWith(s))
                 return true;
         }
         return false;
@@ -125,19 +135,27 @@ public class GeodisyStrings {
 
     public static boolean ogrinfoVectorExtension(String title){
         for(String s : OGRINFO_VECTOR_FILE_EXTENSIONS) {
-            if (title.endsWith(s))
+            if (title.toLowerCase().endsWith(s))
+                return true;
+        }
+        return false;
+    }
+
+    public static boolean otherShapeFilesExtensions(String title){
+        for(String s : NON_SHP_SHAPEFILE_EXTENSIONS){
+            if(title.toLowerCase().endsWith(s))
                 return true;
         }
         return false;
     }
 
     public static boolean hasGeospatialFile(String title){
-        return gdalinfoRasterExtention(title)||ogrinfoVectorExtension(title);
+        return gdalinfoRasterExtention(title.toLowerCase())||ogrinfoVectorExtension(title.toLowerCase());
     }
 
     public static boolean isPreviewable(String title){
         for(String s : PREVIEWABLE_FILE_EXTENSIONS){
-            if(title.endsWith(s))
+            if(title.toLowerCase().endsWith(s))
                 return true;
         }
         return false;

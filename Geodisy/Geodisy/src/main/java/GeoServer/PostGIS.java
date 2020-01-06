@@ -44,7 +44,7 @@ public class PostGIS {
     public void addFile2PostGIS(DataverseJavaObject djo, String fileName, boolean test) {
 
         String vectorDB = test? TEST_VECTOR_DB : VECTOR_DB;
-        String call = "/usr/pgsql-12/bin/vector2pgsql -d /geodisy/" + folderized(djo.getSimpleFieldVal(PERSISTENT_ID)) + fileName + "public." + djo.getSimpleFieldVal(PERSISTENT_ID)+fileName + "| /usr/pgsql-12/bin/psql -d " + vectorDB + " -U geodisy_user";
+        String call = "/usr/pgsql-12/bin/shp2pgsql -d /dataset/" + folderized(djo.getSimpleFieldVal(PERSISTENT_ID)) + fileName + "public." + fileName + "| /usr/pgsql-12/bin/psql -d " + vectorDB + " -U geodisy_user";
         try {
             Runtime.getRuntime().exec(call);
         } catch (IOException e) {
@@ -56,3 +56,4 @@ public class PostGIS {
         return simpleFieldVal.replace(".","/");
     }
 }
+

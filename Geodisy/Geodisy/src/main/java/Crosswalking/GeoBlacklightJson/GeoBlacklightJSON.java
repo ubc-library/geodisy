@@ -7,6 +7,8 @@ import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordFile;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import Dataverse.SourceRecordFiles;
+import GeoServer.GeoServerAPI;
+import GeoServer.PostGIS;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,8 +17,8 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-
-import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.*;
+import static BaseFiles.GeodisyStrings.*;
+import static Dataverse.DVFieldNameStrings.FILE_NAME;
 
 /**
  * Takes a DataverseJavaObject and creates a GeoBlacklight JSON from it
@@ -27,7 +29,8 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
     protected JSONObject jo;
     protected String doi;
     boolean download = false;
-    LinkedList<DataverseRecordFile> oldFiles;
+    LinkedList<DataverseRecordFile> geoFiles;
+    LinkedList<DataverseRecordFile> geoMeta;
     SourceRecordFiles files;
 
     public GeoBlacklightJSON() {
@@ -37,40 +40,34 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
 
     @Override
     public void createJson() {
+        int countFile = geoFiles.size();
+        int countMeta = geoMeta.size();
+        List<DataverseRecordFile> list = (countFile >= countMeta)? geoFiles:geoMeta;
         int count = 1;
-        if (oldFiles.size() > 0) {
-            createJSONFromFiles();
-        } else {
-            LinkedList<GeographicBoundingBox> gbbs = javaObject.getGeoFields().getBBoxesForJSON();
-            int size = gbbs.size();
-            for (int i = 0; i < size; i++) {
-                if(size>1)
-                    getRequiredFields(gbbs.get(i), i + 1, size);
-                else
-                    getRequiredFields(gbbs.get(i), 0, size);
-                getOptionalFields();
-                geoBlacklightJson = jo.toString();
-                if (size > 1)
-                    saveJSONToFile(geoBlacklightJson, doi, doi + " (File " + (i + 1) + " of " + size + ")");
-                else
-                    saveJSONToFile(geoBlacklightJson, doi, doi);
-            }
+        int total = list.size();
+        for(DataverseRecordFile drf:list){
+            createJSONFromFiles(drf,count,total);
+            count++;
         }
     }
 
-    private void createJSONFromFiles() {
-        int s = 0;
-        int size = oldFiles.size();
-        boolean single = size == 1;
-        for (int i = 0; i < size; i++) {
-            getRequiredFields(oldFiles.get(i).getBb(), i + 1, size);
+    private void createJSONFromFiles(DataverseRecordFile drf, int count, int total) {
+        boolean single = total == 1;
+            getRequiredFields(drf.getGBB(), count, total);
             getOptionalFields();
             geoBlacklightJson = jo.toString();
             if (!single)
-                saveJSONToFile(geoBlacklightJson, doi, doi + " (File " + (i + 1) + " of " + size + ")");
+                saveJSONToFile(geoBlacklightJson, doi, doi + " (File " + (count) + " of " + total + ")");
             else
                 saveJSONToFile(geoBlacklightJson, doi, doi);
+        //Don't think I need this here, I'm making the geoserver calls earlier
+        /*String name = drf.getTitle();
+        String transformType = RASTER;
+        if(name.endsWith(".shp")) {
+            addToPostGIS(name);
+            transformType = VECTOR;
         }
+        addToGeoserver(name,transformType);*/
     }
 
     public File genDirs(String doi, String localRepoPath) {
@@ -81,11 +78,26 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
         return fileDir;
     }
 
+    //I believe I'm calling Geoserver earlier, so don't need these
+    /*private void addToGeoserver(String nameStub, String transformType) {
+        GeoServerAPI geoServerAPI = new GeoServerAPI(javaObject);
+        if(transformType.equals(VECTOR))
+            geoServerAPI.uploadVector(nameStub);
+        else
+            geoServerAPI.uploadRaster(nameStub);//TODO need to remove this and add raster upload call
+    }
+
+    private void addToPostGIS(String nameStub) {
+        PostGIS postGis = new PostGIS();
+        postGis.addFile2PostGIS(javaObject,nameStub+".shp",VECTOR, TEST);
+        *//* Raster Data is added to Geoserver directly rather than through PostGIS*//*
+
+    }*/
+
     public String getDoi(){
         return doi;
     }
     protected abstract JSONObject getRequiredFields(GeographicBoundingBox gbb, int number, int total);
-    protected abstract JSONObject getRequiredFields(BoundingBox bb, int number, int total);
 
 
 

@@ -4,6 +4,7 @@ import BaseFiles.GeoLogger;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
 import Dataverse.DataverseJavaObject;
+import Dataverse.DataverseRecordFile;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,11 +39,18 @@ public class GeographicFields extends MetadataType {
     @Override
     public void setFields(JSONObject field) {
         String title = field.getString(TYPE_NAME);
+        GeographicBoundingBox gbb;
+        DataverseRecordFile drf;
         switch (title) {
             case GEOGRAPHIC_BBOX:
                 for(Object o: (JSONArray) field.get("value")) {
                     JSONObject jo = (JSONObject) o;
-                    geoBBoxes.add(parseGeoBBox(jo));
+                    gbb = parseGeoBBox(jo);
+                    if(gbb.hasBB()) {
+                        geoBBoxes.add(gbb);
+                        drf = new DataverseRecordFile(doi, gbb);
+                        djo.addGeoDataMeta(drf);
+                    }
                 }
                 setFullBoundingBox();
                 break;
@@ -52,8 +60,12 @@ public class GeographicFields extends MetadataType {
                     GeographicCoverage geographicCoverage = addGeoCover(jo);
                     geoCovers.add(geographicCoverage);
                     BoundingBox bb = geographicCoverage.getBoundingBox();
-                    if(bb.hasBoundingBox())
-                        geoBBoxes.add(new GeographicBoundingBox(doi,geographicCoverage.getBoundingBox()));
+                    if(bb.hasBoundingBox()) {
+                        geoBBoxes.add(new GeographicBoundingBox(doi, geographicCoverage.getBoundingBox()));
+                        gbb = new GeographicBoundingBox(doi,bb);
+                        drf = new DataverseRecordFile(doi, gbb);
+                        djo.addGeoDataMeta(drf);
+                    }
                 }
                 break;
             case GEOGRAPHIC_UNIT:
@@ -222,8 +234,12 @@ public class GeographicFields extends MetadataType {
     }
 
     public boolean hasBB(){
-        setFullBoundingBox();
-        return fullBB.hasBoundingBox();
+
+        for(GeographicBoundingBox gbb: geoBBoxes){
+            if(gbb.hasBB())
+                return true;
+        }
+        return false;
     }
 
 

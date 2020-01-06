@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public abstract class SourceJavaObject {
     //protected JournalFields journalFields;
     protected LinkedList<DataverseRecordFile> dataFiles; //Stores the datafiles
     protected LinkedList<DataverseRecordFile> geoDataFiles; //Stores the datafiles that are geospatial in nature
+    protected LinkedList<DataverseRecordFile> geoDataMeta;
     protected String server;
     protected boolean hasContent;
     public boolean hasGeospatialFile;
@@ -40,6 +42,7 @@ public abstract class SourceJavaObject {
         this.citationFields = new CitationFields();
         this.dataFiles = new LinkedList<>();
         this.geoDataFiles = new LinkedList<>();
+        this.geoDataMeta = new LinkedList<>();
         this.geoFields = new GeographicFields();
         this.socialFields = new SocialFields();
         //this.journalFields = new JournalFields();
@@ -59,8 +62,8 @@ public abstract class SourceJavaObject {
         return false;
     }
     protected String urlized(String doi) {
-        doi = doi.replaceAll("\\.","_");
-        return doi.replaceAll("/","_");
+        return doi.replaceAll("\\.","/");
+
     }
     protected void deleteDir(File f) {
         File[] files = f.listFiles();
@@ -115,6 +118,24 @@ public abstract class SourceJavaObject {
 
     public void addGeoDataFile(DataverseRecordFile drf){
         geoDataFiles.add(drf);
+    }
+
+    public void removeGeoDataFile(String name){
+        for (Iterator<DataverseRecordFile> iterator = geoDataFiles.iterator(); iterator.hasNext();) {
+            DataverseRecordFile record = iterator.next();
+            if (record.getTitle().equals(name)) {
+                // Remove the current element from the iterator and the list.
+                iterator.remove();
+            }
+        }
+    }
+
+    public LinkedList<DataverseRecordFile> getGeoDataMeta() {
+        return geoDataMeta;
+    }
+
+    public void addGeoDataMeta(DataverseRecordFile drf) {
+        geoDataMeta.add(drf);
     }
 
     public String getServer() {

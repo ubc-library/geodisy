@@ -4,7 +4,9 @@ import Crosswalking.Crosswalk;
 import Crosswalking.GeoBlacklightJson.DataGBJSON;
 import Crosswalking.GeoBlacklightJson.GeoCombine;
 import Dataverse.*;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.FindingBoundingBoxes.Countries;
+import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -59,8 +61,6 @@ public class MyTimerTask extends TimerTask {
             List<SourceJavaObject> sJOs = geo.harvestDataverse();
             for(SourceJavaObject sJO : sJOs) {
                 existingHarvests.addOrReplaceRecord(new DataverseRecordInfo(sJO, logger.getName()));
-                checkFilesForGeo(sJO);
-
             }
             crosswalkRecords(sJOs);
             //sendRecordsToGeoBlacklight();

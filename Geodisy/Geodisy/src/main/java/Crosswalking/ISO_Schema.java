@@ -16,11 +16,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
+
 
 import static Crosswalking.XML.XMLTools.XMLStrings.OPEN_METADATA_LOCAL_REPO;
 import static Crosswalking.XML.XMLTools.XMLStrings.TEST_OPEN_METADATA_LOCAL_REPO;
@@ -77,7 +74,7 @@ public abstract class ISO_Schema implements XMLSchema {
     }
 
     public File genBaseDirs(String doi, String localRepoPath) {
-        File fileDir = genDirs(doi, localRepoPath);
+        File fileDir = genDirs(doi.replace(".","/"), localRepoPath);
         try {
             FileUtils.cleanDirectory(fileDir);
         } catch (IOException e) {

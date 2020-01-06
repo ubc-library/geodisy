@@ -5,6 +5,7 @@ import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
+import GeoServer.GeoServerAPI;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,6 +13,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+
+import static BaseFiles.GeodisyStrings.*;
 import static Dataverse.DVFieldNameStrings.*;
 
 /**
@@ -116,7 +119,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             //Some Dataverses don't have individual DOIs for files, so for those I will use the database's file id instead
             if(dataFile.has(PERSISTENT_ID)&& !dataFile.getString(PERSISTENT_ID).equals("")) {
                 String doi = dataFile.getString(PERSISTENT_ID);
-                dRF = new DataverseRecordFile(title, doi,dataFile.getInt("id"), server, citationFields.getDOI(), this);
+                dRF = new DataverseRecordFile(title, doi,dataFile.getInt("id"), server, citationFields.getDOI());
             }else{
                 int dbID = (int) dataFile.get("id");
                 dRF = new DataverseRecordFile(title,dbID,server,citationFields.getDOI());
@@ -160,22 +163,98 @@ public class DataverseJavaObject extends SourceJavaObject {
     @Override
     public void downloadFiles() {
         //TODO something is going wrong with record 10_5072_FK2_GMKLWX
-        File f = new File("datasetFiles\\\\" + urlized(citationFields.getDOI()));
+        File f = new File("datasetFiles/" + urlized(citationFields.getDOI()));
         deleteDir(f);
         List<DataverseRecordFile> temp = new LinkedList<>();
+        DataverseRecordFile tempDRF = new DataverseRecordFile();
         for (DataverseRecordFile dRF : dataFiles) {
-            if(GeodisyStrings.fileToIgnore(dRF.title))
+            if(GeodisyStrings.fileTypesToIgnore(dRF.title))
                 continue;
-            dRF.getFile();
+            if(tempDRF.getDoi().equals("temp"))
+                tempDRF = dRF.retrieveFile(this);
+            else
+                dRF.retrieveFile(this);
 
-            if(GeodisyStrings.hasGeospatialFile(dRF.title))
+            if(GeodisyStrings.hasGeospatialFile(dRF.getTitle()))
                 hasGeospatialFile = true;
         }
+        for (DataverseRecordFile dRF : dataFiles) {
+            if (GeodisyStrings.fileTypesToIgnore(dRF.title))
+                continue;
+            dRF.translateFile(this);
+        }
+
+        int vector = 1;
+        int raster = 1;
+        LinkedList<DataverseRecordFile> tempList = new LinkedList<>();
+        DataverseRecordFile tempRec;
+        for(DataverseRecordFile drf : getGeoDataFiles()){
+            if(drf.getTitle().endsWith(".shp")) {
+                tempRec = createRecords(drf, vector, VECTOR);
+                if(tempRec.hasValidBB()) {
+                    tempList.add(tempRec);
+                    vector++;
+                }
+            }else if(drf.getTitle().endsWith(".tif")) {
+                tempRec = createRecords(drf, raster, RASTER);
+                if(tempRec.hasValidBB()) {
+                    tempList.add(tempRec);
+                    raster++;
+                }
+            }
+        }
+        setGeoDataFiles(tempList);
         if(f.list() != null && f.list().length==0)
             f.delete();
-        if(geoDataFiles.size()>0)
-            hasGeospatialFile = true;
+        for(DataverseRecordFile drf: getGeoDataFiles()){
+            if(drf.isFromFile()){
+                hasGeospatialFile = true;
+                break;
+            }
+        }
+    }
 
+    private DataverseRecordFile createRecords(DataverseRecordFile drf, int number, String type) {
+        DataverseRecordFile tempDRF;
+        GDAL gdal = new GDAL();
+        String dirPath = DATASET_FILES_PATH + drf.getDatasetDOI().replace("_","/") + "/";
+        String filePath = dirPath + drf.getTitle();
+        File fUpdate = new File(filePath);
+        tempDRF = gdal.parse(fUpdate);
+        if(type.equals(VECTOR)) {
+            drf.setGeometryType(tempDRF.getGeometryType());
+            drf.setProjection(tempDRF.getProjection());
+            drf.setBB(tempDRF.getBB());
+            drf.addFileNumber(number);
+            drf.setGeoserverLabel(labelize(this.getSimpleFieldVal(PERSISTENT_ID))+ "v" + number);
+            addVectorToGeoserver(drf.getGeoserverLabel());
+            return drf;
+        }else if(type.equals(RASTER)){
+            drf.addFileNumber(number);
+            drf.setGeoserverLabel(labelize(this.getSimpleFieldVal(PERSISTENT_ID))+ "r" + number);
+            drf.setGeometryType(RASTER);
+            drf.setProjection(tempDRF.getProjection());
+            drf.setBB(tempDRF.getBB());
+            addRasterToGeoserver(drf.getGeoserverLabel());
+            return drf;
+        } else{
+            logger.error("Something went wrong parsing DataverseRecordFile: " + drf.getTitle());
+            return drf;
+        }
+    }
+
+    private String labelize(String simpleFieldVal) {
+        return simpleFieldVal.replace(".","_").replace("/","_").replace("\\\\","_");
+    }
+
+    private void addVectorToGeoserver(String name) {
+        GeoServerAPI geoServerAPI =  new GeoServerAPI(this);
+        geoServerAPI.uploadVector(name);
+    }
+
+    private void addRasterToGeoserver(String name) {
+        GeoServerAPI geoServerAPI =  new GeoServerAPI(this);
+        geoServerAPI.uploadRaster(name);
     }
     @Override
     public String getDOIProtocal(){

@@ -248,29 +248,30 @@ public class GeonamesBBs extends FindBoundBox {
         if(!other.equals(""))
             logger.info("This record had something in the Other field in the geographic coverage. Check out: " + djo.getSimpleFieldVal(PERSISTENT_URL), djo);
         Boolean second = !givenCountry.equals(commonCountry) || !givenProvince.equals(commonProvince) || !givenCity.equals(commonCity);
+        GeographicBoundingBox gbb;
         if(!givenCountry.isEmpty()) {
             if (!givenProvince.isEmpty()){
                 if(!givenCity.isEmpty()) {
-                    GeographicBoundingBox bb = new GeographicBoundingBox(doi, getDVBoundingBox(givenCountry, givenProvince, givenCity));
-                    geoBBs.add(bb);
+                    gbb = new GeographicBoundingBox(doi, getDVBoundingBox(givenCountry, givenProvince, givenCity));
+                    geoBBs.add(gbb);
                     if(second){
-                        bb = new GeographicBoundingBox(doi, getDVBoundingBox(commonCountry, commonProvince, commonCity));
-                        geoBBs.add(bb);
+                        gbb = new GeographicBoundingBox(doi, getDVBoundingBox(commonCountry, commonProvince, commonCity));
+                        geoBBs.add(gbb);
                     }
                 }else {
-                    GeographicBoundingBox bb = new GeographicBoundingBox(doi, getDVBoundingBox(givenCountry, givenProvince));
-                    geoBBs.add(bb);
+                    gbb = new GeographicBoundingBox(doi, getDVBoundingBox(givenCountry, givenProvince));
+                    geoBBs.add(gbb);
                     if (second) {
-                        bb = new GeographicBoundingBox(doi, getDVBoundingBox(commonCountry, commonProvince));
-                        geoBBs.add(bb);
+                        gbb = new GeographicBoundingBox(doi, getDVBoundingBox(commonCountry, commonProvince));
+                        geoBBs.add(gbb);
                     }
                 }
             }else {
-                GeographicBoundingBox bb = new GeographicBoundingBox(doi, getDVBoundingBox(givenCountry));
-                geoBBs.add(bb);
+                gbb = new GeographicBoundingBox(doi, getDVBoundingBox(givenCountry));
+                geoBBs.add(gbb);
                 if (second) {
-                    bb = new GeographicBoundingBox(doi, getDVBoundingBox(commonCountry));
-                    geoBBs.add(bb);
+                    gbb = new GeographicBoundingBox(doi, getDVBoundingBox(commonCountry));
+                    geoBBs.add(gbb);
                 }
             }
         }else{

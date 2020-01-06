@@ -82,8 +82,8 @@ public class GeoServerAPI extends DestinationAPI {
     }
 
     public void uploadRaster(String fileName){
-        String nameStub = fileName.substring(0,fileName.lastIndexOf("."));
-        String call = "curl -u admin:" + GEOSERVER_PASSWORD + " -XPUT -H " + stringed("Content-type:image/tiff") + " --data-binary @" + DATASET_FILES_PATH + sjo.getSimpleFieldVal(PERSISTENT_ID) + fileName + "  http://localhost:8080/geoserver/rest/workspaces/geodisy/" + sjo.getSimpleFieldVal(PERSISTENT_ID)+nameStub + "/file.geotiff";
+        String nameStub = fileName;
+        String call = "curl -u admin:" + GEOSERVER_PASSWORD + " -XPUT -H " + stringed("Content-type:image/tiff") + " --data-binary @" + DATASET_FILES_PATH + sjo.getSimpleFieldVal(PERSISTENT_ID).replace("/.","/") + fileName + ".tif  http://localhost:8080/geoserver/rest/workspaces/geodisy/" + sjo.getSimpleFieldVal(PERSISTENT_ID).replace("/.","/")+nameStub + "/file.geotiff";
 
         try {
             Process p = Runtime.getRuntime().exec(call);

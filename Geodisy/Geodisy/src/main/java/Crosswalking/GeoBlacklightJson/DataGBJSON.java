@@ -32,18 +32,15 @@ public class DataGBJSON extends GeoBlacklightJSON{
         geoBlacklightJson = "";
         doi = djo.getDOI();
         logger = new GeoLogger(this.getClass());
-        oldFiles = djo.getGeoDataFiles();
+        geoFiles = djo.getGeoDataFiles();
+        geoMeta = djo.getGeoDataMeta();
     }
     //TODO check if Dataverse publisher field be included in the slug?
     @Override
     protected JSONObject getRequiredFields(GeographicBoundingBox gbb, int number, int total){
-        return getRequiredFields(gbb.getBB(),number,total);
-    }
-    @Override
-    protected JSONObject getRequiredFields(BoundingBox bb, int number, int total){
         jo.put("geoblacklight_version","1.0");
         jo.put("dc_identifier_s", javaObject.getSimpleFieldVal(PERSISTENT_URL));
-        jo.put("layer_slug_s", DataverseRecordFile.getUUID(getDoi() + number));
+        jo.put("layer_slug_s", gbb.getField(GEOSERVER_LABEL));
         if(total>1) {
             jo.put("dc_title_s", javaObject.getSimpleFields().getField(TITLE) + " (" + number + " of " + total + ")");
         }
@@ -52,11 +49,14 @@ public class DataGBJSON extends GeoBlacklightJSON{
         jo.put("dc_rights_s",javaObject.getSimpleFields().getField(LICENSE));
         jo.put("dct_provenance_s",javaObject.getSimpleFields().getField(PUBLISHER));
 
-        jo.put("solr_geom","ENVELOPE(" + getBB(bb) + ")");
-        jo.put("layer_geom_type_s",bb.getGeometryType());
+        jo.put("solr_geom","ENVELOPE(" + getBBString(gbb.getBB()) + ")");
+        jo.put("layer_geom_type_s",gbb.getField(GEOMETRY));
+        String geoserverLabel = gbb.getField(GEOSERVER_LABEL);
+        if(!geoserverLabel.equals(""))
+            jo.put("layer_id_s","geodisy:" + geoserverLabel);
         JSONArray ja = addBaseRecordInfo();
-        if(javaObject.hasGeospatialFile)
-            ja = addMetadataDownloadOptions(bb,ja);
+        if(!gbb.getField(GEOSERVER_LABEL).isEmpty())
+            ja = addMetadataDownloadOptions(gbb.getBB(),ja);
         String externalServices = "{";
         for(Object o:ja){
             if(!externalServices.equals("{"))
@@ -69,7 +69,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         return jo;
     }
 
-    private String getBB(BoundingBox bb){
+    private String getBBString(BoundingBox bb){
         return bb.getLongWest() + ", " + bb.getLongEast() + ", " + bb.getLatNorth() + ", " + bb.getLatSouth();
     }
 
@@ -134,6 +134,8 @@ public class DataGBJSON extends GeoBlacklightJSON{
     private void getLanguages() {
         String languageStrings = "";
         List<String> languages = javaObject.getCitationFields().getListField(LANGUAGE);
+        if(languages.size()==0)
+            return;
         for (String s : languages) {
             if (languageStrings.isEmpty())
                 languageStrings = s;
@@ -145,6 +147,8 @@ public class DataGBJSON extends GeoBlacklightJSON{
 
     private void getIssueDate() {
         String dateString = javaObject.getSimpleFields().getField(PUB_DATE);
+        if(dateString.equals(""))
+            return;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm:ss'Z'");
         LocalDate date = LocalDate.parse(dateString);
         LocalDateTime dateTime = date.atStartOfDay();
@@ -156,6 +160,8 @@ public class DataGBJSON extends GeoBlacklightJSON{
     private void getAuthors() {
         JSONArray ja = new JSONArray();
         List<Author> authors = javaObject.getCitationFields().getListField(AUTHOR);
+        if(authors.size()==0)
+            return;
         for(Author a:authors){
             ja.put(a.getField(AUTHOR_NAME));
         }
@@ -165,6 +171,8 @@ public class DataGBJSON extends GeoBlacklightJSON{
     private void getDSDescription() {
         JSONArray ja = new JSONArray();
         List<Description> descriptions = javaObject.getCitationFields().getListField(DS_DESCRIPT);
+        if(descriptions.size()==0)
+            return;
         for(Description d:descriptions){
             ja.put(d.getDsDescriptionValue());
         }
@@ -181,7 +189,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         genDirs(name + end, OPEN_METADATA_LOCAL_REPO);
         BaseFiles.FileWriter file = new BaseFiles.FileWriter();
         try {
-            file.writeStringToFile(json,"./"+OPEN_METADATA_LOCAL_REPO + name + end + "/" +"geoblacklight.json");
+            file.writeStringToFile(json,"./"+OPEN_METADATA_LOCAL_REPO + name.replace(".","/") + end + "/" +"geoblacklight.json");
         } catch (IOException e) {
             logger.error("Something went wrong trying to create a JSON file with doi:" + doi);
         }

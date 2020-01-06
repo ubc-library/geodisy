@@ -68,6 +68,8 @@ public class GeonamesJSON {
         bb.setLatNorth(getDoubleLatLongVal(bbox,"north"));
         bb.setLongEast(getDoubleLatLongVal(bbox,"east"));
         bb.setLatSouth(getDoubleLatLongVal(bbox,"south"));
+        if(!bb.hasBoundingBox())
+            return new BoundingBox();
         return bb;
     }
 
