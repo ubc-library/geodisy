@@ -1,6 +1,7 @@
 package Crosswalking.GeoBlacklightJson;
 
 import BaseFiles.GeoLogger;
+import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Author;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Description;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
@@ -189,7 +190,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         genDirs(name + end, OPEN_METADATA_LOCAL_REPO);
         BaseFiles.FileWriter file = new BaseFiles.FileWriter();
         try {
-            file.writeStringToFile(json,"./"+OPEN_METADATA_LOCAL_REPO + name.replace(".","/") + end + "/" +"geoblacklight.json");
+            file.writeStringToFile(json,GeodisyStrings.getRoot() +OPEN_METADATA_LOCAL_REPO + name.replace(".","/") + end + "/" +"geoblacklight.json");
         } catch (IOException e) {
             logger.error("Something went wrong trying to create a JSON file with doi:" + doi);
         }

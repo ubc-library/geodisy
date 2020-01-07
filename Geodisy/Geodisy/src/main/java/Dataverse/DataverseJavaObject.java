@@ -227,7 +227,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             drf.setBB(tempDRF.getBB());
             drf.addFileNumber(number);
             drf.setGeoserverLabel(labelize(this.getSimpleFieldVal(PERSISTENT_ID))+ "v" + number);
-            addVectorToGeoserver(drf.getGeoserverLabel());
+            addVectorToGeoserver(fUpdate.getName(),drf.getGeoserverLabel());
             return drf;
         }else if(type.equals(RASTER)){
             drf.addFileNumber(number);
@@ -247,9 +247,9 @@ public class DataverseJavaObject extends SourceJavaObject {
         return simpleFieldVal.replace(".","_").replace("/","_").replace("\\\\","_");
     }
 
-    private void addVectorToGeoserver(String name) {
+    private void addVectorToGeoserver(String name, String geoserverLabel) {
         GeoServerAPI geoServerAPI =  new GeoServerAPI(this);
-        geoServerAPI.uploadVector(name);
+        geoServerAPI.uploadVector(name,geoserverLabel);
     }
 
     private void addRasterToGeoserver(String name) {

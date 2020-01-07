@@ -5,7 +5,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 public class GeodisyStrings {
 
-    public final static boolean TEST = false; //change this to false when in production
+    public final static boolean TEST = true; //change this to false when in production
 
     //Repositories (add new repository URLS to a appropriate repository URL array below)
         // New Repository Types need new URL Arrays [Geodisy 2]
@@ -19,11 +19,11 @@ public class GeodisyStrings {
             if(isWindows)
                 return WINDOWS_ROOT;
             else
-                return "./";
+                return "/home/centos/Geodisy/";
         }
 
     //File paths
-        public final static String WINDOWS_ROOT = "C:\\geodisy\\Geodisy\\Geodisy\\";
+        private final static String WINDOWS_ROOT = "C:\\geodisy\\Geodisy\\Geodisy\\";
         public final static String GEODISY_PATH_ROOT = getRoot();
         public final static String EXISTING_RECORDS = GEODISY_PATH_ROOT + "savedFiles/ExisitingRecords.txt";
         public final static String EXISTING_CHECKS = GEODISY_PATH_ROOT + "savedFiles/ExisitingChecks.txt";
@@ -46,19 +46,67 @@ public class GeodisyStrings {
 
     //TODO Change GDAL location to where it is when on Cloud instance
     //GDAL
-        public final static String GDALINFO_LOCAL = "C:\\Program Files\\GDAL\\gdalinfo -approx_stats ";
-        public final static String OGRINFO_LOCAL = "C:\\Program Files\\GDAL\\ogrinfo -ro -al -so ";
-        public final static String GDALINFO_CLOUD = "sudo /usr/gdal30/bin/gdalinfo -approx_stats ";
-        public final static String OGRINFO_CLOUD = "sudo /usr/gdal30/bin/ogrinfo -ro -al -so ";
-        public final static String[] GDALINFO_RASTER_FILE_EXTENSIONS = { ".tif", ".tiff",".xyz"};
-        public final static String[] NON_SHP_SHAPEFILE_EXTENSIONS = {".shx", ".dbf", ".sbn",".prj"};
-        public final static String[] OGRINFO_PROCESSABLE_EXTENTIONS = {".geojson",".shp",".kmz",".csv",".tab",".gpkg"}; //also .csv, but need to check if the csv is actually geospatial in nature
+        private final static String GDALINFO_LOCAL = "C:\\Program Files\\GDAL\\gdalinfo -approx_stats ";
+        private final static String OGRINFO_LOCAL = "C:\\Program Files\\GDAL\\ogrinfo -ro -al -so ";
+        private final static String GDALINFO_CLOUD = "/usr/gdal30/bin/gdalinfo -approx_stats ";
+        private final static String OGRINFO_CLOUD = "/usr/gdal30/bin/ogrinfo -ro -al -so ";
+        public final static String GDALINFO = getGdalInfo();
+        public final static String OGRINFO = getOgrInfo();
+        private final static String[] GDALINFO_RASTER_FILE_EXTENSIONS = { ".tif", ".tiff",".xyz"};
+        private final static String[] NON_SHP_SHAPEFILE_EXTENSIONS = {".shx", ".dbf", ".sbn",".prj"};
+        private final static String[] OGRINFO_PROCESSABLE_EXTENTIONS = {".geojson",".shp",".kmz",".csv",".tab",".gpkg"}; //also .csv, but need to check if the csv is actually geospatial in nature
         public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = ArrayUtils.addAll(NON_SHP_SHAPEFILE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS);
         public final static String[] PREVIEWABLE_FILE_EXTENSIONS = {".tif", ".kmz"};
-        public final static String OGR2OGR_LOCAL = "C:\\Program Files\\GDAL\\ogr2ogr -t_srs EPSG:4326 ";
-        public final static String GDAL_TRANSLATE_LOCAL = "C:\\Program Files\\GDAL\\gdal_translate -t_srs EPSG:4326 ";
-        public final static String OGR2OGR_CLOUD = "sudo /usr/gdal30/bin/ogr2ogr -t_srs EPSG:4326 ";
-        public final static String GDAL_TRANSLATE_CLOUD = "sudo /usr/gdal30/bin/gdal_translate -t_srs EPSG:4326 ";
+        private final static String OGR2OGR_LOCAL = "C:\\Program Files\\GDAL\\ogr2ogr -f \"ESRI Shapefile\" ";
+        private final static String GDAL_TRANSLATE_LOCAL = "C:\\Program Files\\GDAL\\gdal_translate -of GTiff ";
+        private final static String OGR2OGR_CLOUD = "/usr/gdal30/bin/ogr2ogr -f \"ESRI Shapefile\" ";
+        private final static String GDAL_TRANSLATE_CLOUD = "/usr/gdal30/bin/gdal_translate -of GTiff ";
+        public final static String OGR2OGR = getOgr2Ogr();
+        public final static String GDAL_TRANSLATE = getGdalTranslate();
+
+        private static String getOgr2Ogr(){
+            boolean isWindows = System.getProperty("os.name")
+                    .toLowerCase().startsWith("windows");
+            if(isWindows)
+                return OGR2OGR_LOCAL;
+            else
+                return OGR2OGR_CLOUD;
+        }
+
+        private static String getGdalTranslate(){
+            boolean isWindows = System.getProperty("os.name")
+                    .toLowerCase().startsWith("windows");
+            if(isWindows)
+                return GDAL_TRANSLATE_LOCAL;
+            else
+                return GDAL_TRANSLATE_CLOUD;
+        }
+    private static String getGdalInfo(){
+        boolean isWindows = System.getProperty("os.name")
+                .toLowerCase().startsWith("windows");
+        if(isWindows)
+            return GDALINFO_LOCAL;
+        else
+            return GDALINFO_CLOUD;
+    }
+    private static String getOgrInfo(){
+        boolean isWindows = System.getProperty("os.name")
+                .toLowerCase().startsWith("windows");
+        if(isWindows)
+            return OGRINFO_LOCAL;
+        else
+            return OGRINFO_CLOUD;
+    }
+
+    public static String replaceSlashes(String s){
+        boolean isWindows = System.getProperty("os.name")
+                .toLowerCase().startsWith("windows");
+        if(isWindows)
+            return s.replace("/","\\");
+        else
+            return s.replace("\\","/");
+    }
+
 
     //Unused file type extensions
     public final static String[] FILE_TYPES_TO_IGNORE = {".txt",".doc",".pdf",".jpg", ".docx",".las",".xml", ".nc", ".png"};

@@ -62,7 +62,7 @@ public abstract class SourceJavaObject {
         return false;
     }
     protected String urlized(String doi) {
-        return doi.replaceAll("\\.","/");
+        return doi.replace(".","/");
 
     }
     protected void deleteDir(File f) {

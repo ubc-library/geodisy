@@ -3,6 +3,7 @@ package Dataverse;
 import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
+import org.apache.commons.lang3.ObjectUtils;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -19,19 +20,12 @@ public class ExistingHarvests extends ExistingSearches implements Serializable {
     private static HashMap<String, DataverseRecordInfo> recordVersions;
     private static ExistingHarvests single_instance = null;
 
+    public static ExistingHarvests getExistingHarvests(){
 
-    public static ExistingHarvests getExistingHarvests() {
-        return getExistingHarvests(false);
-    }
-
-    public static ExistingHarvests getExistingHarvests(boolean testing){
-        if(testing)
+        if (single_instance == null) {
             single_instance = new ExistingHarvests();
-        else{
-            if (single_instance == null) {
-                single_instance = new ExistingHarvests();
-            }
         }
+
         return single_instance;
     }
 
@@ -124,6 +118,8 @@ public class ExistingHarvests extends ExistingSearches implements Serializable {
             return newFile;
         } catch (ClassNotFoundException e) {
             logger.error("Something went wrong parsing the Existing BBoxes file");
+            return newFile;
+        }catch (NullPointerException e){
             return newFile;
         }
     }

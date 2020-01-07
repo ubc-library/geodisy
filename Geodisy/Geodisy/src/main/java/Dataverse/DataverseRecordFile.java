@@ -49,7 +49,7 @@ public class DataverseRecordFile {
         this.dbID = dbID;
         this.server = server;
         recordURL = server+"api/access/datafile/:persistentId/?persistentId=" + doi + "&format=original";
-        this.datasetDOI = datasetDOI.replaceAll("\\.","_").replaceAll("/","_");
+        this.datasetDOI = datasetDOI.replace(".","_").replace("/","_");
         gbb = new GeographicBoundingBox(doi);
 
     }
@@ -91,7 +91,7 @@ public class DataverseRecordFile {
 
     public DataverseRecordFile retrieveFile(DataverseJavaObject djo) {
         try {
-            String dirPath = DATASET_FILES_PATH + datasetDOI.replace("_", "/") + "/";
+            String dirPath = DATASET_FILES_PATH + datasetDOI.replace("_", "/").replace(".","/") + "/";
             File folder = new File(dirPath);
             folder.mkdirs();
             String filePath = dirPath + title;

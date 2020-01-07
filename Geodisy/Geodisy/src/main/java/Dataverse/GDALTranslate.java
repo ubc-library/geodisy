@@ -44,21 +44,24 @@ public class GDALTranslate {
         if(transformType.equals(VECTOR))
             if(GeodisyStrings.otherShapeFilesExtensions(name))
                 return false;
-        sourcePath = GEODISY_PATH_ROOT + sourcePath.replace("/","\\");
-        destPath = GEODISY_PATH_ROOT + destPath.replace("/","\\");
+        sourcePath = GEODISY_PATH_ROOT + GeodisyStrings.replaceSlashes(sourcePath);
+        destPath = GEODISY_PATH_ROOT + GeodisyStrings.replaceSlashes(destPath);
         String call;
         String nameStub = name.substring(0,name.lastIndexOf("."));
         File file;
         GDAL gdal = new GDAL();
+        ProcessBuilder processBuilder= new ProcessBuilder();
+
         for(int i = 0; i<8; i++){
         if(transformType.equals(RASTER)) {
-            call = "gdal_translate -of GTiff " + sourcePath + name + " " + destPath + nameStub + ".tif";
+            call = GDAL_TRANSLATE + sourcePath + name + " " + destPath + nameStub + ".tif";
+            processBuilder.command("bash", "-c", call);
             try {
 
                 if (isWindows) {
                     Runtime.getRuntime().exec(call);
                 } else {
-                    Runtime.getRuntime().exec(String.format("sh %s", call));
+                    processBuilder.start();
                 }
                 String answer = gdal.getGDALInfo(destPath + nameStub + ".tif", name, isWindows);
                 if(answer.contains("successful.Layer name"))
@@ -67,12 +70,13 @@ public class GDALTranslate {
                 logger.error("Something went wrong converting " + name + " to geotiff");
             }
         } else{
-                call = "ogr2ogr -f \"ESRI Shapefile\" " + destPath + nameStub + ".shp " + sourcePath + name;
+                call = OGR2OGR + destPath + nameStub + ".shp " + sourcePath + name;
+                processBuilder.command("bash", "-c", call);
                 try {
                     if (isWindows) {
                         Runtime.getRuntime().exec(call);
                     } else {
-                        Runtime.getRuntime().exec(String.format("sh %s", call));
+                        processBuilder.start();
                     }
                     String answer = gdal.getGDALInfo(destPath + nameStub + ".shp", name, isWindows);
                     if(answer.contains("successful.Layer name:"))

@@ -229,8 +229,8 @@ public class DataverseAPI extends SourceAPI {
         return answers;
     }
     protected String folderizedDOI(String doi){
-        String folderizedDOI = doi.replaceAll("\\.","_");
-        folderizedDOI = folderizedDOI.replaceAll("/","_");
+        String folderizedDOI = doi.replace(".","_");
+        folderizedDOI = folderizedDOI.replace("/","_");
         return DATASET_FILES_PATH + folderizedDOI;
     }
 }

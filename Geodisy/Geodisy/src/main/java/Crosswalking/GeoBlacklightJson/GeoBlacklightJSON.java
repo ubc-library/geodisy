@@ -1,6 +1,7 @@
 package Crosswalking.GeoBlacklightJson;
 
 import BaseFiles.FileWriter;
+import BaseFiles.GeodisyStrings;
 import Crosswalking.MetadataSchema;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJavaObject;
@@ -72,7 +73,8 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
 
     public File genDirs(String doi, String localRepoPath) {
         doi = FileWriter.fixPath(doi);
-        File fileDir = new File("./"+localRepoPath + doi);
+        localRepoPath = FileWriter.fixPath(localRepoPath);
+        File fileDir = new File(localRepoPath + doi.replace(".","/"));
         if(!fileDir.exists())
             fileDir.mkdirs();
         return fileDir;

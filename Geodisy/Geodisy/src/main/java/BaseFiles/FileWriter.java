@@ -64,6 +64,7 @@ public class FileWriter {
         if(path.contains("handle:")){
             answer = answer.replace("handle:","handle/");
         }
+        answer = answer.replace(".","/");
         return answer;
     }
 
@@ -135,12 +136,16 @@ public class FileWriter {
      * @return
      */
     public boolean verifyFileExistence(String path) {
-        path = fixPath(path);
+        path = GeodisyStrings.replaceSlashes(fixPath(path));
         Path filePath = Paths.get(path);
         try {
-            Files.createFile(filePath);
-            logger.warn("File " + path + " didn't already exists, so created it");
-            return false;
+            File f =  new File(path);
+            boolean  created = f.createNewFile();
+            if(created) {
+                logger.warn("File " + path + " didn't already exists, so created it");
+                return false;
+            }
+            return true;
         } catch (IOException e) {
             return true;
         }

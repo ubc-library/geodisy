@@ -1,5 +1,6 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 
+import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONObject;

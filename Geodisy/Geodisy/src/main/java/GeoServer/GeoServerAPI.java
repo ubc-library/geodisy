@@ -43,17 +43,23 @@ public class GeoServerAPI extends DestinationAPI {
         logger =  new GeoLogger(this.getClass());
     }
         //TODO fix this to access layers from POSTGIS
-    public void uploadVector(String fileName){
-        addVectorToPostGIS(fileName);
+    public void uploadVector(String fileName, String geoserverlabel){
+        addVectorToPostGIS(fileName,geoserverlabel);
     }
 
-    private void addVectorToPostGIS(String fileName) {
+    private void addVectorToPostGIS(String fileName, String geoserverlabel) {
         PostGIS postGIS = new PostGIS();
-        postGIS.addFile2PostGIS((DataverseJavaObject) sjo, fileName, TEST);
+        postGIS.addFile2PostGIS((DataverseJavaObject) sjo, fileName,geoserverlabel, TEST);
         //TODO uncomment this once I have getting the layers from postgis to geoserver
         //addVectorToGeoserver(fileName);
     }
 
+    /**
+     *
+     * @param fileName
+     * @return
+     */
+    //TODO need to get vector files from POSTGRIS, is this the way?
     private boolean addVectorToGeoserver(String fileName) {
         JSONObject jo = new JSONObject();
         JSONObject outer = new JSONObject();
@@ -84,10 +90,11 @@ public class GeoServerAPI extends DestinationAPI {
     public void uploadRaster(String fileName){
         String nameStub = fileName;
         String call = "curl -u admin:" + GEOSERVER_PASSWORD + " -XPUT -H " + stringed("Content-type:image/tiff") + " --data-binary @" + DATASET_FILES_PATH + sjo.getSimpleFieldVal(PERSISTENT_ID).replace("/.","/") + fileName + ".tif  http://localhost:8080/geoserver/rest/workspaces/geodisy/" + sjo.getSimpleFieldVal(PERSISTENT_ID).replace("/.","/")+nameStub + "/file.geotiff";
-
+        Process p;
         try {
-            Process p = Runtime.getRuntime().exec(call);
-
+            ProcessBuilder processBuilder= new ProcessBuilder();
+            processBuilder.command(call.split(" "));
+            p = processBuilder.start();
             BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
             String s = "";
             String error = "";
@@ -104,7 +111,7 @@ public class GeoServerAPI extends DestinationAPI {
     private void saveJsonToFile(String jsonString) {
         FileWriter fileWriter = new FileWriter();
         String doi = sjo.getDOI();
-        String doiPath = doi.replaceAll("/","_");
+        String doiPath = doi.replace("/","_");
         String filePath = DATASET_FILES_PATH + doiPath + "/import.json";
         try {
             fileWriter.writeStringToFile(jsonString,filePath);
@@ -165,8 +172,8 @@ public class GeoServerAPI extends DestinationAPI {
     }
 
     private String jsonArrayBracketChange(String json) {
-        String answer = json.replaceAll("\\[", "{");
-        return answer.replaceAll("]", "}");
+        String answer = json.replace("[", "{");
+        return answer.replace("]", "}");
     }
 
     private JSONArray addWorkspaceStore(String workspace, String store) {

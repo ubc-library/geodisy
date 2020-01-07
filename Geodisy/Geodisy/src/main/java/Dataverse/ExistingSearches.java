@@ -2,6 +2,7 @@ package Dataverse;
 
 import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
+import BaseFiles.GeodisyStrings;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -24,12 +25,14 @@ public abstract class ExistingSearches {
         HashMap<String, DataverseRecordInfo> newFile = new HashMap<>();
         FileWriter fw = new FileWriter();
         try {
-            return  (HashMap<String, DataverseRecordInfo>) fw.readSavedObject(path);
+            return  (HashMap<String, DataverseRecordInfo>) fw.readSavedObject(GeodisyStrings.replaceSlashes(path));
         } catch (IOException e) {
             logger.error("Something went wrong reading " + path);
             return newFile;
         } catch (ClassNotFoundException e) {
             logger.error("Something went wrong parsing " + path);
+            return newFile;
+        } catch (NullPointerException e){
             return newFile;
         }
     }

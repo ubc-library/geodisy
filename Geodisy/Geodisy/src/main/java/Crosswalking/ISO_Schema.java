@@ -60,12 +60,12 @@ public abstract class ISO_Schema implements XMLSchema {
     }
 
     private String safeDOI(String doi) {
-        return doi.replaceAll("/", "_");
+        return doi.replace("/", "_");
     }
 
     public File genDirs(String doi, String localRepoPath) {
         {
-            File fileDir = new File("./" + localRepoPath + doi);
+            File fileDir = new File("./" + localRepoPath + doi.replace(".","/"));
             if (!fileDir.exists())
                 fileDir.mkdirs();
 

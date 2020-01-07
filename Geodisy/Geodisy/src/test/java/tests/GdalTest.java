@@ -59,7 +59,7 @@ public class GdalTest {
                 if (isWindows) {
                     Runtime.getRuntime().exec(call);
                 } else {
-                    Runtime.getRuntime().exec(String.format("sh %s", call));
+                    Runtime.getRuntime().exec(call);
                 }
                 String answer = gdal.getGDALInfo(destPath + newName, name, isWindows);
                 if (answer.contains("Lower Left( 00,72.0)"))

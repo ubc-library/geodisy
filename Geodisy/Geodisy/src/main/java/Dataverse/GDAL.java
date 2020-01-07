@@ -277,15 +277,16 @@ public class GDAL {
         String filePathLower = filePath.toLowerCase();
         String nameLower = name.toLowerCase();
         if(GeodisyStrings.gdalinfoRasterExtention(name))
-            gdal = GDAL_TRANSLATE_LOCAL;
+            gdal = GDAL_TRANSLATE;
         else
-            gdal = OGR2OGR_LOCAL;
+            gdal = OGR2OGR;
         String newAndOld = filePath + " " + filePath.substring(0,filePathLower.indexOf(nameLower)) + "_old_" + name;
         if(isWindows){
             Runtime.getRuntime().exec(gdal + newAndOld);
         } else {
-            Runtime.getRuntime()
-                    .exec(String.format("sh %s", gdal + newAndOld));
+            ProcessBuilder processBuilder= new ProcessBuilder();
+            processBuilder.command("bash", "-c", gdal + newAndOld);
+            processBuilder.start();
         }
     }
 
@@ -316,15 +317,16 @@ public class GDAL {
         StringBuilder gdalString = new StringBuilder();
         Process process;
         if(GeodisyStrings.gdalinfoRasterExtention(name))
-            gdal = GDALINFO_LOCAL;
+            gdal = GDALINFO;
         else
-            gdal = OGRINFO_LOCAL;
+            gdal = OGRINFO;
+        ProcessBuilder processBuilder= new ProcessBuilder();
+        processBuilder.command("bash", "-c", gdal+filePath);
         if (isWindows) {
             process = Runtime.getRuntime()
                     .exec(String.format(gdal + filePath));
         } else {
-            process = Runtime.getRuntime()
-                    .exec(String.format("sh %s", gdal + filePath));
+            process = processBuilder.start();
         }
 
         BufferedReader stdInput = new BufferedReader(new

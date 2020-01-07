@@ -44,7 +44,7 @@ public class DataverseParser implements JSONParser {
             else
                 current = dataverseJSON;
             dJO.parseCitationFields(current);
-            ExistingHarvests es = ExistingHarvests.getExistingHarvests(testing);
+            ExistingHarvests es = ExistingHarvests.getExistingHarvests();
             DataverseRecordInfo dRI = dJO.generateDRI();
             if(!testing && !dRI.newer(es.getRecordInfo(dRI.getDoi())))
                 return new DataverseJavaObject("");
