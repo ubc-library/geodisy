@@ -9,10 +9,17 @@ public class GeodisyStrings {
 
     //Repositories (add new repository URLS to a appropriate repository URL array below)
         // New Repository Types need new URL Arrays [Geodisy 2]
+
         public final static String SANDBOX_DV_URL = "https://206-12-90-131.cloud.computecanada.ca/"; //currently our sandbox
 
         public final static String[] DATAVERSE_URLS = new String[]{SANDBOX_DV_URL};
 
+        public static boolean windowsComputerType(){
+            return  System.getProperty("os.name")
+                    .toLowerCase().startsWith("windows");
+        }
+
+        public final static boolean IS_WINDOWS = windowsComputerType();
         public static String getRoot(){
             boolean isWindows = System.getProperty("os.name")
                     .toLowerCase().startsWith("windows");
@@ -65,43 +72,33 @@ public class GeodisyStrings {
         public final static String GDAL_TRANSLATE = getGdalTranslate();
 
         private static String getOgr2Ogr(){
-            boolean isWindows = System.getProperty("os.name")
-                    .toLowerCase().startsWith("windows");
-            if(isWindows)
+            if(IS_WINDOWS)
                 return OGR2OGR_LOCAL;
             else
                 return OGR2OGR_CLOUD;
         }
 
         private static String getGdalTranslate(){
-            boolean isWindows = System.getProperty("os.name")
-                    .toLowerCase().startsWith("windows");
-            if(isWindows)
+            if(IS_WINDOWS)
                 return GDAL_TRANSLATE_LOCAL;
             else
                 return GDAL_TRANSLATE_CLOUD;
         }
     private static String getGdalInfo(){
-        boolean isWindows = System.getProperty("os.name")
-                .toLowerCase().startsWith("windows");
-        if(isWindows)
+        if(IS_WINDOWS)
             return GDALINFO_LOCAL;
         else
             return GDALINFO_CLOUD;
     }
     private static String getOgrInfo(){
-        boolean isWindows = System.getProperty("os.name")
-                .toLowerCase().startsWith("windows");
-        if(isWindows)
+        if(IS_WINDOWS)
             return OGRINFO_LOCAL;
         else
             return OGRINFO_CLOUD;
     }
 
     public static String replaceSlashes(String s){
-        boolean isWindows = System.getProperty("os.name")
-                .toLowerCase().startsWith("windows");
-        if(isWindows)
+        if(IS_WINDOWS)
             return s.replace("/","\\");
         else
             return s.replace("\\","/");
@@ -130,19 +127,20 @@ public class GeodisyStrings {
 
     public final static String SOLR_PATH_PROD = "SOLR_URL=http://www.example.com:1234/solr/collection ";
     public final static String SOLR_PATH_TEST = "";
-    public final static String SOLR_PATH = SOLR_PATH_TEST;
+    public final static String SOLR_PATH = IS_WINDOWS? SOLR_PATH_TEST:SOLR_PATH_PROD;
     //TODO set custom path for OGM location (where the GeoBlacklightJson are stored)
     public final static String DEV_ADDRESS = "206-12-92-97.cloud.computecanada.ca/";
-    public final static String PROD_ADDRESS = "tbd";
+    public final static String PROD_ADDRESS = "206-12-92-97.cloud.computecanada.ca";
     public final static String ADDRESS = addressToUse(TEST);
     public final static String VM_BASE_PATH_DEV = "https://" + DEV_ADDRESS;
     public final static String VM_BASE_PATH_PROD = "tbd";
     public final static String BASE_PATH = vmToUse(TEST);
-    public final static String END_XML_JSON_FILE_PATH = BASE_PATH + "geodisy/";
+    public final static String END_XML_JSON_FILE_PATH = BASE_PATH;
     public final static String PATH_TO_XML_JSON_FILES = BASE_PATH + END_XML_JSON_FILE_PATH;
-    public final static String OGM_PATH = "OGM_PATH=" + BASE_PATH;
+    public final static String OGM_PATH = "OGM_PATH=" +  "/var/www/206-12-92-97.cloud.computecanada.ca/html/";
+    public final static String MOVE_METADATA = "mv -u /home/centos/Geodisy/metadata/* /var/www/" + ADDRESS + "/html/";
     public final static String GEOCOMBINE = SOLR_PATH + OGM_PATH + "bundle exec rake geocombine:index";
-    public final static String BASE_LOCATION_TO_STORE_METADATA = BASE_PATH + "/var/www/" + ADDRESS  + "/html/";
+    public final static String BASE_LOCATION_TO_STORE_METADATA = "metadata/";
 
     public static String vmToUse(boolean test){
         if(test)

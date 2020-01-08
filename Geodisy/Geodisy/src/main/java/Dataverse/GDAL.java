@@ -43,8 +43,6 @@ public class GDAL {
             if(!GeodisyStrings.gdalinfoRasterExtention(lowerName) && !GeodisyStrings.ogrinfoVectorExtension(lowerName))
                 continue;
             boolean gdalInfo = GeodisyStrings.gdalinfoRasterExtention(lowerName);
-            boolean isWindows = System.getProperty("os.name")
-                    .toLowerCase().startsWith("windows");
 
             String gdalString;
             GeographicBoundingBox temp;
@@ -59,7 +57,7 @@ public class GDAL {
                 vector++;
 
             try {
-                gdalString = getGDALInfo(filePath, name, isWindows);
+                gdalString = getGDALInfo(filePath, name, IS_WINDOWS);
                 if(gdalString.contains("FAILURE")) {
                     logger.warn("Something went wrong parsing " + name + " at " + filePath);
                     continue;
@@ -72,7 +70,7 @@ public class GDAL {
                     convertedName = nameStub + "tif";
                 }
                 else {
-                    temp = getVector(gdalString, isWindows, lowerName, filePath);
+                    temp = getVector(gdalString, IS_WINDOWS, lowerName, filePath);
                     projection = temp.getField(PROJECTION);
                     convertedName = nameStub + "tif";
                 }
@@ -142,14 +140,12 @@ public class GDAL {
         if(!GeodisyStrings.gdalinfoRasterExtention(lowerName) && !GeodisyStrings.ogrinfoVectorExtension(lowerName))
             return new GeographicBoundingBox(doi);
         boolean gdalInfo = GeodisyStrings.gdalinfoRasterExtention(lowerName);
-        boolean isWindows = System.getProperty("os.name")
-                .toLowerCase().startsWith("windows");
 
         String gdalString;
         GeographicBoundingBox temp;
         String projection =  "";
         try {
-            gdalString = getGDALInfo(filePath, lowerName, isWindows);
+            gdalString = getGDALInfo(filePath, lowerName, IS_WINDOWS);
             if(gdalString.contains("FAILURE")) {
                 logger.warn("Something went wrong parsing " + lowerName + " at " + filePath);
                 return new GeographicBoundingBox(doi);
@@ -159,7 +155,7 @@ public class GDAL {
                 projection = getProjection(gdalString);
             }
             else {
-                temp = getVector(gdalString, isWindows, lowerName, filePath);
+                temp = getVector(gdalString, IS_WINDOWS, lowerName, filePath);
                 projection = temp.getField(PROJECTION);
             }
             temp.setIsGeneratedFromGeoFile(true);
@@ -211,16 +207,14 @@ public class GDAL {
         path = path.replace(".","_");
         String filePath = DATASET_FILES_PATH + path + "/" + file.getName();
         String name = file.getName();
-        boolean isWindows = System.getProperty("os.name")
-                .toLowerCase().startsWith("windows");
         String ogrString = null;
         try {
-            ogrString = getGDALInfo(filePath, name, isWindows);
+            ogrString = getGDALInfo(filePath, name, IS_WINDOWS);
             if(ogrString.contains("FAILURE")) {
                 logger.warn("Something went wrong parsing " + name + " at " + filePath);
                 return new GeographicBoundingBox(djo.getDOI());
             }
-        GeographicBoundingBox temp = getVector(ogrString, isWindows, name, filePath);
+        GeographicBoundingBox temp = getVector(ogrString, IS_WINDOWS, name, filePath);
         temp.setIsGeneratedFromGeoFile(true);
         return temp;
         } catch (IOException e) {
@@ -378,16 +372,18 @@ public class GDAL {
     private BoundingBox getLatLongGdalInfo(String gdalStringFull, int start) {
         try {
             String gdalString = gdalStringFull.substring(start);
-            start = gdalString.indexOf("(") + 1;
+            gdalString = gdalString.substring(gdalString.indexOf("(")+1);
             int end = gdalString.indexOf(",");
-            String west = parseDecimalDegrees(gdalString.substring(start, end));
+            String west = parseDecimalDegrees(gdalString.substring(0, end));
             gdalString = gdalString.substring(end + 1);
             start = 0;
             end = gdalString.indexOf(")");
             String north = parseDecimalDegrees(gdalString.substring(start, end));
             start = gdalString.indexOf("Lower Right (") + 13;
+            gdalString = gdalString.substring(start);
+            gdalString = gdalString.substring(gdalString.indexOf("(")+1);
             end = gdalString.indexOf(",");
-            String east = parseDecimalDegrees(gdalString.substring(start, end));
+            String east = parseDecimalDegrees(gdalString.substring(0, end));
             gdalString = gdalString.substring(end + 1);
             start = 0;
             end = gdalString.indexOf(")");
@@ -420,10 +416,9 @@ public class GDAL {
         String path = file.getAbsolutePath();
         String name = file.getName();
         DataverseRecordFile temp = new DataverseRecordFile();
-        boolean isWindows = System.getProperty("os.name")
-                .toLowerCase().startsWith("windows");
+
         try {
-            String gdalString = getGDALInfo(path, name, isWindows);
+            String gdalString = getGDALInfo(path, name, IS_WINDOWS);
             if (gdalString.contains("FAILURE")){
                 logger.warn("Something went wrong parsing " + file.getName() + " at " + file.getPath());
                 return temp;
@@ -434,7 +429,7 @@ public class GDAL {
             if(GeodisyStrings.gdalinfoRasterExtention(name))
                 bb = getRaster(gdalString);
             else
-                bb = getVector(gdalString,isWindows,file.getName(),file.getAbsolutePath());
+                bb = getVector(gdalString,IS_WINDOWS,file.getName(),file.getAbsolutePath());
             temp.setIsFromFile(true);
             temp.setBB(bb.getBB());
         } catch (IOException e) {

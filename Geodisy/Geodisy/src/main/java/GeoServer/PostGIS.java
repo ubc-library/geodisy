@@ -3,6 +3,7 @@ package GeoServer;
 import BaseFiles.GeoLogger;
 import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseJavaObject;
+import Dataverse.GDAL;
 
 
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class PostGIS {
         logger = new GeoLogger(this.getClass());
     }
 
-    public void addFile2PostGIS(DataverseJavaObject djo, String fileName, String geoserverLabel, boolean test) {
+    public boolean addFile2PostGIS(DataverseJavaObject djo, String fileName, String geoserverLabel, boolean test) {
 
         String vectorDB = test? TEST_VECTOR_DB : VECTOR_DB;
         String call = SHP_2_PGSQL + folderized(djo.getSimpleFieldVal(PERSISTENT_ID)) + "/" + fileName + " public." + geoserverLabel + PSQL_CALL + vectorDB + POSTGIS_USER_CALL;
@@ -29,8 +30,12 @@ public class PostGIS {
         processBuilder.command("bash", "-c", call);
         try {
             processBuilder.start();
+            GeoServerAPI geo = new GeoServerAPI(djo);
+            geo.addPostGISLayer(geoserverLabel);
+            return true;
         } catch (IOException e) {
             logger.error("Something went wrong trying to get " + djo.getDOI()+fileName + " into postGID");
+            return false;
         }
     }
 

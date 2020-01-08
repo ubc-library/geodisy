@@ -249,7 +249,7 @@ public class DataverseJavaObject extends SourceJavaObject {
 
     private void addVectorToGeoserver(String name, String geoserverLabel) {
         GeoServerAPI geoServerAPI =  new GeoServerAPI(this);
-        geoServerAPI.uploadVector(name,geoserverLabel);
+        geoServerAPI.addVector(name,geoserverLabel);
     }
 
     private void addRasterToGeoserver(String name) {

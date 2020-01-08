@@ -92,7 +92,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
     protected JSONArray addBaseRecordInfo(){
         JSONArray ja = new JSONArray();
         ja.put(RECORD_URL + stringed(javaObject.getSimpleFieldVal(PERSISTENT_URL)));
-        ja.put(ISO_METADATA + stringed(END_XML_JSON_FILE_PATH + javaObject.getSimpleFieldVal(PERSISTENT_ID) + "/" + ISO_METADATA_FILE_ZIP));
+        ja.put(ISO_METADATA + stringed(END_XML_JSON_FILE_PATH + GeodisyStrings.replaceSlashes(javaObject.getSimpleFieldVal(PERSISTENT_ID).replace(".","/")) + "/" + ISO_METADATA_FILE_ZIP));
         return ja;
     }
 
@@ -187,10 +187,10 @@ public class DataGBJSON extends GeoBlacklightJSON{
             name = folderName.substring(0,folderName.indexOf(" ("));
             end = "/" + getNumber(folderName);
         }
-        genDirs(name + end, OPEN_METADATA_LOCAL_REPO);
+        genDirs(name + end, BASE_LOCATION_TO_STORE_METADATA);
         BaseFiles.FileWriter file = new BaseFiles.FileWriter();
         try {
-            file.writeStringToFile(json,GeodisyStrings.getRoot() +OPEN_METADATA_LOCAL_REPO + name.replace(".","/") + end + "/" +"geoblacklight.json");
+            file.writeStringToFile(json,GeodisyStrings.getRoot() + BASE_LOCATION_TO_STORE_METADATA + name.replace(".","/") + end + "/" +"geoblacklight");
         } catch (IOException e) {
             logger.error("Something went wrong trying to create a JSON file with doi:" + doi);
         }

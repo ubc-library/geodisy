@@ -43,22 +43,37 @@ public class GeoServerAPI extends DestinationAPI {
         logger =  new GeoLogger(this.getClass());
     }
         //TODO fix this to access layers from POSTGIS
-    public void uploadVector(String fileName, String geoserverlabel){
-        addVectorToPostGIS(fileName,geoserverlabel);
+    public void addPostGISLayer(String geoserverlabel){
+        String vectorDB = TEST? TEST_VECTOR_DB : VECTOR_DB;
+        String call = "curl -v -u "+ GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H \"Content-type: text/xml\" -d \"<featureType><name>" + geoserverlabel.toLowerCase() + "</name><nativeCRS>EPSG:4326</nativeCRS><srs>EPSG:4326</srs><enabled>true</enabled></featureType>\" http://localhost:8080/geoserver/rest/workspaces/geodisy/datastores/" + vectorDB + "/featuretypes";
+        String deleteFirst = "curl -v -u "+ GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -X DELETE \"http://localhost:8080/geoserver/rest/workspaces/geodisy/" + geoserverlabel.toLowerCase() + "\"?recurse=true -H  \"accept: application/json\" -H  \"content-type: application/json\"";
+        ProcessBuilder processBuilder= new ProcessBuilder();
+        processBuilder.command("bash", "-c",deleteFirst);
+
+        try {
+            //Delete existing layer
+            Process p = processBuilder.start();
+            p.waitFor();
+            p.destroy();
+            //bring new layer over from POSTGIS
+            processBuilder.command("bash", "-c",call);
+            p = processBuilder.start();
+            p.waitFor();
+            p.destroy();
+        } catch (IOException | InterruptedException e) {
+            logger.error("Something went wrong adding vector layer " + geoserverlabel + " from POSTGIS");
+        }
     }
 
-    private void addVectorToPostGIS(String fileName, String geoserverlabel) {
+    private boolean addVectorToPostGIS(String fileName, String geoserverlabel) {
         PostGIS postGIS = new PostGIS();
-        postGIS.addFile2PostGIS((DataverseJavaObject) sjo, fileName,geoserverlabel, TEST);
+        return postGIS.addFile2PostGIS((DataverseJavaObject) sjo, fileName,geoserverlabel, TEST);
         //TODO uncomment this once I have getting the layers from postgis to geoserver
         //addVectorToGeoserver(fileName);
     }
 
-    /**
-     *
-     * @param fileName
-     * @return
-     */
+
+     /**
     //TODO need to get vector files from POSTGRIS, is this the way?
     private boolean addVectorToGeoserver(String fileName) {
         JSONObject jo = new JSONObject();
@@ -76,17 +91,20 @@ public class GeoServerAPI extends DestinationAPI {
             return false;
         }
     return true;
-    }
+    }*/
 
     private void createFileUploadJSON(JSONObject jo) {
         FileWriter file = new FileWriter(DATASET_FILES_PATH + "input.json");
         file.write(jo.toString());
     }
 
-    public boolean addVectorTest(String fileName){
-        return addVectorToGeoserver(fileName);
+    public boolean addVectorTest(String fileName,String geoserverLabel){
+        return addVectorToPostGIS(fileName,geoserverLabel);
     }
 
+    public boolean addVector(String fileName,String geoserverLabel){
+        return addVectorToPostGIS(fileName,geoserverLabel);
+    }
     public void uploadRaster(String fileName){
         String nameStub = fileName;
         String call = "curl -u admin:" + GEOSERVER_PASSWORD + " -XPUT -H " + stringed("Content-type:image/tiff") + " --data-binary @" + DATASET_FILES_PATH + sjo.getSimpleFieldVal(PERSISTENT_ID).replace("/.","/") + fileName + ".tif  http://localhost:8080/geoserver/rest/workspaces/geodisy/" + sjo.getSimpleFieldVal(PERSISTENT_ID).replace("/.","/")+nameStub + "/file.geotiff";

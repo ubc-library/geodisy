@@ -20,30 +20,41 @@ public class GDALTranslate {
 
     public String rasterTransform(String dirPath, String name, DataverseJavaObject djo){
         this.djo = djo;
-        process(dirPath,name,RASTER);
+        boolean transformed = process(dirPath,name,RASTER);
 
-        int period = name.lastIndexOf(".");
-
-        return name.substring(0,period+1) + "tif";
+        if(transformed) {
+            int period = name.lastIndexOf(".");
+            return name.substring(0, period + 1) + "tif";
+        }else
+            return name;
     }
 
     public String vectorTransform(String dirPath, String name,DataverseJavaObject djo){
         this.djo = djo;
-        process(dirPath,name,VECTOR);
+        boolean transformed = process(dirPath,name,VECTOR);
 
-        int period = name.lastIndexOf(".");
-        return name.substring(0,period+1) + "shp";
+        if(transformed) {
+            int period = name.lastIndexOf(".");
+            return name.substring(0, period + 1) + "shp";
+        }
+        else{
+            return name;
+        }
 
     }
-    private void process(String dirPath, String name, String transformType) {
-        process(dirPath,dirPath,name,transformType);
+    private boolean process(String dirPath, String name, String transformType) {
+        return process(dirPath,dirPath,name,transformType);
     }
     public boolean process(String sourcePath, String destPath, String name, String transformType){
-        boolean isWindows = System.getProperty("os.name")
-                .toLowerCase().startsWith("windows");
         if(transformType.equals(VECTOR))
             if(GeodisyStrings.otherShapeFilesExtensions(name))
                 return false;
+            else if(name.endsWith(".shp"))
+                return false;
+        if(transformType.equals(RASTER))
+            if(name.endsWith(".tif"))
+                return false;
+
         sourcePath = GEODISY_PATH_ROOT + GeodisyStrings.replaceSlashes(sourcePath);
         destPath = GEODISY_PATH_ROOT + GeodisyStrings.replaceSlashes(destPath);
         String call;
@@ -58,14 +69,17 @@ public class GDALTranslate {
             processBuilder.command("bash", "-c", call);
             try {
 
-                if (isWindows) {
+                if (IS_WINDOWS) {
                     Runtime.getRuntime().exec(call);
                 } else {
                     processBuilder.start();
                 }
-                String answer = gdal.getGDALInfo(destPath + nameStub + ".tif", name, isWindows);
-                if(answer.contains("successful.Layer name"))
+                String answer = gdal.getGDALInfo(destPath + nameStub + ".tif", name, IS_WINDOWS);
+                if(answer.contains("successful.Layer name")) {
+                    file = new File(sourcePath+name);
+                    file.delete();
                     return true;
+                }
             } catch (IOException e) {
                 logger.error("Something went wrong converting " + name + " to geotiff");
             }
@@ -73,21 +87,24 @@ public class GDALTranslate {
                 call = OGR2OGR + destPath + nameStub + ".shp " + sourcePath + name;
                 processBuilder.command("bash", "-c", call);
                 try {
-                    if (isWindows) {
+                    if (IS_WINDOWS) {
                         Runtime.getRuntime().exec(call);
                     } else {
                         processBuilder.start();
                     }
-                    String answer = gdal.getGDALInfo(destPath + nameStub + ".shp", name, isWindows);
-                    if(answer.contains("successful.Layer name:"))
+                    String answer = gdal.getGDALInfo(destPath + nameStub + ".shp", name, IS_WINDOWS);
+                    if(answer.contains("successful.Layer name:")) {
+                        file = new File(sourcePath+name);
+                        file.delete();
                         return true;
+                    }
                 } catch (IOException e) {
                     logger.error("Something went wrong converting " + name + " to shapefile");
                 }
             }
         }
-        //file = new File(dirPath+name);
-        //file.delete();
+        file = new File(sourcePath+name);
+        file.delete();
         return false;
     }
 

@@ -18,9 +18,8 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 
-
-import static Crosswalking.XML.XMLTools.XMLStrings.OPEN_METADATA_LOCAL_REPO;
-import static Crosswalking.XML.XMLTools.XMLStrings.TEST_OPEN_METADATA_LOCAL_REPO;
+import static BaseFiles.GeodisyStrings.BASE_LOCATION_TO_STORE_METADATA;
+import static Crosswalking.XML.XMLTools.XMLStrings.*;
 
 
 /**
@@ -43,7 +42,8 @@ public abstract class ISO_Schema implements XMLSchema {
                 transformer.setOutputProperty(OutputKeys.INDENT, "yes");
                 transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
                 DOMSource source = new DOMSource(doc);
-                String loc = testing ? TEST_OPEN_METADATA_LOCAL_REPO : OPEN_METADATA_LOCAL_REPO;
+
+                String loc = BASE_LOCATION_TO_STORE_METADATA;
                 File fileDir = genBaseDirs(doi, loc);
                 File file = new File(fileDir + "/" + "iso19115.xml");
                 FileWriter writer = new FileWriter(file);
