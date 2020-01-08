@@ -110,3 +110,21 @@ Geodisy/testGdal/out/
 
 
 Geodisy/testGdal/src/META-INF/MANIFEST.MF
+
+Geodisy/Geodisy/logs/recordsToCheck/
+
+Geodisy/GeoserverUploadTest/.idea/
+
+Geodisy/VectorToGeoserver/.idea/artifacts/
+
+Geodisy/VectorToGeoserver/.idea/
+
+Geodisy/VectorToGeoserver/out/artifacts/VectorToGeoserver_jar/
+
+Geodisy/VectorToGeoserver/src/META-INF/
+
+*.MF
+
+Geodisy/GeoserverUploadTest/out/artifacts/GeoserverUploadTest_jar/
+
+Geodisy/Geodisy/testFiles/10/5072/FK2/GFCTVC/
