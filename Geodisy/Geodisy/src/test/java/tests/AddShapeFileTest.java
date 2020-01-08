@@ -9,8 +9,9 @@ public class AddShapeFileTest {
 
     @Test
     public void addShapeFileFromPostGIS(){
-        String fileName = "rastertest";
+        String fileName = "vectortest";
+        String geoserverName = "testVectorAdd";
         GeoServerAPI geo = new GeoServerAPI(new DataverseJavaObject("server"));
-        Assert.assertTrue(geo.addVectorTest(fileName));
+        Assert.assertTrue(geo.addVectorTest(fileName, geoserverName));
     }
 }
