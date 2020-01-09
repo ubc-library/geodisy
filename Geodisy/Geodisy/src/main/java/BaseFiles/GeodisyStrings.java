@@ -37,6 +37,7 @@ public class GeodisyStrings {
         public final static String EXISTING_BBOXES = GEODISY_PATH_ROOT + "savedFiles/ExistingBBoxes.txt";
         public final static String TEST_EXISTING_RECORDS = GEODISY_PATH_ROOT + "savedFiles/TestExistingRecords.txt";
         public final static String TEST_EXISTING_BBOXES = GEODISY_PATH_ROOT + "savedFiles/TestExistingBBoxes.txt";
+        public final static String RASTER_RECORDS = GEODISY_PATH_ROOT + "savedFiles/ExistingRasterRecords.txt";
         public final static String RECORDS_TO_CHECK = GEODISY_PATH_ROOT + "logs/recordsToCheck.log";
         public final static String EXISTING_CALL_TO_CHECK = GEODISY_PATH_ROOT + "logs/existingCallToCheck.txt";
         public final static String ERROR_LOG = GEODISY_PATH_ROOT + "logs/error.log";
@@ -61,7 +62,7 @@ public class GeodisyStrings {
         public final static String OGRINFO = getOgrInfo();
         private final static String[] GDALINFO_RASTER_FILE_EXTENSIONS = { ".tif", ".tiff",".xyz"};
         private final static String[] NON_SHP_SHAPEFILE_EXTENSIONS = {".shx", ".dbf", ".sbn",".prj"};
-        private final static String[] OGRINFO_PROCESSABLE_EXTENTIONS = {".geojson",".shp",".kmz",".csv",".tab",".gpkg"}; //also .csv, but need to check if the csv is actually geospatial in nature
+        private final static String[] OGRINFO_PROCESSABLE_EXTENTIONS = {".geojson",".shp",".kmz",".csv",".tab",".gpkg", ".kml"}; //also .csv, but need to check if the csv is actually geospatial in nature
         public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = ArrayUtils.addAll(NON_SHP_SHAPEFILE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS);
         public final static String[] PREVIEWABLE_FILE_EXTENSIONS = {".tif", ".kmz"};
         private final static String OGR2OGR_LOCAL = "C:\\Program Files\\GDAL\\ogr2ogr -f \"ESRI Shapefile\" ";
@@ -129,17 +130,18 @@ public class GeodisyStrings {
     public final static String SOLR_PATH_TEST = "";
     public final static String SOLR_PATH = IS_WINDOWS? SOLR_PATH_TEST:SOLR_PATH_PROD;
     //TODO set custom path for OGM location (where the GeoBlacklightJson are stored)
-    public final static String DEV_ADDRESS = "206-12-92-97.cloud.computecanada.ca/";
+    public final static String DEV_ADDRESS = "206-12-92-97.cloud.computecanada.ca";
     public final static String PROD_ADDRESS = "206-12-92-97.cloud.computecanada.ca";
     public final static String ADDRESS = addressToUse(TEST);
-    public final static String VM_BASE_PATH_DEV = "https://" + DEV_ADDRESS;
+    public final static String VM_BASE_PATH_DEV = "https://" + DEV_ADDRESS + "/";
     public final static String VM_BASE_PATH_PROD = "tbd";
     public final static String BASE_PATH = vmToUse(TEST);
     public final static String END_XML_JSON_FILE_PATH = BASE_PATH;
     public final static String PATH_TO_XML_JSON_FILES = BASE_PATH + END_XML_JSON_FILE_PATH;
-    public final static String OGM_PATH = "OGM_PATH=" +  "/var/www/206-12-92-97.cloud.computecanada.ca/html/";
-    public final static String MOVE_METADATA = "mv -u /home/centos/Geodisy/metadata/* /var/www/" + ADDRESS + "/html/";
-    public final static String GEOCOMBINE = SOLR_PATH + OGM_PATH + "bundle exec rake geocombine:index";
+    public final static String OGM_PATH = "OGM_PATH=/var/www/206-12-92-97.cloud.computecanada.ca/html/geodisy/";
+    public final static String MOVE_METADATA = "rsync -av /home/centos/Geodisy/metadata/* /var/www/" + ADDRESS + "/html/geodisy/";
+    public final static String DELETE_DUPLICATE_META_FOLDER = "rm -rf /home/centos/Geodisy/metadata/*";
+    public final static String GEOCOMBINE = SOLR_PATH + OGM_PATH + "/home/centos/geodisy/bin/bundle exec rake geocombine:index";
     public final static String BASE_LOCATION_TO_STORE_METADATA = "metadata/";
 
     public static String vmToUse(boolean test){

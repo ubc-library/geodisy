@@ -49,7 +49,7 @@ public class FileWriter {
 
     public void writeStringToFile(String stringToSave, String path) throws IOException{
         path = FileWriter.fixPath(path);
-        path = path + ".json";
+        path = GeodisyStrings.replaceSlashes(path) + ".json";
         verifyFileExistence(path);
         File file = new File(path);
         FileUtils.writeStringToFile(file, stringToSave,"UTF-8");

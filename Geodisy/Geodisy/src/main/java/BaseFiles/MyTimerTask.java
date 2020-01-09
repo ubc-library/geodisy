@@ -28,6 +28,7 @@ public class MyTimerTask extends TimerTask {
     GeoLogger logger = new GeoLogger(this.getClass());
     ExistingHarvests existingHarvests;
     ExistingCallsToCheck existingCallsToCheck;
+
     SourceRecordFiles srf;
     public MyTimerTask() {
     }
@@ -48,6 +49,7 @@ public class MyTimerTask extends TimerTask {
             fW.verifyFileExistence(RECORDS_TO_CHECK);
             fW.verifyFileExistence(ERROR_LOG);
             fW.verifyFileExistence(WARNING_LOG);
+            fW.verifyFileExistence(RASTER_RECORDS);
             existingHarvests = ExistingHarvests.getExistingHarvests();
             existingCallsToCheck = ExistingCallsToCheck.getExistingCallsToCheck();
             srf = SourceRecordFiles.getSourceRecords();
@@ -63,7 +65,7 @@ public class MyTimerTask extends TimerTask {
                 existingHarvests.addOrReplaceRecord(new DataverseRecordInfo(sJO, logger.getName()));
             }
             crosswalkRecords(sJOs);
-            //sendRecordsToGeoBlacklight();
+            sendRecordsToGeoBlacklight();
 
 
             endErrorLog = keepMajErrors();
@@ -90,6 +92,8 @@ public class MyTimerTask extends TimerTask {
             }
             existingHarvests.saveExistingSearchs(existingHarvests.getRecordVersions(),EXISTING_RECORDS, "ExistingRecords");
             existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
+            ExistingRasterRecords existingRasterRecords = ExistingRasterRecords.getExistingRasters();
+            existingRasterRecords.saveExistingFile(existingRasterRecords.getRecords(),RASTER_RECORDS, "ExistingRasterRecords");
 
 
         } catch (IOException  e) {

@@ -57,7 +57,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
             jo.put("layer_id_s","geodisy:" + geoserverLabel);
         JSONArray ja = addBaseRecordInfo();
         if(!gbb.getField(GEOSERVER_LABEL).isEmpty())
-            ja = addMetadataDownloadOptions(gbb.getBB(),ja);
+            ja = addMetadataDownloadOptions(gbb,ja);
         String externalServices = "{";
         for(Object o:ja){
             if(!externalServices.equals("{"))
@@ -75,12 +75,10 @@ public class DataGBJSON extends GeoBlacklightJSON{
     }
 
     @Override
-    protected JSONArray addMetadataDownloadOptions(BoundingBox bb, JSONArray ja) {
-        if(!bb.getGeometryType().equals("Non-geospatial")) {
-            if(gbb.isWMS())
-                ja.put(WMS + GEOSERVER_WMS_LOCATION);
-            if(gbb.isWFS())
-                ja.put(WFS + GEOSERVER_WFS_LOCATION);
+    protected JSONArray addMetadataDownloadOptions(GeographicBoundingBox gbb, JSONArray ja) {
+        if(!gbb.getField(GEOMETRY).equals("Non-geospatial")) {
+                ja.put(WMS);
+                ja.put(WFS);
         }
         //TODO uncomment once pushing to OpenGeoMetadata is working
         //ja.put(ISO_METADATA + stringed(gbb.getOpenGeoMetaLocation()));
@@ -91,7 +89,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
     @Override
     protected JSONArray addBaseRecordInfo(){
         JSONArray ja = new JSONArray();
-        ja.put(RECORD_URL + stringed(javaObject.getSimpleFieldVal(PERSISTENT_URL)));
+        ja.put(RECORD_URL + GeodisyStrings.replaceSlashes(stringed(javaObject.getSimpleFieldVal(PERSISTENT_URL))));
         ja.put(ISO_METADATA + stringed(END_XML_JSON_FILE_PATH + GeodisyStrings.replaceSlashes(javaObject.getSimpleFieldVal(PERSISTENT_ID).replace(".","/")) + "/" + ISO_METADATA_FILE_ZIP));
         return ja;
     }

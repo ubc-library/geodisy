@@ -10,6 +10,7 @@ import BaseFiles.GeoLogger;
 import BaseFiles.HTTPCaller;
 import Crosswalking.GeoBlacklightJson.HTTPCombineCaller;
 import Dataverse.DataverseJavaObject;
+import Dataverse.ExistingRasterRecords;
 import Dataverse.SourceJavaObject;
 
 import org.json.JSONArray;
@@ -24,7 +25,6 @@ import java.nio.file.Files;
 
 import static BaseFiles.GeodisyStrings.*;
 import static BaseFiles.PrivateStrings.*;
-import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.GEOSERVER_REST;
 import static Dataverse.DVFieldNameStrings.PERSISTENT_ID;
 import static GeoServer.GeoserverStrings.*;
 
@@ -125,6 +125,8 @@ public class GeoServerAPI extends DestinationAPI {
         } catch (IOException e) {
             logger.error("Something went wrong trying to upload raster file to Geoserver: " + fileName + " " + sjo.getSimpleFieldVal(PERSISTENT_ID));
         }
+        ExistingRasterRecords existingRasterRecords = ExistingRasterRecords.getExistingRasters();
+        existingRasterRecords.addOrReplaceRecord(sjo.getDOI(),fileName);
     }
     private void saveJsonToFile(String jsonString) {
         FileWriter fileWriter = new FileWriter();

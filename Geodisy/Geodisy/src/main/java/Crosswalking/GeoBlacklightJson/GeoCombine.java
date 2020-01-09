@@ -6,8 +6,7 @@ import Crosswalking.XML.XMLTools.JGit;
 
 import java.io.IOException;
 
-import static BaseFiles.GeodisyStrings.GEOCOMBINE;
-import static BaseFiles.GeodisyStrings.MOVE_METADATA;
+import static BaseFiles.GeodisyStrings.*;
 
 public class GeoCombine {
     GeoLogger logger;
@@ -17,7 +16,7 @@ public class GeoCombine {
 
     public void index(){
         ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.command("bash", "-c", MOVE_METADATA);
+        processBuilder.command(new String[] {"/bin/bash", "-c", MOVE_METADATA});
 
         Process p = null;
         try {
@@ -25,8 +24,12 @@ public class GeoCombine {
             p = processBuilder.start();
             p.waitFor();
             p.destroy();
+            processBuilder.command(new String[] {"/bin/bash", "-c", DELETE_DUPLICATE_META_FOLDER});
+            p = processBuilder.start();
+            p.waitFor();
+            p.destroy();
             System.out.println("Calling Geocombine");
-            processBuilder.command("bash", "-c", GEOCOMBINE);
+            processBuilder.command(new String[] { "/bin/bash", "-c", GEOCOMBINE});
             p.waitFor();
             p.destroy();
         } catch (IOException | InterruptedException e) {

@@ -8,17 +8,12 @@ import java.io.IOException;
 import java.util.HashMap;
 
 
-public abstract class ExistingSearches {
+public abstract class ExistingSearches extends ExisitingFile {
     GeoLogger logger;
     public abstract boolean isEmpty();
 
     public void saveExistingSearchs(HashMap object, String path, String className){
-        FileWriter fw  = new FileWriter();
-        try {
-            fw.writeObjectToFile(object,path);
-        } catch (IOException e) {
-            logger.error("Something went wrong saving " + className);
-        }
+        saveExistingFile(object,path,className);
     }
 
     public HashMap<String, DataverseRecordInfo> readExistingRecords(String path){
