@@ -127,4 +127,5 @@ Geodisy/VectorToGeoserver/src/META-INF/
 
 Geodisy/GeoserverUploadTest/out/artifacts/GeoserverUploadTest_jar/
 
-Geodisy/Geodisy/testFiles/10/5072/FK2/GFCTVC/
+Geodisy/Geodisy/testFiles/
+Geodisy/Geodisy/metadata/
