@@ -120,9 +120,11 @@ public class DataverseJavaObject extends SourceJavaObject {
             if(dataFile.has(PERSISTENT_ID)&& !dataFile.getString(PERSISTENT_ID).equals("")) {
                 String doi = dataFile.getString(PERSISTENT_ID);
                 dRF = new DataverseRecordFile(title, doi,dataFile.getInt("id"), server, citationFields.getDOI());
+                dRF.setOriginalTitle(title);
             }else{
                 int dbID = (int) dataFile.get("id");
                 dRF = new DataverseRecordFile(title,dbID,server,citationFields.getDOI());
+                dRF.setOriginalTitle(title);
             }
             SourceRecordFiles srf = SourceRecordFiles.getSourceRecords();
             srf.putRecord(dRF.getDoi(),dRF.title,dRF);

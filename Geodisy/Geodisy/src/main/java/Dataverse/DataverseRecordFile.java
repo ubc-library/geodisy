@@ -26,6 +26,7 @@ import static Dataverse.DVFieldNameStrings.*;
  */
 public class DataverseRecordFile {
     String title;
+    String originalTitle;
     String doi = "N/A";
     int dbID = 0;
     private String server = "";
@@ -133,8 +134,11 @@ public class DataverseRecordFile {
         File f = new File(dirPath+this.getTitle());
         GDALTranslate gdalTranslate = new GDALTranslate();
         GDAL gdal = new GDAL();
+        String originalName = "";
+        ExistingVectorRecords evr = ExistingVectorRecords.getExistingVectors();
         if (f.isFile()) {
             String name = f.getName().toLowerCase();
+            originalName = name;
             DataverseRecordFile drf;
             if (GeodisyStrings.ogrinfoVectorExtension(name) && !name.endsWith("csv")) {
                 if (!name.endsWith(".shp")) {
@@ -143,12 +147,15 @@ public class DataverseRecordFile {
                     name = gdalTranslate.vectorTransform(dirPath, f.getName(), djo);
                 }
                 drf = new DataverseRecordFile(name, this.doi, this.dbID, this.server, this.datasetDOI);
+                drf.setOriginalTitle(originalTitle);
                 drf.setIsFromFile(true);
                 djo.addGeoDataFile(drf);
+                evr.addOrReplaceRecord(drf.doi+name,originalName);
             } else if (GeodisyStrings.gdalinfoRasterExtention(f.getName())) {
                 if (!name.endsWith(".tif"))
                     name = gdalTranslate.rasterTransform(dirPath, f.getName(), djo);
                 drf = new DataverseRecordFile(name, this.doi, this.dbID, this.server, this.datasetDOI);
+                drf.setOriginalTitle(originalTitle);
                 drf.setIsFromFile(true);
                 djo.addGeoDataFile(drf);
             } else if (name.contains(".csv")) {
@@ -157,11 +164,14 @@ public class DataverseRecordFile {
                     if (!name.endsWith(".shp")) {
                         if (name.endsWith(".shx") || name.endsWith(".dbf") || name.endsWith(".prj"))
                             throw new IllegalArgumentException();
+
                         name = gdalTranslate.vectorTransform(dirPath, f.getName(), djo);
                     }
                     drf = new DataverseRecordFile(name, this.doi, this.dbID, this.server, this.datasetDOI);
+                    drf.setOriginalTitle(originalTitle);
                     drf.setIsFromFile(true);
                     djo.addGeoDataFile(drf);
+                    evr.addOrReplaceRecord(drf.doi+name,originalName);
                 } else {
                     String path = djo.getDOI().replace("/", "_");
                     path = path.replace(".", "_");
@@ -277,5 +287,13 @@ public class DataverseRecordFile {
 
     public String getDatasetDOI() {
         return datasetDOI;
+    }
+
+    public void setOriginalTitle(String s){
+        originalTitle = s;
+    }
+
+    public String getOriginalTitle(){
+        return originalTitle;
     }
 }

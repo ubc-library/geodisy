@@ -94,6 +94,8 @@ public class MyTimerTask extends TimerTask {
             existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
             ExistingRasterRecords existingRasterRecords = ExistingRasterRecords.getExistingRasters();
             existingRasterRecords.saveExistingFile(existingRasterRecords.getRecords(),RASTER_RECORDS, "ExistingRasterRecords");
+            ExistingVectorRecords existingVectorRecords = ExistingVectorRecords.getExistingVectors();
+            existingVectorRecords.saveExistingFile(existingVectorRecords.getRecords(),VECTOR_RECORDS,"ExistingVectorRecords");
 
 
         } catch (IOException  e) {
@@ -112,7 +114,8 @@ public class MyTimerTask extends TimerTask {
 
     private void sendRecordsToGeoBlacklight() {
         GeoCombine combine = new GeoCombine();
-        combine.index();
+        //TODO uncomment later
+        //combine.index();
 
     }
 

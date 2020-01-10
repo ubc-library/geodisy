@@ -24,10 +24,10 @@ public class GeoCombine {
             p = processBuilder.start();
             p.waitFor();
             p.destroy();
-            processBuilder.command(new String[] {"/bin/bash", "-c", DELETE_DUPLICATE_META_FOLDER});
+            /*processBuilder.command(new String[] {"/bin/bash", "-c", DELETE_DUPLICATE_META_FOLDER});
             p = processBuilder.start();
             p.waitFor();
-            p.destroy();
+            p.destroy();*/
             System.out.println("Calling Geocombine");
             processBuilder.command(new String[] { "/bin/bash", "-c", GEOCOMBINE});
             p.waitFor();

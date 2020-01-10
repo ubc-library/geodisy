@@ -54,7 +54,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         jo.put("layer_geom_type_s",gbb.getField(GEOMETRY));
         String geoserverLabel = gbb.getField(GEOSERVER_LABEL);
         if(!geoserverLabel.equals(""))
-            jo.put("layer_id_s","geodisy:" + geoserverLabel);
+            jo.put("layer_id_s","geodisy:" + geoserverLabel.toLowerCase());
         JSONArray ja = addBaseRecordInfo();
         if(!gbb.getField(GEOSERVER_LABEL).isEmpty())
             ja = addMetadataDownloadOptions(gbb,ja);

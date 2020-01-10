@@ -31,7 +31,7 @@ public class PostGIS {
         try {
             processBuilder.start();
             GeoServerAPI geo = new GeoServerAPI(djo);
-            geo.addPostGISLayer(geoserverLabel);
+            geo.addPostGISLayer(geoserverLabel,fileName);
             return true;
         } catch (IOException e) {
             logger.error("Something went wrong trying to get " + djo.getDOI()+fileName + " into postGID");

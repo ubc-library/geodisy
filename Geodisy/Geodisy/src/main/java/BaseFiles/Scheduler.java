@@ -60,9 +60,9 @@ public void run(){
 Timer timer = new Timer();
 
 //TODO uncomment the following to get the timer actually running, but for now I want the task to run when I start the program so I can test
-/*new MyTimerTask().run(); //runs Geodisy when the program first get's spun up to get all the existing records
-timer.scheduleAtFixedRate(new MyTimerTask(), today.getTime(), TimeUnit.MILLISECONDS.convert(1, UNIT_BETWEEN_RUNS)); // period: 1 day */
-    timer.scheduleAtFixedRate(new MyTimerTask(),testDelay,testPeriod);
+new MyTimerTask().run(); //runs Geodisy when the program first get's spun up to get all the existing records
+//timer.scheduleAtFixedRate(new MyTimerTask(), today.getTime(), TimeUnit.MILLISECONDS.convert(1, UNIT_BETWEEN_RUNS)); // period: 1 day
+    //timer.scheduleAtFixedRate(new MyTimerTask(),testDelay,testPeriod);
     //new MyTimerTask().run();
     }
     

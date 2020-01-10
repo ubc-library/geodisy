@@ -43,10 +43,11 @@ public class GeoServerAPI extends DestinationAPI {
         logger =  new GeoLogger(this.getClass());
     }
         //TODO fix this to access layers from POSTGIS
-    public void addPostGISLayer(String geoserverlabel){
+    public void addPostGISLayer(String geoserverlabel, String filename){
         String vectorDB = TEST? TEST_VECTOR_DB : VECTOR_DB;
         String call = "curl -v -u "+ GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H \"Content-type: text/xml\" -d \"<featureType><name>" + geoserverlabel.toLowerCase() + "</name><nativeCRS>EPSG:4326</nativeCRS><srs>EPSG:4326</srs><enabled>true</enabled></featureType>\" http://localhost:8080/geoserver/rest/workspaces/geodisy/datastores/" + vectorDB + "/featuretypes";
         String deleteFirst = "curl -v -u "+ GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -X DELETE \"http://localhost:8080/geoserver/rest/workspaces/geodisy/" + geoserverlabel.toLowerCase() + "\"?recurse=true -H  \"accept: application/json\" -H  \"content-type: application/json\"";
+        //String modifyName = "curl -v -u "+ GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H \"Content-type: text/xml\" -d \"<GeoServerLayer><enabled>true</enabled><name>" + geoserverlabel.toLowerCase() + "</name><title>" + filename + "</title></GeoServerLayer>\"  \"http://localhost:8080/geoserver/gwc/rest/layers/" + geoserverlabel.toLowerCase() +".xml\"";
         ProcessBuilder processBuilder= new ProcessBuilder();
         processBuilder.command("bash", "-c",deleteFirst);
 
@@ -60,6 +61,7 @@ public class GeoServerAPI extends DestinationAPI {
             p = processBuilder.start();
             p.waitFor();
             p.destroy();
+            //processBuilder.command("bash", "-c",modifyName);
         } catch (IOException | InterruptedException e) {
             logger.error("Something went wrong adding vector layer " + geoserverlabel + " from POSTGIS");
         }

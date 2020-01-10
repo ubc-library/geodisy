@@ -11,8 +11,9 @@ public class GeodisyStrings {
         // New Repository Types need new URL Arrays [Geodisy 2]
 
         public final static String SANDBOX_DV_URL = "https://206-12-90-131.cloud.computecanada.ca/"; //currently our sandbox
-
-        public final static String[] DATAVERSE_URLS = new String[]{SANDBOX_DV_URL};
+        public final static String TEST_SCHOLARS_PORTAL = "https://demodv.scholarsportal.info/dataverse/sp/";
+        public final static String SCHOLARS_PORTAL = "https://dataverse.scholarsportal.info/dataverse/ubc/";
+        public final static String[] DATAVERSE_URLS = new String[]{SCHOLARS_PORTAL};
 
         public static boolean windowsComputerType(){
             return  System.getProperty("os.name")
@@ -35,6 +36,7 @@ public class GeodisyStrings {
         public final static String EXISTING_RECORDS = GEODISY_PATH_ROOT + "savedFiles/ExisitingRecords.txt";
         public final static String EXISTING_CHECKS = GEODISY_PATH_ROOT + "savedFiles/ExisitingChecks.txt";
         public final static String EXISTING_BBOXES = GEODISY_PATH_ROOT + "savedFiles/ExistingBBoxes.txt";
+        public final static String VECTOR_RECORDS = GEODISY_PATH_ROOT + "savedFiles/ExistingVectorRecords.txt";
         public final static String TEST_EXISTING_RECORDS = GEODISY_PATH_ROOT + "savedFiles/TestExistingRecords.txt";
         public final static String TEST_EXISTING_BBOXES = GEODISY_PATH_ROOT + "savedFiles/TestExistingBBoxes.txt";
         public final static String RASTER_RECORDS = GEODISY_PATH_ROOT + "savedFiles/ExistingRasterRecords.txt";
@@ -136,8 +138,8 @@ public class GeodisyStrings {
     public final static String VM_BASE_PATH_DEV = "https://" + DEV_ADDRESS + "/";
     public final static String VM_BASE_PATH_PROD = "tbd";
     public final static String BASE_PATH = vmToUse(TEST);
-    public final static String END_XML_JSON_FILE_PATH = BASE_PATH;
-    public final static String PATH_TO_XML_JSON_FILES = BASE_PATH + END_XML_JSON_FILE_PATH;
+    public final static String END_XML_JSON_FILE_PATH = BASE_PATH + "geodisy/";
+    public final static String PATH_TO_XML_JSON_FILES = END_XML_JSON_FILE_PATH;
     public final static String OGM_PATH = "OGM_PATH=/var/www/206-12-92-97.cloud.computecanada.ca/html/geodisy/";
     public final static String MOVE_METADATA = "rsync -av /home/centos/Geodisy/metadata/* /var/www/" + ADDRESS + "/html/geodisy/";
     public final static String DELETE_DUPLICATE_META_FOLDER = "rm -rf /home/centos/Geodisy/metadata/*";
