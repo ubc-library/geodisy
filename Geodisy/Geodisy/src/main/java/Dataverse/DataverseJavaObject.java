@@ -11,6 +11,8 @@ import org.json.JSONObject;
 
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -127,7 +129,10 @@ public class DataverseJavaObject extends SourceJavaObject {
                 dRF.setOriginalTitle(title);
             }
             SourceRecordFiles srf = SourceRecordFiles.getSourceRecords();
-            srf.putRecord(dRF.getDoi(),dRF.title,dRF);
+            if(dRF.getDatasetDOI().equals(""))
+                srf.putRecord(dRF.getDatasetDOI(),dRF.title,dRF);
+            else
+                srf.putRecord(dRF.getDoi(),dRF.title,dRF);
             dataFiles.add(dRF);
         }
     }
@@ -180,6 +185,16 @@ public class DataverseJavaObject extends SourceJavaObject {
             if(GeodisyStrings.hasGeospatialFile(dRF.getTitle()))
                 hasGeospatialFile = true;
         }
+        if(dataFiles.size()>20){
+            int counter = 0;
+            for(DataverseRecordFile dRF : dataFiles){
+                if(dRF.getTitle().endsWith(".tif"))
+                    counter++;
+            }
+            if(counter>15){
+                mergeTiles(dataFiles.get(0));
+            }
+        }
         for (DataverseRecordFile dRF : dataFiles) {
             if (GeodisyStrings.fileTypesToIgnore(dRF.title))
                 continue;
@@ -214,6 +229,51 @@ public class DataverseJavaObject extends SourceJavaObject {
                 break;
             }
         }
+    }
+
+    private void mergeTiles(DataverseRecordFile drf) {
+        String merge = "gdalbuildvrt mpsaic.vrt " + DATASET_FILES_PATH + drf.getDatasetDOI().replace("_","/") + "/";
+        String delete = "rm "+ DATASET_FILES_PATH + drf.getDatasetDOI().replace("_","/") + "/*.tif";
+        String transform ="gdal_translate -of GTiff -co \"COMPRESS=JPEG\" -co \"PHOTOMETRIC=YCBCR\" -co \"TILED=YES\" mosaic.vrt" + drf.getDatasetDOI() + ".tif";
+        ProcessBuilder p = new ProcessBuilder();
+        p.command("bash","-c",merge);
+        Process process = null;
+        try {
+            process = p.start();
+
+            process.waitFor();
+            process.destroy();
+        } catch (IOException | InterruptedException e) {
+            logger.error("Something went wrong trying to merge tifs in a mosaic file in record: " + drf.getDatasetDOI());
+        }
+        try{
+            p.command("bash","-c",delete);
+            process = p.start();
+            process.waitFor();
+            process.destroy();
+        } catch (IOException | InterruptedException e) {
+            logger.error("Something went wrong trying to delete merged tifs in record: " + drf.getDatasetDOI());
+        }
+        try{
+        p.command("bash","-c",transform);
+            process = p.start();
+            process.waitFor();
+            process.destroy();
+        } catch (IOException | InterruptedException e) {
+            logger.error("Something went wrong trying to convert merged tifs (mosaic) to to a new tif in record: " + drf.getDatasetDOI());
+        }
+        DataverseRecordFile temp;
+        if(drf.getDoi().equals(""))
+            temp = new DataverseRecordFile(drf.getDatasetDOI().replace("_","/") + "/*.tif",drf.getDbID(),drf.getServer(),drf.getDatasetDOI());
+        else
+            temp = new DataverseRecordFile(drf.getDatasetDOI().replace("_","/") + "/*.tif",drf.getDoi(),drf.getDbID(),drf.getServer(),drf.getDatasetDOI());
+
+        for(Iterator<DataverseRecordFile> iter = dataFiles.iterator(); iter.hasNext();){
+            DataverseRecordFile check = iter.next();
+            if(check.getTitle().toLowerCase().endsWith(".tif"))
+                iter.remove();
+        }
+        dataFiles.add(temp);
     }
 
     private DataverseRecordFile createRecords(DataverseRecordFile drf, int number, String type) {

@@ -34,56 +34,55 @@ public class GDAL {
         GeographicBoundingBox gbb;
         int raster = 0;
         int vector = 0;
-        for(String name: fileNames){
+        for(String name: fileNames) {
             gbb = new GeographicBoundingBox(doi);
-            if(GeodisyStrings.otherShapeFilesExtensions(name)||GeodisyStrings.fileTypesToIgnore(name))
+            if (GeodisyStrings.otherShapeFilesExtensions(name) || GeodisyStrings.fileTypesToIgnore(name))
                 continue;
             String lowerName = name.toLowerCase();
             String filePath = DATASET_FILES_PATH + path + "/" + name;
-            if(!GeodisyStrings.gdalinfoRasterExtention(lowerName) && !GeodisyStrings.ogrinfoVectorExtension(lowerName))
+            if (!GeodisyStrings.gdalinfoRasterExtention(lowerName) && !GeodisyStrings.ogrinfoVectorExtension(lowerName))
                 continue;
             boolean gdalInfo = GeodisyStrings.gdalinfoRasterExtention(lowerName);
 
             String gdalString;
             GeographicBoundingBox temp;
-            String projection =  "";
+            String projection = "";
 
             // Convert Rasters to Geotiff and Vector to Shapefiles
-            name = convertToCommonType(gdalInfo,name, path, djo);
+            name = convertToCommonType(gdalInfo, name, path, djo);
 
-            if(GeodisyStrings.gdalinfoRasterExtention(name))
+            if (name.endsWith(".tif"))
                 raster++;
-            if(GeodisyStrings.ogrinfoVectorExtension(name))
+            if (name.endsWith(".shp"))
                 vector++;
-
-            try {
-                gdalString = getGDALInfo(filePath, name, IS_WINDOWS);
-                if(gdalString.contains("FAILURE")) {
-                    logger.warn("Something went wrong parsing " + name + " at " + filePath);
-                    continue;
-                }
-                String convertedName;
-                String nameStub = name.substring(0,name.length()-3);
-                if(gdalInfo) {
-                    temp = getRaster(gdalString);
-                    projection = getProjection(gdalString);
-                    convertedName = nameStub + "tif";
-                }
-                else {
-                    temp = getVector(gdalString, IS_WINDOWS, lowerName, filePath);
-                    projection = temp.getField(PROJECTION);
-                    convertedName = nameStub + "tif";
-                }
-                temp.setIsGeneratedFromGeoFile(true);
-                if(!temp.hasBB()) {
-                    if (GeodisyStrings.gdalinfoRasterExtention(name))
-                        raster--;
-                    if (GeodisyStrings.ogrinfoVectorExtension(name))
-                        vector--;
-                    File f = new File(DATASET_FILES_PATH + path + "/" + convertedName);
-                    f.delete();
-                    djo.removeGeoDataFile(convertedName);
-                }
+            if (name.endsWith(".tif") || name.endsWith(".shp")) {
+                try {
+                    gdalString = getGDALInfo(filePath, name, IS_WINDOWS);
+                    if (gdalString.contains("FAILURE")) {
+                        logger.warn("Something went wrong parsing " + name + " at " + filePath);
+                        continue;
+                    }
+                    String convertedName;
+                    String nameStub = name.substring(0, name.length() - 3);
+                    if (gdalInfo) {
+                        temp = getRaster(gdalString);
+                        projection = getProjection(gdalString);
+                        convertedName = nameStub + "tif";
+                    } else {
+                        temp = getVector(gdalString, IS_WINDOWS, lowerName, filePath);
+                        projection = temp.getField(PROJECTION);
+                        convertedName = nameStub + "shp";
+                    }
+                    temp.setIsGeneratedFromGeoFile(true);
+                    if (!temp.hasBB()) {
+                        if (GeodisyStrings.gdalinfoRasterExtention(name))
+                            raster--;
+                        if (GeodisyStrings.ogrinfoVectorExtension(name))
+                            vector--;
+                        File f = new File(DATASET_FILES_PATH + path + "/" + convertedName);
+                        f.delete();
+                        djo.removeGeoDataFile(convertedName);
+                    }
                  /*
                     gbb.setField(GEOMETRY,temp.getField(GEOMETRY));
                     GeographicFields gf = djo.getGeoFields();
@@ -102,34 +101,32 @@ public class GDAL {
 
                   */
 
-            } catch (IOException e) {
-                logger.error("Something went wrong trying to call GDAL with " + name);
-            }
-            File[] files = folder.listFiles();
-            GeographicFields gf = djo.getGeoFields();
-            List<GeographicBoundingBox> bboxes = gf.getGeoBBoxes();
-            int vectorCount = 1;
-            int rasterCount = 1;
-            for(File file:files){
-                String number;
-                if(file.getName().endsWith(".shp")) {
-                    if (vector > 1) {
-                        number = String.valueOf(vectorCount);
-                        vectorCount++;
-                    }
-                    else
-                        number = "";
+                } catch (IOException e) {
+                    logger.error("Something went wrong trying to call GDAL with " + name);
                 }
-                else if(file.getName().endsWith(".tif")) {
-                    if (raster > 1) {
-                        number = String.valueOf(rasterCount);
-                        rasterCount++;
-                    }
-                    else
+                File[] files = folder.listFiles();
+                GeographicFields gf = djo.getGeoFields();
+                List<GeographicBoundingBox> bboxes = gf.getGeoBBoxes();
+                int vectorCount = 1;
+                int rasterCount = 1;
+                for (File file : files) {
+                    String number;
+                    if (file.getName().endsWith(".shp")) {
+                        if (vector > 1) {
+                            number = String.valueOf(vectorCount);
+                            vectorCount++;
+                        } else
+                            number = "";
+                    } else if (file.getName().endsWith(".tif")) {
+                        if (raster > 1) {
+                            number = String.valueOf(rasterCount);
+                            rasterCount++;
+                        } else
+                            number = "";
+                    } else
                         number = "";
-                }else
-                    number = "";
-                bboxes.add(generateBB(file, doi,number));
+                    bboxes.add(generateBB(file, doi, number));
+                }
             }
         }
         return djo;

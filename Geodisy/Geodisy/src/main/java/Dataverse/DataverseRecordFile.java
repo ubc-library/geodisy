@@ -64,11 +64,11 @@ public class DataverseRecordFile {
     public DataverseRecordFile(String title, int dbID, String server, String datasetDOI){
         this.title = title;
         this.dbID = dbID;
-        this.doi = String.valueOf(dbID);
+        this.doi = "";
         this.server = server;
-        recordURL = String.format(server+"api/access/datafile/$d?format=original", dbID);
+        recordURL = server+"api/access/datafile/" + dbID + "?format=original";
         this.datasetDOI = datasetDOI;
-        gbb = new GeographicBoundingBox(doi);
+        gbb = new GeographicBoundingBox(datasetDOI);
 
 
     }
@@ -117,7 +117,7 @@ public class DataverseRecordFile {
                 }
             }
         } catch (FileNotFoundException e){
-            logger.info(String.format("This dataset file %s couldn't be found from dataset %s. ", dbID, doi) + "Check out dataset " + datasetDOI, djo);
+            logger.info(String.format("This dataset file %s couldn't be found from dataset %s. ", dbID, datasetDOI) + "Check out dataset " + datasetDOI, djo);
         }catch (MalformedURLException e) {
             logger.error(String.format("Something is wonky with the PERSISTENT_ID " + doi + " or the dbID " + dbID));
         } catch (IOException e) {
@@ -150,7 +150,10 @@ public class DataverseRecordFile {
                 drf.setOriginalTitle(originalTitle);
                 drf.setIsFromFile(true);
                 djo.addGeoDataFile(drf);
-                evr.addOrReplaceRecord(drf.doi+name,originalName);
+                if(!doi.equals(""))
+                    evr.addOrReplaceRecord(drf.doi+name,originalName);
+                else
+                    evr.addOrReplaceRecord(drf.datasetDOI+name,originalName);
             } else if (GeodisyStrings.gdalinfoRasterExtention(f.getName())) {
                 if (!name.endsWith(".tif"))
                     name = gdalTranslate.rasterTransform(dirPath, f.getName(), djo);
@@ -171,7 +174,10 @@ public class DataverseRecordFile {
                     drf.setOriginalTitle(originalTitle);
                     drf.setIsFromFile(true);
                     djo.addGeoDataFile(drf);
-                    evr.addOrReplaceRecord(drf.doi+name,originalName);
+                    if(!doi.equals(""))
+                        evr.addOrReplaceRecord(drf.doi+name,originalName);
+                    else
+                        evr.addOrReplaceRecord(drf.datasetDOI+name,originalName);
                 } else {
                     String path = djo.getDOI().replace("/", "_");
                     path = path.replace(".", "_");
@@ -295,5 +301,53 @@ public class DataverseRecordFile {
 
     public String getOriginalTitle(){
         return originalTitle;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDoi(String doi) {
+        this.doi = doi;
+    }
+
+    public int getDbID() {
+        return dbID;
+    }
+
+    public void setDbID(int dbID) {
+        this.dbID = dbID;
+    }
+
+    public String getServer() {
+        return server;
+    }
+
+    public void setServer(String server) {
+        this.server = server;
+    }
+
+    public String getRecordURL() {
+        return recordURL;
+    }
+
+    public void setRecordURL(String recordURL) {
+        this.recordURL = recordURL;
+    }
+
+    public void setDatasetDOI(String datasetDOI) {
+        this.datasetDOI = datasetDOI;
+    }
+
+    public GeographicBoundingBox getGbb() {
+        return gbb;
+    }
+
+    public void setGbb(GeographicBoundingBox gbb) {
+        this.gbb = gbb;
+    }
+
+    public void setFileNumber(int fileNumber) {
+        this.fileNumber = fileNumber;
     }
 }

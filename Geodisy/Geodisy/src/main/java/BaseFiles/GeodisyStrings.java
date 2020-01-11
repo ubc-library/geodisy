@@ -11,9 +11,9 @@ public class GeodisyStrings {
         // New Repository Types need new URL Arrays [Geodisy 2]
 
         public final static String SANDBOX_DV_URL = "https://206-12-90-131.cloud.computecanada.ca/"; //currently our sandbox
-        public final static String TEST_SCHOLARS_PORTAL = "https://demodv.scholarsportal.info/dataverse/sp/";
-        public final static String SCHOLARS_PORTAL = "https://dataverse.scholarsportal.info/dataverse/ubc/";
-        public final static String[] DATAVERSE_URLS = new String[]{SCHOLARS_PORTAL};
+        public final static String TEST_SCHOLARS_PORTAL = "https://demodv.scholarsportal.info/";
+        public final static String SCHOLARS_PORTAL = "https://dataverse.scholarsportal.info/";
+        public final static String[] DATAVERSE_URLS = new String[]{TEST_SCHOLARS_PORTAL};
 
         public static boolean windowsComputerType(){
             return  System.getProperty("os.name")
@@ -160,11 +160,16 @@ public class GeodisyStrings {
             return PROD_ADDRESS;
     }
     public static boolean fileTypesToIgnore(String title){
-        for (String s : GeodisyStrings.FILE_TYPES_TO_IGNORE) {
+        for (String s : FILE_TYPES_TO_IGNORE) {
             if (title.toLowerCase().endsWith(s))
                 return true;
         }
-        return false;
+        String[] temp = ArrayUtils.addAll(OGRINFO_VECTOR_FILE_EXTENSIONS,GDALINFO_RASTER_FILE_EXTENSIONS);
+        for(String s: temp){
+            if(title.toLowerCase().endsWith(s))
+                return false;
+        }
+        return true;
     }
 
     public static boolean fileToAllow(String title){
