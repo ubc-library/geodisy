@@ -11,8 +11,6 @@ import org.json.JSONObject;
 
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -129,10 +127,10 @@ public class DataverseJavaObject extends SourceJavaObject {
                 dRF.setOriginalTitle(title);
             }
             SourceRecordFiles srf = SourceRecordFiles.getSourceRecords();
-            if(dRF.getDatasetDOI().equals(""))
-                srf.putRecord(dRF.getDatasetDOI(),dRF.title,dRF);
+            if(dRF.getDatasetIdent().equals(""))
+                srf.putRecord(dRF.getDatasetIdent(),dRF.title,dRF);
             else
-                srf.putRecord(dRF.getDoi(),dRF.title,dRF);
+                srf.putRecord(dRF.getFileIdent(),dRF.title,dRF);
             dataFiles.add(dRF);
         }
     }
@@ -169,7 +167,6 @@ public class DataverseJavaObject extends SourceJavaObject {
      */
     @Override
     public void downloadFiles() {
-        //TODO something is going wrong with record 10_5072_FK2_GMKLWX
         File f = new File("datasetFiles/" + urlized(citationFields.getDOI()));
         deleteDir(f);
         List<DataverseRecordFile> temp = new LinkedList<>();
@@ -177,23 +174,13 @@ public class DataverseJavaObject extends SourceJavaObject {
         for (DataverseRecordFile dRF : dataFiles) {
             if(GeodisyStrings.fileTypesToIgnore(dRF.title))
                 continue;
-            if(tempDRF.getDoi().equals("temp"))
+            if(tempDRF.getFileIdent().equals("temp"))
                 tempDRF = dRF.retrieveFile(this);
             else
                 dRF.retrieveFile(this);
 
             if(GeodisyStrings.hasGeospatialFile(dRF.getTitle()))
                 hasGeospatialFile = true;
-        }
-        if(dataFiles.size()>20){
-            int counter = 0;
-            for(DataverseRecordFile dRF : dataFiles){
-                if(dRF.getTitle().endsWith(".tif"))
-                    counter++;
-            }
-            if(counter>15){
-                mergeTiles(dataFiles.get(0));
-            }
         }
         for (DataverseRecordFile dRF : dataFiles) {
             if (GeodisyStrings.fileTypesToIgnore(dRF.title))
@@ -231,10 +218,11 @@ public class DataverseJavaObject extends SourceJavaObject {
         }
     }
 
-    private void mergeTiles(DataverseRecordFile drf) {
-        String merge = "gdalbuildvrt mpsaic.vrt " + DATASET_FILES_PATH + drf.getDatasetDOI().replace("_","/") + "/";
-        String delete = "rm "+ DATASET_FILES_PATH + drf.getDatasetDOI().replace("_","/") + "/*.tif";
-        String transform ="gdal_translate -of GTiff -co \"COMPRESS=JPEG\" -co \"PHOTOMETRIC=YCBCR\" -co \"TILED=YES\" mosaic.vrt" + drf.getDatasetDOI() + ".tif";
+    //May need to merge tilesets later, but ignore this for now
+    /*private void mergeTiles(DataverseRecordFile drf) {
+        String merge = "gdalbuildvrt mpsaic.vrt " + DATASET_FILES_PATH + drf.getDatasetIdent().replace("_","/") + "/";
+        String delete = "rm "+ DATASET_FILES_PATH + drf.getDatasetIdent().replace("_","/") + "/*.tif";
+        String transform ="gdal_translate -of GTiff -co \"COMPRESS=JPEG\" -co \"PHOTOMETRIC=YCBCR\" -co \"TILED=YES\" mosaic.vrt" + drf.getDatasetIdent() + ".tif";
         ProcessBuilder p = new ProcessBuilder();
         p.command("bash","-c",merge);
         Process process = null;
@@ -244,7 +232,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             process.waitFor();
             process.destroy();
         } catch (IOException | InterruptedException e) {
-            logger.error("Something went wrong trying to merge tifs in a mosaic file in record: " + drf.getDatasetDOI());
+            logger.error("Something went wrong trying to merge tifs in a mosaic file in record: " + drf.getDatasetIdent());
         }
         try{
             p.command("bash","-c",delete);
@@ -252,7 +240,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             process.waitFor();
             process.destroy();
         } catch (IOException | InterruptedException e) {
-            logger.error("Something went wrong trying to delete merged tifs in record: " + drf.getDatasetDOI());
+            logger.error("Something went wrong trying to delete merged tifs in record: " + drf.getDatasetIdent());
         }
         try{
         p.command("bash","-c",transform);
@@ -260,13 +248,13 @@ public class DataverseJavaObject extends SourceJavaObject {
             process.waitFor();
             process.destroy();
         } catch (IOException | InterruptedException e) {
-            logger.error("Something went wrong trying to convert merged tifs (mosaic) to to a new tif in record: " + drf.getDatasetDOI());
+            logger.error("Something went wrong trying to convert merged tifs (mosaic) to to a new tif in record: " + drf.getDatasetIdent());
         }
         DataverseRecordFile temp;
-        if(drf.getDoi().equals(""))
-            temp = new DataverseRecordFile(drf.getDatasetDOI().replace("_","/") + "/*.tif",drf.getDbID(),drf.getServer(),drf.getDatasetDOI());
+        if(drf.getFileIdent().equals(""))
+            temp = new DataverseRecordFile(drf.getDatasetIdent().replace("_","/") + "/*.tif",drf.getDbID(),drf.getServer(),drf.getDatasetIdent());
         else
-            temp = new DataverseRecordFile(drf.getDatasetDOI().replace("_","/") + "/*.tif",drf.getDoi(),drf.getDbID(),drf.getServer(),drf.getDatasetDOI());
+            temp = new DataverseRecordFile(drf.getDatasetIdent().replace("_","/") + "/*.tif",drf.getFileIdent(),drf.getDbID(),drf.getServer(),drf.getDatasetIdent());
 
         for(Iterator<DataverseRecordFile> iter = dataFiles.iterator(); iter.hasNext();){
             DataverseRecordFile check = iter.next();
@@ -274,12 +262,12 @@ public class DataverseJavaObject extends SourceJavaObject {
                 iter.remove();
         }
         dataFiles.add(temp);
-    }
+    }*/
 
     private DataverseRecordFile createRecords(DataverseRecordFile drf, int number, String type) {
         DataverseRecordFile tempDRF;
         GDAL gdal = new GDAL();
-        String dirPath = DATASET_FILES_PATH + drf.getDatasetDOI().replace("_","/") + "/";
+        String dirPath = DATASET_FILES_PATH + drf.getDatasetIdent().replace("_","/") + "/";
         String filePath = dirPath + drf.getTitle();
         File fUpdate = new File(filePath);
         tempDRF = gdal.parse(fUpdate);
@@ -288,7 +276,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             drf.setProjection(tempDRF.getProjection());
             drf.setBB(tempDRF.getBB());
             drf.addFileNumber(number);
-            drf.setGeoserverLabel(labelize(this.getSimpleFieldVal(PERSISTENT_ID))+ "v" + number);
+            drf.setGeoserverLabel(labelize(this.getDOIProtocal() + this.getSimpleFieldVal(PERSISTENT_ID))+ "v" + number);
             addVectorToGeoserver(fUpdate.getName(),drf.getGeoserverLabel());
             return drf;
         }else if(type.equals(RASTER)){

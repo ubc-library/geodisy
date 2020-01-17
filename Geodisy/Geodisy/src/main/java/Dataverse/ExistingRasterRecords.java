@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import static BaseFiles.GeodisyStrings.RASTER_RECORDS;
+
 
 public class ExistingRasterRecords extends ExisitingFile implements Serializable {
     private static final long serialVersionUID = 5416853597895403201L;
@@ -23,12 +25,13 @@ public class ExistingRasterRecords extends ExisitingFile implements Serializable
 
     private ExistingRasterRecords(){
         logger = new GeoLogger(this.getClass());
-        records = new HashMap<>();
+        records = readExistingRecords(RASTER_RECORDS);
     }
 
     public void addOrReplaceRecord(String doi, String fileName){
         records.put(doi+fileName,fileName);
     }
+
     public HashMap<String, String> readExistingRecords(String path){
         HashMap<String, String> newFile = new HashMap<>();
         FileWriter fw = new FileWriter();

@@ -133,3 +133,13 @@ Geodisy/Geodisy/metadata/
 Geodisy/ModifyGeoserver/.idea/
 
 Geodisy/ModifyGeoserver/out/artifacts/ModifyGeoserver_jar/
+
+Geodisy/DownloadRecord/.idea/
+
+Geodisy/MoveMetadataAndRunGeoCombine/.idea/
+
+Geodisy/TileMerge/.idea/
+
+testingFolder/
+
+*.jar

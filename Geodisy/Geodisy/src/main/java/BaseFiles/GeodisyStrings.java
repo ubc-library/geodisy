@@ -13,7 +13,7 @@ public class GeodisyStrings {
         public final static String SANDBOX_DV_URL = "https://206-12-90-131.cloud.computecanada.ca/"; //currently our sandbox
         public final static String TEST_SCHOLARS_PORTAL = "https://demodv.scholarsportal.info/";
         public final static String SCHOLARS_PORTAL = "https://dataverse.scholarsportal.info/";
-        public final static String[] DATAVERSE_URLS = new String[]{TEST_SCHOLARS_PORTAL};
+        public final static String[] DATAVERSE_URLS = new String[]{SANDBOX_DV_URL};
 
         public static boolean windowsComputerType(){
             return  System.getProperty("os.name")
@@ -62,14 +62,14 @@ public class GeodisyStrings {
         private final static String OGRINFO_CLOUD = "/usr/gdal30/bin/ogrinfo -ro -al -so ";
         public final static String GDALINFO = getGdalInfo();
         public final static String OGRINFO = getOgrInfo();
-        private final static String[] GDALINFO_RASTER_FILE_EXTENSIONS = { ".tif", ".tiff",".xyz"};
+        private final static String[] GDALINFO_RASTER_FILE_EXTENSIONS = { ".tif", ".tiff",".xyz", ".png"};
         private final static String[] NON_SHP_SHAPEFILE_EXTENSIONS = {".shx", ".dbf", ".sbn",".prj"};
         private final static String[] OGRINFO_PROCESSABLE_EXTENTIONS = {".geojson",".shp",".kmz",".csv",".tab",".gpkg", ".kml"}; //also .csv, but need to check if the csv is actually geospatial in nature
         public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = ArrayUtils.addAll(NON_SHP_SHAPEFILE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS);
         public final static String[] PREVIEWABLE_FILE_EXTENSIONS = {".tif", ".kmz"};
         private final static String OGR2OGR_LOCAL = "C:\\Program Files\\GDAL\\ogr2ogr -f \"ESRI Shapefile\" ";
         private final static String GDAL_TRANSLATE_LOCAL = "C:\\Program Files\\GDAL\\gdal_translate -of GTiff ";
-        private final static String OGR2OGR_CLOUD = "/usr/gdal30/bin/ogr2ogr -f \"ESRI Shapefile\" ";
+        private final static String OGR2OGR_CLOUD = "/usr/gdal30/bin/ogr2ogr -t_srs EPSG:4326 -f \"ESRI Shapefile\" ";
         private final static String GDAL_TRANSLATE_CLOUD = "/usr/gdal30/bin/gdal_translate -of GTiff ";
         public final static String OGR2OGR = getOgr2Ogr();
         public final static String GDAL_TRANSLATE = getGdalTranslate();
@@ -109,7 +109,7 @@ public class GeodisyStrings {
 
 
     //Unused file type extensions
-    public final static String[] FILE_TYPES_TO_IGNORE = {".txt",".doc",".pdf",".jpg", ".docx",".las",".xml", ".nc", ".png"};
+    public final static String[] FILE_TYPES_TO_IGNORE = {".txt",".doc",".pdf",".jpg", ".docx",".las",".xml", ".nc"};
     public final static String[] FILE_TYPES_TO_ALLOW = ArrayUtils.addAll(GDALINFO_RASTER_FILE_EXTENSIONS, OGRINFO_VECTOR_FILE_EXTENSIONS);
 
         public final static String RASTER = "Raster";
@@ -135,8 +135,8 @@ public class GeodisyStrings {
     public final static String DEV_ADDRESS = "206-12-92-97.cloud.computecanada.ca";
     public final static String PROD_ADDRESS = "206-12-92-97.cloud.computecanada.ca";
     public final static String ADDRESS = addressToUse(TEST);
-    public final static String VM_BASE_PATH_DEV = "https://" + DEV_ADDRESS + "/";
-    public final static String VM_BASE_PATH_PROD = "tbd";
+    public final static String VM_BASE_PATH_DEV = "https://" + ADDRESS + "/";
+    public final static String VM_BASE_PATH_PROD = "https://" + ADDRESS + "/";
     public final static String BASE_PATH = vmToUse(TEST);
     public final static String END_XML_JSON_FILE_PATH = BASE_PATH + "geodisy/";
     public final static String PATH_TO_XML_JSON_FILES = END_XML_JSON_FILE_PATH;
@@ -160,10 +160,6 @@ public class GeodisyStrings {
             return PROD_ADDRESS;
     }
     public static boolean fileTypesToIgnore(String title){
-        for (String s : FILE_TYPES_TO_IGNORE) {
-            if (title.toLowerCase().endsWith(s))
-                return true;
-        }
         String[] temp = ArrayUtils.addAll(OGRINFO_VECTOR_FILE_EXTENSIONS,GDALINFO_RASTER_FILE_EXTENSIONS);
         for(String s: temp){
             if(title.toLowerCase().endsWith(s))

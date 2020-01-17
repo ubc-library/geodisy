@@ -1,7 +1,6 @@
 package Crosswalking.GeoBlacklightJson;
 
 import BaseFiles.GeoLogger;
-import BaseFiles.HTTPCaller;
 import Crosswalking.XML.XMLTools.JGit;
 
 import java.io.IOException;
@@ -16,7 +15,7 @@ public class GeoCombine {
 
     public void index(){
         ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.command(new String[] {"/bin/bash", "-c", MOVE_METADATA});
+        processBuilder.command("/bin/bash", "-c", MOVE_METADATA);
 
         Process p = null;
         try {
@@ -24,12 +23,12 @@ public class GeoCombine {
             p = processBuilder.start();
             p.waitFor();
             p.destroy();
-            /*processBuilder.command(new String[] {"/bin/bash", "-c", DELETE_DUPLICATE_META_FOLDER});
+            processBuilder.command("/bin/bash", "-c", DELETE_DUPLICATE_META_FOLDER);
             p = processBuilder.start();
             p.waitFor();
-            p.destroy();*/
+            p.destroy();
             System.out.println("Calling Geocombine");
-            processBuilder.command(new String[] { "/bin/bash", "-c", GEOCOMBINE});
+            processBuilder.command("/bin/bash", "-c", GEOCOMBINE);
             p.waitFor();
             p.destroy();
         } catch (IOException | InterruptedException e) {

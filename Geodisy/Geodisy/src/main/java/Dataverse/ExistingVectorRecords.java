@@ -4,9 +4,12 @@ import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
 import BaseFiles.GeodisyStrings;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
+
+import static BaseFiles.GeodisyStrings.VECTOR_RECORDS;
 
 
 public class ExistingVectorRecords extends ExisitingFile implements Serializable {
@@ -23,7 +26,7 @@ public class ExistingVectorRecords extends ExisitingFile implements Serializable
 
     private ExistingVectorRecords(){
         logger = new GeoLogger(this.getClass());
-        records = new HashMap<>();
+        records = readExistingRecords(VECTOR_RECORDS);
     }
 
     public void addOrReplaceRecord(String doiAndFileName, String originalName){
@@ -33,8 +36,10 @@ public class ExistingVectorRecords extends ExisitingFile implements Serializable
         HashMap<String, String> newFile = new HashMap<>();
         FileWriter fw = new FileWriter();
         try {
-            records =  (HashMap<String, String>) fw.readSavedObject(GeodisyStrings.replaceSlashes(path));
+            records = (HashMap<String, String>) fw.readSavedObject(GeodisyStrings.replaceSlashes(path));
             return records;
+        } catch (FileNotFoundException e){
+            return newFile;
         } catch (IOException e) {
             logger.error("Something went wrong reading " + path);
             return newFile;

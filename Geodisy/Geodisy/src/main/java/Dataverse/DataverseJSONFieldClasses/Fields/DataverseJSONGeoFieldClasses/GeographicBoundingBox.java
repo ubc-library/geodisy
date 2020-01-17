@@ -11,10 +11,10 @@ import static Dataverse.DVFieldNameStrings.*;
 public class GeographicBoundingBox extends CompoundJSONField {
     private BoundingBox bb;
     String doi;
-    private String projection;
-    private String fileName;
-    private String geometryType;
-    private String geoserverLabel;
+    private String projection = "";
+    private String fileName = "";
+    private String geometryType = "Non-Geospatial";
+    private String geoserverLabel = "";
     private boolean generated = false;
     private int fileNumber = 0;
 
@@ -22,17 +22,11 @@ public class GeographicBoundingBox extends CompoundJSONField {
     public GeographicBoundingBox(String doi) {
         this.doi = doi;
         this.bb = new BoundingBox();
-        projection = "";
-        fileName = "";
-        geoserverLabel = "";
-        geometryType = "Non-Geospatial";
     }
 
     public GeographicBoundingBox(String doi, BoundingBox bb){
         this.doi = doi;
         this.bb = bb;
-        projection = "";
-        geometryType = "Non-Geospatial";
     }
 
     public String getFileNumber(){
@@ -225,7 +219,7 @@ public class GeographicBoundingBox extends CompoundJSONField {
         return fileName;
     }
 
-    public void setFileName(String name){
+    private void setFileName(String name){
        while(name.startsWith("/")) {
            name = name.substring(1);
        }

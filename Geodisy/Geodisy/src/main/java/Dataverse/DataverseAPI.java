@@ -51,6 +51,8 @@ public class DataverseAPI extends SourceAPI {
         }
         DataverseParser parser = new DataverseParser();
         System.out.println("This is using the " + dvURL + " dataverse for getting files, should it be changed to something else?");
+        int counter = jsons.size();
+        System.out.println("Downloading records starting at: " + Calendar.getInstance().getTime());
         for(JSONObject jo:jsons){
             String doi ="";
             try {
@@ -72,8 +74,12 @@ public class DataverseAPI extends SourceAPI {
             if(djo.hasContent && es.hasRecord(djo.getDOI()))
                 recordsThatNoLongerExist.remove(djo.getDOI());
             if(djo.hasContent()&& hasNewInfo(djo, es)) {
+                //System.out.println("Downloading record: " + fileIdent);
                 djo.downloadFiles();
+                counter--;
+                //System.out.println("Finished downloading files from: " + fileIdent + " only " + counter + "more records to download");
                 djo = generateBoundingBox(djo);
+                //System.out.println("Finished generating Bounding boxes for: " + fileIdent);
                 if(!djo.hasBoundingBox())
                     if(djo.hasGeoGraphicCoverage())
                         getBBFromGeonames(djo);

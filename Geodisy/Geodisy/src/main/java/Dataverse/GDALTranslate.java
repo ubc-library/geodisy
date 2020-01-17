@@ -12,14 +12,12 @@ import static BaseFiles.GeodisyStrings.*;
 
 public class GDALTranslate {
     GeoLogger logger;
-    DataverseJavaObject djo;
 
     public GDALTranslate() {
         logger = new GeoLogger(this.getClass());
     }
 
-    public String rasterTransform(String dirPath, String name, DataverseJavaObject djo){
-        this.djo = djo;
+    public String rasterTransform(String dirPath, String name){
         boolean transformed = process(dirPath,name,RASTER);
 
         if(transformed) {
@@ -28,9 +26,11 @@ public class GDALTranslate {
         }else
             return name;
     }
+    public void rasterTransformTest(String dirPath, String name, boolean newLocation){
+        process(dirPath,name,RASTER,newLocation);
+    }
 
-    public String vectorTransform(String dirPath, String name,DataverseJavaObject djo){
-        this.djo = djo;
+    public String vectorTransformTest(String dirPath, String name){
         boolean transformed = process(dirPath,name,VECTOR);
 
         if(transformed) {
@@ -42,10 +42,18 @@ public class GDALTranslate {
         }
 
     }
-    private boolean process(String dirPath, String name, String transformType) {
-        return process(dirPath,dirPath,name,transformType);
+    public void vectorTransformTest(String dirPath, String name, boolean newLocation) {
+        boolean transformed = process(dirPath, name, VECTOR, newLocation);
     }
-    public boolean process(String sourcePath, String destPath, String name, String transformType){
+
+    private boolean process(String dirPath, String name, String transformType) {
+        return process(dirPath,dirPath,name,transformType, false);
+    }
+
+    private boolean process(String dirPath, String name, String transformType,boolean newLocation) {
+        return process(dirPath,dirPath,name,transformType, newLocation);
+    }
+    public boolean process(String sourcePath, String destPath, String name, String transformType, boolean newLocation){
         if(transformType.equals(VECTOR))
             if(GeodisyStrings.otherShapeFilesExtensions(name))
                 return false;
@@ -54,9 +62,13 @@ public class GDALTranslate {
         if(transformType.equals(RASTER))
             if(name.endsWith(".tif"))
                 return false;
-
-        sourcePath = GEODISY_PATH_ROOT + GeodisyStrings.replaceSlashes(sourcePath);
-        destPath = GEODISY_PATH_ROOT + GeodisyStrings.replaceSlashes(destPath);
+        if(newLocation){
+            sourcePath = GeodisyStrings.replaceSlashes(sourcePath);
+            destPath = GeodisyStrings.replaceSlashes(destPath);
+        }else {
+            sourcePath = GEODISY_PATH_ROOT + GeodisyStrings.replaceSlashes(sourcePath);
+            destPath = GEODISY_PATH_ROOT + GeodisyStrings.replaceSlashes(destPath);
+        }
         String call;
         String nameStub = name.substring(0,name.lastIndexOf("."));
         File file;

@@ -3,11 +3,12 @@ package Dataverse;
 import BaseFiles.GeoLogger;
 import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
-import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 
 import java.io.*;
-import java.util.List;
+import java.util.Iterator;
+import java.util.LinkedList;
+
 import static BaseFiles.GeodisyStrings.*;
 import static Dataverse.DVFieldNameStrings.*;
 
@@ -18,6 +19,7 @@ public class GDAL {
         String doi = djo.getDOI();
         String path = doi.replace(".","/");
         String folderName = DATASET_FILES_PATH +path+"/";
+        LinkedList<DataverseRecordFile> origRecords = djo.getDataFiles();
         File folder = new File(folderName);
         if(!folder.exists())
             folder.mkdirs();
@@ -34,14 +36,24 @@ public class GDAL {
         GeographicBoundingBox gbb;
         int raster = 0;
         int vector = 0;
-        for(String name: fileNames) {
+        LinkedList<DataverseRecordFile> records = djo.getGeoDataFiles();
+        for(Iterator<DataverseRecordFile> iter = origRecords.iterator(); iter.hasNext();) {
+            DataverseRecordFile drf = iter.next();
+            String name = drf.getFileName();
             gbb = new GeographicBoundingBox(doi);
             if (GeodisyStrings.otherShapeFilesExtensions(name) || GeodisyStrings.fileTypesToIgnore(name))
                 continue;
             String lowerName = name.toLowerCase();
             String filePath = DATASET_FILES_PATH + path + "/" + name;
-            if (!GeodisyStrings.gdalinfoRasterExtention(lowerName) && !GeodisyStrings.ogrinfoVectorExtension(lowerName))
+            if (GeodisyStrings.fileTypesToIgnore(name)){
+                iter.remove();
+                File f = new File(DATASET_FILES_PATH + path + "/" + name);
+                f.delete();
                 continue;
+            }
+            if(GeodisyStrings.otherShapeFilesExtensions(name))
+                continue;
+
             boolean gdalInfo = GeodisyStrings.gdalinfoRasterExtention(lowerName);
 
             String gdalString;
@@ -60,6 +72,10 @@ public class GDAL {
                     gdalString = getGDALInfo(filePath, name, IS_WINDOWS);
                     if (gdalString.contains("FAILURE")) {
                         logger.warn("Something went wrong parsing " + name + " at " + filePath);
+                        if (name.endsWith(".tif"))
+                            raster--;
+                        if (name.endsWith(".shp"))
+                            vector--;
                         continue;
                     }
                     String convertedName;
@@ -82,6 +98,21 @@ public class GDAL {
                         File f = new File(DATASET_FILES_PATH + path + "/" + convertedName);
                         f.delete();
                         djo.removeGeoDataFile(convertedName);
+                        iter.remove();
+                        continue;
+                    } else{
+                        temp.setField(FILE_NAME,name);
+                        DataverseRecordFile tempRec = new DataverseRecordFile(drf.getFileIdent(),temp);
+                        tempRec.setOriginalTitle(convertedName);
+                        tempRec.setTitle(convertedName);
+                        tempRec.setDatasetIdent(drf.getDatasetIdent());
+                        tempRec.setFileIdent(drf.getFileIdent());
+                        tempRec.setDbID(drf.getDbID());
+                        if(gdalInfo)
+                            tempRec.setFileNumber(raster);
+                        else
+                            tempRec.setFileNumber(vector);
+                        records.add(tempRec);
                     }
                  /*
                     gbb.setField(GEOMETRY,temp.getField(GEOMETRY));
@@ -104,35 +135,14 @@ public class GDAL {
                 } catch (IOException e) {
                     logger.error("Something went wrong trying to call GDAL with " + name);
                 }
-                File[] files = folder.listFiles();
-                GeographicFields gf = djo.getGeoFields();
-                List<GeographicBoundingBox> bboxes = gf.getGeoBBoxes();
-                int vectorCount = 1;
-                int rasterCount = 1;
-                for (File file : files) {
-                    String number;
-                    if (file.getName().endsWith(".shp")) {
-                        if (vector > 1) {
-                            number = String.valueOf(vectorCount);
-                            vectorCount++;
-                        } else
-                            number = "";
-                    } else if (file.getName().endsWith(".tif")) {
-                        if (raster > 1) {
-                            number = String.valueOf(rasterCount);
-                            rasterCount++;
-                        } else
-                            number = "";
-                    } else
-                        number = "";
-                    bboxes.add(generateBB(file, doi, number));
-                }
+
             }
         }
         return djo;
     }
     public GeographicBoundingBox generateBB(File file, String doi, String number){
         String lowerName = file.getName().toLowerCase();
+        String regularName = file.getName();
         String filePath = file.getAbsolutePath();
         if(!GeodisyStrings.gdalinfoRasterExtention(lowerName) && !GeodisyStrings.ogrinfoVectorExtension(lowerName))
             return new GeographicBoundingBox(doi);
@@ -160,7 +170,7 @@ public class GDAL {
             if(temp.hasBB()) {
                 GeographicBoundingBox gbb = new GeographicBoundingBox(doi);
                 gbb.setIsGeneratedFromGeoFile(temp.isGeneratedFromGeoFile());
-                gbb.setFileName(lowerName);
+                gbb.setField(FILE_NAME,lowerName);
                 gbb.setField(GEOMETRY,temp.getField(GEOMETRY));
                 gbb.setField(PROJECTION,projection);
                 if(lowerName.endsWith(".shp"))
@@ -181,9 +191,9 @@ public class GDAL {
     private String convertToCommonType(boolean gdalInfo, String name, String path, DataverseJavaObject djo) {
         GDALTranslate gdalTranslate = new GDALTranslate();
         if(gdalInfo)
-            return gdalTranslate.rasterTransform(DATASET_FILES_PATH + path + "/", name, djo);
+            return gdalTranslate.rasterTransform(DATASET_FILES_PATH + path + "/", name);
         else
-            return gdalTranslate.vectorTransform(DATASET_FILES_PATH + path + "/", name, djo);
+            return gdalTranslate.vectorTransformTest(DATASET_FILES_PATH + path + "/", name);
     }
 
     private String getProjection(String gdalString) {

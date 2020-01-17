@@ -29,7 +29,7 @@ public class Crosswalk implements CrosswalkInterface {
         jgit.updateXML(docs);
 
         for(XMLDocObject doc:docs){
-            geoCombine.generateGeoBlacklightXML(doc.getDoi(), jgit);
+            geoCombine.generateGeoBlacklightXML(doc.getFileIdent(), jgit);
         }
 
         jgit.pushToGit();

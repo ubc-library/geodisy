@@ -191,13 +191,13 @@ public abstract class SourceJavaObject {
     public String getDOIProtocal(){
         String protocol = getSimpleFields().getField(PROTOCOL);
         if(protocol.contains("doi"))
-            return "DOI";
+            return "doi";
         if(protocol.contains("handle"))
-            return "Handle";
+            return "handle";
         if(protocol.contains("ark"))
-            return "ARK";
+            return "ark";
         if(protocol.contains("urn"))
-            return "URN";
+            return "urn";
         return "Error";
     }
 

@@ -41,13 +41,13 @@ public class DataGBJSON extends GeoBlacklightJSON{
     protected JSONObject getRequiredFields(GeographicBoundingBox gbb, int number, int total){
         jo.put("geoblacklight_version","1.0");
         jo.put("dc_identifier_s", javaObject.getSimpleFieldVal(PERSISTENT_URL));
-        jo.put("layer_slug_s", gbb.getField(GEOSERVER_LABEL));
+        jo.put("layer_slug_s", gbb.getField(GEOSERVER_LABEL).toLowerCase());
         if(total>1) {
             jo.put("dc_title_s", javaObject.getSimpleFields().getField(TITLE) + " (" + number + " of " + total + ")");
         }
         else
             jo.put("dc_title_s",javaObject.getSimpleFields().getField(TITLE));
-        jo.put("dc_rights_s",javaObject.getSimpleFields().getField(LICENSE));
+        jo.put("dc_rights_s","Public");
         jo.put("dct_provenance_s",javaObject.getSimpleFields().getField(PUBLISHER));
 
         jo.put("solr_geom","ENVELOPE(" + getBBString(gbb.getBB()) + ")");
@@ -77,7 +77,8 @@ public class DataGBJSON extends GeoBlacklightJSON{
     @Override
     protected JSONArray addMetadataDownloadOptions(GeographicBoundingBox gbb, JSONArray ja) {
         if(!gbb.getField(GEOMETRY).equals("Non-geospatial")) {
-                ja.put(WMS);
+            ja.put(WMS);
+            if (gbb.getField(FILE_NAME).endsWith(".shp"))
                 ja.put(WFS);
         }
         //TODO uncomment once pushing to OpenGeoMetadata is working

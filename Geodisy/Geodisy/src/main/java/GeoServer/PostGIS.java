@@ -24,8 +24,8 @@ public class PostGIS {
 
     public boolean addFile2PostGIS(DataverseJavaObject djo, String fileName, String geoserverLabel, boolean test) {
 
-        String vectorDB = test? TEST_VECTOR_DB : VECTOR_DB;
-        String call = SHP_2_PGSQL + folderized(djo.getSimpleFieldVal(PERSISTENT_ID)) + "/" + fileName + " public." + geoserverLabel + PSQL_CALL + vectorDB + POSTGIS_USER_CALL;
+
+        String call = SHP_2_PGSQL + folderized(djo.getSimpleFieldVal(PERSISTENT_ID)) + "/" + fileName + " public." + geoserverLabel + PSQL_CALL + VECTOR_DB + POSTGIS_USER_CALL;
         ProcessBuilder processBuilder= new ProcessBuilder();
         processBuilder.command("bash", "-c", call);
         try {
@@ -34,7 +34,7 @@ public class PostGIS {
             geo.addPostGISLayer(geoserverLabel,fileName);
             return true;
         } catch (IOException e) {
-            logger.error("Something went wrong trying to get " + djo.getDOI()+fileName + " into postGID");
+            logger.error("Something went wrong trying to get " + djo.getDOI()+fileName + " into postGIS");
             return false;
         }
     }
