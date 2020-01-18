@@ -39,7 +39,7 @@ public class GDAL {
         LinkedList<DataverseRecordFile> records = djo.getGeoDataFiles();
         for(Iterator<DataverseRecordFile> iter = origRecords.iterator(); iter.hasNext();) {
             DataverseRecordFile drf = iter.next();
-            String name = drf.getFileName();
+            String name = drf.getTitle();
             gbb = new GeographicBoundingBox(doi);
             if (GeodisyStrings.otherShapeFilesExtensions(name) || GeodisyStrings.fileTypesToIgnore(name))
                 continue;
@@ -60,8 +60,6 @@ public class GDAL {
             GeographicBoundingBox temp;
             String projection = "";
 
-            // Convert Rasters to Geotiff and Vector to Shapefiles
-            name = convertToCommonType(gdalInfo, name, path, djo);
 
             if (name.endsWith(".tif"))
                 raster++;
@@ -173,10 +171,14 @@ public class GDAL {
                 gbb.setField(FILE_NAME,lowerName);
                 gbb.setField(GEOMETRY,temp.getField(GEOMETRY));
                 gbb.setField(PROJECTION,projection);
-                if(lowerName.endsWith(".shp"))
-                    gbb.setField(GEOSERVER_LABEL,doi+ "v" + number);
-                else if(lowerName.endsWith(".tif"))
-                    gbb.setField(GEOSERVER_LABEL,doi+"r" + number);
+                if(lowerName.endsWith(".shp")) {
+                    gbb.setField(GEOSERVER_LABEL, doi + "v" + number);
+                    return gbb;
+                }
+                else if(lowerName.endsWith(".tif")) {
+                    gbb.setField(GEOSERVER_LABEL, doi + "r" + number);
+                    return gbb;
+                }
                 else {
                     logger.error("Somehow got a bounding box, but isn't a shp or tif");
                     return new GeographicBoundingBox(doi);
@@ -188,13 +190,7 @@ public class GDAL {
         }
         return new GeographicBoundingBox(doi);
     }
-    private String convertToCommonType(boolean gdalInfo, String name, String path, DataverseJavaObject djo) {
-        GDALTranslate gdalTranslate = new GDALTranslate();
-        if(gdalInfo)
-            return gdalTranslate.rasterTransform(DATASET_FILES_PATH + path + "/", name);
-        else
-            return gdalTranslate.vectorTransformTest(DATASET_FILES_PATH + path + "/", name);
-    }
+
 
     private String getProjection(String gdalString) {
         String projection = "";
@@ -241,6 +237,7 @@ public class GDAL {
     }
 
     private GeographicBoundingBox getVector(String gdalString, boolean isWindows, String name, String filePath) throws IOException {
+        String geo = getGeometryType(gdalString);
         int start = gdalString.indexOf("Extent: (")+9;
         int end;
         GeographicBoundingBox gbb = new GeographicBoundingBox("temp");
@@ -251,13 +248,30 @@ public class GDAL {
             temp = getLatLongOgrInfo(gdalString, start, end);
             if (temp.hasUTMCoords()) {
                 convertToWGS84(filePath, isWindows, name);
-                gbb.setField(PROJECTION,"WGS 84");
+                gbb.setField(PROJECTION,"EPSG:4326");
                 gdalString = getGDALInfo(filePath, name, isWindows);
                 if(gdalString.contains("FAILURE"))
                     return new GeographicBoundingBox("temp");
                 start = gdalString.indexOf("Extent: (") + 9;
                 end = gdalString.indexOf(", ", start);
                 temp = getLatLongOgrInfo(gdalString, start, end);
+            }
+            else{
+                try {
+                    int projLoc = gdalString.lastIndexOf("AUTHORITY[\"") + 11;
+                    if (projLoc > 10) {
+                        String projectionString = gdalString.substring(projLoc);
+                        int projLocEnd = projectionString.indexOf("\"");
+                        String first = projectionString.substring(0, projLocEnd);
+                        projLoc = projectionString.indexOf("\",\"") + 3;
+                        projectionString = projectionString.substring(projLoc);
+                        projLocEnd = projectionString.indexOf("\"]]");
+                        String second = projectionString.substring(0, projLocEnd);
+                        gbb.setField(PROJECTION, first + ":" + second);
+                    }
+                }catch (IndexOutOfBoundsException e){
+                    logger.error("Couldn't determine projection for record " + name);
+                }
             }
         }
         if(gdalString.contains("Geometry:")){
@@ -316,11 +330,14 @@ public class GDAL {
     public String getGDALInfo(String filePath, String name, boolean isWindows) throws IOException {
         String gdal;
         StringBuilder gdalString = new StringBuilder();
+
         Process process;
-        if(GeodisyStrings.gdalinfoRasterExtention(name))
+        if(GeodisyStrings.gdalinfoRasterExtention(name)) {
             gdal = GDALINFO;
-        else
+        }
+        else {
             gdal = OGRINFO;
+        }
         ProcessBuilder processBuilder= new ProcessBuilder();
         processBuilder.command("bash", "-c", gdal+filePath);
         if (isWindows) {

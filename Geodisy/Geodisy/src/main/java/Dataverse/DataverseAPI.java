@@ -90,6 +90,8 @@ public class DataverseAPI extends SourceAPI {
                     deleteFolder(folderToDelete);
                 }
                 es.addOrReplaceRecord(new DataverseRecordInfo(djo,logger.getName()));
+            }else{
+                continue;
             }
 
         }

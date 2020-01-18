@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -117,17 +118,21 @@ public class DataverseJavaObject extends SourceJavaObject {
             JSONObject dataFile = (JSONObject) jo.get("dataFile");
             DataverseRecordFile dRF;
             //Some Dataverses don't have individual DOIs for files, so for those I will use the database's file id instead
+            int dbID;
             if(dataFile.has(PERSISTENT_ID)&& !dataFile.getString(PERSISTENT_ID).equals("")) {
+                dbID = (int) dataFile.get("id");
                 String doi = dataFile.getString(PERSISTENT_ID);
                 dRF = new DataverseRecordFile(title, doi,dataFile.getInt("id"), server, citationFields.getDOI());
+                dRF.setFileURL(server+DV_FILE_ACCESS_PATH+dbID);
                 dRF.setOriginalTitle(title);
             }else{
-                int dbID = (int) dataFile.get("id");
+                dbID = (int) dataFile.get("id");
                 dRF = new DataverseRecordFile(title,dbID,server,citationFields.getDOI());
                 dRF.setOriginalTitle(title);
+                dRF.setFileURL(server+DV_FILE_ACCESS_PATH+dbID);
             }
             SourceRecordFiles srf = SourceRecordFiles.getSourceRecords();
-            if(dRF.getDatasetIdent().equals(""))
+            if(!dRF.getDatasetIdent().equals(""))
                 srf.putRecord(dRF.getDatasetIdent(),dRF.title,dRF);
             else
                 srf.putRecord(dRF.getFileIdent(),dRF.title,dRF);
@@ -192,7 +197,24 @@ public class DataverseJavaObject extends SourceJavaObject {
         int raster = 1;
         LinkedList<DataverseRecordFile> tempList = new LinkedList<>();
         DataverseRecordFile tempRec;
-        for(DataverseRecordFile drf : getGeoDataFiles()){
+        for(Iterator<DataverseRecordFile> iterator = geoDataFiles.iterator(); iterator.hasNext();){
+            DataverseRecordFile geoDRF = iterator.next();
+            if(geoDRF.getTitle().endsWith(".shp")){
+                if(geoDRF.hasValidBB()) {
+                    geoDRF.setFileNumber(vector);
+                    vector++;
+                }else
+                    iterator.remove();
+            }else if(geoDRF.getTitle().endsWith(".tif")){
+                if(geoDRF.hasValidBB()) {
+                    geoDRF.setFileNumber(raster);
+                    raster++;
+                }else
+                    iterator.remove();
+            }else
+                iterator.remove();
+        }
+        /*for(DataverseRecordFile drf : getGeoDataFiles()){
             if(drf.getTitle().endsWith(".shp")) {
                 tempRec = createRecords(drf, vector, VECTOR);
                 if(tempRec.hasValidBB()) {
@@ -215,7 +237,7 @@ public class DataverseJavaObject extends SourceJavaObject {
                 hasGeospatialFile = true;
                 break;
             }
-        }
+        }*/
     }
 
     //May need to merge tilesets later, but ignore this for now

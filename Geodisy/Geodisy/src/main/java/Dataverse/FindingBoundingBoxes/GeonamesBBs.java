@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import static Dataverse.DVFieldNameStrings.*;
-import static Dataverse.FindingBoundingBoxes.CountryCodes.getCountryByCode;
 
 /**
  * GeonamesBBs collects a bounding box for a record that has enough geospatial fields filled out.
@@ -246,7 +245,7 @@ public class GeonamesBBs extends FindBoundBox {
         String commonCity = geoCoverage.getField(COMMON_CITY);
         String other = geoCoverage.getField(OTHER_GEO_COV);
         if(!other.equals(""))
-            logger.info("This record had something in the Other field in the geographic coverage. Check out: " + djo.getSimpleFieldVal(PERSISTENT_URL), djo);
+            logger.info("This record had something in the Other field in the geographic coverage. Check out: " + djo.getSimpleFieldVal(RECORD_URL), djo);
         Boolean second = !givenCountry.equals(commonCountry) || !givenProvince.equals(commonProvince) || !givenCity.equals(commonCity);
         GeographicBoundingBox gbb;
         if(!givenCountry.isEmpty()) {

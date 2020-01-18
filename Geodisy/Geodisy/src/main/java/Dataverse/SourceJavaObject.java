@@ -146,10 +146,6 @@ public abstract class SourceJavaObject {
         this.server = server;
     }
 
-    public boolean isHasContent() {
-        return hasContent;
-    }
-
     public void setHasContent(boolean hasContent) {
         this.hasContent = hasContent;
     }

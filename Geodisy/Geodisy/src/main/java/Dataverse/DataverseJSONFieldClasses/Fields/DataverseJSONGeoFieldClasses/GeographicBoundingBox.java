@@ -17,6 +17,7 @@ public class GeographicBoundingBox extends CompoundJSONField {
     private String geoserverLabel = "";
     private boolean generated = false;
     private int fileNumber = 0;
+    String fileURL = "";
 
 
     public GeographicBoundingBox(String doi) {
@@ -166,6 +167,9 @@ public class GeographicBoundingBox extends CompoundJSONField {
             case FILE_NAME:
                 fileName = value;
                 break;
+            case FILE_URL:
+                setFileURL(value);
+                break;
             default:
                 errorParsing(this.getClass().getName(),title);
         }
@@ -197,6 +201,8 @@ public class GeographicBoundingBox extends CompoundJSONField {
                 return getGeoserverLocation();
             case GEOMETRY:
                 return geometryType;
+            case FILE_URL:
+                return fileURL;
             default:
                 errorGettingValue(this.getClass().getName(),fieldName);
                 return "Bad fieldName";
@@ -267,5 +273,9 @@ public class GeographicBoundingBox extends CompoundJSONField {
     }
     public boolean hasBB(){
         return bb.hasBoundingBox();
+    }
+
+    private void setFileURL(String fileURL) {
+        this.fileURL = fileURL;
     }
 }

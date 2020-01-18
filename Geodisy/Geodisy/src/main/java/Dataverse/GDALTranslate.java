@@ -30,7 +30,7 @@ public class GDALTranslate {
         process(dirPath,name,RASTER,newLocation);
     }
 
-    public String vectorTransformTest(String dirPath, String name){
+    public String vectorTransform(String dirPath, String name){
         boolean transformed = process(dirPath,name,VECTOR);
 
         if(transformed) {
@@ -56,11 +56,6 @@ public class GDALTranslate {
     public boolean process(String sourcePath, String destPath, String name, String transformType, boolean newLocation){
         if(transformType.equals(VECTOR))
             if(GeodisyStrings.otherShapeFilesExtensions(name))
-                return false;
-            else if(name.endsWith(".shp"))
-                return false;
-        if(transformType.equals(RASTER))
-            if(name.endsWith(".tif"))
                 return false;
         if(newLocation){
             sourcePath = GeodisyStrings.replaceSlashes(sourcePath);

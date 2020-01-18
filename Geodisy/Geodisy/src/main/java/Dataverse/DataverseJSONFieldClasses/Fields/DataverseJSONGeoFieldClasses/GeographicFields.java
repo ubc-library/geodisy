@@ -18,6 +18,7 @@ public class GeographicFields extends MetadataType {
     List<GeographicUnit> geoUnits;
     BoundingBox fullBB; //The single bounding box that includes all listed bounding box extents
     GeoLogger logger = new GeoLogger(this.getClass());
+    int counter = 0;
 
     public GeographicFields(DataverseJavaObject djo) {
         this.djo = djo;
@@ -49,6 +50,8 @@ public class GeographicFields extends MetadataType {
                     if(gbb.hasBB()) {
                         geoBBoxes.add(gbb);
                         drf = new DataverseRecordFile(doi, gbb);
+                        incrementCounter();
+                        drf.setFileNumber(getCounter());
                         djo.addGeoDataMeta(drf);
                     }
                 }
@@ -64,6 +67,8 @@ public class GeographicFields extends MetadataType {
                         geoBBoxes.add(new GeographicBoundingBox(doi, geographicCoverage.getBoundingBox()));
                         gbb = new GeographicBoundingBox(doi,bb);
                         drf = new DataverseRecordFile(doi, gbb);
+                        incrementCounter();
+                        drf.setFileNumber(getCounter());
                         djo.addGeoDataMeta(drf);
                     }
                 }
@@ -297,5 +302,13 @@ public class GeographicFields extends MetadataType {
         if(gdal.size()>=metadata.size())
             return gdal;
         return metadata;
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void incrementCounter() {
+        this.counter = counter;
     }
 }

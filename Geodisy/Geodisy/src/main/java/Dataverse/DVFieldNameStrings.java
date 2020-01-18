@@ -17,12 +17,15 @@ public class DVFieldNameStrings {
     public final static String CITATION = "citation";
 
     public final static String PERSISTENT_ID = "persistentId";
-    public final static String PERSISTENT_URL = "persistentUrl";
+    public final static String RECORD_URL = "persistentUrl";
+    public final static String FILE_URL = "pidURL";
     public final static String MAJOR_VERSION = "versionNumber";
     public final static String MINOR_VERSION = "versionMinorNumber";
     public final static String AUTHORITY = "authority";
     public final static String IDENTIFIER = "identifier";
     public final static String PROTOCOL = "protocol";
+
+    public final static String DV_FILE_ACCESS_PATH = "api/access/datafile/";
 
 
     //Simple Field Names

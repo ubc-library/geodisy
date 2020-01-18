@@ -27,6 +27,10 @@ public class GeoCombine {
             p = processBuilder.start();
             p.waitFor();
             p.destroy();
+            processBuilder.command("/bin/bash", "-c", CLEAR_SOLR);
+            p = processBuilder.start();
+            p.waitFor();
+            p.destroy();
             System.out.println("Calling Geocombine");
             processBuilder.command("/bin/bash", "-c", GEOCOMBINE);
             p.waitFor();

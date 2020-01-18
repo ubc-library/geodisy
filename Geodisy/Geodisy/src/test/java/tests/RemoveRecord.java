@@ -14,7 +14,7 @@ import static BaseFiles.GeodisyStrings.EXISTING_RECORDS;
 
 
 public class RemoveRecord {
-    String record2Remove = "10.5072/FK2/5KNT6U";
+    String record2Remove = "10.5072/FK2/OPE57B";
     @Test
     public void removeRecord() {
         FileWriter fW = new FileWriter();

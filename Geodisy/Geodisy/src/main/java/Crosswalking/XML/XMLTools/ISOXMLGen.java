@@ -1,7 +1,6 @@
 package Crosswalking.XML.XMLTools;
 
 
-import BaseFiles.GeoLogger;
 import Crosswalking.XML.XMLGroups.DataQualityInfo;
 import Crosswalking.XML.XMLGroups.DistributionInfo;
 import Crosswalking.XML.XMLGroups.IdentificationInfo;
@@ -10,7 +9,6 @@ import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Simpl
 import Dataverse.DataverseJavaObject;
 import org.w3c.dom.Element;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.UUID;
@@ -32,7 +30,7 @@ public class ISOXMLGen extends DjoXMLGenerator {
         this.simple = citationFields.getSimpleCitationFields();
         doc = new XMLDocObject();
         doc.setDoi(simple.getField(PERSISTENT_ID));
-        doc.setPURL(simple.getField(PERSISTENT_URL));
+        doc.setPURL(simple.getField(RECORD_URL));
     }
 
     @Override
@@ -120,7 +118,7 @@ public class ISOXMLGen extends DjoXMLGenerator {
         stack.push(doc.createGMDElement(ONLINE_RES)); //Level K
         stack.push(doc.createGMDElement(CI_ONLINE_RES)); //Level L
         stack.push(doc.createGMDElement(LINKAGE)); //Level M
-        levelJ = stack.zip(doc.addGCOVal(djo.getSimpleFieldVal(PERSISTENT_URL),CHARACTER)); //Level N
+        levelJ = stack.zip(doc.addGCOVal(djo.getSimpleFieldVal(RECORD_URL),CHARACTER)); //Level N
         stack.push(levelJ);
         stack.push(doc.createGMDElement("citedResponsibilityParty"));
 

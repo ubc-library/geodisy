@@ -11,7 +11,6 @@ import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasse
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordFile;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 
 import java.util.LinkedList;
@@ -620,7 +619,7 @@ public class IdentificationInfo extends SubElement {
         Element levelM = doc.createGMDElement(IDENT); //M
         stack.push(doc.createGMDElement(MD_IDENT)); //N
         stack.push(doc.createGMDElement(CODE)); //O
-        Element levelN =  stack.zip(doc.addGCOVal(djo.getSimpleFieldVal(PERSISTENT_URL),CHARACTER));
+        Element levelN =  stack.zip(doc.addGCOVal(djo.getSimpleFieldVal(RECORD_URL),CHARACTER));
         stack.push(levelN);
         stack.push(doc.createGMDElement(CODE_SPACE));
         levelM.appendChild(stack.zip(doc.addGCOVal(djo.getSimpleFieldVal(PROTOCOL),CHARACTER)));

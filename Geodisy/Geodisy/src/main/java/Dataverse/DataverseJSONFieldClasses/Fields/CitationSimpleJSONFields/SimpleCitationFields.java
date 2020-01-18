@@ -222,7 +222,7 @@ public class SimpleCitationFields extends JSONField {
         switch (fieldName) {
             case PERSISTENT_ID:
                 return getPersistentID();
-            case PERSISTENT_URL:
+            case RECORD_URL:
                 return getPersistentURL();
             case TITLE:
                 return getTitle();

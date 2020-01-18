@@ -4,9 +4,7 @@ import Crosswalking.Crosswalk;
 import Crosswalking.GeoBlacklightJson.DataGBJSON;
 import Crosswalking.GeoBlacklightJson.GeoCombine;
 import Dataverse.*;
-import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.FindingBoundingBoxes.Countries;
-import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -60,7 +58,7 @@ public class MyTimerTask extends TimerTask {
             Geodisy geo = new Geodisy();
 
             //This section is the initial search for new records in the repositories. We will need to add a new harvest call for each new repository type [Geodisy 2]
-            List<SourceJavaObject> sJOs = geo.harvestDataverse();
+            List<SourceJavaObject> sJOs = geo.harvestDataverseMetadata();
             for(SourceJavaObject sJO : sJOs) {
                 existingHarvests.addOrReplaceRecord(new DataverseRecordInfo(sJO, logger.getName()));
             }

@@ -43,6 +43,12 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
     public void createJson() {
         int countFile = geoFiles.size();
         int countMeta = geoMeta.size();
+        if(countMeta>1)
+            for(int i =1; i <= countMeta; i++){
+                DataverseRecordFile df = geoMeta.get(i-1);
+                df.setFileNumber(i);
+                geoMeta.set(i-1,df);
+            }
         List<DataverseRecordFile> list = (countFile >= countMeta)? geoFiles:geoMeta;
         int count = 1;
         int total = list.size();

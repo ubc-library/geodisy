@@ -2,11 +2,11 @@ package Crosswalking.GeoBlacklightJson;
 
 import BaseFiles.GeoLogger;
 import BaseFiles.GeodisyStrings;
+import Dataverse.DVFieldNameStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Author;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Description;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJavaObject;
-import Dataverse.DataverseRecordFile;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,7 +19,7 @@ import java.util.List;
 
 import static BaseFiles.GeodisyStrings.*;
 import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.*;
-import static Crosswalking.XML.XMLTools.XMLStrings.OPEN_METADATA_LOCAL_REPO;
+import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.RECORD_URL;
 import static Crosswalking.XML.XMLTools.XMLStrings.TEST_OPEN_METADATA_LOCAL_REPO;
 import static Dataverse.DVFieldNameStrings.*;
 
@@ -39,9 +39,15 @@ public class DataGBJSON extends GeoBlacklightJSON{
     //TODO check if Dataverse publisher field be included in the slug?
     @Override
     protected JSONObject getRequiredFields(GeographicBoundingBox gbb, int number, int total){
+        boolean generated = gbb.isGeneratedFromGeoFile();
         jo.put("geoblacklight_version","1.0");
-        jo.put("dc_identifier_s", javaObject.getSimpleFieldVal(PERSISTENT_URL));
-        jo.put("layer_slug_s", gbb.getField(GEOSERVER_LABEL).toLowerCase());
+        jo.put("dc_identifier_s", javaObject.getSimpleFieldVal(DVFieldNameStrings.RECORD_URL));
+        String geoserverLabel = gbb.getField(GEOSERVER_LABEL).toLowerCase();
+        if(generated) {
+            jo.put("layer_slug_s", geoserverLabel);
+        }
+        else
+            jo.put("layer_slug_s", geoserverLabel + number);
         if(total>1) {
             jo.put("dc_title_s", javaObject.getSimpleFields().getField(TITLE) + " (" + number + " of " + total + ")");
         }
@@ -52,11 +58,14 @@ public class DataGBJSON extends GeoBlacklightJSON{
 
         jo.put("solr_geom","ENVELOPE(" + getBBString(gbb.getBB()) + ")");
         jo.put("layer_geom_type_s",gbb.getField(GEOMETRY));
-        String geoserverLabel = gbb.getField(GEOSERVER_LABEL);
-        if(!geoserverLabel.equals(""))
-            jo.put("layer_id_s","geodisy:" + geoserverLabel.toLowerCase());
+        if(!geoserverLabel.equals("")&&!gbb.getField(GEOMETRY).equals("Non-Geospatial")) {
+            if (generated)
+                jo.put("layer_id_s", "geodisy:" + geoserverLabel.toLowerCase()+number);
+            else
+                jo.put("layer_id_s", "geodisy:" + geoserverLabel.toLowerCase() + number);
+        }
         JSONArray ja = addBaseRecordInfo();
-        if(!gbb.getField(GEOSERVER_LABEL).isEmpty())
+        if(!gbb.getField(GEOMETRY).equals("Non-Geospatial"))
             ja = addMetadataDownloadOptions(gbb,ja);
         String externalServices = "{";
         for(Object o:ja){
@@ -76,11 +85,10 @@ public class DataGBJSON extends GeoBlacklightJSON{
 
     @Override
     protected JSONArray addMetadataDownloadOptions(GeographicBoundingBox gbb, JSONArray ja) {
-        if(!gbb.getField(GEOMETRY).equals("Non-geospatial")) {
-            ja.put(WMS);
-            if (gbb.getField(FILE_NAME).endsWith(".shp"))
-                ja.put(WFS);
-        }
+        ja.put(WMS);
+        if (gbb.getField(FILE_NAME).endsWith(".shp"))
+            ja.put(WFS);
+        ja.put(DIRECT_FILE_DOWNLOAD + stringed(gbb.getField(FILE_URL)));
         //TODO uncomment once pushing to OpenGeoMetadata is working
         //ja.put(ISO_METADATA + stringed(gbb.getOpenGeoMetaLocation()));
 
@@ -90,8 +98,8 @@ public class DataGBJSON extends GeoBlacklightJSON{
     @Override
     protected JSONArray addBaseRecordInfo(){
         JSONArray ja = new JSONArray();
-        ja.put(RECORD_URL + GeodisyStrings.replaceSlashes(stringed(javaObject.getSimpleFieldVal(PERSISTENT_URL))));
-        ja.put(ISO_METADATA + stringed(END_XML_JSON_FILE_PATH + GeodisyStrings.replaceSlashes(javaObject.getSimpleFieldVal(PERSISTENT_ID).replace(".","/")) + "/" + ISO_METADATA_FILE_ZIP));
+        ja.put(RECORD_URL + GeodisyStrings.replaceSlashes(stringed(javaObject.getSimpleFieldVal(DVFieldNameStrings.RECORD_URL))));
+        ja.put(ISO_METADATA + stringed(END_XML_JSON_FILE_PATH + GeodisyStrings.replaceSlashes(javaObject.getSimpleFieldVal(PERSISTENT_ID).replace(".","/") + "/" + ISO_METADATA_FILE_ZIP)));
         return ja;
     }
 
