@@ -11,6 +11,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.Stack;
 
 
@@ -24,14 +25,14 @@ import static Dataverse.DVFieldNameStrings.*;
 public class DataverseRecordFile {
     String title;
     String originalTitle;
-    String fileIdent = "N/A";
+    String fileIdent = "";
     int dbID = 0;
-    private String server = "";
-    private GeoLogger logger = new GeoLogger(this.getClass());
-    private String recordURL = "";
-    private String datasetIdent = "";
-    private GeographicBoundingBox gbb;
-    private int fileNumber = 0;
+    String server = "";
+    GeoLogger logger = new GeoLogger(this.getClass());
+    String recordURL = "";
+    String datasetIdent = "";
+    GeographicBoundingBox gbb;
+    int fileNumber = 0;
 
     /**
      * Creates a DataverseRecordFile when there is a File-specific fileIdent.
@@ -46,9 +47,9 @@ public class DataverseRecordFile {
         this.fileIdent = fileIdent;
         this.dbID = dbID;
         this.server = server;
-        recordURL = server+"api/access/datafile/:persistentId/?persistentId=" + fileIdent + "&format=original";
+        recordURL = server+"api/access/datafile/" + dbID + "?format=original";
         this.datasetIdent = datasetIdent.replace(".","_").replace("/","_");
-        gbb = new GeographicBoundingBox(fileIdent);
+        gbb = new GeographicBoundingBox(datasetIdent);
 
     }
     /**
@@ -64,7 +65,7 @@ public class DataverseRecordFile {
         this.fileIdent = "";
         this.server = server;
         recordURL = server+"api/access/datafile/" + dbID + "?format=original";
-        this.datasetIdent = datasetIdent;
+        this.datasetIdent = datasetIdent.replace(".","_").replace("/","_");
         gbb = new GeographicBoundingBox(datasetIdent);
 
 
@@ -78,18 +79,20 @@ public class DataverseRecordFile {
 
     /**
      * DataverseRecordFile for Geographic coverage generated BoundingBoxes
-     * @param fileIdent
+     * @param datasetIdent
      * @param gbb
      */
-    public DataverseRecordFile(String fileIdent, GeographicBoundingBox gbb){
-        this.fileIdent = fileIdent;
+    public DataverseRecordFile(String datasetIdent, GeographicBoundingBox gbb){
+        this.fileIdent = datasetIdent;
         this.gbb = gbb;
-        this.gbb.setField(GEOSERVER_LABEL, fileIdent.replace(".","_").replace("/","_").replace("\\","_"));
+        this.gbb.setField(GEOSERVER_LABEL, datasetIdent.replace(".","_").replace("/","_").replace("\\","_"));
     }
 
-    public DataverseRecordFile retrieveFile(DataverseJavaObject djo) {
+    public LinkedList<DataverseRecordFile> retrieveFile(DataverseJavaObject djo) {
+        LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
         try {
             String dirPath = DATASET_FILES_PATH + datasetIdent.replace("_", "/").replace(".","/") + "/";
+
             File folder = new File(dirPath);
             folder.mkdirs();
             String filePath = dirPath + title;
@@ -100,7 +103,7 @@ public class DataverseRecordFile {
                     120000); //2 minute read timeout
             if (title.endsWith(".zip")) {
                 Unzip zip = new Unzip();
-                zip.unzip(filePath, dirPath, this);
+                drfs = zip.unzip(filePath, dirPath, this, djo);
                 new File(filePath).delete();
             }
 
@@ -113,6 +116,8 @@ public class DataverseRecordFile {
                         convertFromTabToCSV(f, dirPath, name);
                 }
             }
+            if(!this.getTitle().endsWith("zip")&&!djo.hasDataRecord(this.getTitle()))
+                drfs.add(this);
         } catch (FileNotFoundException e){
             logger.info(String.format("This dataset file %s couldn't be found from dataset %s. ", dbID, datasetIdent) + "Check out dataset " + datasetIdent, djo);
         }catch (MalformedURLException e) {
@@ -120,83 +125,69 @@ public class DataverseRecordFile {
         } catch (IOException e) {
             logger.error(String.format("Something went wrong with downloading file %s, with fileIdent %s or dbID %d", title, fileIdent, dbID));
             e.printStackTrace();
-        }finally {
-            return this;
         }
+        return drfs;
     }
 
-    public DataverseJavaObject translateFile(DataverseJavaObject djo){
+    public void translateFile(DataverseJavaObject djo){
 
         String dirPath = DATASET_FILES_PATH + datasetIdent.replace("_","/") + "/";
         File f = new File(dirPath+this.getTitle());
+        System.out.println(f.getName());
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         GDALTranslate gdalTranslate = new GDALTranslate();
         GDAL gdal = new GDAL();
         String originalName = "";
+        DataverseRecordFile dgrf = new DataverseRecordFile();
         ExistingVectorRecords evr = ExistingVectorRecords.getExistingVectors();
         if (f.isFile()) {
             String name = f.getName().toLowerCase();
             originalName = name;
-            DataverseRecordFile drf;
             if (GeodisyStrings.ogrinfoVectorExtension(name) && !name.endsWith("csv")) {
-                if (!name.endsWith(".shp")) {
-                    if (GeodisyStrings.otherShapeFilesExtensions(name))
-                        return djo;
-                    name = gdalTranslate.vectorTransform(dirPath, f.getName());
-                }
-                drf = new DataverseRecordFile(name, this.fileIdent, this.dbID, this.server, this.datasetIdent);
+                if (GeodisyStrings.otherShapeFilesExtensions(name))
+                    return;
+                name = gdalTranslate.vectorTransform(dirPath, f.getName());
+
+                if(fileIdent.isEmpty())
+                    dgrf = new DataverseRecordFile(name, this.dbID, this.server, this.datasetIdent);
+                else
+                    dgrf = new DataverseRecordFile(name, this.fileIdent, this.dbID, this.server, this.datasetIdent);
                 f = new File(dirPath+name);
                 GeographicBoundingBox gbb;
-                if(fileIdent.equals(""))
-                    gbb = gdal.generateBB(f,datasetIdent,String.valueOf(this.fileNumber));
-                else
-                    gbb = gdal.generateBB(f,fileIdent,String.valueOf(this.fileNumber));
-                drf.setGbb(gbb);
-                drf.setOriginalTitle(originalTitle);
-                drf.setIsFromFile(true);
-                drf.setFileURL(getFileURL());
-                if(drf.hasValidBB()) {
-                    djo.addGeoDataFile(drf);
-                    if (!fileIdent.equals(""))
-                        evr.addOrReplaceRecord(drf.fileIdent + name, originalName);
-                    else
-                        evr.addOrReplaceRecord(drf.datasetIdent + name, originalName);
+                gbb = gdal.generateBB(f,datasetIdent,String.valueOf(this.fileNumber));
+                dgrf.setGbb(gbb);
+                dgrf.setOriginalTitle(originalTitle);
+                dgrf.setIsFromFile(true);
+                dgrf.setFileURL(getFileURL());
+                if(dgrf.hasValidBB()) {
+                    evr.addOrReplaceRecord(dgrf.datasetIdent + name, originalName);
                 }
             } else if (GeodisyStrings.gdalinfoRasterExtention(f.getName())) {
-                if (!name.endsWith(".tif"))
-                    name = gdalTranslate.rasterTransform(dirPath, f.getName());
-                drf = new DataverseRecordFile(name, this.fileIdent, this.dbID, this.server, this.datasetIdent);
+                name = gdalTranslate.rasterTransform(dirPath, f.getName());
+                dgrf = new DataverseGeoRecordFile(name, this.fileIdent, this.dbID, this.server, this.datasetIdent);
                 f = new File(dirPath+name);
                 GeographicBoundingBox gbb;
-                if(fileIdent.equals(""))
-                    gbb = gdal.generateBB(f,datasetIdent,String.valueOf(this.fileNumber));
-                else
-                    gbb = gdal.generateBB(f,fileIdent,String.valueOf(this.fileNumber));
-                drf.setGbb(gbb);
-                drf.setOriginalTitle(originalTitle);
-                drf.setIsFromFile(true);
-                drf.setFileURL(getFileURL());
-                if(drf.hasValidBB())
-                    djo.addGeoDataFile(drf);
+                gbb = gdal.generateBB(f,datasetIdent,String.valueOf(this.fileNumber));
+                dgrf.setGbb(gbb);
+                dgrf.setOriginalTitle(originalTitle);
+                dgrf.setIsFromFile(true);
+                dgrf.setFileURL(getFileURL());
             } else if (name.contains(".csv")) {
                 GeographicBoundingBox temp = gdal.generateBoundingBoxFromCSV(f, djo);
                 if (temp.hasBB()) {
-                    if (!name.endsWith(".shp")) {
-                        if (name.endsWith(".shx") || name.endsWith(".dbf") || name.endsWith(".prj"))
-                            throw new IllegalArgumentException();
-
-                        name = gdalTranslate.vectorTransform(dirPath, f.getName());
+                    name = gdalTranslate.vectorTransform(dirPath, f.getName());
                     }
-                    drf = new DataverseRecordFile(name, this.fileIdent, this.dbID, this.server, this.datasetIdent);
-                    drf.setOriginalTitle(originalTitle);
-                    drf.setIsFromFile(true);
-                    drf.setBB(temp.getBB());
-                    drf.setFileURL(getFileURL());
-                    if(drf.hasValidBB()) {
-                        djo.addGeoDataFile(drf);
-                        if (!fileIdent.equals(""))
-                            evr.addOrReplaceRecord(drf.fileIdent + name, originalName);
-                        else
-                            evr.addOrReplaceRecord(drf.datasetIdent + name, originalName);
+                    dgrf = new DataverseGeoRecordFile(name, this.fileIdent, this.dbID, this.server, this.datasetIdent);
+                    dgrf.setOriginalTitle(originalTitle);
+                    dgrf.setIsFromFile(true);
+                    dgrf.setBB(temp.getBB());
+                    dgrf.setFileURL(getFileURL());
+                    if(dgrf.hasValidBB()) {
+                        evr.addOrReplaceRecord(dgrf.datasetIdent + name, originalName);
                     }
                 } else {
                     String path = djo.getDOI().replace("/", "_");
@@ -206,9 +197,10 @@ public class DataverseRecordFile {
                     file.delete();
                 }
             }
+        System.out.println("Valid bb from translate. DIO: " + datasetIdent + " filename: " + getTitle() + " BB (NE/SW): (" + getGBB().getNorthLatitude() + "," + getGBB().getEastLongitude() + "), (" +getGBB().getSouthLatitude() + "," + getGBB().getWestLongitude() + ")");
+        return dgrf;
         }
-        return djo;
-    }
+
 
 
     private void convertFromTabToCSV(File inputFile, String dirPath, String title) {

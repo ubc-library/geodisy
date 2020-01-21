@@ -78,14 +78,13 @@ public class DataverseAPI extends SourceAPI {
                 djo.downloadFiles();
                 counter--;
                 //System.out.println("Finished downloading files from: " + fileIdent + " only " + counter + "more records to download");
-                djo = generateBoundingBox(djo);
+                //djo = generateBoundingBox(djo);
                 //System.out.println("Finished generating Bounding boxes for: " + fileIdent);
-                if(!djo.hasBoundingBox())
-                    if(djo.hasGeoGraphicCoverage())
-                        getBBFromGeonames(djo);
-                if(djo.hasBoundingBox())
+                if(djo.hasGeoGraphicCoverage())
+                    djo = (DataverseJavaObject) getBBFromGeonames(djo);
+                if(djo.hasBoundingBox()) {
                     answers.add(djo);
-                else{
+                } else{
                     File folderToDelete = new File(doi);
                     deleteFolder(folderToDelete);
                 }
@@ -122,9 +121,9 @@ public class DataverseAPI extends SourceAPI {
     }
 
     @Override
-    protected void getBBFromGeonames(SourceJavaObject djo) {
+    protected SourceJavaObject getBBFromGeonames(SourceJavaObject djo) {
         Geonames geonames = new Geonames();
-        geonames.getBoundingBox(djo);
+        return geonames.getBoundingBox(djo);
     }
 
     /**

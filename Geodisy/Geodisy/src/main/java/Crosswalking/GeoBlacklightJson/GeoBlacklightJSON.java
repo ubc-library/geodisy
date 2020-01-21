@@ -3,6 +3,7 @@ package Crosswalking.GeoBlacklightJson;
 import BaseFiles.FileWriter;
 import BaseFiles.GeodisyStrings;
 import Crosswalking.MetadataSchema;
+import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordFile;
@@ -30,8 +31,8 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
     protected JSONObject jo;
     protected String doi;
     boolean download = false;
-    LinkedList<DataverseRecordFile> geoFiles;
-    LinkedList<DataverseRecordFile> geoMeta;
+    LinkedList<DataverseGeoRecordFile> geoFiles;
+    LinkedList<DataverseGeoRecordFile> geoMeta;
     SourceRecordFiles files;
 
     public GeoBlacklightJSON() {
@@ -45,11 +46,11 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
         int countMeta = geoMeta.size();
         if(countMeta>1)
             for(int i =1; i <= countMeta; i++){
-                DataverseRecordFile df = geoMeta.get(i-1);
+                DataverseGeoRecordFile df = geoMeta.get(i-1);
                 df.setFileNumber(i);
                 geoMeta.set(i-1,df);
             }
-        List<DataverseRecordFile> list = (countFile >= countMeta)? geoFiles:geoMeta;
+        List<DataverseGeoRecordFile> list = (countFile >= countMeta)? geoFiles : geoMeta;
         int count = 1;
         int total = list.size();
         for(DataverseRecordFile drf:list){
@@ -110,7 +111,7 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
 
 
     protected abstract JSONObject getOptionalFields();
-    protected abstract JSONArray addMetadataDownloadOptions(GeographicBoundingBox bb, JSONArray ja); //for records with datasetfiles
+    protected abstract JSONArray addDataDownloadOptions(GeographicBoundingBox bb, JSONArray ja); //for records with datasetfiles
     protected abstract JSONArray addBaseRecordInfo(); //adds the base metadata external services that all records need regardless of existence of datafiles
     protected abstract void saveJSONToFile(String json, String doi, String folderName);
 }

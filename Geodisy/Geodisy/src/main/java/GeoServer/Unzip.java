@@ -2,6 +2,8 @@ package GeoServer;
 
 import BaseFiles.GeoLogger;
 import BaseFiles.GeodisyStrings;
+
+import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordFile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,6 +12,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedList;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 /**
@@ -19,11 +22,12 @@ import java.util.zip.ZipInputStream;
 public class Unzip {
     GeoLogger logger = new GeoLogger(Unzip.class);
     //TODO call unzip when adding zipped files to Geoserver and then call deleteUnzippedFiles() after uploadVector is done to save space
-    public void unzip(String filePath, String destPath, DataverseRecordFile dRF) {
+    public LinkedList<DataverseRecordFile> unzip(String filePath, String destPath, DataverseRecordFile dRF, DataverseJavaObject djo ) {
         //String destPath = filePath.substring(0,filePath.length()-4);
         File destDir = new File(destPath);
         destDir.mkdirs();
         Path path = Paths.get(destPath);
+        LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
 
         byte[] buffer = new byte[1024];
         ZipInputStream zis = null;
@@ -42,7 +46,7 @@ public class Unzip {
                 }
 
                 File newFile = newFile(destDir, zipEntry);
-                destDir.mkdirs();
+                drfs.add(new DataverseRecordFile(zipEntry.getName(),-1,djo.getServer(),dRF.getDatasetIdent()));
                 FileOutputStream fos = new FileOutputStream(newFile);
                 int len;
                 while ((len = zis.read(buffer)) > 0) {
@@ -58,6 +62,7 @@ public class Unzip {
         }catch (IOException e) {
             logger.error("Something went wrong unzipping " + filePath);
         }
+        return drfs;
     }
 
 

@@ -67,9 +67,9 @@ public class GeodisyStrings {
         private final static String[] OGRINFO_PROCESSABLE_EXTENTIONS = {".geojson",".shp",".kmz",".csv",".tab",".gpkg", ".kml"}; //also .csv, but need to check if the csv is actually geospatial in nature
         public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = ArrayUtils.addAll(NON_SHP_SHAPEFILE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS);
         public final static String[] PREVIEWABLE_FILE_EXTENSIONS = {".tif", ".kmz"};
-        private final static String OGR2OGR_LOCAL = "C:\\Program Files\\GDAL\\ogr2ogr -f \"ESRI Shapefile\" ";
+        private final static String OGR2OGR_LOCAL = "C:\\Program Files\\GDAL\\ogr2ogr -t_srs EPSG:4326 -f \"ESRI Shapefile\" ";
         private final static String GDAL_TRANSLATE_LOCAL = "C:\\Program Files\\GDAL\\gdal_translate -of GTiff ";
-        private final static String OGR2OGR_CLOUD = "/usr/gdal30/bin/ogr2ogr -t_srs EPSG:4326 ";
+        private final static String OGR2OGR_CLOUD = "/usr/gdal30/bin/ogr2ogr -t_srs EPSG:4326 -f \"ESRI Shapefile\" ";
         private final static String GDAL_TRANSLATE_CLOUD = "/usr/gdal30/bin/gdal_translate -of GTiff ";
         public final static String OGR2OGR = getOgr2Ogr();
         public final static String GDAL_TRANSLATE = getGdalTranslate();
@@ -107,9 +107,13 @@ public class GeodisyStrings {
             return s.replace("\\","/");
     }
 
+    public static String urlSlashes(String s){
+            return s.replace("\\","/");
+    }
+
 
     //Unused file type extensions
-    public final static String[] FILE_TYPES_TO_IGNORE = {".txt",".doc",".pdf",".jpg", ".docx",".las",".xml", ".nc"};
+    public final static String[] FILE_TYPES_TO_IGNORE = {".txt",".doc",".pdf",".jpg", ".docx",".las",".xml", ".nc","bil"};
     public final static String[] FILE_TYPES_TO_ALLOW = ArrayUtils.addAll(GDALINFO_RASTER_FILE_EXTENSIONS, OGRINFO_VECTOR_FILE_EXTENSIONS);
 
         public final static String RASTER = "Raster";
@@ -144,7 +148,7 @@ public class GeodisyStrings {
     public final static String MOVE_METADATA = "rsync -av /home/centos/Geodisy/metadata/* /var/www/" + ADDRESS + "/html/geodisy/";
     public final static String CLEAR_SOLR = "sudo su - root -c \"cd /root/solr-8.3.0/bin/ && ./post -c geoblacklight-prod delete_ALL.xml\"";
     public final static String DELETE_DUPLICATE_META_FOLDER = "rm -rf /home/centos/Geodisy/metadata/*";
-    public final static String GEOCOMBINE = SOLR_PATH + OGM_PATH + "cd /home/geoblack/GeoCombine/ && /home/centos/geodisy/bin/bundle exec rake geocombine:index && cd /home/centos/Geodisy/";
+    public final static String GEOCOMBINE = "(cd /home/geoblack/GeoCombine/ && "+ OGM_PATH +" /home/centos/geodisy/bin/bundle exec rake geocombine:index)";
     public final static String BASE_LOCATION_TO_STORE_METADATA = "metadata/";
 
     public static String vmToUse(boolean test){
@@ -161,12 +165,12 @@ public class GeodisyStrings {
             return PROD_ADDRESS;
     }
     public static boolean fileTypesToIgnore(String title){
-        String[] temp = ArrayUtils.addAll(OGRINFO_VECTOR_FILE_EXTENSIONS,GDALINFO_RASTER_FILE_EXTENSIONS);
+        String[] temp = ArrayUtils.addAll(FILE_TYPES_TO_IGNORE);
         for(String s: temp){
             if(title.toLowerCase().endsWith(s))
-                return false;
+                return true;
         }
-        return true;
+        return false;
     }
 
     public static boolean fileToAllow(String title){

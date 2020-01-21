@@ -10,6 +10,7 @@ import BaseFiles.GeoLogger;
 import BaseFiles.HTTPCaller;
 import Crosswalking.GeoBlacklightJson.HTTPCombineCaller;
 import Dataverse.DataverseJavaObject;
+import Dataverse.DataverseRecordFile;
 import Dataverse.ExistingRasterRecords;
 import Dataverse.SourceJavaObject;
 
@@ -107,9 +108,11 @@ public class GeoServerAPI extends DestinationAPI {
     public boolean addVector(String fileName,String geoserverLabel){
         return addVectorToPostGIS(fileName,geoserverLabel);
     }
-    public void uploadRaster(String fileName){
-        String nameStub = fileName;
-        String call = "curl -u admin:" + GEOSERVER_PASSWORD + " -XPUT -H " + stringed("Content-type:image/tiff") + " --data-binary @" + DATASET_FILES_PATH + sjo.getSimpleFieldVal(PERSISTENT_ID).replace("/.","/") + fileName + ".tif  http://localhost:8080/geoserver/rest/workspaces/geodisy/" + sjo.getSimpleFieldVal(PERSISTENT_ID).replace("/.","/")+nameStub + "/file.geotiff";
+    public void uploadRaster(DataverseRecordFile drf){
+        String fileName = drf.getFileName();
+        String stub = fileName.substring(0,fileName.length()-4);
+        String createCoverstore = "curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:image/tiff") +  "-d '<coverageStore><name>" + drf.getGeoserverLabel() + "</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>/var/www/206-12-92-97.cloud.computecanada.ca/html/geodisy/" + drf.getFileURL() +"</url></coverageStore>' \"http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores?configure=all\"";
+        String call = "curl -u admin:" + GEOSERVER_PASSWORD + " -XPUT -H " + stringed("Content-type:image/tiff") + " --data-binary @" + DATASET_FILES_PATH + sjo.getSimpleFieldVal(PERSISTENT_ID).replace("/.","/") + fileName + ".tif  http://localhost:8080/geoserver/rest/workspaces/geodisy/" + sjo.getSimpleFieldVal(PERSISTENT_ID).replace("/.","/")+ stub + "/file.geotiff";
         Process p;
         try {
             ProcessBuilder processBuilder= new ProcessBuilder();
@@ -123,9 +126,9 @@ public class GeoServerAPI extends DestinationAPI {
                 error+=s;
             }
             if(error.contains("405"))
-                logger.warn("Something went wrong trying to upload raster file to Geoserver: " + fileName + " " + sjo.getSimpleFieldVal(PERSISTENT_ID));
+                logger.warn("Something went wrong trying to upload raster file to Geoserver: " + drf.getFileName() + " " + sjo.getSimpleFieldVal(PERSISTENT_ID));
         } catch (IOException e) {
-            logger.error("Something went wrong trying to upload raster file to Geoserver: " + fileName + " " + sjo.getSimpleFieldVal(PERSISTENT_ID));
+            logger.error("Something went wrong trying to upload raster file to Geoserver: " + drf.getFileName() + " " + sjo.getSimpleFieldVal(PERSISTENT_ID));
         }
         ExistingRasterRecords existingRasterRecords = ExistingRasterRecords.getExistingRasters();
         existingRasterRecords.addOrReplaceRecord(sjo.getDOI(),fileName);

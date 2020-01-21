@@ -1,6 +1,7 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 
 import BaseFiles.GeoLogger;
+import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
 import Dataverse.DataverseJavaObject;
@@ -38,10 +39,10 @@ public class GeographicFields extends MetadataType {
     }
 
     @Override
-    public void setFields(JSONObject field) {
+    public GeographicFields setFields(JSONObject field) {
         String title = field.getString(TYPE_NAME);
         GeographicBoundingBox gbb;
-        DataverseRecordFile drf;
+        DataverseGeoRecordFile drf;
         switch (title) {
             case GEOGRAPHIC_BBOX:
                 for(Object o: (JSONArray) field.get("value")) {
@@ -49,7 +50,7 @@ public class GeographicFields extends MetadataType {
                     gbb = parseGeoBBox(jo);
                     if(gbb.hasBB()) {
                         geoBBoxes.add(gbb);
-                        drf = new DataverseRecordFile(doi, gbb);
+                        drf = new DataverseGeoRecordFile(doi, gbb);
                         incrementCounter();
                         drf.setFileNumber(getCounter());
                         djo.addGeoDataMeta(drf);
@@ -66,7 +67,7 @@ public class GeographicFields extends MetadataType {
                     if(bb.hasBoundingBox()) {
                         geoBBoxes.add(new GeographicBoundingBox(doi, geographicCoverage.getBoundingBox()));
                         gbb = new GeographicBoundingBox(doi,bb);
-                        drf = new DataverseRecordFile(doi, gbb);
+                        drf = new DataverseGeoRecordFile(doi, gbb);
                         incrementCounter();
                         drf.setFileNumber(getCounter());
                         djo.addGeoDataMeta(drf);
@@ -83,6 +84,7 @@ public class GeographicFields extends MetadataType {
             default:
                logger.error("Something went wrong parsing the Geographic Fields. Field " + title + " does not exist");
         }
+        return this;
     }
 
     /**

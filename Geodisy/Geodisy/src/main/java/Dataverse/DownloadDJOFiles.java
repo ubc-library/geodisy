@@ -16,21 +16,22 @@ public class DownloadDJOFiles {
         File f = new File("datasetFiles/" + djo.urlized(djo.citationFields.getDOI()));
         djo.deleteDir(f);
         List<DataverseRecordFile> temp = new LinkedList<>();
-        DataverseRecordFile tempDRF;
+        DataverseRecordFile tempDRF = new DataverseRecordFile();
         for (DataverseRecordFile dRF : djo.dataFiles) {
             if(GeodisyStrings.fileTypesToIgnore(dRF.title))
                 continue;
-             tempDRF = dRF.retrieveFile(djo);
-
+             dRF.retrieveFile(djo);
+            DataverseGeoRecordFile tempGeoRecord = new DataverseGeoRecordFile();
             if(GeodisyStrings.hasGeospatialFile(tempDRF.getTitle())) {
-                djo.hasGeospatialFile = true;
-                djo = dRF.translateFile(djo);
+                tempGeoRecord = dRF.translateFile(djo);
+                if(tempGeoRecord.hasValidBB())
+                    djo.addGeoDataFile(tempGeoRecord);
             }
         }
 
         int vector = 1;
         int raster = 1;
-        for(Iterator<DataverseRecordFile> iterator = djo.geoDataFiles.iterator(); iterator.hasNext();){
+        for(Iterator<DataverseGeoRecordFile> iterator = djo.geoDataFiles.iterator(); iterator.hasNext();){
             DataverseRecordFile geoDRF = iterator.next();
             if(geoDRF.getTitle().endsWith(".shp")){
                 if(geoDRF.hasValidBB()) {

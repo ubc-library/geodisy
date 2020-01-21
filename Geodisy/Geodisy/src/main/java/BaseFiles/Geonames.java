@@ -1,6 +1,7 @@
 package BaseFiles;
 
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicCoverage;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJavaObject;
 import Dataverse.FindingBoundingBoxes.Countries;
 import Dataverse.FindingBoundingBoxes.GeonamesBBs;
@@ -141,12 +142,15 @@ public class Geonames {
         return parameters;
     }
 
-    public void getBoundingBox(SourceJavaObject sjo) {
+    public SourceJavaObject getBoundingBox(SourceJavaObject sjo) {
         DataverseJavaObject djo = (DataverseJavaObject) sjo;
         GeonamesBBs geonamesBBs = new GeonamesBBs(djo);
+        GeographicFields gf = djo.getGeoFields();
         for(GeographicCoverage geoCoverage: djo.getGeoFields().getGeoCovers()){
-            djo.getGeoFields().setGeoBBoxes(geonamesBBs.getDVBoundingBox(geoCoverage,djo.getGeoFields().getGeoBBoxes()));
+            gf.setGeoBBoxes(geonamesBBs.getDVBoundingBox(geoCoverage,gf.getGeoBBoxes()));
         }
+        djo.setGeoFields(gf);
+        return djo;
     }
 
     public String getCountryCode(String countryName){

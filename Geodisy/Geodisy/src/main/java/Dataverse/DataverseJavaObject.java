@@ -11,9 +11,8 @@ import org.json.JSONObject;
 
 
 import java.io.File;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
 
 import static BaseFiles.GeodisyStrings.*;
 import static Dataverse.DVFieldNameStrings.*;
@@ -45,7 +44,7 @@ public class DataverseJavaObject extends SourceJavaObject {
         JSONArray currentArray = metadata.getJSONObject(CITATION).getJSONArray(FIELDS);
         for (Object o : currentArray) {
             JSONObject jo = (JSONObject) o;
-            citationFields.setFields(jo);
+            citationFields = citationFields.setFields(jo);
         }
         hasContent=true;
         geoFields = new GeographicFields(this);
@@ -60,7 +59,7 @@ public class DataverseJavaObject extends SourceJavaObject {
     public void parseGeospatialFields(JSONArray geoFieldsArray) {
         for(Object o: geoFieldsArray){
             JSONObject jo = (JSONObject) o;
-            this.geoFields.setFields(jo);
+             geoFields = geoFields.setFields(jo);
         }
         List<BoundingBox> bb = new LinkedList<>();
         //GeonamesBBs geonames = new GeonamesBBs(this);
@@ -91,7 +90,7 @@ public class DataverseJavaObject extends SourceJavaObject {
     public void parseSocialFields(JSONArray socialFieldsArray){
         for(Object o: socialFieldsArray){
             JSONObject jo = (JSONObject) o;
-            this.socialFields.setFields(jo);
+            socialFields = socialFields.setFields(jo);
         }
 
     }
@@ -135,7 +134,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             if(!dRF.getDatasetIdent().equals(""))
                 srf.putRecord(dRF.getDatasetIdent(),dRF.title,dRF);
             else
-                srf.putRecord(dRF.getFileIdent(),dRF.title,dRF);
+                srf.putRecord(dRF.getDatasetIdent(),dRF.title,dRF);
             dataFiles.add(dRF);
         }
     }
@@ -172,47 +171,63 @@ public class DataverseJavaObject extends SourceJavaObject {
      */
     @Override
     public void downloadFiles() {
-        File f = new File("datasetFiles/" + urlized(citationFields.getDOI()));
+        File f = new File(GEODISY_PATH_ROOT + GeodisyStrings.replaceSlashes("datasetFiles/" + urlized(citationFields.getDOI())));
         deleteDir(f);
-        List<DataverseRecordFile> temp = new LinkedList<>();
-        DataverseRecordFile tempDRF = new DataverseRecordFile();
+        f.mkdir();
+        LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
         for (DataverseRecordFile dRF : dataFiles) {
             if(GeodisyStrings.fileTypesToIgnore(dRF.title))
                 continue;
-            if(tempDRF.getFileIdent().equals("temp"))
-                tempDRF = dRF.retrieveFile(this);
-            else
-                dRF.retrieveFile(this);
+            drfs.addAll(dRF.retrieveFile(this));
 
-            if(GeodisyStrings.hasGeospatialFile(dRF.getTitle()))
-                hasGeospatialFile = true;
+        }
+        dataFiles.addAll(drfs);
+        for(int i = 0; i<dataFiles.size(); i++){
+            if(dataFiles.get(i).getTitle().endsWith("zip"))
+                dataFiles.remove(i);
         }
         for (DataverseRecordFile dRF : dataFiles) {
+            System.out.println(dRF.title);
+            try {
+                System.in.read();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             if (GeodisyStrings.fileTypesToIgnore(dRF.title))
                 continue;
-            dRF.translateFile(this);
-        }
 
-        int vector = 1;
-        int raster = 1;
-        LinkedList<DataverseRecordFile> tempList = new LinkedList<>();
-        DataverseRecordFile tempRec;
-        for(Iterator<DataverseRecordFile> iterator = geoDataFiles.iterator(); iterator.hasNext();){
-            DataverseRecordFile geoDRF = iterator.next();
-            if(geoDRF.getTitle().endsWith(".shp")){
-                if(geoDRF.hasValidBB()) {
-                    geoDRF.setFileNumber(vector);
-                    vector++;
-                }else
-                    iterator.remove();
-            }else if(geoDRF.getTitle().endsWith(".tif")){
-                if(geoDRF.hasValidBB()) {
-                    geoDRF.setFileNumber(raster);
-                    raster++;
-                }else
-                    iterator.remove();
-            }else
-                iterator.remove();
+            if (GeodisyStrings.otherShapeFilesExtensions(dRF.getTitle()))
+                continue;
+            DataverseGeoRecordFile temp = new DataverseGeoRecordFile(dRF);
+            if(temp.getDbID()==-1)
+                temp.setFileURL("");
+            temp = temp.translateFile(this);
+            if (temp.hasValidBB()) {
+                    geoDataFiles.add(temp);
+                    System.out.println("Added valid bb to geodatafile. DIO: " + getDOI() + " filename: " + dRF.getTitle() + " BB (NE/SW): (" + dRF.getGBB().getNorthLatitude() + "," + dRF.getGBB().getEastLongitude() + "), (" +dRF.getGBB().getSouthLatitude() + "," + dRF.getGBB().getWestLongitude() + ")");
+                }
+            }
+
+            int vector = 1;
+            int raster = 1;
+            LinkedList<DataverseGeoRecordFile> tempList = new LinkedList<>();
+            for (Iterator<DataverseGeoRecordFile> iterator = geoDataFiles.iterator(); iterator.hasNext(); ) {
+                DataverseGeoRecordFile geoDRF = iterator.next();
+                if (geoDRF.getTitle().endsWith(".shp")) {
+                    if (geoDRF.hasValidBB()) {
+                        geoDRF.setFileNumber(vector);
+                        vector++;
+                        tempList.add(geoDRF);
+                    }
+                } else if (geoDRF.getTitle().endsWith(".tif")) {
+                    if (geoDRF.hasValidBB()) {
+                        geoDRF.setFileNumber(raster);
+                        raster++;
+                        tempList.add(geoDRF);
+                    }
+                }
+            }
+            setGeoDataFiles(tempList);
         }
         /*for(DataverseRecordFile drf : getGeoDataFiles()){
             if(drf.getTitle().endsWith(".shp")) {
@@ -238,6 +253,25 @@ public class DataverseJavaObject extends SourceJavaObject {
                 break;
             }
         }*/
+
+    private DataverseGeoRecordFile getRecord(String name) {
+        DataverseGeoRecordFile dvgr = new DataverseGeoRecordFile();
+        for(DataverseRecordFile drf : dataFiles){
+            if(drf.getTitle().equals(name)) {
+                dvgr = new DataverseGeoRecordFile(drf);
+                dvgr.setFileURL(server+"api/access/datafile/" + drf.dbID + "?format=original");
+                return dvgr;
+            }
+        }
+        dvgr.setOriginalTitle(name);
+        dvgr.setTitle(name);
+        String fileURL = dataFiles.get(0).getFileURL();
+        fileURL = fileURL.substring(0,fileURL.lastIndexOf(GeodisyStrings.replaceSlashes("/"))+1);
+        dvgr.setFileURL(fileURL + name);
+        dvgr.setServer(dataFiles.get(0).server);
+        dvgr.setDbID(-1);
+        dvgr.setDatasetIdent(dataFiles.get(0).datasetIdent);
+        return dvgr;
     }
 
     //May need to merge tilesets later, but ignore this for now
@@ -307,7 +341,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             drf.setGeometryType(RASTER);
             drf.setProjection(tempDRF.getProjection());
             drf.setBB(tempDRF.getBB());
-            addRasterToGeoserver(drf.getGeoserverLabel());
+            addRasterToGeoserver(drf);
             return drf;
         } else{
             logger.error("Something went wrong parsing DataverseRecordFile: " + drf.getTitle());
@@ -324,9 +358,9 @@ public class DataverseJavaObject extends SourceJavaObject {
         geoServerAPI.addVector(name,geoserverLabel);
     }
 
-    private void addRasterToGeoserver(String name) {
+    private void addRasterToGeoserver(DataverseRecordFile drf) {
         GeoServerAPI geoServerAPI =  new GeoServerAPI(this);
-        geoServerAPI.uploadRaster(name);
+        geoServerAPI.uploadRaster(drf);
     }
     @Override
     public String getDOIProtocal(){
@@ -336,5 +370,12 @@ public class DataverseJavaObject extends SourceJavaObject {
             return "";
         } else
             return answer;
+    }
+    public boolean hasDataRecord(String name){
+        for(DataverseRecordFile drf : dataFiles){
+            if(drf.getTitle().equals(name))
+                return true;
+        }
+        return false;
     }
 }

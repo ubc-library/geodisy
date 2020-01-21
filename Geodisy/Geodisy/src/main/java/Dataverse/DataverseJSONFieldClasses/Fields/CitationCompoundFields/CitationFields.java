@@ -58,7 +58,7 @@ public class CitationFields extends MetadataWSimple {
     }
 
     @Override
-    public void setFields(JSONObject jo) {
+    public CitationFields setFields(JSONObject jo) {
         Object valueObject = jo.get(VAL);
         String label = jo.getString(TYPE_NAME);
         if(!(valueObject instanceof String)){
@@ -215,6 +215,7 @@ public class CitationFields extends MetadataWSimple {
             String value = valueObject.toString();
             simpleCitationFields.setField(label, value);
         }
+        return this;
     }
     @Override
     public String getField(String fieldName) {

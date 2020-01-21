@@ -112,7 +112,6 @@ public class MyTimerTask extends TimerTask {
 
     private void sendRecordsToGeoBlacklight() {
         GeoCombine combine = new GeoCombine();
-        //TODO uncomment later
         combine.index();
 
     }

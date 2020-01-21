@@ -2,6 +2,7 @@ package Dataverse;
 
 import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONJournalFieldClasses.JournalFields;
@@ -23,8 +24,8 @@ public abstract class SourceJavaObject {
     protected SocialFields socialFields;
     //protected JournalFields journalFields;
     protected LinkedList<DataverseRecordFile> dataFiles; //Stores the datafiles
-    protected LinkedList<DataverseRecordFile> geoDataFiles; //Stores the datafiles that are geospatial in nature
-    protected LinkedList<DataverseRecordFile> geoDataMeta;
+    protected LinkedList<DataverseGeoRecordFile> geoDataFiles; //Stores the datafiles that are geospatial in nature
+    protected LinkedList<DataverseGeoRecordFile> geoDataMeta;
     protected String server;
     protected boolean hasContent;
     public boolean hasGeospatialFile;
@@ -104,24 +105,25 @@ public abstract class SourceJavaObject {
         return dataFiles;
     }
 
+
     public void setDataFiles(LinkedList<DataverseRecordFile> dataFiles) {
         this.dataFiles = dataFiles;
     }
 
-    public LinkedList<DataverseRecordFile> getGeoDataFiles() {
+    public LinkedList<DataverseGeoRecordFile> getGeoDataFiles() {
         return geoDataFiles;
     }
 
-    public void setGeoDataFiles(LinkedList<DataverseRecordFile> geoDataFiles) {
+    public void setGeoDataFiles(LinkedList<DataverseGeoRecordFile> geoDataFiles) {
         this.geoDataFiles = geoDataFiles;
     }
 
-    public void addGeoDataFile(DataverseRecordFile drf){
+    public void addGeoDataFile(DataverseGeoRecordFile drf){
         geoDataFiles.add(drf);
     }
 
     public void removeGeoDataFile(String name){
-        for (Iterator<DataverseRecordFile> iterator = geoDataFiles.iterator(); iterator.hasNext();) {
+        for (Iterator<DataverseGeoRecordFile> iterator = geoDataFiles.iterator(); iterator.hasNext();) {
             DataverseRecordFile record = iterator.next();
             if (record.getTitle().equals(name)) {
                 // Remove the current element from the iterator and the list.
@@ -130,11 +132,11 @@ public abstract class SourceJavaObject {
         }
     }
 
-    public LinkedList<DataverseRecordFile> getGeoDataMeta() {
+    public LinkedList<DataverseGeoRecordFile> getGeoDataMeta() {
         return geoDataMeta;
     }
 
-    public void addGeoDataMeta(DataverseRecordFile drf) {
+    public void addGeoDataMeta(DataverseGeoRecordFile drf) {
         geoDataMeta.add(drf);
     }
 
@@ -201,6 +203,7 @@ public abstract class SourceJavaObject {
         GeographicFields gf = geoFields;
         return gf.getGeoCovers().size()>0;
     }
+
 
     //public JournalFields getJournalFields(){ return journalFields;}
 }

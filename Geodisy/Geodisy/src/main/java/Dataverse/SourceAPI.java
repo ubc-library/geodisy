@@ -21,5 +21,5 @@ public abstract class SourceAPI implements API {
     abstract public LinkedList<SourceJavaObject> harvest();
     abstract protected void deleteMetadata(String identifier);
     abstract protected void deleteFromGeoserver(String identifier);
-    abstract protected void getBBFromGeonames(SourceJavaObject sjo);
+    abstract protected SourceJavaObject getBBFromGeonames(SourceJavaObject sjo);
 }

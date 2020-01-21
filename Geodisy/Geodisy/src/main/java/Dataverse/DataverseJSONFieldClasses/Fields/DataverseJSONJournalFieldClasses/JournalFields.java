@@ -36,7 +36,7 @@ public class JournalFields extends MetadataWSimple {
     }
 
     @Override
-    public void setFields(JSONObject jo) {
+    public JournalFields setFields(JSONObject jo) {
         String fieldName = jo.getString(TYPE_NAME);
         Object o = jo.get(VAL);
         if(fieldName.equals(JOURNAL_ARTICLE_TYPE)){
@@ -51,7 +51,7 @@ public class JournalFields extends MetadataWSimple {
             }
         }else
             logger.error("Tried to set field \"" + fieldName + "\"");
-
+        return this;
     }
 
     @Override

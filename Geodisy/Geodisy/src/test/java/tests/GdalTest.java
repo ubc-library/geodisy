@@ -18,21 +18,21 @@ public class GdalTest {
     @Test
     public void gdalparseTest() {
         GDAL gdal = new GDAL();
-        String filePath = "C:\\geodisy\\Geodisy\\Geodisy\\datasetFiles\\10\\5072\\FK2\\WQLIQD\\WA_Point_Roberts_OE_N_20140114_TMorth_geo.tif";
-        String name = "WA_Point_Roberts_OE_N_20140114_TMorth_geo.tif";
+        String filePath = "C:\\geodisy\\Geodisy\\Geodisy\\datasetFiles\\10\\5072\\FK2\\GFCTVC\\NetCDF_GFCTVC.shp";
+        String name = "NetCDF_GFCTVC.shp";
         int success = 0;
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 100; i++) {
 
             try {
                 String answer = gdal.getGDALInfo(filePath, name, true);
-                if (answer.contains("Coordinates:Upper Left  ("))
+                if (answer.contains("FAILURE"))
                     success++;
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
         }
-        System.out.println("Success = " + success + "/100");
+        System.out.println("Success = " + (100-success) + "/100");
     }
 
     @Test

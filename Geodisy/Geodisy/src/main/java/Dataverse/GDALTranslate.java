@@ -54,9 +54,6 @@ public class GDALTranslate {
         return process(dirPath,dirPath,name,transformType, newLocation);
     }
     public boolean process(String sourcePath, String destPath, String name, String transformType, boolean newLocation){
-        if(transformType.equals(VECTOR))
-            if(GeodisyStrings.otherShapeFilesExtensions(name))
-                return false;
         if(newLocation){
             sourcePath = GeodisyStrings.replaceSlashes(sourcePath);
             destPath = GeodisyStrings.replaceSlashes(destPath);
@@ -73,13 +70,16 @@ public class GDALTranslate {
         for(int i = 0; i<8; i++){
         if(transformType.equals(RASTER)) {
             call = GDAL_TRANSLATE + sourcePath + name + " " + destPath + nameStub + ".tif";
+            System.out.println("Translate call: " + call);
             processBuilder.command("bash", "-c", call);
             try {
 
                 if (IS_WINDOWS) {
                     Runtime.getRuntime().exec(call);
                 } else {
-                    processBuilder.start();
+                    Process process = processBuilder.start();
+                    process.waitFor();
+                    process.destroy();
                 }
                 String answer = gdal.getGDALInfo(destPath + nameStub + ".tif", name, IS_WINDOWS);
                 if(answer.contains("successful.Layer name")) {
@@ -87,11 +87,12 @@ public class GDALTranslate {
                     file.delete();
                     return true;
                 }
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
                 logger.error("Something went wrong converting " + name + " to geotiff");
             }
         } else{
                 call = OGR2OGR + destPath + nameStub + ".shp " + sourcePath + name;
+                System.out.println("Translate call: " + call);
                 processBuilder.command("bash", "-c", call);
                 try {
                     if (IS_WINDOWS) {

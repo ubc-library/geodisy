@@ -19,14 +19,13 @@ public class GDAL {
         String doi = djo.getDOI();
         String path = doi.replace(".","/");
         String folderName = DATASET_FILES_PATH +path+"/";
-        LinkedList<DataverseRecordFile> origRecords = djo.getDataFiles();
+        LinkedList<DataverseGeoRecordFile> origRecords = djo.getGeoDataFiles();
+        if(origRecords.size()==0)
+            return djo;
         File folder = new File(folderName);
         if(!folder.exists())
             folder.mkdirs();
-    /*    if(folder.createNewFile()) {
-            folder.delete();
-            return djo;
-        }*/
+
 
         if(folder.listFiles().length==0) {
             folder.delete();
@@ -36,24 +35,12 @@ public class GDAL {
         GeographicBoundingBox gbb;
         int raster = 0;
         int vector = 0;
-        LinkedList<DataverseRecordFile> records = djo.getGeoDataFiles();
-        for(Iterator<DataverseRecordFile> iter = origRecords.iterator(); iter.hasNext();) {
-            DataverseRecordFile drf = iter.next();
+        LinkedList<DataverseGeoRecordFile> records = new LinkedList<>();
+        for(DataverseGeoRecordFile drf : origRecords) {
             String name = drf.getTitle();
             gbb = new GeographicBoundingBox(doi);
-            if (GeodisyStrings.otherShapeFilesExtensions(name) || GeodisyStrings.fileTypesToIgnore(name))
-                continue;
             String lowerName = name.toLowerCase();
             String filePath = DATASET_FILES_PATH + path + "/" + name;
-            if (GeodisyStrings.fileTypesToIgnore(name)){
-                iter.remove();
-                File f = new File(DATASET_FILES_PATH + path + "/" + name);
-                f.delete();
-                continue;
-            }
-            if(GeodisyStrings.otherShapeFilesExtensions(name))
-                continue;
-
             boolean gdalInfo = GeodisyStrings.gdalinfoRasterExtention(lowerName);
 
             String gdalString;
@@ -61,83 +48,82 @@ public class GDAL {
             String projection = "";
 
 
-            if (name.endsWith(".tif"))
+            if (gdalInfo)
                 raster++;
-            if (name.endsWith(".shp"))
+            else
                 vector++;
-            if (name.endsWith(".tif") || name.endsWith(".shp")) {
-                try {
-                    gdalString = getGDALInfo(filePath, name, IS_WINDOWS);
-                    if (gdalString.contains("FAILURE")) {
-                        logger.warn("Something went wrong parsing " + name + " at " + filePath);
-                        if (name.endsWith(".tif"))
-                            raster--;
-                        if (name.endsWith(".shp"))
-                            vector--;
-                        continue;
-                    }
-                    String convertedName;
-                    String nameStub = name.substring(0, name.length() - 3);
-                    if (gdalInfo) {
-                        temp = getRaster(gdalString);
-                        projection = getProjection(gdalString);
-                        convertedName = nameStub + "tif";
-                    } else {
-                        temp = getVector(gdalString, IS_WINDOWS, lowerName, filePath);
-                        projection = temp.getField(PROJECTION);
-                        convertedName = nameStub + "shp";
-                    }
-                    temp.setIsGeneratedFromGeoFile(true);
-                    if (!temp.hasBB()) {
-                        if (GeodisyStrings.gdalinfoRasterExtention(name))
-                            raster--;
-                        if (GeodisyStrings.ogrinfoVectorExtension(name))
-                            vector--;
-                        File f = new File(DATASET_FILES_PATH + path + "/" + convertedName);
-                        f.delete();
-                        djo.removeGeoDataFile(convertedName);
-                        iter.remove();
-                        continue;
-                    } else{
-                        temp.setField(FILE_NAME,name);
-                        DataverseRecordFile tempRec = new DataverseRecordFile(drf.getFileIdent(),temp);
-                        tempRec.setOriginalTitle(convertedName);
-                        tempRec.setTitle(convertedName);
-                        tempRec.setDatasetIdent(drf.getDatasetIdent());
-                        tempRec.setFileIdent(drf.getFileIdent());
-                        tempRec.setDbID(drf.getDbID());
-                        if(gdalInfo)
-                            tempRec.setFileNumber(raster);
-                        else
-                            tempRec.setFileNumber(vector);
-                        records.add(tempRec);
-                    }
-                 /*
-                    gbb.setField(GEOMETRY,temp.getField(GEOMETRY));
-                    GeographicFields gf = djo.getGeoFields();
-                    List<GeographicBoundingBox> bboxes = gf.getGeoBBoxes();
-                    gbb.setBB(temp.getBB());
-                    gbb.setFileName(name);
-                    gbb.setField(PROJECTION,projection);
-                    if(name.endsWith(".shp"))
-                        gbb.setField(GEOSERVER_LABEL,djo.getSimpleFieldVal(PERSISTENT_ID)+ gbb.getFileNumber());
-
-                    gf.addBB(bboxes, gbb);
-                    djo.setGeoFields(gf);
-
-                    GeoServerAPI geoServerAPI = new GeoServerAPI(djo);
-                    geoServerAPI.uploadVector(name);
-
-                  */
-
-                } catch (IOException e) {
-                    logger.error("Something went wrong trying to call GDAL with " + name);
+            try {
+                gdalString = getGDALInfo(filePath, name, IS_WINDOWS);
+                if (gdalString.contains("FAILURE")) {
+                    logger.warn("Something went wrong parsing " + name + " at " + filePath);
+                    if (name.endsWith(".tif"))
+                        raster--;
+                    if (name.endsWith(".shp"))
+                        vector--;
+                    continue;
                 }
+                String convertedName;
+                String nameStub = name.substring(0, name.length() - 3);
+                if (gdalInfo) {
+                    temp = getRaster(gdalString);
+                    projection = getProjection(gdalString);
+                    convertedName = nameStub + "tif";
+                } else {
+                    temp = getVector(gdalString, IS_WINDOWS, lowerName, filePath);
+                    projection = temp.getField(PROJECTION);
+                    convertedName = nameStub + "shp";
+                }
+                temp.setIsGeneratedFromGeoFile(true);
+                if (!temp.hasBB()) {
+                    if (GeodisyStrings.gdalinfoRasterExtention(name))
+                        raster--;
+                    if (GeodisyStrings.ogrinfoVectorExtension(name))
+                        vector--;
+                    File f = new File(DATASET_FILES_PATH + path + "/" + convertedName);
+                    f.delete();
+                    continue;
+                } else{
+                    temp.setField(FILE_NAME,name);
+                    DataverseGeoRecordFile tempRec = new DataverseGeoRecordFile(drf.getDatasetIdent(),temp);
+                    tempRec.setOriginalTitle(convertedName);
+                    tempRec.setTitle(convertedName);
+                    tempRec.setDatasetIdent(drf.getDatasetIdent());
+                    tempRec.setFileIdent(drf.getFileIdent());
+                    tempRec.setDbID(drf.getDbID());
+                    tempRec.setProjection(projection);
+                    tempRec.setGdalString(gdalString, gdalInfo);
+                    if(gdalInfo)
+                        tempRec.setFileNumber(raster);
+                    else
+                        tempRec.setFileNumber(vector);
+                    records.add(tempRec);
+                }
+             /*
+                gbb.setField(GEOMETRY,temp.getField(GEOMETRY));
+                GeographicFields gf = djo.getGeoFields();
+                List<GeographicBoundingBox> bboxes = gf.getGeoBBoxes();
+                gbb.setBB(temp.getBB());
+                gbb.setFileName(name);
+                gbb.setField(PROJECTION,projection);
+                if(name.endsWith(".shp"))
+                    gbb.setField(GEOSERVER_LABEL,djo.getSimpleFieldVal(PERSISTENT_ID)+ gbb.getFileNumber());
 
+                gf.addBB(bboxes, gbb);
+                djo.setGeoFields(gf);
+
+                GeoServerAPI geoServerAPI = new GeoServerAPI(djo);
+                geoServerAPI.uploadVector(name);
+
+              */
+
+            } catch (IOException e) {
+                logger.error("Something went wrong trying to call GDAL with " + name);
             }
         }
+        djo.setGeoDataFiles(records);
         return djo;
     }
+
     public GeographicBoundingBox generateBB(File file, String doi, String number){
         String lowerName = file.getName().toLowerCase();
         String regularName = file.getName();
@@ -171,6 +157,7 @@ public class GDAL {
                 gbb.setField(FILE_NAME,lowerName);
                 gbb.setField(GEOMETRY,temp.getField(GEOMETRY));
                 gbb.setField(PROJECTION,projection);
+                gbb.setBB(temp.getBB());
                 if(lowerName.endsWith(".shp")) {
                     gbb.setField(GEOSERVER_LABEL, doi + "v" + number);
                     return gbb;
@@ -260,14 +247,8 @@ public class GDAL {
                 try {
                     int projLoc = gdalString.lastIndexOf("AUTHORITY[\"") + 11;
                     if (projLoc > 10) {
-                        String projectionString = gdalString.substring(projLoc);
-                        int projLocEnd = projectionString.indexOf("\"");
-                        String first = projectionString.substring(0, projLocEnd);
-                        projLoc = projectionString.indexOf("\",\"") + 3;
-                        projectionString = projectionString.substring(projLoc);
-                        projLocEnd = projectionString.indexOf("\"]]");
-                        String second = projectionString.substring(0, projLocEnd);
-                        gbb.setField(PROJECTION, first + ":" + second);
+                        String authority = getAuthority(gdalString, projLoc);
+                        gbb.setField(PROJECTION, authority);
                     }
                 }catch (IndexOutOfBoundsException e){
                     logger.error("Couldn't determine projection for record " + name);
@@ -284,6 +265,16 @@ public class GDAL {
         return gbb;
     }
 
+    private String getAuthority(String gdalString, int projLoc) {
+        String projectionString = gdalString.substring(projLoc);
+        int projLocEnd = projectionString.indexOf("\"");
+        String first = projectionString.substring(0, projLocEnd);
+        projLoc = projectionString.indexOf("\",\"") + 3;
+        projectionString = projectionString.substring(projLoc);
+        projLocEnd = projectionString.indexOf("\"]]");
+        String second = projectionString.substring(0, projLocEnd);
+        return first+ ":" + second;
+    }
 
 
     private void convertToWGS84(String filePath, boolean isWindows, String name) throws IOException {
@@ -340,20 +331,23 @@ public class GDAL {
         }
         ProcessBuilder processBuilder= new ProcessBuilder();
         processBuilder.command("bash", "-c", gdal+filePath);
-        if (isWindows) {
-            process = Runtime.getRuntime()
-                    .exec(String.format(gdal + filePath));
-        } else {
-            process = processBuilder.start();
-        }
+        int counter = 0;
+            if (isWindows) {
+                process = Runtime.getRuntime()
+                        .exec(String.format(gdal + filePath));
+            } else {
+                process = processBuilder.start();
+            }
 
-        BufferedReader stdInput = new BufferedReader(new
-                InputStreamReader(process.getInputStream()));
+            BufferedReader stdInput = new BufferedReader(new
+                    InputStreamReader(process.getInputStream()));
 
-        String s;
-        while((s = stdInput.readLine()) != null) {
-            gdalString.append(s);
-        }
+            String s;
+            while ((s = stdInput.readLine()) != null) {
+                gdalString.append(s);
+            }
+
+
         return gdalString.toString();
     }
 

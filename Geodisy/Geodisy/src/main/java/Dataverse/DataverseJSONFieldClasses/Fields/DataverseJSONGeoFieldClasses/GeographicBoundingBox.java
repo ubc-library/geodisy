@@ -48,7 +48,14 @@ public class GeographicBoundingBox extends CompoundJSONField {
     }
     //TODO make sure we create a Geoserver Location for each file
     public String getGeoserverLocation() {
-        return geoserverLabel;
+        int colon = geoserverLabel.lastIndexOf(":");
+        if(colon==-1)
+            return geoserverLabel;
+        else{
+            String temp = geoserverLabel.substring(colon+1);
+            temp = geoserverLabel.substring(0,colon) + temp;
+            return temp.replace(".","_").replace("/","_").replace("\\","_");
+        }
     }
     public String getWestLongitude() {
         checkCoords(bb);
