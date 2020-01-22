@@ -1,8 +1,5 @@
 package tests;
 
-import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
-import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
-import Dataverse.DataverseJavaObject;
 import Dataverse.GDAL;
 import Dataverse.GDALTranslate;
 import org.junit.jupiter.api.Test;
@@ -24,7 +21,7 @@ public class GdalTest {
         for (int i = 0; i < 100; i++) {
 
             try {
-                String answer = gdal.getGDALInfo(filePath, name, true);
+                String answer = gdal.getGDALInfo(filePath, name);
                 if (answer.contains("FAILURE"))
                     success++;
             } catch (IOException e) {
@@ -61,7 +58,7 @@ public class GdalTest {
                 } else {
                     processBuilder.start();
                 }
-                String answer = gdal.getGDALInfo(destPath + newName + " ", name, IS_WINDOWS);
+                String answer = gdal.getGDALInfo(destPath + newName + " ", name);
                 if(answer.contains("successful.Layer name:")) {
                     count++;
                 }

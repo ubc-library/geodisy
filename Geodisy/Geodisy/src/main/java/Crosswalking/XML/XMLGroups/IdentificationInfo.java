@@ -151,8 +151,10 @@ public class IdentificationInfo extends SubElement {
     private String getFileNames(List<DataverseRecordFile> dataFiles) {
         String answer = "";
         for(DataverseRecordFile drf:dataFiles){
-            int loc = drf.getTitle().indexOf(".");
-            String ext = drf.getTitle().substring(loc);
+            int loc = drf.getTranslatedTitle().indexOf(".");
+            if(loc==-1)
+                continue;
+            String ext = drf.getTranslatedTitle().substring(loc);
             if(!answer.isEmpty())
                 answer = "FileTypes: " + ext;
             else

@@ -12,8 +12,7 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
-import static BaseFiles.GeodisyStrings.SANDBOX_DV_URL;
-import static BaseFiles.GeodisyStrings.replaceSlashes;
+import static BaseFiles.GeodisyStrings.*;
 
 public class DownloadRecord {
     String doi;
@@ -66,7 +65,7 @@ public class DownloadRecord {
         Long total = beginningEnd.getTimeInMillis()-startTime;
         System.out.println("Finished a download run at: " + beginningEnd.getTime() + " after " + total + " milliseconds");
         Long middle = beginningEnd.getTimeInMillis();
-        String path = "datasetFiles/" + doiPathed + "/";
+        String path = DATASET_FILES_PATH + doiPathed + "/";
         int count = translateFiles(path);
         Calendar endEnd = Calendar.getInstance();
         Long end = endEnd.getTimeInMillis();

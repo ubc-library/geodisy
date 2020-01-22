@@ -7,12 +7,15 @@ import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordFile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import sun.awt.image.ImageWatched;
 
 import java.io.*;
-import java.nio.file.Files;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import java.util.LinkedList;
+
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 /**
@@ -20,7 +23,9 @@ import java.util.zip.ZipInputStream;
  * and then deleting the unzipped files after the uploadVector process is finished
  */
 public class Unzip {
-    GeoLogger logger = new GeoLogger(Unzip.class);
+    GeoLogger logger;
+
+
     //TODO call unzip when adding zipped files to Geoserver and then call deleteUnzippedFiles() after uploadVector is done to save space
     public LinkedList<DataverseRecordFile> unzip(String filePath, String destPath, DataverseRecordFile dRF, DataverseJavaObject djo ) {
         //String destPath = filePath.substring(0,filePath.length()-4);
@@ -46,7 +51,6 @@ public class Unzip {
                 }
 
                 File newFile = newFile(destDir, zipEntry);
-                drfs.add(new DataverseRecordFile(zipEntry.getName(),-1,djo.getServer(),dRF.getDatasetIdent()));
                 FileOutputStream fos = new FileOutputStream(newFile);
                 int len;
                 while ((len = zis.read(buffer)) > 0) {

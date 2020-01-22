@@ -27,11 +27,12 @@ public class GeodisyStrings {
             if(isWindows)
                 return WINDOWS_ROOT;
             else
-                return "/home/centos/Geodisy/";
+                return CENTOS_ROOT;
         }
 
     //File paths
         private final static String WINDOWS_ROOT = "C:\\geodisy\\Geodisy\\Geodisy\\";
+        private final static String CENTOS_ROOT = "/home/centos/Geodisy/";
         public final static String GEODISY_PATH_ROOT = getRoot();
         public final static String EXISTING_RECORDS = GEODISY_PATH_ROOT + "savedFiles/ExisitingRecords.txt";
         public final static String EXISTING_CHECKS = GEODISY_PATH_ROOT + "savedFiles/ExisitingChecks.txt";
@@ -139,20 +140,20 @@ public class GeodisyStrings {
     public final static String DEV_ADDRESS = "206-12-92-97.cloud.computecanada.ca";
     public final static String PROD_ADDRESS = "206-12-92-97.cloud.computecanada.ca";
     public final static String ADDRESS = addressToUse(TEST);
-    public final static String VM_BASE_PATH_DEV = "https://" + ADDRESS + "/";
+    public final static String VM_BASE_PATH_DEV = "C:/geodisy/Geodisy/Geodisy/";
     public final static String VM_BASE_PATH_PROD = "https://" + ADDRESS + "/";
-    public final static String BASE_PATH = vmToUse(TEST);
+    public final static String BASE_PATH = vmToUse();
     public final static String END_XML_JSON_FILE_PATH = BASE_PATH + "geodisy/";
     public final static String PATH_TO_XML_JSON_FILES = END_XML_JSON_FILE_PATH;
     public final static String OGM_PATH = "OGM_PATH=/var/www/206-12-92-97.cloud.computecanada.ca/html/geodisy/";
-    public final static String MOVE_METADATA = "rsync -av /home/centos/Geodisy/metadata/* /var/www/" + ADDRESS + "/html/geodisy/";
+    public final static String MOVE_METADATA = "rsync -auhv /home/centos/Geodisy/metadata/* /var/www/" + ADDRESS + "/html/geodisy/";
     public final static String CLEAR_SOLR = "sudo su - root -c \"cd /root/solr-8.3.0/bin/ && ./post -c geoblacklight-prod delete_ALL.xml\"";
     public final static String DELETE_DUPLICATE_META_FOLDER = "rm -rf /home/centos/Geodisy/metadata/*";
     public final static String GEOCOMBINE = "(cd /home/geoblack/GeoCombine/ && "+ OGM_PATH +" /home/centos/geodisy/bin/bundle exec rake geocombine:index)";
     public final static String BASE_LOCATION_TO_STORE_METADATA = "metadata/";
 
-    public static String vmToUse(boolean test){
-        if(test)
+    public static String vmToUse(){
+        if(IS_WINDOWS)
             return VM_BASE_PATH_DEV;
         else
             return VM_BASE_PATH_PROD;

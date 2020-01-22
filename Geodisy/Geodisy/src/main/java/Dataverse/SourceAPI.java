@@ -18,7 +18,7 @@ import java.util.LinkedList;
 public abstract class SourceAPI implements API {
     abstract protected HashSet<String> searchDV();
     abstract protected LinkedList<JSONObject> downloadMetadata(HashSet<String> dIOs);
-    abstract public LinkedList<SourceJavaObject> harvest();
+    abstract public LinkedList<SourceJavaObject> harvest(LinkedList<SourceJavaObject> answers);
     abstract protected void deleteMetadata(String identifier);
     abstract protected void deleteFromGeoserver(String identifier);
     abstract protected SourceJavaObject getBBFromGeonames(SourceJavaObject sjo);

@@ -6,7 +6,6 @@ import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.G
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 
 import java.io.*;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 import static BaseFiles.GeodisyStrings.*;
@@ -15,6 +14,47 @@ import static Dataverse.DVFieldNameStrings.*;
 public class GDAL {
     GeoLogger logger = new GeoLogger(this.getClass());
 
+    public String getGDALInfo(String filePath, String name) throws IOException {
+        String gdal;
+        StringBuilder gdalString = new StringBuilder();
+
+        Process process;
+        if(GeodisyStrings.gdalinfoRasterExtention(name)) {
+            gdal = GDALINFO;
+        }
+        else if(GeodisyStrings.ogrinfoVectorExtension(name) && !GeodisyStrings.otherShapeFilesExtensions(name)) {
+            gdal = OGRINFO;
+        }else
+            return "FAILURE";
+
+        ProcessBuilder processBuilder= new ProcessBuilder();
+        processBuilder.command("/usr/bin/bash", "-c", gdal+filePath);
+        System.out.println(gdal+filePath);
+        int counter = 0;
+        if (IS_WINDOWS) {
+            process = Runtime.getRuntime()
+                    .exec(String.format(gdal + filePath));
+        } else {
+            process = processBuilder.start();
+            try {
+                process.waitFor();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        BufferedReader stdInput = new BufferedReader(new
+                InputStreamReader(process.getInputStream()));
+
+        String s;
+        while ((s = stdInput.readLine()) != null) {
+            gdalString.append(s);
+        }
+
+        System.out.println(gdalString.toString());
+        return gdalString.toString();
+    }
+    //Not used by main program
     public DataverseJavaObject generateBB(DataverseJavaObject djo) {
         String doi = djo.getDOI();
         String path = doi.replace(".","/");
@@ -31,104 +71,46 @@ public class GDAL {
             folder.delete();
             return djo;
         }
-        String[] fileNames = folder.list();
-        GeographicBoundingBox gbb;
-        int raster = 0;
-        int vector = 0;
+
+        int raster = 1;
+        int vector = 1;
         LinkedList<DataverseGeoRecordFile> records = new LinkedList<>();
+        GeographicBoundingBox temp = new GeographicBoundingBox(doi);
         for(DataverseGeoRecordFile drf : origRecords) {
-            String name = drf.getTitle();
-            gbb = new GeographicBoundingBox(doi);
-            String lowerName = name.toLowerCase();
+            String name = drf.getTranslatedTitle();
             String filePath = DATASET_FILES_PATH + path + "/" + name;
-            boolean gdalInfo = GeodisyStrings.gdalinfoRasterExtention(lowerName);
+            File file = new File(filePath);
 
-            String gdalString;
-            GeographicBoundingBox temp;
-            String projection = "";
-
-
-            if (gdalInfo)
-                raster++;
-            else
-                vector++;
-            try {
-                gdalString = getGDALInfo(filePath, name, IS_WINDOWS);
-                if (gdalString.contains("FAILURE")) {
-                    logger.warn("Something went wrong parsing " + name + " at " + filePath);
-                    if (name.endsWith(".tif"))
-                        raster--;
-                    if (name.endsWith(".shp"))
-                        vector--;
+            if (name.endsWith("tif")) {
+                temp = generateBB(file, doi, String.valueOf(raster));
+                if(temp.hasBB())
+                    raster++;
+                else
                     continue;
-                }
-                String convertedName;
-                String nameStub = name.substring(0, name.length() - 3);
-                if (gdalInfo) {
-                    temp = getRaster(gdalString);
-                    projection = getProjection(gdalString);
-                    convertedName = nameStub + "tif";
-                } else {
-                    temp = getVector(gdalString, IS_WINDOWS, lowerName, filePath);
-                    projection = temp.getField(PROJECTION);
-                    convertedName = nameStub + "shp";
-                }
-                temp.setIsGeneratedFromGeoFile(true);
-                if (!temp.hasBB()) {
-                    if (GeodisyStrings.gdalinfoRasterExtention(name))
-                        raster--;
-                    if (GeodisyStrings.ogrinfoVectorExtension(name))
-                        vector--;
-                    File f = new File(DATASET_FILES_PATH + path + "/" + convertedName);
-                    f.delete();
+            } else if (name.endsWith("shp")) {
+                temp = generateBB(file, doi, String.valueOf(vector));
+                if(temp.hasBB())
+                    vector++;
+                else
                     continue;
-                } else{
-                    temp.setField(FILE_NAME,name);
-                    DataverseGeoRecordFile tempRec = new DataverseGeoRecordFile(drf.getDatasetIdent(),temp);
-                    tempRec.setOriginalTitle(convertedName);
-                    tempRec.setTitle(convertedName);
-                    tempRec.setDatasetIdent(drf.getDatasetIdent());
-                    tempRec.setFileIdent(drf.getFileIdent());
-                    tempRec.setDbID(drf.getDbID());
-                    tempRec.setProjection(projection);
-                    tempRec.setGdalString(gdalString, gdalInfo);
-                    if(gdalInfo)
-                        tempRec.setFileNumber(raster);
-                    else
-                        tempRec.setFileNumber(vector);
-                    records.add(tempRec);
-                }
-             /*
-                gbb.setField(GEOMETRY,temp.getField(GEOMETRY));
-                GeographicFields gf = djo.getGeoFields();
-                List<GeographicBoundingBox> bboxes = gf.getGeoBBoxes();
-                gbb.setBB(temp.getBB());
-                gbb.setFileName(name);
-                gbb.setField(PROJECTION,projection);
-                if(name.endsWith(".shp"))
-                    gbb.setField(GEOSERVER_LABEL,djo.getSimpleFieldVal(PERSISTENT_ID)+ gbb.getFileNumber());
-
-                gf.addBB(bboxes, gbb);
-                djo.setGeoFields(gf);
-
-                GeoServerAPI geoServerAPI = new GeoServerAPI(djo);
-                geoServerAPI.uploadVector(name);
-
-              */
-
-            } catch (IOException e) {
-                logger.error("Something went wrong trying to call GDAL with " + name);
+            } else {
+                logger.error("Somehow got a DataverseGeoRecordFile that isn't for a shp or tif. File name" + name);
             }
+            drf.setGbb(temp);
+            records.add(drf);
         }
         djo.setGeoDataFiles(records);
         return djo;
     }
 
     public GeographicBoundingBox generateBB(File file, String doi, String number){
+        System.out.println("Filename: " + file.getName() + ", doi: " + doi + ", number: " + number);
         String lowerName = file.getName().toLowerCase();
         String regularName = file.getName();
         String filePath = file.getAbsolutePath();
         if(!GeodisyStrings.gdalinfoRasterExtention(lowerName) && !GeodisyStrings.ogrinfoVectorExtension(lowerName))
+            return new GeographicBoundingBox(doi);
+        if(GeodisyStrings.otherShapeFilesExtensions(lowerName))
             return new GeographicBoundingBox(doi);
         boolean gdalInfo = GeodisyStrings.gdalinfoRasterExtention(lowerName);
 
@@ -136,7 +118,8 @@ public class GDAL {
         GeographicBoundingBox temp;
         String projection =  "";
         try {
-            gdalString = getGDALInfo(filePath, lowerName, IS_WINDOWS);
+            System.out.println("Filename: " + file.getName() + ", lowerName: " + lowerName + ", Windows?: " + IS_WINDOWS);
+            gdalString = getGDALInfo(filePath, lowerName);
             if(gdalString.contains("FAILURE")) {
                 logger.warn("Something went wrong parsing " + lowerName + " at " + filePath);
                 return new GeographicBoundingBox(doi);
@@ -160,10 +143,12 @@ public class GDAL {
                 gbb.setBB(temp.getBB());
                 if(lowerName.endsWith(".shp")) {
                     gbb.setField(GEOSERVER_LABEL, doi + "v" + number);
+                    gbb.setFileNumber(Integer.valueOf(number));
                     return gbb;
                 }
                 else if(lowerName.endsWith(".tif")) {
                     gbb.setField(GEOSERVER_LABEL, doi + "r" + number);
+                    gbb.setFileNumber(Integer.valueOf(number));
                     return gbb;
                 }
                 else {
@@ -178,7 +163,6 @@ public class GDAL {
         return new GeographicBoundingBox(doi);
     }
 
-
     private String getProjection(String gdalString) {
         String projection = "";
         int start = gdalString.indexOf("PROJCS[\"");
@@ -192,14 +176,14 @@ public class GDAL {
         return projection;
     }
 
-    public GeographicBoundingBox generateBoundingBoxFromCSV(File file, DataverseJavaObject djo){
+    public GeographicBoundingBox generateBoundingBoxFromCSV(String fileName, DataverseJavaObject djo){
         String path = djo.getDOI().replace("/","_");
         path = path.replace(".","_");
-        String filePath = DATASET_FILES_PATH + path + "/" + file.getName();
-        String name = file.getName();
+        String filePath = DATASET_FILES_PATH + path + "/" + fileName;
+        String name = fileName;
         String ogrString = null;
         try {
-            ogrString = getGDALInfo(filePath, name, IS_WINDOWS);
+            ogrString = getGDALInfo(filePath, name);
             if(ogrString.contains("FAILURE")) {
                 logger.warn("Something went wrong parsing " + name + " at " + filePath);
                 return new GeographicBoundingBox(djo.getDOI());
@@ -214,50 +198,37 @@ public class GDAL {
     }
 
     private GeographicBoundingBox getRaster(String gdalString) {
-        int start = gdalString.indexOf("Upper Left  (")+13;
+
         GeographicBoundingBox temp = new GeographicBoundingBox("temp");
-        if(start > 12) {
-            temp.setBB(getLatLongGdalInfo(gdalString, start));
+            temp.setBB(getLatLongGdalInfo(gdalString));
             temp.setField(GEOMETRY,RASTER);
-        }
         return temp;
     }
 
     private GeographicBoundingBox getVector(String gdalString, boolean isWindows, String name, String filePath) throws IOException {
         String geo = getGeometryType(gdalString);
-        int start = gdalString.indexOf("Extent: (")+9;
-        int end;
         GeographicBoundingBox gbb = new GeographicBoundingBox("temp");
-
-        BoundingBox temp = new BoundingBox();
-        if(start != -1+9) {
-            end = gdalString.indexOf(", ", start);
-            temp = getLatLongOgrInfo(gdalString, start, end);
+        BoundingBox temp;
+            temp = getLatLongOgrInfo(gdalString);
             if (temp.hasUTMCoords()) {
                 convertToWGS84(filePath, isWindows, name);
                 gbb.setField(PROJECTION,"EPSG:4326");
-                gdalString = getGDALInfo(filePath, name, isWindows);
+                gdalString = getGDALInfo(filePath, name);
                 if(gdalString.contains("FAILURE"))
                     return new GeographicBoundingBox("temp");
-                start = gdalString.indexOf("Extent: (") + 9;
-                end = gdalString.indexOf(", ", start);
-                temp = getLatLongOgrInfo(gdalString, start, end);
+                temp = getLatLongOgrInfo(gdalString);
             }
             else{
                 try {
-                    int projLoc = gdalString.lastIndexOf("AUTHORITY[\"") + 11;
-                    if (projLoc > 10) {
-                        String authority = getAuthority(gdalString, projLoc);
+                        String authority = getAuthority(gdalString);
                         gbb.setField(PROJECTION, authority);
-                    }
                 }catch (IndexOutOfBoundsException e){
                     logger.error("Couldn't determine projection for record " + name);
                 }
             }
-        }
         if(gdalString.contains("Geometry:")){
-            start = gdalString.indexOf("Geometry:")+10;
-            end = gdalString.indexOf("Feature Count:");
+            int start = gdalString.indexOf("Geometry:")+10;
+            int end = gdalString.indexOf("Feature Count:");
             gbb.setField(GEOMETRY,gdalString.substring(start,end));
 
         }
@@ -265,7 +236,9 @@ public class GDAL {
         return gbb;
     }
 
-    private String getAuthority(String gdalString, int projLoc) {
+    private String getAuthority(String gdalString) throws IndexOutOfBoundsException {
+
+        int projLoc = gdalString.lastIndexOf("AUTHORITY[\"") + 11;
         String projectionString = gdalString.substring(projLoc);
         int projLocEnd = projectionString.indexOf("\"");
         String first = projectionString.substring(0, projLocEnd);
@@ -273,9 +246,8 @@ public class GDAL {
         projectionString = projectionString.substring(projLoc);
         projLocEnd = projectionString.indexOf("\"]]");
         String second = projectionString.substring(0, projLocEnd);
-        return first+ ":" + second;
+        return first + ":" + second;
     }
-
 
     private void convertToWGS84(String filePath, boolean isWindows, String name) throws IOException {
         String gdal;
@@ -292,7 +264,13 @@ public class GDAL {
         } else {
             ProcessBuilder processBuilder= new ProcessBuilder();
             processBuilder.command("bash", "-c", gdal + newAndOld);
-            processBuilder.start();
+            Process p = processBuilder.start();
+            try {
+                p.waitFor();
+            } catch (InterruptedException e) {
+                logger.error("Something went wrong trying to convert " + name + " to WGS84");
+            }
+            p.destroy();
         }
     }
 
@@ -318,39 +296,6 @@ public class GDAL {
         }
     }
 
-    public String getGDALInfo(String filePath, String name, boolean isWindows) throws IOException {
-        String gdal;
-        StringBuilder gdalString = new StringBuilder();
-
-        Process process;
-        if(GeodisyStrings.gdalinfoRasterExtention(name)) {
-            gdal = GDALINFO;
-        }
-        else {
-            gdal = OGRINFO;
-        }
-        ProcessBuilder processBuilder= new ProcessBuilder();
-        processBuilder.command("bash", "-c", gdal+filePath);
-        int counter = 0;
-            if (isWindows) {
-                process = Runtime.getRuntime()
-                        .exec(String.format(gdal + filePath));
-            } else {
-                process = processBuilder.start();
-            }
-
-            BufferedReader stdInput = new BufferedReader(new
-                    InputStreamReader(process.getInputStream()));
-
-            String s;
-            while ((s = stdInput.readLine()) != null) {
-                gdalString.append(s);
-            }
-
-
-        return gdalString.toString();
-    }
-
     private BoundingBox compare(BoundingBox temp, BoundingBox fullExtent) {
         if(fullExtent.getLongWest()==361||temp.getLongWest()<fullExtent.getLongWest()||(fullExtent.getLongWest()<0 && temp.getLongWest()>=0 && temp.getLongEast()< temp.getLongWest()))
             fullExtent.setLongWest(temp.getLongWest());
@@ -363,59 +308,69 @@ public class GDAL {
         return fullExtent;
     }
 
-    private BoundingBox getLatLongOgrInfo(String gdalString, int start, int end) {
+    private BoundingBox getLatLongOgrInfo(String gdalString) {
         BoundingBox bb = new BoundingBox();
-        try {
-            String west = gdalString.substring(start, end).trim();
-            start = end + 2;
-            end = gdalString.indexOf(")", start);
-            String south = gdalString.substring(start, end).trim();
-            start = gdalString.indexOf("- (", end) + 3;
+        int start = gdalString.indexOf("Extent: (")+9;
+        int end;
+
+        if(start != -1+9) {
             end = gdalString.indexOf(", ", start);
-            String east = gdalString.substring(start, end).trim();
-            start = end + 2;
-            end = gdalString.indexOf(")", start);
-            String north = gdalString.substring(start, end).trim();
-            bb.setLongWest(west);
-            bb.setLongEast(east);
-            bb.setLatNorth(north);
-            bb.setLatSouth(south);
-            bb.setGenerated(true);
-        }catch (StringIndexOutOfBoundsException e){
-            System.out.println(gdalString);
-            return bb;
+
+            try {
+                String west = gdalString.substring(start, end).trim();
+                start = end + 2;
+                end = gdalString.indexOf(")", start);
+                String south = gdalString.substring(start, end).trim();
+                start = gdalString.indexOf("- (", end) + 3;
+                end = gdalString.indexOf(", ", start);
+                String east = gdalString.substring(start, end).trim();
+                start = end + 2;
+                end = gdalString.indexOf(")", start);
+                String north = gdalString.substring(start, end).trim();
+                bb.setLongWest(west);
+                bb.setLongEast(east);
+                bb.setLatNorth(north);
+                bb.setLatSouth(south);
+                bb.setGenerated(true);
+            } catch (StringIndexOutOfBoundsException e) {
+                return bb;
+            }
         }
         return bb;
     }
-    private BoundingBox getLatLongGdalInfo(String gdalStringFull, int start) {
-        try {
-            String gdalString = gdalStringFull.substring(start);
-            gdalString = gdalString.substring(gdalString.indexOf("(")+1);
-            int end = gdalString.indexOf(",");
-            String west = parseDecimalDegrees(gdalString.substring(0, end));
-            gdalString = gdalString.substring(end + 1);
-            start = 0;
-            end = gdalString.indexOf(")");
-            String north = parseDecimalDegrees(gdalString.substring(start, end));
-            start = gdalString.indexOf("Lower Right (") + 13;
-            gdalString = gdalString.substring(start);
-            gdalString = gdalString.substring(gdalString.indexOf("(")+1);
-            end = gdalString.indexOf(",");
-            String east = parseDecimalDegrees(gdalString.substring(0, end));
-            gdalString = gdalString.substring(end + 1);
-            start = 0;
-            end = gdalString.indexOf(")");
-            String south = parseDecimalDegrees(gdalString.substring(start, end));
-            BoundingBox bb = new BoundingBox();
-            bb.setLongWest(west);
-            bb.setLongEast(east);
-            bb.setLatNorth(north);
-            bb.setLatSouth(south);
-            bb.setGenerated(true);
-            return bb;
-        }catch (IndexOutOfBoundsException | NumberFormatException e){
-            return new BoundingBox();
+    private BoundingBox getLatLongGdalInfo(String gdalStringFull) {
+        int start = gdalStringFull.indexOf("Upper Left  (")+13;
+        if(start > 12) {
+            try {
+                String gdalString = gdalStringFull.substring(start);
+                gdalString = gdalString.substring(gdalString.indexOf("(") + 1);
+                int end = gdalString.indexOf(",");
+                String west = parseDecimalDegrees(gdalString.substring(0, end));
+                gdalString = gdalString.substring(end + 1);
+                start = 0;
+                end = gdalString.indexOf(")");
+                String north = parseDecimalDegrees(gdalString.substring(start, end));
+                start = gdalString.indexOf("Lower Right (") + 13;
+                gdalString = gdalString.substring(start);
+                gdalString = gdalString.substring(gdalString.indexOf("(") + 1);
+                end = gdalString.indexOf(",");
+                String east = parseDecimalDegrees(gdalString.substring(0, end));
+                gdalString = gdalString.substring(end + 1);
+                start = 0;
+                end = gdalString.indexOf(")");
+                String south = parseDecimalDegrees(gdalString.substring(start, end));
+                BoundingBox bb = new BoundingBox();
+                bb.setLongWest(west);
+                bb.setLongEast(east);
+                bb.setLatNorth(north);
+                bb.setLatSouth(south);
+                bb.setGenerated(true);
+                return bb;
+            } catch (IndexOutOfBoundsException | NumberFormatException e) {
+                return new BoundingBox();
+            }
         }
+        return new BoundingBox();
     }
 
     private String parseDecimalDegrees(String s) throws NumberFormatException{
@@ -436,7 +391,7 @@ public class GDAL {
         DataverseRecordFile temp = new DataverseRecordFile();
 
         try {
-            String gdalString = getGDALInfo(path, name, IS_WINDOWS);
+            String gdalString = getGDALInfo(path, name);
             if (gdalString.contains("FAILURE")){
                 logger.warn("Something went wrong parsing " + file.getName() + " at " + file.getPath());
                 return temp;

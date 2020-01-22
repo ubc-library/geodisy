@@ -9,9 +9,9 @@
     </gmd:metadataIdentifier>
     <gmd:parentMetadata>
         <gmd:CI_Citation>
-            <gmd:title>
+            <gmd:translatedTitle>
                 <gco:CharacterString>Journal, Social Science, and Astronomical citation metadata:</gco:CharacterString>
-            </gmd:title>
+            </gmd:translatedTitle>
             <gmd:identifier>
                 <gmd:MD_Identifier>
                     <gmd:code>
@@ -81,9 +81,9 @@
                             <gmd:CI_DateTypeCode>lastUpdate</gmd:CI_DateTypeCode>
                         </gmd:CI_Date>
                     </gmd:editionDate>
-                    <gmd:title>
+                    <gmd:translatedTitle>
                         <gco:CharacterString>Journal, Social Science, and Astronomical citation metadata</gco:CharacterString>
-                    </gmd:title>
+                    </gmd:translatedTitle>
                     <gmd:citeResponsibleParty>
                         <gmd:CI_Responsibility>
                             <gmd:party>

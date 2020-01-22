@@ -1,6 +1,6 @@
 package Dataverse;
 
-public class GDALInfo {
+public class GDALInformation {
     private String fullGdalString = "";
     private String projection = "";
     private String nativeCRS = "";

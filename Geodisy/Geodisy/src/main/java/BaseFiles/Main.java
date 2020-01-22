@@ -16,12 +16,18 @@ public class Main {
      */
     public static void main(String[] args) {
 
+        //Run the below to remove a single records
+        RemoveRecord rr = new RemoveRecord();
+        rr.removeRecord();
+
         Scheduler scheduler = new Scheduler();
         scheduler.run();
 
         //Run the below solo to download
         /*DownloadRecord downloadRecord = new DownloadRecord();
         downloadRecord.run("doi:10.5072/FK2/KZRG9F");*/
+
+
     }
     
 }

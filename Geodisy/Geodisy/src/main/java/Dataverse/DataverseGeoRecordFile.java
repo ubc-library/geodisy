@@ -3,38 +3,38 @@ package Dataverse;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 
 public class DataverseGeoRecordFile extends DataverseRecordFile {
-    GDALInfo gdalInfo;
+    GDALInformation gdalInfo;
 
     public DataverseGeoRecordFile(String title, String fileIdent, int dbID, String server, String datasetIdent) {
         super(title, fileIdent, dbID, server, datasetIdent);
-        gdalInfo = new GDALInfo();
+        gdalInfo = new GDALInformation();
     }
 
     public DataverseGeoRecordFile(String title, int dbID, String server, String datasetIdent) {
         super(title, dbID, server, datasetIdent);
-        gdalInfo = new GDALInfo();
+        gdalInfo = new GDALInformation();
     }
 
     public DataverseGeoRecordFile(String datasetIdent, GeographicBoundingBox gbb) {
         super(datasetIdent, gbb);
-        gdalInfo = new GDALInfo();
+        gdalInfo = new GDALInformation();
     }
 
     public DataverseGeoRecordFile (DataverseRecordFile drf){
-        super(drf.getTitle(),drf.dbID,drf.server,drf.datasetIdent);
+        super(drf.getTranslatedTitle(),drf.dbID,drf.server,drf.datasetIdent);
         if(!drf.getFileIdent().equals(""))
             fileIdent = drf.getFileIdent();
-        gdalInfo = new GDALInfo();
+        gdalInfo = new GDALInformation();
         this.setGbb(drf.getGBB());
     }
     public DataverseGeoRecordFile (DataverseRecordFile drf, String fileIdent){
-        super(drf.getTitle(),drf.getFileIdent(),drf.dbID,drf.server,drf.datasetIdent);
-        gdalInfo = new GDALInfo();
+        super(drf.getTranslatedTitle(),drf.getFileIdent(),drf.dbID,drf.server,drf.datasetIdent);
+        gdalInfo = new GDALInformation();
     }
 
     public DataverseGeoRecordFile(){
         super();
-        gdalInfo = new GDALInfo();
+        gdalInfo = new GDALInformation();
     }
 
     @Override

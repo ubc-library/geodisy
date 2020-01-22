@@ -110,26 +110,27 @@ public class GeoServerAPI extends DestinationAPI {
     }
     public void uploadRaster(DataverseRecordFile drf){
         String fileName = drf.getFileName();
-        String stub = fileName.substring(0,fileName.length()-4);
-        String createCoverstore = "curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:image/tiff") +  "-d '<coverageStore><name>" + drf.getGeoserverLabel() + "</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>/var/www/206-12-92-97.cloud.computecanada.ca/html/geodisy/" + drf.getFileURL() +"</url></coverageStore>' \"http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores?configure=all\"";
-        String call = "curl -u admin:" + GEOSERVER_PASSWORD + " -XPUT -H " + stringed("Content-type:image/tiff") + " --data-binary @" + DATASET_FILES_PATH + sjo.getSimpleFieldVal(PERSISTENT_ID).replace("/.","/") + fileName + ".tif  http://localhost:8080/geoserver/rest/workspaces/geodisy/" + sjo.getSimpleFieldVal(PERSISTENT_ID).replace("/.","/")+ stub + "/file.geotiff";
+        String createCoverstore = " admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:image/tiff") +  "-d '<coverageStore><name>" + drf.getGeoserverLabel() + "</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>/var/www/206-12-92-97.cloud.computecanada.ca/html/geodisy/" + drf.getFileURL() +"</url></coverageStore>' \"http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores?configure=all\"";
+        String call = "curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:text/xml") + " -d '<coverageStore><name>"+drf.getGeoserverLabel()+"</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>/var/www/206-12-92-97.cloud.computecanada.ca/html/geodisy/" + drf.getDatasetIdent()+drf.getFileName()+"</url></coverageStore>' \"http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores?configure=all\"";
         Process p;
-        try {
             ProcessBuilder processBuilder= new ProcessBuilder();
-            processBuilder.command(call.split(" "));
-            p = processBuilder.start();
-            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-            String s = "";
-            String error = "";
-            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            while ((s = stdInput.readLine()) != null) {
-                error+=s;
+            try {
+                processBuilder.command("curl", "-u", createCoverstore);
+                p = processBuilder.start();
+                p.waitFor();
+                p.destroy();
+                try {
+                    processBuilder.command("curl", "-u", call);
+                    p = processBuilder.start();
+                    p.waitFor();
+                    p.destroy();
+                }catch (InterruptedException | IOException f){
+                    logger.error("Something went wrong creating raster layer for " + drf.getGeoserverLabel() + ". Error stream: " + p.getErrorStream().read());
+                }
+            }catch (InterruptedException | IOException e){
+                logger.error("Something went wrong creating a raster coverstore for " + drf.getGeoserverLabel());
             }
-            if(error.contains("405"))
-                logger.warn("Something went wrong trying to upload raster file to Geoserver: " + drf.getFileName() + " " + sjo.getSimpleFieldVal(PERSISTENT_ID));
-        } catch (IOException e) {
-            logger.error("Something went wrong trying to upload raster file to Geoserver: " + drf.getFileName() + " " + sjo.getSimpleFieldVal(PERSISTENT_ID));
-        }
+
         ExistingRasterRecords existingRasterRecords = ExistingRasterRecords.getExistingRasters();
         existingRasterRecords.addOrReplaceRecord(sjo.getDOI(),fileName);
     }

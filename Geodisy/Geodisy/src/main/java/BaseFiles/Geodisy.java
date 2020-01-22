@@ -7,8 +7,10 @@ package BaseFiles;/*
 
 
 import Dataverse.DataverseAPI;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.SourceAPI;
 import Dataverse.SourceJavaObject;
+import Dataverse.DataverseJavaObject;
 import Dataverse.DownloadDJOFiles;
 import DataSourceLocations.Dataverse;
 import GeoServer.GeoServerAPI;
@@ -38,9 +40,9 @@ public class Geodisy {
         SourceAPI dVAPI;
         for (String s : dvs) {
             dVAPI = new DataverseAPI(s);
-            records = dVAPI.harvest();
-
+            records = dVAPI.harvest(records);
         }
+
         return records;
     }
 

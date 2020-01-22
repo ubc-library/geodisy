@@ -69,7 +69,7 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
             else
                 saveJSONToFile(geoBlacklightJson, doi, doi);
         //Don't think I need this here, I'm making the geoserver calls earlier
-        /*String name = drf.getTitle();
+        /*String name = drf.getTranslatedTitle();
         String transformType = RASTER;
         if(name.endsWith(".shp")) {
             addToPostGIS(name);

@@ -23,8 +23,8 @@ import static Dataverse.DVFieldNameStrings.*;
  * Info for downloading a geospatial dataset file, and the methods used to download the files.
  */
 public class DataverseRecordFile {
-    String title;
-    String originalTitle;
+    String translatedTitle = "";
+    String originalTitle = "";
     String fileIdent = "";
     int dbID = 0;
     String server = "";
@@ -36,14 +36,14 @@ public class DataverseRecordFile {
 
     /**
      * Creates a DataverseRecordFile when there is a File-specific fileIdent.
-     * @param title
+     * @param translatedTitle
      * @param fileIdent
      * @param dbID
      * @param server
      * @param datasetIdent
      */
-    public DataverseRecordFile(String title, String fileIdent, int dbID, String server, String datasetIdent){
-        this.title = title;
+    public DataverseRecordFile(String translatedTitle, String fileIdent, int dbID, String server, String datasetIdent){
+        this.translatedTitle = translatedTitle;
         this.fileIdent = fileIdent;
         this.dbID = dbID;
         this.server = server;
@@ -54,13 +54,13 @@ public class DataverseRecordFile {
     }
     /**
      * Creates a DataverseRecordFile when there is no File-specific fileIdent, only a dataset fileIdent and a database ID.
-     * @param title
+     * @param translatedTitle
      * @param dbID
      * @param server
      * @param datasetIdent
      */
-    public DataverseRecordFile(String title, int dbID, String server, String datasetIdent){
-        this.title = title;
+    public DataverseRecordFile(String translatedTitle, int dbID, String server, String datasetIdent){
+        this.translatedTitle = translatedTitle;
         this.dbID = dbID;
         this.fileIdent = "";
         this.server = server;
@@ -95,13 +95,13 @@ public class DataverseRecordFile {
 
             File folder = new File(dirPath);
             folder.mkdirs();
-            String filePath = dirPath + title;
+            String filePath = dirPath + translatedTitle;
             FileUtils.copyURLToFile(
                     new URL(recordURL),
                     new File(filePath),
                     10000, //10 seconds connection timeout
                     120000); //2 minute read timeout
-            if (title.endsWith(".zip")) {
+            if (translatedTitle.endsWith(".zip")) {
                 Unzip zip = new Unzip();
                 drfs = zip.unzip(filePath, dirPath, this, djo);
                 new File(filePath).delete();
@@ -116,91 +116,63 @@ public class DataverseRecordFile {
                         convertFromTabToCSV(f, dirPath, name);
                 }
             }
-            if(!this.getTitle().endsWith("zip")&&!djo.hasDataRecord(this.getTitle()))
+            if(!this.getOriginalTitle().endsWith("zip")&&!djo.hasDataRecord(this.getOriginalTitle()))
                 drfs.add(this);
         } catch (FileNotFoundException e){
             logger.info(String.format("This dataset file %s couldn't be found from dataset %s. ", dbID, datasetIdent) + "Check out dataset " + datasetIdent, djo);
         }catch (MalformedURLException e) {
             logger.error(String.format("Something is wonky with the PERSISTENT_ID " + fileIdent + " or the dbID " + dbID));
         } catch (IOException e) {
-            logger.error(String.format("Something went wrong with downloading file %s, with fileIdent %s or dbID %d", title, fileIdent, dbID));
+            logger.error(String.format("Something went wrong with downloading file %s, with fileIdent %s or dbID %d", translatedTitle, fileIdent, dbID));
             e.printStackTrace();
         }
         return drfs;
     }
 
-    public void translateFile(DataverseJavaObject djo){
+    public DataverseRecordFile translateFile(DataverseJavaObject djo) {
 
-        String dirPath = DATASET_FILES_PATH + datasetIdent.replace("_","/") + "/";
-        File f = new File(dirPath+this.getTitle());
-        System.out.println(f.getName());
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.println("Made it to Translate File");
+        String dirPath = GEODISY_PATH_ROOT + DATASET_FILES_PATH + GeodisyStrings.replaceSlashes(datasetIdent.replace("_", "/") + "/");
+        System.out.println(dirPath);
+        File f = new File(dirPath + this.getTranslatedTitle());
         GDALTranslate gdalTranslate = new GDALTranslate();
         GDAL gdal = new GDAL();
-        String originalName = "";
-        DataverseRecordFile dgrf = new DataverseRecordFile();
-        ExistingVectorRecords evr = ExistingVectorRecords.getExistingVectors();
         if (f.isFile()) {
             String name = f.getName().toLowerCase();
-            originalName = name;
             if (GeodisyStrings.ogrinfoVectorExtension(name) && !name.endsWith("csv")) {
                 if (GeodisyStrings.otherShapeFilesExtensions(name))
-                    return;
-                name = gdalTranslate.vectorTransform(dirPath, f.getName());
-
-                if(fileIdent.isEmpty())
-                    dgrf = new DataverseRecordFile(name, this.dbID, this.server, this.datasetIdent);
-                else
-                    dgrf = new DataverseRecordFile(name, this.fileIdent, this.dbID, this.server, this.datasetIdent);
-                f = new File(dirPath+name);
-                GeographicBoundingBox gbb;
-                gbb = gdal.generateBB(f,datasetIdent,String.valueOf(this.fileNumber));
-                dgrf.setGbb(gbb);
-                dgrf.setOriginalTitle(originalTitle);
-                dgrf.setIsFromFile(true);
-                dgrf.setFileURL(getFileURL());
-                if(dgrf.hasValidBB()) {
-                    evr.addOrReplaceRecord(dgrf.datasetIdent + name, originalName);
-                }
+                    return new DataverseRecordFile();
+                setOriginalTitle(name);
+                setTranslatedTitle(gdalTranslate.vectorTransform(dirPath, f.getName()));
+                return replaceRecord();
             } else if (GeodisyStrings.gdalinfoRasterExtention(f.getName())) {
-                name = gdalTranslate.rasterTransform(dirPath, f.getName());
-                dgrf = new DataverseGeoRecordFile(name, this.fileIdent, this.dbID, this.server, this.datasetIdent);
-                f = new File(dirPath+name);
-                GeographicBoundingBox gbb;
-                gbb = gdal.generateBB(f,datasetIdent,String.valueOf(this.fileNumber));
-                dgrf.setGbb(gbb);
-                dgrf.setOriginalTitle(originalTitle);
-                dgrf.setIsFromFile(true);
-                dgrf.setFileURL(getFileURL());
+                setOriginalTitle(name);
+                setTranslatedTitle(gdalTranslate.rasterTransform(dirPath, f.getName()));
+                return replaceRecord();
             } else if (name.contains(".csv")) {
-                GeographicBoundingBox temp = gdal.generateBoundingBoxFromCSV(f, djo);
+                GeographicBoundingBox temp = gdal.generateBoundingBoxFromCSV( f.getName(), djo);
                 if (temp.hasBB()) {
-                    name = gdalTranslate.vectorTransform(dirPath, f.getName());
-                    }
-                    dgrf = new DataverseGeoRecordFile(name, this.fileIdent, this.dbID, this.server, this.datasetIdent);
-                    dgrf.setOriginalTitle(originalTitle);
-                    dgrf.setIsFromFile(true);
-                    dgrf.setBB(temp.getBB());
-                    dgrf.setFileURL(getFileURL());
-                    if(dgrf.hasValidBB()) {
-                        evr.addOrReplaceRecord(dgrf.datasetIdent + name, originalName);
-                    }
-                } else {
-                    String path = djo.getDOI().replace("/", "_");
-                    path = path.replace(".", "_");
-                    String badFilesPath = DATASET_FILES_PATH + path + "/" + name;
-                    File file = new File(badFilesPath);
-                    file.delete();
+                    setOriginalTitle(name);
+                    setTranslatedTitle(gdalTranslate.vectorTransform(dirPath, f.getName()));
+                    replaceRecord();
                 }
+            } else {
+                String path = djo.getDOI().replace("/", "_");
+                path = path.replace(".", "_");
+                String badFilesPath = GeodisyStrings.replaceSlashes(GEODISY_PATH_ROOT + DATASET_FILES_PATH + path + "/" + name);
+                File file = new File(badFilesPath);
+                file.delete();
+                return new DataverseRecordFile();
             }
-        System.out.println("Valid bb from translate. DIO: " + datasetIdent + " filename: " + getTitle() + " BB (NE/SW): (" + getGBB().getNorthLatitude() + "," + getGBB().getEastLongitude() + "), (" +getGBB().getSouthLatitude() + "," + getGBB().getWestLongitude() + ")");
-        return dgrf;
         }
+        return new DataverseRecordFile();
+    }
 
+    private DataverseRecordFile replaceRecord() {
+        DataverseRecordFile newDRF = new DataverseRecordFile(translatedTitle,fileIdent,dbID,server,datasetIdent);
+        newDRF.setOriginalTitle(originalTitle);
+        return newDRF;
+    }
 
 
     private void convertFromTabToCSV(File inputFile, String dirPath, String title) {
@@ -243,7 +215,7 @@ public class DataverseRecordFile {
         }
 
     }
-    public String getTitle(){return title; }
+    public String getTranslatedTitle(){return translatedTitle; }
     //getUUID is also in ISOXMLGen, so change there if changed here
 
     public String getFileIdent(){return fileIdent;}
@@ -254,7 +226,7 @@ public class DataverseRecordFile {
         gbb.setBB(boundingBox);}
 
     public boolean isPreviewable() {
-        return GeodisyStrings.isPreviewable(title);
+        return GeodisyStrings.isPreviewable(translatedTitle);
     }
 
     public String getProjection(){
@@ -316,8 +288,8 @@ public class DataverseRecordFile {
         return originalTitle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTranslatedTitle(String title) {
+        this.translatedTitle = title;
     }
 
     public void setFileIdent(String fileIdent) {

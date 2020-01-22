@@ -2,10 +2,8 @@ package Dataverse;
 
 import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
-import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
-import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONJournalFieldClasses.JournalFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
@@ -14,7 +12,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 
 import static Dataverse.DVFieldNameStrings.PROTOCOL;
 
@@ -119,13 +116,14 @@ public abstract class SourceJavaObject {
     }
 
     public void addGeoDataFile(DataverseGeoRecordFile drf){
-        geoDataFiles.add(drf);
+        if(drf.hasValidBB())
+            geoDataFiles.add(drf);
     }
 
     public void removeGeoDataFile(String name){
-        for (Iterator<DataverseGeoRecordFile> iterator = geoDataFiles.iterator(); iterator.hasNext();) {
-            DataverseRecordFile record = iterator.next();
-            if (record.getTitle().equals(name)) {
+        Iterator<DataverseGeoRecordFile> iterator = geoDataFiles.iterator();
+        while(iterator.hasNext()) {
+            if (iterator.next().getTranslatedTitle().equalsIgnoreCase(name)) {
                 // Remove the current element from the iterator and the list.
                 iterator.remove();
             }
@@ -203,6 +201,8 @@ public abstract class SourceJavaObject {
         GeographicFields gf = geoFields;
         return gf.getGeoCovers().size()>0;
     }
+
+
 
 
     //public JournalFields getJournalFields(){ return journalFields;}

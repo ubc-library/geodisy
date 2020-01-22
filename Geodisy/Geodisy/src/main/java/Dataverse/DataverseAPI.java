@@ -11,6 +11,7 @@ import BaseFiles.GeoLogger;
 import BaseFiles.Geonames;
 import BaseFiles.HTTPCallerGeoNames;
 import Crosswalking.JSONParsing.DataverseParser;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,11 +40,10 @@ public class DataverseAPI extends SourceAPI {
     }
 
     @Override
-    public LinkedList<SourceJavaObject> harvest() {
+    public LinkedList<SourceJavaObject> harvest(LinkedList<SourceJavaObject> answers) {
         ExistingHarvests es = ExistingHarvests.getExistingHarvests();
         HashSet<String> dois = searchDV();
         LinkedList<JSONObject> jsons = downloadMetadata(dois);
-        LinkedList<SourceJavaObject> answers =  new LinkedList<>();
         HashMap<String, DataverseRecordInfo> recordsThatNoLongerExist = new HashMap<>();
         HashMap<String, DataverseRecordInfo> recs = es.getRecordVersions();
         for(String key: recs.keySet()){
@@ -76,7 +76,7 @@ public class DataverseAPI extends SourceAPI {
             if(djo.hasContent()&& hasNewInfo(djo, es)) {
                 //System.out.println("Downloading record: " + fileIdent);
                 djo.downloadFiles();
-                counter--;
+                djo.updateGeoserver();
                 //System.out.println("Finished downloading files from: " + fileIdent + " only " + counter + "more records to download");
                 //djo = generateBoundingBox(djo);
                 //System.out.println("Finished generating Bounding boxes for: " + fileIdent);
@@ -94,14 +94,15 @@ public class DataverseAPI extends SourceAPI {
             }
 
         }
-        if(answers.size()>0)
-            System.out.println("Updated or added " + answers.size() + " records.");
+        if(answers.size()>0) {
+        }
         removeDeletedRecords(recordsThatNoLongerExist);
         for(SourceJavaObject djo: answers){
             DataverseRecordInfo dri = new DataverseRecordInfo(djo,logger.getName());
             es.addOrReplaceRecord(dri);
             es.addBBox(djo.getDOI(),djo.getBoundingBox());
         }
+
         return answers;
     }
 
@@ -162,7 +163,7 @@ public class DataverseAPI extends SourceAPI {
         }
         folder.delete();
     }
-
+    //Not used by main program
     public DataverseJavaObject generateBoundingBox(DataverseJavaObject djo) {
         GDAL gdal = new GDAL();
         djo = gdal.generateBB(djo);
