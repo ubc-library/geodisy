@@ -17,8 +17,8 @@ public class Main {
     public static void main(String[] args) {
 
         //Run the below to remove a single records
-        RemoveRecord rr = new RemoveRecord();
-        rr.removeRecord();
+        //RemoveRecord rr = new RemoveRecord();
+        //rr.removeRecord();
 
         Scheduler scheduler = new Scheduler();
         scheduler.run();
