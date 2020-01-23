@@ -29,7 +29,7 @@ public class GDAL {
 
         ProcessBuilder processBuilder= new ProcessBuilder();
         processBuilder.command("/usr/bin/bash", "-c", gdal+filePath);
-        System.out.println(gdal+filePath);
+        //System.out.println(gdal+filePath);
         int counter = 0;
         if (IS_WINDOWS) {
             process = Runtime.getRuntime()
@@ -51,7 +51,8 @@ public class GDAL {
             gdalString.append(s);
         }
 
-        System.out.println(gdalString.toString());
+        /*if(!name.endsWith(".csv")&& gdalString.toString().contains("FAILURE"))
+            System.out.println(gdalString.toString());*/
         return gdalString.toString();
     }
     //Not used by main program
@@ -118,7 +119,7 @@ public class GDAL {
         GeographicBoundingBox temp;
         String projection =  "";
         try {
-            System.out.println("Filename: " + file.getName() + ", lowerName: " + lowerName + ", Windows?: " + IS_WINDOWS);
+            //System.out.println("Filename: " + file.getName() + ", lowerName: " + lowerName + ", Windows?: " + IS_WINDOWS);
             gdalString = getGDALInfo(filePath, lowerName);
             if(gdalString.contains("FAILURE")) {
                 logger.warn("Something went wrong parsing " + lowerName + " at " + filePath);
@@ -209,23 +210,23 @@ public class GDAL {
         String geo = getGeometryType(gdalString);
         GeographicBoundingBox gbb = new GeographicBoundingBox("temp");
         BoundingBox temp;
+        temp = getLatLongOgrInfo(gdalString);
+        if (temp.hasUTMCoords()) {
+            convertToWGS84(filePath, isWindows, name);
+            gbb.setField(PROJECTION,"EPSG:4326");
+            gdalString = getGDALInfo(filePath, name);
+            if(gdalString.contains("FAILURE"))
+                return new GeographicBoundingBox("temp");
             temp = getLatLongOgrInfo(gdalString);
-            if (temp.hasUTMCoords()) {
-                convertToWGS84(filePath, isWindows, name);
-                gbb.setField(PROJECTION,"EPSG:4326");
-                gdalString = getGDALInfo(filePath, name);
-                if(gdalString.contains("FAILURE"))
-                    return new GeographicBoundingBox("temp");
-                temp = getLatLongOgrInfo(gdalString);
+        }
+        else{
+            try {
+                    String authority = getAuthority(gdalString);
+                    gbb.setField(PROJECTION, authority);
+            }catch (IndexOutOfBoundsException e){
+                logger.error("Couldn't determine projection for record " + name);
             }
-            else{
-                try {
-                        String authority = getAuthority(gdalString);
-                        gbb.setField(PROJECTION, authority);
-                }catch (IndexOutOfBoundsException e){
-                    logger.error("Couldn't determine projection for record " + name);
-                }
-            }
+        }
         if(gdalString.contains("Geometry:")){
             int start = gdalString.indexOf("Geometry:")+10;
             int end = gdalString.indexOf("Feature Count:");

@@ -91,7 +91,7 @@ public class DataverseRecordFile {
     public LinkedList<DataverseRecordFile> retrieveFile(DataverseJavaObject djo) {
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
         try {
-            String dirPath = DATASET_FILES_PATH + datasetIdent.replace("_", "/").replace(".","/") + "/";
+            String dirPath = GEODISY_PATH_ROOT+GeodisyStrings.replaceSlashes(DATASET_FILES_PATH + datasetIdent.replace("_", "/").replace(".","/") + "/");
 
             File folder = new File(dirPath);
             folder.mkdirs();
@@ -131,9 +131,9 @@ public class DataverseRecordFile {
 
     public DataverseRecordFile translateFile(DataverseJavaObject djo) {
 
-        System.out.println("Made it to Translate File");
+        //System.out.println("Made it to Translate File");
         String dirPath = GEODISY_PATH_ROOT + DATASET_FILES_PATH + GeodisyStrings.replaceSlashes(datasetIdent.replace("_", "/") + "/");
-        System.out.println(dirPath);
+        //System.out.println(dirPath);
         File f = new File(dirPath + this.getTranslatedTitle());
         GDALTranslate gdalTranslate = new GDALTranslate();
         GDAL gdal = new GDAL();

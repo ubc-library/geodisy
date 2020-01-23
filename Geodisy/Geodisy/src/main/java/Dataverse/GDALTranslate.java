@@ -54,7 +54,7 @@ public class GDALTranslate {
         return process(dirPath,dirPath,name,transformType, newLocation);
     }
     public boolean process(String sourcePath, String destPath, String name, String transformType, boolean newLocation){
-        System.out.println("Made it to GDALTranslate.process");
+
         if(newLocation){
             sourcePath = GeodisyStrings.replaceSlashes(sourcePath);
             destPath = GeodisyStrings.replaceSlashes(destPath);
@@ -72,7 +72,7 @@ public class GDALTranslate {
         for(int i = 0; i<8; i++){
         if(transformType.equals(RASTER)) {
             call = GDAL_TRANSLATE + sourcePath + name + " " + destPath + nameStub + ".tif";
-            System.out.println(call);
+            //System.out.println(call);
             processBuilder.command("bash", "-c", call);
             try {
 
@@ -84,16 +84,21 @@ public class GDALTranslate {
                     process.destroy();
                 }
 
-                file = new File(sourcePath+name);
-                file.delete();
-                return true;
+                File newFile = new File(destPath+nameStub+".tif");
+                if(newFile.exists()) {
+                    file = new File(sourcePath + name);
+                    file.delete();
+                    return true;
+                }else{
+                    System.out.println("Translation failure #" + i);
+                }
 
             } catch (IOException | InterruptedException e) {
                 logger.error("Something went wrong converting " + name + " to geotiff");
             }
         } else{
                 call = OGR2OGR + destPath + nameStub + ".shp " + sourcePath + name;
-                System.out.println(call);
+                //System.out.println(call);
                 processBuilder.command("bash", "-c", call);
                 try {
                     if (IS_WINDOWS) {
@@ -108,16 +113,20 @@ public class GDALTranslate {
                         p.destroy();
 
                     }
-
-                    file = new File(sourcePath+name);
-                    file.delete();
-                    return true;
-
+                    File newFile = new File(destPath+nameStub+".shp");
+                    if(newFile.exists()) {
+                        file = new File(sourcePath + name);
+                        file.delete();
+                        return true;
+                    }else{
+                        System.out.println("Translation failure #" + i);
+                    }
                 } catch (IOException e) {
                     logger.error("Something went wrong converting " + name + " to shapefile");
                 }
             }
         }
+        System.out.println("Couldn't convert file: " + sourcePath+name);
         file = new File(sourcePath+name);
         file.delete();
         return false;

@@ -9,7 +9,7 @@ import java.io.IOException;
 import static BaseFiles.GeodisyStrings.*;
 
 public class RemoveRecord {
-    String record2Remove = "10.5072/FK2/R4IMZC";
+    String record2Remove = "10.5072/FK2/GFCTVC";
     public void removeRecord() {
     FileWriter fW = new FileWriter();
         fW.verifyFileExistence(EXISTING_BBOXES);

@@ -75,7 +75,7 @@ public class DataverseAPI extends SourceAPI {
                 recordsThatNoLongerExist.remove(djo.getDOI());
             if(djo.hasContent()&& hasNewInfo(djo, es)) {
                 //System.out.println("Downloading record: " + fileIdent);
-                djo.downloadFiles();
+                djo = djo.downloadFiles();
                 djo.updateGeoserver();
                 //System.out.println("Finished downloading files from: " + fileIdent + " only " + counter + "more records to download");
                 //djo = generateBoundingBox(djo);
@@ -93,8 +93,6 @@ public class DataverseAPI extends SourceAPI {
                 continue;
             }
 
-        }
-        if(answers.size()>0) {
         }
         removeDeletedRecords(recordsThatNoLongerExist);
         for(SourceJavaObject djo: answers){

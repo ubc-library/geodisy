@@ -65,8 +65,11 @@ public class GeodisyStrings {
         public final static String OGRINFO = getOgrInfo();
         private final static String[] GDALINFO_RASTER_FILE_EXTENSIONS = { ".tif", ".tiff",".xyz", ".png"};
         private final static String[] NON_SHP_SHAPEFILE_EXTENSIONS = {".shx", ".dbf", ".sbn",".prj"};
-        private final static String[] OGRINFO_PROCESSABLE_EXTENTIONS = {".geojson",".shp",".kmz",".csv",".tab",".gpkg", ".kml"}; //also .csv, but need to check if the csv is actually geospatial in nature
-        public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = ArrayUtils.addAll(NON_SHP_SHAPEFILE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS);
+        private final static String[] OGRINFO_PROCESSABLE_EXTENTIONS = {".geojson",".shp",".kmz",".gpkg", ".kml"}; //also .csv/.tab, but need to check if the csv is actually geospatial in nature
+        private final static String[] CSV_EXTENTIONS = {".csv", "tab"};
+        private final static String[] INTERUM_VECTOR = ArrayUtils.addAll(OGRINFO_PROCESSABLE_EXTENTIONS,CSV_EXTENTIONS);
+        public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = ArrayUtils.addAll(NON_SHP_SHAPEFILE_EXTENSIONS,INTERUM_VECTOR);
+        public final static String FINAL_OGRINFO_VECTOR_FILE_EXTENSIONS = ".shp";
         public final static String[] PREVIEWABLE_FILE_EXTENSIONS = {".tif", ".kmz"};
         private final static String OGR2OGR_LOCAL = "C:\\Program Files\\GDAL\\ogr2ogr -t_srs EPSG:4326 -f \"ESRI Shapefile\" ";
         private final static String GDAL_TRANSLATE_LOCAL = "C:\\Program Files\\GDAL\\gdal_translate -of GTiff ";

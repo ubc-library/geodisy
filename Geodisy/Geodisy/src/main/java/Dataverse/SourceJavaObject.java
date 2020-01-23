@@ -34,7 +34,7 @@ public abstract class SourceJavaObject {
     // public abstract void parseJournalFields(JSONArray journalFieldsArray);
     public abstract void parseFiles(JSONArray fileFieldsArray);
     public abstract JSONObject getVersionSection(JSONObject current);
-    public abstract void downloadFiles();
+    public abstract DataverseJavaObject downloadFiles();
 
     public SourceJavaObject(String server) {
         this.citationFields = new CitationFields();

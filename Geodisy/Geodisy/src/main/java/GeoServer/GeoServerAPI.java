@@ -70,7 +70,7 @@ public class GeoServerAPI extends DestinationAPI {
 
     private boolean addVectorToPostGIS(String fileName, String geoserverlabel) {
         PostGIS postGIS = new PostGIS();
-        return postGIS.addFile2PostGIS((DataverseJavaObject) sjo, fileName,geoserverlabel, TEST);
+        return postGIS.addFile2PostGIS((DataverseJavaObject) sjo, fileName,geoserverlabel);
         //TODO uncomment this once I have getting the layers from postgis to geoserver
         //addVectorToGeoserver(fileName);
     }
