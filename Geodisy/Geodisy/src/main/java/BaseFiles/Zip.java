@@ -8,12 +8,21 @@ public class Zip {
     GeoLogger logger = new GeoLogger(this.getClass());
 
     public boolean create(File file) {
+        byte[] buf = new byte[1024];
         try {
             String path = file.getAbsolutePath();
-            FileOutputStream fos = new FileOutputStream(path.substring(0,path.length()-3)+"zip");
+            FileOutputStream fos = new FileOutputStream(path.substring(0,path.indexOf("xml"))+"zip");
             ZipOutputStream zipOS = new ZipOutputStream(fos);
-            writeToZipFile(file, zipOS);
+            FileInputStream in  = new FileInputStream(file.getAbsolutePath());
+            zipOS.putNextEntry(new ZipEntry("iso19115.xml"));
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                zipOS.write(buf, 0, len);
+            }
+            // Complete the entry
+            zipOS.closeEntry();
             zipOS.close();
+            in.close();
             fos.close();
 
         } catch (FileNotFoundException e) {
@@ -28,7 +37,7 @@ public class Zip {
 
     private void writeToZipFile(File file, ZipOutputStream zipStream) throws FileNotFoundException, IOException{
         File aFile = new File(file.getAbsolutePath());
-        FileInputStream fis = new FileInputStream(aFile);
+        FileInputStream fis = new FileInputStream(aFile.getName());
         ZipEntry zipEntry = new ZipEntry(file.getAbsolutePath());
         zipStream.putNextEntry(zipEntry);
 
