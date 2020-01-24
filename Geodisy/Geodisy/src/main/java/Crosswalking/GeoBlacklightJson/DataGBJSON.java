@@ -42,7 +42,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         boolean generated = gbb.isGeneratedFromGeoFile();
         jo.put("geoblacklight_version","1.0");
         jo.put("dc_identifier_s", GeodisyStrings.urlSlashes(javaObject.getSimpleFieldVal(DVFieldNameStrings.RECORD_URL)));
-        String geoserverLabel = gbb.getField(GEOSERVER_LABEL).toLowerCase();
+        String geoserverLabel = getgeoserverLabel(gbb);
         if(generated) {
             jo.put("layer_slug_s", geoserverLabel);
         }
@@ -58,12 +58,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
 
         jo.put("solr_geom","ENVELOPE(" + getBBString(gbb.getBB()) + ")");
         jo.put("layer_geom_type_s",gbb.getField(GEOMETRY));
-        if(!geoserverLabel.equals("")&&!gbb.getField(GEOMETRY).equals("Non-Geospatial")) {
-            if (generated)
-                jo.put("layer_id_s", "geodisy:" + geoserverLabel.toLowerCase());
-            else
-                jo.put("layer_id_s", "geodisy:" + geoserverLabel.toLowerCase() + number);
-        }
+        jo.put("layer_id_s", geoserverLabel);
         JSONArray ja = addBaseRecordInfo();
         if(!gbb.getField(GEOMETRY).equals("Non-Geospatial"))
             ja = addDataDownloadOptions(gbb,ja);
@@ -78,6 +73,21 @@ public class DataGBJSON extends GeoBlacklightJSON{
         jo.put(EXTERNAL_SERVICES,externalServices);
         return jo;
     }
+
+    private String getgeoserverLabel(GeographicBoundingBox gbb) {
+        boolean generated = gbb.isGeneratedFromGeoFile();
+        if (generated) {
+            if (gbb.getField(GEOMETRY).equals(POLYGON))
+               return "geodisy:" + gbb.getField(GEOSERVER_LABEL).toLowerCase() + "v" + gbb.getFileNumber();
+            else if (gbb.getField(GEOMETRY).equals(RASTER))
+                return "geodisy:" + gbb.getField(GEOSERVER_LABEL).toLowerCase() + "r" + gbb.getFileNumber();
+            else
+                return gbb.getField(GEOSERVER_LABEL).toLowerCase() + "g" + gbb.getFileNumber();
+        }
+        else
+            return gbb.getField(GEOSERVER_LABEL).toLowerCase() + "m" + gbb.getFileNumber();
+    }
+
 
     private String getBBString(BoundingBox bb){
         return bb.getLongWest() + ", " + bb.getLongEast() + ", " + bb.getLatNorth() + ", " + bb.getLatSouth();
