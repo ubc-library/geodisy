@@ -105,7 +105,7 @@ public class GDAL {
     }
 
     public GeographicBoundingBox generateBB(File file, String doi, String number){
-        System.out.println("Filename: " + file.getName() + ", doi: " + doi + ", number: " + number);
+ //       System.out.println("Filename: " + file.getName() + ", doi: " + doi + ", number: " + number);
         String lowerName = file.getName().toLowerCase();
         String regularName = file.getName();
         String filePath = file.getAbsolutePath();

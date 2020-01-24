@@ -244,7 +244,7 @@ public class DataverseJavaObject extends SourceJavaObject {
                 if(isRaster) {
                     gbb = gdal.generateBB(file, getDOI(), String.valueOf(raster));
                     if(gbb.hasBB()) {
-                        System.out.println("Raster with bb: " + gbb.getNorthLatitude() + "N, " + gbb.getSouthLatitude() + "S, " + gbb.getEastLongitude() + "E, " + gbb.getWestLongitude() + "W");
+ //                       System.out.println("Raster with bb: " + gbb.getNorthLatitude() + "N, " + gbb.getSouthLatitude() + "S, " + gbb.getEastLongitude() + "E, " + gbb.getWestLongitude() + "W");
                         raster++;
                         dgrf = new DataverseGeoRecordFile(getDOI(), gbb);
                         geos.add(dgrf);
@@ -252,7 +252,7 @@ public class DataverseJavaObject extends SourceJavaObject {
                 }else{
                     gbb = gdal.generateBB(file,getDOI(),String.valueOf(vector));
                     if(gbb.hasBB()) {
-                        System.out.println("Vector with bb: " + gbb.getNorthLatitude() + "N, " + gbb.getSouthLatitude() + "S, " + gbb.getEastLongitude() + "E, " + gbb.getWestLongitude() + "W");
+ //                       System.out.println("Vector with bb: " + gbb.getNorthLatitude() + "N, " + gbb.getSouthLatitude() + "S, " + gbb.getEastLongitude() + "E, " + gbb.getWestLongitude() + "W");
                         vector++;
                         dgrf = new DataverseGeoRecordFile(getDOI(), gbb);
                         geos.add(dgrf);

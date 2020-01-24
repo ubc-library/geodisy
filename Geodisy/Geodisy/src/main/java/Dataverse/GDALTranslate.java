@@ -90,7 +90,7 @@ public class GDALTranslate {
                     file.delete();
                     return true;
                 }else{
-                    System.out.println("Translation failure #" + i);
+                    //System.out.println("Translation failure #" + i);
                 }
 
             } catch (IOException | InterruptedException e) {
@@ -119,7 +119,7 @@ public class GDALTranslate {
                         file.delete();
                         return true;
                     }else{
-                        System.out.println("Translation failure #" + i);
+                        //System.out.println("Translation failure #" + i);
                     }
                 } catch (IOException e) {
                     logger.error("Something went wrong converting " + name + " to shapefile");
