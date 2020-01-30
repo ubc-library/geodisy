@@ -15,6 +15,10 @@ public class Description extends CompoundJSONField {
         this.dsDescriptionValue = "";
     }
 
+    public Description(String value){
+        this.dsDescriptionValue=value;
+    }
+
     public String getDsDescriptionValue() {
         return dsDescriptionValue;
     }

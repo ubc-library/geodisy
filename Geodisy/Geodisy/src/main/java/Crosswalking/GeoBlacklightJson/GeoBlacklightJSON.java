@@ -5,6 +5,7 @@ import BaseFiles.GeodisyStrings;
 import Crosswalking.MetadataSchema;
 import DataSourceLocations.Dataverse;
 import Dataverse.DataverseGeoRecordFile;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Description;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordFile;
@@ -52,10 +53,10 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
         int count = 1;
         int total = list.size();
         int innerCount = 1;
-        List<String> description = javaObject.getCitationFields().getListField(DS_DESCRIPT);
-        description.add("Connected GeoBlacklight records:");
+        List<Description> description = javaObject.getCitationFields().getListField(DS_DESCRIPT);
+        description.add(new Description("Connected GeoBlacklight records:"));
         for(DataverseGeoRecordFile drf:list){
-            description.add("(" + innerCount + " of " + total + ") - " + GEOBLACKLIGHT_BASE + drf.getGeoserverLabel());
+            description.add(new Description("(" + innerCount + " of " + total + ") - " + GEOBLACKLIGHT_BASE + drf.getGeoserverLabel()));
         }
         for(DataverseRecordFile drf:list){
             createJSONFromFiles(drf,count,total);

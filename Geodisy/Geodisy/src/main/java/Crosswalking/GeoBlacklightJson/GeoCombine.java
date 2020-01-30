@@ -45,7 +45,7 @@ public class GeoCombine {
             p.waitFor();
             p.destroy();
             System.out.println("Calling Geocombine");
-            processBuilder.command(GEOCOMBINE);
+            processBuilder.command("/bin/bash", "-c", GEOCOMBINE);
             processBuilder.directory(new File("/home/geoblack/GeoCombine"));
             p = processBuilder.start();
             p.waitFor();
