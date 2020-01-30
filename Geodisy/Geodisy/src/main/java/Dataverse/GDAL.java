@@ -7,6 +7,7 @@ import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 
 import java.io.*;
 import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
 
 import static BaseFiles.GeodisyStrings.*;
 import static Dataverse.DVFieldNameStrings.*;
@@ -108,7 +109,7 @@ public class GDAL {
  //       System.out.println("Filename: " + file.getName() + ", doi: " + doi + ", number: " + number);
         String lowerName = file.getName().toLowerCase();
         String regularName = file.getName();
-        String filePath = file.getAbsolutePath();
+        String filePath = file.getPath();
         if(!GeodisyStrings.gdalinfoRasterExtention(lowerName) && !GeodisyStrings.ogrinfoVectorExtension(lowerName))
             return new GeographicBoundingBox(doi);
         if(GeodisyStrings.otherShapeFilesExtensions(lowerName))
@@ -120,9 +121,9 @@ public class GDAL {
         String projection =  "";
         try {
             //System.out.println("Filename: " + file.getName() + ", lowerName: " + lowerName + ", Windows?: " + IS_WINDOWS);
-            gdalString = getGDALInfo(filePath, lowerName);
+            gdalString = getGDALInfo(filePath, regularName);
             if(gdalString.contains("FAILURE")) {
-                logger.warn("Something went wrong parsing " + lowerName + " at " + filePath);
+                logger.warn("Something went wrong parsing " + regularName + " at " + filePath);
                 return new GeographicBoundingBox(doi);
             }
             if(gdalInfo) {
@@ -130,7 +131,7 @@ public class GDAL {
                 projection = getProjection(gdalString);
             }
             else {
-                temp = getVector(gdalString, IS_WINDOWS, lowerName, filePath);
+                temp = getVector(gdalString, IS_WINDOWS, regularName, filePath);
                 projection = temp.getField(PROJECTION);
             }
             temp.setIsGeneratedFromGeoFile(true);
@@ -143,12 +144,12 @@ public class GDAL {
                 gbb.setField(PROJECTION,projection);
                 gbb.setBB(temp.getBB());
                 if(lowerName.endsWith(".shp")) {
-                    gbb.setField(GEOSERVER_LABEL, doi + "v" + number);
+                    gbb.setField(GEOSERVER_LABEL, doi);
                     gbb.setFileNumber(Integer.valueOf(number));
                     return gbb;
                 }
                 else if(lowerName.endsWith(".tif")) {
-                    gbb.setField(GEOSERVER_LABEL, doi + "r" + number);
+                    gbb.setField(GEOSERVER_LABEL, doi);
                     gbb.setFileNumber(Integer.valueOf(number));
                     return gbb;
                 }
@@ -203,6 +204,7 @@ public class GDAL {
         GeographicBoundingBox temp = new GeographicBoundingBox("temp");
             temp.setBB(getLatLongGdalInfo(gdalString));
             temp.setField(GEOMETRY,RASTER);
+            temp.setWidthHeight(gdalString);
         return temp;
     }
 
@@ -252,49 +254,33 @@ public class GDAL {
 
     private void convertToWGS84(String filePath, boolean isWindows, String name) throws IOException {
         String gdal;
-        convertName(filePath,name);
         String filePathLower = filePath.toLowerCase();
         String nameLower = name.toLowerCase();
         if(GeodisyStrings.gdalinfoRasterExtention(name))
             gdal = GDAL_TRANSLATE;
         else
             gdal = OGR2OGR;
-        String newAndOld = filePath + " " + filePath.substring(0,filePathLower.indexOf(nameLower)) + "_old_" + name;
+        String newAndOld = filePath + " " + filePath;
         if(isWindows){
-            Runtime.getRuntime().exec(gdal + newAndOld);
+            try {
+                Runtime.getRuntime().exec(gdal + newAndOld).waitFor();
+            } catch (InterruptedException e) {
+                logger.error("Something went wrong trying to convert " + name + " to WGS84");
+            }
         } else {
             ProcessBuilder processBuilder= new ProcessBuilder();
             processBuilder.command("bash", "-c", gdal + newAndOld);
             Process p = processBuilder.start();
             try {
-                p.waitFor();
+                p.waitFor(180, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
                 logger.error("Something went wrong trying to convert " + name + " to WGS84");
             }
             p.destroy();
         }
-    }
-
-    private void convertName(String filePath, String name) throws IOException {
-        // File (or directory) with old name
-        File file = new File(filePath);
-        String filepathlower= filePath.toLowerCase();
-        String nameLower = name.toLowerCase();
-
-// File (or directory) with new name
-        File file2 = new File(filePath.substring(0,filepathlower.indexOf(nameLower)) + "_old_" + name);
-
-        if (file2.exists()) {
-            logger.error("Something went wrong trying to rename the original file when converting to WSG84");
-            throw new java.io.IOException("file exists");
-        }
-
-// Rename file (or directory)
-        boolean success = file.renameTo(file2);
-
-        if (!success) {
-            // File was not successfully renamed
-        }
+        File check = new File(filePath);
+        if(!check.exists())
+            logger.warn("Couldn't convert" + name +" to  WGS84");
     }
 
     private BoundingBox compare(BoundingBox temp, BoundingBox fullExtent) {

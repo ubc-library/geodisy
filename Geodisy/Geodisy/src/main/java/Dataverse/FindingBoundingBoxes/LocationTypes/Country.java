@@ -5,7 +5,7 @@ import Dataverse.FindingBoundingBoxes.Location;
 import org.w3c.dom.Element;
 
 public class Country extends Location {
-    private String countryCode;
+    private String countryCode = "";
 
     public Country(Element country, String commonName) {
         super(commonName, country);

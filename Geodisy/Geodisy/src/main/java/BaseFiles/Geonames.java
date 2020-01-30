@@ -77,6 +77,7 @@ public class Geonames {
 
     public String getGeonamesCountry(String country){
         Map<String, String> parameters = getBaseParameters(country);
+        parameters.remove("country");
         String searchString = country;
         parameters.put("fcode","PCL*");
         searchString +=  addParameters(parameters);

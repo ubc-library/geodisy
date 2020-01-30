@@ -34,10 +34,10 @@ public class GdalTest {
 
     @Test
     public void gdalTranslateTest() {
-        String sourcePath = "datasetFiles\\10\\5072\\FK2\\GFCTVC/";
-        String destPath = "testFiles\\10\\5072\\FK2\\GFCTVC/";
-        String name = "NetCDF_GFCTVC.shp";
-        String newName = "NetCDF_GFCTVC.shp";
+        String sourcePath = "datasetFiles\\10\\5072\\FK2\\WQLIQD\\";
+        String destPath = "testFiles\\10\\5072\\FK2\\WQLIQD\\";
+        String name = "GeoTIFF_WQLIQD.geojson";
+        String newName = "GeoTIFF_WQLIQD.shp";
         //String name = "precip.mon.mean.nc";
         //String newName = "precip.mon.mean.tif";
         String filePath = "C:\\geodisy\\Geodisy\\Geodisy\\testFiles\\10\\5072\\FK2\\GFCTVC\\precip.mon.mean.tif";
@@ -46,25 +46,45 @@ public class GdalTest {
         File file = new File(destPath);
         file.mkdirs();
         boolean success = false;
-        int count = 0;
+        int countGDALInfo = 0;
+        int countGDALOrig = 0;
+        int countTranslate = 0;
+        int origTotal = 100;
+        int newTotal = 100;
         String call;
         ProcessBuilder processBuilder = new ProcessBuilder();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 500; i++) {
             call = OGR2OGR + destPath + newName + " " + sourcePath + name;
             processBuilder.command("bash", "-c", call);
             try {
                 if (IS_WINDOWS) {
-                    Runtime.getRuntime().exec(call);
+                    Runtime.getRuntime().exec(call).waitFor();
+
                 } else {
                     processBuilder.start();
                 }
-                String answer = gdal.getGDALInfo(destPath + newName + " ", name);
-                if(answer.contains("successful.Layer name:")) {
-                    count++;
+                File tempfile = new File(destPath+newName);
+                if(tempfile.exists()) {
+                    countTranslate++;
+                    String answer = gdal.getGDALInfo(destPath, newName);
+                    if (answer.contains("successful.Layer name:")) {
+                        countGDALInfo++;
+                    }
+                    answer = gdal.getGDALInfo(destPath, name);
+                    if (answer.contains("successful.Layer name:")) {
+                        countGDALOrig++;
+                    }
+                    tempfile.delete();
+                }else{
+                    origTotal--;
+                    newTotal--;
                 }
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
             }
-            System.out.println("Success " + count + "/10");
         }
+        System.out.println("Translate Success " + countTranslate + "/10");
+        System.out.println("New Read Success " + countGDALInfo + "/" + newTotal);
+        System.out.println("Old Read Success " + countGDALOrig + "/" + origTotal);
+
     }
 }

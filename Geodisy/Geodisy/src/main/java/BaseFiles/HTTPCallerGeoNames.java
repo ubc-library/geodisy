@@ -20,7 +20,7 @@ public class HTTPCallerGeoNames extends HTTPCaller {
     }
 
     @Override
-    protected void ioError(){
-        logger.error("Something went wrong getting a bounding box from Geonames");
+    protected void ioError(IOException e){
+        logger.error("Something went wrong getting a bounding box from Geonames " + e);
     }
 }

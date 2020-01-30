@@ -5,7 +5,7 @@ import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONObject;
 
-import static BaseFiles.GeodisyStrings.OPEN_GEO_METADATA_BASE;
+import static BaseFiles.GeodisyStrings.*;
 import static Dataverse.DVFieldNameStrings.*;
 
 public class GeographicBoundingBox extends CompoundJSONField {
@@ -32,7 +32,7 @@ public class GeographicBoundingBox extends CompoundJSONField {
 
     public String getFileNumber(){
         if(fileNumber==0)
-            return "";
+            return "0";
         return String.valueOf(fileNumber);
     }
 
@@ -49,13 +49,42 @@ public class GeographicBoundingBox extends CompoundJSONField {
     //TODO make sure we create a Geoserver Location for each file
     public String getGeoserverLocation() {
         int colon = geoserverLabel.lastIndexOf(":");
+        String answer;
         if(colon==-1)
-            return geoserverLabel;
+            answer = geoserverLabel;
         else{
             String temp = geoserverLabel.substring(colon+1);
             temp = geoserverLabel.substring(0,colon) + temp;
-            return temp.replace(".","_").replace("/","_").replace("\\","_");
+            answer = temp;
         }
+        if(Character.isDigit(answer.charAt(0)))
+            answer = "g_" + answer;
+        String type;
+        if(isGeneratedFromGeoFile()) {
+            if (geometryType.equalsIgnoreCase(RASTER))
+                type = "r";
+            else if (geometryType.equalsIgnoreCase("Polygon"))
+                type = "v";
+            else
+                type = "g";
+        }else
+            type = "m";
+        answer = answer + type + fileNumber;
+        return answer.replace(".","_").replace("/","_").replace("\\","_");
+    }
+
+    public String getBaseGeoserverLocation(){
+        int colon = geoserverLabel.lastIndexOf(":");
+        String answer;
+        if(colon==-1)
+            answer = geoserverLabel;
+        else{
+            String temp = geoserverLabel.substring(colon+1);
+            temp = geoserverLabel.substring(0,colon) + temp;
+            temp.replace(".","_").replace("/","_").replace("\\","_");
+            answer = temp;
+        }
+        return answer;
     }
     public String getWestLongitude() {
         checkCoords(bb);
@@ -177,10 +206,20 @@ public class GeographicBoundingBox extends CompoundJSONField {
             case FILE_URL:
                 setFileURL(value);
                 break;
+            case WIDTH:
+                setWidth(value);
+                break;
+            case HEIGHT:
+                setHeight(value);
+                break;
+            case PLACE:
+                bb.setPlace(value);
             default:
                 errorParsing(this.getClass().getName(),title);
         }
     }
+
+
 
     private void setGeometryType(String value) {
        geometryType = value;
@@ -206,10 +245,18 @@ public class GeographicBoundingBox extends CompoundJSONField {
                 return getProjection();
             case GEOSERVER_LABEL:
                 return getGeoserverLocation();
+            case BASE_GEOSERVER_LABEL:
+                return geoserverLabel;
             case GEOMETRY:
                 return geometryType;
             case FILE_URL:
                 return fileURL;
+            case WIDTH:
+                return getWidth();
+            case HEIGHT:
+                return getHeight();
+            case PLACE:
+                return bb.getPlace();
             default:
                 errorGettingValue(this.getClass().getName(),fieldName);
                 return "Bad fieldName";
@@ -284,5 +331,30 @@ public class GeographicBoundingBox extends CompoundJSONField {
 
     private void setFileURL(String fileURL) {
         this.fileURL = fileURL;
+    }
+    private void setHeight(String value) {
+        bb.setHeight(value);
+    }
+
+    private void setWidth(String value) {
+        bb.setWidth(value);
+    }
+    private String getWidth() {
+        return bb.getWidth();
+    }
+    private String getHeight() {
+        return bb.getWidth();
+    }
+
+    public void setWidthHeight(String gdalString) {
+        int start = gdalString.indexOf("Size is ")+8;
+        if(start>7) {
+            int end = start + (gdalString.substring(start).indexOf(","));
+            int coord = gdalString.indexOf("Coordinate System is:");
+            if(end>start && coord>end) {
+                setWidth(gdalString.substring(start, end));
+                setHeight(gdalString.substring(end + 1, coord));
+            }
+        }
     }
 }

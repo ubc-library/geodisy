@@ -6,11 +6,10 @@ import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.City;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Province;
+import org.apache.commons.lang3.ArrayUtils;
 import org.json.JSONObject;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static Dataverse.DVFieldNameStrings.*;
 
@@ -34,6 +33,19 @@ public class GeographicCoverage extends CompoundJSONField {
 
     }
 
+    public HashSet<String> getPlaceNames(){
+        HashSet<String> placenames = new HashSet<>();
+        placenames.add(givenCountry);
+        placenames.add(givenProvince);
+        placenames.add(givenCity);
+        placenames.add(commonCountry);
+        placenames.add(commonProvince);
+        placenames.add(commonCity);
+        placenames.add(otherGeographicCoverage);
+        if(placenames.contains(""))
+            placenames.remove("");
+        return placenames;
+    }
     public Country getCountryObject(){
         return countryObject;
     }
@@ -117,14 +129,20 @@ public class GeographicCoverage extends CompoundJSONField {
 
     public BoundingBox getBoundingBox(){
         if(this.cityObject!=null){
-            if(cityObject.hasBoundingBox())
+            if(cityObject.hasBoundingBox()) {
+                cityObject.getBoundingBox().setPlace(cityObject.getCommonName());
                 return cityObject.getBoundingBox();
+            }
         }else if(provinceObject!=null){
-            if(provinceObject.hasBoundingBox())
+            if(provinceObject.hasBoundingBox()) {
+                provinceObject.getBoundingBox().setPlace(provinceObject.getCommonName());
                 return provinceObject.getBoundingBox();
+            }
         }else if(countryObject!=null){
-            if(countryObject.hasBoundingBox())
+            if(countryObject.hasBoundingBox()) {
+                countryObject.getBoundingBox().setPlace(countryObject.getCommonName());
                 return countryObject.getBoundingBox();
+            }
         }
         return new BoundingBox();
     }

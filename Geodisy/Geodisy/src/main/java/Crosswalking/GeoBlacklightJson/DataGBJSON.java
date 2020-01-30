@@ -6,6 +6,7 @@ import Dataverse.DVFieldNameStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Author;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Description;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicCoverage;
 import Dataverse.DataverseJavaObject;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.List;
 
 import static BaseFiles.GeodisyStrings.*;
@@ -25,7 +27,6 @@ import static Dataverse.DVFieldNameStrings.*;
 
 public class DataGBJSON extends GeoBlacklightJSON{
     GeoLogger logger;
-    private GeographicBoundingBox gbb;
 
     public DataGBJSON(DataverseJavaObject djo) {
         super();
@@ -42,12 +43,8 @@ public class DataGBJSON extends GeoBlacklightJSON{
         boolean generated = gbb.isGeneratedFromGeoFile();
         jo.put("geoblacklight_version","1.0");
         jo.put("dc_identifier_s", GeodisyStrings.urlSlashes(javaObject.getSimpleFieldVal(DVFieldNameStrings.RECORD_URL)));
-        String geoserverLabel = getgeoserverLabel(gbb);
-        if(generated) {
-            jo.put("layer_slug_s", geoserverLabel);
-        }
-        else
-            jo.put("layer_slug_s", geoserverLabel + number);
+        String geoserverLabel = getgeoserverLabel(gbb).toLowerCase();
+        jo.put("layer_slug_s", geoserverLabel);
         if(total>1) {
             jo.put("dc_title_s", javaObject.getSimpleFields().getField(TITLE) + " (" + number + " of " + total + ")");
         }
@@ -55,37 +52,39 @@ public class DataGBJSON extends GeoBlacklightJSON{
             jo.put("dc_title_s",javaObject.getSimpleFields().getField(TITLE));
         jo.put("dc_rights_s","Public");
         jo.put("dct_provenance_s",javaObject.getSimpleFields().getField(PUBLISHER));
-
         jo.put("solr_geom","ENVELOPE(" + getBBString(gbb.getBB()) + ")");
-        jo.put("layer_geom_type_s",gbb.getField(GEOMETRY));
-        jo.put("layer_id_s", geoserverLabel);
+        return jo;
+    }
+
+    private void addRecommendedFields(String geoserverLabel, GeographicBoundingBox gbb) {
+        getDSDescriptionSingle();
+        if(!gbb.getField(GEOMETRY).isEmpty())
+            jo.put("layer_geom_type_s",gbb.getField(GEOMETRY));
         JSONArray ja = addBaseRecordInfo();
-        if(!gbb.getField(GEOMETRY).equals("Non-Geospatial"))
-            ja = addDataDownloadOptions(gbb,ja);
+        if(!gbb.getField(GEOMETRY).equals("Non-Geospatial") && USE_GEOSERVER) {
+            ja = addDataDownloadOptions(gbb, ja);
+        }
         String externalServices = "{";
-        for(Object o:ja){
-            if(!externalServices.equals("{"))
+        for (Object o : ja) {
+            if (!externalServices.equals("{"))
                 externalServices += ",";
             externalServices += (String) o;
         }
-        externalServices+="}";
+        externalServices += "}";
 
-        jo.put(EXTERNAL_SERVICES,externalServices);
-        return jo;
+        jo.put(EXTERNAL_SERVICES, externalServices);
+        if(!geoserverLabel.isEmpty())
+            jo.put("layer_id_s", geoserverLabel);
+
     }
 
     private String getgeoserverLabel(GeographicBoundingBox gbb) {
         boolean generated = gbb.isGeneratedFromGeoFile();
         if (generated) {
-            if (gbb.getField(GEOMETRY).equals(POLYGON))
-               return "geodisy:" + gbb.getField(GEOSERVER_LABEL).toLowerCase() + "v" + gbb.getFileNumber();
-            else if (gbb.getField(GEOMETRY).equals(RASTER))
-                return "geodisy:" + gbb.getField(GEOSERVER_LABEL).toLowerCase() + "r" + gbb.getFileNumber();
-            else
-                return gbb.getField(GEOSERVER_LABEL).toLowerCase() + "g" + gbb.getFileNumber();
+            return "geodisy:" + gbb.getField(GEOSERVER_LABEL);
         }
         else
-            return gbb.getField(GEOSERVER_LABEL).toLowerCase() + "m" + gbb.getFileNumber();
+            return gbb.getField(GEOSERVER_LABEL);
     }
 
 
@@ -99,10 +98,10 @@ public class DataGBJSON extends GeoBlacklightJSON{
         if (gbb.getField(FILE_NAME).endsWith(".shp"))
             ja.put(WFS);
         //TODO uncomment once direct download is working
-        /*if(!gbb.getField(FILE_URL).isEmpty())
-            ja.put(DIRECT_FILE_DOWNLOAD + stringed(gbb.getField(FILE_URL)));*/
+        if(!gbb.getField(FILE_URL).isEmpty())
+            ja.put(DIRECT_FILE_DOWNLOAD + gbb.getField(FILE_URL));
         //TODO uncomment once pushing to OpenGeoMetadata is working
-        //ja.put(ISO_METADATA + stringed(gbb.getOpenGeoMetaLocation()));
+        ja.put(ISO_METADATA + stringed(gbb.getOpenGeoMetaLocation()));
 
         return ja;
     }
@@ -117,11 +116,13 @@ public class DataGBJSON extends GeoBlacklightJSON{
 
     //TODO, check I am getting all the optional fields I should be
     @Override
-    protected JSONObject getOptionalFields() {
-        getDSDescription();
+    protected JSONObject getOptionalFields(GeographicBoundingBox gbb) {
+        String geoserverLabel = getgeoserverLabel(gbb).toLowerCase();
+        addRecommendedFields(geoserverLabel, gbb);
         getAuthors();
         getIssueDate();
         getLanguages();
+        getPlaceNames(gbb);
         getSubjects();
         getType();
         return jo;
@@ -187,7 +188,27 @@ public class DataGBJSON extends GeoBlacklightJSON{
         }
         jo.put("dc_creator_sm",ja);
     }
+    private void getPlaceNames(GeographicBoundingBox gbb){
+        JSONArray ja =  new JSONArray();
+        HashSet<String> placeNames = new HashSet<>();
+        List<GeographicCoverage> places = javaObject.getGeoFields().getGeoCovers();
+        for(GeographicCoverage gc:places){
+            for(String place:gc.getPlaceNames()){
+                placeNames.add(place);
+            }
+        }
+        if(!gbb.getField(PLACE).isEmpty()){
+            ja.put(gbb.getField(PLACE));
+            jo.put("dct_spatial_sm",ja);
+        } else if(placeNames.size()>0) {
+            for (String s : placeNames) {
+                ja.put(s);
+            }
+            jo.put("dct_spatial_sm",ja);
+        }
 
+    }
+    //Description as array, but that seems to be wrong
     private void getDSDescription() {
         JSONArray ja = new JSONArray();
         List<Description> descriptions = javaObject.getCitationFields().getListField(DS_DESCRIPT);
@@ -197,6 +218,18 @@ public class DataGBJSON extends GeoBlacklightJSON{
             ja.put(d.getDsDescriptionValue());
         }
         jo.put("dc_description_s",ja);
+    }
+    //Description as String, but that could be wrong
+    private void getDSDescriptionSingle(){
+        String answer = "";
+        List<Description> descriptions = javaObject.getCitationFields().getListField(DS_DESCRIPT);
+        if(descriptions.size()==0)
+            return;
+        for(Description d:descriptions){
+            answer += d.getDsDescriptionValue()+" ";
+        }
+        if(!answer.isEmpty())
+            jo.put("dc_description_s",answer);
     }
 
     public void saveJSONToFile(String json, String doi, String folderName){

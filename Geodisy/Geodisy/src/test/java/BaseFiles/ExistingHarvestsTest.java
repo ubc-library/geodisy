@@ -18,12 +18,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ExistingHarvestsTest {
     DataverseJavaObject djo;
+    JSONObject jo;
     @Before
     public void initialize(){
         InputStream is = null;
 
         try {
-            is = new FileInputStream(ALL_CITATION_METADATA);
+            is = new FileInputStream(GeodisyStrings.replaceSlashes(ALL_CITATION_METADATA));
 
             BufferedReader buf = new BufferedReader(new InputStreamReader(is));
 
@@ -35,7 +36,7 @@ public class ExistingHarvestsTest {
                 line = buf.readLine();
             }
             String jsonData = sb.toString();
-            JSONObject jo = new JSONObject(jsonData);
+            jo = new JSONObject(jsonData);
             DataverseParser dataverseParser = new DataverseParser();
             djo = dataverseParser.parse(jo, "another fake server name");
             System.out.println(djo.getBoundingBox().getLatNorth());
@@ -115,5 +116,32 @@ public class ExistingHarvestsTest {
     public void fixPerms(){
         String answer = FileWriter.fixPath("htheheredoi:1232,23123");
         assertTrue (answer.equals("hthehere1232,23123"));
+    }
+
+    @Test
+    public void setCoverage(){
+        InputStream is = null;
+
+        try {
+            is = new FileInputStream(GeodisyStrings.replaceSlashes(TEST_GEO_COVERAGE));
+
+            BufferedReader buf = new BufferedReader(new InputStreamReader(is));
+
+            String line = buf.readLine();
+            StringBuilder sb = new StringBuilder();
+
+            while(line != null){
+                sb.append(line).append("\n");
+                line = buf.readLine();
+            }
+            String jsonData = sb.toString();
+            jo = new JSONObject(jsonData);
+            DataverseParser dataverseParser = new DataverseParser();
+            djo = dataverseParser.parse(jo, "another fake server name");
+            System.out.println(djo.getBoundingBox().getLatNorth());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

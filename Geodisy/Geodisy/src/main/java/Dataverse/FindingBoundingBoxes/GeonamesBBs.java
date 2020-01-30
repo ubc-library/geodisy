@@ -58,7 +58,7 @@ public class GeonamesBBs extends FindBoundBox {
             country = countries.getCountryByCode(countryName);
          else
              country = countries.getCountryByName(countryName);
-        if(country.getCountryCode().matches("_JJ")){
+        if(country.getCountryCode().matches("_JJ")||country.getCountryCode().matches("")){
             logger.info(countryName + " is not a valid country givenName in record at PERSISTENT_ID: " + doi + ", so no bounding box could be automatically generated. Check this record manually ", djo);
 
             return new BoundingBox();
@@ -274,7 +274,7 @@ public class GeonamesBBs extends FindBoundBox {
                 }
             }
         }else{
-            if(!givenProvince.isEmpty()||!givenCity.isEmpty())
+            if(!givenProvince.isEmpty()||!givenCity.isEmpty()||!other.isEmpty())
                 logger.info("Record " + doi + " has Geographic Coverage fields filled out but no Country filled out",djo);
             else
                 logger.error("Somehow got to calling Geonames without there being anything in the geographic coverage for " + doi);

@@ -63,7 +63,8 @@ public class MyTimerTask extends TimerTask {
                 existingHarvests.addOrReplaceRecord(new DataverseRecordInfo(sJO, logger.getName()));
             }
             crosswalkRecords(sJOs);
-            sendRecordsToGeoBlacklight();
+            if(!IS_WINDOWS)
+                sendRecordsToGeoBlacklight();
 
 
             endErrorLog = keepMajErrors();

@@ -12,8 +12,11 @@ public class BoundingBox implements Serializable {
     private boolean generated = false;
     private String fileName = "";
     private String geometryType = "Non-geospatial";
-    private String geoserverLabel;
-    private String doi;
+    private String geoserverLabel = "";
+    private String doi = "";
+    private String width = "0";
+    private String height = "0";
+    private String place = "";
 
     /**
      *
@@ -164,4 +167,27 @@ public class BoundingBox implements Serializable {
         return false;
     }
 
+    public String getWidth() {
+        return width;
+    }
+
+    public void setWidth(String width) {
+        this.width = width;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
 }

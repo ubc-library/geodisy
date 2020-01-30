@@ -2,6 +2,8 @@ package Dataverse;
 
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 
+import static BaseFiles.GeodisyStrings.PATH_TO_XML_JSON_FILES;
+
 public class DataverseGeoRecordFile extends DataverseRecordFile {
     GDALInformation gdalInfo;
 
@@ -25,7 +27,11 @@ public class DataverseGeoRecordFile extends DataverseRecordFile {
         if(!drf.getFileIdent().equals(""))
             fileIdent = drf.getFileIdent();
         gdalInfo = new GDALInformation();
-        this.setGbb(drf.getGBB());
+        setGbb(drf.getGBB());
+        this.setFileNumber(Integer.valueOf(drf.getGBBFileNumber()));
+        this.setOriginalTitle(drf.getOriginalTitle());
+        this.setProjection(drf.getProjection());
+        this.setFileURL(drf.getFileURL());
     }
     public DataverseGeoRecordFile (DataverseRecordFile drf, String fileIdent){
         super(drf.getTranslatedTitle(),drf.getFileIdent(),drf.dbID,drf.server,drf.datasetIdent);

@@ -15,7 +15,8 @@ public abstract class HTTPCaller {
         String answer = "";
         boolean run = true;
         while (run && counter<5) {
-            HttpURLConnection h = getHttpURLConnection(fixed);
+            HttpURLConnection h = null;
+                h = getHttpURLConnection(fixed);
             if (h == null)
                 return "HTTP Fail";
             answer = readResponse(h);
@@ -32,8 +33,8 @@ public abstract class HTTPCaller {
             URL url = new URL(searchUrl);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
-            con.setConnectTimeout(20000);
-            con.setReadTimeout(10000);
+            con.setConnectTimeout(60000);
+            con.setReadTimeout(20000);
             return con;
         } catch (ProtocolException e) {
             logger.error("Something went wrong making the HTTP URL connection, Protocol exception");
@@ -68,10 +69,10 @@ public abstract class HTTPCaller {
                 return "BAD_RESPONSE";
             }
         } catch (SocketTimeoutException s) {
-            answer = retryReading(con);
+            logger.warn("Socket Timed out :" + s);
         }catch (IOException e) {
             e.printStackTrace();
-            ioError();
+            ioError(e);
         }
         return answer;
     }
@@ -118,5 +119,5 @@ public abstract class HTTPCaller {
         return answer;
     }
 
-    protected abstract void ioError();
+    protected abstract void ioError(IOException e);
 }

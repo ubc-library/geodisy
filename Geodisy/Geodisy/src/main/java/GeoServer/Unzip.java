@@ -27,7 +27,7 @@ public class Unzip {
 
 
     //TODO call unzip when adding zipped files to Geoserver and then call deleteUnzippedFiles() after uploadVector is done to save space
-    public LinkedList<DataverseRecordFile> unzip(String filePath, String destPath, DataverseRecordFile dRF, DataverseJavaObject djo ) {
+    public LinkedList<DataverseRecordFile> unzip(String filePath, String destPath, DataverseRecordFile dRF, DataverseJavaObject djo ) throws NullPointerException{
         //String destPath = filePath.substring(0,filePath.length()-4);
         File destDir = new File(destPath);
         destDir.mkdirs();
@@ -42,29 +42,36 @@ public class Unzip {
             logger.error("Something went wrong unzipping" + filePath + ". The file couldn't be found somehow.");
         }
         ZipEntry zipEntry = null;
-        try {
-            zipEntry = zis.getNextEntry();
-            while (zipEntry != null) {
-                if(!GeodisyStrings.fileToAllow(zipEntry.getName())){
-                    zipEntry = zis.getNextEntry();
-                    continue;
-                }
 
-                File newFile = newFile(destDir, zipEntry);
-                FileOutputStream fos = new FileOutputStream(newFile);
-                int len;
-                while ((len = zis.read(buffer)) > 0) {
-                    fos.write(buffer, 0, len);
-                }
-                fos.close();
+        if(zis!=null) {
+            try {
                 zipEntry = zis.getNextEntry();
+                do  {
+                    zipEntry = zis.getNextEntry();
+                    if(zipEntry==null)
+                        break;
+                    if (GeodisyStrings.fileTypesToIgnore(zipEntry.getName())) {
+                        continue;
+                    }
+
+                    File newFile = newFile(destDir, zipEntry);
+                    FileOutputStream fos = new FileOutputStream(newFile);
+                    int len;
+                    while ((len = zis.read(buffer)) > 0) {
+                        fos.write(buffer, 0, len);
+                    }
+                    fos.close();
+                    DataverseRecordFile zippedFile = new DataverseRecordFile(zipEntry.getName(), dRF.getFileIdent(), dRF.getDbID(), dRF.getServer(), dRF.getDatasetIdent());
+                    zippedFile.setOriginalTitle(dRF.getOriginalTitle());
+                    drfs.add(zippedFile);
+                } while ((zipEntry != null));
+                zis.closeEntry();
+                zis.close();
+            } catch (FileNotFoundException e) {
+                logger.error("Something went wrong creating new file (File wasn't found, somehow) " + filePath);
+            }  catch (IOException e) {
+                logger.error("Something went wrong unzipping " + dRF.getFileURL());
             }
-            zis.closeEntry();
-            zis.close();
-        } catch (FileNotFoundException e) {
-            logger.error("Something went wrong creating new file (File wasn't found, somehow) " + filePath);
-        }catch (IOException e) {
-            logger.error("Something went wrong unzipping " + filePath);
         }
         return drfs;
     }

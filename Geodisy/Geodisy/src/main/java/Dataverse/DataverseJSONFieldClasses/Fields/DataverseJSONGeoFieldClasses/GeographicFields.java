@@ -52,7 +52,7 @@ public class GeographicFields extends MetadataType {
                         geoBBoxes.add(gbb);
                         drf = new DataverseGeoRecordFile(doi, gbb);
                         incrementCounter();
-                        drf.setFileNumber(getCounter());
+                        drf.setFileNumber(djo.getGeoDataMeta().size()+1);
                         djo.addGeoDataMeta(drf);
                     }
                 }
@@ -69,7 +69,7 @@ public class GeographicFields extends MetadataType {
                         gbb = new GeographicBoundingBox(doi,bb);
                         drf = new DataverseGeoRecordFile(doi, gbb);
                         incrementCounter();
-                        drf.setFileNumber(getCounter());
+                        drf.setFileNumber(djo.getGeoDataMeta().size()+1);
                         djo.addGeoDataMeta(drf);
                     }
                 }
@@ -311,6 +311,6 @@ public class GeographicFields extends MetadataType {
     }
 
     public void incrementCounter() {
-        this.counter = counter;
+        counter++;
     }
 }

@@ -127,7 +127,7 @@ public class JGit {
     private void generateNewXMLFiles(List<XMLDocObject> docs) throws GitAPIException, TransformerException {
         for(XMLDocObject doc: docs){
             //TODO figure out if XML file name should be what is currently in xMLFileName
-            String xMLFileName = getOpenGeoLocalFilePath(doc.doi) + ".xml";
+            String xMLFileName = getOpenGeoLocalFilePath(doc.doi) + "iso19115.xml";
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource domSource = new DOMSource(doc.getDoc());

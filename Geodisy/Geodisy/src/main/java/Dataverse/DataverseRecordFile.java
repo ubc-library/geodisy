@@ -32,7 +32,6 @@ public class DataverseRecordFile {
     String recordURL = "";
     String datasetIdent = "";
     GeographicBoundingBox gbb;
-    int fileNumber = 0;
 
     /**
      * Creates a DataverseRecordFile when there is a File-specific fileIdent.
@@ -88,6 +87,17 @@ public class DataverseRecordFile {
         this.gbb.setField(GEOSERVER_LABEL, datasetIdent.replace(".","_").replace("/","_").replace("\\","_"));
     }
 
+    public DataverseRecordFile(DataverseRecordFile drf){
+        this.originalTitle = drf.originalTitle;
+        this.translatedTitle = drf.translatedTitle;
+        this.fileIdent = drf.getFileIdent();
+        this.datasetIdent = drf.getDatasetIdent();
+        this.dbID = drf.getDbID();
+        this.server = drf.getServer();
+        this.recordURL = drf.getRecordURL();
+        this.gbb = drf.getGBB();
+    }
+
     public LinkedList<DataverseRecordFile> retrieveFile(DataverseJavaObject djo) {
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
         try {
@@ -103,7 +113,11 @@ public class DataverseRecordFile {
                     120000); //2 minute read timeout
             if (translatedTitle.endsWith(".zip")) {
                 Unzip zip = new Unzip();
-                drfs = zip.unzip(filePath, dirPath, this, djo);
+                try {
+                    drfs = zip.unzip(filePath, dirPath, this, djo);
+                }catch (NullPointerException f){
+                        logger.error("Got an null pointer exception, something clearly went wrong with unzipping " + filePath);
+                    }
                 new File(filePath).delete();
             }
 
@@ -139,14 +153,16 @@ public class DataverseRecordFile {
         GDAL gdal = new GDAL();
         if (f.isFile()) {
             String name = f.getName().toLowerCase();
-            if (GeodisyStrings.ogrinfoVectorExtension(name) && !name.endsWith("csv")) {
+            if (GeodisyStrings.ogrinfoVectorExtension(f.getName()) && !name.endsWith("csv")) {
                 if (GeodisyStrings.otherShapeFilesExtensions(name))
                     return new DataverseRecordFile();
-                setOriginalTitle(name);
+                if(originalTitle.isEmpty())
+                    setOriginalTitle(f.getName());
                 setTranslatedTitle(gdalTranslate.vectorTransform(dirPath, f.getName()));
                 return replaceRecord();
             } else if (GeodisyStrings.gdalinfoRasterExtention(f.getName())) {
-                setOriginalTitle(name);
+                if(originalTitle.isEmpty())
+                    setOriginalTitle(name);
                 setTranslatedTitle(gdalTranslate.rasterTransform(dirPath, f.getName()));
                 return replaceRecord();
             } else if (name.contains(".csv")) {
@@ -171,6 +187,7 @@ public class DataverseRecordFile {
     private DataverseRecordFile replaceRecord() {
         DataverseRecordFile newDRF = new DataverseRecordFile(translatedTitle,fileIdent,dbID,server,datasetIdent);
         newDRF.setOriginalTitle(originalTitle);
+        newDRF.setRecordURL(recordURL);
         return newDRF;
     }
 
@@ -185,8 +202,9 @@ public class DataverseRecordFile {
             Stack<String> stack = new Stack<>();
             br = new BufferedReader(new FileReader(inputFile));
             writer = (new FileWriter(outputFile));
-            while ((line = br.readLine()) != null)
+            while ((line = br.readLine()) != null) {
                 stack.push(line.replace("\t", ","));
+            }
             while (!stack.isEmpty()) {
                 writer.write(stack.pop());
                 if (!stack.empty())
@@ -197,6 +215,8 @@ public class DataverseRecordFile {
             logger.error("Tried to convert an non-existant .tab file: " + title);
         } catch (IOException e) {
             logger.error("Something went wrong when converting a .tab file to .csv: " + title);
+        }catch(OutOfMemoryError e){
+            logger.warn("Tab was too big to convert to csv, maybe check? Path = " +dirPath + " And title = " + title);
         }
         finally {
             try{
@@ -237,24 +257,23 @@ public class DataverseRecordFile {
         gbb.setField(PROJECTION,s);
     }
 
-    public void addFileNumber(int i){
-        fileNumber = i;
-    }
-
-    public String getFileNumber(){
-        if(fileNumber==0)
-            return "";
-        else
-            return String.valueOf(fileNumber);
+    public String getGBBFileNumber(){
+        return gbb.getFileNumber();
     }
 
     public void setGeoserverLabel(String s){
-        gbb.setField(GEOSERVER_LABEL,s);
+        gbb.setField(BASE_GEOSERVER_LABEL,s);
     }
 
     public String getGeoserverLabel(){
         return gbb.getField(GEOSERVER_LABEL);
     }
+
+    public String getBaseGeoserverLabel(){
+        return gbb.getField(BASE_GEOSERVER_LABEL);
+    }
+
+
 
     public String getGeometryType() {
         return gbb.getField(GEOMETRY);
@@ -324,16 +343,13 @@ public class DataverseRecordFile {
         this.datasetIdent = datasetIdent;
     }
 
-    public GeographicBoundingBox getGbb() {
-        return gbb;
-    }
 
     public void setGbb(GeographicBoundingBox gbb) {
         this.gbb = gbb;
     }
 
     public void setFileNumber(int fileNumber) {
-        this.fileNumber = fileNumber;
+        gbb.setFileNumber(fileNumber);
     }
 
     public String getFileURL() {

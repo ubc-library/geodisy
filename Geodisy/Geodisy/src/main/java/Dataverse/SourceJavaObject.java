@@ -159,7 +159,7 @@ public abstract class SourceJavaObject {
     }
 
     public boolean hasBoundingBox(){
-        return geoFields.hasBB();
+        return geoDataFiles.size()>0||geoDataMeta.size()>0;
     }
 
     public void setSimpleFields(SimpleCitationFields simpleCitationFields) {
@@ -188,7 +188,7 @@ public abstract class SourceJavaObject {
         String protocol = getSimpleFields().getField(PROTOCOL);
         if(protocol.contains("doi"))
             return "doi";
-        if(protocol.contains("handle"))
+        if(protocol.contains("handle")||protocol.contains("hdl"))
             return "handle";
         if(protocol.contains("ark"))
             return "ark";

@@ -6,6 +6,7 @@ import BaseFiles.GeodisyStrings;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 
 import static BaseFiles.GeodisyStrings.*;
@@ -69,21 +70,21 @@ public class GDALTranslate {
 
         ProcessBuilder processBuilder= new ProcessBuilder();
 
-        for(int i = 0; i<8; i++){
         if(transformType.equals(RASTER)) {
             call = GDAL_TRANSLATE + sourcePath + name + " " + destPath + nameStub + ".tif";
             //System.out.println(call);
             processBuilder.command("bash", "-c", call);
+            Process process = null;
             try {
 
                 if (IS_WINDOWS) {
-                    Runtime.getRuntime().exec(call);
+                    Runtime.getRuntime().exec(call).waitFor();
                 } else {
-                    Process process = processBuilder.start();
-                    process.waitFor();
-                    process.destroy();
+                    process = processBuilder.start();
+                    process.waitFor(120, TimeUnit.SECONDS);
                 }
-
+                if(name.endsWith(".tif"))
+                    return true;
                 File newFile = new File(destPath+nameStub+".tif");
                 if(newFile.exists()) {
                     file = new File(sourcePath + name);
@@ -94,7 +95,10 @@ public class GDALTranslate {
                 }
 
             } catch (IOException | InterruptedException e) {
-                logger.error("Something went wrong converting " + name + " to geotiff");
+                logger.error("Something went wrong converting " + name + " to shapefile");
+            }finally{
+                if(process!=null)
+                    process.destroy();
             }
         } else{
                 call = OGR2OGR + destPath + nameStub + ".shp " + sourcePath + name;
@@ -102,17 +106,19 @@ public class GDALTranslate {
                 processBuilder.command("bash", "-c", call);
                 try {
                     if (IS_WINDOWS) {
-                        Runtime.getRuntime().exec(call);
+                        Runtime.getRuntime().exec(call).waitFor();
                     } else {
                         Process p = processBuilder.start();
                         try {
-                            p.waitFor();
+                            p.waitFor(120, TimeUnit.SECONDS);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                         p.destroy();
 
                     }
+                    if(name.endsWith(".shp"))
+                        return true;
                     File newFile = new File(destPath+nameStub+".shp");
                     if(newFile.exists()) {
                         file = new File(sourcePath + name);
@@ -121,11 +127,10 @@ public class GDALTranslate {
                     }else{
                         //System.out.println("Translation failure #" + i);
                     }
-                } catch (IOException e) {
+                } catch (IOException | InterruptedException e) {
                     logger.error("Something went wrong converting " + name + " to shapefile");
                 }
             }
-        }
         System.out.println("Couldn't convert file: " + sourcePath+name);
         file = new File(sourcePath+name);
         file.delete();

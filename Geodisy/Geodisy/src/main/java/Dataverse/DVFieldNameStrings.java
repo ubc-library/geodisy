@@ -180,7 +180,10 @@ public class DVFieldNameStrings {
     public final static String GEOMETRY = "geometryType";
     public final static String PROJECTION = "projection";
     public final static String GEOSERVER_LABEL = "geoserverLabel";
-    public final static String POLYGON = "Polygon";
+    public final static String WIDTH = "width";
+    public final static String HEIGHT = "height";
+    public final static String PLACE = "place";
+    public final static String BASE_GEOSERVER_LABEL = "baseGeoLable";
 
 
     //Geographic Coverage Field Names

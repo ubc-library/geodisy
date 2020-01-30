@@ -9,11 +9,9 @@ import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
 import BaseFiles.HTTPCaller;
 import Crosswalking.GeoBlacklightJson.HTTPCombineCaller;
-import Dataverse.DataverseJavaObject;
-import Dataverse.DataverseRecordFile;
-import Dataverse.ExistingRasterRecords;
-import Dataverse.SourceJavaObject;
+import Dataverse.*;
 
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -26,7 +24,8 @@ import java.nio.file.Files;
 
 import static BaseFiles.GeodisyStrings.*;
 import static BaseFiles.PrivateStrings.*;
-import static Dataverse.DVFieldNameStrings.PERSISTENT_ID;
+import static Crosswalking.XML.XMLTools.XMLStrings.OPEN_METADATA_LOCAL_REPO;
+import static Dataverse.DVFieldNameStrings.*;
 import static GeoServer.GeoserverStrings.*;
 
 /**
@@ -89,7 +88,9 @@ public class GeoServerAPI extends DestinationAPI {
         String command = "curl -U " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type: application/json") + "-d @" + DATASET_FILES_PATH + "import.json" + urlString;
         try {
             Process p = Runtime.getRuntime().exec(command);
-        } catch (IOException e) {
+            p.waitFor();
+            p.destroy();
+        } catch (InterruptedException | IOException e) {
             logger.error("Something went wrong trying to add a vector to geoserver from postGIS. File name was: " + fileName);
             return false;
         }
@@ -108,10 +109,11 @@ public class GeoServerAPI extends DestinationAPI {
     public boolean addVector(String fileName,String geoserverLabel){
         return addVectorToPostGIS(fileName,geoserverLabel);
     }
-    public void uploadRaster(DataverseRecordFile drf){
-        String fileName = drf.getFileName();
-        String createCoverstore = " admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:image/tiff") +  "-d '<coverageStore><name>" + drf.getGeoserverLabel() + "</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>/var/www/206-12-92-97.cloud.computecanada.ca/html/geodisy/" + drf.getFileURL() +"</url></coverageStore>' \"http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores?configure=all\"";
-        String call = "curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:text/xml") + " -d '<coverageStore><name>"+drf.getGeoserverLabel()+"</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>/var/www/206-12-92-97.cloud.computecanada.ca/html/geodisy/" + drf.getDatasetIdent()+drf.getFileName()+"</url></coverageStore>' \"http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores?configure=all\"";
+    public void uploadRaster(DataverseGeoRecordFile dgrf){
+        String fileName = dgrf.getFileName();
+        GeographicBoundingBox gbb = dgrf.getGBB();
+        String createCoverstore = " admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:image/tiff") +  "-d '<coverageStore><name>" + dgrf.getGeoserverLabel() + "</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>"+ OPEN_METADATA_LOCAL_REPO + dgrf.getDatasetIdent() + dgrf.getTranslatedTitle() + "</url></coverageStore>' \"http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores?configure=all\"";
+        String call = "curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:text/xml") + " -d '<coverageStore><name>"+ dgrf.getGeoserverLabel() + "</name><nativeCRS>" + dgrf.getNativeCRS() + "</nativeCRS><srs>" + dgrf.getProjection() + "</srs><latLonBoundingBox><minx>" + gbb.getField(WEST_LONG) + "</minx><maxx>" + gbb.getField(EAST_LONG) + "</maxx><miny>"+ gbb.getField(SOUTH_LAT) + "</miny><maxy>" + gbb.getField(NORTH_LAT) + "</maxy><crs>" + dgrf.getProjection() + "</crs></latLonBoundingBox></coverageStore>' \"http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores?configure=all\"";
         Process p;
             ProcessBuilder processBuilder= new ProcessBuilder();
             try {
@@ -125,10 +127,10 @@ public class GeoServerAPI extends DestinationAPI {
                     p.waitFor();
                     p.destroy();
                 }catch (InterruptedException | IOException f){
-                    logger.error("Something went wrong creating raster layer for " + drf.getGeoserverLabel() + ". Error stream: " + p.getErrorStream().read());
+                    logger.error("Something went wrong creating raster layer for " + dgrf.getGeoserverLabel() + ". Error stream: " + p.getErrorStream().read());
                 }
             }catch (InterruptedException | IOException e){
-                logger.error("Something went wrong creating a raster coverstore for " + drf.getGeoserverLabel());
+                logger.error("Something went wrong creating a raster coverstore for " + dgrf.getGeoserverLabel());
             }
 
         ExistingRasterRecords existingRasterRecords = ExistingRasterRecords.getExistingRasters();

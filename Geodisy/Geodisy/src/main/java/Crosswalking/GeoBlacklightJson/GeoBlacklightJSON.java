@@ -3,6 +3,7 @@ package Crosswalking.GeoBlacklightJson;
 import BaseFiles.FileWriter;
 import BaseFiles.GeodisyStrings;
 import Crosswalking.MetadataSchema;
+import DataSourceLocations.Dataverse;
 import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJavaObject;
@@ -20,6 +21,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static BaseFiles.GeodisyStrings.*;
+import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.GEOBLACKLIGHT_BASE;
+import static Dataverse.DVFieldNameStrings.DS_DESCRIPT;
 import static Dataverse.DVFieldNameStrings.FILE_NAME;
 
 /**
@@ -44,15 +47,16 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
     public void createJson() {
         int countFile = geoFiles.size();
         int countMeta = geoMeta.size();
-        if(countMeta>1)
-            for(int i =1; i <= countMeta; i++){
-                DataverseGeoRecordFile df = geoMeta.get(i-1);
-                df.setFileNumber(i);
-                geoMeta.set(i-1,df);
-            }
+        System.out.println("DOI = " + doi + " . Number geoFile: " + countFile + " . Number geoMeta: " + countMeta);
         List<DataverseGeoRecordFile> list = (countFile >= countMeta)? geoFiles : geoMeta;
         int count = 1;
         int total = list.size();
+        int innerCount = 1;
+        List<String> description = javaObject.getCitationFields().getListField(DS_DESCRIPT);
+        description.add("Connected GeoBlacklight records:");
+        for(DataverseGeoRecordFile drf:list){
+            description.add("(" + innerCount + " of " + total + ") - " + GEOBLACKLIGHT_BASE + drf.getGeoserverLabel());
+        }
         for(DataverseRecordFile drf:list){
             createJSONFromFiles(drf,count,total);
             count++;
@@ -62,7 +66,7 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
     private void createJSONFromFiles(DataverseRecordFile drf, int count, int total) {
         boolean single = total == 1;
             getRequiredFields(drf.getGBB(), count, total);
-            getOptionalFields();
+            getOptionalFields(drf.getGBB());
             geoBlacklightJson = jo.toString();
             if (!single)
                 saveJSONToFile(geoBlacklightJson, doi, doi + " (File " + (count) + " of " + total + ")");
@@ -110,7 +114,7 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
 
 
 
-    protected abstract JSONObject getOptionalFields();
+    protected abstract JSONObject getOptionalFields(GeographicBoundingBox gbb);
     protected abstract JSONArray addDataDownloadOptions(GeographicBoundingBox bb, JSONArray ja); //for records with datasetfiles
     protected abstract JSONArray addBaseRecordInfo(); //adds the base metadata external services that all records need regardless of existence of datafiles
     protected abstract void saveJSONToFile(String json, String doi, String folderName);

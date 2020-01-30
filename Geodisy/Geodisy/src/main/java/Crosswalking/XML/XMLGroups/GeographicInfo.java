@@ -4,6 +4,7 @@ import BaseFiles.GeoLogger;
 import Crosswalking.XML.XMLTools.SubElement;
 import Crosswalking.XML.XMLTools.XMLDocObject;
 import Crosswalking.XML.XMLTools.XMLStack;
+import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicCoverage;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
@@ -117,18 +118,16 @@ GeoLogger logger;
     }
 
     private List<GeographicBoundingBox> determineWhichBBs() {
-        List<GeographicBoundingBox> geoBBs = gf.getGeoBBoxes();
-        List<GeographicBoundingBox> entered = new LinkedList<>();
-        List<GeographicBoundingBox> generated = new LinkedList<>();
-        for(GeographicBoundingBox geoBB: geoBBs){
-            if(geoBB.hasBB())
-                continue;
-            if(geoBB.isGeneratedFromGeoFile())
-                generated.add(geoBB);
-            else
-                entered.add(geoBB);
+        List<DataverseGeoRecordFile> geoBBRecs = djo.getGeoDataFiles();
+        List<DataverseGeoRecordFile> metaBBrecs = djo.getGeoDataMeta();
+        List<DataverseGeoRecordFile> recs = new LinkedList<>();
+        recs = (geoBBRecs.size()>=metaBBrecs.size())? geoBBRecs : metaBBrecs;
+        LinkedList<GeographicBoundingBox> boxes = new LinkedList<>();
+        for(DataverseGeoRecordFile dgrf: recs){
+            if(dgrf.hasValidBB())
+                boxes.add(dgrf.getGBB());
         }
-        return entered.size()<=generated.size()? generated : entered;
+        return boxes;
     }
 
     public static String getGeoCovPrimeName(List<String> field){

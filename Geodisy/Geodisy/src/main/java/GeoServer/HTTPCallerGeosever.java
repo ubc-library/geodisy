@@ -3,6 +3,8 @@ package GeoServer;
 import BaseFiles.GeoLogger;
 import BaseFiles.HTTPCaller;
 
+import java.io.IOException;
+
 public class HTTPCallerGeosever extends HTTPCaller {
 
     public HTTPCallerGeosever() {
@@ -10,8 +12,8 @@ public class HTTPCallerGeosever extends HTTPCaller {
     }
 
     @Override
-    protected void ioError() {
-        logger.error("Something went wrong trying to access Geoserver; IOError");
+    protected void ioError(IOException e) {
+        logger.error("Something went wrong trying to access Geoserver; IOError " + e);
     }
 
     public String createWorkSpace(String url){

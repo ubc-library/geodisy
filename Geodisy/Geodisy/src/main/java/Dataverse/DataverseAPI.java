@@ -11,7 +11,6 @@ import BaseFiles.GeoLogger;
 import BaseFiles.Geonames;
 import BaseFiles.HTTPCallerGeoNames;
 import Crosswalking.JSONParsing.DataverseParser;
-import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,7 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-import static BaseFiles.GeodisyStrings.DATASET_FILES_PATH;
+import static BaseFiles.GeodisyStrings.*;
 
 /**
  *  Search Dataverse for datasets
@@ -53,10 +52,23 @@ public class DataverseAPI extends SourceAPI {
         System.out.println("This is using the " + dvURL + " dataverse for getting files, should it be changed to something else?");
         int counter = jsons.size();
         System.out.println("Downloading records starting at: " + Calendar.getInstance().getTime());
+        long fullStartTime = Calendar.getInstance().getTimeInMillis();
         for(JSONObject jo:jsons){
+            Calendar fullEnd =  Calendar.getInstance();
+            Long fullTotal = fullEnd.getTimeInMillis()-fullStartTime;
+            if(fullTotal>10800000)
+                break;
             String doi ="";
             try {
                 doi = jo.getString("authority") + "/" + jo.getString("identifier");
+
+                if(processSpecificRecords(doi)) {
+                    System.out.println("Processing only specic records, is that what you want? If not delete all doi in PROCESS_THESE_DOIS in Geodisy Strings");
+                    continue;
+                }
+                if(dontProcessSpecificRecords(doi))
+                    continue;
+                System.out.println("Parsing record " + doi);
                 if(es.hasRecord(doi)) {
                     JSONObject joInfo = jo.getJSONObject("datasetVersion");
                     int version = joInfo.getInt("versionNumber") * 1000 + joInfo.getInt("versionMinorNumber");
@@ -66,7 +78,7 @@ public class DataverseAPI extends SourceAPI {
                     }
                 }
             }catch (JSONException j){
-                logger.error("Tried to get a record but I got a blank JSONObject");
+                logger.error("Tried to get a record but I got a blank or malformed JSONObject");
                 continue;
             }
             DataverseJavaObject djo = parser.parse(jo, dvURL);
@@ -74,8 +86,12 @@ public class DataverseAPI extends SourceAPI {
             if(djo.hasContent && es.hasRecord(djo.getDOI()))
                 recordsThatNoLongerExist.remove(djo.getDOI());
             if(djo.hasContent()&& hasNewInfo(djo, es)) {
-                //System.out.println("Downloading record: " + fileIdent);
+                System.out.println("Downloading record: " + doi);
+                long startTime = Calendar.getInstance().getTimeInMillis();
                 djo = djo.downloadFiles();
+                Calendar end =  Calendar.getInstance();
+                Long total = end.getTimeInMillis()-startTime;
+                System.out.println("Finished downloading " + doi +" after " + total + " milliseconds");
                 djo.updateGeoserver();
                 //System.out.println("Finished downloading files from: " + fileIdent + " only " + counter + "more records to download");
                 //djo = generateBoundingBox(djo);
@@ -83,6 +99,10 @@ public class DataverseAPI extends SourceAPI {
                 if(djo.hasGeoGraphicCoverage())
                     djo = (DataverseJavaObject) getBBFromGeonames(djo);
                 if(djo.hasBoundingBox()) {
+                    /*for(GeographicBoundingBox gbb: djo.getGeoFields().getGeoBBoxes()) {
+                        if(gbb.hasBB())
+                            djo.addGeoDataMeta(new DataverseGeoRecordFile(doi, gbb));
+                    }*/
                     answers.add(djo);
                 } else{
                     File folderToDelete = new File(doi);
@@ -102,6 +122,35 @@ public class DataverseAPI extends SourceAPI {
         }
 
         return answers;
+    }
+
+    private boolean dontProcessSpecificRecords(String doi) {
+        HashSet<String> dois = new HashSet<>();
+        String[] doiArray = HUGE_RECORDS_TO_IGNORE_UNTIL_LATER;
+        if (doiArray.length == 0)
+            return false;
+        for (String d : doiArray){
+            dois.add(d.toLowerCase());
+            if(doi.endsWith(d.toLowerCase()))
+                return true;
+
+        }
+        if(dois.contains(doi.toLowerCase()))
+            return true;
+        return false;
+    }
+    //Only process dois in the below doi array (only for testing, really)
+    private boolean processSpecificRecords(String doi) {
+        HashSet<String> dois = new HashSet<>();
+        String[] doiArray = PROCESS_THESE_DOIS;
+        if (doiArray.length == 0)
+            return false;
+        for (String d : doiArray){
+            dois.add(d);
+        }
+        if(dois.contains(doi))
+            return false;
+        return true;
     }
 
     @Override
@@ -178,7 +227,7 @@ public class DataverseAPI extends SourceAPI {
         HashSet<String> answer = new HashSet<>();
         int start = 0;
         String result;
-        while(moreEntries){
+        while(moreEntries&&start<NUMBER_OF_RECS_TO_HARVEST){
             HTTPCallerGeoNames hC = new HTTPCallerGeoNames();
             result = hC.callHTTP(searchURL+"&start="+ start);
             if(result.equals("HTTP Fail"))
@@ -202,6 +251,7 @@ public class DataverseAPI extends SourceAPI {
             for(Object o:records){
                 JSONObject jo = (JSONObject) o;
                 answer.add(jo.getString("global_id"));
+
             }
         }catch (JSONException e){
             logger.error("Something was malformed with the JSON string returned from Dataverse");

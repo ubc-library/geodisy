@@ -1,0 +1,47 @@
+Setting up Geoserver
+
+1) In admin Geoserver GUI:
+   Create Workspace named "geodisy" [worspace name]
+2) In Postgres:
+   a) Create user "geodisy_user"
+   b) Create database "vectorData"
+		-after creating the DB, run the following sql commands:
+			1) CREATE EXTENSION postgis;
+   c) In psql: ALTER DATABASE "vectordata" OWNER TO "geodisy_user";
+   d) https://docs.geoserver.org/stable/en/user/security/tutorials/httpheaderproxy/index.html
+   
+
+3) On command line		
+	b) In pg_hba.conf add lines:
+			# TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+			# "local" is for Unix domain socket connections only
+			local   geodisy         geodisy_user                            trust
+			
+			# IPv4 local connections:
+			host    all             all             127.0.0.1/32            trust
+
+	c) sudo service postgresql-12 restart
+	d) Create geodisy.xml file with the following code inside:
+			<dataStore>
+				<name>geodisyDB</name>
+				<connectionParameters>
+					<host>localhost</host>
+					<port>5432</port>
+					<database>geodisy</database>
+					<user>geodisy_user</user>
+					<passwd>[g_user_pw]</passwd>
+					<dbtype>postgis</dbtype>
+				</connectionParameters>
+			</dataStore>
+	e) Run:
+		curl -v -u admin:[geoserver admin password] -XPOST -T geodisy.xml -H "Content-type: text/xml" http://localhost:8080/geoserver/rest/workspaces/[workspace name]/datastores
+	f) Run to verify that the dataStore was created:	
+		curl -v -u admin:[geoserver admin password] -XGET http://localhost:8080/geoserver/rest/workspaces/[workspace name]/datastores/geodisyDB.xml
+		
+Other setups:
+	sudo yum install zip
+	
+GeoBlacklight
+	1) In ./home/geoblack/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/geoblacklight-2.2.1/config/locales/geoblacklight.en.yml
+		a) Change "data_dictionary: 'Documentation'" to "data_dictionary: 'Metadata'"
