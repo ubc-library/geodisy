@@ -249,8 +249,7 @@ public class DataverseJavaObject extends SourceJavaObject {
                         raster++;
                         drf.setGbb(gbb);
                         dgrf = new DataverseGeoRecordFile(drf);
-                        if(drf.getFileURL().isEmpty())
-                            dgrf.setFileURL(GeoBlacklightStrings.getGeoDownloadUrl(dgrf));
+                        dgrf.setFileURL(server+"api/access/datafile/" + drf.dbID + "?format=original");
                         geos.add(dgrf);
                     }
                 }else{
@@ -260,8 +259,7 @@ public class DataverseJavaObject extends SourceJavaObject {
                         vector++;
                         drf.setGbb(gbb);
                         dgrf = new DataverseGeoRecordFile(drf);
-                        if(drf.getFileURL().isEmpty())
-                            dgrf.setFileURL(GeoBlacklightStrings.getGeoDownloadUrl(dgrf));
+                        dgrf.setFileURL(server+"api/access/datafile/" + drf.dbID + "?format=original");
                         geos.add(dgrf);
                     }
                 }
@@ -287,7 +285,8 @@ public class DataverseJavaObject extends SourceJavaObject {
                 }
             }
         }
-    private DataverseGeoRecordFile getRecord(String name) {
+    //TODO
+        private DataverseGeoRecordFile getRecord(String name) {
         DataverseGeoRecordFile dvgr = new DataverseGeoRecordFile();
         for(DataverseRecordFile drf : dataFiles){
             if(drf.getTranslatedTitle().equals(name)) {
