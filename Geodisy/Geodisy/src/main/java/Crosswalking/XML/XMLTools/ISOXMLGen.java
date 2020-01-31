@@ -64,6 +64,7 @@ public class ISOXMLGen extends DjoXMLGenerator {
     protected Element getRoot() {
         // root element
         Element rootElement = doc.createGMDElement("MD_Metadata");
+        rootElement.setAttribute(xmlNSElement("gmd"),XML_NS+"gmd");
         rootElement.setAttribute(xmlNSElement(),XML_NS + "gmx");
         rootElement.setAttribute(xmlNSElement("gco"), XML_NS + "gco/1.0");
         rootElement.setAttribute(xmlNSElement("mdb"),XML_NS + "mdb/2.0");

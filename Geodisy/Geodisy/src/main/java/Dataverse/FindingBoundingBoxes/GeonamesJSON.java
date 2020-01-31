@@ -37,7 +37,7 @@ public class GeonamesJSON {
     }
 
     public JSONObject getRecordByName(String name){
-            if(jo.get("countryName").toString().toLowerCase().equalsIgnoreCase(name) || jo.get("altName").toString().toLowerCase().contains(name.toLowerCase()))
+            if(jo.get("countryName").toString().equalsIgnoreCase(name) || jo.get("altName").toString().toLowerCase().contains(name.toLowerCase()))
                 return jo;
             return null;
     }

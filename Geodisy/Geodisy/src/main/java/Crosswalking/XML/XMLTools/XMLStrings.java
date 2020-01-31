@@ -26,6 +26,7 @@ public class XMLStrings {
     public final static String XMLDATE = "date";
     public final static String CI_DATE = "CI_Date";
     public final static String MD_DIST = "MD_Distribution";
+    public final static String MD_DISTRIBUTOR = "MD_Distributor";
     public final static String DESCRIP = "description";
     public final static String EX_EXTENT = "EX_extent";
     public final static String EX_GEO_BB =  "EX_GeographicBoundingBox";

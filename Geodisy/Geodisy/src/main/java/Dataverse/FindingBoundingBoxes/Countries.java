@@ -78,9 +78,8 @@ public class Countries {
 
 
     public Country getCountryByName(String name){
-        String capName = name.toUpperCase();
-        if(countries.containsKey(capName))
-            return countries.get(capName);
+        if(countries.containsKey(name))
+            return countries.get(name);
         //TODO finish this
         else {
            return getCountryFromGeoNames(name);
@@ -104,6 +103,8 @@ public class Countries {
             country.setLatNorth(getNodeString(bbox,"<north>"));
             country.setLatSouth(getNodeString(bbox,"<south>"));
         }
+        country.setGeonamesJSON(new GeonamesJSON(countryStub));
+        country.setCountryCode(getNodeString(countryStub,"<countryCode>"));
         return country;
     }
 

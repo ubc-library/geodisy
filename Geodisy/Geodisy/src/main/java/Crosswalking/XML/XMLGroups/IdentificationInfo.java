@@ -126,7 +126,8 @@ public class IdentificationInfo extends SubElement {
         levelJ = gi.getFields();
 
         SocialFieldInfo sfi = new SocialFieldInfo(djo, doc, levelJ);
-        levelJ =  sfi.getFields();
+        if(!sfi.dataCollector.isEmpty())
+            levelJ =  sfi.getFields();
 
         //Journal metadata is for Journal Dataverses
 /*        JournalInfo ji = new JournalInfo(djo,doc,levelJ);
@@ -441,7 +442,7 @@ public class IdentificationInfo extends SubElement {
     private Element getPointOfContact() {
         List<DatasetContact> datasetContacts = (LinkedList) cf.getListField(DS_CONTACT);
         Element levelK = doc.createGMDElement(P_OF_CONTACT);
-        Element levelL = doc.create_Element(CI_RESPONSIBILITY);
+        Element levelL = doc.createGMDElement(CI_RESPONSIBILITY);
         Element levelM;
         stack = new XMLStack();
         for(DatasetContact dc: datasetContacts) {

@@ -54,9 +54,11 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
         int total = list.size();
         int innerCount = 1;
         List<Description> description = javaObject.getCitationFields().getListField(DS_DESCRIPT);
-        description.add(new Description("Connected GeoBlacklight records:"));
-        for(DataverseGeoRecordFile drf:list){
-            description.add(new Description("(" + innerCount + " of " + total + ") - " + GEOBLACKLIGHT_BASE + drf.getGeoserverLabel()));
+        if(list.size()>1) {
+            description.add(new Description("\n Connected GeoBlacklight records:"));
+            for (DataverseGeoRecordFile drf : list) {
+                description.add(new Description("(" + innerCount + " of " + total + ") - " + GEOBLACKLIGHT_BASE + drf.getGeoserverLabel()));
+            }
         }
         for(DataverseRecordFile drf:list){
             createJSONFromFiles(drf,count,total);

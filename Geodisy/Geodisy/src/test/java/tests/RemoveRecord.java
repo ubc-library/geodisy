@@ -12,7 +12,7 @@ import java.io.IOException;
 import static BaseFiles.GeodisyStrings.*;
 
 public class RemoveRecord {
-    String record2Remove = "10.5683/SP2/UEJGTV";
+    String record2Remove = "10.5683/SP2/GKJPIQ";
     @Test
     public void removeRecord() {
         FileWriter fW = new FileWriter();
