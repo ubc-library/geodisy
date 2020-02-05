@@ -6,9 +6,9 @@ import org.apache.commons.lang3.ArrayUtils;
 public class GeodisyStrings {
 
     public final static boolean TEST = true; //change this to false when in production
-    public final static int NUMBER_OF_RECS_TO_HARVEST = 800;
-    public final static String[] HUGE_RECORDS_TO_IGNORE_UNTIL_LATER = {"10.5683/SP/Y3HRN","10864/GSSJX","10.5683/SP2/JP4WDF","10864/9KJ1L","10864/11086","10864/9VNIK","10.5683/SP/Y3HMRN","10.5683/SP/OEIP77","10.5683/SP/IP9ERW","10.5683/SP/NTUOK9","10864/11369","10864/11175","10.5683/SP/BT7HN2","10.5683/SP/4RFHBJ","10.5683/SP/T7ZJAF","10.5683/SP/RZM9HE","10.5683/SP/RAJQ2P","10.5683/SP2/AAGZDG"};
-    public final static String[] PROCESS_THESE_DOIS = {}; //"10.5683/SP2/UEJGTV" "10864/11669" "10.5683/SP2/GKJPIQ"
+    public final static int NUMBER_OF_RECS_TO_HARVEST = 2000;
+    public final static String[] HUGE_RECORDS_TO_IGNORE_UNTIL_LATER = {"10.5683/SP/Y3HRN","10864/GSSJX","10.5683/SP2/JP4WDF","10864/9KJ1L","10864/11086","10864/9VNIK","10.5683/SP/Y3HMRN","10.5683/SP/OEIP77","10.5683/SP/IP9ERW","10.5683/SP/NTUOK9","10864/11369","10864/11175","10.5683/SP/BT7HN2","10.5683/SP/4RFHBJ","10.5683/SP/T7ZJAF","10.5683/SP/RZM9HE","10.5683/SP/RAJQ2P","10.5683/SP2/AAGZDG","10.5683/SP2/1XRF9U","10.5683/SP2/MICSLT"};
+    public final static String[] PROCESS_THESE_DOIS = {}; //"10.5683/SP2/UEJGTV" "10864/11669" "10.5683/SP2/GKJPIQ""10.5683/SP2/KYHUNF""10.5683/SP/EGOYE3"
     //Repositories (add new repository URLS to a appropriate repository URL array below)
         // New Repository Types need new URL Arrays [Geodisy 2]
 

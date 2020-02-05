@@ -57,7 +57,7 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
         if(list.size()>1) {
             description.add(new Description("\n Connected GeoBlacklight records:"));
             for (DataverseGeoRecordFile drf : list) {
-                description.add(new Description("(" + innerCount + " of " + total + ") - " + GEOBLACKLIGHT_BASE + drf.getGeoserverLabel()));
+                description.add(new Description("\n(" + innerCount + " of " + total + ") - " + GEOBLACKLIGHT_BASE + drf.getGeoserverLabel()));
             }
         }
         for(DataverseRecordFile drf:list){
@@ -69,7 +69,7 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
     private void createJSONFromFiles(DataverseRecordFile drf, int count, int total) {
         boolean single = total == 1;
             getRequiredFields(drf.getGBB(), count, total);
-            getOptionalFields(drf.getGBB());
+            getOptionalFields(drf);
             geoBlacklightJson = jo.toString();
             if (!single)
                 saveJSONToFile(geoBlacklightJson, doi, doi + " (File " + (count) + " of " + total + ")");
@@ -117,7 +117,7 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
 
 
 
-    protected abstract JSONObject getOptionalFields(GeographicBoundingBox gbb);
+    protected abstract JSONObject getOptionalFields(DataverseRecordFile drf);
     protected abstract JSONArray addDataDownloadOptions(GeographicBoundingBox bb, JSONArray ja); //for records with datasetfiles
     protected abstract JSONArray addBaseRecordInfo(); //adds the base metadata external services that all records need regardless of existence of datafiles
     protected abstract void saveJSONToFile(String json, String doi, String folderName);

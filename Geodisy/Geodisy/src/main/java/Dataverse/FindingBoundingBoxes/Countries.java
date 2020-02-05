@@ -103,7 +103,9 @@ public class Countries {
             country.setLatNorth(getNodeString(bbox,"<north>"));
             country.setLatSouth(getNodeString(bbox,"<south>"));
         }
-        country.setGeonamesJSON(new GeonamesJSON(countryStub));
+        GeonamesJSON gnj = new GeonamesJSON();
+        gnj.setJSONObject(countryStub);
+        country.setGeonamesJSON(gnj);
         country.setCountryCode(getNodeString(countryStub,"<countryCode>"));
         return country;
     }

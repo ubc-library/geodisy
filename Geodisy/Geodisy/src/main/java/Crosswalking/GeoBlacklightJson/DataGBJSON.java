@@ -8,6 +8,7 @@ import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Descrip
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicCoverage;
 import Dataverse.DataverseJavaObject;
+import Dataverse.DataverseRecordFile;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -94,12 +95,12 @@ public class DataGBJSON extends GeoBlacklightJSON{
 
     @Override
     protected JSONArray addDataDownloadOptions(GeographicBoundingBox gbb, JSONArray ja) {
-        ja.put(WMS);
+        //TODO uncomment once Geoserver parts are working
+        /*ja.put(WMS);
         if (gbb.getField(FILE_NAME).endsWith(".shp"))
-            ja.put(WFS);
-        //TODO uncomment once direct download is working
+            ja.put(WFS);*/
         if(!gbb.getField(FILE_URL).isEmpty())
-            ja.put(DIRECT_FILE_DOWNLOAD + gbb.getField(FILE_URL));
+            ja.put(DIRECT_FILE_DOWNLOAD + stringed(gbb.getField(FILE_URL)));
         //TODO uncomment once pushing to OpenGeoMetadata is working
         //ja.put(ISO_METADATA + stringed(gbb.getOpenGeoMetaLocation()));
 
@@ -116,8 +117,10 @@ public class DataGBJSON extends GeoBlacklightJSON{
 
     //TODO, check I am getting all the optional fields I should be
     @Override
-    protected JSONObject getOptionalFields(GeographicBoundingBox gbb) {
+    protected JSONObject getOptionalFields(DataverseRecordFile drf) {
+        GeographicBoundingBox gbb = drf.getGBB();
         String geoserverLabel = getgeoserverLabel(gbb).toLowerCase();
+        getFileType(drf);
         addRecommendedFields(geoserverLabel, gbb);
         getAuthors();
         getIssueDate();
@@ -125,7 +128,46 @@ public class DataGBJSON extends GeoBlacklightJSON{
         getPlaceNames(gbb);
         getSubjects();
         getType();
+
         return jo;
+    }
+
+    private void getFileType(DataverseRecordFile drf) {
+        if(!drf.getGBB().getField(FILE_URL).isEmpty()) {
+            String format = getFileTypeName(drf.getOriginalTitle());
+            if(format.isEmpty())
+                format = "File";
+            jo.put("dc_format_s", format);
+        }
+    }
+
+    private String getFileTypeName(String originalTitle) {
+        try {
+            String extension = originalTitle.substring(originalTitle.lastIndexOf(".") + 1).toLowerCase();
+            switch (extension){
+                case ("zip"):
+                    return "Zip File";
+                case ("shp"):
+                    return "Shapefile";
+                case ("geojson"):
+                    return "GeoJSON";
+                case ("tif"):
+                case ("geotif"):
+                case ("tiff"):
+                case ("geotiff"):
+                    return "GepTIFF";
+                case ("png"):
+                    return "PNG";
+                default:
+                    return "Geospatial File";
+
+
+
+            }
+        }catch (IndexOutOfBoundsException e){
+            logger.warn("There was no extension on the original file name for record " + this.doi);
+            return "";
+        }
     }
 
     private void getType() {

@@ -26,6 +26,7 @@ public class GeoCombine {
             p.waitFor();
             p.destroy();
 
+            System.out.println("Deleting old location of metadata");
             processBuilder.command("/bin/bash", "-c", DELETE_DUPLICATE_META_FOLDER);
             p = processBuilder.start();
             p.waitFor();

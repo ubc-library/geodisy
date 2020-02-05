@@ -158,18 +158,18 @@ public class DataverseRecordFile {
                     return new DataverseRecordFile();
                 if(originalTitle.isEmpty())
                     setOriginalTitle(f.getName());
-                setTranslatedTitle(gdalTranslate.vectorTransform(dirPath, f.getName()));
+                setTranslatedTitle(gdalTranslate.vectorTransform(dirPath, f.getName(),getGBBFileNumber()));
                 return replaceRecord();
             } else if (GeodisyStrings.gdalinfoRasterExtention(f.getName())) {
                 if(originalTitle.isEmpty())
                     setOriginalTitle(name);
-                setTranslatedTitle(gdalTranslate.rasterTransform(dirPath, f.getName()));
+                setTranslatedTitle(gdalTranslate.rasterTransform(dirPath, f.getName(),getGBBFileNumber()));
                 return replaceRecord();
             } else if (name.contains(".csv")) {
                 GeographicBoundingBox temp = gdal.generateBoundingBoxFromCSV( f.getName(), djo);
                 if (temp.hasBB()) {
                     setOriginalTitle(name);
-                    setTranslatedTitle(gdalTranslate.vectorTransform(dirPath, f.getName()));
+                    setTranslatedTitle(gdalTranslate.vectorTransform(dirPath, f.getName(),getGBBFileNumber()));
                     replaceRecord();
                 }
             } else {

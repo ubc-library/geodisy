@@ -18,8 +18,8 @@ public class GDALTranslate {
         logger = new GeoLogger(this.getClass());
     }
 
-    public String rasterTransform(String dirPath, String name){
-        boolean transformed = process(dirPath,name,RASTER);
+    public String rasterTransform(String dirPath, String name, String number){
+        boolean transformed = process(dirPath,name,RASTER, number);
 
         if(transformed) {
             int period = name.lastIndexOf(".");
@@ -27,12 +27,12 @@ public class GDALTranslate {
         }else
             return name;
     }
-    public void rasterTransformTest(String dirPath, String name, boolean newLocation){
-        process(dirPath,name,RASTER,newLocation);
+    public void rasterTransformTest(String dirPath, String name, boolean newLocation, String number){
+        process(dirPath,name,RASTER,newLocation,"1");
     }
 
-    public String vectorTransform(String dirPath, String name){
-        boolean transformed = process(dirPath,name,VECTOR);
+    public String vectorTransform(String dirPath, String name, String number){
+        boolean transformed = process(dirPath,name,VECTOR, number);
 
         if(transformed) {
             int period = name.lastIndexOf(".");
@@ -43,18 +43,18 @@ public class GDALTranslate {
         }
 
     }
-    public void vectorTransformTest(String dirPath, String name, boolean newLocation) {
-        boolean transformed = process(dirPath, name, VECTOR, newLocation);
+    public void vectorTransformTest(String dirPath, String name, boolean newLocation, String number) {
+        boolean transformed = process(dirPath, name, VECTOR, newLocation,"1");
     }
 
-    private boolean process(String dirPath, String name, String transformType) {
-        return process(dirPath,dirPath,name,transformType, false);
+    private boolean process(String dirPath, String name, String transformType, String number) {
+        return process(dirPath,dirPath,name,transformType, false, number);
     }
 
-    private boolean process(String dirPath, String name, String transformType,boolean newLocation) {
-        return process(dirPath,dirPath,name,transformType, newLocation);
+    private boolean process(String dirPath, String name, String transformType,boolean newLocation, String number) {
+        return process(dirPath,dirPath,name,transformType, newLocation, number);
     }
-    public boolean process(String sourcePath, String destPath, String name, String transformType, boolean newLocation){
+    public boolean process(String sourcePath, String destPath, String name, String transformType, boolean newLocation, String number){
 
         if(newLocation){
             sourcePath = GeodisyStrings.replaceSlashes(sourcePath);
@@ -71,7 +71,7 @@ public class GDALTranslate {
         ProcessBuilder processBuilder= new ProcessBuilder();
 
         if(transformType.equals(RASTER)) {
-            call = GDAL_TRANSLATE + sourcePath + name + " " + destPath + nameStub + ".tif";
+            call = GDAL_TRANSLATE + sourcePath + name + " " + destPath + nameStub + number + ".tif";
             //System.out.println(call);
             processBuilder.command("bash", "-c", call);
             Process process = null;
@@ -85,7 +85,7 @@ public class GDALTranslate {
                 }
                 if(name.endsWith(".tif"))
                     return true;
-                File newFile = new File(destPath+nameStub+".tif");
+                File newFile = new File(destPath+nameStub + number +".tif");
                 if(newFile.exists()) {
                     file = new File(sourcePath + name);
                     file.delete();
@@ -101,7 +101,7 @@ public class GDALTranslate {
                     process.destroy();
             }
         } else{
-                call = OGR2OGR + destPath + nameStub + ".shp " + sourcePath + name;
+                call = OGR2OGR + destPath + nameStub + number + ".shp " + sourcePath + name;
                 //System.out.println(call);
                 processBuilder.command("bash", "-c", call);
                 try {
@@ -119,7 +119,7 @@ public class GDALTranslate {
                     }
                     if(name.endsWith(".shp"))
                         return true;
-                    File newFile = new File(destPath+nameStub+".shp");
+                    File newFile = new File(destPath+nameStub + number +".shp");
                     if(newFile.exists()) {
                         file = new File(sourcePath + name);
                         file.delete();

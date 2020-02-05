@@ -62,6 +62,7 @@ public class MyTimerTask extends TimerTask {
             for(SourceJavaObject sJO : sJOs) {
                 existingHarvests.addOrReplaceRecord(new DataverseRecordInfo(sJO, logger.getName()));
             }
+            //deleteEmptyFolders();
             crosswalkRecords(sJOs);
             if(!IS_WINDOWS)
                 sendRecordsToGeoBlacklight();
@@ -106,8 +107,37 @@ public class MyTimerTask extends TimerTask {
         }
     }
 
-    private void checkFilesForGeo(SourceJavaObject sJO) {
+    private void deleteEmptyFolders() {
+        boolean isFinished;
+        String location = GEODISY_PATH_ROOT + GeodisyStrings.replaceSlashes("metadata/");
+        do {
+            isFinished = true;
+            isFinished = deleteFolders(location, isFinished);
+    }while(!isFinished);
+        location = GEODISY_PATH_ROOT + GeodisyStrings.replaceSlashes("datasetFiles/");
+        do {
+            isFinished = true;
+            isFinished = deleteFolders(location,isFinished);
+        }while(!isFinished);
+    }
 
+    private boolean deleteFolders(String location, boolean isFinished) {
+
+        File folder = new File(location);
+        File[] listofFiles = folder.listFiles();
+        if (listofFiles.length == 0) {
+            System.out.println("Folder Name :: " + folder.getAbsolutePath() + " is deleted.");
+            folder.delete();
+            return false;
+        } else {
+            for (int j = 0; j < listofFiles.length; j++) {
+                File file = listofFiles[j];
+                if (file.isDirectory()) {
+                    deleteFolders(file.getAbsolutePath(),isFinished);
+                }
+            }
+        }
+        return isFinished;
     }
 
 
