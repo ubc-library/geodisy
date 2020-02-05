@@ -43,10 +43,8 @@ public class DownloadRecord {
         DataverseAPI api = new DataverseAPI(dvURL);
         djo = api.generateBoundingBox(djo);
         String localDoi = djo.getDOI();
-        MyTimerTask myTimerTask = new MyTimerTask();
-        List<SourceJavaObject> sJOs = new LinkedList<>();
-        sJOs.add(djo);
-        myTimerTask.crosswalkRecords(sJOs);
+        DataverseAPI d = new DataverseAPI(djo.getServer());
+        d.crosswalkRecord(djo);
         String stop = "Place to pause program";
     }
 

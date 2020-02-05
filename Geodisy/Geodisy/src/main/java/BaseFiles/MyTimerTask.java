@@ -48,6 +48,9 @@ public class MyTimerTask extends TimerTask {
             fW.verifyFileExistence(ERROR_LOG);
             fW.verifyFileExistence(WARNING_LOG);
             fW.verifyFileExistence(RASTER_RECORDS);
+            fW.verifyFileExistence(EXISTING_RECORDS);
+            fW.verifyFileExistence(EXISTING_BBOXES);
+            fW.verifyFileExistence(VECTOR_RECORDS);
             existingHarvests = ExistingHarvests.getExistingHarvests();
             existingCallsToCheck = ExistingCallsToCheck.getExistingCallsToCheck();
             srf = SourceRecordFiles.getSourceRecords();
@@ -63,7 +66,7 @@ public class MyTimerTask extends TimerTask {
                 existingHarvests.addOrReplaceRecord(new DataverseRecordInfo(sJO, logger.getName()));
             }
             //deleteEmptyFolders();
-            crosswalkRecords(sJOs);
+
             if(!IS_WINDOWS)
                 sendRecordsToGeoBlacklight();
 
@@ -147,27 +150,9 @@ public class MyTimerTask extends TimerTask {
 
     }
 
-    public void crosswalkRecords(List<SourceJavaObject> sJOs) {
-        crosswalkSJOsToXML(sJOs);
-        crosswalkSJOsToGeoBlackJSON(sJOs);
-    }
 
-    private void crosswalkSJOsToGeoBlackJSON(List<SourceJavaObject> sJOs) {
-        for(SourceJavaObject sjo: sJOs){
-            DataverseJavaObject djo = (DataverseJavaObject) sjo;
-            DataGBJSON dataGBJSON = new DataGBJSON(djo);
-            dataGBJSON.createJson();
-        }
-    }
 
-    /**
-     * Create ISO XML files and run Geocombine on them to push them to GeoBlacklight
-     * @param sJOs
-     */
-    private void crosswalkSJOsToXML(List<SourceJavaObject> sJOs) {
-        Crosswalk crosswalk = new Crosswalk();
-        crosswalk.convertSJOs(sJOs);
-    }
+
 
     /**
      * Removes INFO messages from the error log.

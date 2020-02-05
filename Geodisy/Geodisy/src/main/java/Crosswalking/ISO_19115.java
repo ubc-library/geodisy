@@ -20,17 +20,12 @@ import java.util.List;
  * @author pdante
  */
 public class ISO_19115 extends ISO_Schema {
-    public List<XMLDocObject> generateXML(List<SourceJavaObject> sJOs) {
-        LinkedList<XMLDocObject> documents = new LinkedList<>();
-        for(SourceJavaObject sjo : sJOs) {
-            DataverseJavaObject djo = (DataverseJavaObject) sjo;
+    public XMLDocObject generateXML(SourceJavaObject sJO) {
+            DataverseJavaObject djo = (DataverseJavaObject) sJO;
             ISOXMLGen xmlGenerator = new ISOXMLGen(djo);
             XMLDocObject xmlDocObject = xmlGenerator.generateXMLFile();
             saveXMLToFile(xmlDocObject.getDoc(),xmlDocObject.getDoi());
-            documents.add(xmlDocObject);
-
-        }
-        return documents;
+            return xmlDocObject;
 
     }
 

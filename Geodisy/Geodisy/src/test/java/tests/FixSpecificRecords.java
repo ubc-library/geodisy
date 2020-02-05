@@ -47,7 +47,8 @@ public class FixSpecificRecords {
         MyTimerTask myTimerTask = new MyTimerTask();
         List<SourceJavaObject> sJOs = new LinkedList<>();
         sJOs.add(djo);
-        myTimerTask.crosswalkRecords(sJOs);
+        DataverseAPI dvapi = new DataverseAPI(djo.getServer());
+        dvapi.crosswalkRecord(djo);
         String stop = "Place to pause program";
     }
 

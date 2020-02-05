@@ -10,6 +10,8 @@ package Dataverse;
 import BaseFiles.GeoLogger;
 import BaseFiles.Geonames;
 import BaseFiles.HTTPCallerGeoNames;
+import Crosswalking.Crosswalk;
+import Crosswalking.GeoBlacklightJson.DataGBJSON;
 import Crosswalking.JSONParsing.DataverseParser;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
@@ -99,10 +101,12 @@ public class DataverseAPI extends SourceAPI {
                 if(djo.hasGeoGraphicCoverage())
                     djo = (DataverseJavaObject) getBBFromGeonames(djo);
                 if(djo.hasBoundingBox()) {
-                    /*for(GeographicBoundingBox gbb: djo.getGeoFields().getGeoBBoxes()) {
-                        if(gbb.hasBB())
-                            djo.addGeoDataMeta(new DataverseGeoRecordFile(doi, gbb));
-                    }*/
+                    crosswalkRecord(djo);
+                    DataverseRecordInfo dri = new DataverseRecordInfo(djo,logger.getName());
+                    es.addOrReplaceRecord(dri);
+                    es.addBBox(djo.getDOI(),djo.getBoundingBox());
+                    es.saveExistingSearchs(es.getRecordVersions(),EXISTING_RECORDS, "ExistingRecords");
+                    es.saveExistingSearchs(es.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
                     answers.add(djo);
                 } else{
                     File folderToDelete = new File(doi);
@@ -112,14 +116,11 @@ public class DataverseAPI extends SourceAPI {
             }else{
                 continue;
             }
+         System.out.println("Parsed and saved " + doi);
+        }
 
-        }
         removeDeletedRecords(recordsThatNoLongerExist);
-        for(SourceJavaObject djo: answers){
-            DataverseRecordInfo dri = new DataverseRecordInfo(djo,logger.getName());
-            es.addOrReplaceRecord(dri);
-            es.addBBox(djo.getDOI(),djo.getBoundingBox());
-        }
+
 
         return answers;
     }
@@ -288,5 +289,24 @@ public class DataverseAPI extends SourceAPI {
         String folderizedDOI = doi.replace(".","_");
         folderizedDOI = folderizedDOI.replace("/","_");
         return DATASET_FILES_PATH + folderizedDOI;
+    }
+    public void crosswalkRecord(SourceJavaObject sJO) {
+        crosswalkSJOsToXML(sJO);
+        crosswalkSJOsToGeoBlackJSON(sJO);
+    }
+
+    private void crosswalkSJOsToGeoBlackJSON(SourceJavaObject sJO) {
+            DataverseJavaObject djo = (DataverseJavaObject) sJO;
+            DataGBJSON dataGBJSON = new DataGBJSON(djo);
+            dataGBJSON.createJson();
+    }
+
+    /**
+     * Create ISO XML file
+     * @param sJO
+     */
+    private void crosswalkSJOsToXML(SourceJavaObject sJO) {
+        Crosswalk crosswalk = new Crosswalk();
+        crosswalk.convertSJO(sJO);
     }
 }

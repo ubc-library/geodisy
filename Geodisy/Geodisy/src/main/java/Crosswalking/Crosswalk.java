@@ -1,39 +1,13 @@
 package Crosswalking;
 
 
-
-import Crosswalking.GeoBlacklightJson.GeoCombine;
-import Crosswalking.XML.XMLTools.JGit;
-import Crosswalking.XML.XMLTools.XMLDocObject;
 import Dataverse.SourceJavaObject;
-
-import java.util.List;
 
 public class Crosswalk implements CrosswalkInterface {
     @Override
-    public void convertSJOs(List<SourceJavaObject> records) {
+    public void convertSJO(SourceJavaObject record) {
         XMLSchema metadata = new ISO_19115();
-        sendXMLToGit(metadata.generateXML(records));
+        metadata.generateXML(record);
         System.out.println("Finished Creating XML files");
-    }
-
-    @Override
-    public void sendXMLToGit(List<XMLDocObject> docs) {
-
-        //Make sure local files are up to date
-        GeoCombine geoCombine =  new GeoCombine();
-        //geoCombine.call();
-
-        //TODO uncomment once I've got JGit working
-        /*JGit jgit = new JGit();
-        jgit.updateXML(docs);
-
-        for(XMLDocObject doc:docs){
-            geoCombine.generateGeoBlacklightXML(doc.getFileIdent(), jgit);
-        }
-
-        jgit.pushToGit();
-        */
-
     }
 }
