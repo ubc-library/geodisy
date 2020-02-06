@@ -18,6 +18,9 @@ Vagrant.configure("2") do |config|
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
   # config.vm.box_check_update = false
+ 
+  # Enable SSH Agent forwarding in order for Ansible to SSH to same machine
+  config.ssh.insert_key = true
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -45,7 +48,7 @@ Vagrant.configure("2") do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  # config.vm.synced_folder "../data", "/vagrant_data"
+  #config.vm.synced_folder "./provisioning", "/vagrant/provisioning"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -68,4 +71,23 @@ Vagrant.configure("2") do |config|
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
+
+  # Shell provisioner to do environment init
+  config.vm.provision "shell", type: "shell" do |s|
+    s.path = './init.sh'
+    s.privileged = true
+  end      
+
+  # Frontend Ansible Playbook
+  config.vm.provision "ansible", type: "ansible_local" do |a|
+    a.playbook = "provisioning/geodisy.yml" 
+    a.inventory_path = "provisioning/local-ini"
+    a.limit = "all"
+    a.raw_arguments = ["--connection=local"]
+  end
+
+  # Backend Ansible Playbook
+  #config.vm.provision "ansible", type: "ansible_local" do |a|
+  #  a.playbook = "provisioning/backend.yml" 
+  #end
 end

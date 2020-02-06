@@ -1,0 +1,11 @@
+# Geodisy Playbook
+---
+- hosts:
+    - frontend-host
+  roles:
+    - frontend
+
+- hosts: 
+    - backend-host
+  roles:
+    - backend

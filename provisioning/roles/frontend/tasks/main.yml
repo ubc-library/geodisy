@@ -1,0 +1,4 @@
+# Frontend Tasks
+---
+- name: Frontend Test
+  shell: 'echo "Frontend Ansible"'
