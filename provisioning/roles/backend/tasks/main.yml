@@ -1,4 +1,54 @@
 # Backend Tasks
 ---
-- name: Backend Test
-  shell: 'echo "Backend Ansible"'
+- name: Provision environment with necessary packages
+  become: yes
+  yum:
+    state: present
+    name: "{{ item }}"
+  with_items:
+   - unzip    
+
+- name: Install Java 8
+  become: yes
+  yum:
+    name: java-1.8.0-openjdk
+    state: present
+    update_cache: yes
+  tags:
+    - install-geoserver
+
+- name: Create geoserver user
+  become: yes
+  user:
+    name: geoserver
+    state: present
+    system: yes
+  tags:
+    - install-geoserver
+
+- name: Create Geoserver directory
+  become: yes
+  file:
+    state: directory
+    path: "{{ geoserver_full_dir }}" 
+    owner: "geoserver"
+    group: "geoserver"
+  tags:
+    - install-geoserver
+
+- name: Download GeoServer binary
+  become: yes
+  get_url:
+    url: http://sourceforge.net/projects/geoserver/files/GeoServer/2.16.0/geoserver-2.16.0-bin.zip  
+    dest: "{{ geoserver_base_dir }}"
+  tags: 
+    - install-geoserver
+
+- name: Unpack geoserver .zip
+  become: yes
+  unarchive:
+    src: "{{ geoserver_base_dir }}/geoserver-2.16.0-bin.zip"
+    dest: "{{ geoserver_full_dir }}" 
+  tags: 
+    - install-geoserver
+

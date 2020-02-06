@@ -144,3 +144,6 @@ Geodisy/TileMerge/out/artifacts/TileMerge_jar/TileMerge.jar
 
 # Vagrant directory
 .vagrant/
+
+# Vim files
+[._]*.sw[a-p]
