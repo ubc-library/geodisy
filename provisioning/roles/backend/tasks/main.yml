@@ -7,6 +7,7 @@
     name: "{{ item }}"
   with_items:
    - unzip    
+   - wget
 
 - name: Install Java 8
   become: yes
@@ -40,7 +41,8 @@
   become: yes
   get_url:
     url: http://sourceforge.net/projects/geoserver/files/GeoServer/2.16.0/geoserver-2.16.0-bin.zip  
-    dest: "{{ geoserver_base_dir }}"
+    dest: "{{ geoserver_base_dir }}/geoserver-2.16.0-bin.zip"
+    force: no
   tags: 
     - install-geoserver
 
@@ -48,7 +50,24 @@
   become: yes
   unarchive:
     src: "{{ geoserver_base_dir }}/geoserver-2.16.0-bin.zip"
-    dest: "{{ geoserver_full_dir }}" 
+    dest: "{{ geoserver_base_dir }}" 
+  tags: 
+    - install-geoserver
+
+- name: Install systemd service file
+  become: yes
+  template:
+    src: geoserver.service.j2
+    dest: /etc/systemd/system/geoserver.service
+  tags: 
+    - install-geoserver
+
+- name: Daemon reload and start  geoserver systemd service
+  become: yes
+  systemd:
+    daemon_reload: yes
+    name: geoserver.service
+    state: started
   tags: 
     - install-geoserver
 

@@ -1,0 +1,14 @@
+[Unit]
+Description=Startup GeoServer
+After=network.target
+
+[Service]
+Type=simple
+User=geoserver
+Group=geoserver
+Environment=GEOSERVER_HOME={{ geoserver_full_dir }}
+ExecStart={{ geoserver_full_dir }}/bin/startup.sh
+TimeoutStartSec=0
+
+[Install]
+WantedBy=default.target
