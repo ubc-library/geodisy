@@ -42,6 +42,8 @@
   get_url:
     url: http://sourceforge.net/projects/geoserver/files/GeoServer/2.16.0/geoserver-2.16.0-bin.zip  
     dest: "{{ geoserver_base_dir }}/geoserver-2.16.0-bin.zip"
+    owner: geoserver
+    group: geoserver
     force: no
   tags: 
     - install-geoserver
@@ -51,7 +53,30 @@
   unarchive:
     src: "{{ geoserver_base_dir }}/geoserver-2.16.0-bin.zip"
     dest: "{{ geoserver_base_dir }}" 
+    owner: geoserver
+    group: geoserver
   tags: 
+    - install-geoserver
+
+- name: Download GeoServer import plugin
+  become: yes
+  get_url:
+    url: "https://downloads.sourceforge.net/project/geoserver/GeoServer/{{ geoserver_ver }}/extensions/geoserver-{{ geoserver_ver }}-importer-plugin.zip"
+    dest: "{{ geoserver_base_dir }}"
+    owner: geoserver
+    group: geoserver
+    force: no
+  tags: 
+    - install-geoserver
+
+- name: Unpack GeoServer importer plugin
+  become: yes
+  unarchive:
+    src: "{{ geoserver_base_dir }}/geoserver-{{ geoserver_ver }}-importer-plugin.zip"
+    dest: "{{ geoserver_full_dir }}/webapps/geoserver/WEB-INF/lib"
+    owner: geoserver
+    group: geoserver
+  tags:
     - install-geoserver
 
 - name: Install systemd service file
