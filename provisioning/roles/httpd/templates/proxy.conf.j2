@@ -1,0 +1,6 @@
+<Location /geoserver>
+  ProxyPass         http://{{ backend_domain }}:8080/geoserver
+  ProxyPassReverse  http://{{ backend_domain }}:8080/geoserver
+  Order allow,deny
+  Allow from all
+</Location>

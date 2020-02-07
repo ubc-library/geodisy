@@ -1,0 +1,4 @@
+---
+## are there just the inventory hostnames?
+domain: "localhost" 
+backend_domain: "localhost"

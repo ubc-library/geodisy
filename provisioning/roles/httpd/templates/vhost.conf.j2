@@ -1,0 +1,6 @@
+<VirtualHost *:80>
+  ServerName {{ domain }}
+  DocumentRoot /var/www/{{ domain }}/html
+  ErrorLog /etc/httpd/logs/error_log
+  CustomLog /etc/httpd/logs/access_log combined
+</VirtualHost>

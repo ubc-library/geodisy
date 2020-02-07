@@ -3,11 +3,15 @@
 - name: Provision environment with necessary packages
   become: yes
   yum:
+    update_cache: yes
     state: present
     name: "{{ item }}"
   with_items:
    - unzip    
    - wget
+  tags:
+    - install-geoserver
+    - packages
 
 - name: Install Java 8
   become: yes
