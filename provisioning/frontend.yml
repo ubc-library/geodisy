@@ -1,0 +1,7 @@
+# Frontend Playbook
+---
+- hosts:
+    - frontend-host
+  roles:
+    - httpd
+

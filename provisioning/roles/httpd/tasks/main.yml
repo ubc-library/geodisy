@@ -1,0 +1,12 @@
+# Frontend Tasks
+---
+- name: Install system packages
+  become: yes
+  yum:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - mod_ssl
+    - openssl
+    - httpd
+
