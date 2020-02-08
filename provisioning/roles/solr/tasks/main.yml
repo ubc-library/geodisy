@@ -1,0 +1,91 @@
+# Solr install steps
+---
+- name: Install system packages
+  become: yes
+  yum:
+    name: lsof
+    state: present
+  tags:
+    - install-solr
+    - packages
+
+- name: Create solr directory
+  become: yes
+  file:
+    state: directory
+    path: "{{ solr.location }}"
+  tags:
+    - install-solr
+
+- name: Download Solr
+  become: yes
+  get_url:
+    url: "https://archive.apache.org/dist/lucene/solr/{{ solr.version }}/solr-{{ solr.version }}.tgz"
+    dest: "{{ solr.location }}/solr-{{ solr.version }}.tgz"
+    force: no 
+  tags:
+    - install-solr
+
+- name: Unpack Solr 
+  become: yes
+  unarchive:
+    src: "{{ solr.location }}/solr-{{ solr.version }}.tgz"
+    dest: "{{ solr.location }}"
+  tags:
+    - install-solr
+
+- name: Run Solr install script
+  become: yes
+  shell: "cd {{ solr.location }}/solr-{{ solr.version }}/bin && ./install_solr_service.sh {{ solr.location }}/solr-{{ solr.version }}.tgz -n"
+  ignore_errors: yes
+  tags:
+    - install-solr
+
+# Test for Solr limits change, to prevent duplication on re-runs
+- name: Test for Solr limits.conf change
+  become: yes
+  lineinfile:
+    path: "/etc/security/limits.conf"
+    state: present
+    line: "# ANSIBLE MANAGED SOLR_LIMITS"
+  check_mode: yes 
+  register: solr_limits_exist
+  failed_when: solr_limits_exist is changed
+  ignore_errors: yes
+  tags:
+    - install-solr
+
+- name: Write Solr Limits
+  become: yes
+  when: solr_limits_exist is failed
+  blockinfile:
+    marker: "# ANSIBLE MANAGED SOLR_LIMITS"
+    state: present
+    block: "solr             -       nofile          65000\nsolr             -       nproc           65000"
+    path: "/etc/security/limits.conf"
+  tags:
+    - install-solr
+
+      ## Their Solr security config seems to not work
+      #- name: Install Solr Security file
+      #  become: yes
+      #  template:
+      #    src: security.json.j2
+      #    dest: "/var/solr/data/security.json" 
+      #    owner: solr
+      #    group: solr
+      #    mode: "0640"
+      #  tags:
+      #    - install-solr
+
+- name: Enable Solr systemd service
+  become: yes
+  systemd:
+    name: solr.service
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+  tags:
+    - install-solr
+
+

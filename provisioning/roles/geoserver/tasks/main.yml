@@ -35,7 +35,7 @@
   become: yes
   file:
     state: directory
-    path: "{{ geoserver_full_dir }}" 
+    path: "{{ geoserver.full_dir }}" 
     owner: "geoserver"
     group: "geoserver"
   tags:
@@ -45,7 +45,7 @@
   become: yes
   get_url:
     url: http://sourceforge.net/projects/geoserver/files/GeoServer/2.16.0/geoserver-2.16.0-bin.zip  
-    dest: "{{ geoserver_base_dir }}/geoserver-2.16.0-bin.zip"
+    dest: "{{ geoserver.base_dir }}/geoserver-2.16.0-bin.zip"
     owner: geoserver
     group: geoserver
     force: no
@@ -55,8 +55,8 @@
 - name: Unpack geoserver .zip
   become: yes
   unarchive:
-    src: "{{ geoserver_base_dir }}/geoserver-2.16.0-bin.zip"
-    dest: "{{ geoserver_base_dir }}" 
+    src: "{{ geoserver.base_dir }}/geoserver-2.16.0-bin.zip"
+    dest: "{{ geoserver.base_dir }}" 
     owner: geoserver
     group: geoserver
   tags: 
@@ -65,8 +65,8 @@
 - name: Download GeoServer import plugin
   become: yes
   get_url:
-    url: "https://downloads.sourceforge.net/project/geoserver/GeoServer/{{ geoserver_ver }}/extensions/geoserver-{{ geoserver_ver }}-importer-plugin.zip"
-    dest: "{{ geoserver_base_dir }}"
+    url: "https://downloads.sourceforge.net/project/geoserver/GeoServer/{{ geoserver.version }}/extensions/geoserver-{{ geoserver.version }}-importer-plugin.zip"
+    dest: "{{ geoserver.base_dir }}"
     owner: geoserver
     group: geoserver
     force: no
@@ -76,8 +76,8 @@
 - name: Unpack GeoServer importer plugin
   become: yes
   unarchive:
-    src: "{{ geoserver_base_dir }}/geoserver-{{ geoserver_ver }}-importer-plugin.zip"
-    dest: "{{ geoserver_full_dir }}/webapps/geoserver/WEB-INF/lib"
+    src: "{{ geoserver.base_dir }}/geoserver-{{ geoserver.version }}-importer-plugin.zip"
+    dest: "{{ geoserver.full_dir }}/webapps/geoserver/WEB-INF/lib"
     owner: geoserver
     group: geoserver
   tags:
@@ -95,6 +95,7 @@
   become: yes
   systemd:
     daemon_reload: yes
+    enabled: yes
     name: geoserver.service
     state: started
   tags: 

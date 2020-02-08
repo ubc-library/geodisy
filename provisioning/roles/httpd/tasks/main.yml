@@ -35,9 +35,6 @@
   tags:
     - install-httpd
 
-- debug:
-    var: hostvars
-
 - name: Run Certbot
   become: yes
   shell: "certbot --apache -d {{ domain }}"
@@ -53,3 +50,19 @@
     dest: "/etc/httpd/conf.d/{{ domain }}-le-ssl.conf"
   tags:
     - install-httpd
+
+- name: Install Apache systemd service
+  become: yes
+  systemd:
+    name: httpd
+    daemon_reload: yes
+    enabled: yes
+    state: started
+  tags:
+    - install-httpd
+
+#########################################################
+# TODO the provided Apache config doesn't seem finished #
+#########################################################
+
+

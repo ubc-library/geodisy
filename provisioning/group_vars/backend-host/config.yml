@@ -1,0 +1,13 @@
+---
+geoserver:
+  version: "2.16.0"
+  base_dir: "/opt/share/geoserver"
+  app_dir: "geoserver-{{ geoserver.version }}"
+  full_dir: "{{ geoserver.base_dir}}/{{ geoserver.app_dir }}"
+
+solr:
+  version: "8.3.0"
+  location: "/solr"
+  admin:
+    user: "admin"
+    password: "{{ vault.solr.admin.password }}"

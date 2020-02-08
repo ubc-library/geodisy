@@ -1,0 +1,56 @@
+# Install PostGIS 
+---
+- name: Install PostgreSQL RPM
+  become: yes
+  yum:
+    state: present
+    name: https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm 
+  tags:
+    - install postgis
+    - packages
+
+- name: Install PostGIS packages
+  become: yes
+  yum:
+    update_cache: yes
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - postgresql12
+    - postgresql12-server
+    - postgresql12-libs
+    - postgresql12-contrib
+    - postgresql12-devel
+    - postgis30_12
+    - postgis30_12-client
+    - postgis30_12-debuginfo 
+    - postgis30_12-devel
+    - postgis30_12-docs
+    - postgis30_12-gui
+    - postgis30_12-utils
+    - gdal30-libs
+    - gdal30
+    - gdal30-debuginfo
+    - gdal30-devel
+    - gdal30-doc
+  tags:
+    - install-postgis
+    - packages
+
+- name: Initialize PostgreSQL
+  become: yes
+  command:
+    cmd: "/usr/pgsql-12/bin/postgresql-12-setup initdb"
+  ignore_errors: yes # Error thrown id DB already "init'd"
+  tags:
+    - install postgis
+
+- name: Start PostgreSQL systemd service
+  become: yes
+  systemd:
+    name: postgresql-12
+    enabled: yes
+    state: started
+  tags:
+    - install-postgis
+

@@ -6,4 +6,5 @@ echo "Initializing environment..."
 #useradd -m -s /bin/bash -U centos --groups wheel
 
 # Install ansible locally
+yum update
 yum install -y ansible

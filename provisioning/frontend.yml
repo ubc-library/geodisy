@@ -4,4 +4,6 @@
     - frontend-host
   roles:
     - httpd
+    - node
+    - geoblacklight
 

@@ -4,4 +4,6 @@
     - backend-host
   roles:
     - geoserver
+    - postgis
+    - solr
 

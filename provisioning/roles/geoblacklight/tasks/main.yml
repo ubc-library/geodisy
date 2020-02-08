@@ -1,0 +1,156 @@
+---
+- name: Install system packages
+  become: yes
+  yum:
+    name: "{{ item }}"
+    state: present
+  tags:
+    - install-geoblacklight
+    - packages
+  with_items:
+    - git-core
+    - zlib
+    - zlib-devel
+    - gcc-c++
+    - patch
+    - readline
+    - readline-devel
+    - libyaml-devel
+    - libffi-devel
+    - openssl-devel
+    - make
+    - bzip2
+    - automake
+    - autoconf
+    - libtool
+    - bison
+    - curl
+    - sqlite-devel
+
+- name: Create geoblack user
+  become: yes
+  user:
+    name: "geoblack"
+    state: present
+    system: yes
+  tags:
+    - install-geoblacklight
+
+- name: Create GeoBlacklight directory
+  become: yes
+  file:
+    state: directory
+    path: "{{ geoblacklight_dir }}"
+    owner: "geoblack"
+    group: "geoblack"
+
+# Test for Ruby PATH addition first, to prevent duplication on re-runs
+- name: Test for Ruby PATH in geoblack .bashrc
+  become: yes
+  become_user: geoblack
+  lineinfile:
+    path: "$HOME/.bashrc"
+    state: present
+    line: "# ANSIBLE MANAGED RBENV_PATH"
+  check_mode: yes 
+  register: ruby_path_exists
+  failed_when: ruby_path_exists is changed
+  ignore_errors: yes
+  tags:
+    - install-geoblacklight
+
+- name: Add rbenv location to PATH
+  become: yes
+  become_user: geoblack
+  when: ruby_path_exists is failed
+  blockinfile:
+    marker: "# ANSIBLE MANAGED RBENV_PATH"
+    state: present
+    block: 'export PATH="$HOME/.rbenv/bin:$PATH"'
+    path: "$HOME/.bashrc"
+  tags:
+    - install-geoblacklight
+
+# Test for Ruby init command first, to prevent duplication on re-runs
+- name: Test for Ruby init command in geoblack .bashrc
+  become: yes
+  become_user: geoblack
+  lineinfile:
+    path: "$HOME/.bashrc"
+    state: present
+    line: "# ANSIBLE MANAGED RBENV_INIT"
+  check_mode: yes 
+  register: ruby_init_exists
+  failed_when: ruby_init_exists is changed
+  ignore_errors: yes
+  tags:
+    - install-geoblacklight
+
+- name: Init RBEnv
+  become: yes
+  become_user: geoblack
+  when: ruby_init_exists is failed
+  blockinfile:
+    marker: "# ANSIBLE MANAGED RBENV_INIT"
+    state: present
+    block: 'eval "$(rbenv init -)"'
+    path: "$HOME/.bashrc"
+  tags:
+    - install-geoblacklight
+
+# 'source'ing the .bashrc before running this command feels a bit messy, but I dont know 
+# enough about Ruby to clean this up yet. It works for now.
+- name: Install Ruby and Gems as GeoBlackLight user
+  become: yes
+  become_user: geoblack
+  shell: 
+    cmd: "source $HOME/.bashrc && curl -sL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash -"
+  
+- name: Install Ruby 2.6.1
+  become: yes
+  become_user: geoblack
+  shell: "source $HOME/.bashrc && rbenv install {{ ruby_ver }}"
+  ignore_errors: yes
+  tags:
+    - install-geoblacklight
+
+- name: Make Ruby version global default
+  become: yes
+  become_user: geoblack
+  shell: "source $HOME/.bashrc && rbenv global {{ ruby_ver }}"
+  tags:
+    - install-geoblacklight
+
+- name: Install rails gem
+  become: yes
+  become_user: geoblack
+  gem:
+    executable: "$HOME/.rbenv/shims/gem"
+    name: rails
+    version: 5.2.3
+    state: present
+  tags:
+    - install-geoblacklight
+
+- name: Install bundler gem
+  become: yes
+  become_user: geoblack
+  gem:
+    executable: "$HOME/.rbenv/shims/gem"
+    name: bundler 
+    version: 2.0.2
+    state: present
+  tags:
+    - install-geoblacklight
+
+- name: Install execjs gem
+  become: yes
+  become_user: geoblack
+  gem:
+    executable: "$HOME/.rbenv/shims/gem"
+    name: execjs
+    state: present
+  tags:
+    - install-geoblacklight
+
+
