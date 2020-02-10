@@ -77,10 +77,10 @@ Vagrant.configure("2") do |config|
 
   # Frontend Ansible Playbook
   config.vm.provision "ansible", type: "ansible_local" do |a|
-    a.playbook = "provisioning/backend.yml" 
+    a.playbook = "provisioning/site.yml" 
     a.inventory_path = "provisioning/local-ini"
     a.limit = "all"
-    a.raw_arguments = ["--connection=local", "--diff", "--tags=install-solr"]
+    a.raw_arguments = ["--connection=local", "--diff","--tags=install-geoblacklight","-vv"]
   end
 
   # Backend Ansible Playbook

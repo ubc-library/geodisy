@@ -100,16 +100,28 @@
 
 # 'source'ing the .bashrc before running this command feels a bit messy, but I dont know 
 # enough about Ruby to clean this up yet. It works for now.
+# Seems to return a failed exit status back to Ansible even though the command has worked
 - name: Install Ruby and Gems as GeoBlackLight user
   become: yes
   become_user: geoblack
   shell: 
     cmd: "source $HOME/.bashrc && curl -sL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash -"
+  ignore_errors: yes
   
-- name: Install Ruby 2.6.1
+- name: Test for previous install of Ruby version
+  become: yes
+  become_user: geoblack
+  shell: "source $HOME/.bashrc && rbenv versions"
+  register: ruby_versions
+  ignore_errors: yes
+  tags:
+    - install-geoblacklight
+
+- name: Install Ruby
   become: yes
   become_user: geoblack
   shell: "source $HOME/.bashrc && rbenv install {{ ruby_ver }}"
+  when: ruby_ver not in ruby_versions.stdout
   ignore_errors: yes
   tags:
     - install-geoblacklight
@@ -139,6 +151,7 @@
     executable: "$HOME/.rbenv/shims/gem"
     name: bundler 
     version: 2.0.2
+    build_flags: "--default"
     state: present
   tags:
     - install-geoblacklight
@@ -153,4 +166,4 @@
   tags:
     - install-geoblacklight
 
-
+- 

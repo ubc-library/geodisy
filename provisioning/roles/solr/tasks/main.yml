@@ -34,9 +34,20 @@
   tags:
     - install-solr
 
+- name: Test for previous solr install
+  become: yes
+  stat:
+    path: "/var/solr/"
+  check_mode: yes
+  register: solr_dir
+  ignore_errors: yes
+  tags:
+    - install-solr
+
 - name: Run Solr install script
   become: yes
   shell: "cd {{ solr.location }}/solr-{{ solr.version }}/bin && ./install_solr_service.sh {{ solr.location }}/solr-{{ solr.version }}.tgz -n"
+  when: solr_dir.stat.exists == false
   ignore_errors: yes
   tags:
     - install-solr
@@ -88,4 +99,11 @@
   tags:
     - install-solr
 
+- name: Create Solr core for geoblacklight
+  become: yes
+  become_user: solr
+  shell: "/opt/solr/bin/solr create_core -c geoblacklight-core"
+  tags:
+    - install-solr
+ 
 
