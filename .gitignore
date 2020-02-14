@@ -74,15 +74,7 @@ Geodisy/Geodisy/BMSC_Wizard_Exposed_UnderstoryCover_1997\.csv
 
 Geodisy/Geodisy/BMSC_Wizard_Exposed_InvertebrateDensity_1997\.csv
 
-Geodisy/Geodisy/classes/artifacts/Geodisy_jar/datasetFiles/
-
-Geodisy/Geodisy/classes/artifacts/Geodisy_jar/logs/error\.log
-
-Geodisy/Geodisy/classes/artifacts/Geodisy_jar/savedFiles/
-
-Geodisy/Geodisy/classes/artifacts/Geodisy_jar/logs/recordsToCheck\.log
-
-Geodisy/Geodisy/classes/artifacts/Geodisy_jar/Geodisy\.jar
+Geodisy/Geodisy/classes/artifacts/
 
 settings\.zip
 
@@ -96,58 +88,27 @@ Geodisy/Geodisy/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/
 
 Geodisy/Geodisy/src/main/java/BaseFiles/PrivateStrings.java
 
-*.class
-Geodisy/Geodisy/src/main/target/classes/META-INF/MANIFEST.MF
-*.iml
-Geodisy/Geodisy Full Install Guide (Other than Solr).txt
 
-Geodisy/Geodisy/logs/error/
+*.svg
 
-Geodisy/Geodisy/logs/warning/
+*.png
 
-Geodisy/testGdal/.idea/
-Geodisy/testGdal/out/
-
-
-Geodisy/testGdal/src/META-INF/MANIFEST.MF
-
-Geodisy/Geodisy/logs/recordsToCheck/
-
-Geodisy/GeoserverUploadTest/.idea/
-
-Geodisy/VectorToGeoserver/.idea/artifacts/
-
-Geodisy/VectorToGeoserver/.idea/
-
-Geodisy/VectorToGeoserver/out/artifacts/VectorToGeoserver_jar/
-
-Geodisy/VectorToGeoserver/src/META-INF/
-
-*.MF
-
-Geodisy/GeoserverUploadTest/out/artifacts/GeoserverUploadTest_jar/
-
-Geodisy/Geodisy/testFiles/
-Geodisy/Geodisy/metadata/
-
-Geodisy/ModifyGeoserver/.idea/
-
-Geodisy/ModifyGeoserver/out/artifacts/ModifyGeoserver_jar/
-Geodisy/DownloadRecord
-testingFolder/
-
-Geodisy/TileMerge/.idea/
-
-Geodisy/MoveMetadataAndRunGeoCombine/.idea/
-
-Geodisy/TileMerge/out/artifacts/TileMerge_jar/TileMerge.jar
-
-Geodisy/Logos/
+Geodisy/VectorToGeoserver/out/
 
 Geodisy/UBC Logos/
 
-Geodisy/MoveMetadataAndRunGeoCombine/src/META-INF/
+Geodisy/testGdal/.idea/
 
+Geodisy/testGdal/out/
+Geodisy/TileMerge/
+
+*.iml
+
+*.DS_Store
+
+Geodisy/Logos/
 Geodisy/MoveMetadataAndRunGeoCombine/
-
 Geodisy/ModifyGeoserver/
+*.iml
+Geodisy/Geodisy/testFiles/
+Geodisy/Geodisy/metadata/
