@@ -93,7 +93,7 @@ public class SimpleCitationFields extends JSONField {
      */
     public void setField(String label, String value){
         switch(label) {
-            case PERSISTENT_ID:
+            case RECORD_URL:
                 setPersistentID(value);
                 break;
             case TITLE:

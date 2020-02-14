@@ -7,7 +7,6 @@ import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 
 import java.io.*;
 import java.util.LinkedList;
-import java.util.concurrent.TimeUnit;
 
 import static BaseFiles.GeodisyStrings.*;
 import static Dataverse.DVFieldNameStrings.*;
@@ -235,7 +234,8 @@ public class GDAL {
             gbb.setField(GEOMETRY,gdalString.substring(start,end));
 
         }
-        gbb.setBB(temp);
+        if(temp.hasBoundingBox())
+            gbb.setBB(temp);
         return gbb;
     }
 
@@ -253,34 +253,16 @@ public class GDAL {
     }
 
     private void convertToWGS84(String filePath, boolean isWindows, String name) throws IOException {
-        String gdal;
-        String filePathLower = filePath.toLowerCase();
-        String nameLower = name.toLowerCase();
-        if(GeodisyStrings.gdalinfoRasterExtention(name))
-            gdal = GDAL_TRANSLATE;
+        GDALTranslate gdalTranslate = new GDALTranslate();
+        String path = new File(filePath).getPath();
+        String stub;
+        if(GeodisyStrings.ogrinfoVectorExtension(name))
+            stub = gdalTranslate.vectorTransform(path,name);
         else
-            gdal = OGR2OGR;
-        String newAndOld = filePath + " " + filePath;
-        if(isWindows){
-            try {
-                Runtime.getRuntime().exec(gdal + newAndOld).waitFor();
-            } catch (InterruptedException e) {
-                logger.error("Something went wrong trying to convert " + name + " to WGS84");
-            }
-        } else {
-            ProcessBuilder processBuilder= new ProcessBuilder();
-            processBuilder.command("bash", "-c", gdal + newAndOld);
-            Process p = processBuilder.start();
-            try {
-                p.waitFor(180, TimeUnit.SECONDS);
-            } catch (InterruptedException e) {
-                logger.error("Something went wrong trying to convert " + name + " to WGS84");
-            }
-            p.destroy();
-        }
-        File check = new File(filePath);
+            stub = gdalTranslate.rasterTransform(path,name);
+        File check = new File(path+stub);
         if(!check.exists())
-            logger.warn("Couldn't convert" + name +" to  WGS84");
+            logger.warn("Couldn't convert " + name +" to  WGS84");
     }
 
     private BoundingBox compare(BoundingBox temp, BoundingBox fullExtent) {

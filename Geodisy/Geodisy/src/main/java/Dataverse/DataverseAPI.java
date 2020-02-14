@@ -57,20 +57,20 @@ public class DataverseAPI extends SourceAPI {
         long fullStartTime = Calendar.getInstance().getTimeInMillis();
         for(JSONObject jo:jsons){
             Calendar fullEnd =  Calendar.getInstance();
-            Long fullTotal = fullEnd.getTimeInMillis()-fullStartTime;
+            // Uncomment this and set milliseconds if you want to put a maximum time per run
+            /*Long fullTotal = fullEnd.getTimeInMillis()-fullStartTime;
             if(fullTotal>10800000)
-                break;
+                break;*/
             String doi ="";
             try {
                 doi = jo.getString("authority") + "/" + jo.getString("identifier");
 
                 if(processSpecificRecords(doi)) {
-                    System.out.println("Processing only specic records, is that what you want? If not delete all doi in PROCESS_THESE_DOIS in Geodisy Strings");
-                    continue;
+                    System.out.println("Processing only specic records, is that what you want? If not delete all doi in PROCESS_THESE_DOIS in GeodisyStrings class");
                 }
                 if(dontProcessSpecificRecords(doi))
                     continue;
-                System.out.println("Parsing record " + doi);
+                //System.out.println("Parsing record " + doi);
                 if(es.hasRecord(doi)) {
                     JSONObject joInfo = jo.getJSONObject("datasetVersion");
                     int version = joInfo.getInt("versionNumber") * 1000 + joInfo.getInt("versionMinorNumber");
@@ -94,6 +94,7 @@ public class DataverseAPI extends SourceAPI {
                 Calendar end =  Calendar.getInstance();
                 Long total = end.getTimeInMillis()-startTime;
                 System.out.println("Finished downloading " + doi +" after " + total + " milliseconds");
+                djo.updateRecordFileNumbers();
                 djo.updateGeoserver();
                 //System.out.println("Finished downloading files from: " + fileIdent + " only " + counter + "more records to download");
                 //djo = generateBoundingBox(djo);
@@ -142,16 +143,10 @@ public class DataverseAPI extends SourceAPI {
     }
     //Only process dois in the below doi array (only for testing, really)
     private boolean processSpecificRecords(String doi) {
-        HashSet<String> dois = new HashSet<>();
-        String[] doiArray = PROCESS_THESE_DOIS;
-        if (doiArray.length == 0)
-            return false;
-        for (String d : doiArray){
-            dois.add(d);
-        }
-        if(dois.contains(doi))
-            return false;
-        return true;
+
+        if (PROCESS_THESE_DOIS.length > 0)
+            return true;
+        return false;
     }
 
     @Override
@@ -263,7 +258,9 @@ public class DataverseAPI extends SourceAPI {
     //Find all the datasets and create a HashSet of their DOIs
     @Override
     protected HashSet<String> searchDV() {
-        String searchURL = dvURL + "api/search?q=*&type=dataset&show_entity_id=true&rows=1000";
+        String searchURL = dvURL + "api/search?q=*&type=dataset&show_entity_id=true";
+        if(PROCESS_THESE_DOIS.length>0)
+            return new HashSet<String>();
         return getRecords(searchURL);
 
     }
@@ -275,13 +272,25 @@ public class DataverseAPI extends SourceAPI {
         //TODO set base URL programmatically
         String baseURL = dvURL + "api/datasets/export?exporter=dataverse_json&persistentId=";
         LinkedList<JSONObject> answers =  new LinkedList<>();
-        for(String s: dOIs){
-            getMetadata = new HTTPCallerGeoNames();
-            String dataverseJSON = getMetadata.callHTTP(baseURL+s);
-            if(dataverseJSON.equals("HTTP Fail"))
-                continue;
-            JSONObject jo = new JSONObject(dataverseJSON);
-            answers.add(jo);
+        if(PROCESS_THESE_DOIS.length>0){
+            for(String s: PROCESS_THESE_DOIS){
+                String pid = (s.contains("."))? "doi:" + s: "hdl:" +s;
+                getMetadata = new HTTPCallerGeoNames();
+                String dataverseJSON = getMetadata.callHTTP(baseURL+pid);
+                if(dataverseJSON.equals("HTTP Fail"))
+                    continue;
+                JSONObject jo = new JSONObject(dataverseJSON);
+                answers.add(jo);
+            }
+        }else {
+            for (String s : dOIs) {
+                getMetadata = new HTTPCallerGeoNames();
+                String dataverseJSON = getMetadata.callHTTP(baseURL + s);
+                if (dataverseJSON.equals("HTTP Fail"))
+                    continue;
+                JSONObject jo = new JSONObject(dataverseJSON);
+                answers.add(jo);
+            }
         }
         return answers;
     }

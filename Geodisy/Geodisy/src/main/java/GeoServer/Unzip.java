@@ -61,9 +61,13 @@ public class Unzip {
                         fos.write(buffer, 0, len);
                     }
                     fos.close();
-                    DataverseRecordFile zippedFile = new DataverseRecordFile(zipEntry.getName(), dRF.getFileIdent(), dRF.getDbID(), dRF.getServer(), dRF.getDatasetIdent());
-                    zippedFile.setOriginalTitle(dRF.getOriginalTitle());
-                    drfs.add(zippedFile);
+                    if(newFile.getName().toLowerCase().endsWith(".zip"))
+                        drfs.addAll(unzip(newFile.getPath(),destPath,dRF,djo));
+                    else {
+                        DataverseRecordFile zippedFile = new DataverseRecordFile(zipEntry.getName(), dRF.getFileIdent(), dRF.getDbID(), dRF.getServer(), dRF.getDatasetIdent());
+                        zippedFile.setOriginalTitle(dRF.getOriginalTitle());
+                        drfs.add(zippedFile);
+                    }
                 } while ((zipEntry != null));
                 zis.closeEntry();
                 zis.close();

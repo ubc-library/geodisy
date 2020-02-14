@@ -36,10 +36,10 @@ public class BoundingBox implements Serializable {
         return longitude;
     }
     public boolean hasBoundingBox(){
-        return (latSouth>=-90 && latNorth<=90 && longEast<=180 && longWest>=-180)&&(latSouth!=361 && latNorth!=361 && longEast!=361 && longWest!=361)&&!(latSouth==0 && latNorth==0 && longEast==0 && longWest==0);
+        return (getLatSouth()>=-90 && getLatNorth()<=90 && getLongEast()<=180 && getLongWest()>=-180)&&(getLatSouth()!=361 && getLatNorth()!=361 && getLongEast()!=361 && getLongWest()!=361)&&!((getLatSouth()==0 && getLatNorth()==0) || (getLongEast()==0 && getLongWest()==0));
     }
     public boolean hasUTMCoords(){
-        return Math.abs(latSouth) > 90 || latNorth > 90 || Math.abs(longEast) > 180 || Math.abs(longWest) > 180;
+        return Math.abs(getLatSouthUnchecked()) > 90 || Math.abs(getLatNorthUncheck()) > 90 || Math.abs(getLongEastUnchecked()) > 180 || Math.abs(getLongWestUnchecked()) > 180;
     }
     /**
      *
@@ -54,7 +54,7 @@ public class BoundingBox implements Serializable {
         } catch (NumberFormatException e){
             val = 361;
         }
-        return checkLat(val);
+        return val;
     }
 
     private double getDoubleLong(String numString) {
@@ -64,15 +64,15 @@ public class BoundingBox implements Serializable {
         } catch (NumberFormatException e){
             val = 361;
         }
-        return checkLong(val);
+        return val;
     }
 
     public double getLatSouth() {
-        return latNorth>=latSouth? latSouth:latNorth;
+        return latNorth>=latSouth? checkLat(latSouth):checkLat(latNorth);
     }
 
     public void setLatSouth(double latSouth) {
-        this.latSouth = checkLat(latSouth);
+        this.latSouth = latSouth;
 
     }
 
@@ -81,11 +81,11 @@ public class BoundingBox implements Serializable {
     }
 
     public double getLatNorth() {
-        return latNorth>=latSouth? latNorth:latSouth;
+        return latNorth>=latSouth? checkLat(latNorth):checkLat(latSouth);
     }
 
     public void setLatNorth(double latNorth) {
-        this.latNorth = checkLat(latNorth);
+        this.latNorth = latNorth;
     }
 
     public void setLatNorth(String latNorth){
@@ -93,11 +93,11 @@ public class BoundingBox implements Serializable {
     }
 
     public double getLongWest() {
-        return longWest;
+        return checkLong(longWest);
     }
 
     public void setLongWest(double longWest) {
-        this.longWest = checkLong(longWest);
+        this.longWest = longWest;
     }
 
     public void setLongWest(String longWest){
@@ -105,7 +105,7 @@ public class BoundingBox implements Serializable {
     }
 
     public double getLongEast() {
-        return longEast;
+        return checkLong(longEast);
     }
 
     public void setLongEast(double longEast) {
@@ -116,6 +116,21 @@ public class BoundingBox implements Serializable {
         this.longEast = getDoubleLong(longEast);
     }
 
+    public double getLongEastUnchecked(){
+        return longEast;
+    }
+
+    public double getLongWestUnchecked(){
+        return longWest;
+    }
+
+    public double getLatNorthUncheck(){
+        return latNorth>latSouth? latNorth:latSouth;
+    }
+
+    public double getLatSouthUnchecked(){
+        return latSouth<latNorth? latSouth:latNorth;
+    }
     public boolean isGenerated() {
         return generated;
     }

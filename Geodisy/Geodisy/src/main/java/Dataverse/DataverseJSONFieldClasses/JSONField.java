@@ -41,7 +41,7 @@ public abstract class JSONField {
 
     public void errorParsing(String className, String fieldName){
         logger.error("Something wrong parsing "+ className + ". Title is " + fieldName);
-        System.out.println("Something wrong with " + className + " parsing.");
+        System.out.println("Something wrong with " + className + " parsing. Title is " + fieldName);
     }
 
     public void errorGettingValue(String className, String fieldName){

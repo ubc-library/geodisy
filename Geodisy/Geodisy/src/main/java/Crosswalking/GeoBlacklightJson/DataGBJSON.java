@@ -3,6 +3,7 @@ package Crosswalking.GeoBlacklightJson;
 import BaseFiles.GeoLogger;
 import BaseFiles.GeodisyStrings;
 import Dataverse.DVFieldNameStrings;
+import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Author;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Description;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
@@ -18,6 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 
 import static BaseFiles.GeodisyStrings.*;
@@ -40,8 +42,8 @@ public class DataGBJSON extends GeoBlacklightJSON{
     }
     //TODO check if Dataverse publisher field be included in the slug?
     @Override
-    protected JSONObject getRequiredFields(GeographicBoundingBox gbb, int number, int total){
-        boolean generated = gbb.isGeneratedFromGeoFile();
+    protected JSONObject getRequiredFields(GeographicBoundingBox gbb, int total){
+        String number = gbb.getFileNumber();
         jo.put("geoblacklight_version","1.0");
         jo.put("dc_identifier_s", GeodisyStrings.urlSlashes(javaObject.getSimpleFieldVal(DVFieldNameStrings.RECORD_URL)));
         String geoserverLabel = getgeoserverLabel(gbb).toLowerCase();
@@ -76,7 +78,6 @@ public class DataGBJSON extends GeoBlacklightJSON{
         jo.put(EXTERNAL_SERVICES, externalServices);
         if(!geoserverLabel.isEmpty())
             jo.put("layer_id_s", geoserverLabel);
-
     }
 
     private String getgeoserverLabel(GeographicBoundingBox gbb) {
@@ -117,7 +118,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
 
     //TODO, check I am getting all the optional fields I should be
     @Override
-    protected JSONObject getOptionalFields(DataverseRecordFile drf) {
+    protected JSONObject getOptionalFields(DataverseRecordFile drf, int totalRecordsInStudy) {
         GeographicBoundingBox gbb = drf.getGBB();
         String geoserverLabel = getgeoserverLabel(gbb).toLowerCase();
         getFileType(drf);
@@ -128,8 +129,24 @@ public class DataGBJSON extends GeoBlacklightJSON{
         getPlaceNames(gbb);
         getSubjects();
         getType();
+        getRelatedRecords(drf);
 
         return jo;
+    }
+
+    private void getRelatedRecords(DataverseRecordFile drf) {
+        LinkedList<DataverseGeoRecordFile> geo = javaObject.getGeoDataFiles();
+        LinkedList<DataverseGeoRecordFile> meta = javaObject.getGeoDataMeta();
+        LinkedList<DataverseGeoRecordFile> recs = (geo.size()>=meta.size())? geo:meta;
+        if(recs.size()>1){
+            JSONArray ja = new JSONArray();
+            for(DataverseGeoRecordFile dgrf : recs){
+                if(!drf.getGeoserverLabel().equals(dgrf.getGeoserverLabel()))
+                    ja.put(dgrf.getGeoserverLabel());
+            }
+            jo.put("dc_source_sm",ja);
+            jo.put("dct_isPartOf_sm",javaObject.getSimpleFieldVal(TITLE));
+        }
     }
 
     private void getFileType(DataverseRecordFile drf) {

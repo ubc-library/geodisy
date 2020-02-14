@@ -4,13 +4,10 @@ import Crosswalking.JSONParsing.DataverseParser;
 import Dataverse.DataverseAPI;
 import Dataverse.DataverseJavaObject;
 import Dataverse.GDALTranslate;
-import Dataverse.SourceJavaObject;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.List;
 
 import static BaseFiles.GeodisyStrings.*;
 
@@ -82,9 +79,9 @@ public class DownloadRecord {
         for(File f: files){
             String name = f.getName();
             if(GeodisyStrings.gdalinfoRasterExtention(name))
-                trans.rasterTransformTest(path,name,true , "1");
+                trans.rasterTransformTest(path,name,true);
             else if(GeodisyStrings.ogrinfoVectorExtension(name))
-                trans.vectorTransformTest(path,name,true, "1");
+                trans.vectorTransformTest(path,name,true);
             else
                 count--;
         }

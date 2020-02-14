@@ -2,6 +2,7 @@ package Dataverse.FindingBoundingBoxes;
 
 import BaseFiles.GeoLogger;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 
@@ -40,7 +41,7 @@ public class GeonamesJSON {
     }
 
     public void setJSONObject(String json){
-        jo = new JSONObject(json);
+        jo = XML.toJSONObject(json);
     }
     public JSONObject getRecordByName(String name){
             if(jo.get("countryName").toString().equalsIgnoreCase(name) || jo.get("altName").toString().toLowerCase().contains(name.toLowerCase()))
