@@ -45,7 +45,6 @@ public class Unzip {
 
         if(zis!=null) {
             try {
-                zipEntry = zis.getNextEntry();
                 do  {
                     zipEntry = zis.getNextEntry();
                     if(zipEntry==null)
