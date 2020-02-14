@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="MoveMetadataAndRunGeoCombine:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/MoveMetadataAndRunGeoCombine_jar</output-path>
+    <root id="archive" name="MoveMetadataAndRunGeoCombine.jar">
+      <element id="module-output" name="MoveMetadataAndRunGeoCombine" />
+    </root>
+  </artifact>
+</component>

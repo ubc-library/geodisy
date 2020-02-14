@@ -74,15 +74,7 @@ Geodisy/Geodisy/BMSC_Wizard_Exposed_UnderstoryCover_1997\.csv
 
 Geodisy/Geodisy/BMSC_Wizard_Exposed_InvertebrateDensity_1997\.csv
 
-Geodisy/Geodisy/classes/artifacts/Geodisy_jar/datasetFiles/
-
-Geodisy/Geodisy/classes/artifacts/Geodisy_jar/logs/error\.log
-
-Geodisy/Geodisy/classes/artifacts/Geodisy_jar/savedFiles/
-
-Geodisy/Geodisy/classes/artifacts/Geodisy_jar/logs/recordsToCheck\.log
-
-Geodisy/Geodisy/classes/artifacts/Geodisy_jar/Geodisy\.jar
+Geodisy/Geodisy/classes/artifacts/
 
 settings\.zip
 
@@ -94,3 +86,29 @@ Geodisy/Geodisy/savedFiles/
 *.log
 Geodisy/Geodisy/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/
 Geodisy/Geodisy/src/main/java/BaseFiles/PrivateStrings.java
+
+
+*.svg
+
+*.png
+
+Geodisy/VectorToGeoserver/out/
+
+Geodisy/UBC Logos/
+
+Geodisy/ModifyGeoserver/.idea/artifacts/
+
+Geodisy/ModifyGeoserver/.idea/
+
+Geodisy/ModifyGeoserver/src/META-INF/
+
+Geodisy/MoveMetadataAndRunGeoCombine/src/META-INF/
+
+Geodisy/testGdal/.idea/
+
+Geodisy/testGdal/out/
+Geodisy/TileMerge/
+
+*.iml
+
+*.DS_Store
