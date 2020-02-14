@@ -88,6 +88,7 @@ Geodisy/Geodisy/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/
 
 Geodisy/Geodisy/src/main/java/BaseFiles/PrivateStrings.java
 
+Geodisy/ModifyGeoserver/
 
 *.svg
 
@@ -96,7 +97,6 @@ Geodisy/Geodisy/src/main/java/BaseFiles/PrivateStrings.java
 Geodisy/VectorToGeoserver/out/
 
 Geodisy/UBC Logos/
-
 Geodisy/testGdal/.idea/
 
 Geodisy/testGdal/out/
@@ -106,9 +106,7 @@ Geodisy/TileMerge/
 
 *.DS_Store
 
+Geodisy/Geodisy/metadata/
+Geodisy/Geodisy/testFiles/
 Geodisy/Logos/
 Geodisy/MoveMetadataAndRunGeoCombine/
-Geodisy/ModifyGeoserver/
-*.iml
-Geodisy/Geodisy/testFiles/
-Geodisy/Geodisy/metadata/
