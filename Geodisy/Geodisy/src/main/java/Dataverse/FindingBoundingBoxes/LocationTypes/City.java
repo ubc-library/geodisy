@@ -9,6 +9,7 @@ public class City extends Location {
     //TODO deal with higher levels of the location hierarchy if the lower level does or does not find a bounding box
     public City(String name, String provinceName, String countryName) {
         super(name, new GeonamesJSON(new Geonames().getGeonamesCity(name,provinceName,countryName)));
+        this.commonName = this.geonamesJSON.getCommonCityName();
         if(provinceName.isEmpty())
             province = new Province();
         else {
@@ -18,6 +19,7 @@ public class City extends Location {
     //When no province is given, but city and country are;
     public City(String name, String countryName){
         super(name,new GeonamesJSON(new Geonames().getGeonamesCountry("NO_VALUE")));
+        this.commonName = this.geonamesJSON.getCommonCityName();
         province = new Province("",countryName);
 
     }

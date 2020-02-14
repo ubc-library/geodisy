@@ -1,6 +1,8 @@
 package Dataverse.FindingBoundingBoxes;
 
 import BaseFiles.Geonames;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicCoverage;
 import Dataverse.DataverseJavaObject;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.City;
@@ -9,6 +11,9 @@ import Dataverse.FindingBoundingBoxes.LocationTypes.Province;
 import java.io.UnsupportedEncodingException;
 import java.net.*;
 import java.util.HashMap;
+import java.util.List;
+
+import static Dataverse.DVFieldNameStrings.*;
 
 /**
  * GeonamesBBs collects a bounding box for a record that has enough geospatial fields filled out.
@@ -23,11 +28,13 @@ public class GeonamesBBs extends FindBoundBox {
     HashMap<String, BoundingBox> bBoxes;
     String doi;
     public DataverseJavaObject djo;
+    Geonames geo;
 
     public GeonamesBBs(String doi) {
         this.doi = doi;
         this.countries = Countries.getCountry();
         this.bBoxes = countries.getBoundingBoxes();
+        geo = new Geonames();
     }
 
     public GeonamesBBs(DataverseJavaObject djo){
@@ -35,6 +42,7 @@ public class GeonamesBBs extends FindBoundBox {
         doi = this.djo.getDOI();
         this.countries = Countries.getCountry();
         this.bBoxes = countries.getBoundingBoxes();
+        geo = new Geonames();
     }
 
     /**
@@ -50,8 +58,8 @@ public class GeonamesBBs extends FindBoundBox {
             country = countries.getCountryByCode(countryName);
          else
              country = countries.getCountryByName(countryName);
-        if(country.getCountryCode().matches("_JJ")){
-            logger.info(countryName + " is not a valid country givenName in record at PERSISTENT_ID: " + doi + ", so no bounding box could be automatically generated. Check this record manually ", djo, logger.getName());
+        if(country.getCountryCode().matches("_JJ")||country.getCountryCode().matches("")){
+            logger.info(countryName + " is not a valid country givenName in record at PERSISTENT_ID: " + doi + ", so no bounding box could be automatically generated. Check this record manually ", djo);
 
             return new BoundingBox();
         }
@@ -79,15 +87,14 @@ public class GeonamesBBs extends FindBoundBox {
         } catch (UnsupportedEncodingException ignored) {
             // Can be safely ignored because UTF-8 is always supported
         }
-        String searchString = province;
-        String responseString = getJSONString(searchString, country);
+        String responseString = geo.getGeonamesProvince(province,country);
         box = readResponse(responseString,doi, djo);
-        if(box.getLongWest()==361)
-            return getDVBoundingBox(country);
-        Province p = new Province(unURLedProvince, country);
-        p.setBoundingBox(box);
-        bBoxes.put(addDelimiter(country,unURLedProvince), box);
-        countries.setBoundingBoxes(bBoxes);
+        if(box.getLongWest()!=361) {
+            Province p = new Province(unURLedProvince, country);
+            p.setBoundingBox(box);
+            bBoxes.put(addDelimiter(country, unURLedProvince), box);
+            countries.setBoundingBoxes(bBoxes);
+        }
         return box;
     }
 
@@ -109,8 +116,6 @@ public class GeonamesBBs extends FindBoundBox {
         BoundingBox box = countries.getExistingBB(country, province, city);
         if(box.getLongWest()!=361)
             return box;
-        String fcode = "PPL*";
-
         String unURLedProvince = province;
         String unURLedCity = city;
         try {
@@ -119,15 +124,15 @@ public class GeonamesBBs extends FindBoundBox {
         } catch (UnsupportedEncodingException ignored) {
             // Can be safely ignored because UTF-8 is always supported
         }
-        String searchString = city + "%2C%20" + province;
-        String responseString = getJSONString(searchString, country);
+
+        String responseString = geo.getGeonamesCity(city,province, country);
         box = readResponse(responseString,doi, djo);
-        if(box.getLongWest()==361)
-            return getDVBoundingBox(country,province);
-        City cit = new City(city,province,country);
-        cit.setBoundingBox(box);
-        bBoxes.put(addDelimiter(country,unURLedProvince,unURLedCity),box);
-        countries.setBoundingBoxes(bBoxes);
+        if(box.getLongWest()==361) {
+            City cit = new City(city, province, country);
+            cit.setBoundingBox(box);
+            bBoxes.put(addDelimiter(country, unURLedProvince, unURLedCity), box);
+            countries.setBoundingBoxes(bBoxes);
+        }
 
         return box;
     }
@@ -149,9 +154,9 @@ public class GeonamesBBs extends FindBoundBox {
         if(box.getLongWest()!=361)
             return box;
         Map<String, String> parameters = new HashMap<>();
-        parameters.put("username", USER_NAME);
+        parameters.put("username", GEONAMES_USERNAME);
         parameters.put("style","FULL");
-        String countryCode = countries.isCountryCode(country) ? country : countries.getCountryCode(country);
+        String countryCode = countries.isCountryCode(country) ? country : countries.getCountryByCode(country);
         parameters.put("country",countryCode);
         String unURLedOther = other;
         try {
@@ -172,7 +177,7 @@ public class GeonamesBBs extends FindBoundBox {
         else
             box = getDVBoundingBox(country);*/
         if(box.getLatSouth() == 361)
-            logger.info("Record with PERSISTENT_ID: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" ,djo, logger.getName());
+            logger.info("Record with PERSISTENT_ID: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" ,djo);
         return box;
 
     }
@@ -192,9 +197,9 @@ public class GeonamesBBs extends FindBoundBox {
         /*if(box.getLongWest()!=361)
             return box;
         Map<String, String> parameters = new HashMap<>();
-        parameters.put("username", USER_NAME);
+        parameters.put("username", GEONAMES_USERNAME);
         parameters.put("style","FULL");
-        String countryCode = countries.isCountryCode(country) ? country : countries.getCountryCode(country);
+        String countryCode = countries.isCountryCode(country) ? country : countries.getCountryByCode(country);
         parameters.put("country",countryCode);
         String unURLedOther = other;
         String unURLedProvince = province;
@@ -217,14 +222,8 @@ public class GeonamesBBs extends FindBoundBox {
         else
             box = getDVBoundingBoxOther(country, other);*/
         if(box.getLatSouth() == 361)
-            logger.info("Record with PERSISTENT_ID: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" ,djo, logger.getName());
+            logger.info("Record with PERSISTENT_ID: " + doi + " has something in the 'Other Geographic Coverage' field so needs to be inspected" ,djo);
         return box;
-    }
-
-    @Override
-    public String getJSONString(String searchValue, String country) {
-        Geonames geo = new Geonames();
-        return geo.getGeonamesProvince(searchValue,country);
     }
 
 
@@ -235,5 +234,52 @@ public class GeonamesBBs extends FindBoundBox {
 
     public void setDJO(DataverseJavaObject djo){
         this.djo = djo;
+    }
+
+    public List<GeographicBoundingBox> getDVBoundingBox(GeographicCoverage geoCoverage, List<GeographicBoundingBox> geoBBs ) {
+        String givenCountry = geoCoverage.getField(GIVEN_COUNTRY);
+        String givenProvince = geoCoverage.getField(GIVEN_PROVINCE);
+        String givenCity = geoCoverage.getField(GIVEN_CITY);
+        String commonCountry = geoCoverage.getField(COMMON_COUNTRY);
+        String commonProvince = geoCoverage.getField(COMMON_PROVINCE);
+        String commonCity = geoCoverage.getField(COMMON_CITY);
+        String other = geoCoverage.getField(OTHER_GEO_COV);
+        if(!other.equals(""))
+            logger.info("This record had something in the Other field in the geographic coverage. Check out: " + djo.getSimpleFieldVal(RECORD_URL), djo);
+        Boolean second = !givenCountry.equals(commonCountry) || !givenProvince.equals(commonProvince) || !givenCity.equals(commonCity);
+        GeographicBoundingBox gbb;
+        if(!givenCountry.isEmpty()) {
+            if (!givenProvince.isEmpty()){
+                if(!givenCity.isEmpty()) {
+                    gbb = new GeographicBoundingBox(doi, getDVBoundingBox(givenCountry, givenProvince, givenCity));
+                    geoBBs.add(gbb);
+                    if(second){
+                        gbb = new GeographicBoundingBox(doi, getDVBoundingBox(commonCountry, commonProvince, commonCity));
+                        geoBBs.add(gbb);
+                    }
+                }else {
+                    gbb = new GeographicBoundingBox(doi, getDVBoundingBox(givenCountry, givenProvince));
+                    geoBBs.add(gbb);
+                    if (second) {
+                        gbb = new GeographicBoundingBox(doi, getDVBoundingBox(commonCountry, commonProvince));
+                        geoBBs.add(gbb);
+                    }
+                }
+            }else {
+                gbb = new GeographicBoundingBox(doi, getDVBoundingBox(givenCountry));
+                geoBBs.add(gbb);
+                if (second) {
+                    gbb = new GeographicBoundingBox(doi, getDVBoundingBox(commonCountry));
+                    geoBBs.add(gbb);
+                }
+            }
+        }else{
+            if(!givenProvince.isEmpty()||!givenCity.isEmpty()||!other.isEmpty())
+                logger.info("Record " + doi + " has Geographic Coverage fields filled out but no Country filled out",djo);
+            else
+                logger.error("Somehow got to calling Geonames without there being anything in the geographic coverage for " + doi);
+
+        }
+        return geoBBs;
     }
 }

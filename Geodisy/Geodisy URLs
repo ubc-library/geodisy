@@ -1,0 +1,4 @@
+GeoBlacklight: http://206-12-92-97.cloud.computecanada.ca:3000/
+GeoServer: https://206-12-92-97.cloud.computecanada.ca/geoserver/web/
+GeoServer (admin): http://206.12.92.97:8080/geoserver
+Solr (admin): http://206-12-92-97.cloud.computecanada.ca:8983

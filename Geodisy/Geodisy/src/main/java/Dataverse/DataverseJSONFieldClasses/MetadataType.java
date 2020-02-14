@@ -1,5 +1,6 @@
 package Dataverse.DataverseJSONFieldClasses;
 
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJavaObject;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONObject;
@@ -10,7 +11,7 @@ public abstract class MetadataType{
     protected String doi;
     protected DataverseJavaObject djo;
 
-    public abstract void setFields(JSONObject jo);
+    public abstract MetadataType setFields(JSONObject jo);
     public abstract List getListField(String fieldName);
     public abstract String getDoi();
     public abstract void setDoi(String doi);

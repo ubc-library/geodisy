@@ -17,9 +17,9 @@ public class CountryCodes {
     public static Map<String, String> getCountries() {
         return countries;
     }
-    public static String getCountryCode(String country){
-        if(countries.containsKey(country.toUpperCase()))
-            return countries.get(country);
+    public static String getCountryByCode(String code){
+        if(countries.containsKey(code.toUpperCase()))
+            return countries.get(code);
         else
             return "";
     }

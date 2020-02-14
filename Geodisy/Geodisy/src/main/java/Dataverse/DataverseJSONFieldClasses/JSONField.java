@@ -7,6 +7,9 @@ import org.apache.commons.validator.routines.UrlValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import static org.apache.commons.validator.routines.UrlValidator.ALLOW_ALL_SCHEMES;
 
 
@@ -18,13 +21,13 @@ public abstract class JSONField {
      * @return Either a validly formated URL or an empty String
      */
     protected String filterURL(String value) {
-        //String URLFILTER = "^((?i)((http|https):\\/\\/(www))|(www))?.(?i)([\\w]+\\.)+(\\/[\\w\\/]*)*\\??([\\&a-z1-9=]*)?";
-        UrlValidator urlValidator = new UrlValidator(ALLOW_ALL_SCHEMES);
-
-        if(urlValidator.isValid(value))
+        try {
+            new URI(value).parseServerAuthority();
             return value;
-        logger.error("Malformed URL error " + value + ", returning blank String");
-        return "";
+        } catch (URISyntaxException e) {
+            logger.warn("Got an invalid url: " + value);
+            return "";
+        }
     }
 
 
@@ -38,7 +41,7 @@ public abstract class JSONField {
 
     public void errorParsing(String className, String fieldName){
         logger.error("Something wrong parsing "+ className + ". Title is " + fieldName);
-        System.out.println("Something wrong with " + className + " parsing.");
+        System.out.println("Something wrong with " + className + " parsing. Title is " + fieldName);
     }
 
     public void errorGettingValue(String className, String fieldName){

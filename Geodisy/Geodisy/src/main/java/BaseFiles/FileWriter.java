@@ -1,7 +1,7 @@
 package BaseFiles;
 
 
-import Dataverse.ExistingSearches;
+import Dataverse.ExistingHarvests;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
@@ -13,9 +13,25 @@ import java.nio.file.Paths;
  * Class used to write things to files (logs and existing records files)
  */
 public class FileWriter {
+    GeoLogger logger;
+    java.io.FileWriter fw;
     public FileWriter() {
+        logger = new GeoLogger(this.getClass());
     }
 
+    public FileWriter(String path){
+        logger = new GeoLogger(this.getClass());
+        try {
+            fw = new java.io.FileWriter(path);
+        } catch (IOException e) {
+            logger.error("Something was wonky with the given path: " + path);
+        }
+    }
+
+    public FileWriter(File file) throws IOException{
+        logger = new GeoLogger(this.getClass());
+        fw = new java.io.FileWriter(file);
+    }
     /**
      * Saves a file on the local machine to the path provided
      * @param objectToSave
@@ -32,9 +48,25 @@ public class FileWriter {
     }
 
     public void writeStringToFile(String stringToSave, String path) throws IOException{
+        path = FileWriter.fixPath(path);
+        path = GeodisyStrings.replaceSlashes(path) + ".json";
         verifyFileExistence(path);
         File file = new File(path);
         FileUtils.writeStringToFile(file, stringToSave,"UTF-8");
+    }
+    //TODO figure out where this is actually getting used
+    public static String fixPath(String path) {
+        String answer = path;
+        if (path.contains("doi:")) {
+            answer = path.replace("doi:", "doi/");
+        }
+
+        //TODO figure out what to do with a handle
+        if(path.contains("handle:")){
+            answer = answer.replace("handle:","handle/");
+        }
+        answer = answer.replace(".","/");
+        return answer;
     }
 
     /**
@@ -76,25 +108,25 @@ public class FileWriter {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public ExistingSearches readExistingSearches(String path) throws IOException {
-        ExistingSearches es = ExistingSearches.getExistingSearches();
+    public ExistingHarvests readExistingSearches(String path) throws IOException {
+        ExistingHarvests es = ExistingHarvests.getExistingHarvests();
         try {
             File file = new File(path);
             File directory = new File(file.getParentFile().getAbsolutePath());
             directory.mkdirs();
             if(file.createNewFile())
-                return ExistingSearches.getExistingSearches();
+                return ExistingHarvests.getExistingHarvests();
             FileInputStream f = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(f);
-            es = (ExistingSearches) ois.readObject();
+            es = (ExistingHarvests) ois.readObject();
         } catch (FileNotFoundException e) {
-            es = ExistingSearches.getExistingSearches();
+            es = ExistingHarvests.getExistingHarvests();
             writeObjectToFile(es, path);
         } catch (EOFException e) {
-            return ExistingSearches.getExistingSearches();
+            return ExistingHarvests.getExistingHarvests();
         } catch (ClassNotFoundException e){
             System.out.println("something went wonky loading the existing searches from the file");
-            return ExistingSearches.getExistingSearches();
+            return ExistingHarvests.getExistingHarvests();
         }
         return es;
     }
@@ -104,14 +136,38 @@ public class FileWriter {
      * @param path
      * @return
      */
-    private boolean verifyFileExistence(String path) {
+    public boolean verifyFileExistence(String path) {
+        path = GeodisyStrings.replaceSlashes(path);
         Path filePath = Paths.get(path);
         try {
-            Files.createFile(filePath);
-            System.out.println("File didn't already exists, so created it");
-            return false;
+            File f =  new File(path);
+            boolean  created = f.createNewFile();
+            if(created) {
+                logger.warn("File " + path + " didn't already exists, so created it");
+                return false;
+            }
+            return true;
         } catch (IOException e) {
             return true;
         }
+    }
+
+    public boolean write(String obj){
+
+        try {
+            fw.write(obj);
+        } catch (IOException e) {
+            logger.error("Something went wrong trying to save the string: " + obj);
+            return false;
+        }
+        return true;
+    }
+
+    public java.io.FileWriter getFw(){
+        return fw;
+    }
+
+    public String getPath(){
+        return fw.toString();
     }
 }

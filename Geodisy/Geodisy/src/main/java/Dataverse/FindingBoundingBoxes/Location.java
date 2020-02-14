@@ -15,11 +15,11 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.StringWriter;
 
 public class Location implements GeographicPoliticalUnit {
-    protected String givenName;
-    protected String commonName;
-    protected BoundingBox boundingBox;
+    protected String givenName = "";
+    protected String commonName = "";
+    protected BoundingBox boundingBox = new BoundingBox();
     protected final String NO_NAME= "no name";
-    protected String altNames;
+    protected String altNames = "";
     protected GeonamesJSON geonamesJSON;
     protected GeoLogger logger = new GeoLogger(this.getClass());
 
@@ -27,8 +27,7 @@ public class Location implements GeographicPoliticalUnit {
     public Location(String givenName, GeonamesJSON geonamesJSON) {
         this.geonamesJSON = geonamesJSON;
         this.givenName = givenName;
-        this.commonName = this.geonamesJSON.getCommonName();
-        boundingBox = geonamesJSON.parseGeonamesBoundingBox();
+        boundingBox = geonamesJSON.getBBFromGeonamesJSON();
         altNames = geonamesJSON.getAltNames();
 
     }
@@ -36,12 +35,11 @@ public class Location implements GeographicPoliticalUnit {
     public Location(String givenName, Element element){
         this.geonamesJSON = new GeonamesJSON(elementToString(element));
         this.givenName = givenName;
-        this.commonName = this.geonamesJSON.getCommonName();
-        boundingBox = geonamesJSON.getBoundingBox();
+        boundingBox = geonamesJSON.getBBFromGeonamesBBElementString();
     }
     //Placeholder location constructor
     public Location(){
-
+        boundingBox = new BoundingBox();
     }
 
     public String getGivenName() {
@@ -52,6 +50,18 @@ public class Location implements GeographicPoliticalUnit {
 
     public void setGivenName(String givenName) {
         this.givenName = givenName;
+    }
+
+    public void setCommonName(String commonName) {
+        this.commonName = commonName;
+    }
+
+    public GeonamesJSON getGeonamesJSON() {
+        return geonamesJSON;
+    }
+
+    public void setGeonamesJSON(GeonamesJSON geonamesJSON) {
+        this.geonamesJSON = geonamesJSON;
     }
 
     public double getLatSouth() {

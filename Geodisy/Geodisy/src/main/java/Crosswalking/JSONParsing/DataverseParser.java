@@ -4,7 +4,7 @@ import BaseFiles.GeoLogger;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordInfo;
-import Dataverse.ExistingSearches;
+import Dataverse.ExistingHarvests;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,8 +25,17 @@ public class DataverseParser implements JSONParser {
      * @throws JSONException
      */
     public DataverseJavaObject parse(JSONObject jo, String server)  {
+        return parse(jo, server, false);
+
+    }
+
+    public DataverseJavaObject parse(JSONObject jo, String server, boolean testing)  {
         DataverseJavaObject dJO = new DataverseJavaObject(server);
         JSONObject dataverseJSON;
+        if(testing) {
+            logger.warn("DJO parse is set to \"testing\", set testing to false if this is a production run");
+            System.out.println("DJO parse is set to \"testing\", set testing to false if this is a production run");
+        }
         try {
             dataverseJSON = jo;
             JSONObject current;
@@ -35,9 +44,9 @@ public class DataverseParser implements JSONParser {
             else
                 current = dataverseJSON;
             dJO.parseCitationFields(current);
-            ExistingSearches es = ExistingSearches.getExistingSearches();
+            ExistingHarvests es = ExistingHarvests.getExistingHarvests();
             DataverseRecordInfo dRI = dJO.generateDRI();
-            if(!dRI.newer(es.getRecordInfo(dRI.getDoi())))
+            if(!testing && !dRI.newer(es.getRecordInfo(dRI.getDoi())))
                 return new DataverseJavaObject("");
             JSONObject metadata;
             metadata = dJO.getVersionSection(current).getJSONObject("metadataBlocks");
@@ -55,10 +64,11 @@ public class DataverseParser implements JSONParser {
             //Doesn't make sense to use these fields; will check with team
             /*if(metadata.has(JOURNAL_FIELDS))
                 dJO.parseJournalFields(metadata.getJSONObject(JOURNAL_FIELDS).getJSONArray(FIELDS));*/
-            if(dJO.getVersionSection(current).has("files"))
+
+            if(dJO.getVersionSection(current).has(FILES))
                 dJO.parseFiles((JSONArray) dJO.getVersionSection(current).get("files"));
         }catch (JSONException e){
-            logger.error("Something was malformed with the JSON string returned from Dataverse");
+            logger.error("Something was malformed with the JSON string returned from Dataverse: " + jo.toString());
         }
         return dJO;
     }
@@ -67,7 +77,7 @@ public class DataverseParser implements JSONParser {
     // the manual check log
     private BoundingBox getBBFromProdPlace(String prodPlace, DataverseJavaObject dJO) {
         BoundingBox b = new BoundingBox();
-        logger.info("The following record has no geographic location info other than a Production Place. Please manually check: " + dJO.getDOI(), dJO, logger.getName());
+        logger.info("The following record has no geographic location info other than a Production Place. Please manually check: " + dJO.getDOI(), dJO);
         return b;
     }
 

@@ -2,16 +2,16 @@ package BaseFiles;
 
 import Crosswalking.Crosswalk;
 import Crosswalking.GeoBlacklightJson.DataGBJSON;
-import Dataverse.DataverseJavaObject;
-import Dataverse.DataverseRecordInfo;
-import Dataverse.ExistingSearches;
+import Crosswalking.GeoBlacklightJson.GeoCombine;
+import Dataverse.*;
 import Dataverse.FindingBoundingBoxes.Countries;
-import Dataverse.SourceJavaObject;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static BaseFiles.GeodisyStrings.*;
@@ -24,6 +24,10 @@ import static BaseFiles.GeodisyStrings.*;
  */
 public class MyTimerTask extends TimerTask {
     GeoLogger logger = new GeoLogger(this.getClass());
+    ExistingHarvests existingHarvests;
+    ExistingCallsToCheck existingCallsToCheck;
+
+    SourceRecordFiles srf;
     public MyTimerTask() {
     }
 /**
@@ -31,39 +35,71 @@ public class MyTimerTask extends TimerTask {
  */
     @Override
     public void run() {
-       String startRecsToCheck;
-       String endRecsToCheck;
+       String recsToCheck;
        String startErrorLog;
        String endErrorLog;
+       String startWarningLog;
+       String endWarningLog;
        long startTime = Calendar.getInstance().getTimeInMillis();
         Countries.getCountry();
         try {
-            startRecsToCheck = new String(Files.readAllBytes(Paths.get(RECORDS_TO_CHECK)));
+            FileWriter fW = new FileWriter();
+            fW.verifyFileExistence(RECORDS_TO_CHECK);
+            fW.verifyFileExistence(ERROR_LOG);
+            fW.verifyFileExistence(WARNING_LOG);
+            fW.verifyFileExistence(RASTER_RECORDS);
+            fW.verifyFileExistence(EXISTING_RECORDS);
+            fW.verifyFileExistence(EXISTING_BBOXES);
+            fW.verifyFileExistence(VECTOR_RECORDS);
+            existingHarvests = ExistingHarvests.getExistingHarvests();
+            existingCallsToCheck = ExistingCallsToCheck.getExistingCallsToCheck();
+            srf = SourceRecordFiles.getSourceRecords();
+
             startErrorLog = new String(Files.readAllBytes(Paths.get(ERROR_LOG)));
+            startWarningLog = new String(Files.readAllBytes(Paths.get(WARNING_LOG)));
 
             Geodisy geo = new Geodisy();
-            FileWriter fW = new FileWriter();
-
-            ExistingSearches existingSearches = ExistingSearches.readExistingSearches();
 
             //This section is the initial search for new records in the repositories. We will need to add a new harvest call for each new repository type [Geodisy 2]
-            List<SourceJavaObject> sJOs = geo.harvestDataverse();
+            List<SourceJavaObject> sJOs = geo.harvestDataverseMetadata();
             for(SourceJavaObject sJO : sJOs) {
-                existingSearches.addOrReplaceRecord(new DataverseRecordInfo(sJO, logger.getName()));
+                existingHarvests.addOrReplaceRecord(new DataverseRecordInfo(sJO, logger.getName()));
             }
-            crosswalkSJOsToGeoBlackJSON(sJOs);
-            crosswalkSJOsToXML(sJOs);
+            //deleteEmptyFolders();
 
-            endRecsToCheck = trimErrors();
-            endErrorLog = trimInfo();
-            if(!startRecsToCheck.equals(endRecsToCheck)) {
-                emailCheckRecords();
-                fW.writeStringToFile(endRecsToCheck,RECORDS_TO_CHECK);
+            if(!IS_WINDOWS)
+                sendRecordsToGeoBlacklight();
+
+
+            endErrorLog = keepMajErrors();
+            endWarningLog = keepMinErrors();
+
+                HashMap<String, String> newRecords = existingCallsToCheck.getNewRecords();
+                if(newRecords.size() != 0){
+                    recsToCheck = new String(Files.readAllBytes(Paths.get(RECORDS_TO_CHECK)));
+                    Set<String> keys = newRecords.keySet();
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                    LocalDateTime now = LocalDateTime.now();
+                    recsToCheck += System.lineSeparator() + dtf.format(now);
+                    for(String k : keys){
+                        recsToCheck += System.lineSeparator() + newRecords.get(k);
+                    }
+                    emailCheckRecords();
+                    fW.writeStringToFile(recsToCheck,RECORDS_TO_CHECK);
             }
             if(!startErrorLog.equals(endErrorLog)){
                 fW.writeStringToFile(endErrorLog,ERROR_LOG);
             }
-            existingSearches.saveExistingSearchs();
+            if(!startWarningLog.equals(endWarningLog)){
+                fW.writeStringToFile(endWarningLog,WARNING_LOG);
+            }
+            existingHarvests.saveExistingSearchs(existingHarvests.getRecordVersions(),EXISTING_RECORDS, "ExistingRecords");
+            existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
+            ExistingRasterRecords existingRasterRecords = ExistingRasterRecords.getExistingRasters();
+            existingRasterRecords.saveExistingFile(existingRasterRecords.getRecords(),RASTER_RECORDS, "ExistingRasterRecords");
+            ExistingVectorRecords existingVectorRecords = ExistingVectorRecords.getExistingVectors();
+            existingVectorRecords.saveExistingFile(existingVectorRecords.getRecords(),VECTOR_RECORDS,"ExistingVectorRecords");
+
 
         } catch (IOException  e) {
             logger.error("Something went wrong trying to read permanent file ExistingRecords.txt!");
@@ -74,34 +110,61 @@ public class MyTimerTask extends TimerTask {
         }
     }
 
-    private void crosswalkSJOsToGeoBlackJSON(List<SourceJavaObject> sJOs) {
-        for(SourceJavaObject sjo: sJOs){
-            DataverseJavaObject djo = (DataverseJavaObject) sjo;
-            DataGBJSON dataGBJSON = new DataGBJSON(djo);
-            dataGBJSON.createJson();
-        }
+    private void deleteEmptyFolders() {
+        boolean isFinished;
+        String location = GEODISY_PATH_ROOT + GeodisyStrings.replaceSlashes("metadata/");
+        do {
+            isFinished = true;
+            isFinished = deleteFolders(location, isFinished);
+    }while(!isFinished);
+        location = GEODISY_PATH_ROOT + GeodisyStrings.replaceSlashes("datasetFiles/");
+        do {
+            isFinished = true;
+            isFinished = deleteFolders(location,isFinished);
+        }while(!isFinished);
     }
 
-    /**
-     * Create ISO XML files and run Geocombine on them to push them to GeoBlacklight
-     * @param sJOs
-     */
-    private void crosswalkSJOsToXML(List<SourceJavaObject> sJOs) {
-        Crosswalk crosswalk = new Crosswalk();
-        crosswalk.convertSJOs(sJOs);
+    private boolean deleteFolders(String location, boolean isFinished) {
+
+        File folder = new File(location);
+        File[] listofFiles = folder.listFiles();
+        if (listofFiles.length == 0) {
+            System.out.println("Folder Name :: " + folder.getAbsolutePath() + " is deleted.");
+            folder.delete();
+            return false;
+        } else {
+            for (int j = 0; j < listofFiles.length; j++) {
+                File file = listofFiles[j];
+                if (file.isDirectory()) {
+                    deleteFolders(file.getAbsolutePath(),isFinished);
+                }
+            }
+        }
+        return isFinished;
     }
+
+
+    private void sendRecordsToGeoBlacklight() {
+        GeoCombine combine = new GeoCombine();
+        combine.index();
+
+    }
+
+
+
+
 
     /**
      * Removes INFO messages from the error log.
      * @return String with no INFO messages
      * @throws IOException
      */
-    private String trimInfo()throws IOException {
+    private String keepMajErrors()throws IOException {
         String end = new String(Files.readAllBytes(Paths.get(ERROR_LOG)));
         String[] lines = end.split(System.getProperty("line.separator"));
         StringBuilder sb = new StringBuilder();
         for(String s: lines){
-            if(s.contains("INFO"))
+            if(s.contains("INFO")||s.contains("WARN"))
                 continue;
             sb.append(s+System.lineSeparator());
         }
@@ -113,18 +176,27 @@ public class MyTimerTask extends TimerTask {
      * @return String with no ERROR messages
      * @throws IOException
      */
-    public String trimErrors() throws IOException {
+    public String keepInfo() throws IOException {
         String end = new String(Files.readAllBytes(Paths.get(RECORDS_TO_CHECK)));
         String[] lines = end.split(System.getProperty("line.separator"));
         StringBuilder sb = new StringBuilder();
         for(String s: lines){
-            if(s.contains("ERROR"))
+            if(s.contains("ERROR")||s.contains("WARN"))
                 continue;
             sb.append(s + System.lineSeparator());        }
         return sb.toString();
     }
 
-
+    private String keepMinErrors() throws IOException{
+        String end = new String(Files.readAllBytes(Paths.get(WARNING_LOG)));
+        String[] lines = end.split(System.getProperty("line.separator"));
+        StringBuilder sb = new StringBuilder();
+        for(String s: lines){
+            if(s.contains("ERROR")||s.contains("INFO"))
+                continue;
+            sb.append(s + System.lineSeparator());        }
+        return sb.toString();
+    }
     //TODO setup email system
     private void emailCheckRecords() {
     }

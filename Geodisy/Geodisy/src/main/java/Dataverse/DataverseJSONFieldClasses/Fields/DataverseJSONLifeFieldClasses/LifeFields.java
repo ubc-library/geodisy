@@ -35,7 +35,7 @@ public class LifeFields extends MetadataType {
     }
 
     @Override
-    public void setFields(JSONObject jo) {
+    public LifeFields setFields(JSONObject jo) {
         JSONArray a;
         JSONObject jsonObject;
         String fieldName, value;
@@ -60,7 +60,7 @@ public class LifeFields extends MetadataType {
 
             }
         }
-
+        return this;
     }
 
     @Override

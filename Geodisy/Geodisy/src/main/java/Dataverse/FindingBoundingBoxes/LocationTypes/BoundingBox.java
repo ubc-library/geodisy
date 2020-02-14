@@ -1,12 +1,22 @@
 package Dataverse.FindingBoundingBoxes.LocationTypes;
 import java.io.Serializable;
 
+import static BaseFiles.GeodisyStrings.*;
+
 public class BoundingBox implements Serializable {
     private static final long serialVersionUID = -515599959188846468L;
     private double latSouth = 361;
     private double latNorth = 361;
     private double longWest = 361;
     private double longEast = 361;
+    private boolean generated = false;
+    private String fileName = "";
+    private String geometryType = "Non-geospatial";
+    private String geoserverLabel = "";
+    private String doi = "";
+    private String width = "0";
+    private String height = "0";
+    private String place = "";
 
     /**
      *
@@ -26,10 +36,10 @@ public class BoundingBox implements Serializable {
         return longitude;
     }
     public boolean hasBoundingBox(){
-        return latSouth!=361 && latNorth!=361 && longEast!=361 && longWest!=361;
+        return (getLatSouth()>=-90 && getLatNorth()<=90 && getLongEast()<=180 && getLongWest()>=-180)&&(getLatSouth()!=361 && getLatNorth()!=361 && getLongEast()!=361 && getLongWest()!=361)&&!((getLatSouth()==0 && getLatNorth()==0) || (getLongEast()==0 && getLongWest()==0));
     }
     public boolean hasUTMCoords(){
-        return latSouth <-90 || latNorth > 361 || Math.abs(longEast) > 361 || Math.abs(longWest) > 361;
+        return Math.abs(getLatSouthUnchecked()) > 90 || Math.abs(getLatNorthUncheck()) > 90 || Math.abs(getLongEastUnchecked()) > 180 || Math.abs(getLongWestUnchecked()) > 180;
     }
     /**
      *
@@ -44,7 +54,7 @@ public class BoundingBox implements Serializable {
         } catch (NumberFormatException e){
             val = 361;
         }
-        return checkLat(val);
+        return val;
     }
 
     private double getDoubleLong(String numString) {
@@ -54,15 +64,15 @@ public class BoundingBox implements Serializable {
         } catch (NumberFormatException e){
             val = 361;
         }
-        return checkLong(val);
+        return val;
     }
 
     public double getLatSouth() {
-        return latSouth;
+        return latNorth>=latSouth? checkLat(latSouth):checkLat(latNorth);
     }
 
     public void setLatSouth(double latSouth) {
-        this.latSouth = checkLat(latSouth);
+        this.latSouth = latSouth;
 
     }
 
@@ -71,11 +81,11 @@ public class BoundingBox implements Serializable {
     }
 
     public double getLatNorth() {
-        return latNorth;
+        return latNorth>=latSouth? checkLat(latNorth):checkLat(latSouth);
     }
 
     public void setLatNorth(double latNorth) {
-        this.latNorth = checkLat(latNorth);
+        this.latNorth = latNorth;
     }
 
     public void setLatNorth(String latNorth){
@@ -83,11 +93,11 @@ public class BoundingBox implements Serializable {
     }
 
     public double getLongWest() {
-        return longWest;
+        return checkLong(longWest);
     }
 
     public void setLongWest(double longWest) {
-        this.longWest = checkLong(longWest);
+        this.longWest = longWest;
     }
 
     public void setLongWest(String longWest){
@@ -95,7 +105,7 @@ public class BoundingBox implements Serializable {
     }
 
     public double getLongEast() {
-        return longEast;
+        return checkLong(longEast);
     }
 
     public void setLongEast(double longEast) {
@@ -106,4 +116,93 @@ public class BoundingBox implements Serializable {
         this.longEast = getDoubleLong(longEast);
     }
 
+    public double getLongEastUnchecked(){
+        return longEast;
+    }
+
+    public double getLongWestUnchecked(){
+        return longWest;
+    }
+
+    public double getLatNorthUncheck(){
+        return latNorth>latSouth? latNorth:latSouth;
+    }
+
+    public double getLatSouthUnchecked(){
+        return latSouth<latNorth? latSouth:latNorth;
+    }
+    public boolean isGenerated() {
+        return generated;
+    }
+
+    public void setGenerated(boolean generated) {
+        this.generated = generated;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        if(fileName.startsWith("/"))
+            fileName = fileName.substring(1);
+        this.fileName = fileName;
+    }
+
+    public String getGeometryType() {
+        return geometryType;
+    }
+
+    public void setGeometryType(String geometryType) {
+        this.geometryType = geometryType;
+    }
+
+    public String getGeoserverLabel() {
+        return geoserverLabel;
+    }
+
+    public void setGeoserverLabel(String s){
+        geoserverLabel = "geodisy:" + s;
+    }
+
+
+    public boolean isWMS() {
+        for(String s: PREVIEWABLE_FILE_EXTENSIONS) {
+            if (fileName.toLowerCase().endsWith(s))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean isWFS(){
+        for(String s:OGRINFO_VECTOR_FILE_EXTENSIONS){
+            if(fileName.toLowerCase().endsWith(s))
+                return true;
+        }
+        return false;
+    }
+
+    public String getWidth() {
+        return width;
+    }
+
+    public void setWidth(String width) {
+        this.width = width;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
 }

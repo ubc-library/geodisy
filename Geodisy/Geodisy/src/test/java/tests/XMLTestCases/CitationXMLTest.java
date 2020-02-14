@@ -40,7 +40,7 @@ DataverseJavaObject djo;
             String jsonData = sb.toString();
             JSONObject jo = new JSONObject(jsonData);
             DataverseParser dataverseParser = new DataverseParser();
-            djo = dataverseParser.parse(jo, "another fake server name");
+            djo = dataverseParser.parse(jo, "another fake server name", true);
             System.out.println(djo.getBoundingBox().getLatNorth());
         } catch (IOException e) {
             e.printStackTrace();
@@ -79,7 +79,7 @@ DataverseJavaObject djo;
         ISOXMLGen xmlGenerator = new ISOXMLGen(djo);
         XMLDocObject xmlFile = xmlGenerator.generateXMLFile();
         ISO_19115 iso = new ISO_19115();
-        iso.saveXMLToFile(xmlFile.getDoc(), xmlFile.getDoi());
+        iso.saveXMLToFile(xmlFile.getDoc(), xmlFile.getDoi(), true);
     }
 
     @Test

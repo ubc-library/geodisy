@@ -1,14 +1,24 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 
+import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONObject;
 
+import static BaseFiles.GeodisyStrings.*;
 import static Dataverse.DVFieldNameStrings.*;
 
 public class GeographicBoundingBox extends CompoundJSONField {
     private BoundingBox bb;
     String doi;
+    private String projection = "";
+    private String fileName = "";
+    private String geometryType = "Non-Geospatial";
+    private String geoserverLabel = "";
+    private boolean generated = false;
+    private int fileNumber = 0;
+    String fileURL = "";
+
 
     public GeographicBoundingBox(String doi) {
         this.doi = doi;
@@ -20,11 +30,66 @@ public class GeographicBoundingBox extends CompoundJSONField {
         this.bb = bb;
     }
 
+    public String getFileNumber(){
+        if(fileNumber==0)
+            return "0";
+        return String.valueOf(fileNumber);
+    }
+
+    public void setFileNumber(int i){
+        fileNumber = i;
+    }
+    public boolean isWMS(){
+        return bb.isWMS();
+    }
+
+    public boolean isWFS() {
+        return bb.isWFS();
+    }
+    //TODO make sure we create a Geoserver Location for each file
+    public String getGeoserverLocation() {
+        int colon = geoserverLabel.lastIndexOf(":");
+        String answer;
+        if(colon==-1)
+            answer = geoserverLabel;
+        else{
+            String temp = geoserverLabel.substring(colon+1);
+            temp = geoserverLabel.substring(0,colon) + temp;
+            answer = temp;
+        }
+        if(Character.isDigit(answer.charAt(0)))
+            answer = "g_" + answer;
+        String type;
+        if(isGeneratedFromGeoFile()) {
+            if (geometryType.equalsIgnoreCase(RASTER))
+                type = "r";
+            else if (geometryType.equalsIgnoreCase("Polygon"))
+                type = "v";
+            else
+                type = "g";
+        }else
+            type = "m";
+        answer = answer + type + fileNumber;
+        return answer.replace(".","_").replace("/","_").replace("\\","_");
+    }
+
+    public String getBaseGeoserverLocation(){
+        int colon = geoserverLabel.lastIndexOf(":");
+        String answer;
+        if(colon==-1)
+            answer = geoserverLabel;
+        else{
+            String temp = geoserverLabel.substring(colon+1);
+            temp = geoserverLabel.substring(0,colon) + temp;
+            temp.replace(".","_").replace("/","_").replace("\\","_");
+            answer = temp;
+        }
+        return answer;
+    }
     public String getWestLongitude() {
         checkCoords(bb);
         return String.valueOf(bb.getLongWest());
     }
-
     public double getWestLongDub(){
         checkCoords(bb);
         return bb.getLongWest();
@@ -42,7 +107,6 @@ public class GeographicBoundingBox extends CompoundJSONField {
         checkCoords(bb);
         return String.valueOf(bb.getLongEast());
     }
-
     public double getEastLongDub(){
         checkCoords(bb);
         return bb.getLongEast();
@@ -59,7 +123,6 @@ public class GeographicBoundingBox extends CompoundJSONField {
         checkCoords(bb);
         return String.valueOf(bb.getLatNorth());
     }
-
     public double getNorthLatDub(){
         checkCoords(bb);
         return bb.getLatNorth();
@@ -68,7 +131,6 @@ public class GeographicBoundingBox extends CompoundJSONField {
     public void setNorthLatitude(String northLatitude) {
         this.bb.setLatNorth(northLatitude);
     }
-
     public void setNorthLatitude(double northLatitude) {
         this.bb.setLatNorth(northLatitude);
     }
@@ -77,7 +139,6 @@ public class GeographicBoundingBox extends CompoundJSONField {
         checkCoords(bb);
         return String.valueOf(bb.getLatSouth());
     }
-
     public double getSouthLatDub(){
         checkCoords(bb);
         return bb.getLatSouth();
@@ -114,6 +175,56 @@ public class GeographicBoundingBox extends CompoundJSONField {
         }
     }
 
+    public void setField(String title, String value){
+        switch (title) {
+            case WEST_LONG:
+                setWestLongitude(value);
+                break;
+            case EAST_LONG:
+                setEastLongitude(value);
+                break;
+            case NORTH_LAT:
+            case NORTH_LAT_LONG:
+                setNorthLatitude(value);
+                break;
+            case SOUTH_LAT:
+            case SOUTH_LAT_LONG:
+                setSouthLatitude(value);
+                break;
+            case PROJECTION:
+                setProjection(value);
+                break;
+            case GEOSERVER_LABEL:
+                setGeoserverLabel(value);
+                break;
+            case GEOMETRY:
+                setGeometryType(value);
+                break;
+            case FILE_NAME:
+                fileName = value;
+                break;
+            case FILE_URL:
+                setFileURL(value);
+                break;
+            case WIDTH:
+                setWidth(value);
+                break;
+            case HEIGHT:
+                setHeight(value);
+                break;
+            case PLACE:
+                bb.setPlace(value);
+            default:
+                errorParsing(this.getClass().getName(),title);
+        }
+    }
+
+
+
+    private void setGeometryType(String value) {
+       geometryType = value;
+    }
+
     @Override
     public String getField(String fieldName) {
         checkCoords(bb);
@@ -128,10 +239,51 @@ public class GeographicBoundingBox extends CompoundJSONField {
             case SOUTH_LAT:
             case SOUTH_LAT_LONG:
                 return getSouthLatitude();
+            case FILE_NAME:
+                return getFileName();
+            case PROJECTION:
+                return getProjection();
+            case GEOSERVER_LABEL:
+                return getGeoserverLocation();
+            case BASE_GEOSERVER_LABEL:
+                return geoserverLabel;
+            case GEOMETRY:
+                return geometryType;
+            case FILE_URL:
+                return fileURL;
+            case WIDTH:
+                return getWidth();
+            case HEIGHT:
+                return getHeight();
+            case PLACE:
+                return bb.getPlace();
             default:
                 errorGettingValue(this.getClass().getName(),fieldName);
                 return "Bad fieldName";
         }
+    }
+
+
+    private void setGeoserverLabel(String value){
+        geoserverLabel = value;
+    }
+
+    private String getProjection() {
+        return projection;
+    }
+    private void setProjection(String s){
+        projection = s;
+    }
+
+    private String getFileName() {
+        return fileName;
+    }
+
+    private void setFileName(String name){
+       while(name.startsWith("/")) {
+           name = name.substring(1);
+       }
+        fileName = name;
     }
 
     /**
@@ -144,6 +296,65 @@ public class GeographicBoundingBox extends CompoundJSONField {
             bb.setLatSouth(361);
             bb.setLatNorth(361);
             bb.setLongWest(361);
+        }
+    }
+
+    public BoundingBox getBB(){
+        return bb;
+    }
+    public void setBB(BoundingBox b){
+        bb = b;
+    }
+    public boolean isGeneratedFromGeoFile(){
+        return generated;
+    }
+    public void setIsGeneratedFromGeoFile(boolean generated){this.generated=generated;}
+
+    public String getOpenGeoMetaLocation() {
+        return OPEN_GEO_METADATA_BASE+folderized(doi)+"iso19115.xml";
+    }
+
+    private String folderized(String doi) {
+        String answer = doi;
+        answer = answer.replace(".","/");
+        int loc = answer.lastIndexOf("/");
+        if(loc==-1) {
+            logger.error("Something went wrong with creating a folder structure for the doi using doi: " + doi);
+            return "";
+        }
+        answer = answer.substring(0,loc+1);
+        return answer;
+    }
+    public boolean hasBB(){
+        return bb.hasBoundingBox();
+    }
+
+    private void setFileURL(String fileURL) {
+        this.fileURL = fileURL;
+    }
+    private void setHeight(String value) {
+        bb.setHeight(value);
+    }
+
+    private void setWidth(String value) {
+        bb.setWidth(value);
+    }
+    private String getWidth() {
+        return bb.getWidth();
+    }
+    private String getHeight() {
+        return bb.getWidth();
+    }
+
+    public void setWidthHeight(String gdalString) {
+        int start = gdalString.indexOf("Size is ")+8;
+        if(start>7) {
+            int end = start + (gdalString.substring(start).indexOf(","));
+            int coord = gdalString.indexOf("Coordinate System is:");
+            if(end>start && coord>end) {
+                setWidth(gdalString.substring(start, end));
+                setHeight(gdalString.substring(end + 1, coord));
+            }
         }
     }
 }

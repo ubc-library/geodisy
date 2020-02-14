@@ -7,12 +7,13 @@ package BaseFiles;/*
 
 
 import Dataverse.DataverseAPI;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.SourceAPI;
-import Dataverse.DataverseJavaObject;
 import Dataverse.SourceJavaObject;
-
+import Dataverse.DataverseJavaObject;
+import Dataverse.DownloadDJOFiles;
 import DataSourceLocations.Dataverse;
-import Dataverse.ExistingSearches;
+import GeoServer.GeoServerAPI;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -32,15 +33,16 @@ public class Geodisy {
      * Front side of middleware, this part harvests data from Dataverse
      */
 
-    public List<SourceJavaObject> harvestDataverse() {
+    public List<SourceJavaObject> harvestDataverseMetadata() {
         Dataverse dv = new Dataverse();
         String[] dvs = dv.getDataLocationURLs();
         LinkedList<SourceJavaObject> records = new LinkedList<>();
         SourceAPI dVAPI;
         for (String s : dvs) {
             dVAPI = new DataverseAPI(s);
-            records = dVAPI.harvest();
+            records = dVAPI.harvest(records);
         }
+
         return records;
     }
 
@@ -58,7 +60,8 @@ public class Geodisy {
     /**
      * Backside of middleware, this is the part that sends the processed data/metadata to Geoserver
      */
-    public void exportToGeoserver(){
-        //TODO
+    public void exportToGeoserver(SourceJavaObject sjo){
+        GeoServerAPI geoServerAPI = new GeoServerAPI(sjo);
+
     }
 }

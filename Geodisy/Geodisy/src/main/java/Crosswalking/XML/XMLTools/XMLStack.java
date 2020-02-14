@@ -4,7 +4,7 @@ import org.w3c.dom.Element;
 
 import java.util.Stack;
 
-public class XMLStack{
+public class XMLStack extends Stack{
     Stack<Element> stack;
 
     public XMLStack() {
@@ -23,7 +23,7 @@ public class XMLStack{
         return stack.peek();
     }
 
-    public Boolean empty(){
+    public boolean empty(){
         return stack.isEmpty();
     }
 

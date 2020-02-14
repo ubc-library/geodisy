@@ -33,7 +33,7 @@ public class AstroFields extends MetadataWSimple {
     }
 
     @Override
-    public void setFields(JSONObject jo) {
+    public AstroFields setFields(JSONObject jo) {
         String fieldName = jo.getString(TYPE_NAME).toLowerCase();
         Object val =  jo.get(VAL);
         if(fieldName.contains(REDSHIFT_FIELDS))
@@ -46,6 +46,7 @@ public class AstroFields extends MetadataWSimple {
             spatialFields.setFields((JSONArray) val);
         else
             simpleAstroFields.setFields((JSONArray) val);
+        return this;
     }
     @Override
     public String getField(String field){

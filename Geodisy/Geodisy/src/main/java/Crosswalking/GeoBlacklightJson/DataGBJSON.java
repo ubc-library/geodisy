@@ -1,9 +1,13 @@
 package Crosswalking.GeoBlacklightJson;
 
 import BaseFiles.GeoLogger;
-import DataSourceLocations.Dataverse;
+import BaseFiles.GeodisyStrings;
+import Dataverse.DVFieldNameStrings;
+import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Author;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Description;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
+import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicCoverage;
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordFile;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
@@ -11,109 +15,180 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 
-import static BaseFiles.GeodisyStrings.XML_NS;
-import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.EXTERNAL_SERVICES;
-import static Crosswalking.XML.XMLTools.XMLStrings.OPEN_METADATA_LOCAL_REPO;
+import static BaseFiles.GeodisyStrings.*;
+import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.*;
+import static Crosswalking.GeoBlacklightJson.GeoBlacklightStrings.RECORD_URL;
 import static Crosswalking.XML.XMLTools.XMLStrings.TEST_OPEN_METADATA_LOCAL_REPO;
 import static Dataverse.DVFieldNameStrings.*;
 
 public class DataGBJSON extends GeoBlacklightJSON{
     GeoLogger logger;
+
     public DataGBJSON(DataverseJavaObject djo) {
         super();
         javaObject = djo;
         geoBlacklightJson = "";
         doi = djo.getDOI();
         logger = new GeoLogger(this.getClass());
-        files = djo.getGeoDataFiles();
+        geoFiles = djo.getGeoDataFiles();
+        geoMeta = djo.getGeoDataMeta();
     }
     //TODO check if Dataverse publisher field be included in the slug?
     @Override
-    protected JSONObject getRequiredFields(DataverseRecordFile drf, int totalFiles, int thisFile) {
+    protected JSONObject getRequiredFields(GeographicBoundingBox gbb, int total){
+        String number = gbb.getFileNumber();
         jo.put("geoblacklight_version","1.0");
-        jo.put("dc_identifier_s", javaObject.getDOI());
-        jo.put("layer_slug_s",drf.getUUID(doi + drf.getTitle()));
-
-        String fileCount = "";
-        if(totalFiles>1){
-            fileCount = " (" + thisFile + " of " + totalFiles + ")";
+        jo.put("dc_identifier_s", GeodisyStrings.urlSlashes(javaObject.getSimpleFieldVal(DVFieldNameStrings.RECORD_URL)));
+        String geoserverLabel = getgeoserverLabel(gbb).toLowerCase();
+        jo.put("layer_slug_s", geoserverLabel);
+        if(total>1) {
+            jo.put("dc_title_s", javaObject.getSimpleFields().getField(TITLE) + " (" + number + " of " + total + ")");
         }
-        jo.put("dc_title_s",javaObject.getSimpleFields().getField(TITLE) + fileCount);
-        jo.put("dc_rights_s",javaObject.getSimpleFields().getField(LICENSE));
+        else
+            jo.put("dc_title_s",javaObject.getSimpleFields().getField(TITLE));
+        jo.put("dc_rights_s","Public");
         jo.put("dct_provenance_s",javaObject.getSimpleFields().getField(PUBLISHER));
-        jo.put("solr_geom","ENVELOPE" + getBB(drf));
-        addMetadataDownloadOptions(drf);
+        jo.put("solr_geom","ENVELOPE(" + getBBString(gbb.getBB()) + ")");
         return jo;
     }
 
-    @Override
-    protected JSONObject getRequiredFields(){
-        jo.put("geoblacklight_version","1.0");
-        jo.put("dc_identifier_s", javaObject.getDOI());
-        jo.put("layer_slug_s", DataverseRecordFile.getUUID(getDoi()));
-        jo.put("dc_title_s",javaObject.getSimpleFields().getField(TITLE));
-        jo.put("dc_rights_s",javaObject.getSimpleFields().getField(LICENSE));
-        jo.put("dct_provenance_s",javaObject.getSimpleFields().getField(PUBLISHER));
-        jo.put("solr_geom","ENVELOPE" + getBB(javaObject));
-        addMetadataDownloadOptions();
-        return jo;
+    private void addRecommendedFields(String geoserverLabel, GeographicBoundingBox gbb) {
+        getDSDescriptionSingle();
+        if(!gbb.getField(GEOMETRY).isEmpty())
+            jo.put("layer_geom_type_s",gbb.getField(GEOMETRY));
+        JSONArray ja = addBaseRecordInfo();
+        if(!gbb.getField(GEOMETRY).equals("Non-Geospatial") && USE_GEOSERVER) {
+            ja = addDataDownloadOptions(gbb, ja);
+        }
+        String externalServices = "{";
+        for (Object o : ja) {
+            if (!externalServices.equals("{"))
+                externalServices += ",";
+            externalServices += (String) o;
+        }
+        externalServices += "}";
+
+        jo.put(EXTERNAL_SERVICES, externalServices);
+        if(!geoserverLabel.isEmpty())
+            jo.put("layer_id_s", geoserverLabel);
     }
 
-    private String getBB(DataverseJavaObject djo) {
-        return getBoxStringFromBB(djo.getBoundingBox());
+    private String getgeoserverLabel(GeographicBoundingBox gbb) {
+        boolean generated = gbb.isGeneratedFromGeoFile();
+        if (generated) {
+            return "geodisy:" + gbb.getField(GEOSERVER_LABEL);
+        }
+        else
+            return gbb.getField(GEOSERVER_LABEL);
     }
 
-    private String getBB(DataverseRecordFile drf){
-        return getBoxStringFromBB(drf.getBb());
-    }
 
-    private String getBoxStringFromBB(BoundingBox bb){
-        return "(" + bb.getLongWest()+ ", " + bb.getLongEast()+ ", " + bb.getLatNorth()+ ", " + bb.getLatSouth() + ")";
-    }
-
-    @Override
-    protected void addMetadataDownloadOptions(DataverseRecordFile drf) {
-        JSONArray ja = addBaseMetadataDownloadOptions();
-        jo.put(EXTERNAL_SERVICES,ja);
-        addWFS();
-        if(drf.isPreviewable())
-            addWMS();
-    }
-    @Override
-    protected void addMetadataDownloadOptions() {
-        JSONArray ja = addBaseMetadataDownloadOptions();
-        jo.put(EXTERNAL_SERVICES,ja);
+    private String getBBString(BoundingBox bb){
+        return bb.getLongWest() + ", " + bb.getLongEast() + ", " + bb.getLatNorth() + ", " + bb.getLatSouth();
     }
 
     @Override
-    protected JSONArray addBaseMetadataDownloadOptions(){
-        JSONArray ja = new JSONArray();
-        ja.put(XML_NS + "mdb/2.0"); //ISO 19139
-        ja.put("http://www.opengis.net/cat/csw/csdgm/");
-        ja.put("http://www.loc.gov/mods/v3");
-        ja.put("http://www.w3.org/1999/xhtml");
-        ja.put(("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""));
-        ja.put("xsi:schemaLocation=\"http://standards.iso.org/iso/19115/-3/mdb/2.0/mdb.xsd\">");
+    protected JSONArray addDataDownloadOptions(GeographicBoundingBox gbb, JSONArray ja) {
+        //TODO uncomment once Geoserver parts are working
+        /*ja.put(WMS);
+        if (gbb.getField(FILE_NAME).endsWith(".shp"))
+            ja.put(WFS);*/
+        if(!gbb.getField(FILE_URL).isEmpty())
+            ja.put(DIRECT_FILE_DOWNLOAD + stringed(gbb.getField(FILE_URL)));
+        //TODO uncomment once pushing to OpenGeoMetadata is working
+        //ja.put(ISO_METADATA + stringed(gbb.getOpenGeoMetaLocation()));
+
         return ja;
     }
+
+    @Override
+    protected JSONArray addBaseRecordInfo(){
+        JSONArray ja = new JSONArray();
+        ja.put(RECORD_URL + GeodisyStrings.urlSlashes(stringed(javaObject.getSimpleFieldVal(DVFieldNameStrings.RECORD_URL))));
+        ja.put(ISO_METADATA + stringed(END_XML_JSON_FILE_PATH + GeodisyStrings.urlSlashes(javaObject.getSimpleFieldVal(PERSISTENT_ID).replace(".","/") + "/" + ISO_METADATA_FILE_ZIP)));
+        return ja;
+    }
+
     //TODO, check I am getting all the optional fields I should be
     @Override
-    protected JSONObject getOptionalFields() {
-        getDSDescription();
+    protected JSONObject getOptionalFields(DataverseRecordFile drf, int totalRecordsInStudy) {
+        GeographicBoundingBox gbb = drf.getGBB();
+        String geoserverLabel = getgeoserverLabel(gbb).toLowerCase();
+        getFileType(drf);
+        addRecommendedFields(geoserverLabel, gbb);
         getAuthors();
         getIssueDate();
         getLanguages();
+        getPlaceNames(gbb);
         getSubjects();
         getType();
+        getRelatedRecords(drf);
+
         return jo;
     }
 
+    private void getRelatedRecords(DataverseRecordFile drf) {
+        LinkedList<DataverseGeoRecordFile> geo = javaObject.getGeoDataFiles();
+        LinkedList<DataverseGeoRecordFile> meta = javaObject.getGeoDataMeta();
+        LinkedList<DataverseGeoRecordFile> recs = (geo.size()>=meta.size())? geo:meta;
+        if(recs.size()>1){
+            JSONArray ja = new JSONArray();
+            for(DataverseGeoRecordFile dgrf : recs){
+                if(!drf.getGeoserverLabel().equals(dgrf.getGeoserverLabel()))
+                    ja.put(dgrf.getGeoserverLabel());
+            }
+            jo.put("dc_source_sm",ja);
+            jo.put("dct_isPartOf_sm",javaObject.getSimpleFieldVal(TITLE));
+        }
+    }
+
+    private void getFileType(DataverseRecordFile drf) {
+        if(!drf.getGBB().getField(FILE_URL).isEmpty()) {
+            String format = getFileTypeName(drf.getOriginalTitle());
+            if(format.isEmpty())
+                format = "File";
+            jo.put("dc_format_s", format);
+        }
+    }
+
+    private String getFileTypeName(String originalTitle) {
+        try {
+            String extension = originalTitle.substring(originalTitle.lastIndexOf(".") + 1).toLowerCase();
+            switch (extension){
+                case ("zip"):
+                    return "Zip File";
+                case ("shp"):
+                    return "Shapefile";
+                case ("geojson"):
+                    return "GeoJSON";
+                case ("tif"):
+                case ("geotif"):
+                case ("tiff"):
+                case ("geotiff"):
+                    return "GepTIFF";
+                case ("png"):
+                    return "PNG";
+                default:
+                    return "Geospatial File";
+
+
+
+            }
+        }catch (IndexOutOfBoundsException e){
+            logger.warn("There was no extension on the original file name for record " + this.doi);
+            return "";
+        }
+    }
+
     private void getType() {
-        jo.put("dc_type_s","dataset");
+        jo.put("dc_type_s","Dataset");
     }
 
     private void getSubjects() {
@@ -125,6 +200,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         jo.put("dc_subject_sm",ja);
     }
 
+    /*This version is only be activated when the GeoBlacklight schema changes to allow multiple values
     private void getLanguages() {
         JSONArray ja = new JSONArray();
         List<String> languages = javaObject.getCitationFields().getListField(LANGUAGE);
@@ -133,49 +209,109 @@ public class DataGBJSON extends GeoBlacklightJSON{
         }
         jo.put("dc_language_s",ja);
     }
+     */
+    // This version is only to be used while the GeoBlacklight schema doesn't allow multiple value, when that happens use the method directly above
+    private void getLanguages() {
+        String languageStrings = "";
+        List<String> languages = javaObject.getCitationFields().getListField(LANGUAGE);
+        if(languages.size()==0)
+            return;
+        for (String s : languages) {
+            if (languageStrings.isEmpty())
+                languageStrings = s;
+            else
+                languageStrings = languageStrings + ", " + s;
+        }
+        jo.put("dc_language_s", languageStrings);
+    }
 
     private void getIssueDate() {
-        jo.put("dct_issued_dt",javaObject.getSimpleFields().getField(PUB_DATE));
+        String dateString = javaObject.getSimpleFields().getField(PUB_DATE);
+        if(dateString.equals(""))
+            return;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm:ss'Z'");
+        LocalDate date = LocalDate.parse(dateString);
+        LocalDateTime dateTime = date.atStartOfDay();
+        String dateTimeString = dateTime.format(formatter);
+        jo.put("dct_issued_dt",dateTimeString);
     }
 
 
     private void getAuthors() {
         JSONArray ja = new JSONArray();
         List<Author> authors = javaObject.getCitationFields().getListField(AUTHOR);
+        if(authors.size()==0)
+            return;
         for(Author a:authors){
             ja.put(a.getField(AUTHOR_NAME));
         }
         jo.put("dc_creator_sm",ja);
     }
+    private void getPlaceNames(GeographicBoundingBox gbb){
+        JSONArray ja =  new JSONArray();
+        HashSet<String> placeNames = new HashSet<>();
+        List<GeographicCoverage> places = javaObject.getGeoFields().getGeoCovers();
+        for(GeographicCoverage gc:places){
+            for(String place:gc.getPlaceNames()){
+                placeNames.add(place);
+            }
+        }
+        if(!gbb.getField(PLACE).isEmpty()){
+            ja.put(gbb.getField(PLACE));
+            jo.put("dct_spatial_sm",ja);
+        } else if(placeNames.size()>0) {
+            for (String s : placeNames) {
+                ja.put(s);
+            }
+            jo.put("dct_spatial_sm",ja);
+        }
 
+    }
+    //Description as array, but that seems to be wrong
     private void getDSDescription() {
         JSONArray ja = new JSONArray();
         List<Description> descriptions = javaObject.getCitationFields().getListField(DS_DESCRIPT);
+        if(descriptions.size()==0)
+            return;
         for(Description d:descriptions){
             ja.put(d.getDsDescriptionValue());
         }
         jo.put("dc_description_s",ja);
     }
+    //Description as String, but that could be wrong
+    private void getDSDescriptionSingle(){
+        String answer = "";
+        List<Description> descriptions = javaObject.getCitationFields().getListField(DS_DESCRIPT);
+        if(descriptions.size()==0)
+            return;
+        for(Description d:descriptions){
+            answer += d.getDsDescriptionValue()+" ";
+        }
+        if(!answer.isEmpty())
+            jo.put("dc_description_s",answer);
+    }
 
-    public void saveJSONToFile(String json, String doi, String uuid){
-        genDirs(doi + "/" + uuid, OPEN_METADATA_LOCAL_REPO);
+    public void saveJSONToFile(String json, String doi, String folderName){
+        String name = folderName;
+        String end = "";
+        if(folderName.contains("(")){
+            name = folderName.substring(0,folderName.indexOf(" ("));
+            end = "/" + getNumber(folderName);
+        }
+        genDirs(name + end, BASE_LOCATION_TO_STORE_METADATA);
         BaseFiles.FileWriter file = new BaseFiles.FileWriter();
         try {
-            file.writeStringToFile(json,"./"+OPEN_METADATA_LOCAL_REPO + doi + "/" + uuid + "/" +"geoblacklight.json");
+            file.writeStringToFile(json,GeodisyStrings.getRoot() + BASE_LOCATION_TO_STORE_METADATA + name.replace(".","/") + end + "/" +"geoblacklight");
         } catch (IOException e) {
             logger.error("Something went wrong trying to create a JSON file with doi:" + doi);
         }
 
     }
 
-    public void saveJSONToFile(String json, String doi){
-        genDirs(doi + "/" , OPEN_METADATA_LOCAL_REPO);
-        BaseFiles.FileWriter file = new BaseFiles.FileWriter();
-        try {
-            file.writeStringToFile(json,"./"+OPEN_METADATA_LOCAL_REPO + doi + "/" + "/" +"geoblacklight.json");
-        } catch (IOException e) {
-            logger.error("Something went wrong trying to create a JSON file with doi:" + doi);
-        }
+    private String getNumber(String folderName) {
+        int start = folderName.indexOf("File ") + 5;
+        int end = folderName.indexOf(" of");
+        return folderName.substring(start,end);
     }
 
     public void saveJSONToTestFile(String json, String doi, String uuid){

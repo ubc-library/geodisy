@@ -1,35 +1,36 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields;
 
+import Dataverse.DataverseJSONFieldClasses.CompoundDateJSONField;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Date;
 import org.json.JSONObject;
 
 import static Dataverse.DVFieldNameStrings.*;
 
-public class DateOfCollection extends CompoundJSONField {
+public class DateOfCollection extends CompoundDateJSONField {
     private Date dateOfCollectionStart, dateOfCollectionEnd;
 
     public DateOfCollection() {
         this.dateOfCollectionStart = new Date("6000");
         this.dateOfCollectionEnd = new Date("");
     }
-
-    public String getDateOfCollectionStart() {
+    @Override
+    public String getStartDate() {
         return dateOfCollectionStart.getDateAsString();
     }
-
-    public void setDateOfCollectionStart(String dateOfCollectionStart) {
+    @Override
+    public void setStartDate(String dateOfCollectionStart) {
         this.dateOfCollectionStart = new Date(dateOfCollectionStart);
     }
-
-    public String getDateOfCollectionEnd() {
+    @Override
+    public String getEndDate() {
         return dateOfCollectionEnd.getDateAsString();
     }
 
-    public void setDateOfCollectionEnd(String dateOfCollectionEnd) {
+    @Override
+    public void setEndDate(String dateOfCollectionEnd) {
         this.dateOfCollectionEnd = new Date(dateOfCollectionEnd);
     }
-
 
     @Override
     public void setField(JSONObject field) {
@@ -37,10 +38,10 @@ public class DateOfCollection extends CompoundJSONField {
         String value = field.getString(VAL);
         switch(title){
             case DATE_OF_COLLECT_START:
-                setDateOfCollectionStart(value);
+                setStartDate(value);
                 break;
             case DATE_OF_COLLECT_END:
-                setDateOfCollectionEnd(value);
+                setEndDate(value);
                 break;
             default:
                 errorParsing(this.getClass().getName(),title);
@@ -51,9 +52,9 @@ public class DateOfCollection extends CompoundJSONField {
     public String getField(String title) {
         switch(title){
             case DATE_OF_COLLECT_START:
-                return getDateOfCollectionStart();
+                return getStartDate();
             case DATE_OF_COLLECT_END:
-                return getDateOfCollectionEnd();
+                return getEndDate();
             default:
                 errorGettingValue(this.getClass().getName(),title);
                 return "Bad field name";

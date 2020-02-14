@@ -9,17 +9,13 @@ import org.apache.logging.log4j.Logger;
  */
 public class GeoLogger {
     public Logger logger;
-    private ExistingCallsToCheck efc;
 
     public GeoLogger(String className) {
         logger = LogManager.getLogger(className);
-        efc = ExistingCallsToCheck.getExistingCallsToCheck();
     }
 
     public GeoLogger(Class classType){
         logger = LogManager.getLogger(classType);
-        efc = ExistingCallsToCheck.getExistingCallsToCheck();
-
     }
 
     public void error(String message){
@@ -27,18 +23,20 @@ public class GeoLogger {
     }
 
 
-    public void info(String message, DataverseJavaObject djo, String loggerName){
-        DataverseRecordInfo dri = new DataverseRecordInfo(djo, loggerName);
-        if(!efc.hasRecord(djo.getDOI())){
-            logger.info(message);
+    public void info(String message, DataverseJavaObject djo){
+        if(djo==null)
             logger.error(message);
-            efc.addOrReplaceRecord(dri);
-        }else if(efc.isNewerRecord(dri,loggerName))
-        {
-            logger.info("UPDATED RECORD: " + message);
-            logger.error("UPDATED RECORD: " + message);
-            efc.addOrReplaceRecord(dri);
+        else {
+            DataverseRecordInfo dri = new DataverseRecordInfo(djo, this.getName());
+            ExistingCallsToCheck efc = ExistingCallsToCheck.getExistingCallsToCheck();
+            if (!efc.hasRecord(djo.getDOI())) {
+                efc.addOrReplaceRecord(dri, message);
+            } else if (efc.isNewerRecord(dri, this.getName())) {
+                efc.addOrReplaceRecord(dri, message);
+            }
+
         }
+
     }
 
     public void warn(String message){

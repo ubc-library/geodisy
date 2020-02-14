@@ -18,11 +18,11 @@ public class SocialScienceNotes extends CompoundJSONField {
     public void setField(JSONObject jo) {
         for(String s: SOCIAL_SIENCE_NOTES_ALL_FIELDS){
             if(!jo.isNull(s)){
-                if(s.contains("Text"))
+                if(s.contains("socialScienceNotesText"))
                     text = jo.getJSONObject(s).getString(VAL);
-                else if(s.contains("Subject"))
+                else if(s.contains("socialScienceNotesSubject"))
                     subject = jo.getJSONObject(s).getString(VAL);
-                else if(s.contains("Type"))
+                else if(s.contains("socialScienceNotesType"))
                     type = jo.getJSONObject(s).getString(VAL);
                 else
                     errorParsing(this.getClass().toString(),s);

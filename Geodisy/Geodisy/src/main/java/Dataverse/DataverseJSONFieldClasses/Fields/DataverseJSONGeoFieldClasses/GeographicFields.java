@@ -1,9 +1,11 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 
 import BaseFiles.GeoLogger;
+import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
 import Dataverse.DataverseJavaObject;
+import Dataverse.DataverseRecordFile;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,6 +19,7 @@ public class GeographicFields extends MetadataType {
     List<GeographicUnit> geoUnits;
     BoundingBox fullBB; //The single bounding box that includes all listed bounding box extents
     GeoLogger logger = new GeoLogger(this.getClass());
+    int counter = 0;
 
     public GeographicFields(DataverseJavaObject djo) {
         this.djo = djo;
@@ -36,13 +39,22 @@ public class GeographicFields extends MetadataType {
     }
 
     @Override
-    public void setFields(JSONObject field) {
+    public GeographicFields setFields(JSONObject field) {
         String title = field.getString(TYPE_NAME);
+        GeographicBoundingBox gbb;
+        DataverseGeoRecordFile drf;
         switch (title) {
             case GEOGRAPHIC_BBOX:
                 for(Object o: (JSONArray) field.get("value")) {
                     JSONObject jo = (JSONObject) o;
-                    geoBBoxes.add(parseGeoBBox(jo));
+                    gbb = parseGeoBBox(jo);
+                    if(gbb.hasBB()) {
+                        geoBBoxes.add(gbb);
+                        drf = new DataverseGeoRecordFile(doi, gbb);
+                        incrementCounter();
+                        drf.setFileNumber(djo.getGeoDataMeta().size()+1);
+                        djo.addGeoDataMeta(drf);
+                    }
                 }
                 setFullBoundingBox();
                 break;
@@ -52,8 +64,14 @@ public class GeographicFields extends MetadataType {
                     GeographicCoverage geographicCoverage = addGeoCover(jo);
                     geoCovers.add(geographicCoverage);
                     BoundingBox bb = geographicCoverage.getBoundingBox();
-                    if(bb.hasBoundingBox())
-                        geoBBoxes.add(new GeographicBoundingBox(doi,geographicCoverage.getBoundingBox()));
+                    if(bb.hasBoundingBox()) {
+                        geoBBoxes.add(new GeographicBoundingBox(doi, geographicCoverage.getBoundingBox()));
+                        gbb = new GeographicBoundingBox(doi,bb);
+                        drf = new DataverseGeoRecordFile(doi, gbb);
+                        incrementCounter();
+                        drf.setFileNumber(djo.getGeoDataMeta().size()+1);
+                        djo.addGeoDataMeta(drf);
+                    }
                 }
                 break;
             case GEOGRAPHIC_UNIT:
@@ -66,6 +84,7 @@ public class GeographicFields extends MetadataType {
             default:
                logger.error("Something went wrong parsing the Geographic Fields. Field " + title + " does not exist");
         }
+        return this;
     }
 
     /**
@@ -200,7 +219,7 @@ public class GeographicFields extends MetadataType {
         west = (west==181) ? altWest : west;
         east = (east==-181)? altEast : east;
         if(west >= 181 || east <= -181 || north <= -181 || south >= 181) {
-            logger.info("Something went wrong with the bounding box for record " + doi, djo, logger.getName());
+            logger.info("Something went wrong with the bounding box for record " + doi, djo);
             west = 361;
             east = 361;
             north = 361;
@@ -222,8 +241,12 @@ public class GeographicFields extends MetadataType {
     }
 
     public boolean hasBB(){
-        setFullBoundingBox();
-        return fullBB.hasBoundingBox();
+
+        for(GeographicBoundingBox gbb: geoBBoxes){
+            if(gbb.hasBB())
+                return true;
+        }
+        return false;
     }
 
 
@@ -247,7 +270,7 @@ public class GeographicFields extends MetadataType {
         double north = gBB.getNorthLatDub();
         double south = gBB.getSouthLatDub();
 
-        if(east<west){
+        if(east<west && east!=-181 && west!=181){
             GeographicBoundingBox second = new GeographicBoundingBox(gBB.doi);
             second.setNorthLatitude(String.valueOf(north));
             second.setSouthLatitude(String.valueOf(south));
@@ -259,5 +282,35 @@ public class GeographicFields extends MetadataType {
         }else
             bboxes.add(gBB);
         setGeoBBoxes(bboxes);
+    }
+
+    public LinkedList<GeographicBoundingBox> getBBoxesForJSON(){
+        LinkedList<GeographicBoundingBox> gdal = new LinkedList<>();
+        LinkedList<GeographicBoundingBox> metadata = new LinkedList<>();
+        int g=1;
+        int m=1;
+        for(GeographicBoundingBox gb:geoBBoxes){
+            if(gb.isGeneratedFromGeoFile()) {
+                gb.setFileNumber(g);
+                g++;
+                gdal.add(gb);
+            }
+            else {
+                gb.setFileNumber(m);
+                m++;
+                metadata.add(gb);
+            }
+        }
+        if(gdal.size()>=metadata.size())
+            return gdal;
+        return metadata;
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void incrementCounter() {
+        counter++;
     }
 }

@@ -58,7 +58,7 @@ public class CitationFields extends MetadataWSimple {
     }
 
     @Override
-    public void setFields(JSONObject jo) {
+    public CitationFields setFields(JSONObject jo) {
         Object valueObject = jo.get(VAL);
         String label = jo.getString(TYPE_NAME);
         if(!(valueObject instanceof String)){
@@ -215,6 +215,7 @@ public class CitationFields extends MetadataWSimple {
             String value = valueObject.toString();
             simpleCitationFields.setField(label, value);
         }
+        return this;
     }
     @Override
     public String getField(String fieldName) {
@@ -227,9 +228,12 @@ public class CitationFields extends MetadataWSimple {
 
     public void setBaseFields(JSONObject current){
 
-        simpleCitationFields.setField(PERSISTENT_ID,parseSimpleValue( current,"persistentUrl"));
+        simpleCitationFields.setField(AUTHORITY,parseSimpleValue(current,AUTHORITY));
+        simpleCitationFields.setField(RECORD_URL,parseSimpleValue( current, RECORD_URL));
         simpleCitationFields.setField(PUB_DATE, getValueDate(current,PUB_DATE));
         simpleCitationFields.setField(PUBLISHER, parseSimpleValue(current,PUBLISHER));
+        simpleCitationFields.setField(PROTOCOL,parseSimpleValue(current,PROTOCOL));
+        simpleCitationFields.setField(IDENTIFIER,parseSimpleValue(current,IDENTIFIER));
         current = getVersionSection(current);
         simpleCitationFields.setField(PROD_DATE,getValueDate(current,PROD_DATE));
         simpleCitationFields.setField(DEPOS_DATE,getValueDate(current,"createTime"));
@@ -338,7 +342,7 @@ public class CitationFields extends MetadataWSimple {
 
     @Override
     public String getDoi() {
-        return simpleCitationFields.getDOI();
+        return simpleCitationFields.getPersistentID();
     }
 
     @Override
@@ -490,7 +494,7 @@ public class CitationFields extends MetadataWSimple {
     }
 
     public String getDOI(){
-        return getSimpleCitationFields().getDOI();
+        return getSimpleCitationFields().getPersistentID();
     }
 
     //If you update this method, also update copy in DataverseJavaObject

@@ -10,17 +10,17 @@ import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Descrip
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJavaObject;
 
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 import java.io.IOException;
 
 import static Dataverse.DVFieldNameStrings.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+
 
 public class DataverseParserTest {
 
@@ -36,7 +36,7 @@ public class DataverseParserTest {
         DataverseJavaObject djo = dataverseParser.parse(jo, "another fake server name");
         MyTimerTask my = new MyTimerTask();
         try {
-            my.trimErrors();
+            my.keepInfo();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -82,7 +82,7 @@ public class DataverseParserTest {
         dataverseJavaObject.setCitationFields(citationFields);
         GeoLogger logger = new GeoLogger(DataverseParserTest.class);
         logger.error("Testing an error");
-        logger.info("Testing an info", dataverseJavaObject, logger.getName());
+        logger.info("Testing an info", dataverseJavaObject);
 
         return dataverseJavaObject;
     }

@@ -1,5 +1,6 @@
 package Dataverse.FindingBoundingBoxes;
 
+import BaseFiles.Geonames;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Province;
@@ -50,7 +51,7 @@ public class Countries {
             doc = dBuilder.parse(xmlFile);
             doc.getDocumentElement().normalize();
             System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
-            NodeList nodeList = doc.getDocumentElement().getElementsByTagName("country");
+            NodeList nodeList = doc.getDocumentElement().getElementsByTagName("givenCountry");
             int nodeListLen = nodeList.getLength();
             for(int i = 0; i<nodeListLen; i++){
                 setCountry(nodeList.item(i));
@@ -75,11 +76,55 @@ public class Countries {
 
 
     public Country getCountryByName(String name){
-        String capName = WordUtils.capitalizeFully(name);
-        if(countries.containsKey(capName))
-            return countries.get(capName);
-        else
-            return countries.get("Junk");
+        if(countries.containsKey(name))
+            return countries.get(name);
+        //TODO finish this
+        else {
+           return getCountryFromGeoNames(name);
+        }
+    }
+
+    private Country getCountryFromGeoNames(String name) {
+        Geonames geonames = new Geonames();
+        String fullCountry = geonames.getGeonamesCountry(name);
+        Country country = new Country();
+        if(fullCountry.contains("<totalResultsCount>0</totalResultsCount>"))
+            return new Country();
+        String countryStub = getNodeString(fullCountry,"<geoname>");
+        country.setGivenName(name);
+        country.setCommonName(getNodeString(countryStub,"<name>"));
+        country.setAltNames(getNodeString(countryStub,"<alternateNames>"));
+        String bbox = getNodeString(countryStub,"<bbox>");
+        if(!bbox.isEmpty()) {
+            country.setLongWest(getNodeString(bbox, "<west>"));
+            country.setLongEast(getNodeString(bbox, "<east>"));
+            country.setLatNorth(getNodeString(bbox,"<north>"));
+            country.setLatSouth(getNodeString(bbox,"<south>"));
+        }
+        GeonamesJSON gnj = new GeonamesJSON();
+        gnj.setJSONObject(countryStub);
+        country.setGeonamesJSON(gnj);
+        country.setCountryCode(getNodeString(countryStub,"<countryCode>"));
+        return country;
+    }
+
+    private String getNodeString(String xmlString, String s) {
+        try {
+            int start = xmlString.indexOf(s) + s.length();
+            String end = "</" + s.substring(1);
+            return xmlString.substring(start, xmlString.indexOf(end));
+        }catch(IndexOutOfBoundsException e) {
+            return "";
+        }
+    }
+
+    private Country createCountryFromNode(Node node){
+        if (node.getNodeType() == Node.ELEMENT_NODE) {
+            Element element = (Element) node;
+            String commonName = Location.getTagValue("countryName", element);
+            return new Country(element, commonName);
+        }
+        return new Country();
     }
 
     public Country getCountryByCode(String code){
@@ -87,7 +132,7 @@ public class Countries {
         if(countryCodes.containsKey(codeCorrect))
             return getCountryByName(countryCodes.get(codeCorrect));
         else
-            return countries.get("Junk");
+            return new Country();
     }
 
     public String getCountryCode(String countryName){

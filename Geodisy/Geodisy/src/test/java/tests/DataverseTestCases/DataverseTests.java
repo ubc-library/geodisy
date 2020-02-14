@@ -4,8 +4,6 @@ package tests.DataverseTestCases;
 import BaseFiles.GeoLogger;
 import Crosswalking.JSONParsing.DataverseParser;
 import Dataverse.SourceJavaObject;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;

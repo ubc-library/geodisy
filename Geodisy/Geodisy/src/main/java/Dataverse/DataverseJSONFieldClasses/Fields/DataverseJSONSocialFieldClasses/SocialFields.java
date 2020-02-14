@@ -34,7 +34,7 @@ public class SocialFields extends MetadataType {
     }
 
     @Override
-    public void setFields(JSONObject jo) {
+    public SocialFields setFields(JSONObject jo) {
         String fieldName = jo.getString(TYPE_NAME);
         if(fieldName.contains(TARGET_SAMPLE_SIZE_FIELDS)) {
             JSONObject o = (JSONObject) jo.get(VAL);
@@ -46,6 +46,7 @@ public class SocialFields extends MetadataType {
         }
         else
             simpleSocialFields.setField(jo);
+        return this;
     }
     public String getField(String fieldName){
         if(fieldName.contains(TARGET_SAMPLE_SIZE_FIELDS))

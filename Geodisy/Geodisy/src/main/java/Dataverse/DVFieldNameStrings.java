@@ -17,10 +17,15 @@ public class DVFieldNameStrings {
     public final static String CITATION = "citation";
 
     public final static String PERSISTENT_ID = "persistentId";
+    public final static String RECORD_URL = "persistentUrl";
+    public final static String FILE_URL = "pidURL";
     public final static String MAJOR_VERSION = "versionNumber";
     public final static String MINOR_VERSION = "versionMinorNumber";
     public final static String AUTHORITY = "authority";
     public final static String IDENTIFIER = "identifier";
+    public final static String PROTOCOL = "protocol";
+
+    public final static String DV_FILE_ACCESS_PATH = "api/access/datafile/";
 
 
     //Simple Field Names
@@ -171,13 +176,29 @@ public class DVFieldNameStrings {
     public final static String SOUTH_LAT = "southLatitude";
     public final static String NORTH_LAT_LONG = "northLongitude";
     public final static String SOUTH_LAT_LONG = "southLongitude";
+    public final static String FILE_NAME = "fileName";
+    public final static String GEOMETRY = "geometryType";
+    public final static String PROJECTION = "projection";
+    public final static String GEOSERVER_LABEL = "geoserverLabel";
+    public final static String WIDTH = "width";
+    public final static String HEIGHT = "height";
+    public final static String PLACE = "place";
+    public final static String BASE_GEOSERVER_LABEL = "baseGeoLable";
+
 
     //Geographic Coverage Field Names
     public final static String COUNTRY = "country";
+    public final static String PROVINCE = "province";
     public final static String STATE = "state";
     public final static String CITY = "city";
+    public final static String GIVEN_COUNTRY = "givenCountry";
+    public final static String GIVEN_PROVINCE = "givenProvince";
+    public final static String GIVEN_CITY = "givenCity";
+    public final static String COMMON_COUNTRY = "commonCountry";
+    public final static String COMMON_PROVINCE = "commonProvice";
+    public final static String COMMON_CITY = "commonCity";
     public final static String OTHER_GEO_COV = "otherGeographicCoverage";
-    public final static List<String> GEO_META_FIELDS = Arrays.asList(GEOGRAPHIC_COVERAGE, GEOGRAPHIC_BBOX, GEOGRAPHIC_UNIT, WEST_LONG, EAST_LONG, NORTH_LAT, NORTH_LAT_LONG, SOUTH_LAT, SOUTH_LAT_LONG, COUNTRY, STATE, CITY, OTHER_GEO_COV);
+    public final static List<String> GEO_META_FIELDS = Arrays.asList(GEOGRAPHIC_COVERAGE, GEOGRAPHIC_BBOX, GEOGRAPHIC_UNIT, WEST_LONG, EAST_LONG, NORTH_LAT, NORTH_LAT_LONG, SOUTH_LAT, SOUTH_LAT_LONG, COUNTRY, PROVINCE, CITY, OTHER_GEO_COV);
 
     //Astrophysics_________________________________________________________________________________
     // Spatial Field Names
@@ -268,6 +289,6 @@ public class DVFieldNameStrings {
     public final static String SOCIAL_SCIENCE_NOTES_TEXT = "socialScienceNotesText";
     public final static List<String> SOCIAL_SIENCE_NOTES_ALL_FIELDS = Arrays.asList(SOCIAL_SCIENCE_NOTES_TEXT, SOCIAL_SCIENCE_NOTES_SUBJECT,SOCIAL_SCIENCE_NOTES_TEXT);
     public final static String SOCIAL_SCIENCE = "socialscience";
-
+    public final static String FILES = "files";
 
 }

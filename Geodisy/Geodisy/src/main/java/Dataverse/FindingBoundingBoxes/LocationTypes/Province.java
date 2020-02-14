@@ -9,19 +9,20 @@ import java.util.HashMap;
 
 public class Province extends Location {
     private Country country;
-    private HashMap<String, City> cities;
+    private HashMap<String, City> cities = new HashMap<>();
 
     public Province(String name, String countryName) {
         super(name, new GeonamesJSON(new Geonames().getGeonamesProvince(name,countryName)));
+        this.commonName = this.geonamesJSON.getCommonStateName();
         if(countryName.isEmpty())
             country = new Country();
         else
             country = Countries.getCountry().getCountryByName(countryName);
-        cities = new HashMap<>();
     }
     //placeholder province constructor
     public Province() {
         super();
+
     }
     @Override
     public double getLatSouth() {

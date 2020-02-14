@@ -1,7 +1,6 @@
 package Crosswalking.XML.XMLTools;
 
 
-import BaseFiles.GeoLogger;
 import Crosswalking.XML.XMLGroups.DataQualityInfo;
 import Crosswalking.XML.XMLGroups.DistributionInfo;
 import Crosswalking.XML.XMLGroups.IdentificationInfo;
@@ -10,7 +9,6 @@ import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Simpl
 import Dataverse.DataverseJavaObject;
 import org.w3c.dom.Element;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.UUID;
@@ -31,7 +29,8 @@ public class ISOXMLGen extends DjoXMLGenerator {
         this.citationFields = djo.getCitationFields();
         this.simple = citationFields.getSimpleCitationFields();
         doc = new XMLDocObject();
-        doc.setDoi(djo.getDOI());
+        doc.setDoi(simple.getField(PERSISTENT_ID));
+        doc.setPURL(simple.getField(RECORD_URL));
     }
 
     @Override
@@ -65,10 +64,9 @@ public class ISOXMLGen extends DjoXMLGenerator {
     protected Element getRoot() {
         // root element
         Element rootElement = doc.createGMDElement("MD_Metadata");
-        rootElement.setAttribute(xmlNSElement(),XML_NS + "gmx");
-        rootElement.setAttribute(xmlNSElement("gco"), XML_NS + "gco/1.0");
-        rootElement.setAttribute(xmlNSElement("mdb"),XML_NS + "mdb/2.0");
-        rootElement.setAttribute(xmlNSElement("srv"), XML_NS + "srv/2.0");
+        rootElement.setAttribute(xmlNSElement("gmd"),XML_NS+"gmd");
+        rootElement.setAttribute(xmlNSElement("gmx"),XML_NS + "gmx");
+        rootElement.setAttribute(xmlNSElement("gco"), XML_NS + "gco");
         rootElement.setAttribute(xmlNSElement("xlink"),"http://www.w3.org/1999/xlink");
         rootElement.setAttribute(xmlNSElement("xsi"), "http://www.w3.org/2001/XMLSchema-instance");
         return getMDMetadata(rootElement);
@@ -119,7 +117,7 @@ public class ISOXMLGen extends DjoXMLGenerator {
         stack.push(doc.createGMDElement(ONLINE_RES)); //Level K
         stack.push(doc.createGMDElement(CI_ONLINE_RES)); //Level L
         stack.push(doc.createGMDElement(LINKAGE)); //Level M
-        levelJ = stack.zip(doc.addGCOVal(djo.getDOI(),CHARACTER)); //Level N
+        levelJ = stack.zip(doc.addGCOVal(djo.getSimpleFieldVal(RECORD_URL),CHARACTER)); //Level N
         stack.push(levelJ);
         stack.push(doc.createGMDElement("citedResponsibilityParty"));
 

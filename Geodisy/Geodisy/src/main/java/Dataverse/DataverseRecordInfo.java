@@ -26,8 +26,10 @@ public class DataverseRecordInfo implements Serializable {
      * @param dataverseJavaObject
      */
     public DataverseRecordInfo(SourceJavaObject dataverseJavaObject, String loggerName){
-        doi = dataverseJavaObject.getDOI();
-        version = dataverseJavaObject.getVersion();
+        if(dataverseJavaObject!=null) {
+            doi = dataverseJavaObject.getDOI();
+            version = dataverseJavaObject.getVersion();
+        }
         setMajor(version/1000);
         setMinor(version%1000);
         this.loggerName = loggerName;

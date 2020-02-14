@@ -26,7 +26,7 @@ public abstract class SubElement {
     }
 
     protected Element levelRoleCode(String name){
-        Element levelRoleCode = doc.create_Element("role");
+        Element levelRoleCode = doc.createGMDElement("role");
         levelRoleCode.appendChild(doc.addRoleCode(name));
         return levelRoleCode;
     }

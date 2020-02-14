@@ -6,16 +6,15 @@ import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.City;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Province;
+import org.apache.commons.lang3.ArrayUtils;
 import org.json.JSONObject;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static Dataverse.DVFieldNameStrings.*;
 
 public class GeographicCoverage extends CompoundJSONField {
-    private String country, province, city, otherGeographicCoverage, doi, altCountry, altProvince, altCity;
+    private String givenCountry, givenProvince, givenCity, otherGeographicCoverage, doi, commonCountry, commonProvince, commonCity;
     private Country countryObject;
     private Province provinceObject;
     private City cityObject;
@@ -23,17 +22,30 @@ public class GeographicCoverage extends CompoundJSONField {
 
     public GeographicCoverage(String doi) {
         this.doi = doi;
-        this.country = "";
-        this.province = "";
-        this.city = "";
+        this.givenCountry = "";
+        this.givenProvince = "";
+        this.givenCity = "";
         this.otherGeographicCoverage = "";
-        this.altCountry = "";
-        this.altProvince = "";
-        this.altCity = "";
+        this.commonCountry = "";
+        this.commonProvince = "";
+        this.commonCity = "";
         this.countryObject = new Country();
 
     }
 
+    public HashSet<String> getPlaceNames(){
+        HashSet<String> placenames = new HashSet<>();
+        placenames.add(givenCountry);
+        placenames.add(givenProvince);
+        placenames.add(givenCity);
+        placenames.add(commonCountry);
+        placenames.add(commonProvince);
+        placenames.add(commonCity);
+        placenames.add(otherGeographicCoverage);
+        if(placenames.contains(""))
+            placenames.remove("");
+        return placenames;
+    }
     public Country getCountryObject(){
         return countryObject;
     }
@@ -45,52 +57,25 @@ public class GeographicCoverage extends CompoundJSONField {
     public City getCityObject(){
         return cityObject;
     }
-    private List<String> getGeoCoverageField(String name, String altName){
-        String[] array;
-        if(name.equalsIgnoreCase(altName))
-            array = new String[]{name};
-        else
-            array = new String[]{name,altName};
-        List answer = Arrays.asList(array);
-        return answer;
-    }
-    public List<String> getCountryList() {
-        return (country.isEmpty() ? new LinkedList<String>() : getGeoCoverageField(country,altCountry));
+
+    public void setGivenCountry(String givenCountry) {
+        this.givenCountry = givenCountry;
+        countryObject = Countries.getCountry().getCountryByName(givenCountry);
+        commonCountry = countryObject.getCommonName();
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-        countryObject = Countries.getCountry().getCountryByName(country);
-        altCountry = countryObject.getGivenName();
+    public void setGivenProvince(String givenProvince) {
+        this.givenProvince = givenProvince;
+        provinceObject =  new Province(this.givenProvince, givenCountry);
+        commonProvince = provinceObject.getGivenName();
     }
 
-    public List<String> getProvinceList() {
-        return (province.isEmpty() ? new LinkedList<String>() : getGeoCoverageField(province,altProvince));
+    public void setGivenCity(String givenCity) {
+        this.givenCity = givenCity;
+        cityObject = new City(this.givenCity, givenProvince, givenCountry);
+        commonCity = cityObject.getGivenName();
     }
 
-    public void setProvince(String province) {
-        this.province = province;
-        provinceObject =  new Province(this.province,country);
-        altProvince = provinceObject.getGivenName();
-    }
-
-    public List<String> getCityList() {
-        return (city.isEmpty() ? new LinkedList<String>() : getGeoCoverageField(city,altCity));
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-        cityObject = new City(this.city,province,country);
-        altCity = cityObject.getGivenName();
-    }
-
-    public List<String> getOtherGeographicCoverage() {
-        return Arrays.asList(otherGeographicCoverage);
-    }
-
-    public void setOtherGeographicCoverage(String otherGeographicCoverage) {
-        this.otherGeographicCoverage = otherGeographicCoverage;
-    }
 
 
     @Override
@@ -101,16 +86,17 @@ public class GeographicCoverage extends CompoundJSONField {
             String value = fieldTitle.getString(VAL);
             switch (title) {
                 case COUNTRY:
-                    setCountry(value);
+                    setGivenCountry(value);
                     break;
+                case PROVINCE:
                 case STATE:
-                    setProvince(value);
+                    setGivenProvince(value);
                     break;
                 case CITY:
-                    setCity(value);
+                    setGivenCity(value);
                     break;
                 case OTHER_GEO_COV:
-                    setOtherGeographicCoverage(value);
+                    this.otherGeographicCoverage = value;
                     break;
                 default:
                     errorParsing(this.getClass().getName(), title);
@@ -120,37 +106,44 @@ public class GeographicCoverage extends CompoundJSONField {
 
     @Override
     public String getField(String fieldName) {
-        return null;
-    }
-
-
-    public List<String> getListField(String fieldName) {
         switch (fieldName) {
-            case COUNTRY:
-                return getCountryList();
-            case STATE:
-                return getProvinceList();
-            case CITY:
-                return getCityList();
+            case GIVEN_COUNTRY:
+                return givenCountry;
+            case GIVEN_PROVINCE:
+                return givenProvince;
+            case GIVEN_CITY:
+                return givenCity;
             case OTHER_GEO_COV:
-                return getOtherGeographicCoverage();
+                return otherGeographicCoverage;
+            case COMMON_COUNTRY:
+                return (commonCountry.isEmpty()? givenCountry:commonCountry);
+            case COMMON_PROVINCE:
+                return (commonProvince.isEmpty()? givenProvince:commonProvince);
+            case COMMON_CITY:
+                return (commonCity.isEmpty()? givenCity:commonCity);
             default:
                 errorParsing(this.getClass().getName(), fieldName);
-                return Arrays.asList("Bad FieldName");
+                return "Bad FieldName";
         }
     }
 
     public BoundingBox getBoundingBox(){
         if(this.cityObject!=null){
-            if(cityObject.hasBoundingBox())
+            if(cityObject.hasBoundingBox()) {
+                cityObject.getBoundingBox().setPlace(cityObject.getCommonName());
                 return cityObject.getBoundingBox();
+            }
         }else if(provinceObject!=null){
-            if(provinceObject.hasBoundingBox())
+            if(provinceObject.hasBoundingBox()) {
+                provinceObject.getBoundingBox().setPlace(provinceObject.getCommonName());
                 return provinceObject.getBoundingBox();
-        }else if(countryObject.hasBoundingBox()) {
-            return countryObject.getBoundingBox();
+            }
+        }else if(countryObject!=null){
+            if(countryObject.hasBoundingBox()) {
+                countryObject.getBoundingBox().setPlace(countryObject.getCommonName());
+                return countryObject.getBoundingBox();
+            }
         }
-
         return new BoundingBox();
     }
 }

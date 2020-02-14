@@ -4,23 +4,25 @@ import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
-import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONJournalFieldClasses.JournalFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
+
+import static Dataverse.DVFieldNameStrings.PROTOCOL;
 
 public abstract class SourceJavaObject {
     protected CitationFields citationFields;
     protected GeographicFields geoFields;
     protected SocialFields socialFields;
     //protected JournalFields journalFields;
-    protected List<DataverseRecordFile> dataFiles; //Stores the datafiles
-    protected List<DataverseRecordFile> geoDataFiles; //Stores the datafiles that are geospatial in nature
+    protected LinkedList<DataverseRecordFile> dataFiles; //Stores the datafiles
+    protected LinkedList<DataverseGeoRecordFile> geoDataFiles; //Stores the datafiles that are geospatial in nature
+    protected LinkedList<DataverseGeoRecordFile> geoDataMeta;
     protected String server;
     protected boolean hasContent;
     public boolean hasGeospatialFile;
@@ -32,12 +34,13 @@ public abstract class SourceJavaObject {
     // public abstract void parseJournalFields(JSONArray journalFieldsArray);
     public abstract void parseFiles(JSONArray fileFieldsArray);
     public abstract JSONObject getVersionSection(JSONObject current);
-    public abstract void downloadFiles();
+    public abstract DataverseJavaObject downloadFiles();
 
     public SourceJavaObject(String server) {
         this.citationFields = new CitationFields();
         this.dataFiles = new LinkedList<>();
         this.geoDataFiles = new LinkedList<>();
+        this.geoDataMeta = new LinkedList<>();
         this.geoFields = new GeographicFields();
         this.socialFields = new SocialFields();
         //this.journalFields = new JournalFields();
@@ -57,8 +60,8 @@ public abstract class SourceJavaObject {
         return false;
     }
     protected String urlized(String doi) {
-        doi = doi.replaceAll("\\.","_");
-        return doi.replaceAll("/","_");
+        return doi.replace(".","/");
+
     }
     protected void deleteDir(File f) {
         File[] files = f.listFiles();
@@ -95,24 +98,44 @@ public abstract class SourceJavaObject {
         this.geoFields = geoFields;
     }
 
-    public List<DataverseRecordFile> getDataFiles() {
+    public LinkedList<DataverseRecordFile> getDataFiles() {
         return dataFiles;
     }
 
-    public void setDataFiles(List<DataverseRecordFile> dataFiles) {
+
+    public void setDataFiles(LinkedList<DataverseRecordFile> dataFiles) {
         this.dataFiles = dataFiles;
     }
 
-    public List<DataverseRecordFile> getGeoDataFiles() {
+    public LinkedList<DataverseGeoRecordFile> getGeoDataFiles() {
         return geoDataFiles;
     }
 
-    public void setGeoDataFiles(List<DataverseRecordFile> geoDataFiles) {
+    public void setGeoDataFiles(LinkedList<DataverseGeoRecordFile> geoDataFiles) {
         this.geoDataFiles = geoDataFiles;
     }
 
-    public void addGeoDataFile(DataverseRecordFile drf){
-        geoDataFiles.add(drf);
+    public void addGeoDataFile(DataverseGeoRecordFile drf){
+        if(drf.hasValidBB())
+            geoDataFiles.add(drf);
+    }
+
+    public void removeGeoDataFile(String name){
+        Iterator<DataverseGeoRecordFile> iterator = geoDataFiles.iterator();
+        while(iterator.hasNext()) {
+            if (iterator.next().getTranslatedTitle().equalsIgnoreCase(name)) {
+                // Remove the current element from the iterator and the list.
+                iterator.remove();
+            }
+        }
+    }
+
+    public LinkedList<DataverseGeoRecordFile> getGeoDataMeta() {
+        return geoDataMeta;
+    }
+
+    public void addGeoDataMeta(DataverseGeoRecordFile drf) {
+        geoDataMeta.add(drf);
     }
 
     public String getServer() {
@@ -121,10 +144,6 @@ public abstract class SourceJavaObject {
 
     public void setServer(String server) {
         this.server = server;
-    }
-
-    public boolean isHasContent() {
-        return hasContent;
     }
 
     public void setHasContent(boolean hasContent) {
@@ -140,7 +159,7 @@ public abstract class SourceJavaObject {
     }
 
     public boolean hasBoundingBox(){
-        return geoFields.hasBB();
+        return geoDataFiles.size()>0||geoDataMeta.size()>0;
     }
 
     public void setSimpleFields(SimpleCitationFields simpleCitationFields) {
@@ -166,17 +185,25 @@ public abstract class SourceJavaObject {
     }
 
     public String getDOIProtocal(){
-        String persistentURL = getDOI();
-        if(persistentURL.contains("https://doi.org/")||persistentURL.contains("doi:"))
-            return "DOI";
-        if(persistentURL.contains("handle")||persistentURL.contains("hdl:"))
-            return "Handle";
-        if(persistentURL.contains("ark:"))
-            return "ARK";
-        if(persistentURL.contains("urn:"))
-            return "URN";
+        String protocol = getSimpleFields().getField(PROTOCOL);
+        if(protocol.contains("doi"))
+            return "doi";
+        if(protocol.contains("handle")||protocol.contains("hdl"))
+            return "handle";
+        if(protocol.contains("ark"))
+            return "ark";
+        if(protocol.contains("urn"))
+            return "urn";
         return "Error";
     }
+
+    public boolean hasGeoGraphicCoverage(){
+        GeographicFields gf = geoFields;
+        return gf.getGeoCovers().size()>0;
+    }
+
+
+
 
     //public JournalFields getJournalFields(){ return journalFields;}
 }

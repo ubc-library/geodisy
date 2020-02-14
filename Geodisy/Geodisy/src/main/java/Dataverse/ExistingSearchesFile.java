@@ -2,27 +2,27 @@ package Dataverse;
 
 import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
-import Dataverse.ExistingSearches;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 
 
 import java.io.*;
+import java.util.HashMap;
 
+import static BaseFiles.GeodisyStrings.EXISTING_BBOXES;
 import static BaseFiles.GeodisyStrings.EXISTING_RECORDS;
 
 /**
  * Class for getting the list of records that have already been downloaded
  */
 public class ExistingSearchesFile {
-    private String path;
     GeoLogger logger = new GeoLogger(this.getClass());
+    ExistingHarvests es;
 
     /**
      * Constructor to use for production environment;
      */
     public ExistingSearchesFile(){
-        path = EXISTING_RECORDS;
+        es = ExistingHarvests.getExistingHarvests();
     }
 
     /**
@@ -30,12 +30,17 @@ public class ExistingSearchesFile {
      * @param path
      */
     public ExistingSearchesFile(String path){
-        this.path = path;
+        es = ExistingHarvests.getExistingHarvests();
     }
 
-    public void writeExistingSearches(ExistingSearches existingSearches) throws IOException {
+    public void writeExistingSearches(ExistingHarvests existingSearches) throws IOException {
+        HashMap<String, DataverseRecordInfo> records = new HashMap<>();
+        es.getRecordVersions().forEach((key, value)-> records.put(key,value));
+        HashMap<String, BoundingBox> bboxes = new HashMap<>();
+        es.getbBoxes().forEach((key,value)->bboxes.put(key,value));
         FileWriter writer = new FileWriter();
-        writer.writeObjectToFile(existingSearches,path);
+        writer.writeObjectToFile(records,EXISTING_RECORDS);
+        writer.writeObjectToFile(bboxes,EXISTING_BBOXES);
         }
 
     /**
@@ -43,18 +48,22 @@ public class ExistingSearchesFile {
      * @return
      * @throws IOException
      */
-    public ExistingSearches readExistingSearches() throws IOException {
-        ExistingSearches es;
+    public ExistingHarvests readExistingSearches() throws IOException {
+        ExistingHarvests es;
         FileWriter writer = new FileWriter();
         try {
-
-            es = (ExistingSearches) writer.readSavedObject(path);
+            //TODO something is going wrong here. Says it's trying to convert a HashMap to Dataverse.ExistingHarvests. Maybe save the maps separately?
+            HashMap<String, DataverseRecordInfo> records = (HashMap<String, DataverseRecordInfo>) writer.readSavedObject(EXISTING_RECORDS);
+            HashMap<String, BoundingBox> bBoxes = (HashMap<String, BoundingBox>) writer.readSavedObject(EXISTING_BBOXES);
+            es = ExistingHarvests.getExistingHarvests();
+            es.setbBoxes(bBoxes);
+            es.setRecords(records);
         } catch (FileNotFoundException e) {
-            es = ExistingSearches.getExistingSearches();
+            es = ExistingHarvests.getExistingHarvests();
             writeExistingSearches(es);
         } catch (ClassNotFoundException e){
-            logger.warn("something went wonky loading the existing searches from the file");
-            return ExistingSearches.getExistingSearches();
+            logger.error("something went wonky loading the existing searches from the file");
+            return ExistingHarvests.getExistingHarvests();
         }
         return es;
     }

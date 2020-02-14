@@ -16,7 +16,7 @@ public abstract class FindBoundBox {
     abstract BoundingBox getDVBoundingBox(String country, String province, String city);
     abstract BoundingBox getDVBoundingBoxOther(String country, String other);
     abstract BoundingBox getDVBoundingBoxOther(String country,String province, String other);
-    abstract String getJSONString(String search, String country);
+
     GeoLogger logger = new GeoLogger(FindBoundBox.class);
 
     protected BoundingBox readResponse(String responseString, String doi, DataverseJavaObject djo){
@@ -27,7 +27,7 @@ public abstract class FindBoundBox {
         int tooFar = responseString.indexOf("</geoname>");
         int start = responseString.indexOf("<countryName>");
         if(start==-1||start>tooFar) {
-            logger.info("Record with PERSISTENT_ID of "+ doi + "could not have information found  in geonames. Please doublecheck the geospatial coverage field values", djo, logger.getName());
+            logger.info("Record with PERSISTENT_ID of "+ doi + "could not have information found  in geonames. Please doublecheck the geospatial coverage field values", djo);
             return "";
         }
         int end = responseString.indexOf("</countryName>");
@@ -39,7 +39,7 @@ public abstract class FindBoundBox {
         int tooFar = responseString.indexOf("</geoname>");
         int start = responseString.indexOf("<west>");
         if(start==-1||start>tooFar) {
-            logger.info("Record with PERSISTENT_ID of "+ doi + "could not have a bounding box found in geonames. Please doublecheck the geospatial coverage field values", djo, logger.getName());
+            logger.info("Record with PERSISTENT_ID of "+ doi + "could not have a bounding box found in geonames. Please doublecheck the geospatial coverage field values", djo);
             return box;
         }
         int end = responseString.indexOf("</west>");
@@ -53,6 +53,7 @@ public abstract class FindBoundBox {
         start = responseString.indexOf("<south>");
         end = responseString.indexOf("</south>");
         box.setLatSouth(responseString.substring(start+7, end));
+        box.setGenerated(true);
 
         return box;
     }

@@ -1,15 +1,19 @@
 package Dataverse;
 
 
+import BaseFiles.GeoLogger;
+
 import java.io.Serializable;
 import java.util.HashMap;
 
+import static BaseFiles.GeodisyStrings.EXISTING_CHECKS;
 
-public class ExistingCallsToCheck implements Serializable{
+
+public class ExistingCallsToCheck extends ExistingSearches implements Serializable{
     private static final long serialVersionUID = 5416853597895403102L;
     private HashMap<String, DataverseRecordInfo> records;
+    private HashMap<String, String> newRecords;
     private static ExistingCallsToCheck single_instance = null;
-
 
     public static ExistingCallsToCheck getExistingCallsToCheck() {
         if (single_instance == null) {
@@ -19,7 +23,11 @@ public class ExistingCallsToCheck implements Serializable{
     }
 
     private ExistingCallsToCheck(){
+        logger = new GeoLogger(this.getClass());
         records = new HashMap<>();
+        records = readExistingRecords(EXISTING_CHECKS);
+        newRecords = new HashMap<>();
+
     }
     public boolean isEmpty(){
         return records.isEmpty();
@@ -37,8 +45,9 @@ public class ExistingCallsToCheck implements Serializable{
         return records.size();
     }
 
-    public void addOrReplaceRecord(DataverseRecordInfo dataverseRecordInfo){
+    public void addOrReplaceRecord(DataverseRecordInfo dataverseRecordInfo, String message){
         records.put(dataverseRecordInfo.getDoi(), dataverseRecordInfo);
+        newRecords.put(dataverseRecordInfo.getDoi(), message);
     }
 
     public boolean isNewerRecord(DataverseRecordInfo dataverseRecordInfo){
@@ -48,6 +57,10 @@ public class ExistingCallsToCheck implements Serializable{
     public boolean isNewerRecord(DataverseRecordInfo dataverseRecordInfo, String loggerName){
         DataverseRecordInfo driSaved = records.get(dataverseRecordInfo.getDoi());
         return dataverseRecordInfo.newer(driSaved) && loggerName.equals(driSaved.getLoggerName());
+    }
+
+    public HashMap<String, String> getNewRecords(){
+        return newRecords;
     }
 
 
@@ -60,7 +73,5 @@ public class ExistingCallsToCheck implements Serializable{
     public void deleteRecords(String location){
         records.remove(location);
     }
-
-
 
 }
