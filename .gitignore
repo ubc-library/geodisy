@@ -5,13 +5,11 @@ Geodisy_old/
 
 practice_DV\.json
 
-Geodisy/Geodisy/target/
 
 Geodisy/Dataverse Install settings\.txt
 
 Geodisy/nbproject/private/private\.xml
 
-Geodisy/\.idea/
 
 Geodisy/Geodisy/src/test/java/tests/Address\.java
 
@@ -21,13 +19,6 @@ Geodisy/Geodisy/src/test/resources/file/employee\.txt
 
 Dataverse Metadata v4\.x\.xlsx
 
-*.html
-
-Geodisy/Geodisy/stylesheet\.css
-
-Geodisy/Geodisy/script\.js
-
-Geodisy/Geodisy/package-list
 
 *.java___jb_old___
 
@@ -41,13 +32,9 @@ Template\+for\+System\+Descriptions\.mht
 
 Geodisy/Geodisy/logs/error\.log
 
-Geodisy/Geodisy/\.idea/
 
 Time reports/
 
-Geodisy/Geodisy/src/\.idea/
-
-Geodisy/Geodisy/Geodisy\.iml
 
 Geodisy/Geodisy/ExistingRecordsTest\.txt
 
@@ -59,13 +46,6 @@ Geodisy/Geodisy/savedFiles/ExisitingRecords\.txt
 
 gdal-2\.4\.1/
 
-Geodisy/GDAL/\.idea/
-
-Geodisy/GDAL/venv/Lib/site-packages/
-
-Geodisy/GDAL/venv/Scripts/
-
-Geodisy/GDAL/venv/
 
 Geotools/apidocs/
 Geodisy/Geodisy/BMSC_Wizard_Sheltered_AlgalCanopy_1997\.csv
@@ -76,7 +56,6 @@ Geodisy/Geodisy/BMSC_Wizard_Exposed_InvertebrateDensity_1997\.csv
 
 Geodisy/Geodisy/classes/artifacts/
 
-settings\.zip
 
 Geodisy/Geodisy/xmlTestDJO\.xml
 
@@ -101,10 +80,6 @@ Geodisy/testGdal/.idea/
 
 Geodisy/testGdal/out/
 Geodisy/TileMerge/
-
-*.iml
-
-*.DS_Store
 
 Geodisy/Geodisy/metadata/
 Geodisy/Geodisy/testFiles/

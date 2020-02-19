@@ -1,0 +1,2247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Geodisy:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e719edb7-3c25-4197-be36-316eb001a745" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/Temp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/Temp.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geodisyFiles/xmlTestDJO.xml" beforeDir="false" afterPath="$PROJECT_DIR$/geodisyFiles/xmlTestDJO.xml" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/classes/" />
+    <ignored path="$PROJECT_DIR$/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="ErrorTreeViewConfiguration">
+    <option name="hideWarnings" value="true" />
+    <option name="HIDE_WARNINGS" value="true" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="Geodisy" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLGroups/GeographicInfo.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="156">
+              <caret line="58" column="39" selection-start-line="58" selection-start-column="39" selection-end-line="58" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLDocObject.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="48" column="40" selection-start-line="48" selection-start-column="40" selection-end-line="48" selection-end-column="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/ISO_19115.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="25" column="57" selection-start-line="25" selection-start-column="56" selection-end-line="25" selection-end-column="57" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/ISOXMLGen.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="258">
+              <caret line="69" column="87" selection-start-line="69" selection-start-column="87" selection-end-line="69" selection-end-column="87" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/tests/XMLTestCases/CitationXMLTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="484">
+              <caret line="73" column="38" selection-start-line="73" selection-start-column="38" selection-end-line="73" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLValidator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="19" column="49" selection-start-line="19" selection-start-column="49" selection-end-line="19" selection-end-column="49" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/javax/xml/parsers/SAXParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="415" column="42" selection-start-line="415" selection-start-column="42" selection-end-line="415" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/geodisyFiles/xmlTestDJO.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="27" selection-end-line="541" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/GeodisyStrings.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="146">
+              <caret line="53" column="35" selection-start-line="53" selection-start-column="35" selection-end-line="53" selection-end-column="35" />
+              <folding>
+                <element signature="e#7368#7369#0" expanded="true" />
+                <element signature="e#7414#7415#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>optiona</find>
+      <find>URL</find>
+      <find>catch</find>
+      <find>/home/centos/Geodisy/</find>
+      <find>Something was wrong with the country XML</find>
+      <find>Moving metadata</find>
+      <find>Something was malformed with the JSON string returned from Dataverse</find>
+      <find>Unzip</find>
+      <find>cro</find>
+      <find>Moving</find>
+      <find>Finished do</find>
+      <find>Something was malformed with the JSON string returned from Dataverse:</find>
+      <find>rsyn</find>
+      <find>GeonamesJSON</find>
+      <find>String</find>
+      <find>Connected GeoBlacklight records</find>
+      <find>couldn't convert</find>
+      <find>1000</find>
+      <find>Finished downloading</find>
+      <find>Calendar.getInstance().getTimeInMillis();</find>
+      <find>) -</find>
+      <find>(&quot; + number + &quot; of &quot; + total + &quot;)&quot;</find>
+      <find>rsy</find>
+      <find>&quot;v&quot;</find>
+      <find>Something wrong parsing class</find>
+      <find>clear</find>
+      <find>something clearly went wrong with unzipping</find>
+      <find>Non-Geo</find>
+      <find>gmd</find>
+      <find>records</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>SimpleFields simpleFields = getSimpleFields();</replace>
+      <replace>SourceJavaObject val = dataverseCallTest();</replace>
+      <replace>ExistingCallsToCheck</replace>
+      <replace>records</replace>
+      <replace>simpleCitationFields.</replace>
+      <replace>levelJ</replace>
+      <replace>levelK</replace>
+      <replace>levelN</replace>
+      <replace>levelM</replace>
+      <replace>stack = new XMLStack();</replace>
+      <replace>List&lt;</replace>
+      <replace>cf</replace>
+      <replace>setTextContent</replace>
+      <replace>&quot;CI_Responsibility</replace>
+      <replace>));</replace>
+      <replace>stack.push(doc.createGMDElement</replace>
+      <replace>jo.put(EXTERNAL_SERVICES, ja);</replace>
+      <replace>jo.getJSONArray(EXTERNAL_SERVICES);</replace>
+      <replace>Province</replace>
+      <replace>return &quot;Bad field name&quot;;</replace>
+      <replace>&lt;altName&gt;</replace>
+      <replace>localRepoLocation</replace>
+      <replace>djo)</replace>
+      <replace>lowername</replace>
+      <replace>lowerName</replace>
+      <replace>Vector</replace>
+      <replace>DATASET_FILES_PATH</replace>
+      <replace>C:\\\&quot;Program Files\&quot;\\GD</replace>
+      <replace>String</replace>
+      <replace>bb</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\test\java\tests\DataverseTestCases</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\datasetFiles</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\BaseFiles</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\test\java\tests</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Crosswalking\XML\XMLTools</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\XMLFilesTest</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\test</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\test\java</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Crosswalking\XML\XMLGroups</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Crosswalking\XML</dir>
+      <dir>127.0.0.1</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Dataverse</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Crosswalking</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\main</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Crosswalking\GeoBlacklightJson</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/java/BaseFiles/HTTPCallerGeoNames.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONSocialFieldClasses/SocialScienceNotes.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLGroups/GeographicInfo.java" />
+        <option value="$PROJECT_DIR$/src/test/java/BaseFiles/ExistingHarvestsTest.java" />
+        <option value="$PROJECT_DIR$/geodisyFiles/geocoverage.json" />
+        <option value="$PROJECT_DIR$/src/main/java/BaseFiles/Geonames.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/JGit.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/GeoBlacklightStrings.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DVFieldNameStrings.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicFields.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/Description.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicCoverage.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLStrings.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/SubElement.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLGroups/IdentificationInfo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLGroups/DistributionInfo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/GeoCombine.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/JSONParsing/DataverseParser.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/XMLSchema.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/ISO_19115.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/CrosswalkInterface.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/Crosswalk.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/ISO_Schema.java" />
+        <option value="$PROJECT_DIR$/src/main/pom.xml" />
+        <option value="$PROJECT_DIR$/src/test/java/tests/FixSpecificRecords.java" />
+        <option value="$PROJECT_DIR$/src/main/java/BaseFiles/DownloadRecord.java" />
+        <option value="$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java" />
+        <option value="$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/JSONField.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationSimpleJSONFields/SimpleCitationFields.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/Countries.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/Location.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/GeonamesJSON.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseRecordFile.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/GDALTranslate.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java" />
+        <option value="$PROJECT_DIR$/src/test/java/tests/RemoveRecord.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/SourceJavaObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/GeoBlacklightJSON.java" />
+        <option value="$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java" />
+        <option value="$PROJECT_DIR$/src/main/java/BaseFiles/GeodisyStrings.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/LocationTypes/BoundingBox.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicBoundingBox.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/ISOXMLGen.java" />
+        <option value="$PROJECT_DIR$/XMLFiles/10/5072/FK2/1TUKUB/iso19115.xml" />
+        <option value="$PROJECT_DIR$/geodisyFiles/xmlTestDJO.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLValidator.java" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="usePluginRegistry" value="true" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="createModuleGroups" value="true" />
+        <option name="downloadSourcesAutomatically" value="true" />
+        <option name="importAutomatically" value="true" />
+        <option name="vmOptionsForImporter" value="-Xmx768m" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="Geodisy" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="Geodisy" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="Geodisy" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="Geodisy" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+          <item name="clean" type="36feed69:MavenProjectsStructure$PluginNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-7" />
+    <option name="y" value="-7" />
+    <option name="width" value="1550" />
+    <option name="height" value="878" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="classes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="geodisyFiles" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="logs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="savedFiles" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="BaseFiles" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Crosswalking" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Crosswalking" type="462c0819:PsiDirectoryNode" />
+              <item name="GeoBlacklightJson" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Crosswalking" type="462c0819:PsiDirectoryNode" />
+              <item name="JSONParsing" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Crosswalking" type="462c0819:PsiDirectoryNode" />
+              <item name="XML" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Dataverse" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Dataverse" type="462c0819:PsiDirectoryNode" />
+              <item name="DataverseJSONFieldClasses" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Dataverse" type="462c0819:PsiDirectoryNode" />
+              <item name="DataverseJSONFieldClasses" type="462c0819:PsiDirectoryNode" />
+              <item name="Fields" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Dataverse" type="462c0819:PsiDirectoryNode" />
+              <item name="DataverseJSONFieldClasses" type="462c0819:PsiDirectoryNode" />
+              <item name="Fields" type="462c0819:PsiDirectoryNode" />
+              <item name="CitationCompoundFields" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Dataverse" type="462c0819:PsiDirectoryNode" />
+              <item name="DataverseJSONFieldClasses" type="462c0819:PsiDirectoryNode" />
+              <item name="Fields" type="462c0819:PsiDirectoryNode" />
+              <item name="DataverseJSONSocialFieldClasses" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Dataverse" type="462c0819:PsiDirectoryNode" />
+              <item name="FindingBoundingBoxes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Dataverse" type="462c0819:PsiDirectoryNode" />
+              <item name="FindingBoundingBoxes" type="462c0819:PsiDirectoryNode" />
+              <item name="LocationTypes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="GeoServer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
+              <item name="XMLTestCases" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="XMLFiles" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="XMLFiles" type="462c0819:PsiDirectoryNode" />
+              <item name="10" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="XMLFiles" type="462c0819:PsiDirectoryNode" />
+              <item name="10" type="462c0819:PsiDirectoryNode" />
+              <item name="5072" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="XMLFiles" type="462c0819:PsiDirectoryNode" />
+              <item name="10" type="462c0819:PsiDirectoryNode" />
+              <item name="5072" type="462c0819:PsiDirectoryNode" />
+              <item name="FK2" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="XMLFiles" type="462c0819:PsiDirectoryNode" />
+              <item name="10" type="462c0819:PsiDirectoryNode" />
+              <item name="5072" type="462c0819:PsiDirectoryNode" />
+              <item name="FK2" type="462c0819:PsiDirectoryNode" />
+              <item name="1TUKUB" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="true" />
+    <property name="GenerateAntBuildDialog.backupFiles" value="true" />
+    <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
+    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
+    <property name="GenerateAntBuildDialog.outputFileNameProperty" value="geodisy" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="last.edited.regexp" value="10_5072/FK2/8O2NUZ" />
+    <property name="last_opened_file_path" value="$MAVEN_REPOSITORY$/zip4j/zip4j-2.3.1.jar!/" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.49885058" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses" />
+      <recent name="BaseFiles" />
+    </key>
+    <key name="MoveMembersDialog.RECENTS_KEY">
+      <recent name="BaseFiles.GeodisyStrings" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="Crosswalking" />
+      <recent name="Crosswalking.XML.XMLTools" />
+      <recent name="Crosswalking.XML.XMLGroups" />
+      <recent name="Crosswalking.XML.XMLMajorGroupTags" />
+      <recent name="Crosswalking.XML" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\geodisy\Geodisy\Geodisy\geodisyFiles" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="Crosswalking.XML" />
+      <recent name="Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields" />
+      <recent name="Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="JUnit.CitationXMLTest.testXMLValidation">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="BaseFiles.Main" />
+      <module name="Geodisy" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="BaseFiles.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AltNames.setAltNames" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Geodisy" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="BaseFiles.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="BaseFiles" />
+      <option name="MAIN_CLASS_NAME" value="BaseFiles.AltNames" />
+      <option name="METHOD_NAME" value="setAltNames" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CitationXMLTest.testXMLValidation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Geodisy" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tests.XMLTestCases.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tests.XMLTestCases" />
+      <option name="MAIN_CLASS_NAME" value="tests.XMLTestCases.CitationXMLTest" />
+      <option name="METHOD_NAME" value="testXMLValidation" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ExistingHarvestsTest.setCoverage" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Geodisy" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="BaseFiles.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="BaseFiles" />
+      <option name="MAIN_CLASS_NAME" value="BaseFiles.ExistingHarvestsTest" />
+      <option name="METHOD_NAME" value="setCoverage" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RemoveRecord.removeRecord" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Geodisy" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tests" />
+      <option name="MAIN_CLASS_NAME" value="tests.RemoveRecord" />
+      <option name="METHOD_NAME" value="removeRecord" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.CitationXMLTest.testXMLValidation" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.RemoveRecord.removeRecord" />
+        <item itemvalue="JUnit.ExistingHarvestsTest.setCoverage" />
+        <item itemvalue="JUnit.AltNames.setAltNames" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e719edb7-3c25-4197-be36-316eb001a745" name="Default Changelist" comment="" />
+      <created>1555005304410</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1555005304410</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="RemoveRecord_removeRecord - 2020.02.06 at 03h 58m 38s.xml">
+      <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="RemoveRecord_removeRecord - 2020.02.06 at 04h 07m 21s.xml">
+      <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="RemoveRecord_removeRecord - 2020.02.12 at 12h 27m 24s.xml">
+      <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="RemoveRecord_removeRecord - 2020.02.14 at 14h 03m 27s.xml">
+      <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="RemoveRecord_removeRecord - 2020.02.14 at 14h 08m 02s.xml">
+      <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="RemoveRecord_removeRecord - 2020.02.14 at 14h 10m 07s.xml">
+      <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CitationXMLTest_testXMLValidation - 2020.02.19 at 11h 38m 17s.xml">
+      <configuration name="CitationXMLTest.testXMLValidation" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CitationXMLTest_testXMLValidation - 2020.02.19 at 11h 44m 46s.xml">
+      <configuration name="CitationXMLTest.testXMLValidation" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CitationXMLTest_testXMLValidation - 2020.02.19 at 11h 44m 59s.xml">
+      <configuration name="CitationXMLTest.testXMLValidation" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CitationXMLTest_testXMLValidation - 2020.02.19 at 11h 45m 22s.xml">
+      <configuration name="CitationXMLTest.testXMLValidation" configurationId="JUnit" />
+    </history-entry>
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+      <is-preview-enabled value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49892473" visible="true" weight="0.1673774" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Favorites" order="3" sideWeight="0.50107527" side_tool="true" weight="0.2585288" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.48926175" weight="0.43878657" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.48791945" visible="true" weight="0.32936078" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.557047" weight="0.31048805" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946696" weight="0.32827735" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49946696" weight="0.32936078" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4989339" weight="0.32936078" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.44295302" side_tool="true" weight="0.42351276" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49946696" weight="0.18696883" />
+      <window_info anchor="bottom" id="Statistic" order="11" sideWeight="0.49946696" weight="0.3286119" />
+      <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32936078" />
+      <window_info anchor="bottom" id="Dependency Viewer" order="13" weight="0.3286119" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" visible="true" weight="0.32942432" />
+      <window_info anchor="right" id="Palette&#9;" order="4" />
+      <window_info anchor="right" id="Module Dependencies" order="5" weight="0.32995737" />
+    </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49892473" visible="true" weight="0.1673774" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Favorites" order="3" sideWeight="0.50107527" side_tool="true" weight="0.2585288" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info active="true" anchor="bottom" id="Find" order="1" sideWeight="0.48926175" visible="true" weight="0.43878657" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.48791945" weight="0.32936078" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.557047" weight="0.32394367" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946696" weight="0.32827735" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49946696" weight="0.32936078" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4989339" weight="0.32936078" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.44295302" side_tool="true" weight="0.42351276" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49946696" weight="0.18696883" />
+      <window_info anchor="bottom" id="Statistic" order="11" sideWeight="0.49946696" weight="0.3286119" />
+      <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32936078" />
+      <window_info anchor="bottom" id="Dependency Viewer" order="13" weight="0.3286119" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" weight="0.32952252" />
+      <window_info anchor="right" id="Palette&#9;" order="4" />
+      <window_info anchor="right" id="Module Dependencies" order="5" weight="0.32995737" />
+    </layout-to-restore>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/ReadWriteToFileTest.java</url>
+          <line>29</line>
+          <properties />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/ReadWriteToFileTest.java</url>
+          <line>38</line>
+          <properties />
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/DataverseParserTest.java</url>
+          <line>43</line>
+          <properties />
+          <option name="timeStamp" value="82" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/DataverseParserTest.java</url>
+          <line>48</line>
+          <properties />
+          <option name="timeStamp" value="83" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/ExistingSearchesFile.java</url>
+          <line>40</line>
+          <properties />
+          <option name="timeStamp" value="115" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/ExistingSearchesFile.java</url>
+          <line>51</line>
+          <properties />
+          <option name="timeStamp" value="123" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../Geotools/geotools-21.1/gt-main-21.1.jar!/org/geotools/data/store/ContentDataStore.class</url>
+          <line>142</line>
+          <properties />
+          <option name="timeStamp" value="151" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/BaseFiles/SendMailTest.java</url>
+          <line>12</line>
+          <properties />
+          <option name="timeStamp" value="166" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/BaseFiles/SendMailTest.java</url>
+          <line>11</line>
+          <properties />
+          <option name="timeStamp" value="167" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/SendMail.java</url>
+          <line>20</line>
+          <properties />
+          <option name="timeStamp" value="168" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicFieldsTest.java</url>
+          <line>51</line>
+          <properties />
+          <option name="timeStamp" value="177" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/ReadWriteToFileTest.java</url>
+          <line>45</line>
+          <properties />
+          <option name="timeStamp" value="235" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/DataverseTestCases/VectorTests.java</url>
+          <line>22</line>
+          <properties />
+          <option name="timeStamp" value="236" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/DataverseTestCases/VectorTests.java</url>
+          <line>15</line>
+          <properties />
+          <option name="timeStamp" value="237" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/DataverseTestCases/VectorTests.java</url>
+          <line>29</line>
+          <properties />
+          <option name="timeStamp" value="238" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/XMLTestCases/CitationXMLTest.java</url>
+          <line>49</line>
+          <properties />
+          <option name="timeStamp" value="249" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/CompoundJSONField.java</url>
+          <line>37</line>
+          <properties />
+          <option name="timeStamp" value="302" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/JSONParsing/DataverseParser.java</url>
+          <line>81</line>
+          <properties />
+          <option name="timeStamp" value="313" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/FindBoundBox.java</url>
+          <line>29</line>
+          <properties />
+          <option name="timeStamp" value="316" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/FindBoundBox.java</url>
+          <line>41</line>
+          <properties />
+          <option name="timeStamp" value="317" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/XMLTestCases/CitationXMLTest.java</url>
+          <line>68</line>
+          <properties />
+          <option name="timeStamp" value="353" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/CountryCodes.java</url>
+          <line>20</line>
+          <properties />
+          <option name="timeStamp" value="358" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/Main.java</url>
+          <line>23</line>
+          <properties />
+          <option name="timeStamp" value="359" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/LocationTypes/Country.java</url>
+          <line>6</line>
+          <properties />
+          <option name="timeStamp" value="378" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/JGit.java</url>
+          <line>37</line>
+          <properties />
+          <option name="timeStamp" value="397" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/XMLTestCases/CitationXMLTest.java</url>
+          <line>71</line>
+          <properties />
+          <option name="timeStamp" value="430" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java</url>
+          <line>103</line>
+          <properties />
+          <option name="timeStamp" value="460" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/GeonamesJSON.java</url>
+          <line>23</line>
+          <properties />
+          <option name="timeStamp" value="484" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/GeonamesJSON.java</url>
+          <line>49</line>
+          <properties />
+          <option name="timeStamp" value="486" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/GitTest.java</url>
+          <line>53</line>
+          <properties />
+          <option name="timeStamp" value="492" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/GitTest.java</url>
+          <line>47</line>
+          <properties />
+          <option name="timeStamp" value="493" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/GitTest.java</url>
+          <line>61</line>
+          <properties />
+          <option name="timeStamp" value="494" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/XMLTestCases/CitationXMLTest.java</url>
+          <line>87</line>
+          <properties />
+          <option name="timeStamp" value="495" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/GeonamesBBsTest.java</url>
+          <line>40</line>
+          <properties />
+          <option name="timeStamp" value="500" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/GeonamesBBsTest.java</url>
+          <line>58</line>
+          <properties />
+          <option name="timeStamp" value="509" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/GeonamesBBsTest.java</url>
+          <line>54</line>
+          <properties />
+          <option name="timeStamp" value="510" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicCoverage.java</url>
+          <line>124</line>
+          <properties />
+          <option name="timeStamp" value="518" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicCoverage.java</url>
+          <line>123</line>
+          <properties />
+          <option name="timeStamp" value="519" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/Geodisy.java</url>
+          <line>45</line>
+          <properties />
+          <option name="timeStamp" value="534" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="dataverseJavaObject==null" language="JAVA" />
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseRecordInfo.java</url>
+          <line>29</line>
+          <properties />
+          <option name="timeStamp" value="538" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/HTTPCaller.java</url>
+          <line>41</line>
+          <properties />
+          <option name="timeStamp" value="557" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="counter&gt;1" language="JAVA" />
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/HTTPCaller.java</url>
+          <line>27</line>
+          <properties />
+          <option name="timeStamp" value="575" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationSimpleJSONFields/SimpleCitationFields.java</url>
+          <line>214</line>
+          <properties />
+          <option name="timeStamp" value="577" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationSimpleJSONFields/SimpleCitationFields.java</url>
+          <line>306</line>
+          <properties />
+          <option name="timeStamp" value="578" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/LocationTypes/BoundingBox.java</url>
+          <line>174</line>
+          <properties />
+          <option name="timeStamp" value="631" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicBoundingBox.java</url>
+          <line>288</line>
+          <properties />
+          <option name="timeStamp" value="632" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/JGit.java</url>
+          <line>159</line>
+          <properties />
+          <option name="timeStamp" value="638" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/XMLTestCases/CitationXMLTest.java</url>
+          <line>81</line>
+          <properties />
+          <option name="timeStamp" value="640" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/XMLTestCases/CitationXMLTest.java</url>
+          <line>40</line>
+          <properties />
+          <option name="timeStamp" value="642" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicFields.java</url>
+          <line>314</line>
+          <properties />
+          <option name="timeStamp" value="705" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java</url>
+          <line>104</line>
+          <properties />
+          <option name="timeStamp" value="713" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
+          <line>133</line>
+          <properties />
+          <option name="timeStamp" value="779" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java</url>
+          <line>110</line>
+          <properties />
+          <option name="timeStamp" value="808" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java</url>
+          <line>118</line>
+          <properties />
+          <option name="timeStamp" value="835" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java</url>
+          <line>119</line>
+          <properties />
+          <option name="timeStamp" value="836" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/HTTPCaller.java</url>
+          <line>91</line>
+          <properties />
+          <option name="timeStamp" value="839" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/HTTPCaller.java</url>
+          <line>92</line>
+          <properties />
+          <option name="timeStamp" value="840" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java</url>
+          <line>68</line>
+          <properties />
+          <option name="timeStamp" value="845" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/GeoServer/GeoServerAPI.java</url>
+          <line>296</line>
+          <properties />
+          <option name="timeStamp" value="850" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java</url>
+          <line>115</line>
+          <properties />
+          <option name="timeStamp" value="856" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/JGit.java</url>
+          <line>50</line>
+          <properties />
+          <option name="timeStamp" value="868" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/JGit.java</url>
+          <line>213</line>
+          <properties />
+          <option name="timeStamp" value="869" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="doi.contains(&quot;.&quot;)" language="JAVA" />
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/ISO_Schema.java</url>
+          <line>67</line>
+          <properties />
+          <option name="timeStamp" value="873" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java</url>
+          <line>102</line>
+          <properties />
+          <option name="timeStamp" value="902" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java</url>
+          <line>42</line>
+          <properties />
+          <option name="timeStamp" value="912" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java</url>
+          <line>144</line>
+          <properties />
+          <option name="timeStamp" value="917" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java</url>
+          <line>63</line>
+          <properties />
+          <option name="timeStamp" value="918" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="doi==null" language="JAVA" />
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/ISO_Schema.java</url>
+          <line>51</line>
+          <properties />
+          <option name="timeStamp" value="937" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/ISO_Schema.java</url>
+          <line>77</line>
+          <properties />
+          <option name="timeStamp" value="938" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java</url>
+          <line>104</line>
+          <properties />
+          <option name="timeStamp" value="997" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java</url>
+          <line>44</line>
+          <properties />
+          <option name="timeStamp" value="1000" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java</url>
+          <line>106</line>
+          <properties />
+          <option name="timeStamp" value="1019" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/GeoBlacklightJSON.java</url>
+          <line>50</line>
+          <properties />
+          <option name="timeStamp" value="1057" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java</url>
+          <line>52</line>
+          <properties />
+          <option name="timeStamp" value="1059" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/GeoBlacklightJSON.java</url>
+          <line>51</line>
+          <properties />
+          <option name="timeStamp" value="1068" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
+          <line>56</line>
+          <properties />
+          <option name="timeStamp" value="1070" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java</url>
+          <line>220</line>
+          <properties />
+          <option name="timeStamp" value="1074" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java</url>
+          <line>107</line>
+          <properties />
+          <option name="timeStamp" value="1090" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java</url>
+          <line>213</line>
+          <properties />
+          <option name="timeStamp" value="1110" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java</url>
+          <line>286</line>
+          <properties />
+          <option name="timeStamp" value="1115" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java</url>
+          <line>239</line>
+          <properties />
+          <option name="timeStamp" value="1124" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicBoundingBox.java</url>
+          <line>357</line>
+          <properties />
+          <option name="timeStamp" value="1126" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java</url>
+          <line>205</line>
+          <properties />
+          <option name="timeStamp" value="1127" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
+          <line>43</line>
+          <properties />
+          <option name="timeStamp" value="1153" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
+          <line>111</line>
+          <properties />
+          <option name="timeStamp" value="1155" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/BaseFiles/AltNames.java</url>
+          <line>9</line>
+          <properties />
+          <option name="timeStamp" value="1175" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="this.getOriginalTitle().toLowerCase().endsWith(&quot;kmz&quot;)" language="JAVA" />
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseRecordFile.java</url>
+          <line>196</line>
+          <properties />
+          <option name="timeStamp" value="1190" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java</url>
+          <line>315</line>
+          <properties />
+          <option name="timeStamp" value="1194" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java</url>
+          <line>216</line>
+          <properties />
+          <option name="timeStamp" value="1217" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
+          <line>267</line>
+          <properties />
+          <option name="timeStamp" value="1218" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/Geonames.java</url>
+          <line>78</line>
+          <properties />
+          <option name="timeStamp" value="1219" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
+          <line>136</line>
+          <properties />
+          <option name="timeStamp" value="1221" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
+          <line>138</line>
+          <properties />
+          <option name="timeStamp" value="1222" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
+          <line>139</line>
+          <properties />
+          <option name="timeStamp" value="1223" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
+          <line>153</line>
+          <properties />
+          <option name="timeStamp" value="1224" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
+          <line>154</line>
+          <properties />
+          <option name="timeStamp" value="1225" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
+          <line>155</line>
+          <properties />
+          <option name="timeStamp" value="1226" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/ISOXMLGen.java</url>
+          <line>50</line>
+          <properties />
+          <option name="timeStamp" value="1227" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLGroups/IdentificationInfo.java</url>
+          <line>118</line>
+          <properties />
+          <option name="timeStamp" value="1228" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLGroups/IdentificationInfo.java</url>
+          <line>233</line>
+          <properties />
+          <option name="timeStamp" value="1229" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLGroups/SocialFieldInfo.java</url>
+          <line>19</line>
+          <properties />
+          <option name="timeStamp" value="1230" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLGroups/IdentificationInfo.java</url>
+          <line>128</line>
+          <properties />
+          <option name="timeStamp" value="1231" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
+          <line>125</line>
+          <properties />
+          <option name="timeStamp" value="1235" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/JSONParsing/DataverseParser.java</url>
+          <line>32</line>
+          <properties />
+          <option name="timeStamp" value="1237" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java</url>
+          <line>46</line>
+          <properties />
+          <option name="timeStamp" value="1238" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
+          <line>230</line>
+          <properties />
+          <option name="timeStamp" value="1240" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicFields.java</url>
+          <line>75</line>
+          <properties />
+          <option name="timeStamp" value="1243" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/Countries.java</url>
+          <line>127</line>
+          <properties />
+          <option name="timeStamp" value="1244" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseRecordFile.java</url>
+          <line>103</line>
+          <properties />
+          <option name="timeStamp" value="1249" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseRecordFile.java</url>
+          <line>254</line>
+          <properties />
+          <option name="timeStamp" value="1253" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java</url>
+          <line>186</line>
+          <properties />
+          <option name="timeStamp" value="1259" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java</url>
+          <line>58</line>
+          <properties />
+          <option name="timeStamp" value="1262" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java</url>
+          <line>215</line>
+          <properties />
+          <option name="timeStamp" value="1263" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
+          <line>158</line>
+          <properties />
+          <option name="timeStamp" value="1266" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java</url>
+          <line>43</line>
+          <properties />
+          <option name="timeStamp" value="1267" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java</url>
+          <line>33</line>
+          <properties />
+          <option name="timeStamp" value="1268" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java</url>
+          <line>26</line>
+          <properties />
+          <option name="timeStamp" value="1269" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/RemoveRecord.java</url>
+          <line>20</line>
+          <properties />
+          <option name="timeStamp" value="1270" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java</url>
+          <line>48</line>
+          <properties />
+          <option name="timeStamp" value="1271" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java</url>
+          <line>92</line>
+          <properties />
+          <option name="timeStamp" value="1272" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java</url>
+          <line>183</line>
+          <properties />
+          <option name="timeStamp" value="1273" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java</url>
+          <line>49</line>
+          <properties class="BaseFiles.FileWriter" method="writeStringToFile">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="1058" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="EXISTING_RECORDS" language="JAVA" />
+        <watch expression="this" />
+        <watch expression="this" language="JAVA" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand>
+      <path>
+        <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+        <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="breakpointCondition">
+      <expression>
+        <expression-string>this.getOriginalTitle().toLowerCase().endsWith(&quot;kmz&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>name.equals(&quot;creeks.kml&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>!gdalString.toString().contains(&quot;FAILURE&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>getGeoDataFiles().size()&gt;0</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>dgrf.getFileURL().isEmpty()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>start == -1</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>geoDataFiles.size()&gt;0</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>countFile&gt;0</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>drf.getFileURL().isEmpty()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>datasetIdent.contains(&quot;LICNGT&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+    <expressions id="watch">
+      <expression>
+        <expression-string>EXISTING_RECORDS</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+    <expressions id="setValue">
+      <expression>
+        <expression-string>&quot;https://dataverse.scholarsportal.info/api/datasets/export?exporter=dataverse_json&amp;persistentId=doi:10.5072/FK2/PLD5VK&quot;</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>baseURL+pid</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>destPath+fileName</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>fileName.replace(&quot;temp&quot;,nameStub)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>fileName.replace(&quot;temp&quot;,&quot;yes&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>temp.hasUTMCoords()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>folder.listFiles()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>dJO.getVersionSection(current).get(&quot;files&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>countries.get(name)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>geographicCoverage.getBoundingBox()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/test/java/tests/UnzipTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="22" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/GeoBlacklightStrings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/GeoCombine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="548">
+          <caret line="48" column="61" selection-start-line="48" selection-start-column="61" selection-end-line="48" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/SendMail.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/Scheduler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/PersistantURL.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/GeoServer/PostGIS.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseGeoRecordFile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="52" lean-forward="true" selection-start-line="6" selection-start-column="52" selection-end-line="6" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicFields.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="606">
+          <caret line="298" column="33" selection-start-line="298" selection-start-column="19" selection-end-line="298" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="106" column="37" selection-start-line="106" selection-start-column="37" selection-end-line="106" selection-end-column="37" />
+          <folding>
+            <element signature="method#getProjection#0;class#GDAL#0" />
+            <element signature="method#getAuthority#0;class#GDAL#0" />
+            <element signature="method#compare#0;class#GDAL#0" />
+            <element signature="method#getLatLongGdalInfo#0;class#GDAL#0" />
+            <element signature="method#parseDecimalDegrees#0;class#GDAL#0" />
+            <element signature="method#getGeometryType#0;class#GDAL#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/GeoServer/GeoServerAPI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="13" column="1" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/SourceJavaObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="179" selection-start-line="179" selection-end-line="179" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/GeoBlacklightJSON.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="620">
+          <caret line="81" column="41" selection-start-line="81" selection-start-column="41" selection-end-line="81" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/Zip.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/error.log">
+      <provider selected="true" editor-type-id="LogFileEditorProvider">
+        <state relative-caret-position="483">
+          <caret line="457" selection-start-line="457" selection-end-line="457" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="100" selection-start-line="100" selection-end-line="100" />
+          <folding>
+            <element signature="e#379#380#0" expanded="true" />
+            <element signature="e#434#435#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/ExistingSearches.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/ExistingHarvests.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="301">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/tests/RemoveRecord.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-commons/1.1.0/junit-platform-commons-1.1.0-sources.jar!/org/junit/platform/commons/util/ReflectionUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="435" selection-start-line="435" selection-end-line="435" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-engine/5.1.0/junit-jupiter-engine-5.1.0-sources.jar!/org/junit/jupiter/engine/execution/ExecutableInvoker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="114" selection-start-line="114" selection-end-line="114" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-engine/5.1.0/junit-jupiter-engine-5.1.0-sources.jar!/org/junit/jupiter/engine/execution/ThrowableCollector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="44" selection-start-line="44" selection-end-line="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-engine/5.1.0/junit-jupiter-engine-5.1.0-sources.jar!/org/junit/jupiter/engine/descriptor/TestMethodTestDescriptor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="123" selection-start-line="123" selection-end-line="123" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-engine/1.1.0/junit-platform-engine-1.1.0-sources.jar!/org/junit/platform/engine/support/hierarchical/HierarchicalTestExecutor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="124" selection-start-line="124" selection-end-line="124" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/Geodisy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="42" selection-start-line="42" selection-end-line="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1585#1586#0" expanded="true" />
+            <element signature="e#1627#1628#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/HTTPCaller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="63" selection-start-line="63" selection-end-line="63" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/JSONParsing/DataverseParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="32" selection-start-line="32" selection-end-line="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="230" selection-start-line="230" selection-end-line="230" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="92" selection-start-line="92" selection-end-line="92" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="78" selection-start-line="78" selection-end-line="78" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseRecordFile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="147" selection-start-line="147" selection-end-line="147" />
+          <folding>
+            <element signature="e#2419#2420#0" expanded="true" />
+            <element signature="e#2474#2475#0" expanded="true" />
+            <element signature="e#10478#10479#0" expanded="true" />
+            <element signature="e#10546#10547#0" expanded="true" />
+            <element signature="e#10582#10583#0" expanded="true" />
+            <element signature="e#10629#10630#0" expanded="true" />
+            <element signature="e#10671#10672#0" expanded="true" />
+            <element signature="e#10713#10714#0" expanded="true" />
+            <element signature="e#10752#10753#0" expanded="true" />
+            <element signature="e#10794#10795#0" expanded="true" />
+            <element signature="e#10840#10841#0" expanded="true" />
+            <element signature="e#10892#10893#0" expanded="true" />
+            <element signature="e#10932#10933#0" expanded="true" />
+            <element signature="e#10984#10985#0" expanded="true" />
+            <element signature="e#11028#11029#0" expanded="true" />
+            <element signature="e#11085#11086#0" expanded="true" />
+            <element signature="e#11126#11127#0" expanded="true" />
+            <element signature="e#11171#11172#0" expanded="true" />
+            <element signature="e#11227#11228#0" expanded="true" />
+            <element signature="e#11278#11279#0" expanded="true" />
+            <element signature="e#11312#11313#0" expanded="true" />
+            <element signature="e#11358#11359#0" expanded="true" />
+            <element signature="e#11392#11393#0" expanded="true" />
+            <element signature="e#11443#11444#0" expanded="true" />
+            <element signature="e#11493#11494#0" expanded="true" />
+            <element signature="e#11548#11549#0" expanded="true" />
+            <element signature="e#11587#11588#0" expanded="true" />
+            <element signature="e#11622#11623#0" expanded="true" />
+            <element signature="e#11667#11668#0" expanded="true" />
+            <element signature="e#11700#11701#0" expanded="true" />
+            <element signature="e#11739#11740#0" expanded="true" />
+            <element signature="e#11775#11776#0" expanded="true" />
+            <element signature="e#11827#11828#0" expanded="true" />
+            <element signature="e#11871#11872#0" expanded="true" />
+            <element signature="e#11921#11922#0" expanded="true" />
+            <element signature="e#11963#11964#0" expanded="true" />
+            <element signature="e#11991#11992#0" expanded="true" />
+            <element signature="e#12018#12019#0" expanded="true" />
+            <element signature="e#12055#12056#0" expanded="true" />
+            <element signature="e#12087#12088#0" expanded="true" />
+            <element signature="e#12120#12121#0" expanded="true" />
+            <element signature="e#12149#12150#0" expanded="true" />
+            <element signature="e#12193#12194#0" expanded="true" />
+            <element signature="e#12229#12230#0" expanded="true" />
+            <element signature="e#12265#12266#0" expanded="true" />
+            <element signature="e#12297#12298#0" expanded="true" />
+            <element signature="e#12347#12348#0" expanded="true" />
+            <element signature="e#12389#12390#0" expanded="true" />
+            <element signature="e#12445#12446#0" expanded="true" />
+            <element signature="e#12493#12494#0" expanded="true" />
+            <element signature="e#12547#12548#0" expanded="true" />
+            <element signature="e#12577#12578#0" expanded="true" />
+            <element signature="e#12626#12627#0" expanded="true" />
+            <element signature="e#12671#12672#0" expanded="true" />
+            <element signature="e#12705#12706#0" expanded="true" />
+            <element signature="e#12750#12751#0" expanded="true" />
+            <element signature="e#12796#12797#0" expanded="true" />
+            <element signature="e#12842#12843#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/GeonamesBBs.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="224" column="20" lean-forward="true" selection-start-line="224" selection-start-column="20" selection-end-line="224" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/logging/log4j/log4j-api/2.8.2/log4j-api-2.8.2-sources.jar!/org/apache/logging/log4j/Logger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="860" column="9" selection-start-line="860" selection-start-column="9" selection-end-line="860" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/GeoLogger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="394">
+          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/LocationTypes/BoundingBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="13" column="46" selection-start-line="13" selection-start-column="46" selection-end-line="13" selection-end-column="46" />
+          <folding>
+            <element signature="e#2606#2607#0" expanded="true" />
+            <element signature="e#2686#2687#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="169" column="39" selection-start-line="169" selection-start-column="25" selection-end-line="169" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicBoundingBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="15" column="46" selection-start-line="15" selection-start-column="46" selection-end-line="15" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="66" column="54" selection-start-line="66" selection-start-column="54" selection-end-line="66" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLGroups/GeographicInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="58" column="39" selection-start-line="58" selection-start-column="39" selection-end-line="58" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLDocObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="48" column="40" selection-start-line="48" selection-start-column="40" selection-end-line="48" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/ISO_19115.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="25" column="57" selection-start-line="25" selection-start-column="56" selection-end-line="25" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/ISOXMLGen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="258">
+          <caret line="69" column="87" selection-start-line="69" selection-start-column="87" selection-end-line="69" selection-end-column="87" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/XMLFiles/10/5072/FK2/1TUKUB/iso19115.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="249" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/GeodisyStrings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="53" column="35" selection-start-line="53" selection-start-column="35" selection-end-line="53" selection-end-column="35" />
+          <folding>
+            <element signature="e#7368#7369#0" expanded="true" />
+            <element signature="e#7414#7415#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/tests/XMLTestCases/CitationXMLTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="73" column="38" selection-start-line="73" selection-start-column="38" selection-end-line="73" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/geodisyFiles/xmlTestDJO.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="27" selection-end-line="541" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/javax/xml/parsers/SAXParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="415" column="42" selection-start-line="415" selection-start-column="42" selection-end-line="415" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="19" column="49" selection-start-line="19" selection-start-column="49" selection-end-line="19" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor>
+            <show-content>
+              <type id="library" />
+              <type id="artifact" />
+            </show-content>
+          </artifact-editor>
+          <last-edited>Geodisy:jar</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.49885058" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.49885058" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.49885058" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.49885058" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>Geodisy</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.49885058" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>zip4j-2.3.1</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.49885058" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
