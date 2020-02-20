@@ -20,7 +20,7 @@ public class XMLValidator {
     public boolean validateXML(String fileName) {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
-            factory.setValidating(true);
+            factory.setValidating(false);
             factory.setNamespaceAware(true);
 
             SAXParser parser = factory.newSAXParser();
