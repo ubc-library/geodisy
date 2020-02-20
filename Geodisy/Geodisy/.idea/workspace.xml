@@ -7,8 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e719edb7-3c25-4197-be36-316eb001a745" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/Temp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/Temp.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/geodisyFiles/xmlTestDJO.xml" beforeDir="false" afterPath="$PROJECT_DIR$/geodisyFiles/xmlTestDJO.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -31,37 +33,23 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLGroups/GeographicInfo.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="58" column="39" selection-start-line="58" selection-start-column="39" selection-end-line="58" selection-end-column="39" />
+            <state relative-caret-position="196">
+              <caret line="50" selection-start-line="50" selection-end-line="50" />
+              <folding>
+                <element signature="e#379#380#0" expanded="true" />
+                <element signature="e#434#435#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLDocObject.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="48" column="40" selection-start-line="48" selection-start-column="40" selection-end-line="48" selection-end-column="40" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/ISO_19115.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="25" column="57" selection-start-line="25" selection-start-column="56" selection-end-line="25" selection-end-column="57" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/ISOXMLGen.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="69" column="87" selection-start-line="69" selection-start-column="87" selection-end-line="69" selection-end-column="87" />
+            <state relative-caret-position="196">
+              <caret line="183" selection-start-line="183" selection-end-line="183" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -70,55 +58,142 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/tests/XMLTestCases/CitationXMLTest.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseRecordFile.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="73" column="38" selection-start-line="73" selection-start-column="38" selection-end-line="73" selection-end-column="38" />
+            <state relative-caret-position="196">
+              <caret line="103" selection-start-line="103" selection-end-line="103" />
+              <folding>
+                <element signature="e#2419#2420#0" expanded="true" />
+                <element signature="e#2474#2475#0" expanded="true" />
+                <element signature="e#10478#10479#0" expanded="true" />
+                <element signature="e#10546#10547#0" expanded="true" />
+                <element signature="e#10582#10583#0" expanded="true" />
+                <element signature="e#10629#10630#0" expanded="true" />
+                <element signature="e#10671#10672#0" expanded="true" />
+                <element signature="e#10713#10714#0" expanded="true" />
+                <element signature="e#10752#10753#0" expanded="true" />
+                <element signature="e#10794#10795#0" expanded="true" />
+                <element signature="e#10840#10841#0" expanded="true" />
+                <element signature="e#10892#10893#0" expanded="true" />
+                <element signature="e#10932#10933#0" expanded="true" />
+                <element signature="e#10984#10985#0" expanded="true" />
+                <element signature="e#11028#11029#0" expanded="true" />
+                <element signature="e#11085#11086#0" expanded="true" />
+                <element signature="e#11126#11127#0" expanded="true" />
+                <element signature="e#11171#11172#0" expanded="true" />
+                <element signature="e#11227#11228#0" expanded="true" />
+                <element signature="e#11278#11279#0" expanded="true" />
+                <element signature="e#11312#11313#0" expanded="true" />
+                <element signature="e#11358#11359#0" expanded="true" />
+                <element signature="e#11392#11393#0" expanded="true" />
+                <element signature="e#11443#11444#0" expanded="true" />
+                <element signature="e#11493#11494#0" expanded="true" />
+                <element signature="e#11548#11549#0" expanded="true" />
+                <element signature="e#11587#11588#0" expanded="true" />
+                <element signature="e#11622#11623#0" expanded="true" />
+                <element signature="e#11667#11668#0" expanded="true" />
+                <element signature="e#11700#11701#0" expanded="true" />
+                <element signature="e#11739#11740#0" expanded="true" />
+                <element signature="e#11775#11776#0" expanded="true" />
+                <element signature="e#11827#11828#0" expanded="true" />
+                <element signature="e#11871#11872#0" expanded="true" />
+                <element signature="e#11921#11922#0" expanded="true" />
+                <element signature="e#11963#11964#0" expanded="true" />
+                <element signature="e#11991#11992#0" expanded="true" />
+                <element signature="e#12018#12019#0" expanded="true" />
+                <element signature="e#12055#12056#0" expanded="true" />
+                <element signature="e#12087#12088#0" expanded="true" />
+                <element signature="e#12120#12121#0" expanded="true" />
+                <element signature="e#12149#12150#0" expanded="true" />
+                <element signature="e#12193#12194#0" expanded="true" />
+                <element signature="e#12229#12230#0" expanded="true" />
+                <element signature="e#12265#12266#0" expanded="true" />
+                <element signature="e#12297#12298#0" expanded="true" />
+                <element signature="e#12347#12348#0" expanded="true" />
+                <element signature="e#12389#12390#0" expanded="true" />
+                <element signature="e#12445#12446#0" expanded="true" />
+                <element signature="e#12493#12494#0" expanded="true" />
+                <element signature="e#12547#12548#0" expanded="true" />
+                <element signature="e#12577#12578#0" expanded="true" />
+                <element signature="e#12626#12627#0" expanded="true" />
+                <element signature="e#12671#12672#0" expanded="true" />
+                <element signature="e#12705#12706#0" expanded="true" />
+                <element signature="e#12750#12751#0" expanded="true" />
+                <element signature="e#12796#12797#0" expanded="true" />
+                <element signature="e#12842#12843#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLValidator.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="19" column="49" selection-start-line="19" selection-start-column="49" selection-end-line="19" selection-end-column="49" />
+            <state relative-caret-position="196">
+              <caret line="33" selection-start-line="33" selection-end-line="33" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/javax/xml/parsers/SAXParser.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="415" column="42" selection-start-line="415" selection-start-column="42" selection-end-line="415" selection-end-column="42" />
+            <state relative-caret-position="196">
+              <caret line="160" column="56" selection-start-line="160" selection-start-column="56" selection-end-line="160" selection-end-column="56" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/geodisyFiles/xmlTestDJO.xml">
+        <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="27" selection-end-line="541" />
+            <state relative-caret-position="391">
+              <caret line="23" selection-start-line="23" selection-end-line="23" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/GeodisyStrings.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
-              <caret line="53" column="35" selection-start-line="53" selection-start-column="35" selection-end-line="53" selection-end-column="35" />
+            <state relative-caret-position="498">
+              <caret line="63" selection-start-line="63" selection-end-line="63" />
               <folding>
-                <element signature="e#7368#7369#0" expanded="true" />
-                <element signature="e#7414#7415#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="196">
+              <caret line="92" selection-start-line="92" selection-end-line="92" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/JSONParsing/DataverseParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="277">
+              <caret line="32" selection-start-line="32" selection-end-line="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="199">
+              <caret line="230" selection-start-line="230" selection-end-line="230" />
             </state>
           </provider>
         </entry>
@@ -136,10 +211,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>optiona</find>
-      <find>URL</find>
-      <find>catch</find>
-      <find>/home/centos/Geodisy/</find>
       <find>Something was wrong with the country XML</find>
       <find>Moving metadata</find>
       <find>Something was malformed with the JSON string returned from Dataverse</find>
@@ -166,6 +237,10 @@
       <find>Non-Geo</find>
       <find>gmd</find>
       <find>records</find>
+      <find>MANIFEST.MF</find>
+      <find>Somehow have a DataverseGeoRecordFile that doesn't end in shp or tif: File</find>
+      <find>Something went wrong trying to get</find>
+      <find>dc_format_s</find>
     </findStrings>
     <replaceStrings>
       <replace>SimpleFields simpleFields = getSimpleFields();</replace>
@@ -211,12 +286,12 @@
       <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Crosswalking\XML\XMLGroups</dir>
       <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Crosswalking\XML</dir>
       <dir>127.0.0.1</dir>
-      <dir>C:\geodisy\Geodisy\Geodisy</dir>
       <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Dataverse</dir>
       <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Crosswalking</dir>
       <dir>C:\geodisy\Geodisy\Geodisy\src\main</dir>
       <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Crosswalking\GeoBlacklightJson</dir>
       <dir>C:\geodisy\Geodisy\Geodisy\src\main\java</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy</dir>
       <dir>C:\geodisy\Geodisy\Geodisy\src</dir>
     </dirStrings>
   </component>
@@ -253,7 +328,6 @@
         <option value="$PROJECT_DIR$/src/test/java/tests/FixSpecificRecords.java" />
         <option value="$PROJECT_DIR$/src/main/java/BaseFiles/DownloadRecord.java" />
         <option value="$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java" />
-        <option value="$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java" />
         <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/JSONField.java" />
         <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationSimpleJSONFields/SimpleCitationFields.java" />
         <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java" />
@@ -272,11 +346,12 @@
         <option value="$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/LocationTypes/BoundingBox.java" />
         <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicBoundingBox.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java" />
         <option value="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/ISOXMLGen.java" />
         <option value="$PROJECT_DIR$/XMLFiles/10/5072/FK2/1TUKUB/iso19115.xml" />
         <option value="$PROJECT_DIR$/geodisyFiles/xmlTestDJO.xml" />
         <option value="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLValidator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java" />
       </list>
     </option>
   </component>
@@ -336,7 +411,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -344,26 +418,6 @@
             <path>
               <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
               <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
-              <item name="classes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
-              <item name="geodisyFiles" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
-              <item name="logs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
-              <item name="savedFiles" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
@@ -406,16 +460,7 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="Crosswalking" type="462c0819:PsiDirectoryNode" />
-              <item name="GeoBlacklightJson" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="Crosswalking" type="462c0819:PsiDirectoryNode" />
-              <item name="JSONParsing" type="462c0819:PsiDirectoryNode" />
+              <item name="XML" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
@@ -425,6 +470,17 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="Crosswalking" type="462c0819:PsiDirectoryNode" />
               <item name="XML" type="462c0819:PsiDirectoryNode" />
+              <item name="XMLGroups" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Crosswalking" type="462c0819:PsiDirectoryNode" />
+              <item name="XML" type="462c0819:PsiDirectoryNode" />
+              <item name="XMLTools" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
@@ -433,74 +489,6 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="Dataverse" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="Dataverse" type="462c0819:PsiDirectoryNode" />
-              <item name="DataverseJSONFieldClasses" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="Dataverse" type="462c0819:PsiDirectoryNode" />
-              <item name="DataverseJSONFieldClasses" type="462c0819:PsiDirectoryNode" />
-              <item name="Fields" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="Dataverse" type="462c0819:PsiDirectoryNode" />
-              <item name="DataverseJSONFieldClasses" type="462c0819:PsiDirectoryNode" />
-              <item name="Fields" type="462c0819:PsiDirectoryNode" />
-              <item name="CitationCompoundFields" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="Dataverse" type="462c0819:PsiDirectoryNode" />
-              <item name="DataverseJSONFieldClasses" type="462c0819:PsiDirectoryNode" />
-              <item name="Fields" type="462c0819:PsiDirectoryNode" />
-              <item name="DataverseJSONSocialFieldClasses" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="Dataverse" type="462c0819:PsiDirectoryNode" />
-              <item name="FindingBoundingBoxes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="Dataverse" type="462c0819:PsiDirectoryNode" />
-              <item name="FindingBoundingBoxes" type="462c0819:PsiDirectoryNode" />
-              <item name="LocationTypes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="GeoServer" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
@@ -535,46 +523,25 @@
             <path>
               <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
               <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
-              <item name="XMLFiles" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
               <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
-              <item name="XMLFiles" type="462c0819:PsiDirectoryNode" />
-              <item name="10" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+              <item name="generated-sources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
               <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
-              <item name="XMLFiles" type="462c0819:PsiDirectoryNode" />
-              <item name="10" type="462c0819:PsiDirectoryNode" />
-              <item name="5072" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
-              <item name="XMLFiles" type="462c0819:PsiDirectoryNode" />
-              <item name="10" type="462c0819:PsiDirectoryNode" />
-              <item name="5072" type="462c0819:PsiDirectoryNode" />
-              <item name="FK2" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
-              <item name="XMLFiles" type="462c0819:PsiDirectoryNode" />
-              <item name="10" type="462c0819:PsiDirectoryNode" />
-              <item name="5072" type="462c0819:PsiDirectoryNode" />
-              <item name="FK2" type="462c0819:PsiDirectoryNode" />
-              <item name="1TUKUB" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+              <item name="generated-test-sources" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -595,7 +562,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.49885058" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
@@ -636,7 +603,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.CitationXMLTest.testXMLValidation">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="BaseFiles.Main" />
       <module name="Geodisy" />
@@ -716,9 +683,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CitationXMLTest.testXMLValidation" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.RemoveRecord.removeRecord" />
+        <item itemvalue="JUnit.CitationXMLTest.testXMLValidation" />
         <item itemvalue="JUnit.ExistingHarvestsTest.setCoverage" />
         <item itemvalue="JUnit.AltNames.setAltNames" />
       </list>
@@ -735,9 +702,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="RemoveRecord_removeRecord - 2020.02.06 at 03h 58m 38s.xml">
-      <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="RemoveRecord_removeRecord - 2020.02.06 at 04h 07m 21s.xml">
       <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
     </history-entry>
@@ -765,6 +729,9 @@
     <history-entry file="CitationXMLTest_testXMLValidation - 2020.02.19 at 11h 45m 22s.xml">
       <configuration name="CitationXMLTest.testXMLValidation" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="RemoveRecord_removeRecord - 2020.02.19 at 16h 57m 09s.xml">
+      <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -778,21 +745,22 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49892473" visible="true" weight="0.1673774" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49892473" visible="true" weight="0.16897655" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Favorites" order="3" sideWeight="0.50107527" side_tool="true" weight="0.2585288" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.48926175" weight="0.43878657" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.48791945" visible="true" weight="0.32936078" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.557047" weight="0.31048805" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.48791945" weight="0.32936078" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.5565032" visible="true" weight="0.30985916" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946696" weight="0.32827735" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49946696" weight="0.32936078" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4989339" weight="0.32936078" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.44295302" side_tool="true" weight="0.42351276" />
+      <window_info active="true" anchor="bottom" id="Event Log" order="9" sideWeight="0.4434968" side_tool="true" visible="true" weight="0.30985916" />
       <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49946696" weight="0.18696883" />
       <window_info anchor="bottom" id="Statistic" order="11" sideWeight="0.49946696" weight="0.3286119" />
       <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32936078" />
@@ -1565,6 +1533,18 @@
           <properties />
           <option name="timeStamp" value="1273" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java</url>
+          <line>361</line>
+          <properties />
+          <option name="timeStamp" value="1274" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java</url>
+          <line>49</line>
+          <properties />
+          <option name="timeStamp" value="1276" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java</url>
           <line>49</line>
@@ -1708,27 +1688,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/test/java/tests/UnzipTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="22" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/GeoBlacklightStrings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/GeoCombine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="548">
-          <caret line="48" column="61" selection-start-line="48" selection-start-column="61" selection-end-line="48" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/SendMail.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -1747,13 +1706,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/GeoServer/PostGIS.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -1821,24 +1773,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="100" selection-start-line="100" selection-end-line="100" />
-          <folding>
-            <element signature="e#379#380#0" expanded="true" />
-            <element signature="e#434#435#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/ExistingSearches.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/ExistingHarvests.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="301">
@@ -1888,10 +1822,171 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/HTTPCaller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/GeonamesBBs.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="224" column="20" lean-forward="true" selection-start-line="224" selection-start-column="20" selection-end-line="224" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/logging/log4j/log4j-api/2.8.2/log4j-api-2.8.2-sources.jar!/org/apache/logging/log4j/Logger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="860" column="9" selection-start-line="860" selection-start-column="9" selection-end-line="860" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/GeoLogger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="394">
+          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/LocationTypes/BoundingBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="13" column="46" selection-start-line="13" selection-start-column="46" selection-end-line="13" selection-end-column="46" />
+          <folding>
+            <element signature="e#2606#2607#0" expanded="true" />
+            <element signature="e#2686#2687#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicBoundingBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="15" column="46" selection-start-line="15" selection-start-column="46" selection-end-line="15" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/XMLFiles/10/5072/FK2/1TUKUB/iso19115.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="249" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLGroups/GeographicInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="58" column="39" selection-start-line="58" selection-start-column="39" selection-end-line="58" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLDocObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="48" column="40" selection-start-line="48" selection-start-column="40" selection-end-line="48" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/ISO_19115.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="25" column="57" selection-start-line="25" selection-start-column="56" selection-end-line="25" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/ISOXMLGen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="918">
+          <caret line="69" column="87" selection-start-line="69" selection-start-column="87" selection-end-line="69" selection-end-column="87" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/tests/XMLTestCases/CitationXMLTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="935">
+          <caret line="73" column="38" selection-start-line="73" selection-start-column="38" selection-end-line="73" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="19" column="49" selection-start-line="19" selection-start-column="49" selection-end-line="19" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/javax/xml/parsers/SAXParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6443">
+          <caret line="415" column="42" selection-start-line="415" selection-start-column="42" selection-end-line="415" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/geodisyFiles/xmlTestDJO.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="27" selection-end-line="541" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/GeodisyStrings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="39" column="35" selection-start-line="39" selection-start-column="35" selection-end-line="39" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/ExistingCallsToCheck.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="27" column="28" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/io/FileNotFoundException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="49" column="11" selection-start-line="49" selection-start-column="11" selection-end-line="49" selection-end-column="11" />
+          <folding>
+            <element signature="e#1063#1064#0" expanded="true" />
+            <element signature="e#1086#1087#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/ExistingSearches.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="22" column="66" selection-start-line="22" selection-start-column="66" selection-end-line="22" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/io/File.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="1005" column="19" selection-start-line="1005" selection-start-column="19" selection-end-line="1005" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/GeoServer/PostGIS.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="45" column="26" selection-start-line="45" selection-start-column="26" selection-end-line="45" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/Geodisy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="42" selection-start-line="42" selection-end-line="42" />
+        <state relative-caret-position="238">
+          <caret line="45" selection-start-line="45" selection-end-line="45" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1585#1586#0" expanded="true" />
@@ -1900,10 +1995,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/HTTPCaller.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        <state relative-caret-position="196">
+          <caret line="50" selection-start-line="50" selection-end-line="50" />
+          <folding>
+            <element signature="e#379#380#0" expanded="true" />
+            <element signature="e#434#435#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1916,7 +2015,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
+        <state relative-caret-position="498">
           <caret line="63" selection-start-line="63" selection-end-line="63" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1940,7 +2039,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
+        <state relative-caret-position="196">
           <caret line="92" selection-start-line="92" selection-end-line="92" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1948,10 +2047,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="78" selection-start-line="78" selection-end-line="78" />
+        <state relative-caret-position="196">
+          <caret line="183" selection-start-line="183" selection-end-line="183" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1960,8 +2059,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseRecordFile.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="147" selection-start-line="147" selection-end-line="147" />
+        <state relative-caret-position="196">
+          <caret line="103" selection-start-line="103" selection-end-line="103" />
           <folding>
             <element signature="e#2419#2420#0" expanded="true" />
             <element signature="e#2474#2475#0" expanded="true" />
@@ -2025,141 +2124,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/GeonamesBBs.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="224" column="20" lean-forward="true" selection-start-line="224" selection-start-column="20" selection-end-line="224" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/logging/log4j/log4j-api/2.8.2/log4j-api-2.8.2-sources.jar!/org/apache/logging/log4j/Logger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="860" column="9" selection-start-line="860" selection-start-column="9" selection-end-line="860" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/GeoLogger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/LocationTypes/BoundingBox.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="13" column="46" selection-start-line="13" selection-start-column="46" selection-end-line="13" selection-end-column="46" />
-          <folding>
-            <element signature="e#2606#2607#0" expanded="true" />
-            <element signature="e#2686#2687#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="169" column="39" selection-start-line="169" selection-start-column="25" selection-end-line="169" selection-end-column="39" />
+        <state relative-caret-position="196">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicBoundingBox.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="15" column="46" selection-start-line="15" selection-start-column="46" selection-end-line="15" selection-end-column="46" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="66" column="54" selection-start-line="66" selection-start-column="54" selection-end-line="66" selection-end-column="54" />
+        <state relative-caret-position="196">
+          <caret line="160" column="56" selection-start-line="160" selection-start-column="56" selection-end-line="160" selection-end-column="56" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLGroups/GeographicInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="58" column="39" selection-start-line="58" selection-start-column="39" selection-end-line="58" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLDocObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="48" column="40" selection-start-line="48" selection-start-column="40" selection-end-line="48" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/ISO_19115.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="25" column="57" selection-start-line="25" selection-start-column="56" selection-end-line="25" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/ISOXMLGen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="69" column="87" selection-start-line="69" selection-start-column="87" selection-end-line="69" selection-end-column="87" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/XMLFiles/10/5072/FK2/1TUKUB/iso19115.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="249" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/GeodisyStrings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="53" column="35" selection-start-line="53" selection-start-column="35" selection-end-line="53" selection-end-column="35" />
-          <folding>
-            <element signature="e#7368#7369#0" expanded="true" />
-            <element signature="e#7414#7415#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/tests/XMLTestCases/CitationXMLTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="73" column="38" selection-start-line="73" selection-start-column="38" selection-end-line="73" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/geodisyFiles/xmlTestDJO.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="27" selection-end-line="541" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/javax/xml/parsers/SAXParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="415" column="42" selection-start-line="415" selection-start-column="42" selection-end-line="415" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLValidator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="19" column="49" selection-start-line="19" selection-start-column="49" selection-end-line="19" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
   <component name="masterDetails">

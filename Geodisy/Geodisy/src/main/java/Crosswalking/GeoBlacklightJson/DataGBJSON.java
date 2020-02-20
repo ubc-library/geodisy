@@ -151,16 +151,16 @@ public class DataGBJSON extends GeoBlacklightJSON{
 
     private void getFileType(DataverseRecordFile drf) {
         if(!drf.getGBB().getField(FILE_URL).isEmpty()) {
-            String format = getFileTypeName(drf.getOriginalTitle());
+            String format = getFileTypeName(drf.getTranslatedTitle());
             if(format.isEmpty())
                 format = "File";
             jo.put("dc_format_s", format);
         }
     }
 
-    private String getFileTypeName(String originalTitle) {
+    private String getFileTypeName(String translatedName) {
         try {
-            String extension = originalTitle.substring(originalTitle.lastIndexOf(".") + 1).toLowerCase();
+            String extension = translatedName.substring(translatedName.lastIndexOf(".") + 1).toLowerCase();
             switch (extension){
                 case ("zip"):
                     return "Zip File";

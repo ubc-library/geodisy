@@ -138,7 +138,6 @@ public class FileWriter {
      */
     public boolean verifyFileExistence(String path) {
         path = GeodisyStrings.replaceSlashes(path);
-        Path filePath = Paths.get(path);
         try {
             File f =  new File(path);
             boolean  created = f.createNewFile();
