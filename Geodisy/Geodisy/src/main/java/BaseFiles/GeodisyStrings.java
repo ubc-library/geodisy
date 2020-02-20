@@ -130,6 +130,8 @@ public class GeodisyStrings {
 
         public final static String RASTER = "Raster";
         public final static String VECTOR = "Vector";
+        public final static String UNDETERMINED = "Undetermined";
+
 
     //XML value types
         public final static String CHARACTER = "CharacterString";

@@ -64,7 +64,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         if(!gbb.getField(GEOMETRY).isEmpty())
             jo.put("layer_geom_type_s",gbb.getField(GEOMETRY));
         JSONArray ja = addBaseRecordInfo();
-        if(!gbb.getField(GEOMETRY).equals("Non-Geospatial") && USE_GEOSERVER) {
+        if(!gbb.getField(GEOMETRY).equals(UNDETERMINED) && USE_GEOSERVER) {
             ja = addDataDownloadOptions(gbb, ja);
         }
         String externalServices = "{";

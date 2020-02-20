@@ -11,7 +11,7 @@ public class BoundingBox implements Serializable {
     private double longEast = 361;
     private boolean generated = false;
     private String fileName = "";
-    private String geometryType = "Non-geospatial";
+    private String geometryType = UNDETERMINED;
     private String geoserverLabel = "";
     private String doi = "";
     private String width = "0";

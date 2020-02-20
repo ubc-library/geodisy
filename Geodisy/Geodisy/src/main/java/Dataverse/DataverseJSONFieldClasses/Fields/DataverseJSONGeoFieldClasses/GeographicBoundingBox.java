@@ -13,7 +13,7 @@ public class GeographicBoundingBox extends CompoundJSONField {
     String doi;
     private String projection = "";
     private String fileName = "";
-    private String geometryType = "Non-Geospatial";
+    private String geometryType = UNDETERMINED;
     private String geoserverLabel = "";
     private boolean generated = false;
     private int fileNumber = 0;
