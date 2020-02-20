@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="zip4j-2.3.1">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/zip4j/zip4j-2.3.1.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
