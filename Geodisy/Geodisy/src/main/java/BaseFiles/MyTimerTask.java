@@ -51,6 +51,7 @@ public class MyTimerTask extends TimerTask {
             fW.verifyFileExistence(EXISTING_RECORDS);
             fW.verifyFileExistence(EXISTING_BBOXES);
             fW.verifyFileExistence(VECTOR_RECORDS);
+            fW.verifyFileExistence(EXISTING_CHECKS);
             existingHarvests = ExistingHarvests.getExistingHarvests();
             existingCallsToCheck = ExistingCallsToCheck.getExistingCallsToCheck();
             srf = SourceRecordFiles.getSourceRecords();
