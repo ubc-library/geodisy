@@ -99,11 +99,10 @@
   tags:
     - install-solr
 
-      #- name: Create Solr core for geoblacklight
-      #  become: yes
-      #  become_user: solr
-      #  shell: "/opt/solr/bin/solr create_core -c geoblacklight-core"
-      #  tags:
-      #    - install-solr
- 
+- name: Create Solr core for geoblacklight
+  become: yes
+  become_user: solr
+  shell: "/opt/solr/bin/solr create_core -c geoblacklight-core"
+  tags:
+    - install-solr
 

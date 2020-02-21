@@ -107,7 +107,6 @@
   shell: 
     cmd: "source $HOME/.bashrc && curl -sL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash -"
   ignore_errors: yes
-  tags:
     - install-geoblacklight
   
 - name: Test for previous install of Ruby version

@@ -88,7 +88,7 @@ Vagrant.configure("2") do |config|
     a.playbook = "provisioning/site.yml" 
     a.inventory_path = "provisioning/local-ini"
     a.limit = "all"
-    a.raw_arguments = ["--connection=local", "--diff","--tags=install-geoblacklight"]
+    a.raw_arguments = ["--connection=local", "--diff"]
   end
 
   # Backend Ansible Playbook
