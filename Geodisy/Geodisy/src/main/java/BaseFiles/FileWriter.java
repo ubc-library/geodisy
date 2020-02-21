@@ -48,8 +48,7 @@ public class FileWriter {
     }
 
     public void writeStringToFile(String stringToSave, String path) throws IOException{
-        path = FileWriter.fixPath(path);
-        path = GeodisyStrings.replaceSlashes(path) + ".json";
+        path = GeodisyStrings.replaceSlashes(path);
         verifyFileExistence(path);
         File file = new File(path);
         FileUtils.writeStringToFile(file, stringToSave,"UTF-8");
