@@ -42,8 +42,7 @@ public class GeographicCoverage extends CompoundJSONField {
         placenames.add(commonProvince);
         placenames.add(commonCity);
         placenames.add(otherGeographicCoverage);
-        if(placenames.contains(""))
-            placenames.remove("");
+        placenames.remove("");
         return placenames;
     }
     public Country getCountryObject(){

@@ -88,10 +88,8 @@ public class ExistingHarvests extends ExistingSearches implements Serializable {
     }
 
     public void deleteRecord(String doi){
-        if(bBoxes.containsKey(doi))
-            bBoxes.remove(doi);
-        if(recordVersions.containsKey(doi))
-            recordVersions.remove(doi);
+        bBoxes.remove(doi);
+        recordVersions.remove(doi);
     }
 
     public void testSaveExistingSearches(){

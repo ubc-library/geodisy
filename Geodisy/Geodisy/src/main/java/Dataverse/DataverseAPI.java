@@ -137,16 +137,12 @@ public class DataverseAPI extends SourceAPI {
                 return true;
 
         }
-        if(dois.contains(doi.toLowerCase()))
-            return true;
-        return false;
+        return dois.contains(doi.toLowerCase());
     }
     //Only process dois in the below doi array (only for testing, really)
     private boolean processSpecificRecords(String doi) {
 
-        if (PROCESS_THESE_DOIS.length > 0)
-            return true;
-        return false;
+        return PROCESS_THESE_DOIS.length > 0;
     }
 
     @Override
