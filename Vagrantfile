@@ -18,7 +18,12 @@ Vagrant.configure("2") do |config|
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
   # config.vm.box_check_update = false
- 
+
+  # Suggested configuration for speeding up guest network
+  config.vm.provider "virtualbox" do |v|
+     v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+  end
+
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
@@ -47,15 +52,18 @@ Vagrant.configure("2") do |config|
   # argument is a set of non-required options.
   config.vm.synced_folder ".", "/vagrant", type: "rsync"
 
+  # Copt Geodisy code into home folder of centos user
+  config.vm.synced_folder "./Geodisy", "/home/centos", type: "rsync", owner: "centos", group: "centos"
+  
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
   config.vm.provider "virtualbox" do |vb|
     # Display the VirtualBox GUI when booting the machine
-    vb.gui = true
+    #vb.gui = true
     #   # Customize the amount of memory on the VM:
-    vb.memory = "2048"
+    vb.memory = "4096"
   end
   #
   # View the documentation for the provider you are using for more
@@ -77,10 +85,10 @@ Vagrant.configure("2") do |config|
 
   # Frontend Ansible Playbook
   config.vm.provision "ansible", type: "ansible_local" do |a|
-    a.playbook = "provisioning/backend.yml" 
+    a.playbook = "provisioning/site.yml" 
     a.inventory_path = "provisioning/local-ini"
     a.limit = "all"
-    a.raw_arguments = ["--connection=local", "--diff", "--tags=install-solr"]
+    a.raw_arguments = ["--connection=local", "--diff","--tags=install-geoblacklight"]
   end
 
   # Backend Ansible Playbook
