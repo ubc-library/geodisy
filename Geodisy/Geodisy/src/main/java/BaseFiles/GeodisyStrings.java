@@ -6,16 +6,16 @@ import org.apache.commons.lang3.ArrayUtils;
 public class GeodisyStrings {
 
     public final static boolean TEST = true; //change this to false when in production
-    public final static int NUMBER_OF_RECS_TO_HARVEST = 2500;
+    public final static int NUMBER_OF_RECS_TO_HARVEST = 1000;
     public final static String[] HUGE_RECORDS_TO_IGNORE_UNTIL_LATER = {"10.5683/SP/Y3HRN","10864/GSSJX","10.5683/SP2/JP4WDF","10864/9KJ1L","10864/11086","10864/9VNIK","10.5683/SP/Y3HMRN","10.5683/SP/OEIP77","10.5683/SP/IP9ERW","10.5683/SP/NTUOK9","10864/11369","10864/11175","10.5683/SP/BT7HN2","10.5683/SP/4RFHBJ","10.5683/SP/T7ZJAF","10.5683/SP/RZM9HE","10.5683/SP/RAJQ2P","10.5683/SP2/AAGZDG","10.5683/SP2/1XRF9U","10.5683/SP2/MICSLT"};
-    public final static String[] PROCESS_THESE_DOIS = {"10.5072/FK2/PLD5VK"}; //"10.5683/SP2/UEJGTV" "10864/11669" "10.5683/SP2/GKJPIQ""10.5683/SP2/KYHUNF""10.5683/SP/EGOYE3""10.5683/SP2/LAWLTI"
+    public final static String[] PROCESS_THESE_DOIS = {}; //"10.5683/SP2/UEJGTV" "10864/11669" "10.5683/SP2/GKJPIQ""10.5683/SP2/KYHUNF""10.5683/SP/EGOYE3""10.5683/SP2/LAWLTI""10.5072/FK2/PLD5VK"
     //Repositories (add new repository URLS to a appropriate repository URL array below)
         // New Repository Types need new URL Arrays [Geodisy 2]
 
         public final static String SANDBOX_DV_URL = "https://206-12-90-131.cloud.computecanada.ca/"; //currently our sandbox
         public final static String TEST_SCHOLARS_PORTAL = "https://demodv.scholarsportal.info/";
         public final static String SCHOLARS_PORTAL = "https://dataverse.scholarsportal.info/";
-        public final static String[] DATAVERSE_URLS = new String[]{TEST_SCHOLARS_PORTAL};
+        public final static String[] DATAVERSE_URLS = new String[]{SCHOLARS_PORTAL};
 
         public static boolean windowsComputerType(){
             return  System.getProperty("os.name")
