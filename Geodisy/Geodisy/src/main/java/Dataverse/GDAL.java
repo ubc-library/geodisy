@@ -260,7 +260,9 @@ public class GDAL {
             stub = gdalTranslate.vectorTransform(path,name);
         else
             stub = gdalTranslate.rasterTransform(path,name);
-        File check = new File(path+stub);
+        if(!path.endsWith(stub))
+            path = path.substring(0,path.lastIndexOf(GeodisyStrings.replaceSlashes("/"))+1) + stub;
+        File check = new File(path);
         if(!check.exists())
             logger.warn("Couldn't convert " + name +" to  WGS84");
     }
