@@ -3,8 +3,12 @@
 - name: Install system packages
   become: yes
   yum:
-    name: lsof
+    update_cache: yes
     state: present
+    name: "{{ item }}"
+  with_items:
+    - lsof
+    - java-1.8.0-openjdk
   tags:
     - install-solr
     - packages
@@ -103,6 +107,9 @@
   become: yes
   become_user: solr
   shell: "/opt/solr/bin/solr create_core -c geoblacklight-core"
+  # ignore case where core exists. This should be changed as it ignores
+  # all errors
+  ignore_errors: yes 
   tags:
     - install-solr
 

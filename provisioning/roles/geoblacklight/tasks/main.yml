@@ -178,6 +178,13 @@
       #  tags:
       #    - install-geoblacklight
 
+- name: Update RobyGems system version
+  become: yes
+  become_user: geoblack
+  shell: "source ~/.bashrc && gem update --system"
+  tags:
+      - install-geoblacklight  
+
 - name: Install rails gem
   become: yes
   become_user: geoblack
@@ -188,7 +195,7 @@
 - name: Install bundler gem
   become: yes
   become_user: geoblack
-  shell: "source ~/.bashrc && gem install bundler -v 2.0.2 --default"
+  shell: "source ~/.bashrc && gem install bundler -v 2.1.4 --default"
   tags:
     - install-geoblacklight
 

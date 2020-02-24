@@ -52,8 +52,13 @@ Vagrant.configure("2") do |config|
   # argument is a set of non-required options.
   config.vm.synced_folder ".", "/vagrant", type: "rsync"
 
-  # Copt Geodisy code into home folder of centos user
-  config.vm.synced_folder "./Geodisy", "/home/centos", type: "rsync", owner: "centos", group: "centos"
+  # Assign predictable UID and GID values. 'synced_folder' directive will complain
+  # on first run since init.sh provisioning script has not run yet to create the user/group
+  CENTOS_UID = 1001
+  CENTOS_GID = 1001
+
+  # Copy Geodisy code into home folder of centos user
+  config.vm.synced_folder "./Geodisy", "/home/centos", type: "rsync", rsync__auto: true, owner: CENTOS_UID, group: CENTOS_GID 
   
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -63,7 +68,7 @@ Vagrant.configure("2") do |config|
     # Display the VirtualBox GUI when booting the machine
     #vb.gui = true
     #   # Customize the amount of memory on the VM:
-    vb.memory = "4096"
+    vb.memory = "2048"
   end
   #
   # View the documentation for the provider you are using for more
