@@ -6,6 +6,8 @@ import BaseFiles.GeodisyStrings;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 
@@ -51,18 +53,14 @@ public class GDALTranslate {
         return process(dirPath,dirPath,name,transformType, false);
     }
 
-    private boolean process(String dirPath, String name, String transformType,boolean newLocation) {
+    private boolean process(String dirPath, String name, String transformType, boolean newLocation) {
         return process(dirPath,dirPath,name,transformType, newLocation);
     }
     public boolean process(String sourcePath, String destPath, String name, String transformType, boolean newLocation){
 
-        if(newLocation){
-            sourcePath = GeodisyStrings.replaceSlashes(sourcePath);
-            destPath = GeodisyStrings.replaceSlashes(destPath);
-        }else {
-            sourcePath = GeodisyStrings.replaceSlashes(sourcePath);
-            destPath = GeodisyStrings.replaceSlashes(destPath);
-        }
+        sourcePath = GeodisyStrings.replaceSlashes(sourcePath);
+        destPath = GeodisyStrings.replaceSlashes(destPath).substring(0,destPath.lastIndexOf(GeodisyStrings.replaceSlashes("/")))+GeodisyStrings.replaceSlashes("/");
+
 
         String call;
         String nameStub = name.substring(0,name.lastIndexOf("."));
@@ -71,7 +69,7 @@ public class GDALTranslate {
         ProcessBuilder processBuilder= new ProcessBuilder();
 
         if(transformType.equals(RASTER)) {
-            call = GDAL_TRANSLATE + sourcePath + name + " " + destPath + nameStub + ".tif";
+            call = GDAL_TRANSLATE + sourcePath + " " + destPath + "temp.tif";
             //System.out.println(call);
             processBuilder.command("bash", "-c", call);
             Process process = null;
@@ -85,10 +83,11 @@ public class GDALTranslate {
                 }
                 if(name.endsWith(".tif"))
                     return true;
-                File newFile = new File(destPath+nameStub+".tif");
+                File newFile = new File(destPath + "temp.tif");
                 if(newFile.exists()) {
                     file = new File(sourcePath + name);
                     file.delete();
+                    newFile.renameTo(new File(destPath + nameStub + ".tif"));
                     return true;
                 }else{
                     //System.out.println("Translation failure #" + i);
@@ -101,7 +100,7 @@ public class GDALTranslate {
                     process.destroy();
             }
         } else{
-                call = OGR2OGR + destPath + nameStub + ".shp " + sourcePath + name;
+                call = OGR2OGR + destPath + "temp.shp " + sourcePath;
                 //System.out.println(call);
                 processBuilder.command("bash", "-c", call);
                 try {
@@ -117,12 +116,42 @@ public class GDALTranslate {
                         p.destroy();
 
                     }
-                    if(name.endsWith(".shp"))
+                    if(name.toLowerCase().endsWith(".shp")) {
+                        File[] files = new File(destPath).listFiles();
+                        Set<String> extensions = new HashSet<>();
+                        for(File f: files){
+                            String fileName = f.getName();
+                            if(fileName.startsWith("temp."))
+                                extensions.add(fileName.substring(fileName.lastIndexOf(".")));
+                        }
+                        for(String s: extensions){
+                            File tempFile = new File(destPath+nameStub+s);
+                            if(tempFile.exists())
+                                tempFile.delete();
+                        }
+                        files = new File(destPath).listFiles();
+                        for(File f: files){
+                            String fileName = f.getName();
+                            if(fileName.startsWith("temp.")){
+                                String ext = fileName.substring(fileName.lastIndexOf("."));
+                                f.renameTo(new File(destPath+nameStub+ext));
+                            }
+                        }
                         return true;
-                    File newFile = new File(destPath+nameStub+".shp");
+                    }
+
+                    File newFile = new File(destPath+"temp.shp");
                     if(newFile.exists()) {
-                        file = new File(sourcePath + name);
+                        file = new File(sourcePath);
                         file.delete();
+                        File[] files = new File(destPath).listFiles();
+                        for(File f: files){
+                            String fileName = f.getName();
+                            if(fileName.startsWith("temp.")){
+                                fileName.replace("temp",nameStub);
+                                f.renameTo(new File(destPath+fileName));
+                            }
+                        }
                         return true;
                     }else{
                         //System.out.println("Translation failure #" + i);
@@ -131,8 +160,8 @@ public class GDALTranslate {
                     logger.error("Something went wrong converting " + name + " to shapefile");
                 }
             }
-        System.out.println("Couldn't convert file: " + sourcePath+name);
-        file = new File(sourcePath+name);
+        System.out.println("Couldn't convert file: " + sourcePath);
+        file = new File(sourcePath);
         file.delete();
         return false;
     }

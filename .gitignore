@@ -5,13 +5,9 @@ Geodisy_old/
 
 practice_DV\.json
 
-Geodisy/Geodisy/target/
-
 Geodisy/Dataverse Install settings\.txt
 
 Geodisy/nbproject/private/private\.xml
-
-Geodisy/\.idea/
 
 Geodisy/Geodisy/src/test/java/tests/Address\.java
 
@@ -20,14 +16,6 @@ Geodisy/Geodisy/src/test/java/tests/Employee\.java
 Geodisy/Geodisy/src/test/resources/file/employee\.txt
 
 Dataverse Metadata v4\.x\.xlsx
-
-*.html
-
-Geodisy/Geodisy/stylesheet\.css
-
-Geodisy/Geodisy/script\.js
-
-Geodisy/Geodisy/package-list
 
 *.java___jb_old___
 
@@ -41,11 +29,7 @@ Template\+for\+System\+Descriptions\.mht
 
 Geodisy/Geodisy/logs/error\.log
 
-Geodisy/Geodisy/\.idea/
-
 Time reports/
-
-Geodisy/Geodisy/src/\.idea/
 
 Geodisy/Geodisy/Geodisy\.iml
 
@@ -58,12 +42,6 @@ Geodisy/Geodisy/logs/tempFile\.txt
 Geodisy/Geodisy/savedFiles/ExisitingRecords\.txt
 
 gdal-2\.4\.1/
-
-Geodisy/GDAL/\.idea/
-
-Geodisy/GDAL/venv/Lib/site-packages/
-
-Geodisy/GDAL/venv/Scripts/
 
 Geodisy/GDAL/venv/
 
@@ -83,8 +61,6 @@ Geodisy/Geodisy/classes/artifacts/Geodisy_jar/savedFiles/
 Geodisy/Geodisy/classes/artifacts/Geodisy_jar/logs/recordsToCheck\.log
 
 Geodisy/Geodisy/classes/artifacts/Geodisy_jar/Geodisy\.jar
-
-settings\.zip
 
 Geodisy/Geodisy/xmlTestDJO\.xml
 
@@ -123,8 +99,6 @@ Geodisy/VectorToGeoserver/out/artifacts/VectorToGeoserver_jar/
 
 Geodisy/VectorToGeoserver/src/META-INF/
 
-*.MF
-
 Geodisy/GeoserverUploadTest/out/artifacts/GeoserverUploadTest_jar/
 
 Geodisy/Geodisy/testFiles/
@@ -136,7 +110,7 @@ Geodisy/ModifyGeoserver/out/artifacts/ModifyGeoserver_jar/
 Geodisy/DownloadRecord
 testingFolder/
 
-Geodisy/TileMerge/.idea/
+Geodisy/TileMerge/
 
 Geodisy/MoveMetadataAndRunGeoCombine/.idea/
 
@@ -147,3 +121,14 @@ Geodisy/TileMerge/out/artifacts/TileMerge_jar/TileMerge.jar
 
 # Vim files
 [._]*.sw[a-p]
+Geodisy/Logos/
+
+Geodisy/UBC Logos/
+
+Geodisy/MoveMetadataAndRunGeoCombine/src/META-INF/
+
+Geodisy/MoveMetadataAndRunGeoCombine/
+
+Geodisy/ModifyGeoserver/
+
+Geodisy/Geodisy/.idea/workspace.xml

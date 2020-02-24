@@ -68,7 +68,7 @@ public class DataverseParser implements JSONParser {
             if(dJO.getVersionSection(current).has(FILES))
                 dJO.parseFiles((JSONArray) dJO.getVersionSection(current).get("files"));
         }catch (JSONException e){
-            logger.error("Something was malformed with the JSON string returned from Dataverse");
+            logger.error("Something was malformed with the JSON string returned from Dataverse: " + jo.toString());
         }
         return dJO;
     }

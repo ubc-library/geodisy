@@ -48,6 +48,10 @@ public class MyTimerTask extends TimerTask {
             fW.verifyFileExistence(ERROR_LOG);
             fW.verifyFileExistence(WARNING_LOG);
             fW.verifyFileExistence(RASTER_RECORDS);
+            fW.verifyFileExistence(EXISTING_RECORDS);
+            fW.verifyFileExistence(EXISTING_BBOXES);
+            fW.verifyFileExistence(VECTOR_RECORDS);
+            fW.verifyFileExistence(EXISTING_CHECKS);
             existingHarvests = ExistingHarvests.getExistingHarvests();
             existingCallsToCheck = ExistingCallsToCheck.getExistingCallsToCheck();
             srf = SourceRecordFiles.getSourceRecords();
@@ -62,7 +66,8 @@ public class MyTimerTask extends TimerTask {
             for(SourceJavaObject sJO : sJOs) {
                 existingHarvests.addOrReplaceRecord(new DataverseRecordInfo(sJO, logger.getName()));
             }
-            crosswalkRecords(sJOs);
+            //deleteEmptyFolders();
+
             if(!IS_WINDOWS)
                 sendRecordsToGeoBlacklight();
 
@@ -106,8 +111,37 @@ public class MyTimerTask extends TimerTask {
         }
     }
 
-    private void checkFilesForGeo(SourceJavaObject sJO) {
+    private void deleteEmptyFolders() {
+        boolean isFinished;
+        String location = GEODISY_PATH_ROOT + GeodisyStrings.replaceSlashes("metadata/");
+        do {
+            isFinished = true;
+            isFinished = deleteFolders(location, isFinished);
+    }while(!isFinished);
+        location = GEODISY_PATH_ROOT + GeodisyStrings.replaceSlashes("datasetFiles/");
+        do {
+            isFinished = true;
+            isFinished = deleteFolders(location,isFinished);
+        }while(!isFinished);
+    }
 
+    private boolean deleteFolders(String location, boolean isFinished) {
+
+        File folder = new File(location);
+        File[] listofFiles = folder.listFiles();
+        if (listofFiles.length == 0) {
+            System.out.println("Folder Name :: " + folder.getAbsolutePath() + " is deleted.");
+            folder.delete();
+            return false;
+        } else {
+            for (int j = 0; j < listofFiles.length; j++) {
+                File file = listofFiles[j];
+                if (file.isDirectory()) {
+                    deleteFolders(file.getAbsolutePath(),isFinished);
+                }
+            }
+        }
+        return isFinished;
     }
 
 
@@ -117,27 +151,9 @@ public class MyTimerTask extends TimerTask {
 
     }
 
-    public void crosswalkRecords(List<SourceJavaObject> sJOs) {
-        crosswalkSJOsToXML(sJOs);
-        crosswalkSJOsToGeoBlackJSON(sJOs);
-    }
 
-    private void crosswalkSJOsToGeoBlackJSON(List<SourceJavaObject> sJOs) {
-        for(SourceJavaObject sjo: sJOs){
-            DataverseJavaObject djo = (DataverseJavaObject) sjo;
-            DataGBJSON dataGBJSON = new DataGBJSON(djo);
-            dataGBJSON.createJson();
-        }
-    }
 
-    /**
-     * Create ISO XML files and run Geocombine on them to push them to GeoBlacklight
-     * @param sJOs
-     */
-    private void crosswalkSJOsToXML(List<SourceJavaObject> sJOs) {
-        Crosswalk crosswalk = new Crosswalk();
-        crosswalk.convertSJOs(sJOs);
-    }
+
 
     /**
      * Removes INFO messages from the error log.

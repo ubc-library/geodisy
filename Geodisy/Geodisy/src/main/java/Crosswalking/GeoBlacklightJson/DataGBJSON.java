@@ -3,11 +3,13 @@ package Crosswalking.GeoBlacklightJson;
 import BaseFiles.GeoLogger;
 import BaseFiles.GeodisyStrings;
 import Dataverse.DVFieldNameStrings;
+import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Author;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Description;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicCoverage;
 import Dataverse.DataverseJavaObject;
+import Dataverse.DataverseRecordFile;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,6 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 
 import static BaseFiles.GeodisyStrings.*;
@@ -39,8 +42,8 @@ public class DataGBJSON extends GeoBlacklightJSON{
     }
     //TODO check if Dataverse publisher field be included in the slug?
     @Override
-    protected JSONObject getRequiredFields(GeographicBoundingBox gbb, int number, int total){
-        boolean generated = gbb.isGeneratedFromGeoFile();
+    protected JSONObject getRequiredFields(GeographicBoundingBox gbb, int total){
+        String number = gbb.getFileNumber();
         jo.put("geoblacklight_version","1.0");
         jo.put("dc_identifier_s", GeodisyStrings.urlSlashes(javaObject.getSimpleFieldVal(DVFieldNameStrings.RECORD_URL)));
         String geoserverLabel = getgeoserverLabel(gbb).toLowerCase();
@@ -61,7 +64,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         if(!gbb.getField(GEOMETRY).isEmpty())
             jo.put("layer_geom_type_s",gbb.getField(GEOMETRY));
         JSONArray ja = addBaseRecordInfo();
-        if(!gbb.getField(GEOMETRY).equals("Non-Geospatial") && USE_GEOSERVER) {
+        if(!gbb.getField(GEOMETRY).equals(UNDETERMINED) && USE_GEOSERVER) {
             ja = addDataDownloadOptions(gbb, ja);
         }
         String externalServices = "{";
@@ -75,7 +78,6 @@ public class DataGBJSON extends GeoBlacklightJSON{
         jo.put(EXTERNAL_SERVICES, externalServices);
         if(!geoserverLabel.isEmpty())
             jo.put("layer_id_s", geoserverLabel);
-
     }
 
     private String getgeoserverLabel(GeographicBoundingBox gbb) {
@@ -94,12 +96,12 @@ public class DataGBJSON extends GeoBlacklightJSON{
 
     @Override
     protected JSONArray addDataDownloadOptions(GeographicBoundingBox gbb, JSONArray ja) {
-        ja.put(WMS);
+        //TODO uncomment once Geoserver parts are working
+        /*ja.put(WMS);
         if (gbb.getField(FILE_NAME).endsWith(".shp"))
-            ja.put(WFS);
-        //TODO uncomment once direct download is working
+            ja.put(WFS);*/
         if(!gbb.getField(FILE_URL).isEmpty())
-            ja.put(DIRECT_FILE_DOWNLOAD + gbb.getField(FILE_URL));
+            ja.put(DIRECT_FILE_DOWNLOAD + stringed(gbb.getField(FILE_URL)));
         //TODO uncomment once pushing to OpenGeoMetadata is working
         //ja.put(ISO_METADATA + stringed(gbb.getOpenGeoMetaLocation()));
 
@@ -116,8 +118,10 @@ public class DataGBJSON extends GeoBlacklightJSON{
 
     //TODO, check I am getting all the optional fields I should be
     @Override
-    protected JSONObject getOptionalFields(GeographicBoundingBox gbb) {
+    protected JSONObject getOptionalFields(DataverseRecordFile drf, int totalRecordsInStudy) {
+        GeographicBoundingBox gbb = drf.getGBB();
         String geoserverLabel = getgeoserverLabel(gbb).toLowerCase();
+        getFileType(drf);
         addRecommendedFields(geoserverLabel, gbb);
         getAuthors();
         getIssueDate();
@@ -125,7 +129,62 @@ public class DataGBJSON extends GeoBlacklightJSON{
         getPlaceNames(gbb);
         getSubjects();
         getType();
+        getRelatedRecords(drf);
+
         return jo;
+    }
+
+    private void getRelatedRecords(DataverseRecordFile drf) {
+        LinkedList<DataverseGeoRecordFile> geo = javaObject.getGeoDataFiles();
+        LinkedList<DataverseGeoRecordFile> meta = javaObject.getGeoDataMeta();
+        LinkedList<DataverseGeoRecordFile> recs = (geo.size()>=meta.size())? geo:meta;
+        if(recs.size()>1){
+            JSONArray ja = new JSONArray();
+            for(DataverseGeoRecordFile dgrf : recs){
+                if(!drf.getGeoserverLabel().equals(dgrf.getGeoserverLabel()))
+                    ja.put(dgrf.getGeoserverLabel());
+            }
+            jo.put("dc_source_sm",ja);
+            jo.put("dct_isPartOf_sm",javaObject.getSimpleFieldVal(TITLE));
+        }
+    }
+
+    private void getFileType(DataverseRecordFile drf) {
+        if(!drf.getGBB().getField(FILE_URL).isEmpty()) {
+            String format = getFileTypeName(drf.getTranslatedTitle());
+            if(format.isEmpty())
+                format = "File";
+            jo.put("dc_format_s", format);
+        }
+    }
+
+    private String getFileTypeName(String translatedTitle) {
+        try {
+            String extension = translatedTitle.substring(translatedTitle.lastIndexOf(".") + 1).toLowerCase();
+            switch (extension){
+                case ("zip"):
+                    return "Zip File";
+                case ("shp"):
+                    return "Shapefile";
+                case ("geojson"):
+                    return "GeoJSON";
+                case ("tif"):
+                case ("geotif"):
+                case ("tiff"):
+                case ("geotiff"):
+                    return "GepTIFF";
+                case ("png"):
+                    return "PNG";
+                default:
+                    return "Geospatial File";
+
+
+
+            }
+        }catch (IndexOutOfBoundsException e){
+            logger.warn("There was no extension on the original file name for record " + this.doi);
+            return "";
+        }
     }
 
     private void getType() {
@@ -242,7 +301,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         genDirs(name + end, BASE_LOCATION_TO_STORE_METADATA);
         BaseFiles.FileWriter file = new BaseFiles.FileWriter();
         try {
-            file.writeStringToFile(json,GeodisyStrings.getRoot() + BASE_LOCATION_TO_STORE_METADATA + name.replace(".","/") + end + "/" +"geoblacklight");
+            file.writeStringToFile(json,GeodisyStrings.getRoot() + BASE_LOCATION_TO_STORE_METADATA + name.replace(".","/") + end + "/" +"geoblacklight.json");
         } catch (IOException e) {
             logger.error("Something went wrong trying to create a JSON file with doi:" + doi);
         }

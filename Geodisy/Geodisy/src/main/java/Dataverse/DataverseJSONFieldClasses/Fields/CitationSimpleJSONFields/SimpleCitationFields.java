@@ -77,10 +77,7 @@ public class SimpleCitationFields extends JSONField {
 
     public boolean hasField(String fieldName){
         if(fieldName.equals(MAJOR_VERSION)||fieldName.equals(MINOR_VERSION))
-            if(!getField(MAJOR_VERSION).equals("0"))
-                return true;
-            else
-                return false;
+            return !getField(MAJOR_VERSION).equals("0");
         return !getField(fieldName).equals("");
 
     }
@@ -93,7 +90,7 @@ public class SimpleCitationFields extends JSONField {
      */
     public void setField(String label, String value){
         switch(label) {
-            case PERSISTENT_ID:
+            case RECORD_URL:
                 setPersistentID(value);
                 break;
             case TITLE:

@@ -229,7 +229,7 @@ public class CitationFields extends MetadataWSimple {
     public void setBaseFields(JSONObject current){
 
         simpleCitationFields.setField(AUTHORITY,parseSimpleValue(current,AUTHORITY));
-        simpleCitationFields.setField(PERSISTENT_ID,parseSimpleValue( current, RECORD_URL));
+        simpleCitationFields.setField(RECORD_URL,parseSimpleValue( current, RECORD_URL));
         simpleCitationFields.setField(PUB_DATE, getValueDate(current,PUB_DATE));
         simpleCitationFields.setField(PUBLISHER, parseSimpleValue(current,PUBLISHER));
         simpleCitationFields.setField(PROTOCOL,parseSimpleValue(current,PROTOCOL));

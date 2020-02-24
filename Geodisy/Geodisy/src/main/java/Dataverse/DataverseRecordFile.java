@@ -111,7 +111,7 @@ public class DataverseRecordFile {
                     new File(filePath),
                     10000, //10 seconds connection timeout
                     120000); //2 minute read timeout
-            if (translatedTitle.endsWith(".zip")) {
+            if (translatedTitle.toLowerCase().endsWith(".zip")) {
                 Unzip zip = new Unzip();
                 try {
                     drfs = zip.unzip(filePath, dirPath, this, djo);
@@ -126,8 +126,13 @@ public class DataverseRecordFile {
             for (File f : listOfFiles) {
                 if (f.isFile()) {
                     String name = f.getName();
-                    if (name.endsWith(".tab"))
-                        convertFromTabToCSV(f, dirPath, name);
+                    if (name.endsWith(".tab")) {
+                        String newName = convertFromTabToCSV(f, dirPath, name);
+                        DataverseRecordFile d = new DataverseRecordFile(this);
+                        d.setTranslatedTitle(newName);
+                        drfs.add(d);
+                        f.delete();
+                    }
                 }
             }
             if(!this.getOriginalTitle().endsWith("zip")&&!djo.hasDataRecord(this.getOriginalTitle()))
@@ -192,7 +197,7 @@ public class DataverseRecordFile {
     }
 
 
-    private void convertFromTabToCSV(File inputFile, String dirPath, String title) {
+    private String convertFromTabToCSV(File inputFile, String dirPath, String title) {
         String fileName = title.substring(0, title.length() - 3) + "csv";
         File outputFile = new File(dirPath + fileName);
         BufferedReader br = null;
@@ -233,7 +238,7 @@ public class DataverseRecordFile {
                 }
             }
         }
-
+    return fileName;
     }
     public String getTranslatedTitle(){return translatedTitle; }
     //getUUID is also in ISOXMLGen, so change there if changed here

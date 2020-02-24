@@ -44,7 +44,7 @@ public class GitTest {
     public static Repository getRepo(String repoPath) throws IOException {
         Repository repo;
         File repoFile = new File(repoPath);
-        File gitFile = (File) repoFile.listFiles()[0].listFiles()[0];
+        File gitFile = repoFile.listFiles()[0].listFiles()[0];
         if (gitFile.exists()) {
             // Open an existing repository
             FileRepositoryBuilder repositoryBuilder = new FileRepositoryBuilder();
