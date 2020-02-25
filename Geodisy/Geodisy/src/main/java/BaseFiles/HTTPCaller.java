@@ -11,6 +11,7 @@ public abstract class HTTPCaller {
 
     public String callHTTP(String searchUrl) {
         String fixed = searchUrl.replaceAll(" ", "%20");
+        System.out.println("Http call: " + fixed);
         int counter = 0;
         String answer = "";
         boolean run = true;
@@ -20,6 +21,7 @@ public abstract class HTTPCaller {
             if (h == null)
                 return "HTTP Fail";
             answer = readResponse(h);
+            System.out.println(answer);
             if(!answer.contains("Please add a username"))
                 run = false;
             counter++;
@@ -31,6 +33,7 @@ public abstract class HTTPCaller {
         try {
 
             URL url = new URL(searchUrl);
+            System.out.println("URL Called: " + searchUrl);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setConnectTimeout(60000);
@@ -65,7 +68,7 @@ public abstract class HTTPCaller {
                 answer = response.toString();
 
             } else {
-                logger.error("GET request didn't work");
+                logger.error("GET request didn't work: Code = " + responseCode);
                 return "BAD_RESPONSE";
             }
         } catch (SocketTimeoutException s) {
