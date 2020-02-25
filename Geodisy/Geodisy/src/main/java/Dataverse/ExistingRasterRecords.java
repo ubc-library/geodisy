@@ -4,6 +4,8 @@ import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
 import BaseFiles.GeodisyStrings;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -35,16 +37,19 @@ public class ExistingRasterRecords extends ExisitingFile implements Serializable
     public HashMap<String, String> readExistingRecords(String path){
         HashMap<String, String> newFile = new HashMap<>();
         FileWriter fw = new FileWriter();
+        File checkBlank = new File(path);
+        if(checkBlank.toString().isEmpty())
+            return newFile;
         try {
             records =  (HashMap<String, String>) fw.readSavedObject(GeodisyStrings.replaceSlashes(path));
             return records;
+        } catch (FileNotFoundException e){
+            return newFile;
         } catch (IOException e) {
-            logger.error("Something went wrong reading " + path);
+            logger.error("IO Exception: Something went wrong reading " + path);
             return newFile;
         } catch (ClassNotFoundException e) {
-            logger.error("Something went wrong parsing " + path);
-            return newFile;
-        } catch (NullPointerException e){
+            logger.error("Class Not Found Error: Something went wrong parsing " + path + " or file was empty");
             return newFile;
         }
     }
