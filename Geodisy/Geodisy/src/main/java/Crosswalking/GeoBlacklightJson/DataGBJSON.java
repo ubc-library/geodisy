@@ -49,6 +49,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         String geoserverLabel = getgeoserverLabel(gbb).toLowerCase();
         jo.put("layer_slug_s", geoserverLabel);
         if(total>1) {
+            number = padZeros(number,total);
             jo.put("dc_title_s", javaObject.getSimpleFields().getField(TITLE) + " (" + number + " of " + total + ")");
         }
         else
@@ -57,6 +58,29 @@ public class DataGBJSON extends GeoBlacklightJSON{
         jo.put("dct_provenance_s",javaObject.getSimpleFields().getField(PUBLISHER));
         jo.put("solr_geom","ENVELOPE(" + getBBString(gbb.getBB()) + ")");
         return jo;
+    }
+
+    private String padZeros(String number, int total) {
+        if(total>9) {
+            if(number.length()<2)
+                number = "0"+number;
+        }
+        if(total>99)
+        {
+            if(number.length()<3)
+                number = "0"+number;
+        }
+        if(total>999)
+        {
+            if(number.length()<4)
+                number = "0"+number;
+        }
+        if(total>9999)
+        {
+            if(number.length()<5)
+                number = "0"+number;
+        }
+        return number;
     }
 
     private void addRecommendedFields(String geoserverLabel, GeographicBoundingBox gbb) {
