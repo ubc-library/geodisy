@@ -44,14 +44,8 @@ public class MyTimerTask extends TimerTask {
         Countries.getCountry();
         try {
             FileWriter fW = new FileWriter();
-            fW.verifyFileExistence(RECORDS_TO_CHECK);
-            fW.verifyFileExistence(ERROR_LOG);
-            fW.verifyFileExistence(WARNING_LOG);
-            fW.verifyFileExistence(RASTER_RECORDS);
-            fW.verifyFileExistence(EXISTING_RECORDS);
-            fW.verifyFileExistence(EXISTING_BBOXES);
-            fW.verifyFileExistence(VECTOR_RECORDS);
-            fW.verifyFileExistence(EXISTING_CHECKS);
+            verifyFiles(fW);
+
             existingHarvests = ExistingHarvests.getExistingHarvests();
             existingCallsToCheck = ExistingCallsToCheck.getExistingCallsToCheck();
             srf = SourceRecordFiles.getSourceRecords();
@@ -109,6 +103,17 @@ public class MyTimerTask extends TimerTask {
             Long total = end.getTimeInMillis()-startTime;
             System.out.println("Finished a run at: " + end.getTime() + " after " + total + " milliseconds");
         }
+    }
+
+    private void verifyFiles(FileWriter fW) {
+        fW.verifyFileExistence(RECORDS_TO_CHECK);
+        fW.verifyFileExistence(ERROR_LOG);
+        fW.verifyFileExistence(WARNING_LOG);
+        fW.verifyFileExistence(RASTER_RECORDS);
+        fW.verifyFileExistence(EXISTING_RECORDS);
+        fW.verifyFileExistence(EXISTING_BBOXES);
+        fW.verifyFileExistence(VECTOR_RECORDS);
+        fW.verifyFileExistence(EXISTING_CHECKS);
     }
 
     private void deleteEmptyFolders() {
