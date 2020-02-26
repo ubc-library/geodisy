@@ -15,7 +15,7 @@ public class GeodisyStrings {
         public final static String SANDBOX_DV_URL = "https://206-12-90-131.cloud.computecanada.ca/"; //currently our sandbox
         public final static String TEST_SCHOLARS_PORTAL = "https://demodv.scholarsportal.info/";
         public final static String SCHOLARS_PORTAL = "https://dataverse.scholarsportal.info/";
-        public final static String[] DATAVERSE_URLS = new String[]{SCHOLARS_PORTAL};
+        public final static String[] DATAVERSE_URLS = new String[]{TEST_SCHOLARS_PORTAL};
 
         public static boolean windowsComputerType(){
             return  System.getProperty("os.name")
