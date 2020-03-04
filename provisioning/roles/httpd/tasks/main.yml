@@ -21,7 +21,7 @@
   become: yes 
   file:
     state: directory
-    path: "/var/www/{{ domain }}/html"
+    path: "/var/www/{{ inventory_hostname }}/html"
     #owner:
     #group:
   tags:
@@ -31,23 +31,24 @@
   become: yes
   template:
     src: "vhost.conf.j2"
-    dest: "/etc/httpd/conf.d/{{ domain }}.conf"
+    dest: "/etc/httpd/conf.d/{{ inventory_hostname }}.conf"
   tags:
     - install-httpd
 
-- name: Run Certbot
-  become: yes
-  shell: "certbot --apache -d {{ domain }}"
-  when: 
-    - "inventory_hostname != 'localhost'"
-  tags:
-    - install-httpd
+#- name: Install Proxy config
+#  become: yes
+#  template:
+#    src: "proxy.conf.j2"
+#    dest: "/etc/httpd/conf.d/{{ inventory_hostname }}-le-ssl.conf"
+#  tags:
+#    - install-httpd
 
-- name: Install Proxy config
+- name: Allow Proxy to connect outbound
   become: yes
-  template:
-    src: "proxy.conf.j2"
-    dest: "/etc/httpd/conf.d/{{ domain }}-le-ssl.conf"
+  seboolean:
+    name: httpd_can_network_connect
+    state: yes
+    persistent: yes
   tags:
     - install-httpd
 
@@ -60,6 +61,15 @@
     state: started
   tags:
     - install-httpd
+
+#- name: Run Certbot
+#  become: yes
+#  shell: "certbot --apache -d {{ inventory_hostname }}"
+#  when: 
+#    - "inventory_hostname != 'localhost'"
+#  tags:
+#    - install-httpd
+#    - install-cert
 
 #########################################################
 # TODO the provided Apache config doesn't seem finished #

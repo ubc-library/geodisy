@@ -43,7 +43,21 @@
     path: "{{ geoblacklight_dir }}"
     owner: "geoblack"
     group: "geoblack"
+  tags:
+    - install-geoblacklight
 
+# 'source'ing the .bashrc before running this command feels a bit messy, but I dont know 
+# enough about Ruby to clean this up yet. It works for now.
+# Seems to return a failed exit status back to Ansible even though the command has worked
+- name: Install Ruby and Gems as GeoBlackLight user
+  become: yes
+  become_user: geoblack
+  shell: 
+    cmd: "source $HOME/.bashrc && curl -sL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash -"
+  ignore_errors: yes
+  tags:
+    - install-geoblacklight
+ 
 # Test for Ruby PATH addition first, to prevent duplication on re-runs
 - name: Test for Ruby PATH in geoblack .bashrc
   become: yes
@@ -98,17 +112,6 @@
   tags:
     - install-geoblacklight
 
-# 'source'ing the .bashrc before running this command feels a bit messy, but I dont know 
-# enough about Ruby to clean this up yet. It works for now.
-# Seems to return a failed exit status back to Ansible even though the command has worked
-- name: Install Ruby and Gems as GeoBlackLight user
-  become: yes
-  become_user: geoblack
-  shell: 
-    cmd: "source $HOME/.bashrc && curl -sL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash -"
-  ignore_errors: yes
-    - install-geoblacklight
-  
 - name: Test for previous install of Ruby version
   become: yes
   become_user: geoblack
@@ -261,6 +264,7 @@
   become: yes
   become_user: solr
   copy:
+    remote_src: yes 
     src: /opt/geoblacklight/geodisy/solr/conf/
     dest: "/var/solr/data/{{ geoblacklight_core_name }}/conf/"
   tags:

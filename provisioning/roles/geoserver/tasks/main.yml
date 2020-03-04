@@ -91,6 +91,18 @@
   tags: 
     - install-geoserver
 
+#- name: Install GeoServer Config file
+#  become: yes
+#  become_user: geoserver
+#  copy:
+#    src: start.ini
+#    dest: "{{ geoserver_full_dir }}/start.ini"
+#    owner: geoserver
+#    group: geoserver
+#    mode: 0644  
+#  tags:
+#    - install-geoserver
+
 - name: Daemon reload and start  geoserver systemd service
   become: yes
   systemd:

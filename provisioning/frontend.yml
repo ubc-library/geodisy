@@ -3,6 +3,7 @@
 - hosts:
     - frontend-host
   roles:
+    - hosts
     - httpd
     - node
     - solr

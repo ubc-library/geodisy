@@ -1,0 +1,12 @@
+# Init tasks to be run on both front/back hosts
+---
+- name: Install hosts file 
+  become: yes
+  copy:
+    src: hosts 
+    dest: /etc/hosts 
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+    - install-hosts  

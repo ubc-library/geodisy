@@ -33,6 +33,7 @@
 - name: Unpack Solr 
   become: yes
   unarchive:
+    remote_src: yes
     src: "{{ solr.location }}/solr-{{ solr.version }}.tgz"
     dest: "{{ solr.location }}"
   tags:
@@ -52,7 +53,7 @@
   become: yes
   shell: "cd {{ solr.location }}/solr-{{ solr.version }}/bin && ./install_solr_service.sh {{ solr.location }}/solr-{{ solr.version }}.tgz -n"
   when: solr_dir.stat.exists == false
-  ignore_errors: yes
+  #ignore_errors: yes
   tags:
     - install-solr
 

@@ -3,6 +3,7 @@
 - hosts: 
     - backend-host
   roles:
+    - hosts
     - geoserver
     - postgis
 

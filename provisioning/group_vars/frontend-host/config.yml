@@ -1,0 +1,15 @@
+---
+geoblacklight_dir: "/opt/geoblacklight"
+geoblacklight_core_name: "geoblacklight-core"
+#ruby_ver: "2.6.1"
+ruby_ver: "2.6.5"
+rails_env: "development"
+
+# Apache Solr
+solr:
+  version: "8.3.0"
+  location: "/solr"
+  admin:
+    user: "admin"
+    # vault-encrypted, but does solr also encrypt passwords?
+    password: "yjGh8657QV5ryRDBiNe07MUPKrlrkW/fG4xLDnA5Pnw= SukmLiIEomRrC2XvvpSMQONs7CVXsw/nEVPX2jv+luM="

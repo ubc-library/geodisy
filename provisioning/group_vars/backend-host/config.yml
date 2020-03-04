@@ -13,10 +13,4 @@ geoserver_base_dir: "/opt/share/geoserver"
 geoserver_app_dir: "geoserver-{{ geoserver_version }}"
 geoserver_full_dir: "{{ geoserver_base_dir}}/{{ geoserver_app_dir }}"
 
-# Apache Solr
-solr:
-  version: "8.3.0"
-  location: "/solr"
-  admin:
-    user: "admin"
-    password: "{{ vault.solr.admin.password }}"
+

@@ -1,6 +1,0 @@
----
-geoblacklight_dir: "/opt/geoblacklight"
-geoblacklight_core_name: "geoblacklight-core"
-#ruby_ver: "2.6.1"
-ruby_ver: "2.6.5"
-rails_env: "development"
