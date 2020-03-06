@@ -1,14 +1,15 @@
 package Crosswalking.XML.XMLTools;
 
 import BaseFiles.GeoLogger;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.RemoteAddCommand;
+import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.dircache.DirCache;
+import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 
 import javax.xml.transform.Transformer;
@@ -19,10 +20,9 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Set;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.*;
 
 import static Crosswalking.XML.XMLTools.XMLStrings.*;
 
@@ -36,120 +36,75 @@ public class JGit {
     private String localRepoLocation;
 
     public JGit() {
+        logger = new GeoLogger(this.getClass());
         //Make the directory if it doesn't already exist
         localRepoLocation = OPEN_METADATA_LOCAL_REPO;
-        secondaryPartOfConstructor();
+        File repo = new File(localRepoLocation);
+        if(!repo.exists())
+            cloneOpenGeoMetadataToLocal();
+        else {
+            accessLocal();
+        }
+
+    }
+
+    public void updateRemoteMetadata(){
+        String commitmessage = String.valueOf(ZonedDateTime.now(ZoneId.of("Canada/Pacific")));
+        AddCommand add = git.add().addFilepattern(".");
+        try {
+            add.call();
+        } catch (GitAPIException e) {
+            logger.error("Something went wrong trying to add files to git at " + commitmessage);
+        }
+        CommitCommand commit = git.commit();
+        commit.setMessage(commitmessage);
+        pushToGit();
+
+    }
+
+    private void cloneOpenGeoMetadataToLocal() {
+        try {
+            git = Git.cloneRepository()
+                    .setURI(OPEN_METADATA_REMOTE_REPO)
+                    .setGitDir(new File(localRepoLocation))
+                    .setCloneAllBranches(true)
+                    .call();
+        } catch (GitAPIException e) {
+            logger.error("Something went wrong trying to clone " + OPEN_METADATA_REMOTE_REPO + " to " + localRepoLocation);
+        }
+    }
+
+    private void accessLocal() {
+        FileRepositoryBuilder repositoryBuilder = new FileRepositoryBuilder();
+        repositoryBuilder.setMustExist(true);
+        repositoryBuilder.setGitDir(new File(localRepoLocation));
+        try {
+            xmlRepo = repositoryBuilder.build();
+        } catch (IOException e) {
+            logger.error("Something went wrong trying to access the local git repo at " + localRepoLocation);
+        }
+        git = new Git(xmlRepo);
     }
 
     public JGit(String localRepoLocation){
         this.localRepoLocation = localRepoLocation;
-        secondaryPartOfConstructor();
-    }
-    private void secondaryPartOfConstructor(){
-        logger = new GeoLogger(this.getClass());
-        File directory = new File(localRepoLocation);
-        if (! directory.exists()) {
-            directory.mkdir();
-        }
-        FileRepositoryBuilder repositoryBuilder = new FileRepositoryBuilder();
-        repositoryBuilder.addCeilingDirectory(directory);
-        repositoryBuilder.findGitDir( new File(OPEN_METADATA_REMOTE_REPO) );
-        repositoryBuilder.setMustExist(true);
-        try {
-            xmlRepo = repositoryBuilder.build();
-            git = new Git(xmlRepo);
-
-            //add remote repo
-            RemoteAddCommand remoteAddCommand = git.remoteAdd();
-            remoteAddCommand.setName("origin");
-            remoteAddCommand.setUri(new URIish(OPEN_METADATA_REMOTE_REPO));
-            // you can add more settings here if needed
-            remoteAddCommand.call();
-        } catch(IOException e){
-            logger.error("Something happened when trying to connect to the XML repository (local or remote");
-        } catch (GitAPIException e) {
-            logger.error("Something went wrong trying to add the remote repo");
-        } catch (URISyntaxException e) {
-            logger.error("Something wrong with the URI");
-        }
-    }
-    /**
-     * Creates new ISO XML files, saves them to the local OpenMetadata repo, commits the changes, and pushes to the remote OpenMetadataRepo
-     * @param docs = XML document objects that need to be used to create actual XML files
-     */
-    public void updateXML(List<XMLDocObject> docs){
-        try {
-            generateNewXMLFiles(docs);
-            pushToGit();
-            System.out.println("Pushed from repository: " + xmlRepo.getDirectory() + " to remote repository at " + "[Insert remote repo address");
-        } catch (GitAPIException | TransformerException e) {
-            logger.error("Something went wrong with Git when either connecting to .");
-        }
-
     }
 
     /**
-     * Pushes new XML files to the OpenMetadata Repo to be then harvested by Geocombine and sent to SOLR
+     * Pushes new metadata files to the OpenMetadata Repo
      */
     public void pushToGit() {
-        //TODO is this really all I need?
-        //TODO uncomment in production environment
-        /*
         PushCommand pushCommand = git.push();
         pushCommand.setCredentialsProvider(new UsernamePasswordCredentialsProvider(OPEN_METADATA_REMOTE_USERNAME,OPEN_METADATA_REMOTE_PASSWORD));
         try {
             pushCommand.call();
         } catch (GitAPIException e) {
-            logger.error("Soemthing went wrong trying to push to repo");
-        }*/
-    }
-
-    /**
-     * Used only for testing
-     * @param docs
-     */
-    public void testgenerateNewXMLFile(LinkedList<XMLDocObject> docs){
-        try {
-            generateNewXMLFiles(docs);
-        } catch (GitAPIException e) {
-            logger.error("Something went wrong creating new XML files.");
-        } catch (TransformerException e) {
-            e.printStackTrace();
+            logger.error("Something went wrong trying to push to repo");
         }
     }
 
-    /**
-     * Creates XML files from the XML Docs, adds them to the git index, and pushes them to the remote repo
-     * @param docs
-     * @throws GitAPIException
-     * @throws TransformerException
-     */
-    private void generateNewXMLFiles(List<XMLDocObject> docs) throws GitAPIException, TransformerException {
-        for(XMLDocObject doc: docs){
-            //TODO figure out if XML file name should be what is currently in xMLFileName
-            String xMLFileName = getOpenGeoLocalFilePath(doc.doi) + "iso19115.xml";
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource domSource = new DOMSource(doc.getDoc());
-            StreamResult streamResult = new StreamResult(new File(xMLFileName));
-            transformer.transform(domSource, streamResult);
-            addXMLFileToIndex(xMLFileName);
-        }
-        RevCommit commit = git.commit().setMessage(docs.size() + " ISO XML files created").call();
-        pushToGit();
-    }
 
-    /**
-     * XML files need to be added to the index in order to be git committed
-     * @param fileName
-     */
-    public void addXMLFileToIndex(String fileName){
-        try {
-            DirCache index = git.add().addFilepattern(localRepoLocation + fileName).call();
-        } catch (GitAPIException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     /**
      * Creates a string with the path to where the XML file should go

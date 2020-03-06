@@ -55,10 +55,4 @@ public class GeoCombine {
             logger.error("Something went wrong calling GeoCombine to index files");
         }
     }
-
-    public void updateOpenGeoMetadata(String fileName, JGit jgit){
-        String filePath = jgit.getOpenGeoLocalFilePath(fileName);
-        //TODO uncomment once I've got JGit working
-        //jgit.addXMLFileToIndex(filePath + fileName + ".json");
-    }
 }

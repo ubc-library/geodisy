@@ -3,6 +3,7 @@ package BaseFiles;
 import Crosswalking.Crosswalk;
 import Crosswalking.GeoBlacklightJson.DataGBJSON;
 import Crosswalking.GeoBlacklightJson.GeoCombine;
+import Crosswalking.XML.XMLTools.JGit;
 import Dataverse.*;
 import Dataverse.FindingBoundingBoxes.Countries;
 
@@ -62,9 +63,11 @@ public class MyTimerTask extends TimerTask {
             }
             //deleteEmptyFolders();
 
-            if(!IS_WINDOWS)
+            if(!IS_WINDOWS) {
                 sendRecordsToGeoBlacklight();
-
+                JGit jgit = new JGit();
+                jgit.pushToGit();
+            }
 
             endErrorLog = keepMajErrors();
             endWarningLog = keepMinErrors();
