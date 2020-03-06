@@ -1,7 +1,5 @@
 package BaseFiles;
 
-import Crosswalking.Crosswalk;
-import Crosswalking.GeoBlacklightJson.DataGBJSON;
 import Crosswalking.GeoBlacklightJson.GeoCombine;
 import Crosswalking.XML.XMLTools.JGit;
 import Dataverse.*;
@@ -159,9 +157,8 @@ public class MyTimerTask extends TimerTask {
 
 
     private void sendRecordsToGeoBlacklight() {
-        //TODO uncomment when I've got some records to index
-        /*GeoCombine combine = new GeoCombine();
-        combine.index();*/
+        GeoCombine combine = new GeoCombine();
+        combine.index();
 
     }
 
