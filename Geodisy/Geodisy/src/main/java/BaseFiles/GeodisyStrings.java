@@ -6,7 +6,7 @@ import org.apache.commons.lang3.ArrayUtils;
 public class GeodisyStrings {
 
     public final static boolean TEST = true; //change this to false when in production
-    public final static int NUMBER_OF_RECS_TO_HARVEST = 50;
+    public final static int NUMBER_OF_RECS_TO_HARVEST = 2000;
     public final static String[] HUGE_RECORDS_TO_IGNORE_UNTIL_LATER = {"10.5683/SP/Y3HRN","10864/GSSJX","10.5683/SP2/JP4WDF","10864/9KJ1L","10864/11086","10864/9VNIK","10.5683/SP/Y3HMRN","10.5683/SP/OEIP77","10.5683/SP/IP9ERW","10.5683/SP/NTUOK9","10864/11369","10864/11175","10.5683/SP/BT7HN2","10.5683/SP/4RFHBJ","10.5683/SP/T7ZJAF","10.5683/SP/RZM9HE","10.5683/SP/RAJQ2P","10.5683/SP2/AAGZDG","10.5683/SP2/1XRF9U","10.5683/SP2/MICSLT"};
     public final static String[] PROCESS_THESE_DOIS = {}; //"10.5683/SP2/UEJGTV" "10864/11669" "10.5683/SP2/GKJPIQ""10.5683/SP2/KYHUNF""10.5683/SP/EGOYE3""10.5683/SP2/LAWLTI""10.5072/FK2/PLD5VK"
     //Repositories (add new repository URLS to a appropriate repository URL array below)
@@ -81,8 +81,11 @@ public class GeodisyStrings {
         private final static String GDAL_TRANSLATE_LOCAL = "gdal_translate -of GTiff ";
         private final static String OGR2OGR_CLOUD = "/usr/gdal30/bin/ogr2ogr -t_srs EPSG:4326 -f \"ESRI Shapefile\" ";
         private final static String GDAL_TRANSLATE_CLOUD = "/usr/gdal30/bin/gdal_translate -of GTiff ";
+        private final static String GDAL_WARP_LOCAL = "gdalwarp -overwrite -t_srs EPSG:3875 -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW ";
+        private final static String GDAL_WARP_CLOUD = "/usr/gdal30/bin/gdalwarp -overwrite -t_srs EPSG:3875 -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW ";
         public final static String OGR2OGR = getOgr2Ogr();
         public final static String GDAL_TRANSLATE = getGdalTranslate();
+        public final static String GDALWARP = getGdalWarp();
         public final static String[] PROCESSABLE_EXTENSIONS = ArrayUtils.addAll(GDALINFO_PROCESSABLE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS);
 
         private static String getOgr2Ogr(){
@@ -97,6 +100,13 @@ public class GeodisyStrings {
                 return GDAL_TRANSLATE_LOCAL;
             else
                 return GDAL_TRANSLATE_CLOUD;
+        }
+
+        private static String getGdalWarp(){
+            if(IS_WINDOWS)
+                return GDAL_WARP_LOCAL;
+            else
+                return GDAL_WARP_CLOUD;
         }
     private static String getGdalInfo(){
         if(IS_WINDOWS)
