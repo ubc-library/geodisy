@@ -54,7 +54,7 @@ public class GeodisyStrings {
         public final static String TEST_GEO_COVERAGE = GEODISY_PATH_ROOT + "geodisyFiles/geocoverage.json";
         public final static String XML_TEST_FILE = GEODISY_PATH_ROOT + "geodisyFiles/XMLTestDJO.xml";
         public final static String DATASET_FILES_PATH = "datasetFiles/";
-        public final static String OPEN_GEO_METADATA_BASE = "https://github.com/OpenGeoMetadata/ca.ubc/";
+        public final static String OPEN_GEO_METADATA_BASE = "https://github.com/OpenGeoMetadata/ca.frdr.geodisy/";
 
 
 

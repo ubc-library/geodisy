@@ -126,9 +126,6 @@ public class DataGBJSON extends GeoBlacklightJSON{
             ja.put(WFS);*/
         if(!gbb.getField(FILE_URL).isEmpty())
             ja.put(DIRECT_FILE_DOWNLOAD + stringed(gbb.getField(FILE_URL)));
-        //TODO uncomment once pushing to OpenGeoMetadata is working
-        //ja.put(ISO_METADATA + stringed(gbb.getOpenGeoMetaLocation()));
-
         return ja;
     }
 
