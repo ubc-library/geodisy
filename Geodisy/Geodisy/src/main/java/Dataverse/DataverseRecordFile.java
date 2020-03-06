@@ -100,6 +100,8 @@ public class DataverseRecordFile {
 
     public LinkedList<DataverseRecordFile> retrieveFile(DataverseJavaObject djo) {
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
+        DownloadedFiles downloads = DownloadedFiles.getDownloadedFiles();
+        downloads.addDownload(originalTitle,djo.getDOI(),dbID);
         try {
             String dirPath = GEODISY_PATH_ROOT+GeodisyStrings.replaceSlashes(DATASET_FILES_PATH + datasetIdent.replace("_", "/").replace(".","/") + "/");
 

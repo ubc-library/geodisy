@@ -39,6 +39,7 @@ public class GeodisyStrings {
         public final static String EXISTING_RECORDS = GEODISY_PATH_ROOT + "savedFiles/ExistingRecords.txt";
         public final static String EXISTING_CHECKS = GEODISY_PATH_ROOT + "savedFiles/ExistingChecks.txt";
         public final static String EXISTING_BBOXES = GEODISY_PATH_ROOT + "savedFiles/ExistingBBoxes.txt";
+        public final static String DOWNLOADED_FILES = GEODISY_PATH_ROOT + "savedFiles/DownloadedFiles.txt";
         public final static String VECTOR_RECORDS = GEODISY_PATH_ROOT + "savedFiles/ExistingVectorRecords.txt";
         public final static String TEST_EXISTING_RECORDS = GEODISY_PATH_ROOT + "savedFiles/TestExistingRecords.txt";
         public final static String TEST_EXISTING_BBOXES = GEODISY_PATH_ROOT + "savedFiles/TestExistingBBoxes.txt";

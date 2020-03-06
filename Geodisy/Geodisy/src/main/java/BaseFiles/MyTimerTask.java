@@ -68,6 +68,11 @@ public class MyTimerTask extends TimerTask {
                 JGit jgit = new JGit();
                 jgit.pushToGit();
             }
+            /**
+             * Saving a record of all the files that were downloaded
+             */
+            DownloadedFiles downloadedFiles = DownloadedFiles.getDownloadedFiles();
+            downloadedFiles.saveDownloads();
 
             endErrorLog = keepMajErrors();
             endWarningLog = keepMinErrors();
