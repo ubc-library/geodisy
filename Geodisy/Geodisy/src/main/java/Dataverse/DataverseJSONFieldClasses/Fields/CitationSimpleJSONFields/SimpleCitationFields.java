@@ -35,7 +35,7 @@ public class SimpleCitationFields extends JSONField {
      *  * Study Completion : String : studyComp
      */
     private String title, subtitle, alternativeTitle, alternativeURL, license,notesText,productionPlace,depositor, accessToSources, publisher,originOfSources, characteristicOfSources, pID, authority, identifier, termsOfUse, confidDec, availabStat, specialPerms, restrictions, citationReqs, depositReqs, conditions, disclaimer, termsOfAcc, dataAccPlace, origArch, contactForAcc, sizeOfColl, studyComp,protocol, pURL;
-    private Date productionDate,distributionDate,dateOfDeposit, publicationDate;
+    private Date productionDate,distributionDate,dateOfDeposit, publicationDate, lastModDate;
     private int versionMajor, versionMinor;
 
     public SimpleCitationFields() {
@@ -77,10 +77,7 @@ public class SimpleCitationFields extends JSONField {
 
     public boolean hasField(String fieldName){
         if(fieldName.equals(MAJOR_VERSION)||fieldName.equals(MINOR_VERSION))
-            if(!getField(MAJOR_VERSION).equals("0"))
-                return true;
-            else
-                return false;
+            return !getField(MAJOR_VERSION).equals("0");
         return !getField(fieldName).equals("");
 
     }
@@ -158,6 +155,9 @@ public class SimpleCitationFields extends JSONField {
                 break;
             case PROTOCOL:
                 setProtocol(value);
+                break;
+            case LAST_MOD_DATE:
+                setLastModDate(value);
                 break;
             default:
                 setTermsAndAccField(label,value);
@@ -266,6 +266,8 @@ public class SimpleCitationFields extends JSONField {
                 return identifier;
             case PROTOCOL:
                 return protocol;
+            case LAST_MOD_DATE:
+                return getLastModDate();
             default:
                 return getTermsAndAccessField(fieldName);
         }
@@ -379,6 +381,8 @@ public class SimpleCitationFields extends JSONField {
         this.productionDate = new Date(productionDate);
     }
 
+    private void setLastModDate(String lastModDate) {this.lastModDate = new Date(lastModDate);}
+
     private void setDistributionDate(String distributionDate) {
         this.distributionDate = new Date(distributionDate);
     }
@@ -448,19 +452,33 @@ public class SimpleCitationFields extends JSONField {
     }
 
     private String getProductionDate() {
+        if(productionDate==null)
+            return "";
         return productionDate.getDateAsString();
     }
 
     private String getDistributionDate() {
+        if(distributionDate==null)
+            return "";
         return distributionDate.getDateAsString();
     }
 
     private String getDateOfDeposit() {
+        if(dateOfDeposit==null)
+            return "";
         return dateOfDeposit.getDateAsString();
     }
 
     private String getPublicationDate() {
+        if(publicationDate==null)
+            return "";
         return publicationDate.getDateAsString();
+    }
+
+    private String getLastModDate() {
+        if(lastModDate==null)
+            return "";
+        return lastModDate.getDateAsString();
     }
 
     public String getPersistentID(){

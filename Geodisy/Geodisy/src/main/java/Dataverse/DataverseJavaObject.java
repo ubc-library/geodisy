@@ -214,7 +214,8 @@ public class DataverseJavaObject extends SourceJavaObject {
                 dgrf.setFileURL(server+"api/access/datafile/" + dgrf.dbID + "?format=original");
                 if (!tempRec.getOriginalTitle().isEmpty())
                     newRecs.add(tempRec);
-                geoDataFiles.add(dgrf);
+                if(!dgrf.getTranslatedTitle().isEmpty())
+                    geoDataFiles.add(dgrf);
             }
         }
         dataFiles = newRecs;

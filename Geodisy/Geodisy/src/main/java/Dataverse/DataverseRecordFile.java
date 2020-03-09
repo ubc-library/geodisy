@@ -4,6 +4,7 @@ import BaseFiles.GeoLogger;
 import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
+import GeoServer.FolderFileParser;
 import GeoServer.Unzip;
 import org.apache.commons.io.FileUtils;
 
@@ -99,7 +100,11 @@ public class DataverseRecordFile {
     }
 
     public LinkedList<DataverseRecordFile> retrieveFile(DataverseJavaObject djo) {
+        FolderFileParser ffp = new FolderFileParser();
+        System.out.println("downloading file: " + originalTitle);
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
+        DownloadedFiles downloads = DownloadedFiles.getDownloadedFiles();
+        downloads.addDownload(originalTitle,djo.getDOI(),dbID);
         try {
             String dirPath = GEODISY_PATH_ROOT+GeodisyStrings.replaceSlashes(DATASET_FILES_PATH + datasetIdent.replace("_", "/").replace(".","/") + "/");
 
@@ -111,29 +116,30 @@ public class DataverseRecordFile {
                     new File(filePath),
                     10000, //10 seconds connection timeout
                     120000); //2 minute read timeout
+            File newFile = new File(filePath);
             if (translatedTitle.toLowerCase().endsWith(".zip")) {
                 Unzip zip = new Unzip();
                 try {
-                    drfs = zip.unzip(filePath, dirPath, this, djo);
+                    System.out.println("Unzipping file");
+                    drfs = ffp.unzip(newFile, dirPath, this, djo);
                 }catch (NullPointerException f){
                         logger.error("Got an null pointer exception, something clearly went wrong with unzipping " + filePath);
                     }
                 new File(filePath).delete();
-            }
-
-            //Unzip any zip files and convert .tab to .csv
+            }else if(newFile.isDirectory())
+                drfs = ffp.openFolders(newFile, dirPath,djo,this);
             File[] listOfFiles = folder.listFiles();
             for (File f : listOfFiles) {
                 if (f.isFile()) {
                     String name = f.getName();
                     if (name.endsWith(".tab")) {
-                        String newName = convertFromTabToCSV(f, dirPath, name);
-                        DataverseRecordFile d = new DataverseRecordFile(this);
-                        d.setTranslatedTitle(newName);
-                        drfs.add(d);
+                        System.out.println("Converting tab file");
+                        drfs.add(ffp.convertTab(f, dirPath, name, this));
                         f.delete();
-                    }
-                }
+                    }else if(name.endsWith(".zip"))
+                        drfs.addAll(ffp.unzip(f,dirPath,this,djo));
+                }else
+                    drfs.addAll(ffp.openFolders(f,dirPath,djo,this));
             }
             if(!this.getOriginalTitle().endsWith("zip")&&!djo.hasDataRecord(this.getOriginalTitle()))
                 drfs.add(this);

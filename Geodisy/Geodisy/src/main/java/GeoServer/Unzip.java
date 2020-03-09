@@ -14,9 +14,11 @@ import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.Enumeration;
 import java.util.LinkedList;
 
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 /**
  * Class for unzipping a file right before uploading things to Geosever
@@ -25,56 +27,85 @@ import java.util.zip.ZipInputStream;
 public class Unzip {
     GeoLogger logger;
 
+    public Unzip() {
+        logger = new GeoLogger(this.getClass());
+    }
+
+    private LinkedList<File> unzipFunction(String filePath, String destpath){
+        byte[] buffer = new byte[1024];
+
+        try {
+            //create output directory is not exists
+            File folder = new File(destpath);
+            if (!folder.exists()) {
+                folder.mkdir();
+            }
+
+            //get the zip file content
+            ZipInputStream zis = new ZipInputStream(new FileInputStream(filePath));
+            //get the zipped file list entry
+            ZipEntry ze = zis.getNextEntry();
+
+            while (ze != null) {
+                String fileName = ze.getName();
+                if (ze.isDirectory()||GeodisyStrings.fileTypesToIgnore(fileName.toLowerCase())) {
+                    ze = zis.getNextEntry();
+                    continue;
+                }
+
+                fileName = new File(fileName).getName();
+                File newFile = new File(destpath + File.separator + fileName);
+
+
+                //create all non exists folders
+                //else you will hit FileNotFoundException for compressed folder
+                new File(newFile.getParent()).mkdirs();
+
+                FileOutputStream fos = new FileOutputStream(newFile);
+
+                int len;
+                while ((len = zis.read(buffer)) > 0) {
+                    fos.write(buffer, 0, len);
+                }
+
+                fos.close();
+                ze = zis.getNextEntry();
+            }
+
+            zis.closeEntry();
+            zis.close();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        LinkedList<File> answer = new LinkedList<>();
+        File orig = new File(filePath);
+        orig.delete();
+        File destination = new File(destpath);
+
+
+        for(File f:destination.listFiles()){
+            if(f.getName().toLowerCase().endsWith(".zip")) {
+                answer.addAll(unzipFunction(destpath + f.getName(), destpath));
+                f.delete();
+            }else
+                answer.add(f);
+        }
+        return answer;
+    }
 
     //TODO call unzip when adding zipped files to Geoserver and then call deleteUnzippedFiles() after uploadVector is done to save space
     public LinkedList<DataverseRecordFile> unzip(String filePath, String destPath, DataverseRecordFile dRF, DataverseJavaObject djo ) throws NullPointerException{
-        //String destPath = filePath.substring(0,filePath.length()-4);
+        LinkedList<File> files = new LinkedList<>();
         File destDir = new File(destPath);
         destDir.mkdirs();
         Path path = Paths.get(destPath);
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
-
-        byte[] buffer = new byte[1024];
-        ZipInputStream zis = null;
-        try {
-            zis = new ZipInputStream(new FileInputStream(filePath));
-        } catch (FileNotFoundException e) {
-            logger.error("Something went wrong unzipping" + filePath + ". The file couldn't be found somehow.");
-        }
-        ZipEntry zipEntry = null;
-
-        if(zis!=null) {
-            try {
-                do  {
-                    zipEntry = zis.getNextEntry();
-                    if(zipEntry==null)
-                        break;
-                    if (GeodisyStrings.fileTypesToIgnore(zipEntry.getName())) {
-                        continue;
-                    }
-
-                    File newFile = newFile(destDir, zipEntry);
-                    FileOutputStream fos = new FileOutputStream(newFile);
-                    int len;
-                    while ((len = zis.read(buffer)) > 0) {
-                        fos.write(buffer, 0, len);
-                    }
-                    fos.close();
-                    if(newFile.getName().toLowerCase().endsWith(".zip"))
-                        drfs.addAll(unzip(newFile.getPath(),destPath,dRF,djo));
-                    else {
-                        DataverseRecordFile zippedFile = new DataverseRecordFile(zipEntry.getName(), dRF.getFileIdent(), dRF.getDbID(), dRF.getServer(), dRF.getDatasetIdent());
-                        zippedFile.setOriginalTitle(dRF.getOriginalTitle());
-                        drfs.add(zippedFile);
-                    }
-                } while ((zipEntry != null));
-                zis.closeEntry();
-                zis.close();
-            } catch (FileNotFoundException e) {
-                logger.error("Something went wrong creating new file (File wasn't found, somehow) " + filePath);
-            }  catch (IOException e) {
-                logger.error("Something went wrong unzipping " + dRF.getFileURL());
-            }
+        files = unzipFunction(filePath,destPath);
+        for(File f: files){
+            DataverseRecordFile temp = new DataverseRecordFile(dRF);
+            temp.setTranslatedTitle(f.getName());
+            drfs.add(temp);
         }
         return drfs;
     }

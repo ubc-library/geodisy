@@ -5,9 +5,6 @@ import Dataverse.ExistingHarvests;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * Class used to write things to files (logs and existing records files)
@@ -48,8 +45,7 @@ public class FileWriter {
     }
 
     public void writeStringToFile(String stringToSave, String path) throws IOException{
-        path = FileWriter.fixPath(path);
-        path = GeodisyStrings.replaceSlashes(path) + ".json";
+        path = GeodisyStrings.replaceSlashes(path);
         verifyFileExistence(path);
         File file = new File(path);
         FileUtils.writeStringToFile(file, stringToSave,"UTF-8");
