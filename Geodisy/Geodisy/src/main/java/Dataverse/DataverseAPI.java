@@ -46,9 +46,11 @@ public class DataverseAPI extends SourceAPI {
         HashSet<String> dois = searchDV();
         LinkedList<JSONObject> jsons = downloadMetadata(dois);
         HashMap<String, DataverseRecordInfo> recordsThatNoLongerExist = new HashMap<>();
-        HashMap<String, DataverseRecordInfo> recs = es.getRecordVersions();
-        for(String key: recs.keySet()){
-            recordsThatNoLongerExist.put(key, recs.get(key));
+        HashMap<String, DataverseRecordInfo> recs = existingHarvests.getRecordVersions();
+        if(PROCESS_THESE_DOIS.length==0) {
+            for (String key : recs.keySet()) {
+                recordsThatNoLongerExist.put(key, recs.get(key));
+            }
         }
         DataverseParser parser = new DataverseParser();
         System.out.println("This is using the " + dvURL + " dataverse for getting files, should it be changed to something else?");
@@ -71,12 +73,14 @@ public class DataverseAPI extends SourceAPI {
                 if(dontProcessSpecificRecords(doi))
                     continue;
                 //System.out.println("Parsing record " + doi);
-                if(es.hasRecord(doi)) {
-                    JSONObject joInfo = jo.getJSONObject("datasetVersion");
-                    int version = joInfo.getInt("versionNumber") * 1000 + joInfo.getInt("versionMinorNumber");
-                    if (es.getRecordInfo(doi).getVersion() == version) {
-                        recordsThatNoLongerExist.remove(doi);
-                        continue;
+                if(PROCESS_THESE_DOIS.length==0) {
+                    if (existingHarvests.hasRecord(doi)) {
+                        JSONObject joInfo = jo.getJSONObject("datasetVersion");
+                        int version = joInfo.getInt("versionNumber") * 1000 + joInfo.getInt("versionMinorNumber");
+                        if (existingHarvests.getRecordInfo(doi).getVersion() == version) {
+                            recordsThatNoLongerExist.remove(doi);
+                            continue;
+                        }
                     }
                 }
             }catch (JSONException j){
@@ -95,10 +99,9 @@ public class DataverseAPI extends SourceAPI {
                 Long total = end.getTimeInMillis()-startTime;
                 System.out.println("Finished downloading " + doi +" after " + total + " milliseconds");
                 djo.updateRecordFileNumbers();
-                djo.updateGeoserver();
-                //System.out.println("Finished downloading files from: " + fileIdent + " only " + counter + "more records to download");
-                //djo = generateBoundingBox(djo);
-                //System.out.println("Finished generating Bounding boxes for: " + fileIdent);
+                //TODO uncomment once we are using Geoserver
+                //djo.updateGeoserver();
+
                 if(djo.hasGeoGraphicCoverage())
                     djo = (DataverseJavaObject) getBBFromGeonames(djo);
                 if(djo.hasBoundingBox()) {
