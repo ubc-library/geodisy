@@ -169,8 +169,8 @@ public class DataGBJSON extends GeoBlacklightJSON{
         if(recs.size()>1){
             JSONArray ja = new JSONArray();
             for(DataverseGeoRecordFile dgrf : recs){
-                if(!drf.getGeoserverLabel().equals(dgrf.getGeoserverLabel()))
-                    ja.put(dgrf.getGeoserverLabel());
+                if(!getGeoserverLabel(drf.getGBB()).equals(getGeoserverLabel(dgrf.getGBB())))
+                    ja.put(getGeoserverLabel(dgrf.getGBB()).toLowerCase());
             }
             jo.put("dc_source_sm",ja);
             jo.put("dct_isPartOf_sm",javaObject.getSimpleFieldVal(TITLE));
