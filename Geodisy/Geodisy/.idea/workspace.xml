@@ -1,0 +1,2618 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Geodisy:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e719edb7-3c25-4197-be36-316eb001a745" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DownloadRecord/.idea/description.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/.idea/GDAL.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/.idea/libraries/R_User_Library.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/easy-install.pth" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/EGG-INFO/PKG-INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/EGG-INFO/SOURCES.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/EGG-INFO/dependency_links.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/EGG-INFO/entry_points.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/EGG-INFO/not-zip-safe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/EGG-INFO/top_level.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/__main__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/build_env.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/cache.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/cli/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/cli/autocompletion.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/cli/base_command.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/cli/cmdoptions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/cli/main_parser.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/cli/parser.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/cli/status_codes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/check.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/completion.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/configuration.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/download.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/freeze.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/hash.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/help.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/install.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/list.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/search.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/show.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/uninstall.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/commands/wheel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/configuration.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/download.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/exceptions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/index.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/locations.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/models/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/models/candidate.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/models/format_control.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/models/index.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/models/link.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/operations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/operations/check.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/operations/freeze.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/operations/prepare.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/pep425tags.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/pyproject.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/req/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/req/constructors.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/req/req_file.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/req/req_install.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/req/req_set.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/req/req_tracker.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/req/req_uninstall.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/resolve.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/appdirs.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/compat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/deprecation.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/encoding.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/filesystem.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/glibc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/hashes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/logging.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/misc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/outdated.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/packaging.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/setuptools_build.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/temp_dir.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/typing.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/utils/ui.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/vcs/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/vcs/bazaar.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/vcs/git.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/vcs/mercurial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/vcs/subversion.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/wheel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/appdirs.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/_cmd.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/adapter.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/cache.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/caches/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/caches/file_cache.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/caches/redis_cache.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/compat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/controller.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/filewrapper.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/heuristics.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/serialize.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/cachecontrol/wrapper.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/certifi/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/certifi/__main__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/certifi/cacert.pem" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/certifi/core.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/big5freq.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/big5prober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/chardistribution.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/charsetgroupprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/charsetprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/cli/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/cli/chardetect.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/codingstatemachine.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/compat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/cp949prober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/enums.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/escprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/escsm.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/eucjpprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/euckrfreq.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/euckrprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/euctwfreq.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/euctwprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/gb2312freq.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/gb2312prober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/hebrewprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/jisfreq.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/jpcntx.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/langbulgarianmodel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/langcyrillicmodel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/langgreekmodel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/langhebrewmodel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/langhungarianmodel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/langthaimodel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/langturkishmodel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/latin1prober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/mbcharsetprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/mbcsgroupprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/mbcssm.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/sbcharsetprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/sbcsgroupprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/sjisprober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/universaldetector.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/utf8prober.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/chardet/version.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/colorama/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/colorama/ansi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/colorama/ansitowin32.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/colorama/initialise.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/colorama/win32.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/colorama/winterm.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/_backport/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/_backport/misc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/_backport/shutil.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/_backport/sysconfig.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/_backport/sysconfig.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/_backport/tarfile.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/compat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/database.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/index.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/locators.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/manifest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/markers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/metadata.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/resources.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/scripts.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/t32.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/t64.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/util.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/version.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/w32.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/w64.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distlib/wheel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/distro.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/_ihatexml.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/_inputstream.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/_tokenizer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/_trie/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/_trie/_base.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/_trie/datrie.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/_trie/py.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/constants.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/filters/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/filters/alphabeticalattributes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/filters/base.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/filters/inject_meta_charset.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/filters/lint.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/filters/optionaltags.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/filters/sanitizer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/filters/whitespace.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/html5parser.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/serializer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treeadapters/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treeadapters/genshi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treeadapters/sax.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treebuilders/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treebuilders/base.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treebuilders/dom.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treebuilders/etree.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treebuilders/etree_lxml.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treewalkers/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treewalkers/base.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treewalkers/dom.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treewalkers/etree.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treewalkers/etree_lxml.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/html5lib/treewalkers/genshi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/idna/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/idna/codec.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/idna/compat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/idna/core.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/idna/idnadata.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/idna/intranges.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/idna/package_data.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/idna/uts46data.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/ipaddress.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/lockfile/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/lockfile/linklockfile.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/lockfile/mkdirlockfile.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/lockfile/pidlockfile.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/lockfile/sqlitelockfile.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/lockfile/symlinklockfile.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/msgpack/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/msgpack/_version.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/msgpack/exceptions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/msgpack/fallback.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/packaging/__about__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/packaging/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/packaging/_compat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/packaging/_structures.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/packaging/markers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/packaging/requirements.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/packaging/specifiers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/packaging/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/packaging/version.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pep517/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pep517/_in_process.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pep517/build.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pep517/check.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pep517/colorlog.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pep517/compat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pep517/envbuild.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pep517/wrappers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pkg_resources/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pkg_resources/py31compat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/progress/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/progress/bar.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/progress/counter.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/progress/helpers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/progress/spinner.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pyparsing.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pytoml/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pytoml/core.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pytoml/parser.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pytoml/test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pytoml/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/pytoml/writer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/__version__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/_internal_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/adapters.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/api.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/auth.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/certs.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/compat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/cookies.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/exceptions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/help.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/hooks.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/packages.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/sessions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/status_codes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/structures.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/requests/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/retrying.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/six.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/_collections.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/connection.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/connectionpool.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/contrib/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/contrib/_appengine_environ.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/contrib/_securetransport/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/contrib/_securetransport/bindings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/contrib/_securetransport/low_level.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/contrib/appengine.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/contrib/ntlmpool.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/contrib/pyopenssl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/contrib/securetransport.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/contrib/socks.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/exceptions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/fields.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/filepost.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/packages/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/packages/backports/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/packages/backports/makefile.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/packages/six.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/packages/ssl_match_hostname/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/packages/ssl_match_hostname/_implementation.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/poolmanager.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/request.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/response.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/util/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/util/connection.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/util/queue.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/util/request.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/util/response.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/util/retry.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/util/ssl_.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/util/timeout.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/util/url.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/urllib3/util/wait.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/webencodings/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/webencodings/labels.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/webencodings/mklabels.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/webencodings/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_vendor/webencodings/x_user_defined.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/setuptools-40.8.0-py3.7.egg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Lib/site-packages/setuptools.pth" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Scripts/Activate.ps1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Scripts/activate" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Scripts/activate.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Scripts/deactivate.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Scripts/easy_install-3.7-script.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Scripts/easy_install-3.7.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Scripts/easy_install-script.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Scripts/easy_install.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Scripts/gdal.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Scripts/pip-script.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Scripts/pip.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Scripts/pip3-script.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Scripts/pip3.7-script.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Scripts/pip3.7.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Scripts/pip3.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Scripts/python.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/Scripts/pythonw.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GDAL/venv/pyvenv.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GeoBlacklight Customization" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Geodisy_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/pdante.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_javaewah_JavaEWAH_1_1_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_jcraft_jsch_0_1_55.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_jcraft_jzlib_1_1_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_beanutils_commons_beanutils_1_9_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_collections_commons_collections_3_2_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_digester_commons_digester_1_8_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_io_commons_io_2_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_validator_commons_validator_1_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_activation_activation_1_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_mail_mail_1_4_7.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_12.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_8_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_text_1_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_core_2_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_surefire_common_java5_2_19_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_surefire_surefire_api_2_19_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_0_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bouncycastle_bcpg_jdk15on_1_61.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bouncycastle_bcpkix_jdk15on_1_61.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bouncycastle_bcprov_jdk15on_1_61.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jgit_org_eclipse_jgit_5_5_0_201909110433_r.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jgit_org_eclipse_jgit_junit_5_4_0_201906121030_r.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jdom_jdom2_2_0_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_annotations_17_0_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_json_json_20180813.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_engine_5_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_commons_1_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_engine_1_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_launcher_1_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_runner_1_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_suite_api_1_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_surefire_provider_1_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_vintage_junit_vintage_engine_5_1_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_opentest4j_opentest4j_1_0_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/zip4j_2_3_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/statistic.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/Temp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/Temp.txt" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/classes/" />
+    <ignored path="$PROJECT_DIR$/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="ErrorTreeViewConfiguration">
+    <option name="hideWarnings" value="true" />
+    <option name="HIDE_WARNINGS" value="true" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="Geodisy" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="196">
+              <caret line="50" selection-start-line="50" selection-end-line="50" />
+              <folding>
+                <element signature="e#379#380#0" expanded="true" />
+                <element signature="e#434#435#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="196">
+              <caret line="183" selection-start-line="183" selection-end-line="183" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseRecordFile.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="196">
+              <caret line="103" selection-start-line="103" selection-end-line="103" />
+              <folding>
+                <element signature="e#2419#2420#0" expanded="true" />
+                <element signature="e#2474#2475#0" expanded="true" />
+                <element signature="e#10478#10479#0" expanded="true" />
+                <element signature="e#10546#10547#0" expanded="true" />
+                <element signature="e#10582#10583#0" expanded="true" />
+                <element signature="e#10629#10630#0" expanded="true" />
+                <element signature="e#10671#10672#0" expanded="true" />
+                <element signature="e#10713#10714#0" expanded="true" />
+                <element signature="e#10752#10753#0" expanded="true" />
+                <element signature="e#10794#10795#0" expanded="true" />
+                <element signature="e#10840#10841#0" expanded="true" />
+                <element signature="e#10892#10893#0" expanded="true" />
+                <element signature="e#10932#10933#0" expanded="true" />
+                <element signature="e#10984#10985#0" expanded="true" />
+                <element signature="e#11028#11029#0" expanded="true" />
+                <element signature="e#11085#11086#0" expanded="true" />
+                <element signature="e#11126#11127#0" expanded="true" />
+                <element signature="e#11171#11172#0" expanded="true" />
+                <element signature="e#11227#11228#0" expanded="true" />
+                <element signature="e#11278#11279#0" expanded="true" />
+                <element signature="e#11312#11313#0" expanded="true" />
+                <element signature="e#11358#11359#0" expanded="true" />
+                <element signature="e#11392#11393#0" expanded="true" />
+                <element signature="e#11443#11444#0" expanded="true" />
+                <element signature="e#11493#11494#0" expanded="true" />
+                <element signature="e#11548#11549#0" expanded="true" />
+                <element signature="e#11587#11588#0" expanded="true" />
+                <element signature="e#11622#11623#0" expanded="true" />
+                <element signature="e#11667#11668#0" expanded="true" />
+                <element signature="e#11700#11701#0" expanded="true" />
+                <element signature="e#11739#11740#0" expanded="true" />
+                <element signature="e#11775#11776#0" expanded="true" />
+                <element signature="e#11827#11828#0" expanded="true" />
+                <element signature="e#11871#11872#0" expanded="true" />
+                <element signature="e#11921#11922#0" expanded="true" />
+                <element signature="e#11963#11964#0" expanded="true" />
+                <element signature="e#11991#11992#0" expanded="true" />
+                <element signature="e#12018#12019#0" expanded="true" />
+                <element signature="e#12055#12056#0" expanded="true" />
+                <element signature="e#12087#12088#0" expanded="true" />
+                <element signature="e#12120#12121#0" expanded="true" />
+                <element signature="e#12149#12150#0" expanded="true" />
+                <element signature="e#12193#12194#0" expanded="true" />
+                <element signature="e#12229#12230#0" expanded="true" />
+                <element signature="e#12265#12266#0" expanded="true" />
+                <element signature="e#12297#12298#0" expanded="true" />
+                <element signature="e#12347#12348#0" expanded="true" />
+                <element signature="e#12389#12390#0" expanded="true" />
+                <element signature="e#12445#12446#0" expanded="true" />
+                <element signature="e#12493#12494#0" expanded="true" />
+                <element signature="e#12547#12548#0" expanded="true" />
+                <element signature="e#12577#12578#0" expanded="true" />
+                <element signature="e#12626#12627#0" expanded="true" />
+                <element signature="e#12671#12672#0" expanded="true" />
+                <element signature="e#12705#12706#0" expanded="true" />
+                <element signature="e#12750#12751#0" expanded="true" />
+                <element signature="e#12796#12797#0" expanded="true" />
+                <element signature="e#12842#12843#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="196">
+              <caret line="33" selection-start-line="33" selection-end-line="33" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="196">
+              <caret line="160" column="56" selection-start-line="160" selection-start-column="56" selection-end-line="160" selection-end-column="56" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="23" selection-start-line="23" selection-end-line="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="498">
+              <caret line="63" selection-start-line="63" selection-end-line="63" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="196">
+              <caret line="92" selection-start-line="92" selection-end-line="92" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/JSONParsing/DataverseParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="277">
+              <caret line="32" selection-start-line="32" selection-end-line="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="199">
+              <caret line="230" selection-start-line="230" selection-end-line="230" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>Something was wrong with the country XML</find>
+      <find>Moving metadata</find>
+      <find>Something was malformed with the JSON string returned from Dataverse</find>
+      <find>Unzip</find>
+      <find>cro</find>
+      <find>Moving</find>
+      <find>Finished do</find>
+      <find>Something was malformed with the JSON string returned from Dataverse:</find>
+      <find>rsyn</find>
+      <find>GeonamesJSON</find>
+      <find>String</find>
+      <find>Connected GeoBlacklight records</find>
+      <find>couldn't convert</find>
+      <find>1000</find>
+      <find>Finished downloading</find>
+      <find>Calendar.getInstance().getTimeInMillis();</find>
+      <find>) -</find>
+      <find>(&quot; + number + &quot; of &quot; + total + &quot;)&quot;</find>
+      <find>rsy</find>
+      <find>&quot;v&quot;</find>
+      <find>Something wrong parsing class</find>
+      <find>clear</find>
+      <find>something clearly went wrong with unzipping</find>
+      <find>Non-Geo</find>
+      <find>gmd</find>
+      <find>records</find>
+      <find>MANIFEST.MF</find>
+      <find>Somehow have a DataverseGeoRecordFile that doesn't end in shp or tif: File</find>
+      <find>Something went wrong trying to get</find>
+      <find>dc_format_s</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>SimpleFields simpleFields = getSimpleFields();</replace>
+      <replace>SourceJavaObject val = dataverseCallTest();</replace>
+      <replace>ExistingCallsToCheck</replace>
+      <replace>records</replace>
+      <replace>simpleCitationFields.</replace>
+      <replace>levelJ</replace>
+      <replace>levelK</replace>
+      <replace>levelN</replace>
+      <replace>levelM</replace>
+      <replace>stack = new XMLStack();</replace>
+      <replace>List&lt;</replace>
+      <replace>cf</replace>
+      <replace>setTextContent</replace>
+      <replace>&quot;CI_Responsibility</replace>
+      <replace>));</replace>
+      <replace>stack.push(doc.createGMDElement</replace>
+      <replace>jo.put(EXTERNAL_SERVICES, ja);</replace>
+      <replace>jo.getJSONArray(EXTERNAL_SERVICES);</replace>
+      <replace>Province</replace>
+      <replace>return &quot;Bad field name&quot;;</replace>
+      <replace>&lt;altName&gt;</replace>
+      <replace>localRepoLocation</replace>
+      <replace>djo)</replace>
+      <replace>lowername</replace>
+      <replace>lowerName</replace>
+      <replace>Vector</replace>
+      <replace>DATASET_FILES_PATH</replace>
+      <replace>C:\\\&quot;Program Files\&quot;\\GD</replace>
+      <replace>String</replace>
+      <replace>bb</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\test\java\tests\DataverseTestCases</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\datasetFiles</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\BaseFiles</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\test\java\tests</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Crosswalking\XML\XMLTools</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\XMLFilesTest</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\test</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\test\java</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Crosswalking\XML\XMLGroups</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Crosswalking\XML</dir>
+      <dir>127.0.0.1</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Dataverse</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Crosswalking</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\main</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Crosswalking\GeoBlacklightJson</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy</dir>
+      <dir>C:\geodisy\Geodisy\Geodisy\src</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/java/BaseFiles/HTTPCallerGeoNames.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONSocialFieldClasses/SocialScienceNotes.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLGroups/GeographicInfo.java" />
+        <option value="$PROJECT_DIR$/src/test/java/BaseFiles/ExistingHarvestsTest.java" />
+        <option value="$PROJECT_DIR$/geodisyFiles/geocoverage.json" />
+        <option value="$PROJECT_DIR$/src/main/java/BaseFiles/Geonames.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/JGit.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/GeoBlacklightStrings.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DVFieldNameStrings.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicFields.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/Description.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicCoverage.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLStrings.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/SubElement.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLGroups/IdentificationInfo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLGroups/DistributionInfo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/GeoCombine.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/JSONParsing/DataverseParser.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/XMLSchema.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/ISO_19115.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/CrosswalkInterface.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/Crosswalk.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/ISO_Schema.java" />
+        <option value="$PROJECT_DIR$/src/main/pom.xml" />
+        <option value="$PROJECT_DIR$/src/test/java/tests/FixSpecificRecords.java" />
+        <option value="$PROJECT_DIR$/src/main/java/BaseFiles/DownloadRecord.java" />
+        <option value="$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/JSONField.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationSimpleJSONFields/SimpleCitationFields.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/Countries.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/Location.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/GeonamesJSON.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseRecordFile.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/GDALTranslate.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java" />
+        <option value="$PROJECT_DIR$/src/test/java/tests/RemoveRecord.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/SourceJavaObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/GeoBlacklightJSON.java" />
+        <option value="$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java" />
+        <option value="$PROJECT_DIR$/src/main/java/BaseFiles/GeodisyStrings.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/LocationTypes/BoundingBox.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicBoundingBox.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/ISOXMLGen.java" />
+        <option value="$PROJECT_DIR$/XMLFiles/10/5072/FK2/1TUKUB/iso19115.xml" />
+        <option value="$PROJECT_DIR$/geodisyFiles/xmlTestDJO.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLValidator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="usePluginRegistry" value="true" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="createModuleGroups" value="true" />
+        <option name="downloadSourcesAutomatically" value="true" />
+        <option name="importAutomatically" value="true" />
+        <option name="vmOptionsForImporter" value="-Xmx768m" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="Geodisy" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="Geodisy" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="Geodisy" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="Geodisy" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+          <item name="clean" type="36feed69:MavenProjectsStructure$PluginNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-7" />
+    <option name="y" value="-7" />
+    <option name="width" value="1550" />
+    <option name="height" value="878" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="BaseFiles" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Crosswalking" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Crosswalking" type="462c0819:PsiDirectoryNode" />
+              <item name="XML" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Crosswalking" type="462c0819:PsiDirectoryNode" />
+              <item name="XML" type="462c0819:PsiDirectoryNode" />
+              <item name="XMLGroups" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Crosswalking" type="462c0819:PsiDirectoryNode" />
+              <item name="XML" type="462c0819:PsiDirectoryNode" />
+              <item name="XMLTools" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Dataverse" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
+              <item name="XMLTestCases" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+              <item name="generated-sources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+              <item name="generated-test-sources" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="true" />
+    <property name="GenerateAntBuildDialog.backupFiles" value="true" />
+    <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
+    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
+    <property name="GenerateAntBuildDialog.outputFileNameProperty" value="geodisy" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="last.edited.regexp" value="10_5072/FK2/8O2NUZ" />
+    <property name="last_opened_file_path" value="$MAVEN_REPOSITORY$/zip4j/zip4j-2.3.1.jar!/" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.49885058" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses" />
+      <recent name="BaseFiles" />
+    </key>
+    <key name="MoveMembersDialog.RECENTS_KEY">
+      <recent name="BaseFiles.GeodisyStrings" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="Crosswalking" />
+      <recent name="Crosswalking.XML.XMLTools" />
+      <recent name="Crosswalking.XML.XMLGroups" />
+      <recent name="Crosswalking.XML.XMLMajorGroupTags" />
+      <recent name="Crosswalking.XML" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\geodisy\Geodisy\Geodisy\geodisyFiles" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="Crosswalking.XML" />
+      <recent name="Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields" />
+      <recent name="Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="BaseFiles.Main" />
+      <module name="Geodisy" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="BaseFiles.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AltNames.setAltNames" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Geodisy" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="BaseFiles.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="BaseFiles" />
+      <option name="MAIN_CLASS_NAME" value="BaseFiles.AltNames" />
+      <option name="METHOD_NAME" value="setAltNames" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CitationXMLTest.testXMLValidation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Geodisy" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tests.XMLTestCases.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tests.XMLTestCases" />
+      <option name="MAIN_CLASS_NAME" value="tests.XMLTestCases.CitationXMLTest" />
+      <option name="METHOD_NAME" value="testXMLValidation" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ExistingHarvestsTest.setCoverage" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Geodisy" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="BaseFiles.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="BaseFiles" />
+      <option name="MAIN_CLASS_NAME" value="BaseFiles.ExistingHarvestsTest" />
+      <option name="METHOD_NAME" value="setCoverage" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RemoveRecord.removeRecord" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Geodisy" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tests" />
+      <option name="MAIN_CLASS_NAME" value="tests.RemoveRecord" />
+      <option name="METHOD_NAME" value="removeRecord" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.RemoveRecord.removeRecord" />
+        <item itemvalue="JUnit.CitationXMLTest.testXMLValidation" />
+        <item itemvalue="JUnit.ExistingHarvestsTest.setCoverage" />
+        <item itemvalue="JUnit.AltNames.setAltNames" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e719edb7-3c25-4197-be36-316eb001a745" name="Default Changelist" comment="" />
+      <created>1555005304410</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1555005304410</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="RemoveRecord_removeRecord - 2020.02.06 at 04h 07m 21s.xml">
+      <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="RemoveRecord_removeRecord - 2020.02.12 at 12h 27m 24s.xml">
+      <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="RemoveRecord_removeRecord - 2020.02.14 at 14h 03m 27s.xml">
+      <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="RemoveRecord_removeRecord - 2020.02.14 at 14h 08m 02s.xml">
+      <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="RemoveRecord_removeRecord - 2020.02.14 at 14h 10m 07s.xml">
+      <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CitationXMLTest_testXMLValidation - 2020.02.19 at 11h 38m 17s.xml">
+      <configuration name="CitationXMLTest.testXMLValidation" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CitationXMLTest_testXMLValidation - 2020.02.19 at 11h 44m 46s.xml">
+      <configuration name="CitationXMLTest.testXMLValidation" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CitationXMLTest_testXMLValidation - 2020.02.19 at 11h 44m 59s.xml">
+      <configuration name="CitationXMLTest.testXMLValidation" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CitationXMLTest_testXMLValidation - 2020.02.19 at 11h 45m 22s.xml">
+      <configuration name="CitationXMLTest.testXMLValidation" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="RemoveRecord_removeRecord - 2020.02.19 at 16h 57m 09s.xml">
+      <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
+    </history-entry>
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+      <is-preview-enabled value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49892473" visible="true" weight="0.16897655" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Favorites" order="3" sideWeight="0.50107527" side_tool="true" weight="0.2585288" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.48926175" weight="0.43878657" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.48791945" weight="0.32936078" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.5565032" visible="true" weight="0.30985916" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946696" weight="0.32827735" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49946696" weight="0.32936078" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4989339" weight="0.32936078" />
+      <window_info active="true" anchor="bottom" id="Event Log" order="9" sideWeight="0.4434968" side_tool="true" visible="true" weight="0.30985916" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49946696" weight="0.18696883" />
+      <window_info anchor="bottom" id="Statistic" order="11" sideWeight="0.49946696" weight="0.3286119" />
+      <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32936078" />
+      <window_info anchor="bottom" id="Dependency Viewer" order="13" weight="0.3286119" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" visible="true" weight="0.32942432" />
+      <window_info anchor="right" id="Palette&#9;" order="4" />
+      <window_info anchor="right" id="Module Dependencies" order="5" weight="0.32995737" />
+    </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49892473" visible="true" weight="0.1673774" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Favorites" order="3" sideWeight="0.50107527" side_tool="true" weight="0.2585288" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info active="true" anchor="bottom" id="Find" order="1" sideWeight="0.48926175" visible="true" weight="0.43878657" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.48791945" weight="0.32936078" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.557047" weight="0.32394367" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946696" weight="0.32827735" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49946696" weight="0.32936078" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4989339" weight="0.32936078" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.44295302" side_tool="true" weight="0.42351276" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49946696" weight="0.18696883" />
+      <window_info anchor="bottom" id="Statistic" order="11" sideWeight="0.49946696" weight="0.3286119" />
+      <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32936078" />
+      <window_info anchor="bottom" id="Dependency Viewer" order="13" weight="0.3286119" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" weight="0.32952252" />
+      <window_info anchor="right" id="Palette&#9;" order="4" />
+      <window_info anchor="right" id="Module Dependencies" order="5" weight="0.32995737" />
+    </layout-to-restore>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/ReadWriteToFileTest.java</url>
+          <line>29</line>
+          <properties />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/ReadWriteToFileTest.java</url>
+          <line>38</line>
+          <properties />
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/DataverseParserTest.java</url>
+          <line>43</line>
+          <properties />
+          <option name="timeStamp" value="82" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/DataverseParserTest.java</url>
+          <line>48</line>
+          <properties />
+          <option name="timeStamp" value="83" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/ExistingSearchesFile.java</url>
+          <line>40</line>
+          <properties />
+          <option name="timeStamp" value="115" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/ExistingSearchesFile.java</url>
+          <line>51</line>
+          <properties />
+          <option name="timeStamp" value="123" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../Geotools/geotools-21.1/gt-main-21.1.jar!/org/geotools/data/store/ContentDataStore.class</url>
+          <line>142</line>
+          <properties />
+          <option name="timeStamp" value="151" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/BaseFiles/SendMailTest.java</url>
+          <line>12</line>
+          <properties />
+          <option name="timeStamp" value="166" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/BaseFiles/SendMailTest.java</url>
+          <line>11</line>
+          <properties />
+          <option name="timeStamp" value="167" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/SendMail.java</url>
+          <line>20</line>
+          <properties />
+          <option name="timeStamp" value="168" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicFieldsTest.java</url>
+          <line>51</line>
+          <properties />
+          <option name="timeStamp" value="177" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/ReadWriteToFileTest.java</url>
+          <line>45</line>
+          <properties />
+          <option name="timeStamp" value="235" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/DataverseTestCases/VectorTests.java</url>
+          <line>22</line>
+          <properties />
+          <option name="timeStamp" value="236" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/DataverseTestCases/VectorTests.java</url>
+          <line>15</line>
+          <properties />
+          <option name="timeStamp" value="237" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/DataverseTestCases/VectorTests.java</url>
+          <line>29</line>
+          <properties />
+          <option name="timeStamp" value="238" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/XMLTestCases/CitationXMLTest.java</url>
+          <line>49</line>
+          <properties />
+          <option name="timeStamp" value="249" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/CompoundJSONField.java</url>
+          <line>37</line>
+          <properties />
+          <option name="timeStamp" value="302" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/JSONParsing/DataverseParser.java</url>
+          <line>81</line>
+          <properties />
+          <option name="timeStamp" value="313" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/FindBoundBox.java</url>
+          <line>29</line>
+          <properties />
+          <option name="timeStamp" value="316" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/FindBoundBox.java</url>
+          <line>41</line>
+          <properties />
+          <option name="timeStamp" value="317" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/XMLTestCases/CitationXMLTest.java</url>
+          <line>68</line>
+          <properties />
+          <option name="timeStamp" value="353" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/CountryCodes.java</url>
+          <line>20</line>
+          <properties />
+          <option name="timeStamp" value="358" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/Main.java</url>
+          <line>23</line>
+          <properties />
+          <option name="timeStamp" value="359" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/LocationTypes/Country.java</url>
+          <line>6</line>
+          <properties />
+          <option name="timeStamp" value="378" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/JGit.java</url>
+          <line>37</line>
+          <properties />
+          <option name="timeStamp" value="397" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/XMLTestCases/CitationXMLTest.java</url>
+          <line>71</line>
+          <properties />
+          <option name="timeStamp" value="430" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java</url>
+          <line>103</line>
+          <properties />
+          <option name="timeStamp" value="460" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/GeonamesJSON.java</url>
+          <line>23</line>
+          <properties />
+          <option name="timeStamp" value="484" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/GeonamesJSON.java</url>
+          <line>49</line>
+          <properties />
+          <option name="timeStamp" value="486" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/GitTest.java</url>
+          <line>53</line>
+          <properties />
+          <option name="timeStamp" value="492" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/GitTest.java</url>
+          <line>47</line>
+          <properties />
+          <option name="timeStamp" value="493" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/GitTest.java</url>
+          <line>61</line>
+          <properties />
+          <option name="timeStamp" value="494" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/XMLTestCases/CitationXMLTest.java</url>
+          <line>87</line>
+          <properties />
+          <option name="timeStamp" value="495" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/GeonamesBBsTest.java</url>
+          <line>40</line>
+          <properties />
+          <option name="timeStamp" value="500" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/GeonamesBBsTest.java</url>
+          <line>58</line>
+          <properties />
+          <option name="timeStamp" value="509" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/GeonamesBBsTest.java</url>
+          <line>54</line>
+          <properties />
+          <option name="timeStamp" value="510" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicCoverage.java</url>
+          <line>124</line>
+          <properties />
+          <option name="timeStamp" value="518" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicCoverage.java</url>
+          <line>123</line>
+          <properties />
+          <option name="timeStamp" value="519" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/Geodisy.java</url>
+          <line>45</line>
+          <properties />
+          <option name="timeStamp" value="534" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="dataverseJavaObject==null" language="JAVA" />
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseRecordInfo.java</url>
+          <line>29</line>
+          <properties />
+          <option name="timeStamp" value="538" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/HTTPCaller.java</url>
+          <line>41</line>
+          <properties />
+          <option name="timeStamp" value="557" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="counter&gt;1" language="JAVA" />
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/HTTPCaller.java</url>
+          <line>27</line>
+          <properties />
+          <option name="timeStamp" value="575" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationSimpleJSONFields/SimpleCitationFields.java</url>
+          <line>214</line>
+          <properties />
+          <option name="timeStamp" value="577" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationSimpleJSONFields/SimpleCitationFields.java</url>
+          <line>306</line>
+          <properties />
+          <option name="timeStamp" value="578" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/LocationTypes/BoundingBox.java</url>
+          <line>174</line>
+          <properties />
+          <option name="timeStamp" value="631" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicBoundingBox.java</url>
+          <line>288</line>
+          <properties />
+          <option name="timeStamp" value="632" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/JGit.java</url>
+          <line>159</line>
+          <properties />
+          <option name="timeStamp" value="638" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/XMLTestCases/CitationXMLTest.java</url>
+          <line>81</line>
+          <properties />
+          <option name="timeStamp" value="640" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/XMLTestCases/CitationXMLTest.java</url>
+          <line>40</line>
+          <properties />
+          <option name="timeStamp" value="642" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicFields.java</url>
+          <line>314</line>
+          <properties />
+          <option name="timeStamp" value="705" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java</url>
+          <line>104</line>
+          <properties />
+          <option name="timeStamp" value="713" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
+          <line>133</line>
+          <properties />
+          <option name="timeStamp" value="779" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java</url>
+          <line>110</line>
+          <properties />
+          <option name="timeStamp" value="808" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java</url>
+          <line>118</line>
+          <properties />
+          <option name="timeStamp" value="835" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java</url>
+          <line>119</line>
+          <properties />
+          <option name="timeStamp" value="836" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/HTTPCaller.java</url>
+          <line>91</line>
+          <properties />
+          <option name="timeStamp" value="839" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/HTTPCaller.java</url>
+          <line>92</line>
+          <properties />
+          <option name="timeStamp" value="840" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java</url>
+          <line>68</line>
+          <properties />
+          <option name="timeStamp" value="845" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/GeoServer/GeoServerAPI.java</url>
+          <line>296</line>
+          <properties />
+          <option name="timeStamp" value="850" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java</url>
+          <line>115</line>
+          <properties />
+          <option name="timeStamp" value="856" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/JGit.java</url>
+          <line>50</line>
+          <properties />
+          <option name="timeStamp" value="868" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/JGit.java</url>
+          <line>213</line>
+          <properties />
+          <option name="timeStamp" value="869" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="doi.contains(&quot;.&quot;)" language="JAVA" />
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/ISO_Schema.java</url>
+          <line>67</line>
+          <properties />
+          <option name="timeStamp" value="873" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java</url>
+          <line>102</line>
+          <properties />
+          <option name="timeStamp" value="902" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java</url>
+          <line>42</line>
+          <properties />
+          <option name="timeStamp" value="912" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java</url>
+          <line>144</line>
+          <properties />
+          <option name="timeStamp" value="917" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java</url>
+          <line>63</line>
+          <properties />
+          <option name="timeStamp" value="918" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="doi==null" language="JAVA" />
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/ISO_Schema.java</url>
+          <line>51</line>
+          <properties />
+          <option name="timeStamp" value="937" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/ISO_Schema.java</url>
+          <line>77</line>
+          <properties />
+          <option name="timeStamp" value="938" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java</url>
+          <line>104</line>
+          <properties />
+          <option name="timeStamp" value="997" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java</url>
+          <line>44</line>
+          <properties />
+          <option name="timeStamp" value="1000" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java</url>
+          <line>106</line>
+          <properties />
+          <option name="timeStamp" value="1019" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/GeoBlacklightJSON.java</url>
+          <line>50</line>
+          <properties />
+          <option name="timeStamp" value="1057" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java</url>
+          <line>52</line>
+          <properties />
+          <option name="timeStamp" value="1059" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/GeoBlacklightJSON.java</url>
+          <line>51</line>
+          <properties />
+          <option name="timeStamp" value="1068" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
+          <line>56</line>
+          <properties />
+          <option name="timeStamp" value="1070" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java</url>
+          <line>220</line>
+          <properties />
+          <option name="timeStamp" value="1074" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java</url>
+          <line>107</line>
+          <properties />
+          <option name="timeStamp" value="1090" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java</url>
+          <line>213</line>
+          <properties />
+          <option name="timeStamp" value="1110" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java</url>
+          <line>286</line>
+          <properties />
+          <option name="timeStamp" value="1115" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java</url>
+          <line>239</line>
+          <properties />
+          <option name="timeStamp" value="1124" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicBoundingBox.java</url>
+          <line>357</line>
+          <properties />
+          <option name="timeStamp" value="1126" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java</url>
+          <line>205</line>
+          <properties />
+          <option name="timeStamp" value="1127" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
+          <line>43</line>
+          <properties />
+          <option name="timeStamp" value="1153" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
+          <line>111</line>
+          <properties />
+          <option name="timeStamp" value="1155" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/BaseFiles/AltNames.java</url>
+          <line>9</line>
+          <properties />
+          <option name="timeStamp" value="1175" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="this.getOriginalTitle().toLowerCase().endsWith(&quot;kmz&quot;)" language="JAVA" />
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseRecordFile.java</url>
+          <line>196</line>
+          <properties />
+          <option name="timeStamp" value="1190" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java</url>
+          <line>315</line>
+          <properties />
+          <option name="timeStamp" value="1194" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java</url>
+          <line>216</line>
+          <properties />
+          <option name="timeStamp" value="1217" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
+          <line>267</line>
+          <properties />
+          <option name="timeStamp" value="1218" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/Geonames.java</url>
+          <line>78</line>
+          <properties />
+          <option name="timeStamp" value="1219" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
+          <line>136</line>
+          <properties />
+          <option name="timeStamp" value="1221" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
+          <line>138</line>
+          <properties />
+          <option name="timeStamp" value="1222" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
+          <line>139</line>
+          <properties />
+          <option name="timeStamp" value="1223" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
+          <line>153</line>
+          <properties />
+          <option name="timeStamp" value="1224" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
+          <line>154</line>
+          <properties />
+          <option name="timeStamp" value="1225" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
+          <line>155</line>
+          <properties />
+          <option name="timeStamp" value="1226" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/ISOXMLGen.java</url>
+          <line>50</line>
+          <properties />
+          <option name="timeStamp" value="1227" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLGroups/IdentificationInfo.java</url>
+          <line>118</line>
+          <properties />
+          <option name="timeStamp" value="1228" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLGroups/IdentificationInfo.java</url>
+          <line>233</line>
+          <properties />
+          <option name="timeStamp" value="1229" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLGroups/SocialFieldInfo.java</url>
+          <line>19</line>
+          <properties />
+          <option name="timeStamp" value="1230" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLGroups/IdentificationInfo.java</url>
+          <line>128</line>
+          <properties />
+          <option name="timeStamp" value="1231" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
+          <line>125</line>
+          <properties />
+          <option name="timeStamp" value="1235" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/JSONParsing/DataverseParser.java</url>
+          <line>32</line>
+          <properties />
+          <option name="timeStamp" value="1237" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java</url>
+          <line>46</line>
+          <properties />
+          <option name="timeStamp" value="1238" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
+          <line>230</line>
+          <properties />
+          <option name="timeStamp" value="1240" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicFields.java</url>
+          <line>75</line>
+          <properties />
+          <option name="timeStamp" value="1243" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/Countries.java</url>
+          <line>127</line>
+          <properties />
+          <option name="timeStamp" value="1244" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseRecordFile.java</url>
+          <line>103</line>
+          <properties />
+          <option name="timeStamp" value="1249" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseRecordFile.java</url>
+          <line>254</line>
+          <properties />
+          <option name="timeStamp" value="1253" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java</url>
+          <line>186</line>
+          <properties />
+          <option name="timeStamp" value="1259" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java</url>
+          <line>58</line>
+          <properties />
+          <option name="timeStamp" value="1262" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java</url>
+          <line>215</line>
+          <properties />
+          <option name="timeStamp" value="1263" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
+          <line>158</line>
+          <properties />
+          <option name="timeStamp" value="1266" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java</url>
+          <line>43</line>
+          <properties />
+          <option name="timeStamp" value="1267" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java</url>
+          <line>33</line>
+          <properties />
+          <option name="timeStamp" value="1268" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java</url>
+          <line>26</line>
+          <properties />
+          <option name="timeStamp" value="1269" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/RemoveRecord.java</url>
+          <line>20</line>
+          <properties />
+          <option name="timeStamp" value="1270" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java</url>
+          <line>48</line>
+          <properties />
+          <option name="timeStamp" value="1271" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java</url>
+          <line>92</line>
+          <properties />
+          <option name="timeStamp" value="1272" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java</url>
+          <line>183</line>
+          <properties />
+          <option name="timeStamp" value="1273" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java</url>
+          <line>361</line>
+          <properties />
+          <option name="timeStamp" value="1274" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java</url>
+          <line>49</line>
+          <properties />
+          <option name="timeStamp" value="1276" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java</url>
+          <line>49</line>
+          <properties class="BaseFiles.FileWriter" method="writeStringToFile">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="1058" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="EXISTING_RECORDS" language="JAVA" />
+        <watch expression="this" />
+        <watch expression="this" language="JAVA" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand>
+      <path>
+        <item name="Geodisy" type="b2602c69:ProjectViewProjectNode" />
+        <item name="Geodisy" type="462c0819:PsiDirectoryNode" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="breakpointCondition">
+      <expression>
+        <expression-string>this.getOriginalTitle().toLowerCase().endsWith(&quot;kmz&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>name.equals(&quot;creeks.kml&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>!gdalString.toString().contains(&quot;FAILURE&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>getGeoDataFiles().size()&gt;0</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>dgrf.getFileURL().isEmpty()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>start == -1</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>geoDataFiles.size()&gt;0</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>countFile&gt;0</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>drf.getFileURL().isEmpty()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>datasetIdent.contains(&quot;LICNGT&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+    <expressions id="watch">
+      <expression>
+        <expression-string>EXISTING_RECORDS</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+    <expressions id="setValue">
+      <expression>
+        <expression-string>&quot;https://dataverse.scholarsportal.info/api/datasets/export?exporter=dataverse_json&amp;persistentId=doi:10.5072/FK2/PLD5VK&quot;</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>baseURL+pid</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>destPath+fileName</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>fileName.replace(&quot;temp&quot;,nameStub)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>fileName.replace(&quot;temp&quot;,&quot;yes&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>temp.hasUTMCoords()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>folder.listFiles()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>dJO.getVersionSection(current).get(&quot;files&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>countries.get(name)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>geographicCoverage.getBoundingBox()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/SendMail.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/Scheduler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/PersistantURL.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseGeoRecordFile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="52" lean-forward="true" selection-start-line="6" selection-start-column="52" selection-end-line="6" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicFields.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="606">
+          <caret line="298" column="33" selection-start-line="298" selection-start-column="19" selection-end-line="298" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="106" column="37" selection-start-line="106" selection-start-column="37" selection-end-line="106" selection-end-column="37" />
+          <folding>
+            <element signature="method#getProjection#0;class#GDAL#0" />
+            <element signature="method#getAuthority#0;class#GDAL#0" />
+            <element signature="method#compare#0;class#GDAL#0" />
+            <element signature="method#getLatLongGdalInfo#0;class#GDAL#0" />
+            <element signature="method#parseDecimalDegrees#0;class#GDAL#0" />
+            <element signature="method#getGeometryType#0;class#GDAL#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/GeoServer/GeoServerAPI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="13" column="1" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/SourceJavaObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="179" selection-start-line="179" selection-end-line="179" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/GeoBlacklightJSON.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="620">
+          <caret line="81" column="41" selection-start-line="81" selection-start-column="41" selection-end-line="81" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/Zip.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/error.log">
+      <provider selected="true" editor-type-id="LogFileEditorProvider">
+        <state relative-caret-position="483">
+          <caret line="457" selection-start-line="457" selection-end-line="457" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/ExistingHarvests.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="301">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/tests/RemoveRecord.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-commons/1.1.0/junit-platform-commons-1.1.0-sources.jar!/org/junit/platform/commons/util/ReflectionUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="435" selection-start-line="435" selection-end-line="435" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-engine/5.1.0/junit-jupiter-engine-5.1.0-sources.jar!/org/junit/jupiter/engine/execution/ExecutableInvoker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="114" selection-start-line="114" selection-end-line="114" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-engine/5.1.0/junit-jupiter-engine-5.1.0-sources.jar!/org/junit/jupiter/engine/execution/ThrowableCollector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="44" selection-start-line="44" selection-end-line="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-engine/5.1.0/junit-jupiter-engine-5.1.0-sources.jar!/org/junit/jupiter/engine/descriptor/TestMethodTestDescriptor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="123" selection-start-line="123" selection-end-line="123" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-engine/1.1.0/junit-platform-engine-1.1.0-sources.jar!/org/junit/platform/engine/support/hierarchical/HierarchicalTestExecutor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="124" selection-start-line="124" selection-end-line="124" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/HTTPCaller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/GeonamesBBs.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="224" column="20" lean-forward="true" selection-start-line="224" selection-start-column="20" selection-end-line="224" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/logging/log4j/log4j-api/2.8.2/log4j-api-2.8.2-sources.jar!/org/apache/logging/log4j/Logger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="860" column="9" selection-start-line="860" selection-start-column="9" selection-end-line="860" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/GeoLogger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="394">
+          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/LocationTypes/BoundingBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="13" column="46" selection-start-line="13" selection-start-column="46" selection-end-line="13" selection-end-column="46" />
+          <folding>
+            <element signature="e#2606#2607#0" expanded="true" />
+            <element signature="e#2686#2687#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicBoundingBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="15" column="46" selection-start-line="15" selection-start-column="46" selection-end-line="15" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/XMLFiles/10/5072/FK2/1TUKUB/iso19115.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="249" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLGroups/GeographicInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="58" column="39" selection-start-line="58" selection-start-column="39" selection-end-line="58" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLDocObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="48" column="40" selection-start-line="48" selection-start-column="40" selection-end-line="48" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/ISO_19115.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="25" column="57" selection-start-line="25" selection-start-column="56" selection-end-line="25" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/ISOXMLGen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="918">
+          <caret line="69" column="87" selection-start-line="69" selection-start-column="87" selection-end-line="69" selection-end-column="87" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/tests/XMLTestCases/CitationXMLTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="935">
+          <caret line="73" column="38" selection-start-line="73" selection-start-column="38" selection-end-line="73" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="19" column="49" selection-start-line="19" selection-start-column="49" selection-end-line="19" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/javax/xml/parsers/SAXParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6443">
+          <caret line="415" column="42" selection-start-line="415" selection-start-column="42" selection-end-line="415" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/geodisyFiles/xmlTestDJO.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="27" selection-end-line="541" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/GeodisyStrings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="39" column="35" selection-start-line="39" selection-start-column="35" selection-end-line="39" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/ExistingCallsToCheck.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="27" column="28" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/io/FileNotFoundException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="49" column="11" selection-start-line="49" selection-start-column="11" selection-end-line="49" selection-end-column="11" />
+          <folding>
+            <element signature="e#1063#1064#0" expanded="true" />
+            <element signature="e#1086#1087#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/ExistingSearches.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="22" column="66" selection-start-line="22" selection-start-column="66" selection-end-line="22" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/io/File.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="1005" column="19" selection-start-line="1005" selection-start-column="19" selection-end-line="1005" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/GeoServer/PostGIS.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="45" column="26" selection-start-line="45" selection-start-column="26" selection-end-line="45" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/Geodisy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="45" selection-start-line="45" selection-end-line="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1585#1586#0" expanded="true" />
+            <element signature="e#1627#1628#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="50" selection-start-line="50" selection-end-line="50" />
+          <folding>
+            <element signature="e#379#380#0" expanded="true" />
+            <element signature="e#434#435#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="498">
+          <caret line="63" selection-start-line="63" selection-end-line="63" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/JSONParsing/DataverseParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="32" selection-start-line="32" selection-end-line="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="230" selection-start-line="230" selection-end-line="230" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="92" selection-start-line="92" selection-end-line="92" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="183" selection-start-line="183" selection-end-line="183" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseRecordFile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="103" selection-start-line="103" selection-end-line="103" />
+          <folding>
+            <element signature="e#2419#2420#0" expanded="true" />
+            <element signature="e#2474#2475#0" expanded="true" />
+            <element signature="e#10478#10479#0" expanded="true" />
+            <element signature="e#10546#10547#0" expanded="true" />
+            <element signature="e#10582#10583#0" expanded="true" />
+            <element signature="e#10629#10630#0" expanded="true" />
+            <element signature="e#10671#10672#0" expanded="true" />
+            <element signature="e#10713#10714#0" expanded="true" />
+            <element signature="e#10752#10753#0" expanded="true" />
+            <element signature="e#10794#10795#0" expanded="true" />
+            <element signature="e#10840#10841#0" expanded="true" />
+            <element signature="e#10892#10893#0" expanded="true" />
+            <element signature="e#10932#10933#0" expanded="true" />
+            <element signature="e#10984#10985#0" expanded="true" />
+            <element signature="e#11028#11029#0" expanded="true" />
+            <element signature="e#11085#11086#0" expanded="true" />
+            <element signature="e#11126#11127#0" expanded="true" />
+            <element signature="e#11171#11172#0" expanded="true" />
+            <element signature="e#11227#11228#0" expanded="true" />
+            <element signature="e#11278#11279#0" expanded="true" />
+            <element signature="e#11312#11313#0" expanded="true" />
+            <element signature="e#11358#11359#0" expanded="true" />
+            <element signature="e#11392#11393#0" expanded="true" />
+            <element signature="e#11443#11444#0" expanded="true" />
+            <element signature="e#11493#11494#0" expanded="true" />
+            <element signature="e#11548#11549#0" expanded="true" />
+            <element signature="e#11587#11588#0" expanded="true" />
+            <element signature="e#11622#11623#0" expanded="true" />
+            <element signature="e#11667#11668#0" expanded="true" />
+            <element signature="e#11700#11701#0" expanded="true" />
+            <element signature="e#11739#11740#0" expanded="true" />
+            <element signature="e#11775#11776#0" expanded="true" />
+            <element signature="e#11827#11828#0" expanded="true" />
+            <element signature="e#11871#11872#0" expanded="true" />
+            <element signature="e#11921#11922#0" expanded="true" />
+            <element signature="e#11963#11964#0" expanded="true" />
+            <element signature="e#11991#11992#0" expanded="true" />
+            <element signature="e#12018#12019#0" expanded="true" />
+            <element signature="e#12055#12056#0" expanded="true" />
+            <element signature="e#12087#12088#0" expanded="true" />
+            <element signature="e#12120#12121#0" expanded="true" />
+            <element signature="e#12149#12150#0" expanded="true" />
+            <element signature="e#12193#12194#0" expanded="true" />
+            <element signature="e#12229#12230#0" expanded="true" />
+            <element signature="e#12265#12266#0" expanded="true" />
+            <element signature="e#12297#12298#0" expanded="true" />
+            <element signature="e#12347#12348#0" expanded="true" />
+            <element signature="e#12389#12390#0" expanded="true" />
+            <element signature="e#12445#12446#0" expanded="true" />
+            <element signature="e#12493#12494#0" expanded="true" />
+            <element signature="e#12547#12548#0" expanded="true" />
+            <element signature="e#12577#12578#0" expanded="true" />
+            <element signature="e#12626#12627#0" expanded="true" />
+            <element signature="e#12671#12672#0" expanded="true" />
+            <element signature="e#12705#12706#0" expanded="true" />
+            <element signature="e#12750#12751#0" expanded="true" />
+            <element signature="e#12796#12797#0" expanded="true" />
+            <element signature="e#12842#12843#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="160" column="56" selection-start-line="160" selection-start-column="56" selection-end-line="160" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor>
+            <show-content>
+              <type id="library" />
+              <type id="artifact" />
+            </show-content>
+          </artifact-editor>
+          <last-edited>Geodisy:jar</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.49885058" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.49885058" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.49885058" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.49885058" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>Geodisy</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.49885058" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>zip4j-2.3.1</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.49885058" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
