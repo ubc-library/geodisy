@@ -42,7 +42,7 @@ public class DataverseAPI extends SourceAPI {
 
     @Override
     public LinkedList<SourceJavaObject> harvest(LinkedList<SourceJavaObject> answers) {
-        ExistingHarvests es = ExistingHarvests.getExistingHarvests();
+        ExistingHarvests existingHarvests = ExistingHarvests.getExistingHarvests();
         HashSet<String> dois = searchDV();
         LinkedList<JSONObject> jsons = downloadMetadata(dois);
         HashMap<String, DataverseRecordInfo> recordsThatNoLongerExist = new HashMap<>();
@@ -85,9 +85,9 @@ public class DataverseAPI extends SourceAPI {
             }
             DataverseJavaObject djo = parser.parse(jo, dvURL);
             doi = djo.getDOI();
-            if(djo.hasContent && es.hasRecord(djo.getDOI()))
+            if(djo.hasContent && existingHarvests.hasRecord(djo.getDOI()))
                 recordsThatNoLongerExist.remove(djo.getDOI());
-            if(djo.hasContent()&& hasNewInfo(djo, es)) {
+            if(djo.hasContent()&& (hasNewInfo(djo, existingHarvests)||PROCESS_THESE_DOIS.length>0)) {
                 System.out.println("Downloading record: " + doi);
                 long startTime = Calendar.getInstance().getTimeInMillis();
                 djo = djo.downloadFiles();
@@ -104,20 +104,25 @@ public class DataverseAPI extends SourceAPI {
                 if(djo.hasBoundingBox()) {
                     crosswalkRecord(djo);
                     DataverseRecordInfo dri = new DataverseRecordInfo(djo,logger.getName());
-                    es.addOrReplaceRecord(dri);
-                    es.addBBox(djo.getDOI(),djo.getBoundingBox());
-                    es.saveExistingSearchs(es.getRecordVersions(),EXISTING_RECORDS, "ExistingRecords");
-                    es.saveExistingSearchs(es.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
+                    existingHarvests.addOrReplaceRecord(dri);
+                    existingHarvests.addBBox(djo.getDOI(),djo.getBoundingBox());
+                    existingHarvests.saveExistingSearchs(existingHarvests.getRecordVersions(),EXISTING_RECORDS, "ExistingRecords");
+                    existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
                     answers.add(djo);
                 } else{
                     File folderToDelete = new File(doi);
                     deleteFolder(folderToDelete);
                 }
-                es.addOrReplaceRecord(new DataverseRecordInfo(djo,logger.getName()));
+                existingHarvests.addOrReplaceRecord(new DataverseRecordInfo(djo,logger.getName()));
             }else{
                 continue;
             }
-         System.out.println("Parsed and saved " + doi);
+            existingHarvests.saveExistingSearchs(existingHarvests.getRecordVersions(),EXISTING_RECORDS, "ExistingRecords");
+            existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
+            System.out.println("Parsed and saved " + doi);
+            DownloadedFiles dF = DownloadedFiles.getDownloadedFiles();
+            dF.saveDownloads();
+            dF.resetList();
         }
 
         removeDeletedRecords(recordsThatNoLongerExist);
