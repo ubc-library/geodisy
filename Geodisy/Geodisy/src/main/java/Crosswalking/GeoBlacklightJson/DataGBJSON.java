@@ -46,7 +46,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         String number = gbb.getFileNumber();
         jo.put("geoblacklight_version","1.0");
         jo.put("dc_identifier_s", GeodisyStrings.urlSlashes(javaObject.getSimpleFieldVal(DVFieldNameStrings.RECORD_URL)));
-        String geoserverLabel = getgeoserverLabel(gbb).toLowerCase();
+        String geoserverLabel = getGeoserverLabel(gbb).toLowerCase();
         jo.put("layer_slug_s", geoserverLabel);
         if(total>1) {
             number = padZeros(number,total);
@@ -104,7 +104,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
             jo.put("layer_id_s", geoserverLabel);
     }
 
-    private String getgeoserverLabel(GeographicBoundingBox gbb) {
+    private String getGeoserverLabel(GeographicBoundingBox gbb) {
         boolean generated = gbb.isGeneratedFromGeoFile();
         if (generated) {
             return "geodisy:" + gbb.getField(GEOSERVER_LABEL);
@@ -141,7 +141,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
     @Override
     protected JSONObject getOptionalFields(DataverseRecordFile drf, int totalRecordsInStudy) {
         GeographicBoundingBox gbb = drf.getGBB();
-        String geoserverLabel = getgeoserverLabel(gbb).toLowerCase();
+        String geoserverLabel = getGeoserverLabel(gbb).toLowerCase();
         getFileType(drf);
         addRecommendedFields(geoserverLabel, gbb);
         getAuthors();
@@ -151,8 +151,15 @@ public class DataGBJSON extends GeoBlacklightJSON{
         getSubjects();
         getType();
         getRelatedRecords(drf);
+        getModifiedDate();
 
         return jo;
+    }
+
+    private void getModifiedDate() {
+        String modDate = javaObject.getSimpleFieldVal(LAST_MOD_DATE);
+        if(!modDate.isEmpty())
+            jo.put("layer_modified_dt",modDate);
     }
 
     private void getRelatedRecords(DataverseRecordFile drf) {
@@ -193,7 +200,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
                 case ("geotif"):
                 case ("tiff"):
                 case ("geotiff"):
-                    return "GepTIFF";
+                    return "GeoTIFF";
                 case ("png"):
                     return "PNG";
                 default:
