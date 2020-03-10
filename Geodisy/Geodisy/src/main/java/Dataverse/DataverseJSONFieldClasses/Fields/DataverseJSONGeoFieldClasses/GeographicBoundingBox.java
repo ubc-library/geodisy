@@ -330,8 +330,8 @@ public class GeographicBoundingBox extends CompoundJSONField {
     }
 
     private void setFileURL(String fileURL) {
-        if(fileURL.equals(SCHOLARS_PORTAL_CLONE))
-            this.fileURL = SCHOLARS_PORTAL;
+        if(fileURL.startsWith(SCHOLARS_PORTAL_CLONE))
+            this.fileURL = SCHOLARS_PORTAL + fileURL.substring(SCHOLARS_PORTAL_CLONE.length());
         else
             this.fileURL = fileURL;
     }

@@ -8,166 +8,18 @@
   <component name="ChangeListManager">
     <list default="true" id="e719edb7-3c25-4197-be36-316eb001a745" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Geodisy.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Geodisy.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/Temp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/Temp.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/BaseFiles/GeodisyStrings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BaseFiles/GeodisyStrings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/API.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/DownloadRecord.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/FileWriter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/GeoLogger.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/Geodisy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/GeodisyStrings.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/Geonames.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/GetAltCountryNames.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/HTTPCaller.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/HTTPCallerGeoNames.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/MyTimerTask.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/PersistantURL.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/PrivateStringTemplate.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/PrivateStrings.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/RemoveRecord.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/Scheduler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/SendMail.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/Zip.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/Crosswalk.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/CrosswalkInterface.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/GeoBlacklightJson/DataGBJSON.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/GeoBlacklightJson/GeoBlacklightJSON.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/GeoBlacklightJson/GeoBlacklightStrings.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/GeoBlacklightJson/GeoCombine.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/GeoBlacklightJson/HTTPCombineCaller.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/GeoBlacklightJson/JSONCreator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/ISO_19115.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/ISO_Schema.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/JSONParsing/DataverseParser.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/JSONParsing/JSONParser.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/MetadataSchema.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/XML/XMLGroups/DataQualityInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/XML/XMLGroups/DistributionInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/XML/XMLGroups/GeographicInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/XML/XMLGroups/IdentificationInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/XML/XMLGroups/JournalInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/XML/XMLGroups/SocialFieldInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/XML/XMLTools/DjoXMLGenerator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/XML/XMLTools/ISOXMLGen.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/XML/XMLTools/JGit.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/XML/XMLTools/SubElement.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/XML/XMLTools/XMLDocObject.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/XML/XMLTools/XMLStack.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/XML/XMLTools/XMLStrings.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/XML/XMLTools/XMLValidator$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/XML/XMLTools/XMLValidator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/XMLSchema.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DataSourceLocations/DataLocation.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DataSourceLocations/Dataverse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DVFieldNameStrings.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseAPI.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseGeoRecordFile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/CompoundDateJSONField.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/CompoundJSONField.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/Author.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/Contributor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/DatasetContact.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/DateOfCollection.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/Description.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/Distributor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/GrantNumber.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/Keyword.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/OtherID.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/Producer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/RelatedPublication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/Series.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/Software.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/TimePeriodCovered.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/TopicClassification.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/CitationSimpleJSONFields/Date.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/CitationSimpleJSONFields/DateField.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/CitationSimpleJSONFields/SimpleCitationFields.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONAstroFieldClasses/AstroFields.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONAstroFieldClasses/Redshift.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONAstroFieldClasses/RedshiftExtents.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONAstroFieldClasses/SimpleAstroFields.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONAstroFieldClasses/Spatial.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONAstroFieldClasses/Spectral.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONAstroFieldClasses/Temporal.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONAstroFieldClasses/TemporalExtents.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONAstroFieldClasses/WaveLengthExtents.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicBoundingBox.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicCoverage.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicFields.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicUnit.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONJournalFieldClasses/JournalFields.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONJournalFieldClasses/JournalVolIssue.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONLifeFieldClasses/LifeFields.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONSocialFieldClasses/SimpleSocialFields.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONSocialFieldClasses/SocialFields.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONSocialFieldClasses/SocialScienceNotes.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONSocialFieldClasses/TargetSampleSize.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/JSONField.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/MetadataType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJSONFieldClasses/MetadataWSimple.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseJavaObject.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseRecordFile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DataverseRecordInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/DownloadDJOFiles.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/ExisitingFile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/ExistingCallsToCheck.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/ExistingHarvests.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/ExistingRasterRecords.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/ExistingSearches.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/ExistingSearchesFile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/ExistingVectorRecords.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/FindingBoundingBoxes/Countries.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/FindingBoundingBoxes/CountryCodes.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/FindingBoundingBoxes/FindBoundBox.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/FindingBoundingBoxes/GeographicPoliticalUnit.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/FindingBoundingBoxes/GeonamesBBs.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/FindingBoundingBoxes/GeonamesJSON.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/FindingBoundingBoxes/Location.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/FindingBoundingBoxes/LocationTypes/BoundingBox.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/FindingBoundingBoxes/LocationTypes/City.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/FindingBoundingBoxes/LocationTypes/Country.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/FindingBoundingBoxes/LocationTypes/Province.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/FindingBoundingBoxes/ParameterStringBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/GDAL.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/GDALInformation.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/GDALTranslate.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/SourceAPI.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/SourceJavaObject.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Dataverse/SourceRecordFiles.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/GeoServer/DestinationAPI.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/GeoServer/GeoServerAPI.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/GeoServer/GeoserverStrings.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/GeoServer/HTTPCallerGeosever.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/GeoServer/PostGIS.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/GeoServer/Unzip.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/BaseFiles/AltNames.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/BaseFiles/ExistingHarvestsTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/BaseFiles/SendMailTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicFieldsTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/AddShapeFileTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/CheckRasterRecords.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/DataverseParserTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/DataverseTestCases/CSVTests.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/DataverseTestCases/DataverseTests.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/DataverseTestCases/GeoJSONTests.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/DataverseTestCases/LiDARTests.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/DataverseTestCases/ShapefileTests.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/DataverseTestCases/StraightMetadataTests.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/DataverseTestCases/VariousFileTypeTests.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/DataverseTestCases/VectorTests.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/DateTimeParseTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/FixSpecificRecords.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/GdalTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/GeonamesBBsTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/GitTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/ReadWriteToFileTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/RemoveRecord.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/SchedulerTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/UnzipTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/XMLTestCases/CitationXMLTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BaseFiles/Geonames.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BaseFiles/Geonames.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLStrings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLStrings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicBoundingBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicBoundingBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GeoServer/GeoServerAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GeoServer/GeoServerAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tests/GitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/GitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/GeodisyStrings.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/BaseFiles/GeodisyStrings.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/Geonames.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/BaseFiles/Geonames.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/XML/XMLTools/XMLStrings.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Crosswalking/XML/XMLTools/XMLStrings.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GeoServer/GeoServerAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GeoServer/GeoServerAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/GitTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/tests/GitTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,92 +44,6 @@
         <option value="Class" />
       </list>
     </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>Something was wrong with the country XML</find>
-      <find>Moving metadata</find>
-      <find>Something was malformed with the JSON string returned from Dataverse</find>
-      <find>Unzip</find>
-      <find>cro</find>
-      <find>Moving</find>
-      <find>Finished do</find>
-      <find>Something was malformed with the JSON string returned from Dataverse:</find>
-      <find>rsyn</find>
-      <find>GeonamesJSON</find>
-      <find>String</find>
-      <find>Connected GeoBlacklight records</find>
-      <find>couldn't convert</find>
-      <find>1000</find>
-      <find>Finished downloading</find>
-      <find>Calendar.getInstance().getTimeInMillis();</find>
-      <find>) -</find>
-      <find>(&quot; + number + &quot; of &quot; + total + &quot;)&quot;</find>
-      <find>rsy</find>
-      <find>&quot;v&quot;</find>
-      <find>Something wrong parsing class</find>
-      <find>clear</find>
-      <find>something clearly went wrong with unzipping</find>
-      <find>Non-Geo</find>
-      <find>gmd</find>
-      <find>records</find>
-      <find>MANIFEST.MF</find>
-      <find>Somehow have a DataverseGeoRecordFile that doesn't end in shp or tif: File</find>
-      <find>Something went wrong trying to get</find>
-      <find>dc_format_s</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>SimpleFields simpleFields = getSimpleFields();</replace>
-      <replace>SourceJavaObject val = dataverseCallTest();</replace>
-      <replace>ExistingCallsToCheck</replace>
-      <replace>records</replace>
-      <replace>simpleCitationFields.</replace>
-      <replace>levelJ</replace>
-      <replace>levelK</replace>
-      <replace>levelN</replace>
-      <replace>levelM</replace>
-      <replace>stack = new XMLStack();</replace>
-      <replace>List&lt;</replace>
-      <replace>cf</replace>
-      <replace>setTextContent</replace>
-      <replace>&quot;CI_Responsibility</replace>
-      <replace>));</replace>
-      <replace>stack.push(doc.createGMDElement</replace>
-      <replace>jo.put(EXTERNAL_SERVICES, ja);</replace>
-      <replace>jo.getJSONArray(EXTERNAL_SERVICES);</replace>
-      <replace>Province</replace>
-      <replace>return &quot;Bad field name&quot;;</replace>
-      <replace>&lt;altName&gt;</replace>
-      <replace>localRepoLocation</replace>
-      <replace>djo)</replace>
-      <replace>lowername</replace>
-      <replace>lowerName</replace>
-      <replace>Vector</replace>
-      <replace>DATASET_FILES_PATH</replace>
-      <replace>C:\\\&quot;Program Files\&quot;\\GD</replace>
-      <replace>String</replace>
-      <replace>bb</replace>
-    </replaceStrings>
-    <dirStrings>
-      <dir>C:\geodisy\Geodisy\Geodisy\src\test\java\tests\DataverseTestCases</dir>
-      <dir>C:\geodisy\Geodisy\Geodisy\datasetFiles</dir>
-      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\BaseFiles</dir>
-      <dir>C:\geodisy\Geodisy\Geodisy\src\test\java\tests</dir>
-      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Crosswalking\XML\XMLTools</dir>
-      <dir>C:\geodisy\Geodisy\Geodisy\XMLFilesTest</dir>
-      <dir>C:\geodisy\Geodisy\Geodisy\src\test</dir>
-      <dir>C:\geodisy\Geodisy\Geodisy\src\test\java</dir>
-      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Crosswalking\XML\XMLGroups</dir>
-      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Crosswalking\XML</dir>
-      <dir>127.0.0.1</dir>
-      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Dataverse</dir>
-      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Crosswalking</dir>
-      <dir>C:\geodisy\Geodisy\Geodisy\src\main</dir>
-      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java\Crosswalking\GeoBlacklightJson</dir>
-      <dir>C:\geodisy\Geodisy\Geodisy\src\main\java</dir>
-      <dir>C:\geodisy\Geodisy\Geodisy</dir>
-      <dir>C:\geodisy\Geodisy\Geodisy\src</dir>
-    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -493,6 +259,12 @@
       <is-autoscroll-to-source value="true" />
     </todo-panel>
   </component>
+  <component name="WindowStateProjectService">
+    <state x="-904" y="-828" width="674" height="536" key="find.popup" timestamp="1583776517162">
+      <screen x="-1561" y="-1080" width="1920" height="1040" />
+    </state>
+    <state x="-904" y="-828" width="674" height="536" key="find.popup/0.0.1536.824/-1561.-1080.1920.1040@-1561.-1080.1920.1040" timestamp="1583776517162" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -643,17 +415,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/tests/GitTest.java</url>
-          <line>53</line>
+          <line>52</line>
           <option name="timeStamp" value="492" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/tests/GitTest.java</url>
-          <line>47</line>
+          <line>46</line>
           <option name="timeStamp" value="493" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/tests/GitTest.java</url>
-          <line>61</line>
+          <line>60</line>
           <option name="timeStamp" value="494" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -790,7 +562,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/GeoServer/GeoServerAPI.java</url>
-          <line>296</line>
+          <line>295</line>
           <option name="timeStamp" value="850" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -802,11 +574,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/JGit.java</url>
           <line>50</line>
           <option name="timeStamp" value="868" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/JGit.java</url>
-          <line>213</line>
-          <option name="timeStamp" value="869" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <condition expression="doi.contains(&quot;.&quot;)" language="JAVA" />

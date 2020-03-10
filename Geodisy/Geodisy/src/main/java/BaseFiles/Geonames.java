@@ -19,7 +19,7 @@ import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import static BaseFiles.PrivateStrings.GEONAMES_USERNAME;
+import static BaseFiles.GeodisyStrings.GEONAMES_USERNAME;
 
 
 public class Geonames {

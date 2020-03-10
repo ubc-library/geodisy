@@ -1,7 +1,7 @@
 package Crosswalking.XML.XMLTools;
 
-import static BaseFiles.PrivateStrings.OPENGEOMETADATA_PASSWORD;
-import static BaseFiles.PrivateStrings.OPENGEOMETADATA_USERNAME;
+import static BaseFiles.GeodisyStrings.OPENGEOMETADATA_PASSWORD;
+import static BaseFiles.GeodisyStrings.OPENGEOMETADATA_USERNAME;
 
 public class XMLStrings {
     public final static String CI_RESPONSIBILITY = "CI_Responsibility";
