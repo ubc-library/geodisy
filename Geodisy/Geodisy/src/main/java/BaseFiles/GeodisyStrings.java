@@ -2,15 +2,16 @@ package BaseFiles;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import static BaseFiles.PrivateStrings.*;
 
 public class GeodisyStrings {
-    public final static String GIT_PASSWORD = PrivateStrings.GIT_PASSWORD;
-    public final static String GEOSERVER_PASSWORD =PrivateStrings.GEOSERVER_PASSWORD;
-    public final static String GEOSERVER_USERNAME = PrivateStrings.GEOSERVER_USERNAME;
-    public final static String GEONAMES_USERNAME = PrivateStrings.GEONAMES_USERNAME;
-    public final static String POSTGIS_USER_PASSWORD = PrivateStrings.POSTGIS_USER_PASSWORD;
-    public final static String OPENGEOMETADATA_USERNAME = PrivateStrings.OPENGEOMETADATA_USERNAME;
-    public final static String OPENGEOMETADATA_PASSWORD = PrivateStrings.OPENGEOMETADATA_PASSWORD;
+    public final static String GIT_PASSWORD = PRIVATE_GIT_PASSWORD;
+    public final static String GEOSERVER_PASSWORD = PRIVATE_GEOSERVER_PASSWORD;
+    public final static String GEOSERVER_USERNAME = PRIVATE_GEOSERVER_USERNAME;
+    public final static String GEONAMES_USERNAME = PRIVATE_GEONAMES_USERNAME;
+    public final static String POSTGIS_USER_PASSWORD = PRIVATE_POSTGIS_USER_PASSWORD;
+    public final static String OPENGEOMETADATA_USERNAME = PRIVATE_OPENGEOMETADATA_USERNAME;
+    public final static String OPENGEOMETADATA_PASSWORD = PRIVATE_OPENGEOMETADATA_PASSWORD;
     public final static boolean TEST = false; //change this to false when in production
     public final static int NUMBER_OF_RECS_TO_HARVEST = 4000;
     public final static String[] HUGE_RECORDS_TO_IGNORE_UNTIL_LATER = {"10.5683/SP2/FJWIL8","10.5683/SP/Y3HRN","10864/GSSJX","10.5683/SP2/JP4WDF","10864/9KJ1L","10864/11086","10864/9VNIK","10.5683/SP/Y3HMRN","10.5683/SP/OEIP77","10.5683/SP/IP9ERW","10.5683/SP/NTUOK9","10864/11369","10864/11175","10.5683/SP/BT7HN2","10.5683/SP/4RFHBJ","10.5683/SP/T7ZJAF","10.5683/SP/RZM9HE","10.5683/SP/RAJQ2P","10.5683/SP2/AAGZDG","10.5683/SP2/1XRF9U","10.5683/SP2/MICSLT"};
