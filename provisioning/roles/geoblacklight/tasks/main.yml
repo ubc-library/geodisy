@@ -36,15 +36,15 @@
   tags:
     - install-geoblacklight
 
-- name: Create GeoBlacklight directory
-  become: yes
-  file:
-    state: directory
-    path: "{{ geoblacklight_dir }}"
-    owner: "geoblack"
-    group: "geoblack"
-  tags:
-    - install-geoblacklight
+#- name: Create GeoBlacklight directory
+#  become: yes
+#  file:
+#    state: directory
+#    path: "{{ geoblacklight_dir }}"
+#    owner: "geoblack"
+#    group: "geoblack"
+#  tags:
+#    - install-geoblacklight
 
 # 'source'ing the .bashrc before running this command feels a bit messy, but I dont know 
 # enough about Ruby to clean this up yet. It works for now.
@@ -223,12 +223,21 @@
       #  tags:
       #    - install-geoblacklight
 
+- name: Make folder in webroot for GeoBlacklight app
+  become: yes
+  file:
+    state: directory
+    path: "{{ geoblacklight_dir }}"
+    owner: geoblack
+    group: geoblack
+  tags: install-geoblacklight
+
 - name: Install GeoBlacklight Rails application
   become: yes
   become_user: geoblack
   ignore_errors: yes
   shell:
-    chdir: /opt/geoblacklight/
+    chdir: "/var/www/geoblacklight"
     cmd: "source ~/.bashrc && RBENV_VERSION={{ ruby_ver }} rbenv exec rails _5.2.3_ new geodisy -m https://raw.githubusercontent.com/geoblacklight/geoblacklight/master/template.rb"  
   tags:
     - install-geoblacklight
@@ -265,7 +274,7 @@
   become_user: solr
   copy:
     remote_src: yes 
-    src: /opt/geoblacklight/geodisy/solr/conf/
+    src: "{{ geoblacklight_dir }}/geodisy/solr/conf/"
     dest: "/var/solr/data/{{ geoblacklight_core_name }}/conf/"
   tags:
     - install-geoblacklight
@@ -275,7 +284,7 @@
   become_user: geoblack
   template:
     src: blacklight.yml.j2
-    dest: /opt/geoblacklight/geodisy/config/blacklight.yml
+    dest: "{{ geoblacklight_dir }}/geodisy/config/blacklight.yml"
   tags:
     - install-geoblacklight
 

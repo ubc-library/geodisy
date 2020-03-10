@@ -1,0 +1,15 @@
+# Install Geodisy Java middleware application
+---
+- name: Provision environment with necessary packages
+  become: yes
+  yum:
+    update_cache: yes
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - java-1.8.0-openjdk
+    - maven
+  tags:
+    - install-geodisy
+    - packages
+

@@ -17,8 +17,8 @@
   DocumentRoot /var/www/geo.frdr.ca/html 
   ErrorLog /etc/httpd/logs/error_log 
   CustomLog /etc/httpd/logs/access_log combined 
- 
-  #RewriteEngine On 
+
+  RequestHeader set X-Forwarded-Proto "https" 
  
   # Rewrite requests to /geoserver to backend 
   ProxyPass        "/geoserver" "http://geoserver.frdr.ca:8080/geoserver" 
@@ -27,6 +27,9 @@
   # Rewrite requests to /solr to solr port 
   #ProxyPass        "/solr"  "http://localhost:8983/solr" 
   #ProxyPassReverse "/solr"  "http://localhost:8983/solr"
+
+  ProxyPass        "/"  "http://localhost:3000/" 
+  ProxyPassReverse "/"  "http://localhost:3000/"
 
   Include /etc/letsencrypt/options-ssl-apache.conf 
   SSLCertificateFile /etc/letsencrypt/live/{{ inventory_hostname }}/cert.pem 

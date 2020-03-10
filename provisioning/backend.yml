@@ -6,4 +6,5 @@
     - hosts
     - geoserver
     - postgis
+    - geodisy
 
