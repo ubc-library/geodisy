@@ -7,19 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e719edb7-3c25-4197-be36-316eb001a745" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../FixStringInFile/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../FixStringInFile/src/Switcher.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/Temp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/Temp.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/BaseFiles/GeodisyStrings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BaseFiles/GeodisyStrings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/BaseFiles/Geonames.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BaseFiles/Geonames.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLStrings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/XMLStrings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicBoundingBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicBoundingBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GeoServer/GeoServerAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GeoServer/GeoServerAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/tests/GitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/GitTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/GeodisyStrings.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/BaseFiles/GeodisyStrings.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BaseFiles/Geonames.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/BaseFiles/Geonames.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Crosswalking/XML/XMLTools/XMLStrings.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Crosswalking/XML/XMLTools/XMLStrings.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/GeoServer/GeoServerAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GeoServer/GeoServerAPI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/GitTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/tests/GitTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -264,6 +255,10 @@
       <screen x="-1561" y="-1080" width="1920" height="1040" />
     </state>
     <state x="-904" y="-828" width="674" height="536" key="find.popup/0.0.1536.824/-1561.-1080.1920.1040@-1561.-1080.1920.1040" timestamp="1583776517162" />
+    <state x="342" y="140" key="new project wizard" timestamp="1583950304406">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="342" y="140" key="new project wizard/-1920.0.1536.832/1920.1.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1583950304406" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
