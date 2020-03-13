@@ -76,6 +76,8 @@ public class Geonames {
     }
 
     public String getGeonamesCountry(String country){
+        if(country.isEmpty())
+            return "";
         Map<String, String> parameters = getBaseParameters(country);
         parameters.remove("country");
         String searchString = country;
