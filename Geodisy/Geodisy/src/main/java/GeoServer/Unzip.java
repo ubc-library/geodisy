@@ -54,7 +54,7 @@ public class Unzip {
                 }
 
                 fileName = new File(fileName).getName();
-                File newFile = new File(destpath + File.separator + fileName);
+                File newFile = new File(destpath + GeodisyStrings.replaceSlashes(File.separator) + fileName);
 
 
                 //create all non exists folders
