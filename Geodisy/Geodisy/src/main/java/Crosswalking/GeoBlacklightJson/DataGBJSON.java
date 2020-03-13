@@ -5,6 +5,7 @@ import BaseFiles.GeodisyStrings;
 import Dataverse.DVFieldNameStrings;
 import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Author;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.DateOfCollection;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Description;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicCoverage;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -56,6 +58,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
             jo.put("dc_title_s",javaObject.getSimpleFields().getField(TITLE));
         jo.put("dc_rights_s","Public");
         jo.put("dct_provenance_s",javaObject.getSimpleFields().getField(PUBLISHER));
+        jo.put("dc_publisher_s",javaObject.getSimpleFields().getField(PUBLISHER));
         jo.put("solr_geom","ENVELOPE(" + getBBString(gbb.getBB()) + ")");
         return jo;
     }
@@ -152,8 +155,29 @@ public class DataGBJSON extends GeoBlacklightJSON{
         getType();
         getRelatedRecords(drf);
         getModifiedDate();
+        getSolrYear();
 
         return jo;
+    }
+
+    private void getSolrYear() {
+        List<DateOfCollection> dates = javaObject.getCitationFields().getListField(DATE_OF_COLLECT);
+        int date = 10000;
+        for(DateOfCollection doc: dates){
+            String dateString = doc.getStartDate();
+            int current;
+            if(dateString.contains("-"))
+                current = Integer.valueOf(dateString.substring(0,dateString.indexOf("-")));
+            else
+                current = Integer.valueOf(dateString);
+
+            if(date>current)
+                date = current;
+
+        }
+        if(date!=10000)
+            jo.put("solr_year_i",String.valueOf(date));
+
     }
 
     private void getModifiedDate() {
