@@ -1,6 +1,7 @@
 package Dataverse;
 
 import BaseFiles.GeoLogger;
+import BaseFiles.Geodisy;
 import BaseFiles.GeodisyStrings;
 
 
@@ -59,7 +60,8 @@ public class GDALTranslate {
     public boolean process(String sourcePath, String destPath, String name, String transformType, boolean newLocation){
 
         sourcePath = GeodisyStrings.replaceSlashes(sourcePath);
-        destPath = GeodisyStrings.replaceSlashes(destPath).substring(0,destPath.lastIndexOf(GeodisyStrings.replaceSlashes("/")))+GeodisyStrings.replaceSlashes("/");
+        destPath = GeodisyStrings.replaceSlashes(destPath);
+        destPath = destPath.substring(0,destPath.lastIndexOf(GeodisyStrings.replaceSlashes("/")))+GeodisyStrings.replaceSlashes("/");
 
 
         String call;
@@ -94,7 +96,7 @@ public class GDALTranslate {
                 }
 
             } catch (IOException | InterruptedException e) {
-                logger.error("Something went wrong converting " + name + " to shapefile");
+                logger.error("Something went wrong converting " + name + " to geotiff");
             }finally{
                 if(process!=null)
                     process.destroy();
@@ -120,7 +122,8 @@ public class GDALTranslate {
                         File[] files = new File(destPath).listFiles();
                         Set<String> extensions = new HashSet<>();
                         for(File f: files){
-                            String fileName = f.getName();
+                            String pathName = f.getName();
+                            String fileName = pathName.substring(pathName.lastIndexOf(GeodisyStrings.replaceSlashes("/"))+1);
                             if(fileName.startsWith("temp."))
                                 extensions.add(fileName.substring(fileName.lastIndexOf(".")));
                         }
