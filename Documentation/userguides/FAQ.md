@@ -1,5 +1,18 @@
 ## Frequently Asked Questions
 
+### How do I search with the map in Geodisy
+
+1. **Move** or **adjust** the map to your area of interest
+	* Use the + and - buttons in the top left of the map to zoom in and out  
+	* Use your mouse’s scroll wheel to zoom in and out    
+	* Click and drag within the map  
+	* Press the Shift key and click to draw a box for the map to zoom toward  
+	* On a mobile device, use two fingers to zoom and drag within the map  
+
+2. Click **Search here** to see the results	 
+
+The “Relevance” of the search results is determined by bounding box size. Data with bounding boxes that most closely fit the area you are searching will be boosted, while bounding boxes that are far larger or smaller than the pictured area will be suppressed.
+
 ### What does the  _undetermined_  data type mean when I see results in Geodisy?
 
 _Geodisy_ harvests all kinds of data, and not all of those data types are explicitly geospatial. _Undetermined_ can have multiple meanings:
