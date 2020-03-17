@@ -254,7 +254,7 @@ public class DataverseAPI extends SourceAPI {
 
             }
         }catch (JSONException e){
-            logger.error("Something was malformed with the JSON string returned from Dataverse");
+            logger.error("Something was malformed with the JSON string returned from Dataverse. JSON looks like: " + result);
         }
         return more;
     }
