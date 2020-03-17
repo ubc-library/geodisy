@@ -115,6 +115,10 @@ public class MyTimerTask extends TimerTask {
     }
 
     private void verifyFiles(FileWriter fW) {
+        File folder = new File(SAVED_FILES);
+        folder.mkdir();
+        File logs = new File(LOGS);
+        logs.mkdir();
         if(!fW.verifyFileExistence(RECORDS_TO_CHECK))
             ExistingCallsToCheck.getExistingCallsToCheck();
         fW.verifyFileExistence(ERROR_LOG);
