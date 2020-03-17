@@ -5,9 +5,6 @@ import Dataverse.ExistingHarvests;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * Class used to write things to files (logs and existing records files)
@@ -137,7 +134,6 @@ public class FileWriter {
      */
     public boolean verifyFileExistence(String path) {
         path = GeodisyStrings.replaceSlashes(path);
-        Path filePath = Paths.get(path);
         try {
             File f =  new File(path);
             boolean  created = f.createNewFile();

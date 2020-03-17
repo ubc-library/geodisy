@@ -65,7 +65,7 @@ public abstract class HTTPCaller {
                 answer = response.toString();
 
             } else {
-                logger.error("GET request didn't work");
+                logger.error("GET request didn't work: Code = " + responseCode);
                 return "BAD_RESPONSE";
             }
         } catch (SocketTimeoutException s) {

@@ -24,7 +24,6 @@ public class ExistingCallsToCheck extends ExistingSearches implements Serializab
 
     private ExistingCallsToCheck(){
         logger = new GeoLogger(this.getClass());
-        records = new HashMap<>();
         records = readExistingRecords(EXISTING_CHECKS);
         newRecords = new HashMap<>();
 
@@ -62,7 +61,9 @@ public class ExistingCallsToCheck extends ExistingSearches implements Serializab
     public HashMap<String, String> getNewRecords(){
         return newRecords;
     }
-
+    public HashMap<String, DataverseRecordInfo> getRecords(){
+        return records;
+    }
 
     public DataverseRecordInfo getRecordInfo(String doi){
         if(records.containsKey(doi))

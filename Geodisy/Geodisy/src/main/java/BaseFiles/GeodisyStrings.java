@@ -2,20 +2,28 @@ package BaseFiles;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import static BaseFiles.PrivateStrings.*;
 
 public class GeodisyStrings {
-
-    public final static boolean TEST = true; //change this to false when in production
-    public final static int NUMBER_OF_RECS_TO_HARVEST = 1000;
-    public final static String[] HUGE_RECORDS_TO_IGNORE_UNTIL_LATER = {"10.5683/SP/Y3HRN","10864/GSSJX","10.5683/SP2/JP4WDF","10864/9KJ1L","10864/11086","10864/9VNIK","10.5683/SP/Y3HMRN","10.5683/SP/OEIP77","10.5683/SP/IP9ERW","10.5683/SP/NTUOK9","10864/11369","10864/11175","10.5683/SP/BT7HN2","10.5683/SP/4RFHBJ","10.5683/SP/T7ZJAF","10.5683/SP/RZM9HE","10.5683/SP/RAJQ2P","10.5683/SP2/AAGZDG","10.5683/SP2/1XRF9U","10.5683/SP2/MICSLT"};
-    public final static String[] PROCESS_THESE_DOIS = {}; //"10.5683/SP2/UEJGTV" "10864/11669" "10.5683/SP2/GKJPIQ""10.5683/SP2/KYHUNF""10.5683/SP/EGOYE3""10.5683/SP2/LAWLTI""10.5072/FK2/PLD5VK"
+    public final static String GIT_PASSWORD = PRIVATE_GIT_PASSWORD;
+    public final static String GEOSERVER_PASSWORD = PRIVATE_GEOSERVER_PASSWORD;
+    public final static String GEOSERVER_USERNAME = PRIVATE_GEOSERVER_USERNAME;
+    public final static String GEONAMES_USERNAME = PRIVATE_GEONAMES_USERNAME;
+    public final static String POSTGIS_USER_PASSWORD = PRIVATE_POSTGIS_USER_PASSWORD;
+    public final static String OPENGEOMETADATA_USERNAME = PRIVATE_OPENGEOMETADATA_USERNAME;
+    public final static String OPENGEOMETADATA_PASSWORD = PRIVATE_OPENGEOMETADATA_PASSWORD;
+    public final static boolean TEST = false; //change this to false when in production
+    public final static int NUMBER_OF_RECS_TO_HARVEST = 4000;
+    public final static String[] HUGE_RECORDS_TO_IGNORE_UNTIL_LATER = {"10.5683/SP2/FJWIL8","10.5683/SP/Y3HRN","10864/GSSJX","10.5683/SP2/JP4WDF","10864/9KJ1L","10864/11086","10864/9VNIK","10.5683/SP/Y3HMRN","10.5683/SP/OEIP77","10.5683/SP/IP9ERW","10.5683/SP/NTUOK9","10864/11369","10864/11175","10.5683/SP/BT7HN2","10.5683/SP/4RFHBJ","10.5683/SP/T7ZJAF","10.5683/SP/RZM9HE","10.5683/SP/RAJQ2P","10.5683/SP2/AAGZDG","10.5683/SP2/1XRF9U","10.5683/SP2/MICSLT"};
+    public final static String[] PROCESS_THESE_DOIS = {}; //"10.5683/SP2/UEJGTV" "10864/11669" "10.5683/SP2/GKJPIQ""10.5683/SP2/KYHUNF""10.5683/SP/EGOYE3""10.5683/SP2/LAWLTI""10.5072/FK2/PLD5VK","10.5683/SP2/UEJGTV","10.5683/SP/SBTXLS","10.5683/SP/UYBROL","10864/XER6B","10864/10197""10.5683/SP/OZ0WB0","10.5683/SP/S0MQVP","10.5683/SP/5S5Y9T","10.5683/SP/30JPOR","10.5683/SP/ASR2XE","10.5683/SP2/1VWZNC","10.5683/SP/AB5A9O","10.5683/SP2/YNOJSD","10.5683/SP/AB5A9O","10.5683/SP/2ZARY2","10.5683/SP2/ZDAHQG","10.5683/SP2/JFQ1SZ"
     //Repositories (add new repository URLS to a appropriate repository URL array below)
         // New Repository Types need new URL Arrays [Geodisy 2]
 
         public final static String SANDBOX_DV_URL = "https://206-12-90-131.cloud.computecanada.ca/"; //currently our sandbox
         public final static String TEST_SCHOLARS_PORTAL = "https://demodv.scholarsportal.info/";
-        public final static String SCHOLARS_PORTAL = "https://dataverse.scholarsportal.info/";
-        public final static String[] DATAVERSE_URLS = new String[]{SCHOLARS_PORTAL};
+        public final static String SCHOLARS_PORTAL = "https://dataverse.scholarsportal.info/"; //Don't use this unless SP gives approval
+        public final static String SCHOLARS_PORTAL_CLONE = "https://dvtest.scholarsportal.info/";
+        public final static String[] DATAVERSE_URLS = new String[]{SCHOLARS_PORTAL_CLONE};
 
         public static boolean windowsComputerType(){
             return  System.getProperty("os.name")
@@ -36,29 +44,29 @@ public class GeodisyStrings {
         private final static String WINDOWS_ROOT = "C:\\geodisy\\Geodisy\\Geodisy\\";
         private final static String CENTOS_ROOT = "/home/centos/Geodisy/";
         public final static String GEODISY_PATH_ROOT = getRoot();
-        public final static String EXISTING_RECORDS = GEODISY_PATH_ROOT + "savedFiles/ExisitingRecords.txt";
-        public final static String EXISTING_CHECKS = GEODISY_PATH_ROOT + "savedFiles/ExisitingChecks.txt";
-        public final static String EXISTING_BBOXES = GEODISY_PATH_ROOT + "savedFiles/ExistingBBoxes.txt";
-        public final static String VECTOR_RECORDS = GEODISY_PATH_ROOT + "savedFiles/ExistingVectorRecords.txt";
-        public final static String TEST_EXISTING_RECORDS = GEODISY_PATH_ROOT + "savedFiles/TestExistingRecords.txt";
-        public final static String TEST_EXISTING_BBOXES = GEODISY_PATH_ROOT + "savedFiles/TestExistingBBoxes.txt";
-        public final static String RASTER_RECORDS = GEODISY_PATH_ROOT + "savedFiles/ExistingRasterRecords.txt";
-        public final static String RECORDS_TO_CHECK = GEODISY_PATH_ROOT + "logs/recordsToCheck.log";
-        public final static String EXISTING_CALL_TO_CHECK = GEODISY_PATH_ROOT + "logs/existingCallToCheck.txt";
-        public final static String ERROR_LOG = GEODISY_PATH_ROOT + "logs/error.log";
-        public final static String WARNING_LOG = GEODISY_PATH_ROOT + "logs/warning.log";
+        public final static String EXISTING_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingRecords.txt");
+        public final static String EXISTING_CHECKS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingChecks.txt");
+        public final static String EXISTING_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingBBoxes.txt");
+        public final static String DOWNLOADED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/DownloadedFiles.csv");
+        public final static String VECTOR_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingVectorRecords.txt");
+        public final static String TEST_EXISTING_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/TestExistingRecords.txt");
+        public final static String TEST_EXISTING_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/TestExistingBBoxes.txt");
+        public final static String RASTER_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingRasterRecords.txt");
+        public final static String RECORDS_TO_CHECK = GEODISY_PATH_ROOT + replaceSlashes("logs/recordsToCheck.log");
+        public final static String EXISTING_CALL_TO_CHECK = GEODISY_PATH_ROOT + replaceSlashes("logs/existingCallToCheck.txt");
+        public final static String ERROR_LOG = GEODISY_PATH_ROOT + replaceSlashes("logs/error.log");
+        public final static String WARNING_LOG = GEODISY_PATH_ROOT + replaceSlashes("logs/warning.log");
         public final static String XML_NS = "http://www.isotc211.org/2005/";
-        public final static String COUNTRY_VALS =  GEODISY_PATH_ROOT + "geodisyFiles/Geoname_countries.xml";
-        public final static String ALL_CITATION_METADATA = GEODISY_PATH_ROOT + "geodisyFiles/AllCitationMetadata.json";
-        public final static String TEST_GEO_COVERAGE = GEODISY_PATH_ROOT + "geodisyFiles/geocoverage.json";
-        public final static String XML_TEST_FILE = GEODISY_PATH_ROOT + "geodisyFiles/XMLTestDJO.xml";
-        public final static String DATASET_FILES_PATH = "datasetFiles/";
-        public final static String OPEN_GEO_METADATA_BASE = "https://github.com/OpenGeoMetadata/ca.ubc/";
+        public final static String COUNTRY_VALS =  GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/Geoname_countries.xml");
+        public final static String ALL_CITATION_METADATA = GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/AllCitationMetadata.json");
+        public final static String TEST_GEO_COVERAGE = GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/geocoverage.json");
+        public final static String XML_TEST_FILE = GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/XMLTestDJO.xml");
+        public final static String DATASET_FILES_PATH = replaceSlashes("datasetFiles/");
+        public final static String OPEN_GEO_METADATA_BASE = "https://github.com/OpenGeoMetadata/ca.frdr.geodisy/";
 
 
 
 
-    //TODO Change GDAL location to where it is when on Cloud instance
     //GDAL
         private final static String GDALINFO_LOCAL = "gdalinfo -approx_stats ";
         private final static String OGRINFO_LOCAL = "ogrinfo -ro -al -so ";
@@ -149,7 +157,6 @@ public class GeodisyStrings {
     public final static String SOLR_PATH_PROD = "SOLR_URL=http://www.example.com:1234/solr/collection ";
     public final static String SOLR_PATH_TEST = "";
     public final static String SOLR_PATH = IS_WINDOWS? SOLR_PATH_TEST:SOLR_PATH_PROD;
-    //TODO set custom path for OGM location (where the GeoBlacklightJson are stored)
     public final static String DEV_ADDRESS = "206-12-92-97.cloud.computecanada.ca";
     public final static String PROD_ADDRESS = "206-12-92-97.cloud.computecanada.ca";
     public final static String ADDRESS = addressToUse(TEST);

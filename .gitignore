@@ -52,9 +52,8 @@ Geodisy/Geodisy/BMSC_Wizard_Exposed_UnderstoryCover_1997\.csv
 
 Geodisy/Geodisy/BMSC_Wizard_Exposed_InvertebrateDensity_1997\.csv
 
-Geodisy/Geodisy/classes/artifacts/Geodisy_jar/datasetFiles/
+Geodisy/Geodisy/classes/artifacts/
 
-Geodisy/Geodisy/classes/artifacts/Geodisy_jar/logs/error\.log
 
 Geodisy/Geodisy/classes/artifacts/Geodisy_jar/savedFiles/
 
@@ -73,16 +72,21 @@ Geodisy/Geodisy/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/
 Geodisy/Geodisy/src/main/java/BaseFiles/PrivateStrings.java
 
 *.class
-Geodisy/Geodisy/src/main/target/classes/META-INF/MANIFEST.MF
+
 *.iml
 Geodisy/Geodisy Full Install Guide (Other than Solr).txt
 
-Geodisy/Geodisy/logs/error/
+*.svg
 
-Geodisy/Geodisy/logs/warning/
+*.png
 
+Geodisy/VectorToGeoserver/out/
+
+Geodisy/UBC Logos/
 Geodisy/testGdal/.idea/
+
 Geodisy/testGdal/out/
+Geodisy/TileMerge/
 
 
 Geodisy/testGdal/src/META-INF/MANIFEST.MF
@@ -122,12 +126,8 @@ Geodisy/TileMerge/out/artifacts/TileMerge_jar/TileMerge.jar
 # Vim files
 [._]*.sw[a-p]
 Geodisy/Logos/
-
-Geodisy/UBC Logos/
-
-Geodisy/MoveMetadataAndRunGeoCombine/src/META-INF/
-
 Geodisy/MoveMetadataAndRunGeoCombine/
+Geodisy/GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/
 
 Geodisy/ModifyGeoserver/
 

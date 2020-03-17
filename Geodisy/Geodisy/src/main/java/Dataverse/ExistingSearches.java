@@ -4,6 +4,7 @@ import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
 import BaseFiles.GeodisyStrings;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -19,10 +20,13 @@ public abstract class ExistingSearches extends ExisitingFile {
     public HashMap<String, DataverseRecordInfo> readExistingRecords(String path){
         HashMap<String, DataverseRecordInfo> newFile = new HashMap<>();
         FileWriter fw = new FileWriter();
+        File checkBlank = new File(path);
+        if(checkBlank.toString().isEmpty())
+            return newFile;
         try {
             return  (HashMap<String, DataverseRecordInfo>) fw.readSavedObject(GeodisyStrings.replaceSlashes(path));
         } catch (IOException e) {
-            logger.error("Something went wrong reading " + path);
+            logger.error("Something went wrong reading " + path + ". Ignore this if the file didn't exist before this run or the file is empty");
             return newFile;
         } catch (ClassNotFoundException e) {
             logger.error("Something went wrong parsing " + path);

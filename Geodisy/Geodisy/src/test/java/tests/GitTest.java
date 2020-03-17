@@ -2,7 +2,6 @@ package tests;
 
 import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.URIish;
@@ -15,7 +14,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Date;
 
-import static BaseFiles.PrivateStrings.GIT_PASSWORD;
+import static BaseFiles.GeodisyStrings.GIT_PASSWORD;
 
 
 public class GitTest {

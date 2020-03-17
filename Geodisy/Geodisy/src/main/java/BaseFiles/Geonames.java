@@ -19,7 +19,7 @@ import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import static BaseFiles.PrivateStrings.GEONAMES_USERNAME;
+import static BaseFiles.GeodisyStrings.GEONAMES_USERNAME;
 
 
 public class Geonames {
@@ -76,6 +76,8 @@ public class Geonames {
     }
 
     public String getGeonamesCountry(String country){
+        if(country.isEmpty())
+            return "";
         Map<String, String> parameters = getBaseParameters(country);
         parameters.remove("country");
         String searchString = country;
