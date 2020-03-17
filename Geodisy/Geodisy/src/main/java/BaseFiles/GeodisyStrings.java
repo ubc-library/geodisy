@@ -44,6 +44,8 @@ public class GeodisyStrings {
         private final static String WINDOWS_ROOT = "C:\\geodisy\\Geodisy\\Geodisy\\";
         private final static String CENTOS_ROOT = "/home/centos/Geodisy/";
         public final static String GEODISY_PATH_ROOT = getRoot();
+        public final static String SAVED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles");
+        public final static String LOGS = GEODISY_PATH_ROOT + replaceSlashes("logs");
         public final static String EXISTING_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingRecords.txt");
         public final static String EXISTING_CHECKS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingChecks.txt");
         public final static String EXISTING_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingBBoxes.txt");
