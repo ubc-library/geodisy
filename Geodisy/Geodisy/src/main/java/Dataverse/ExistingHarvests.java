@@ -31,7 +31,6 @@ public class ExistingHarvests extends ExistingSearches implements Serializable {
 
     private ExistingHarvests(){
         logger = new GeoLogger(this.getClass());
-        FileWriter fw = new FileWriter();
         bBoxes = readExistingBoundingBoxes();
         recordVersions = readExistingRecords(EXISTING_RECORDS);
     }
@@ -118,6 +117,7 @@ public class ExistingHarvests extends ExistingSearches implements Serializable {
             return newFile;
         }
     }
+
 
     public HashMap<String, BoundingBox> getbBoxes() {
         return bBoxes;
