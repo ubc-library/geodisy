@@ -7,10 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e719edb7-3c25-4197-be36-316eb001a745" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../FixStringInFile/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../FixStringInFile/src/Switcher.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FRDR Back Plan for Geodisy.docx" beforeDir="false" afterPath="$PROJECT_DIR$/FRDR Back Plan for Geodisy.docx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/Temp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/Temp.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/~$DR Back Plan for Geodisy.docx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +76,7 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="last.edited.regexp" value="10_5072/FK2/8O2NUZ" />
-    <property name="last_opened_file_path" value="$MAVEN_REPOSITORY$/zip4j/zip4j-2.3.1.jar!/" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/test/UnzipTestDepositLocation" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.49885058" />
@@ -104,6 +104,9 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\geodisy\Geodisy\Geodisy\geodisyFiles" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\geodisy\Geodisy\Geodisy\src\test\UnzipTestDepositLocation" />
+    </key>
     <key name="CreateClassDialog.RecentsKey">
       <recent name="Crosswalking.XML" />
       <recent name="Dataverse.DataverseJSONFieldClasses.Fields.SimpleJSONFields" />
@@ -124,55 +127,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AltNames.setAltNames" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Geodisy" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="BaseFiles.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="BaseFiles" />
-      <option name="MAIN_CLASS_NAME" value="BaseFiles.AltNames" />
-      <option name="METHOD_NAME" value="setAltNames" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CitationXMLTest.testXMLValidation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Geodisy" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="tests.XMLTestCases.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="tests.XMLTestCases" />
-      <option name="MAIN_CLASS_NAME" value="tests.XMLTestCases.CitationXMLTest" />
-      <option name="METHOD_NAME" value="testXMLValidation" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ExistingHarvestsTest.setCoverage" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Geodisy" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="BaseFiles.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="BaseFiles" />
-      <option name="MAIN_CLASS_NAME" value="BaseFiles.ExistingHarvestsTest" />
-      <option name="METHOD_NAME" value="setCoverage" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="RemoveRecord.removeRecord" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DataverseParserTest.testDataverseParser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Geodisy" />
       <extension name="coverage">
         <pattern>
@@ -181,8 +136,56 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="tests" />
-      <option name="MAIN_CLASS_NAME" value="tests.RemoveRecord" />
-      <option name="METHOD_NAME" value="removeRecord" />
+      <option name="MAIN_CLASS_NAME" value="tests.DataverseParserTest" />
+      <option name="METHOD_NAME" value="testDataverseParser" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GDALTranslateTest.utm2LatLongTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Geodisy" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tests" />
+      <option name="MAIN_CLASS_NAME" value="tests.GDALTranslateTest" />
+      <option name="METHOD_NAME" value="utm2LatLongTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GdalTest.gdalparseTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Geodisy" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tests" />
+      <option name="MAIN_CLASS_NAME" value="tests.GdalTest" />
+      <option name="METHOD_NAME" value="gdalparseTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UnzipTest.unzipTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Geodisy" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tests" />
+      <option name="MAIN_CLASS_NAME" value="tests.UnzipTest" />
+      <option name="METHOD_NAME" value="unzipTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -191,10 +194,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.RemoveRecord.removeRecord" />
-        <item itemvalue="JUnit.CitationXMLTest.testXMLValidation" />
-        <item itemvalue="JUnit.ExistingHarvestsTest.setCoverage" />
-        <item itemvalue="JUnit.AltNames.setAltNames" />
+        <item itemvalue="JUnit.DataverseParserTest.testDataverseParser" />
+        <item itemvalue="JUnit.GDALTranslateTest.utm2LatLongTest" />
+        <item itemvalue="JUnit.GdalTest.gdalparseTest" />
+        <item itemvalue="JUnit.UnzipTest.unzipTest" />
       </list>
     </recent_temporary>
   </component>
@@ -208,38 +211,6 @@
     </task>
     <servers />
   </component>
-  <component name="TestHistory">
-    <history-entry file="RemoveRecord_removeRecord - 2020.02.06 at 04h 07m 21s.xml">
-      <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="RemoveRecord_removeRecord - 2020.02.12 at 12h 27m 24s.xml">
-      <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="RemoveRecord_removeRecord - 2020.02.14 at 14h 03m 27s.xml">
-      <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="RemoveRecord_removeRecord - 2020.02.14 at 14h 08m 02s.xml">
-      <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="RemoveRecord_removeRecord - 2020.02.14 at 14h 10m 07s.xml">
-      <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CitationXMLTest_testXMLValidation - 2020.02.19 at 11h 38m 17s.xml">
-      <configuration name="CitationXMLTest.testXMLValidation" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CitationXMLTest_testXMLValidation - 2020.02.19 at 11h 44m 46s.xml">
-      <configuration name="CitationXMLTest.testXMLValidation" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CitationXMLTest_testXMLValidation - 2020.02.19 at 11h 44m 59s.xml">
-      <configuration name="CitationXMLTest.testXMLValidation" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CitationXMLTest_testXMLValidation - 2020.02.19 at 11h 45m 22s.xml">
-      <configuration name="CitationXMLTest.testXMLValidation" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="RemoveRecord_removeRecord - 2020.02.19 at 16h 57m 09s.xml">
-      <configuration name="RemoveRecord.removeRecord" configurationId="JUnit" />
-    </history-entry>
-  </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
@@ -251,10 +222,70 @@
     </todo-panel>
   </component>
   <component name="WindowStateProjectService">
-    <state x="-904" y="-828" width="674" height="536" key="find.popup" timestamp="1583776517162">
-      <screen x="-1561" y="-1080" width="1920" height="1040" />
+    <state x="566" y="272" width="448" height="287" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1584066140646">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="566" y="272" width="448" height="287" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1536.824@0.0.1536.824" timestamp="1584066140646" />
+    <state x="-649" y="-854" key="#xdebugger.evaluate" timestamp="1584466158663">
+      <screen x="-1920" y="-989" width="1920" height="1040" />
+    </state>
+    <state x="-649" y="-854" key="#xdebugger.evaluate/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584466158663" />
+    <state x="97" y="146" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1584077036320" />
+    <state width="1357" height="292" key="GridCell.Tab.0.bottom" timestamp="1584468555336">
+      <screen x="-1920" y="-989" width="1920" height="1040" />
+    </state>
+    <state width="1357" height="292" key="GridCell.Tab.0.bottom/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584468555336" />
+    <state width="1082" height="292" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1584123247279" />
+    <state width="1357" height="292" key="GridCell.Tab.0.center" timestamp="1584468555335">
+      <screen x="-1920" y="-989" width="1920" height="1040" />
+    </state>
+    <state width="1357" height="292" key="GridCell.Tab.0.center/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584468555335" />
+    <state width="1082" height="292" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1584123247279" />
+    <state width="1357" height="292" key="GridCell.Tab.0.left" timestamp="1584468555334">
+      <screen x="-1920" y="-989" width="1920" height="1040" />
+    </state>
+    <state width="1357" height="292" key="GridCell.Tab.0.left/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584468555334" />
+    <state width="1082" height="292" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1584123247279" />
+    <state width="1357" height="292" key="GridCell.Tab.0.right" timestamp="1584468555336">
+      <screen x="-1920" y="-989" width="1920" height="1040" />
+    </state>
+    <state width="1357" height="292" key="GridCell.Tab.0.right/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584468555336" />
+    <state width="1082" height="292" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1584123247279" />
+    <state width="1357" height="292" key="GridCell.Tab.1.bottom" timestamp="1584468555337">
+      <screen x="-1920" y="-989" width="1920" height="1040" />
+    </state>
+    <state width="1357" height="292" key="GridCell.Tab.1.bottom/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584468555337" />
+    <state width="1082" height="292" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1584123249264" />
+    <state width="1357" height="292" key="GridCell.Tab.1.center" timestamp="1584468555336">
+      <screen x="-1920" y="-989" width="1920" height="1040" />
+    </state>
+    <state width="1357" height="292" key="GridCell.Tab.1.center/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584468555336" />
+    <state width="1082" height="292" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1584123249264" />
+    <state width="1357" height="292" key="GridCell.Tab.1.left" timestamp="1584468555336">
+      <screen x="-1920" y="-989" width="1920" height="1040" />
+    </state>
+    <state width="1357" height="292" key="GridCell.Tab.1.left/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584468555336" />
+    <state width="1082" height="292" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1584123249263" />
+    <state width="1357" height="292" key="GridCell.Tab.1.right" timestamp="1584468555337">
+      <screen x="-1920" y="-989" width="1920" height="1040" />
+    </state>
+    <state width="1357" height="292" key="GridCell.Tab.1.right/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584468555337" />
+    <state width="1082" height="292" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1584123249264" />
+    <state width="970" height="531" key="XDebugger.FullValuePopup" timestamp="1584142279228">
+      <screen x="-1920" y="-989" width="1920" height="1040" />
+    </state>
+    <state width="970" height="531" key="XDebugger.FullValuePopup/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584142279228" />
+    <state width="776" height="420" key="XDebugger.FullValuePopup/0.0.1536.824@0.0.1536.824" timestamp="1584123312215" />
+    <state x="-1265" y="-645" key="com.intellij.ide.util.TipDialog" timestamp="1584464643336">
+      <screen x="-1920" y="-989" width="1920" height="1040" />
+    </state>
+    <state x="-1265" y="-645" key="com.intellij.ide.util.TipDialog/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584464643336" />
+    <state x="-1262" y="-753" width="799" height="804" key="find.popup" timestamp="1584478838757">
+      <screen x="-1920" y="-989" width="1920" height="1040" />
     </state>
     <state x="-904" y="-828" width="674" height="536" key="find.popup/0.0.1536.824/-1561.-1080.1920.1040@-1561.-1080.1920.1040" timestamp="1583776517162" />
+    <state x="-1262" y="-753" width="799" height="804" key="find.popup/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584478838757" />
+    <state x="526" y="200" width="639" height="536" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1584067963722" />
     <state x="342" y="140" key="new project wizard" timestamp="1583950304406">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -275,13 +306,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/tests/DataverseParserTest.java</url>
-          <line>43</line>
+          <line>42</line>
           <option name="timeStamp" value="82" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/tests/DataverseParserTest.java</url>
-          <line>48</line>
-          <option name="timeStamp" value="83" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Dataverse/ExistingSearchesFile.java</url>
@@ -522,7 +548,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
-          <line>133</line>
+          <line>136</line>
           <option name="timeStamp" value="779" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -588,7 +614,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java</url>
-          <line>144</line>
+          <line>148</line>
           <option name="timeStamp" value="917" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -639,7 +665,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
-          <line>56</line>
+          <line>58</line>
           <option name="timeStamp" value="1070" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -679,12 +705,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
-          <line>43</line>
+          <line>45</line>
           <option name="timeStamp" value="1153" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
-          <line>111</line>
+          <line>114</line>
           <option name="timeStamp" value="1155" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -710,13 +736,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
-          <line>267</line>
+          <line>291</line>
           <option name="timeStamp" value="1218" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/Geonames.java</url>
-          <line>78</line>
-          <option name="timeStamp" value="1219" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
@@ -732,21 +753,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
           <line>139</line>
           <option name="timeStamp" value="1223" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
-          <line>153</line>
-          <option name="timeStamp" value="1224" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
-          <line>154</line>
-          <option name="timeStamp" value="1225" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
-          <line>155</line>
-          <option name="timeStamp" value="1226" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/XML/XMLTools/ISOXMLGen.java</url>
@@ -775,7 +781,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
-          <line>125</line>
+          <line>128</line>
           <option name="timeStamp" value="1235" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -787,11 +793,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java</url>
           <line>46</line>
           <option name="timeStamp" value="1238" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
-          <line>230</line>
-          <option name="timeStamp" value="1240" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicFields.java</url>
@@ -830,13 +831,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/GeoBlacklightJson/DataGBJSON.java</url>
-          <line>158</line>
+          <line>182</line>
           <option name="timeStamp" value="1266" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java</url>
-          <line>43</line>
-          <option name="timeStamp" value="1267" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java</url>
@@ -854,11 +850,6 @@
           <option name="timeStamp" value="1270" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java</url>
-          <line>48</line>
-          <option name="timeStamp" value="1271" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java</url>
           <line>92</line>
           <option name="timeStamp" value="1272" />
@@ -874,14 +865,184 @@
           <option name="timeStamp" value="1274" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Crosswalking/JSONParsing/DataverseParser.java</url>
+          <line>56</line>
+          <option name="timeStamp" value="1280" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicFields.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="1281" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/Countries.java</url>
+          <line>78</line>
+          <option name="timeStamp" value="1282" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicCoverage.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="1283" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicCoverage.java</url>
+          <line>87</line>
+          <option name="timeStamp" value="1284" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicCoverage.java</url>
+          <line>91</line>
+          <option name="timeStamp" value="1285" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/DataverseJSONGeoFieldClasses/GeographicCoverage.java</url>
+          <line>94</line>
+          <option name="timeStamp" value="1286" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/Geonames.java</url>
+          <line>78</line>
+          <option name="timeStamp" value="1288" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/Geonames.java</url>
+          <line>88</line>
+          <option name="timeStamp" value="1289" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/UnzipTest.java</url>
+          <line>13</line>
+          <option name="timeStamp" value="1290" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java</url>
-          <line>49</line>
-          <option name="timeStamp" value="1276" />
+          <line>44</line>
+          <option name="timeStamp" value="1292" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/GeoServer/Unzip.java</url>
+          <line>80</line>
+          <option name="timeStamp" value="1293" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/GdalTest.java</url>
+          <line>18</line>
+          <option name="timeStamp" value="1294" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="1295" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDAL.java</url>
+          <line>55</line>
+          <option name="timeStamp" value="1296" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/GDALTranslateTest.java</url>
+          <line>41</line>
+          <option name="timeStamp" value="1297" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/GDALTranslateTest.java</url>
+          <line>50</line>
+          <option name="timeStamp" value="1298" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/GdalTest.java</url>
+          <line>23</line>
+          <option name="timeStamp" value="1299" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDALTranslate.java</url>
+          <line>63</line>
+          <option name="timeStamp" value="1300" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/GDALTranslateTest.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="1301" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDALTranslate.java</url>
+          <line>123</line>
+          <option name="timeStamp" value="1302" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDALTranslate.java</url>
+          <line>127</line>
+          <option name="timeStamp" value="1303" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDALTranslate.java</url>
+          <line>129</line>
+          <option name="timeStamp" value="1304" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/GDALTranslate.java</url>
+          <line>138</line>
+          <option name="timeStamp" value="1305" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/DataverseParserTest.java</url>
+          <line>55</line>
+          <option name="timeStamp" value="1306" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java</url>
+          <line>44</line>
+          <option name="timeStamp" value="1307" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
+          <line>237</line>
+          <option name="timeStamp" value="1308" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
+          <line>235</line>
+          <option name="timeStamp" value="1309" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
+          <line>501</line>
+          <option name="timeStamp" value="1310" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/DateOfCollection.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="1313" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java</url>
+          <line>48</line>
+          <option name="timeStamp" value="1314" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/tests/DataverseParserTest.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="1315" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/ExistingHarvests.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="1318" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="1319" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/ExistingHarvests.java</url>
+          <line>32</line>
+          <option name="timeStamp" value="1320" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java</url>
           <line>49</line>
-          <properties class="BaseFiles.FileWriter" method="writeStringToFile">
+          <properties class="BaseFiles.FileWriter">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="1058" />
@@ -905,120 +1066,10 @@
     </expand>
     <select />
   </component>
-  <component name="debuggerHistoryManager">
-    <expressions id="breakpointCondition">
-      <expression>
-        <expression-string>this.getOriginalTitle().toLowerCase().endsWith(&quot;kmz&quot;)</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>name.equals(&quot;creeks.kml&quot;)</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>!gdalString.toString().contains(&quot;FAILURE&quot;)</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>getGeoDataFiles().size()&gt;0</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>dgrf.getFileURL().isEmpty()</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>start == -1</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>geoDataFiles.size()&gt;0</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>countFile&gt;0</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>drf.getFileURL().isEmpty()</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>datasetIdent.contains(&quot;LICNGT&quot;)</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-    </expressions>
-    <expressions id="watch">
-      <expression>
-        <expression-string>EXISTING_RECORDS</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-    </expressions>
-    <expressions id="setValue">
-      <expression>
-        <expression-string>&quot;https://dataverse.scholarsportal.info/api/datasets/export?exporter=dataverse_json&amp;persistentId=doi:10.5072/FK2/PLD5VK&quot;</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-    </expressions>
-    <expressions id="evaluateExpression">
-      <expression>
-        <expression-string>baseURL+pid</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>destPath+fileName</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>fileName.replace(&quot;temp&quot;,nameStub)</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>fileName.replace(&quot;temp&quot;,&quot;yes&quot;)</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>temp.hasUTMCoords()</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>folder.listFiles()</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>dJO.getVersionSection(current).get(&quot;files&quot;)</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>countries.get(name)</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>geographicCoverage.getBoundingBox()</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-    </expressions>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Geodisy$DataverseParserTest_testDataverseParser.ic" NAME="DataverseParserTest.testDataverseParser Coverage Results" MODIFIED="1584139792180" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>tests.*</FILTER>
+    </SUITE>
   </component>
   <component name="masterDetails">
     <states>
