@@ -5,12 +5,102 @@ yum -y update
 
 Unless otherwise noted, commands executed in a root shell
 
-1. Install Java 8
+1. Install GeoServer 2.16.x (Stable)
+* Install Java 8
 yum install java-1.8.0-openjdk
 
-2. Install GDAL
+* Install Platform Independent binary from http://geoserver.org/release/stable/
+wget http://sourceforge.net/projects/geoserver/files/GeoServer/2.16.0/geoserver-2.16.0-bin.zip
+mkdir -p /opt/share/geoserver
+unzip geoserver-2.16.0-bin.zip in /opt/share/geoserver
+useradd -r geoserver
+
+chown -R geoserver /opt/share/geoserver/
+
+* As geoserver user (manual startup)
+
+export GEOSERVER_HOME=/opt/share/geoserver/geoserver-2.16.0
+cd /opt/share/geoserver/geoserver-2.16.0
+sh startup.sh
+
+* Install startup script in /etc/systemd/system/geoserver.service
+[Unit]
+Description=Startup GeoServer
+After=network.target
+
+[Service]
+Type=simple
+User=geoserver
+Group=geoserver
+Environment=GEOSERVER_HOME=/opt/share/geoserver/geoserver-2.16.0
+ExecStart=/opt/share/geoserver/geoserver-2.16.0/bin/startup.sh
+TimeoutStartSec=0
+
+[Install]
+WantedBy=default.target
+
+systemctl daemon-reload
+systemctl start geoserver.service
+
+* Login and test
+http://206.12.92.97:8080/geoserver
+admin
+<< password provided separately >>
+
+* Install import extension
+Geoserver w/import extension
+Download importer extension Core from http://geoserver.org/release/stable/
+unzip geoserver-2.16.0-importer-plugin.zip into /opt/share/geoserver/geoserver-2.16.0/webapps/geoserver/WEB-INF/lib
+
+* Apache reverse proxy
+yum install mod_ssl openssl
+
+systemctl enable httpd
+systemctl start httpd
+
+yum install certbot python2-certbot-apache mod_ssl
+mkdir -p /var/www/206-12-92-97.cloud.computecanada.ca/html
+
+Add virtual host in /etc/httpd/conf.d/206-12-92-97.cloud.computecanada.ca.conf
+<VirtualHost *:80>
+ServerName 206-12-92-97.cloud.computecanada.ca
+DocumentRoot /var/www/206-12-92-97.cloud.computecanada.ca/html
+ErrorLog /etc/httpd/logs/error_log
+CustomLog /etc/httpd/logs/access_log combined
+</VirtualHost>
+
+certbot --apache -d 206-12-92-97.cloud.computecanada.ca
+
+in /etc/httpd/conf.d/206-12-92-97.cloud.computecanada.ca-le-ssl.conf
+<Location /geoserver>
+        ProxyPass         http://localhost:8080/geoserver
+        ProxyPassReverse  http://localhost:8080/geoserver
+        Order allow,deny
+        Allow from all
+</Location>
+
+In GeoServer Global Settings, set Base URL to:
+https://206-12-92-97.cloud.computecanada.ca/geoserver
+
+Note: https access can be opened up; however port 8080 access to GeoServer should be restricted to admin IPs only.
+
+
+2. Install PostGIS 30 and GDAL 30 for PostgreSQL 12
+wget https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+rpm -ivh pgdg-redhat-repo-latest.noarch.rpm
+
+* Install PostgreSQL 12
+yum install postgresql12 postgresql12-server postgresql12-libs postgresql12-contrib postgresql12-devel
+
+/usr/pgsql-12/bin/postgresql-12-setup initdb
+systemctl enable postgresql-12
+systemctl start postgresql-12
+
+* yum install postgis30_12 postgis30_12-client postgis30_12-debuginfo postgis30_12-devel postgis30_12-docs postgis30_12-gui postgis30_12-utils
+
 * yum install gdal30-libs gdal30 gdal30-debuginfo gdal30-devel gdal30-do
 (installs binaries to /usr/gdal30/bin)
+
 
 3. Install GeoBlacklight and Solr
 
@@ -18,6 +108,7 @@ yum install java-1.8.0-openjdk
 yum install git-core zlib zlib-devel gcc-c++ patch readline readline-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison curl sqlite-devel
 
 * Create GeoBlacklight user and directories
+useradd -r geoserver
 
 mkdir -p /opt/geoblacklight
 chown -R geoblack /opt/geoblacklight/
@@ -180,6 +271,8 @@ bundle install
 
 6. Startup scripts
 
+* GeoServer: /etc/systemd/system/geoserver.service
+* PostgreSQL: enabled via systemctl
 * GeoBlacklight: /etc/systemd/system/geoblacklight.service
 * Solr: enabled via systemctl
 

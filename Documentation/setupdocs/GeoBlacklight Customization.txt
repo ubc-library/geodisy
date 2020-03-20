@@ -1,4 +1,95 @@
-1)	Make geo_footer.scss in /home/geoblack/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/geoblacklight-2.2.1/app/assets/stylesheets/geoblacklight/modules/:
+1)	 Copy default application.scss to /opt/geoblacklight/geodisy/app/assets/stylesheets/geoblacklight/ and update:
+		@import 'geodisy';
+
+2) Add _geo_footer.html.erb at /opt/geoblacklight/geodisy/app/views/shared:
+	<footer role="“contentinfo”">
+	  <div id="geo-footer-container">
+		<div id="geo-footer">
+		  <div id="geo-footer-img" class="span2">
+			<%= link_to 'https://researchdata.library.ubc.ca/find/geodisy/' do %>
+			  <%= image_tag "ubc.png", alt: "University Of British Columbia", height: 45 %>
+			<% end %>
+		  </div>
+		  <div id="geo-footer-links" class="span2">
+			<ul>
+			  <li><a href="https://library.stanford.edu/hours">Hours &amp; locations</a></li>
+			  <li> <a href="https://library.stanford.edu/myaccount">My Account</a></li>
+			  <li> <a href="https://library.stanford.edu/ask">Ask us</a></li>
+			  <li> <a href="https://library.stanford.edu/opt-out">Opt out of analytics</a></li>
+			  <li><a href="http://library-status.stanford.edu">System status</a></li>
+			</ul>
+		  </div>
+		</div>
+	  </div>
+	</footer>
+3) Copy default  _header_navbar.html.erb to /opt/geoblacklight/geodisy/app/views/shared and update:
+	<%= link_to application_name, root_path, class: 'mb-0 navbar-brand' %>
+	becomes
+	<%= link_to application_name, root_path, class: 'navbar-brand pt-4'%>
+	
+4) cp default base.html.erb to /opt/geoblacklight/geodisy/app/views/layouts/blacklight/
+
+		
+5) Copy default geoblacklight.en.yml to /opt/geoblacklight/geodisy/config/locales/geoblacklight.en.yml and update: 
+    a)
+		headline: 'Explore and discover...'
+		search_heading: 'Find now'
+		category_heading: 'Find by...'
+		map_heading: 'Find by location'
+		
+		BECOMES
+		
+		headline: 'Explore Canadian research data'
+		search_heading: 'Browse by keyword'
+		category_heading: 'Browse by category'
+		map_heading: 'Browse by location'
+		
+	b)
+		relations:
+		descendant: 'Derived Datasets (%{count})'
+	 
+		BECOMES
+	 
+		relations:
+		decendant: 'Linked Records'
+6) Using parent-child relationships for linked records
+	Copy default index.html.erb in /opt/geoblacklight/geodisy/app/views/relation/ and update:
+		a)
+			replace
+			<%= render 'ancestor' unless @relations.descendants['numFound'].to_i == 0 %>
+			
+			with
+			
+			<!-- commenting out descendants so we can use parent-child relationship for linked records-->
+			<-- <%= render 'ancestor' unless @relations.descendants['numFound'].to_i == 0 %>-->
+		
+7) Copy default catalog_controller to /opt/geoblacklight/geodisy/app/controllers/catalog_controller.rb and update:
+	a)
+		# Nav actions from Blacklight
+		config.add_nav_action(:bookmark, partial: 'blacklight/nav/bookmark', if: :render_bookmarks_control?)
+		config.add_nav_action(:search_history, partial: 'blacklight/nav/search_history')
+
+		# Tools from Blacklight
+		config.add_results_collection_tool(:sort_widget)
+		config.add_results_collection_tool(:per_page_widget)
+		config.add_show_tools_partial(:bookmark, partial: 'bookmark_control', if: :render_bookmarks_control?)
+		config.add_show_tools_partial(:email, callback: :email_action, validator: :validate_email_params)
+		config.add_show_tools_partial(:sms, if: :render_sms_action?, callback: :sms_action, validator: :validate_sms_params)
+
+		TO 
+		
+		# Nav actions from Blacklight
+		config.add_nav_action(:search_history, partial: 'blacklight/nav/search_history')
+
+		# Tools from Blacklight
+		config.add_results_collection_tool(:sort_widget)
+		config.add_results_collection_tool(:per_page_widget)
+		
+		
+		
+______________________________________________________________________________________
+Being worked on:
+1) 	Make geo_footer.scss in /opt/geoblacklight/geodisy/app/assets/stylesheets/geoblacklight/modules/:
 			#geo-content {
 				padding-bottom: 220px !important;
 			}
@@ -16,6 +107,7 @@
 			}
 
 			#geo-footer {
+				//something is wrong in the css with the next line
 				@extend .container;
 				display: table;
 				height: 80px;
@@ -72,97 +164,11 @@
 				}
 			}
 			
-2)	Make geodisy.scss in /home/geoblack/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/geoblacklight-2.2.1/app/assets/stylesheets/geoblacklight/:
+2)	Make geodisy.scss in /opt/geoblacklight/geodisy/app/assets/stylesheets/geoblacklight/:
 		@import 'modules/geo_footer';
 
-3) Add to application.scss in /home/geoblack/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/geoblacklight-2.2.1/app/assets/stylesheets/geoblacklight/:
-		@import 'geodisy';
-
-4) Add _geo_footer.html.erb at /home/geoblack/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/geoblacklight-2.2.1/app/views/shared:
-	<footer role="“contentinfo”">
-	  <div id="geo-footer-container">
-		<div id="geo-footer">
-		  <div id="geo-footer-img" class="span2">
-			<%= link_to 'https://researchdata.library.ubc.ca/find/geodisy/' do %>
-			  <%= image_tag "ubc.png", alt: "University Of British Columbia", height: 45 %>
-			<% end %>
-		  </div>
-		  <div id="geo-footer-links" class="span2">
-			<ul>
-			  <li><a href="https://library.stanford.edu/hours">Hours &amp; locations</a></li>
-			  <li> <a href="https://library.stanford.edu/myaccount">My Account</a></li>
-			  <li> <a href="https://library.stanford.edu/ask">Ask us</a></li>
-			  <li> <a href="https://library.stanford.edu/opt-out">Opt out of analytics</a></li>
-			  <li><a href="http://library-status.stanford.edu">System status</a></li>
-			</ul>
-		  </div>
-		</div>
-	  </div>
-	</footer>
-5) Update  _header_navbar.html.erb in /home/geoblack/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/geoblacklight-2.2.1/app/views/shared:
-	<%= link_to application_name, root_path, class: 'mb-0 navbar-brand' %>
-	becomes
-	<%= link_to application_name, root_path, class: 'navbar-brand pt-4'%>
-	
-6) mkdir  /home/geoblack/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/geoblacklight-2.2.1/app/views/layouts/blacklight/
-7) cp base.html.erb from /home/geoblack/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/blacklight-7.4.1/app/views/layouts/blacklight/ to /home/geoblack/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/geoblacklight-2.2.1/app/views/layouts/blacklight/
-8) Using parent-child relationships for linked records
-	a)Update geoblacklight.en.yml in /home/geoblack/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/geoblacklight-2.2.1/config/locales/geoblacklight.en.yml
-		relations:
-		descendant: 'Derived Datasets (%{count})'
-	 
-		BECOMES
-	 
-		relations:
-		decendant: 'Linked Records'
-	b) Update index.html.erb in /home/geoblack/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/geoblacklight-2.2.1/app/views/relation/
-		replace
-		<%= render 'ancestor' unless @relations.descendants['numFound'].to_i == 0 %>
-		
-		with
-		
-		<!-- commenting out descendants so we can use parent-child relationship for linked records-->
-		<-- <%= render 'ancestor' unless @relations.descendants['numFound'].to_i == 0 %>-->
-		
-9) Update geoblacklight.en.yml in /home/geoblack/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/geoblacklight-2.2.1/config/locales/geoblacklight.en.yml 
-    a)
-		headline: 'Explore and discover...'
-		search_heading: 'Find now'
-		category_heading: 'Find by...'
-		map_heading: 'Find by location'
-		
-		BECOMES
-		
-		headline: 'Explore Canadian research data'
-		search_heading: 'Browse by keyword'
-		category_heading: 'Browse by category'
-		map_heading: 'Browse by location'
-
-10) Update  _header_navbar.html.erb in /home/geoblack/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/geoblacklight-2.2.1/app/views/shared:
-	a)delete
-		<div class='d-flex justify-content-center'>
-			<%= content_tag :h3, t('geoblacklight.home.search_heading'), class: 'text-center' %>
-		</div>
-		
-		from
-			<div class='geobl-homepage-masthead jumbotron'>
-				<div class='d-flex justify-content-center'>
-				  <%= content_tag :h2, t('geoblacklight.home.headline'), class: 'text-center' %>
-				</div>
-				<div class='d-flex justify-content-center'>
-				  <%= content_tag :h3, t('geoblacklight.home.search_heading'), class: 'text-center' %>
-				</div>
-				<div class='row justify-content-md-center'>
-				  <div class='col-md-6 col-sm-12'>
-					<div class='navbar-search'>
-					  <%= render_search_bar %>
-					</div>
-				  </div>
-				</div>
-			  </div>
 
 
-	
 
 	
 
