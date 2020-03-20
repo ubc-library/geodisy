@@ -13,7 +13,7 @@ public class GeodisyStrings {
     public final static String OPENGEOMETADATA_USERNAME = PRIVATE_OPENGEOMETADATA_USERNAME;
     public final static String OPENGEOMETADATA_PASSWORD = PRIVATE_OPENGEOMETADATA_PASSWORD;
     public final static boolean TEST = false; //change this to false when in production
-    public final static int NUMBER_OF_RECS_TO_HARVEST = 4000;
+    public final static int NUMBER_OF_RECS_TO_HARVEST = 5000;
     public final static String[] HUGE_RECORDS_TO_IGNORE_UNTIL_LATER = {"10.5683/SP2/FJWIL8","10.5683/SP/Y3HRN","10864/GSSJX","10.5683/SP2/JP4WDF","10864/9KJ1L","10864/11086","10864/9VNIK","10.5683/SP/Y3HMRN","10.5683/SP/OEIP77","10.5683/SP/IP9ERW","10.5683/SP/NTUOK9","10864/11369","10864/11175","10.5683/SP/BT7HN2","10.5683/SP/4RFHBJ","10.5683/SP/T7ZJAF","10.5683/SP/RZM9HE","10.5683/SP/RAJQ2P","10.5683/SP2/AAGZDG","10.5683/SP2/1XRF9U","10.5683/SP2/MICSLT"};
     public final static String[] PROCESS_THESE_DOIS = {}; //"10.5683/SP2/UEJGTV" "10864/11669" "10.5683/SP2/GKJPIQ""10.5683/SP2/KYHUNF""10.5683/SP/EGOYE3""10.5683/SP2/LAWLTI""10.5072/FK2/PLD5VK","10.5683/SP2/UEJGTV","10.5683/SP/SBTXLS","10.5683/SP/UYBROL","10864/XER6B","10864/10197""10.5683/SP/OZ0WB0","10.5683/SP/S0MQVP","10.5683/SP/5S5Y9T","10.5683/SP/30JPOR","10.5683/SP/ASR2XE","10.5683/SP2/1VWZNC","10.5683/SP/AB5A9O","10.5683/SP2/YNOJSD","10.5683/SP/AB5A9O","10.5683/SP/2ZARY2","10.5683/SP2/ZDAHQG","10.5683/SP2/JFQ1SZ"
     //Repositories (add new repository URLS to a appropriate repository URL array below)
@@ -42,7 +42,7 @@ public class GeodisyStrings {
 
     //File paths
         private final static String WINDOWS_ROOT = "C:\\geodisy\\Geodisy\\Geodisy\\";
-        private final static String CENTOS_ROOT = "/home/centos/Geodisy/";
+        private final static String CENTOS_ROOT = "/home/centos/geodisy/Geodisy/Geodisy/";
         public final static String GEODISY_PATH_ROOT = getRoot();
         public final static String SAVED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles");
         public final static String LOGS = GEODISY_PATH_ROOT + replaceSlashes("logs");
@@ -168,11 +168,11 @@ public class GeodisyStrings {
     public final static String END_XML_JSON_FILE_PATH = BASE_PATH + "geodisy/";
     public final static String PATH_TO_XML_JSON_FILES = END_XML_JSON_FILE_PATH;
     public final static String OGM_PATH = "OGM_PATH=/var/www/206-12-92-97.cloud.computecanada.ca/html/geodisy/";
-    public final static String MOVE_METADATA = "rsync -auhv /home/centos/Geodisy/metadata/* /var/www/" + ADDRESS + "/html/geodisy/";
-    public final static String MOVE_DATA = "rsync -auhv /home/centos/Geodisy/datasetFiles/* /var/www/" + ADDRESS + "/html/geodisy/";
+    public final static String MOVE_METADATA = "rsync -auhv " + getRoot() + "metadata/* /var/www/" + ADDRESS + "/html/geodisy/";
+    public final static String MOVE_DATA = "rsync -auhv " + getRoot() + "datasetFiles/* /var/www/" + ADDRESS + "/html/geodisy/";
     public final static String CLEAR_SOLR = "sudo su - root -c \"cd /root/solr-8.3.0/bin/ && ./post -c geoblacklight-prod delete_ALL.xml\"";
-    public final static String DELETE_DUPLICATE_META_FOLDER = "rm -rf /home/centos/Geodisy/metadata/*";
-    public final static String DELETE_DUPLICATE_DATA_FOLDER = "rm -rf /home/centos/Geodisy/datasetFiles/*";
+    public final static String DELETE_DUPLICATE_META_FOLDER = "rm -rf " + getRoot() + "metadata/*";
+    public final static String DELETE_DUPLICATE_DATA_FOLDER = "rm -rf " + getRoot() + "datasetFiles/*";
     public final static String GEOCOMBINE = OGM_PATH +" /home/centos/geodisy/bin/bundle exec rake geocombine:index";
     //public final static String GEOCOMBINE = "/bin/sh /home/centos/Geodisy/combine.sh";
     public final static String BASE_LOCATION_TO_STORE_METADATA = "metadata/";
