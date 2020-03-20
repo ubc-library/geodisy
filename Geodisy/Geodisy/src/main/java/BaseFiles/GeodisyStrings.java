@@ -5,6 +5,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import static BaseFiles.PrivateStrings.*;
 
 public class GeodisyStrings {
+    private final static boolean DEV = false;
     public final static String GIT_PASSWORD = PRIVATE_GIT_PASSWORD;
     public final static String GEOSERVER_PASSWORD = PRIVATE_GEOSERVER_PASSWORD;
     public final static String GEOSERVER_USERNAME = PRIVATE_GEOSERVER_USERNAME;
@@ -36,13 +37,18 @@ public class GeodisyStrings {
                     .toLowerCase().startsWith("windows");
             if(isWindows)
                 return WINDOWS_ROOT;
-            else
-                return CENTOS_ROOT;
+            else {
+                if(DEV)
+                    return EVAN_VM_CENTOS_ROOT
+                else
+                    return FRDR_VM_CENTOS_ROOT;
+            }
         }
 
     //File paths
         private final static String WINDOWS_ROOT = "C:\\geodisy\\Geodisy\\Geodisy\\";
-        private final static String CENTOS_ROOT = "/home/centos/geodisy/Geodisy/Geodisy/";
+        private final static String EVAN_VM_CENTOS_ROOT = "/home/centos/Geodisy/";
+        private final static String FRDR_VM_CENTOS_ROOT = "/home/centos/geodisy/Geodisy/Geodisy/";
         public final static String GEODISY_PATH_ROOT = getRoot();
         public final static String SAVED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles");
         public final static String LOGS = GEODISY_PATH_ROOT + replaceSlashes("logs");
