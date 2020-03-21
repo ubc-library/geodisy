@@ -39,7 +39,7 @@ public class GeodisyStrings {
                 return WINDOWS_ROOT;
             else {
                 if(DEV)
-                    return EVAN_VM_CENTOS_ROOT
+                    return EVAN_VM_CENTOS_ROOT;
                 else
                     return FRDR_VM_CENTOS_ROOT;
             }
