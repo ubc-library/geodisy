@@ -14,8 +14,6 @@ public abstract class FindBoundBox {
     abstract BoundingBox getDVBoundingBox(String country);
     abstract BoundingBox getDVBoundingBox(String country, String province) throws IOException;
     abstract BoundingBox getDVBoundingBox(String country, String province, String city);
-    abstract BoundingBox getDVBoundingBoxOther(String country, String other);
-    abstract BoundingBox getDVBoundingBoxOther(String country,String province, String other);
 
     GeoLogger logger = new GeoLogger(FindBoundBox.class);
 
