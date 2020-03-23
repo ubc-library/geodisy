@@ -6,6 +6,7 @@ import static BaseFiles.PrivateStrings.*;
 
 public class GeodisyStrings {
     private final static boolean DEV = false;
+    public final static boolean GEOSPATIAL_ONLY = false;
     public final static String GIT_PASSWORD = PRIVATE_GIT_PASSWORD;
     public final static String GEOSERVER_PASSWORD = PRIVATE_GEOSERVER_PASSWORD;
     public final static String GEOSERVER_USERNAME = PRIVATE_GEOSERVER_USERNAME;
@@ -72,7 +73,8 @@ public class GeodisyStrings {
         public final static String DATASET_FILES_PATH = replaceSlashes("datasetFiles/");
         public final static String OPEN_GEO_METADATA_BASE = "https://github.com/OpenGeoMetadata/ca.frdr.geodisy/";
 
-
+    //Geonames
+        public final static String GEONAMES_SEARCH_BASE = "-L -H 'Cookie: troute=t1' 'http://api.geonames.org/search?q=";
 
 
     //GDAL
