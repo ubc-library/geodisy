@@ -19,6 +19,7 @@ import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import static BaseFiles.GeodisyStrings.GEONAMES_SEARCH_BASE;
 import static BaseFiles.GeodisyStrings.GEONAMES_USERNAME;
 
 
@@ -42,7 +43,7 @@ public class Geonames {
             return "";
         searchValue = city + "%2C%20" + province;
         searchValue +=  addParameters(parameters);
-        String urlString = "http://api.geonames.org/search?q=" + searchValue;
+        String urlString = GEONAMES_SEARCH_BASE + searchValue;
         HTTPCallerGeoNames caller = new HTTPCallerGeoNames();
         String answer = "";
         answer = caller.callHTTP(urlString);
@@ -55,7 +56,7 @@ public class Geonames {
         Map<String, String> parameters = getBaseParameters(country);
         parameters.put("fcode","ADM1*");
         String search = province + addParameters(parameters);
-        String urlString = "http://api.geonames.org/search?q=" + search;
+        String urlString = GEONAMES_SEARCH_BASE + search;
         HTTPCallerGeoNames caller = new HTTPCallerGeoNames();
         String answer = "";
         answer = caller.callHTTP(urlString);
@@ -65,7 +66,7 @@ public class Geonames {
             parameters = getBaseParameters(country);
             parameters.put("fcode", "TERR");
             search = province + addParameters(parameters);
-            urlString = "http://api.geonames.org/search?q=" + search;
+            urlString = GEONAMES_SEARCH_BASE + search;
             caller = new HTTPCallerGeoNames();
             answer = caller.callHTTP(urlString);
         }
@@ -83,7 +84,7 @@ public class Geonames {
         String searchString = country;
         parameters.put("fcode","PCL*");
         searchString +=  addParameters(parameters);
-        String urlString = "http://api.geonames.org/search?q=" + searchString;
+        String urlString = GEONAMES_SEARCH_BASE + searchString;
         HTTPCallerGeoNames caller = new HTTPCallerGeoNames();
         String answer ="";
         answer = caller.callHTTP(urlString);
@@ -98,7 +99,7 @@ public class Geonames {
         String searchString = country;
         parameters.put("fcode","TERR");
         searchString +=  addParameters(parameters);
-        String urlString = "http://api.geonames.org/search?q=" + searchString;
+        String urlString = GEONAMES_SEARCH_BASE + searchString + "'";
         HTTPCallerGeoNames caller = new HTTPCallerGeoNames();
         String answer ="";
         answer = caller.callHTTP(urlString);
