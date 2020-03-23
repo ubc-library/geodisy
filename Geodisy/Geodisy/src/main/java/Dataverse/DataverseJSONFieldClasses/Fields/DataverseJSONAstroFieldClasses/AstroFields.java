@@ -1,11 +1,7 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONAstroFieldClasses;
 
 import BaseFiles.GeoLogger;
-import Dataverse.DataverseJSONFieldClasses.MetadataType;
-import Dataverse.DataverseJSONFieldClasses.MetadataWSimple;
-import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import Dataverse.DataverseJSONFieldClasses.MetadataSimple;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,7 +10,7 @@ import java.util.List;
 
 import static Dataverse.DVFieldNameStrings.*;
 
-public class AstroFields extends MetadataWSimple {
+public class AstroFields extends MetadataSimple {
     private SimpleAstroFields simpleAstroFields;
     private Spatial spatialFields;
     private Spectral spectralFields;

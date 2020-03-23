@@ -4,14 +4,14 @@ import BaseFiles.GeoLogger;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Date;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 
-import Dataverse.DataverseJSONFieldClasses.MetadataWSimple;
+import Dataverse.DataverseJSONFieldClasses.MetadataSimple;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 import static Dataverse.DVFieldNameStrings.*;
 
-public class CitationFields extends MetadataWSimple {
+public class CitationFields extends MetadataSimple {
     private SimpleCitationFields simpleCitationFields;
     private List<OtherID> otherIDs;
     private List<Author> authors;
