@@ -43,7 +43,7 @@ public class Geonames {
             return "";
         searchString = city + "%2C%20" + province;
         searchString +=  addParameters(parameters);
-        String urlString = GEONAMES_SEARCH_BASE + searchString + "'";
+        String urlString = GEONAMES_SEARCH_BASE + searchString;
         HTTPCallerGeoNames caller = new HTTPCallerGeoNames();
         String answer = "";
         answer = caller.callHTTP(urlString);
@@ -56,7 +56,7 @@ public class Geonames {
         Map<String, String> parameters = getBaseParameters(country);
         parameters.put("fcode","ADM1*");
         String searchString = province + addParameters(parameters);
-        String urlString = GEONAMES_SEARCH_BASE + searchString + "'";
+        String urlString = GEONAMES_SEARCH_BASE + searchString;
         HTTPCallerGeoNames caller = new HTTPCallerGeoNames();
         String answer = "";
         answer = caller.callHTTP(urlString);
@@ -66,7 +66,7 @@ public class Geonames {
             parameters = getBaseParameters(country);
             parameters.put("fcode", "TERR");
             searchString = province + addParameters(parameters);
-            urlString = GEONAMES_SEARCH_BASE + searchString + "'";
+            urlString = GEONAMES_SEARCH_BASE + searchString;
             caller = new HTTPCallerGeoNames();
             answer = caller.callHTTP(urlString);
         }
@@ -84,7 +84,7 @@ public class Geonames {
         String searchString = country;
         parameters.put("fcode","PCL*");
         searchString +=  addParameters(parameters);
-        String urlString = GEONAMES_SEARCH_BASE + searchString + "'";
+        String urlString = GEONAMES_SEARCH_BASE + searchString;
         HTTPCallerGeoNames caller = new HTTPCallerGeoNames();
         String answer ="";
         answer = caller.callHTTP(urlString);
@@ -99,7 +99,7 @@ public class Geonames {
         String searchString = country;
         parameters.put("fcode","TERR");
         searchString +=  addParameters(parameters);
-        String urlString = GEONAMES_SEARCH_BASE + searchString + "'";
+        String urlString = GEONAMES_SEARCH_BASE + searchString;
         HTTPCallerGeoNames caller = new HTTPCallerGeoNames();
         String answer ="";
         answer = caller.callHTTP(urlString);

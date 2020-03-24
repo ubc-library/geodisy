@@ -74,7 +74,7 @@ public class GeodisyStrings {
         public final static String OPEN_GEO_METADATA_BASE = "https://github.com/OpenGeoMetadata/ca.frdr.geodisy/";
 
     //Geonames
-        public final static String GEONAMES_SEARCH_BASE = "-L -H 'Cookie: troute=t1' 'http://api.geonames.org/search?q=";
+        public final static String GEONAMES_SEARCH_BASE = "http://api.geonames.org/search?q=";
 
 
     //GDAL

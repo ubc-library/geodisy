@@ -9,6 +9,7 @@ package Dataverse;
 
 import BaseFiles.GeoLogger;
 import BaseFiles.Geonames;
+import BaseFiles.HTTPCallerDataverse;
 import BaseFiles.HTTPCallerGeoNames;
 import Crosswalking.Crosswalk;
 import Crosswalking.GeoBlacklightJson.DataGBJSON;
@@ -228,7 +229,7 @@ public class DataverseAPI extends SourceAPI {
         int start = 0;
         String result;
         while(moreEntries&&start<NUMBER_OF_RECS_TO_HARVEST){
-            HTTPCallerGeoNames hC = new HTTPCallerGeoNames();
+            HTTPCallerDataverse hC = new HTTPCallerDataverse();
             result = hC.callHTTP(searchURL+"&start="+ start);
             if(result.equals("HTTP Fail"))
                 break;
