@@ -9,6 +9,7 @@ package Dataverse;
 
 import BaseFiles.GeoLogger;
 import BaseFiles.Geonames;
+import BaseFiles.HTTPCallerDataverse;
 import BaseFiles.HTTPCallerGeoNames;
 import Crosswalking.Crosswalk;
 import Crosswalking.GeoBlacklightJson.DataGBJSON;
@@ -228,7 +229,7 @@ public class DataverseAPI extends SourceAPI {
         int start = 0;
         String result;
         while(moreEntries&&start<NUMBER_OF_RECS_TO_HARVEST){
-            HTTPCallerGeoNames hC = new HTTPCallerGeoNames();
+            HTTPCallerDataverse hC = new HTTPCallerDataverse();
             result = hC.callHTTP(searchURL+"&start="+ start);
             if(result.equals("HTTP Fail"))
                 break;
@@ -285,7 +286,13 @@ public class DataverseAPI extends SourceAPI {
                 if(dataverseJSON.equals("HTTP Fail"))
                     continue;
                 JSONObject jo = new JSONObject(dataverseJSON);
-                answers.add(jo);
+                if(GEOSPATIAL_ONLY){
+                    logger.error("Only accessing records with Files, this is not correct if a production run");
+                    System.out.println("Only accessing records with Files");
+                    if(hasFiles(jo))
+                        answers.add(jo);
+                }else
+                    answers.add(jo);
             }
         }else {
             for (String s : dOIs) {
@@ -299,6 +306,11 @@ public class DataverseAPI extends SourceAPI {
         }
         return answers;
     }
+
+    private boolean hasFiles(JSONObject jo) {
+        return jo.getJSONObject("datasetVersion").has("files");
+    }
+
     protected String folderizedDOI(String doi){
         String folderizedDOI = doi.replace(".","_");
         folderizedDOI = folderizedDOI.replace("/","_");

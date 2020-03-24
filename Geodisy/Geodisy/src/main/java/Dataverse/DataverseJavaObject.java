@@ -172,15 +172,16 @@ public class DataverseJavaObject extends SourceJavaObject {
      */
     //@Override
     public DataverseJavaObject downloadFiles() {
-
-        File f = new File(GEODISY_PATH_ROOT + GeodisyStrings.replaceSlashes(DATASET_FILES_PATH + urlized(citationFields.getDOI())));
-
+        String path = GEODISY_PATH_ROOT + GeodisyStrings.replaceSlashes(DATASET_FILES_PATH + urlized(citationFields.getDOI()));
+        File f = new File(path);
         deleteDir(f);
         f.mkdir();
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
         for (DataverseRecordFile dRF : dataFiles) {
-            if (GeodisyStrings.fileTypesToIgnore(dRF.translatedTitle))
+            if (GeodisyStrings.fileTypesToIgnore(dRF.translatedTitle)) {
+                System.out.println("Ignored file: " + dRF.translatedTitle);
                 continue;
+            }
             drfs.addAll(dRF.retrieveFile(this));
 
         }
@@ -189,7 +190,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             return this;
         }
 
-        dataFiles =drfs;
+        dataFiles = drfs;
         for (int i = 0; i < dataFiles.size(); i++) {
             if (dataFiles.get(i).getTranslatedTitle().endsWith("zip"))
                 dataFiles.remove(i);
