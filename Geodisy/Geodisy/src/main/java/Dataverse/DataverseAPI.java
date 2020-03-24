@@ -285,7 +285,13 @@ public class DataverseAPI extends SourceAPI {
                 if(dataverseJSON.equals("HTTP Fail"))
                     continue;
                 JSONObject jo = new JSONObject(dataverseJSON);
-                answers.add(jo);
+                if(GEOSPATIAL_ONLY){
+                    logger.error("Only accessing records with Files, this is not correct if a production run");
+                    System.out.println("Only accessing records with Files");
+                    if(hasFiles(jo))
+                        answers.add(jo);
+                }else
+                    answers.add(jo);
             }
         }else {
             for (String s : dOIs) {
@@ -299,6 +305,11 @@ public class DataverseAPI extends SourceAPI {
         }
         return answers;
     }
+
+    private boolean hasFiles(JSONObject jo) {
+        return jo.getJSONObject("datasetVersion").has("files");
+    }
+
     protected String folderizedDOI(String doi){
         String folderizedDOI = doi.replace(".","_");
         folderizedDOI = folderizedDOI.replace("/","_");
