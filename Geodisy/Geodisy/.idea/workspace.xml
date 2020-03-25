@@ -7,10 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e719edb7-3c25-4197-be36-316eb001a745" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Geodisy_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Geodisy_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FRDR Back Plan for Geodisy.docx" beforeDir="false" afterPath="$PROJECT_DIR$/FRDR Back Plan for Geodisy.docx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/Temp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/Temp.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/~$DR Back Plan for Geodisy.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -222,70 +222,91 @@
     </todo-panel>
   </component>
   <component name="WindowStateProjectService">
+    <state x="-1155" y="-760" key="#com.intellij.ide.util.MemberChooser" timestamp="1585076548490">
+      <screen x="-1920" y="-989" width="1920" height="1040" />
+    </state>
+    <state x="-1155" y="-760" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1585076548490" />
+    <state x="499" y="196" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1584741999719">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="499" y="196" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1536.824/-1920.-989.1920.1040@0.0.1536.824" timestamp="1584741999719" />
     <state x="566" y="272" width="448" height="287" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1584066140646">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="566" y="272" width="448" height="287" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1536.824@0.0.1536.824" timestamp="1584066140646" />
-    <state x="-649" y="-854" key="#xdebugger.evaluate" timestamp="1584466158663">
+    <state x="-649" y="-854" key="#xdebugger.evaluate" timestamp="1585076956577">
       <screen x="-1920" y="-989" width="1920" height="1040" />
     </state>
-    <state x="-649" y="-854" key="#xdebugger.evaluate/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584466158663" />
+    <state x="-649" y="-854" key="#xdebugger.evaluate/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1585076956577" />
     <state x="97" y="146" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1584077036320" />
-    <state width="1357" height="292" key="GridCell.Tab.0.bottom" timestamp="1584468555336">
-      <screen x="-1920" y="-989" width="1920" height="1040" />
+    <state width="1075" height="292" key="GridCell.Tab.0.bottom" timestamp="1585155135639">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1357" height="292" key="GridCell.Tab.0.bottom/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584468555336" />
+    <state width="1353" height="292" key="GridCell.Tab.0.bottom/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1585076332562" />
+    <state width="1075" height="292" key="GridCell.Tab.0.bottom/0.0.1536.824/-1920.-989.1920.1040@0.0.1536.824" timestamp="1585155135639" />
     <state width="1082" height="292" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1584123247279" />
-    <state width="1357" height="292" key="GridCell.Tab.0.center" timestamp="1584468555335">
-      <screen x="-1920" y="-989" width="1920" height="1040" />
+    <state width="1075" height="292" key="GridCell.Tab.0.center" timestamp="1585155135637">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1357" height="292" key="GridCell.Tab.0.center/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584468555335" />
+    <state width="1353" height="292" key="GridCell.Tab.0.center/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1585076332562" />
+    <state width="1075" height="292" key="GridCell.Tab.0.center/0.0.1536.824/-1920.-989.1920.1040@0.0.1536.824" timestamp="1585155135637" />
     <state width="1082" height="292" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1584123247279" />
-    <state width="1357" height="292" key="GridCell.Tab.0.left" timestamp="1584468555334">
-      <screen x="-1920" y="-989" width="1920" height="1040" />
+    <state width="1075" height="292" key="GridCell.Tab.0.left" timestamp="1585155135631">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1357" height="292" key="GridCell.Tab.0.left/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584468555334" />
+    <state width="1353" height="292" key="GridCell.Tab.0.left/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1585076332562" />
+    <state width="1075" height="292" key="GridCell.Tab.0.left/0.0.1536.824/-1920.-989.1920.1040@0.0.1536.824" timestamp="1585155135631" />
     <state width="1082" height="292" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1584123247279" />
-    <state width="1357" height="292" key="GridCell.Tab.0.right" timestamp="1584468555336">
-      <screen x="-1920" y="-989" width="1920" height="1040" />
+    <state width="1075" height="292" key="GridCell.Tab.0.right" timestamp="1585155135638">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1357" height="292" key="GridCell.Tab.0.right/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584468555336" />
+    <state width="1353" height="292" key="GridCell.Tab.0.right/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1585076332562" />
+    <state width="1075" height="292" key="GridCell.Tab.0.right/0.0.1536.824/-1920.-989.1920.1040@0.0.1536.824" timestamp="1585155135638" />
     <state width="1082" height="292" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1584123247279" />
-    <state width="1357" height="292" key="GridCell.Tab.1.bottom" timestamp="1584468555337">
-      <screen x="-1920" y="-989" width="1920" height="1040" />
+    <state width="1075" height="292" key="GridCell.Tab.1.bottom" timestamp="1585155135639">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1357" height="292" key="GridCell.Tab.1.bottom/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584468555337" />
+    <state width="1353" height="292" key="GridCell.Tab.1.bottom/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1585076332562" />
+    <state width="1075" height="292" key="GridCell.Tab.1.bottom/0.0.1536.824/-1920.-989.1920.1040@0.0.1536.824" timestamp="1585155135639" />
     <state width="1082" height="292" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1584123249264" />
-    <state width="1357" height="292" key="GridCell.Tab.1.center" timestamp="1584468555336">
-      <screen x="-1920" y="-989" width="1920" height="1040" />
+    <state width="1075" height="292" key="GridCell.Tab.1.center" timestamp="1585155135639">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1357" height="292" key="GridCell.Tab.1.center/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584468555336" />
+    <state width="1353" height="292" key="GridCell.Tab.1.center/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1585076332562" />
+    <state width="1075" height="292" key="GridCell.Tab.1.center/0.0.1536.824/-1920.-989.1920.1040@0.0.1536.824" timestamp="1585155135639" />
     <state width="1082" height="292" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1584123249264" />
-    <state width="1357" height="292" key="GridCell.Tab.1.left" timestamp="1584468555336">
-      <screen x="-1920" y="-989" width="1920" height="1040" />
+    <state width="1075" height="292" key="GridCell.Tab.1.left" timestamp="1585155135639">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1357" height="292" key="GridCell.Tab.1.left/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584468555336" />
+    <state width="1353" height="292" key="GridCell.Tab.1.left/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1585076332562" />
+    <state width="1075" height="292" key="GridCell.Tab.1.left/0.0.1536.824/-1920.-989.1920.1040@0.0.1536.824" timestamp="1585155135639" />
     <state width="1082" height="292" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1584123249263" />
-    <state width="1357" height="292" key="GridCell.Tab.1.right" timestamp="1584468555337">
-      <screen x="-1920" y="-989" width="1920" height="1040" />
+    <state width="1075" height="292" key="GridCell.Tab.1.right" timestamp="1585155135639">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1357" height="292" key="GridCell.Tab.1.right/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584468555337" />
+    <state width="1353" height="292" key="GridCell.Tab.1.right/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1585076332562" />
+    <state width="1075" height="292" key="GridCell.Tab.1.right/0.0.1536.824/-1920.-989.1920.1040@0.0.1536.824" timestamp="1585155135639" />
     <state width="1082" height="292" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1584123249264" />
-    <state width="970" height="531" key="XDebugger.FullValuePopup" timestamp="1584142279228">
+    <state x="249" y="0" key="SettingsEditor" timestamp="1584742327146">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="249" y="0" key="SettingsEditor/0.0.1536.824/-1920.-989.1920.1040@0.0.1536.824" timestamp="1584742327146" />
+    <state width="970" height="531" key="XDebugger.FullValuePopup" timestamp="1584988074210">
       <screen x="-1920" y="-989" width="1920" height="1040" />
     </state>
-    <state width="970" height="531" key="XDebugger.FullValuePopup/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584142279228" />
+    <state width="970" height="531" key="XDebugger.FullValuePopup/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584988074210" />
     <state width="776" height="420" key="XDebugger.FullValuePopup/0.0.1536.824@0.0.1536.824" timestamp="1584123312215" />
     <state x="-1265" y="-645" key="com.intellij.ide.util.TipDialog" timestamp="1584464643336">
       <screen x="-1920" y="-989" width="1920" height="1040" />
     </state>
     <state x="-1265" y="-645" key="com.intellij.ide.util.TipDialog/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584464643336" />
-    <state x="-1262" y="-753" width="799" height="804" key="find.popup" timestamp="1584478838757">
-      <screen x="-1920" y="-989" width="1920" height="1040" />
+    <state x="526" y="186" width="738" height="638" key="find.popup" timestamp="1585158601450">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="-904" y="-828" width="674" height="536" key="find.popup/0.0.1536.824/-1561.-1080.1920.1040@-1561.-1080.1920.1040" timestamp="1583776517162" />
-    <state x="-1262" y="-753" width="799" height="804" key="find.popup/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584478838757" />
-    <state x="526" y="200" width="639" height="536" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1584067963722" />
+    <state x="-1262" y="-753" width="799" height="804" key="find.popup/0.0.1536.824/-1920.-989.1920.1040@-1920.-989.1920.1040" timestamp="1584993948557" />
+    <state x="526" y="186" width="738" height="638" key="find.popup/0.0.1536.824/-1920.-989.1920.1040@0.0.1536.824" timestamp="1585158601450" />
+    <state x="526" y="200" width="639" height="536" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1585154559677" />
     <state x="342" y="140" key="new project wizard" timestamp="1583950304406">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -381,12 +402,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/FindBoundBox.java</url>
-          <line>29</line>
+          <line>27</line>
           <option name="timeStamp" value="316" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Dataverse/FindingBoundingBoxes/FindBoundBox.java</url>
-          <line>41</line>
+          <line>39</line>
           <option name="timeStamp" value="317" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -458,11 +479,6 @@
           <url>file://$PROJECT_DIR$/src/test/java/tests/GeonamesBBsTest.java</url>
           <line>40</line>
           <option name="timeStamp" value="500" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/tests/GeonamesBBsTest.java</url>
-          <line>58</line>
-          <option name="timeStamp" value="509" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/tests/GeonamesBBsTest.java</url>
@@ -639,11 +655,6 @@
           <option name="timeStamp" value="997" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java</url>
-          <line>44</line>
-          <option name="timeStamp" value="1000" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java</url>
           <line>106</line>
           <option name="timeStamp" value="1019" />
@@ -726,7 +737,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java</url>
-          <line>315</line>
+          <line>316</line>
           <option name="timeStamp" value="1194" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -791,7 +802,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java</url>
-          <line>46</line>
+          <line>47</line>
           <option name="timeStamp" value="1238" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -816,7 +827,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java</url>
-          <line>186</line>
+          <line>187</line>
           <option name="timeStamp" value="1259" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -851,17 +862,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java</url>
-          <line>92</line>
+          <line>93</line>
           <option name="timeStamp" value="1272" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java</url>
-          <line>183</line>
+          <line>184</line>
           <option name="timeStamp" value="1273" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java</url>
-          <line>361</line>
+          <line>362</line>
           <option name="timeStamp" value="1274" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -990,34 +1001,9 @@
           <option name="timeStamp" value="1306" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java</url>
-          <line>44</line>
-          <option name="timeStamp" value="1307" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
-          <line>237</line>
-          <option name="timeStamp" value="1308" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
-          <line>235</line>
-          <option name="timeStamp" value="1309" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
-          <line>501</line>
-          <option name="timeStamp" value="1310" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/DateOfCollection.java</url>
           <line>36</line>
           <option name="timeStamp" value="1313" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJavaObject.java</url>
-          <line>48</line>
-          <option name="timeStamp" value="1314" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/tests/DataverseParserTest.java</url>
@@ -1026,18 +1012,69 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Dataverse/ExistingHarvests.java</url>
-          <line>24</line>
-          <option name="timeStamp" value="1318" />
+          <line>32</line>
+          <option name="timeStamp" value="1320" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/Geodisy.java</url>
+          <line>42</line>
+          <option name="timeStamp" value="1321" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/MyTimerTask.java</url>
-          <line>47</line>
-          <option name="timeStamp" value="1319" />
+          <line>60</line>
+          <option name="timeStamp" value="1323" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/ExistingHarvests.java</url>
-          <line>32</line>
-          <option name="timeStamp" value="1320" />
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java</url>
+          <line>95</line>
+          <option name="timeStamp" value="1325" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java</url>
+          <line>91</line>
+          <option name="timeStamp" value="1326" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java</url>
+          <line>287</line>
+          <option name="timeStamp" value="1327" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java</url>
+          <line>45</line>
+          <option name="timeStamp" value="1328" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java</url>
+          <line>238</line>
+          <option name="timeStamp" value="1329" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="jo.getString(&quot;global_id&quot;).contains(&quot;YPVTYT&quot;)||jo.getString(&quot;global_id&quot;).contains(&quot;J8581N&quot;)||jo.getString(&quot;global_id&quot;).contains(&quot;PONAP6&quot;)" language="JAVA" />
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java</url>
+          <line>253</line>
+          <option name="timeStamp" value="1330" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java</url>
+          <line>306</line>
+          <option name="timeStamp" value="1332" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseAPI.java</url>
+          <line>90</line>
+          <option name="timeStamp" value="1334" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Dataverse/DataverseJSONFieldClasses/Fields/CitationCompoundFields/CitationFields.java</url>
+          <line>230</line>
+          <option name="timeStamp" value="1335" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/DownloadRecord.java</url>
+          <line>38</line>
+          <option name="timeStamp" value="1337" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/BaseFiles/FileWriter.java</url>
@@ -1070,87 +1107,5 @@
     <SUITE FILE_PATH="coverage/Geodisy$DataverseParserTest_testDataverseParser.ic" NAME="DataverseParserTest.testDataverseParser Coverage Results" MODIFIED="1584139792180" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>tests.*</FILTER>
     </SUITE>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor>
-            <show-content>
-              <type id="library" />
-              <type id="artifact" />
-            </show-content>
-          </artifact-editor>
-          <last-edited>Geodisy:jar</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.49885058" />
-                <option value="0.5" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>No facets are configured</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.49885058" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.49885058" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.49885058" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>Geodisy</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.49885058" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>zip4j-2.3.1</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.49885058" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>
