@@ -25,21 +25,34 @@ If you're a running a research data repository based on [Dataverse](https://data
 #### For the more technically inclined
 
 **Geodisy** consists of middleware (a piece of software living on a server, not directly accessible to end users) that:
+
 1. Harvests data and metadata from a repository (intially Dataverse)
+
 2. Cleans and normalizes metadata and data found in study recods
+
 3. Creates bounding boxes for data sets if applicable, and reads geometry from compatible files, such as shapefiles
+
 4. Injects bounding box data and/ or geospatial data into a geospatial server, in this case [Open Geoserver](http://geoserver.org/)
+
 5. Presents a visual search in the form of a [Geoblacklight](https://geoblacklight.org) front end
 
 **Geodisy is open source**
+All of the software you need will be free and open source (FOSS). The Geodisy middleware component will be available for download from [Github](https://github.com). In addition to Geodisy, you will need:
 
-All of the software you need will be free and open source (FOSS). The Geodisy middleware component will be available for download from [Github](https://github.com). In addition to Geodisy, you will need
 1. A [Dataverse](https://dataverse.org) repository to harvest from
+
 2. [Open Geoserver](http://geoserver.org/) in which to place your data
+
 3. [Geoblacklight](https://geoblacklight.org) to allow users to search
 
 ### When will it be available?
-**Geodisy** is (tentatively) expected to be available Quarter 2, 2020.
+**Geodisy** is available now. See it in action at [geo.frdr.ca](https://geo.frdr.ca)
+
+### Where can I find documentation?
+**Geodisy** documentation is available in our [Github repository](https://github.com/ubc-library/geodisy/blob/master/Documentation/index.md)
+
+### Where is the software?
+Because **Geodisy** is an open source project, all of our software is freely available. Download or fork the software from [Github](https://github.com/ubc-library/geodisy/).
 
 ### Who is behind all of this?
 
@@ -65,7 +78,6 @@ All of the software you need will be free and open source (FOSS). The Geodisy mi
 ||Venkat Mahadevan | UBC ARC|
 ||Todd Trann | University of Saskatchewan|
 ||Lee Wilson | Portage Network|
-
 
 
 ### I want to know more!
