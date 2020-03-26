@@ -62,6 +62,7 @@ All of the software you need will be free and open source (FOSS). The Geodisy mi
 ||Alex Garnett | SFU |
 ||Amber Leahey | Scholars Portal|
 ||Jason Hlady | University of Saskatchewan|
+||Joel Farthing	| University of Saskatchewan|
 ||Venkat Mahadevan | UBC ARC|
 ||Todd Trann | University of Saskatchewan|
 ||Lee Wilson | Portage Network|
