@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="VectorToGeoserver:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/VectorToGeoserver_jar</output-path>
+    <root id="archive" name="VectorToGeoserver.jar">
+      <element id="module-output" name="VectorToGeoserver" />
+    </root>
+  </artifact>
+</component>
