@@ -1,6 +1,6 @@
 # Geodisy Release Notes
 
-*Release notes are in reverse chronological order, ie, most current release at the top)*
+*Release notes are in reverse chronological order (ie, most current release at the top)*
 
 ## Geodisy Version 1.0, released on March 31, 2020.
 
