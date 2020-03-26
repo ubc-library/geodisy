@@ -4,15 +4,15 @@
 
 * [Geodisy Depositor Guide (PDF)](userguides/cheatsheets/GeodisyDepositorGuide.pdf)
 
-* [Geodisy Institutional Guide (PDF)](userguides/cheatsheets/GeodisyInsitutionalGuide.pdf)
+* [Geodisy Institutional Guide (PDF)](userguides/cheatsheets/GeodisyInstitutionalGuide.pdf)
 
 ## Guides for for installation of Geodisy middleware (for institutions wishing to implement their own Geodisy instance)
 
 * [Full Installation Guide](setupdocs/Geodisy_Full_Install_Guide_with_Geoserver.txt)
 
-* [Full Installation Guide with Geoserver](Geodisy_Full_Install_Guide_with_Geoserver.txt)
+* [Full Installation Guide with Geoserver](setupdocs/Geodisy_Full_Install_Guide_with_Geoserver.txt)
 
-* [GeoBlacklight Customization](GeoBlacklight_Customization.txt)
+* [GeoBlacklight Customization](setupdocs/GeoBlacklight_Customization.txt)
 
 ## Metadata crosswalk documentation (Microsoft Excel .xlsx)
 
