@@ -80,6 +80,7 @@ public class GdalTest {
                     newTotal--;
                 }
             } catch (IOException | InterruptedException e) {
+                System.out.println(e);
             }
         }
         System.out.println("Translate Success " + countTranslate + "/10");

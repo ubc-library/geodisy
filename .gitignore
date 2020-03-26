@@ -129,3 +129,5 @@ Geodisy/ModifyGeoserver/
 Geodisy/Geodisy/.idea/workspace.xml
 
 *.class
+
+Geodisy/Geodisy/target/classes/META-INF/Geodisy.kotlin_module
