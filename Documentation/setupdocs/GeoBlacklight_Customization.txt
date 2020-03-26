@@ -16,7 +16,7 @@
 		Rails.application.config.assets.precompile += %w( canarie.png )
 		Rails.application.config.assets.precompile += %w( frdr.png )
 		
-5) Add the following logos to /home/geoblack/.rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/geoblacklight-2.2.1/app/assets/images/
+5) Add the following logos to /var/www/geoblacklight/geodisy/app/assets/images/
 	a) canarie.png
 	b) ubc.png
 	c) frdr.png
