@@ -1,36 +1,39 @@
-1)	 Copy default application.scss to /opt/geoblacklight/geodisy/app/assets/stylesheets/geoblacklight/ and update:
+1)	 Copy default application.scss to /var/www/geoblacklight/geodisy/app/views/ and update:
+		@import 'bootstrap';
+		@import 'geoblacklight/geoblacklight';
 		@import 'geodisy';
 
-2) Add _geo_footer.html.erb at /opt/geoblacklight/geodisy/app/views/shared:
-	<footer role="“contentinfo”">
-	  <div id="geo-footer-container">
-		<div id="geo-footer">
-		  <div id="geo-footer-img" class="span2">
-			<%= link_to 'https://researchdata.library.ubc.ca/find/geodisy/' do %>
-			  <%= image_tag "ubc.png", alt: "University Of British Columbia", height: 45 %>
-			<% end %>
-		  </div>
-		  <div id="geo-footer-links" class="span2">
-			<ul>
-			  <li><a href="https://library.stanford.edu/hours">Hours &amp; locations</a></li>
-			  <li> <a href="https://library.stanford.edu/myaccount">My Account</a></li>
-			  <li> <a href="https://library.stanford.edu/ask">Ask us</a></li>
-			  <li> <a href="https://library.stanford.edu/opt-out">Opt out of analytics</a></li>
-			  <li><a href="http://library-status.stanford.edu">System status</a></li>
-			</ul>
-		  </div>
-		</div>
-	  </div>
-	</footer>
-3) Copy default  _header_navbar.html.erb to /opt/geoblacklight/geodisy/app/views/shared and update:
-	<%= link_to application_name, root_path, class: 'mb-0 navbar-brand' %>
-	becomes
-	<%= link_to application_name, root_path, class: 'navbar-brand pt-4'%>
+
+2) Add _geo_footer.html.erb to /var/www/geoblacklight/geodisy/app/views/shared/:
+	see custom file
 	
-4) cp default base.html.erb to /opt/geoblacklight/geodisy/app/views/layouts/blacklight/
+3) Add geo_footer.scss to /home/geoblack/.rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/geoblacklight-2.2.1/app/assets/stylesheets/geoblacklight/modules/:
+	see custom file
+
+4) Update assets.rb in /var/www/geoblacklight/geodisy/config/initializers/
+	add)
+		Rails.application.config.assets.precompile += %w( ubc.png )
+		Rails.application.config.assets.precompile += %w( canarie.png )
+		Rails.application.config.assets.precompile += %w( frdr.png )
+		
+5) Add the following logos to /home/geoblack/.rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/geoblacklight-2.2.1/app/assets/images/
+	a) canarie.png
+	b) ubc.png
+	c) frdr.png
+	d) geodisy.svg and rename to logo.svg
+	
+
+6)	Make geodisy.scss in /home/geoblack/.rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/geoblacklight-2.2.1/app/assets/stylesheets/geoblacklight/:
+		@import 'modules/geo_footer';
+	
+7) cp default base.html.erb to /var/www/geoblacklight/geodisy/app/views/layouts/geoblacklight/:
+	a)
+		<%= render partial: 'shared/footer' %>
+		to
+		<%= render partial: 'shared/geo_footer' %>
 
 		
-5) Copy default geoblacklight.en.yml to /opt/geoblacklight/geodisy/config/locales/geoblacklight.en.yml and update: 
+8) Copy default geoblacklight.en.yml to /var/www/geoblacklight/geodisy/config/locales/geoblacklight.en.yml and update: 
     a)
 		headline: 'Explore and discover...'
 		search_heading: 'Find now'
@@ -52,8 +55,8 @@
 	 
 		relations:
 		decendant: 'Linked Records'
-6) Using parent-child relationships for linked records
-	Copy default index.html.erb in /opt/geoblacklight/geodisy/app/views/relation/ and update:
+9) Using parent-child relationships for linked records
+	Copy default index.html.erb in /var/www/geoblacklight/geodisy/app/views/relation/ and update:
 		a)
 			replace
 			<%= render 'ancestor' unless @relations.descendants['numFound'].to_i == 0 %>
@@ -63,7 +66,7 @@
 			<!-- commenting out descendants so we can use parent-child relationship for linked records-->
 			<-- <%= render 'ancestor' unless @relations.descendants['numFound'].to_i == 0 %>-->
 		
-7) Copy default catalog_controller to /opt/geoblacklight/geodisy/app/controllers/catalog_controller.rb and update:
+10) Copy default catalog_controller to /var/www/geoblacklight/geodisy/app/controllers/ and update:
 	a)
 		# Nav actions from Blacklight
 		config.add_nav_action(:bookmark, partial: 'blacklight/nav/bookmark', if: :render_bookmarks_control?)
@@ -85,87 +88,6 @@
 		config.add_results_collection_tool(:sort_widget)
 		config.add_results_collection_tool(:per_page_widget)
 		
-		
-		
-______________________________________________________________________________________
-Being worked on:
-1) 	Make geo_footer.scss in /opt/geoblacklight/geodisy/app/assets/stylesheets/geoblacklight/modules/:
-			#geo-content {
-				padding-bottom: 220px !important;
-			}
-
-			#geo-footer-container {
-				background-color: #f2af0d;
-				-webkit-box-shadow: 0 4px 8px -8px rgba(0, 0, 0, .2) inset;
-				box-shadow: 0 4px 8px -8px rgba(0, 0, 0, .2) inset;
-				clear: both;
-				margin-top: -220px;
-				min-height: 220px;
-				padding: 0 !important;
-				position: relative;
-				width: 100%;
-			}
-
-			#geo-footer {
-				//something is wrong in the css with the next line
-				@extend .container;
-				display: table;
-				height: 80px;
-
-				ul {
-					list-style-type: none;
-					margin: 0;
-					padding: 0;
-
-					li {
-						display: inline;
-						margin: 0 13px 3px 0;
-						padding: 0;
-							}
-				}
-
-				li a {
-					white-space: nowrap;
-				}
-			}
-
-			#geo-footer-img {
-				display: table-cell;
-				vertical-align: middle;
-				width: 162px;
-			}
-
-			#geo-footer-links {
-				display: table-cell;
-				font-size: small;
-				padding-left: 15px;
-				text-align: left;
-				vertical-align: middle;
-			}
-
-			#global-footer {
-				max-width: 100%;
-
-				.row {
-					display: block;
-					flex-wrap: nowrap;
-				}
-
-				.span10 {
-					margin: 0 !important;
-				}
-
-				p {
-					max-width: 100%;
-					}
-
-				#bottom-text {
-					margin-right: 6px;
-				}
-			}
-			
-2)	Make geodisy.scss in /opt/geoblacklight/geodisy/app/assets/stylesheets/geoblacklight/:
-		@import 'modules/geo_footer';
 
 
 
