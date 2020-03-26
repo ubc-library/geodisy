@@ -16,8 +16,8 @@
 
 ## Metadata crosswalk documentation (Microsoft Excel .xlsx)
 
-* [Dataverse JSON to ISO19115](v2_Dec_2019_Dataverse_to_ISO_19115_metadata_crosswalk.xlsx)
+* [Dataverse JSON to ISO19115](crosswalks/v2_Dec_2019_Dataverse_to_ISO_19115_metadata_crosswalk.xlsx)
 
-* [GeoBlacklight Metadata](v1_Dec_2019_GeoBlacklight_metadata.xlsx)
+* [GeoBlacklight Metadata](crosswalks/v1_Dec_2019_GeoBlacklight_metadata.xlsx)
 
-* [Geodisy Metadata creation for ISO 19115](v1_Dec_2019_Geodisy_metadata_creation_for_ISO19115.xlsx)
+* [Geodisy Metadata creation for ISO 19115](crosswalks/v1_Dec_2019_Geodisy_metadata_creation_for_ISO19115.xlsx)
