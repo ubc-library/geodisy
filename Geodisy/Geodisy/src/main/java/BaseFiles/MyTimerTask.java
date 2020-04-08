@@ -66,9 +66,8 @@ public class MyTimerTask extends TimerTask {
 
             if(!IS_WINDOWS) {
                 sendRecordsToGeoBlacklight();
-                //TODO uncomment when github working
-                /*JGit jgit = new JGit();
-                jgit.pushToGit();*/
+                JGit jgit = new JGit();
+                jgit.updateRemoteMetadata();
             }
             /**
              * Saving a record of all the files that were downloaded
