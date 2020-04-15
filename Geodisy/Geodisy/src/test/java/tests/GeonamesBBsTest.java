@@ -56,13 +56,6 @@ class GeonamesBBsTest {
         assertEquals(bb.getLatSouth(),49.64722);
     }
 
-    //Country, Province, City, Other
-    @Test
-    void getDVBoundingBox3() {
-        BoundingBox bb = geonames.getDVBoundingBoxOther("United States", "Arches National Park");
-        assertEquals(bb.getLongEast(),361);
-    }
-
 
     @Test
     void getHttpURLConnection() {

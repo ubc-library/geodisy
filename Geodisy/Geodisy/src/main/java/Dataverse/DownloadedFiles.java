@@ -33,9 +33,16 @@ public class DownloadedFiles {
         try {
             fileWriter = new FileWriter(DOWNLOADED_FILES,true);
         PrintWriter printWriter = new PrintWriter(fileWriter);
+        boolean first = true;
         for(String s:downloads){
-            printWriter.println(s);
+            if(!first){
+                s = "," + s;
+            }
+            first = false;
+            printWriter.print(s);
+
         }
+        printWriter.println();
         printWriter.close();
         } catch (IOException e) {
             logger.error("Something went wrong trying to save the list of downloaded files to file " + DOWNLOADED_FILES);
@@ -43,6 +50,10 @@ public class DownloadedFiles {
     }
     public void addDownload(String fileName, String doi, int dbID){
         String datetime = String.valueOf(ZonedDateTime.now(ZoneId.of("Canada/Pacific")));
-        downloads.add("DateTime = " + datetime + "; FileID = " + dbID + "; PersistantID = " + doi + "; File Name = " + fileName);
+        downloads.add("FileID=" + dbID + ";PersistantID=" + doi + ";File Name=" + fileName + ";DateTime=" + datetime);
+    }
+
+    public void resetList(){
+        downloads = new LinkedList<>();
     }
 }

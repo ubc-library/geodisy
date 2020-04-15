@@ -52,9 +52,8 @@ Geodisy/Geodisy/BMSC_Wizard_Exposed_UnderstoryCover_1997\.csv
 
 Geodisy/Geodisy/BMSC_Wizard_Exposed_InvertebrateDensity_1997\.csv
 
-Geodisy/Geodisy/classes/artifacts/Geodisy_jar/datasetFiles/
+Geodisy/Geodisy/classes/artifacts/
 
-Geodisy/Geodisy/classes/artifacts/Geodisy_jar/logs/error\.log
 
 Geodisy/Geodisy/classes/artifacts/Geodisy_jar/savedFiles/
 
@@ -77,12 +76,17 @@ Geodisy/Geodisy/src/main/java/BaseFiles/PrivateStrings.java
 *.iml
 Geodisy/Geodisy Full Install Guide (Other than Solr).txt
 
-Geodisy/Geodisy/logs/error/
+*.svg
 
-Geodisy/Geodisy/logs/warning/
+*.png
 
+Geodisy/VectorToGeoserver/out/
+
+Geodisy/UBC Logos/
 Geodisy/testGdal/.idea/
+
 Geodisy/testGdal/out/
+Geodisy/TileMerge/
 
 
 Geodisy/testGdal/src/META-INF/MANIFEST.MF
@@ -117,13 +121,22 @@ Geodisy/MoveMetadataAndRunGeoCombine/.idea/
 Geodisy/TileMerge/out/artifacts/TileMerge_jar/TileMerge.jar
 
 Geodisy/Logos/
-
-Geodisy/UBC Logos/
-
-Geodisy/MoveMetadataAndRunGeoCombine/src/META-INF/
-
 Geodisy/MoveMetadataAndRunGeoCombine/
+Geodisy/GDAL/venv/Lib/site-packages/pip-19.0.3-py3.7.egg/pip/_internal/
 
 Geodisy/ModifyGeoserver/
 
 Geodisy/Geodisy/.idea/workspace.xml
+
+*.class
+
+Geodisy/Geodisy/target/classes/META-INF/Geodisy.kotlin_module
+
+Geodisy/ISO19115To19139/out/production/ISO19115To19139/com/company/SP/
+Geodisy/ISO19115To19139/src/com/company/SP/
+
+Geodisy/ISO19115To19139/out/production/ISO19115To19139/META-INF/
+
+Geodisy/ISO19115To19139/.idea/
+
+*.MF

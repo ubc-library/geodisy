@@ -31,14 +31,10 @@ public class ExistingHarvests extends ExistingSearches implements Serializable {
 
     private ExistingHarvests(){
         logger = new GeoLogger(this.getClass());
-        bBoxes = new HashMap<>();
-        recordVersions = new HashMap<>();
-        FileWriter fw = new FileWriter();
-        fw.verifyFileExistence(EXISTING_BBOXES);
-        fw.verifyFileExistence(EXISTING_RECORDS);
         bBoxes = readExistingBoundingBoxes();
         recordVersions = readExistingRecords(EXISTING_RECORDS);
     }
+
     public boolean isEmpty(){
         return recordVersions.isEmpty();
     }
@@ -121,6 +117,7 @@ public class ExistingHarvests extends ExistingSearches implements Serializable {
             return newFile;
         }
     }
+
 
     public HashMap<String, BoundingBox> getbBoxes() {
         return bBoxes;

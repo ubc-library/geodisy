@@ -105,7 +105,6 @@ public class GDAL {
     }
 
     public GeographicBoundingBox generateBB(File file, String doi, String number){
- //       System.out.println("Filename: " + file.getName() + ", doi: " + doi + ", number: " + number);
         String lowerName = file.getName().toLowerCase();
         String regularName = file.getName();
         String filePath = file.getPath();
@@ -119,7 +118,6 @@ public class GDAL {
         GeographicBoundingBox temp;
         String projection =  "";
         try {
-            //System.out.println("Filename: " + file.getName() + ", lowerName: " + lowerName + ", Windows?: " + IS_WINDOWS);
             gdalString = getGDALInfo(filePath, regularName);
             if(gdalString.contains("FAILURE")) {
                 logger.warn("Something went wrong parsing " + regularName + " at " + filePath);
@@ -153,7 +151,7 @@ public class GDAL {
                     return gbb;
                 }
                 else {
-                    logger.error("Somehow got a bounding box, but isn't a shp or tif");
+                    logger.error("Somehow got a bounding box, but isn't a shp or tif with file " + filePath + " and persistantID=" + doi);
                     return new GeographicBoundingBox(doi);
                 }
 

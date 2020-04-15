@@ -44,6 +44,7 @@ public class DVFieldNameStrings {
     public final static String PUBLISHER = "publisher";
     public final static String TITLE = "title";
     public final static String SUBTITLE = "subtitle";
+    public final static String LAST_MOD_DATE = "lastUpdateTime";
 
     //Terms of Use and Access______________________________________________________________________
     public final static String LICENSE = "license";
@@ -63,7 +64,7 @@ public class DVFieldNameStrings {
     public final static String SIZE_OF_COLLECTION = "sizeOfCollection";
     public final static String STUDY_COMPLETION = "studyCompletion";
     public final static List<String> TERMS_AND_ACCESS_NAME = Arrays.asList(TERMS_OF_USE,CONFID_DEC,AVALIB_STATUS,SPECIAL_PERMS,RESTRICTIONS,CITATION_REQUIREMENTS,DEPOSIT_REQUIREMENTS,CONDITIONS,DISCLAIMER,TERMS_OF_ACCESS,DATA_ACC_PLACE,ORIG_ARCHIVE,CONTACT_FOR_ACCESS,SIZE_OF_COLLECTION,STUDY_COMPLETION);
-    public final static List<String> SIMPLE_FIELD_NAMES = Arrays.asList(ACCESS_TO_SOURCES,ALT_TITLE,ALT_URL,CHAR_OF_SOURCES,DEPOS_DATE,DEPOSITOR,DIST_DATE,LICENSE,NOTES_TEXT,ORIG_OF_SOURCES,PROD_DATE,PROD_PLACE,PUB_DATE,PUBLISHER,TITLE,SUBTITLE, AUTHORITY, IDENTIFIER);
+    public final static List<String> SIMPLE_FIELD_NAMES = Arrays.asList(ACCESS_TO_SOURCES,ALT_TITLE,ALT_URL,CHAR_OF_SOURCES,DEPOS_DATE,DEPOSITOR,DIST_DATE,LICENSE,NOTES_TEXT,ORIG_OF_SOURCES,PROD_DATE,PROD_PLACE,PUB_DATE,PUBLISHER,TITLE,SUBTITLE, AUTHORITY, IDENTIFIER,LAST_MOD_DATE);
 
     //String List Field Names
     public final static String RELATED_MATERIAL = "relatedMaterial";

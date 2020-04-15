@@ -18,7 +18,7 @@ import static BaseFiles.GeodisyStrings.*;
 /**
  *This extends TimerTask to create the class that will
  * be used in the BaseFiles.Scheduler to start the tests, harvesting from Dataverse and
- * exporting data and ISO-19115 metadata to Geoserver.
+ * exporting data and ISO-19139 metadata to Geoserver.
  * @author pdante
  */
 public class MyTimerTask extends TimerTask {
@@ -46,7 +46,10 @@ public class MyTimerTask extends TimerTask {
             verifyFiles(fW);
 
             existingHarvests = ExistingHarvests.getExistingHarvests();
+            existingHarvests.saveExistingSearchs(existingHarvests.getRecordVersions(),EXISTING_RECORDS,"ExistingRecords");
+            existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
             existingCallsToCheck = ExistingCallsToCheck.getExistingCallsToCheck();
+            existingCallsToCheck.saveExistingSearchs(existingCallsToCheck.getRecords(),EXISTING_CHECKS,"ExistingCallsToCheck");
             srf = SourceRecordFiles.getSourceRecords();
 
             startErrorLog = new String(Files.readAllBytes(Paths.get(ERROR_LOG)));
@@ -64,13 +67,11 @@ public class MyTimerTask extends TimerTask {
             if(!IS_WINDOWS) {
                 sendRecordsToGeoBlacklight();
                 JGit jgit = new JGit();
-                jgit.pushToGit();
+                jgit.updateRemoteMetadata();
             }
             /**
              * Saving a record of all the files that were downloaded
              */
-            DownloadedFiles downloadedFiles = DownloadedFiles.getDownloadedFiles();
-            downloadedFiles.saveDownloads();
 
             endErrorLog = keepMajErrors();
             endWarningLog = keepMinErrors();
@@ -96,10 +97,11 @@ public class MyTimerTask extends TimerTask {
             }
             existingHarvests.saveExistingSearchs(existingHarvests.getRecordVersions(),EXISTING_RECORDS, "ExistingRecords");
             existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
-            ExistingRasterRecords existingRasterRecords = ExistingRasterRecords.getExistingRasters();
+            //TODO Uncomment the following once Geoserver has been implemented
+            /*ExistingRasterRecords existingRasterRecords = ExistingRasterRecords.getExistingRasters();
             existingRasterRecords.saveExistingFile(existingRasterRecords.getRecords(),RASTER_RECORDS, "ExistingRasterRecords");
             ExistingVectorRecords existingVectorRecords = ExistingVectorRecords.getExistingVectors();
-            existingVectorRecords.saveExistingFile(existingVectorRecords.getRecords(),VECTOR_RECORDS,"ExistingVectorRecords");
+            existingVectorRecords.saveExistingFile(existingVectorRecords.getRecords(),VECTOR_RECORDS,"ExistingVectorRecords");*/
 
 
         } catch (IOException  e) {
@@ -112,14 +114,21 @@ public class MyTimerTask extends TimerTask {
     }
 
     private void verifyFiles(FileWriter fW) {
-        fW.verifyFileExistence(RECORDS_TO_CHECK);
+        File folder = new File(SAVED_FILES);
+        folder.mkdir();
+        File logs = new File(LOGS);
+        logs.mkdir();
+        if(!fW.verifyFileExistence(RECORDS_TO_CHECK))
+            ExistingCallsToCheck.getExistingCallsToCheck();
         fW.verifyFileExistence(ERROR_LOG);
         fW.verifyFileExistence(WARNING_LOG);
-        fW.verifyFileExistence(RASTER_RECORDS);
         fW.verifyFileExistence(EXISTING_RECORDS);
         fW.verifyFileExistence(EXISTING_BBOXES);
-        fW.verifyFileExistence(VECTOR_RECORDS);
         fW.verifyFileExistence(EXISTING_CHECKS);
+        fW.verifyFileExistence(DOWNLOADED_FILES);
+        //TODO uncomment once Geoserver is working
+        /*fW.verifyFileExistence(RASTER_RECORDS);
+        fW.verifyFileExistence(VECTOR_RECORDS);*/
     }
 
     private void deleteEmptyFolders() {
@@ -159,7 +168,6 @@ public class MyTimerTask extends TimerTask {
     private void sendRecordsToGeoBlacklight() {
         GeoCombine combine = new GeoCombine();
         combine.index();
-
     }
 
 

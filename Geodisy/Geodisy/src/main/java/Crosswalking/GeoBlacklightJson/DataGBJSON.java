@@ -5,6 +5,7 @@ import BaseFiles.GeodisyStrings;
 import Dataverse.DVFieldNameStrings;
 import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Author;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.DateOfCollection;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Description;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicCoverage;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -46,7 +48,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         String number = gbb.getFileNumber();
         jo.put("geoblacklight_version","1.0");
         jo.put("dc_identifier_s", GeodisyStrings.urlSlashes(javaObject.getSimpleFieldVal(DVFieldNameStrings.RECORD_URL)));
-        String geoserverLabel = getgeoserverLabel(gbb).toLowerCase();
+        String geoserverLabel = getGeoserverLabel(gbb).toLowerCase();
         jo.put("layer_slug_s", geoserverLabel);
         if(total>1) {
             number = padZeros(number,total);
@@ -56,6 +58,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
             jo.put("dc_title_s",javaObject.getSimpleFields().getField(TITLE));
         jo.put("dc_rights_s","Public");
         jo.put("dct_provenance_s",javaObject.getSimpleFields().getField(PUBLISHER));
+        jo.put("dc_publisher_s",javaObject.getSimpleFields().getField(PUBLISHER));
         jo.put("solr_geom","ENVELOPE(" + getBBString(gbb.getBB()) + ")");
         return jo;
     }
@@ -104,7 +107,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
             jo.put("layer_id_s", geoserverLabel);
     }
 
-    private String getgeoserverLabel(GeographicBoundingBox gbb) {
+    private String getGeoserverLabel(GeographicBoundingBox gbb) {
         boolean generated = gbb.isGeneratedFromGeoFile();
         if (generated) {
             return "geodisy:" + gbb.getField(GEOSERVER_LABEL);
@@ -126,9 +129,6 @@ public class DataGBJSON extends GeoBlacklightJSON{
             ja.put(WFS);*/
         if(!gbb.getField(FILE_URL).isEmpty())
             ja.put(DIRECT_FILE_DOWNLOAD + stringed(gbb.getField(FILE_URL)));
-        //TODO uncomment once pushing to OpenGeoMetadata is working
-        //ja.put(ISO_METADATA + stringed(gbb.getOpenGeoMetaLocation()));
-
         return ja;
     }
 
@@ -144,7 +144,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
     @Override
     protected JSONObject getOptionalFields(DataverseRecordFile drf, int totalRecordsInStudy) {
         GeographicBoundingBox gbb = drf.getGBB();
-        String geoserverLabel = getgeoserverLabel(gbb).toLowerCase();
+        String geoserverLabel = getGeoserverLabel(gbb).toLowerCase();
         getFileType(drf);
         addRecommendedFields(geoserverLabel, gbb);
         getAuthors();
@@ -154,8 +154,36 @@ public class DataGBJSON extends GeoBlacklightJSON{
         getSubjects();
         getType();
         getRelatedRecords(drf);
+        getModifiedDate();
+        getSolrYear();
 
         return jo;
+    }
+
+    private void getSolrYear() {
+        List<DateOfCollection> dates = javaObject.getCitationFields().getListField(DATE_OF_COLLECT);
+        int date = 10000;
+        for(DateOfCollection doc: dates){
+            String dateString = doc.getStartDate();
+            int current;
+            if(dateString.contains("-"))
+                current = Integer.valueOf(dateString.substring(0,dateString.indexOf("-")));
+            else
+                current = Integer.valueOf(dateString);
+
+            if(date>current)
+                date = current;
+
+        }
+        if(date!=10000)
+            jo.put("solr_year_i",String.valueOf(date));
+
+    }
+
+    private void getModifiedDate() {
+        String modDate = javaObject.getSimpleFieldVal(LAST_MOD_DATE);
+        if(!modDate.isEmpty())
+            jo.put("layer_modified_dt",modDate);
     }
 
     private void getRelatedRecords(DataverseRecordFile drf) {
@@ -165,8 +193,8 @@ public class DataGBJSON extends GeoBlacklightJSON{
         if(recs.size()>1){
             JSONArray ja = new JSONArray();
             for(DataverseGeoRecordFile dgrf : recs){
-                if(!drf.getGeoserverLabel().equals(dgrf.getGeoserverLabel()))
-                    ja.put(dgrf.getGeoserverLabel());
+                if(!getGeoserverLabel(drf.getGBB()).equals(getGeoserverLabel(dgrf.getGBB())))
+                    ja.put(getGeoserverLabel(dgrf.getGBB()).toLowerCase());
             }
             jo.put("dc_source_sm",ja);
             jo.put("dct_isPartOf_sm",javaObject.getSimpleFieldVal(TITLE));
@@ -196,7 +224,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
                 case ("geotif"):
                 case ("tiff"):
                 case ("geotiff"):
-                    return "GepTIFF";
+                    return "GeoTIFF";
                 case ("png"):
                     return "PNG";
                 default:

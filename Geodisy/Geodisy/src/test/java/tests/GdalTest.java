@@ -15,8 +15,8 @@ public class GdalTest {
     @Test
     public void gdalparseTest() {
         GDAL gdal = new GDAL();
-        String filePath = "C:\\geodisy\\Geodisy\\Geodisy\\datasetFiles\\10\\5072\\FK2\\GFCTVC\\NetCDF_GFCTVC.shp";
-        String name = "NetCDF_GFCTVC.shp";
+        String filePath = "src/test/UnzipTestDepositLocation/OldStreamsPolyline.shp";
+        String name = "OldStreamsPolyline.shp";
         int success = 0;
         for (int i = 0; i < 100; i++) {
 
@@ -80,6 +80,7 @@ public class GdalTest {
                     newTotal--;
                 }
             } catch (IOException | InterruptedException e) {
+                System.out.println(e);
             }
         }
         System.out.println("Translate Success " + countTranslate + "/10");

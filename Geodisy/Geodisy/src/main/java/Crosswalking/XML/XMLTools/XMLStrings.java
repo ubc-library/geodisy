@@ -1,7 +1,7 @@
 package Crosswalking.XML.XMLTools;
 
-import static BaseFiles.PrivateStrings.OPENGEOMETADATA_PASSWORD;
-import static BaseFiles.PrivateStrings.OPENGEOMETADATA_USERNAME;
+import static BaseFiles.GeodisyStrings.OPENGEOMETADATA_PASSWORD;
+import static BaseFiles.GeodisyStrings.OPENGEOMETADATA_USERNAME;
 
 public class XMLStrings {
     public final static String CI_RESPONSIBILITY = "CI_Responsibility";
@@ -41,12 +41,12 @@ public class XMLStrings {
     public final static String SUPPLEMENTAL_INFO = "supplementalInformation";
 
     //TODO figure out what file(s) to actually use
-    public final static String ISO_19115_VALIDATION_FILE_PATH = "./geodisyFiles/gco.xsd";
+    public final static String ISO_19139_VALIDATION_FILE_PATH = "./geodisyFiles/gco.xsd";
 
     //OPEN METADATA
-    public final static String OPEN_METADATA_LOCAL_REPO = "/var/www/206-12-92-97.cloud.computecanada.ca/html/geodisy/";
+    public final static String OPEN_METADATA_LOCAL_REPO = "/var/www/geoserver.frdr.ca/html/geodisy/";
     public final static String TEST_OPEN_METADATA_LOCAL_REPO = "XMLFilesTest/";
-    public final static String OPEN_METADATA_REMOTE_REPO = "https://github.com/OpenGeoMetadata/ca.ubc/";
+    public final static String OPEN_METADATA_REMOTE_REPO = "https://github.com/OpenGeoMetadata/ca.frdr.geodisy/";
     public final static String OPEN_METADATA_REMOTE_USERNAME = OPENGEOMETADATA_USERNAME;
     public final static String OPEN_METADATA_REMOTE_PASSWORD = OPENGEOMETADATA_PASSWORD;
 }
