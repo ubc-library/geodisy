@@ -131,3 +131,6 @@ Geodisy/Geodisy/.idea/workspace.xml
 *.class
 
 Geodisy/Geodisy/target/classes/META-INF/Geodisy.kotlin_module
+
+Geodisy/ISO19115To19139/out/production/ISO19115To19139/com/company/SP/
+Geodisy/ISO19115To19139/src/com/company/SP/
