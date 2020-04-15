@@ -18,7 +18,7 @@ import static BaseFiles.GeodisyStrings.*;
 /**
  *This extends TimerTask to create the class that will
  * be used in the BaseFiles.Scheduler to start the tests, harvesting from Dataverse and
- * exporting data and ISO-19115 metadata to Geoserver.
+ * exporting data and ISO-19139 metadata to Geoserver.
  * @author pdante
  */
 public class MyTimerTask extends TimerTask {

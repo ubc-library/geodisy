@@ -19,10 +19,11 @@ import java.io.File;
 import java.io.IOException;
 
 import static BaseFiles.GeodisyStrings.BASE_LOCATION_TO_STORE_METADATA;
+import static BaseFiles.GeodisyStrings.ISO_19139_XML;
 
 
 /**
- * Abstract class for general ISO schema crosswalking. Probably will only be for ISO 19115, but I'm including this so
+ * Abstract class for general ISO schema crosswalking. Probably will only be for ISO 19139, but I'm including this so
  * Geodisy can more easily be extended to other ISO formats in the future, if necessary.
  * @author pdante
  */
@@ -44,7 +45,7 @@ public abstract class ISO_Schema implements XMLSchema {
 
                 String loc = BASE_LOCATION_TO_STORE_METADATA;
                 File fileDir = genBaseDirs(doi, loc);
-                File file = new File(fileDir + "/" + "iso19115.xml");
+                File file = new File(fileDir + "/" + ISO_19139_XML);
                 FileWriter writer = new FileWriter(file);
                 StreamResult result = new StreamResult(writer.getFw());
 

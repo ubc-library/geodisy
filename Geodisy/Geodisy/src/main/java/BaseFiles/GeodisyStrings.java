@@ -72,6 +72,7 @@ public class GeodisyStrings {
         public final static String XML_TEST_FILE = GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/XMLTestDJO.xml");
         public final static String DATASET_FILES_PATH = replaceSlashes("datasetFiles/");
         public final static String OPEN_GEO_METADATA_BASE = "https://github.com/OpenGeoMetadata/ca.frdr.geodisy/";
+        public final static String ISO_19139_XML = "iso19139.xml";
 
     //Geonames
         public final static String GEONAMES_SEARCH_BASE = "http://api.geonames.org/search?q=";
