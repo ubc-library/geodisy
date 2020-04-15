@@ -19,7 +19,7 @@ import java.util.List;
  * crosswalked in for the data repository Java Objects.
  * @author pdante
  */
-public class ISO_19115 extends ISO_Schema {
+public class ISO_19139 extends ISO_Schema {
     public XMLDocObject generateXML(SourceJavaObject sJO) {
             DataverseJavaObject djo = (DataverseJavaObject) sJO;
             ISOXMLGen xmlGenerator = new ISOXMLGen(djo);

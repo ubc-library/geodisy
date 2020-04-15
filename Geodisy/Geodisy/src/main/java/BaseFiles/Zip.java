@@ -4,6 +4,8 @@ import java.io.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import static BaseFiles.GeodisyStrings.ISO_19139_XML;
+
 public class Zip {
     GeoLogger logger = new GeoLogger(this.getClass());
 
@@ -14,7 +16,7 @@ public class Zip {
             FileOutputStream fos = new FileOutputStream(path.substring(0,path.indexOf("xml"))+"zip");
             ZipOutputStream zipOS = new ZipOutputStream(fos);
             FileInputStream in  = new FileInputStream(file.getAbsolutePath());
-            zipOS.putNextEntry(new ZipEntry("iso19115.xml"));
+            zipOS.putNextEntry(new ZipEntry(ISO_19139_XML));
             int len;
             while ((len = in.read(buf)) > 0) {
                 zipOS.write(buf, 0, len);

@@ -41,7 +41,7 @@ public class XMLStrings {
     public final static String SUPPLEMENTAL_INFO = "supplementalInformation";
 
     //TODO figure out what file(s) to actually use
-    public final static String ISO_19115_VALIDATION_FILE_PATH = "./geodisyFiles/gco.xsd";
+    public final static String ISO_19139_VALIDATION_FILE_PATH = "./geodisyFiles/gco.xsd";
 
     //OPEN METADATA
     public final static String OPEN_METADATA_LOCAL_REPO = "/var/www/geoserver.frdr.ca/html/geodisy/";
