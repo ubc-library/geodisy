@@ -131,3 +131,11 @@ Geodisy/Geodisy/.idea/workspace.xml
 *.class
 
 Geodisy/Geodisy/target/classes/META-INF/Geodisy.kotlin_module
+
+FRDR/
+
+Geodisy/.idea/
+
+GeodisyGBL/
+
+Geodisy/Geodisy/src/main/target/classes/META-INF/MANIFEST.MF
