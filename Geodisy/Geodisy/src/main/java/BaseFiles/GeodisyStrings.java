@@ -102,6 +102,8 @@ public class GeodisyStrings {
         public final static String OGR2OGR = getOgr2Ogr();
         public final static String GDAL_TRANSLATE = getGdalTranslate();
         public final static String GDALWARP = getGdalWarp();
+        public final static String GDAL_WARP_LOCAL = "gdalwarp -overwrite -t_srs EPSG:3857 -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW {} {}";
+        public final static String GDAL_WARP_CLOUD = "/user/gdal30/bin/gdalwarp -overwrite -t_srs EPSG:3857 -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW {} {}";
         public final static String[] PROCESSABLE_EXTENSIONS = ArrayUtils.addAll(GDALINFO_PROCESSABLE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS);
 
         private static String getOgr2Ogr(){
@@ -176,7 +178,7 @@ public class GeodisyStrings {
     public final static String SOLR_PATH_PROD = "SOLR_URL=http://www.example.com:1234/solr/collection ";
     public final static String SOLR_PATH_TEST = "";
     public final static String SOLR_PATH = IS_WINDOWS? SOLR_PATH_TEST:SOLR_PATH_PROD;
-    public final static String DEV_ADDRESS = "206-12-92-97.cloud.computecanada.ca";
+    public final static String DEV_ADDRESS = "geoservertest.frdr-dfdr.ca";
     public final static String PROD_ADDRESS = "geoserver.frdr.ca";
     public final static String ADDRESS = addressToUse(TEST);
     public final static String VM_BASE_PATH_DEV = "C:/geodisy/Geodisy/Geodisy/";
@@ -186,6 +188,7 @@ public class GeodisyStrings {
     public final static String PATH_TO_XML_JSON_FILES = END_XML_JSON_FILE_PATH;
     public final static String OGM_PATH = "OGM_PATH=/var/www/geoserver.frdr.ca/html/geodisy/";
     public final static String MOVE_METADATA = "rsync -auhv " + getRoot() + "metadata/* /var/www/" + ADDRESS + "/html/geodisy/";
+    //TODO figure out where to move the data if it needs to move at all
     public final static String MOVE_DATA = "rsync -auhv " + getRoot() + "datasetFiles/* /var/www/" + ADDRESS + "/html/geodisy/";
     //TODO need to update the SOLR clear to access the solr index on geo.frdr.ca VM
     public final static String CLEAR_SOLR = "sudo su - root -c \"cd /root/solr-8.3.0/bin/ && ./post -c geoblacklight-prod delete_ALL.xml\"";
