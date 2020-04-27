@@ -15,24 +15,17 @@ import java.util.*;
 
 import static BaseFiles.GeodisyStrings.*;
 
-/**
- *This extends TimerTask to create the class that will
- * be used in the BaseFiles.Scheduler to start the tests, harvesting from Dataverse and
- * exporting data and ISO-19139 metadata to Geoserver.
- * @author pdante
- */
-public class MyTimerTask extends TimerTask {
+public class GeodisyTask {
     GeoLogger logger = new GeoLogger(this.getClass());
     ExistingHarvests existingHarvests;
     ExistingCallsToCheck existingCallsToCheck;
 
     SourceRecordFiles srf;
-    public MyTimerTask() {
+    public GeodisyTask() {
     }
 /**
  * 
  */
-    @Override
     public void run() {
        String recsToCheck;
        String startErrorLog;

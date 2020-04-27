@@ -20,8 +20,8 @@ public class Main {
         //RemoveRecord rr = new RemoveRecord();
         //rr.removeRecord();
 
-        Scheduler scheduler = new Scheduler();
-        scheduler.run();
+        GeodisyTask geodisyTask = new GeodisyTask();
+        geodisyTask.run();
 
         //Run the below solo to download
         /*DownloadRecord downloadRecord = new DownloadRecord();

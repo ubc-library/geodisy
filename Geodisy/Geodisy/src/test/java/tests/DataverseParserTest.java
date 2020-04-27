@@ -1,7 +1,7 @@
 package tests;
 
 import BaseFiles.GeoLogger;
-import BaseFiles.MyTimerTask;
+import BaseFiles.GeodisyTask;
 import Crosswalking.JSONParsing.DataverseParser;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
@@ -33,7 +33,7 @@ public class DataverseParserTest {
         //create ObjectMapper instance
         DataverseParser dataverseParser = new DataverseParser();
         DataverseJavaObject djo = dataverseParser.parse(jo, "another fake server name");
-        MyTimerTask my = new MyTimerTask();
+        GeodisyTask my = new GeodisyTask();
         try {
             my.keepInfo();
         } catch (IOException e) {

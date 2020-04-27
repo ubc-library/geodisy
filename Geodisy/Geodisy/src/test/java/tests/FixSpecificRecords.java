@@ -1,7 +1,7 @@
 package tests;
 
 import BaseFiles.HTTPCallerGeoNames;
-import BaseFiles.MyTimerTask;
+import BaseFiles.GeodisyTask;
 import Crosswalking.JSONParsing.DataverseParser;
 import Dataverse.DataverseAPI;
 import Dataverse.DataverseJavaObject;
@@ -44,7 +44,7 @@ public class FixSpecificRecords {
         DataverseAPI api = new DataverseAPI(dvURL);
         djo = api.generateBoundingBox(djo);
         String localDoi = djo.getDOI();
-        MyTimerTask myTimerTask = new MyTimerTask();
+        GeodisyTask geodisyTask = new GeodisyTask();
         List<SourceJavaObject> sJOs = new LinkedList<>();
         sJOs.add(djo);
         DataverseAPI dvapi = new DataverseAPI(djo.getServer());
