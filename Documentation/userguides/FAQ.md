@@ -2,7 +2,7 @@
 
 ### How do I search with the map in Geodisy
 
-1. **Move** or **adjust** the map to your area of interest
+1. Move the map to display your area of interest
 	* Use the + and - buttons in the top left of the map to zoom in and out  
 	* Use your mouse’s scroll wheel to zoom in and out    
 	* Click and drag within the map  
