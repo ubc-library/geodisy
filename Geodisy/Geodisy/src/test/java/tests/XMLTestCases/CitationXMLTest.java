@@ -1,8 +1,7 @@
 package tests.XMLTestCases;
 
 import Crosswalking.GeoBlacklightJson.DataGBJSON;
-import Crosswalking.GeoBlacklightJson.GeoBlacklightJSON;
-import Crosswalking.ISO_19115;
+import Crosswalking.ISO_19139;
 import Crosswalking.JSONParsing.DataverseParser;
 import Crosswalking.XML.XMLTools.XMLDocObject;
 import Crosswalking.XML.XMLTools.ISOXMLGen;
@@ -78,7 +77,7 @@ DataverseJavaObject djo;
     public void testXMLSave(){
         ISOXMLGen xmlGenerator = new ISOXMLGen(djo);
         XMLDocObject xmlFile = xmlGenerator.generateXMLFile();
-        ISO_19115 iso = new ISO_19115();
+        ISO_19139 iso = new ISO_19139();
         iso.saveXMLToFile(xmlFile.getDoc(), xmlFile.getDoi(), true);
     }
 

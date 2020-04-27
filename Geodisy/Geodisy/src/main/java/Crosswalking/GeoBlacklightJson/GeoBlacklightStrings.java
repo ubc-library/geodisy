@@ -27,7 +27,7 @@ public class GeoBlacklightStrings {
     public final static String WFS = "\"http://www.opengis.net/def/serviceType/ogc/wfs\":"+GEOSERVER_WFS_LOCATION;
     public final static String DIRECT_FILE_DOWNLOAD = "\"http://schema.org/downloadUrl\":";
     public final static String ISO_METADATA = "\"http://lccn.loc.gov/sh85035852\":";
-    public final static String ISO_METADATA_FILE_ZIP = "iso19115.zip";
+    public final static String ISO_METADATA_FILE_ZIP = "iso19139.zip";
     public final static String[] METADATA_DOWNLOAD_SERVICES = {RECORD_URL, WMS, WFS,DIRECT_FILE_DOWNLOAD,ISO_METADATA};
 
     public static String getGeoDownloadUrl(DataverseGeoRecordFile dgrf){

@@ -72,6 +72,7 @@ public class GeodisyStrings {
         public final static String XML_TEST_FILE = GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/XMLTestDJO.xml");
         public final static String DATASET_FILES_PATH = replaceSlashes("datasetFiles/");
         public final static String OPEN_GEO_METADATA_BASE = "https://github.com/OpenGeoMetadata/ca.frdr.geodisy/";
+        public final static String ISO_19139_XML = "iso19139.xml";
 
     //Geonames
         public final static String GEONAMES_SEARCH_BASE = "http://api.geonames.org/search?q=";
@@ -96,10 +97,13 @@ public class GeodisyStrings {
         public final static String[] PREVIEWABLE_FILE_EXTENSIONS = {".tif"};
         private final static String OGR2OGR_LOCAL = "ogr2ogr -f \"ESRI Shapefile\" -t_srs EPSG:4326 ";
         private final static String GDAL_TRANSLATE_LOCAL = "gdal_translate -of GTiff ";
-        private final static String OGR2OGR_CLOUD = "/usr/bin/ogr2ogr -t_srs EPSG:4326 -f \"ESRI Shapefile\" ";
-        private final static String GDAL_TRANSLATE_CLOUD = "/usr/bin/gdal_translate -of GTiff ";
+        private final static String OGR2OGR_CLOUD = "/usr/gdal30/bin/ogr2ogr -t_srs EPSG:4326 -f \"ESRI Shapefile\" ";
+        private final static String GDAL_TRANSLATE_CLOUD = "/usr/gdal30/bin/gdal_translate -of GTiff ";
         public final static String OGR2OGR = getOgr2Ogr();
         public final static String GDAL_TRANSLATE = getGdalTranslate();
+        public final static String GDALWARP = getGdalWarp();
+        public final static String GDAL_WARP_LOCAL = "gdalwarp -overwrite -t_srs EPSG:3857 -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW {} {}";
+        public final static String GDAL_WARP_CLOUD = "/user/gdal30/bin/gdalwarp -overwrite -t_srs EPSG:3857 -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW {} {}";
         public final static String[] PROCESSABLE_EXTENSIONS = ArrayUtils.addAll(GDALINFO_PROCESSABLE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS);
 
         private static String getOgr2Ogr(){
@@ -114,6 +118,13 @@ public class GeodisyStrings {
                 return GDAL_TRANSLATE_LOCAL;
             else
                 return GDAL_TRANSLATE_CLOUD;
+        }
+
+        private static String getGdalWarp(){
+            if(IS_WINDOWS)
+                return GDAL_WARP_LOCAL;
+            else
+                return GDAL_WARP_CLOUD;
         }
     private static String getGdalInfo(){
         if(IS_WINDOWS)
@@ -167,7 +178,7 @@ public class GeodisyStrings {
     public final static String SOLR_PATH_PROD = "SOLR_URL=http://www.example.com:1234/solr/collection ";
     public final static String SOLR_PATH_TEST = "";
     public final static String SOLR_PATH = IS_WINDOWS? SOLR_PATH_TEST:SOLR_PATH_PROD;
-    public final static String DEV_ADDRESS = "206-12-92-97.cloud.computecanada.ca";
+    public final static String DEV_ADDRESS = "geoservertest.frdr-dfdr.ca";
     public final static String PROD_ADDRESS = "geoserver.frdr.ca";
     public final static String ADDRESS = addressToUse(TEST);
     public final static String VM_BASE_PATH_DEV = "C:/geodisy/Geodisy/Geodisy/";
@@ -177,6 +188,7 @@ public class GeodisyStrings {
     public final static String PATH_TO_XML_JSON_FILES = END_XML_JSON_FILE_PATH;
     public final static String OGM_PATH = "OGM_PATH=/var/www/geoserver.frdr.ca/html/geodisy/";
     public final static String MOVE_METADATA = "rsync -auhv " + getRoot() + "metadata/* /var/www/" + ADDRESS + "/html/geodisy/";
+    //TODO figure out where to move the data if it needs to move at all
     public final static String MOVE_DATA = "rsync -auhv " + getRoot() + "datasetFiles/* /var/www/" + ADDRESS + "/html/geodisy/";
     //TODO need to update the SOLR clear to access the solr index on geo.frdr.ca VM
     public final static String CLEAR_SOLR = "sudo su - root -c \"cd /root/solr-8.3.0/bin/ && ./post -c geoblacklight-prod delete_ALL.xml\"";
