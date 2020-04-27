@@ -101,8 +101,12 @@ systemctl start postgresql-12
 * yum install gdal30-libs gdal30 gdal30-debuginfo gdal30-devel gdal30-do
 (installs binaries to /usr/gdal30/bin)
 
+3. Install GDAL 2.x
 
-3. Install GeoBlacklight and Solr
+TODO: Figure out steps
+
+
+4. Install GeoBlacklight and Solr
 
 * Install Rbenv
 yum install git-core zlib zlib-devel gcc-c++ patch readline readline-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison curl sqlite-devel
@@ -251,7 +255,7 @@ systemctl enable geoblacklight.service
 Test by going to http://206-12-92-97.cloud.computecanada.ca:3000
 
 
-4. Install GeoCombine
+5. Install GeoCombine
 
 git clone https://github.com/OpenGeoMetadata/GeoCombine.git
 cd GeoCombine
@@ -263,20 +267,20 @@ bundle install
 - Run rake geocombine:clone and then rake geocombine:index
 
 
-5. SELinux config
+6. SELinux config
 
 * If running SELinux, apply the necessary booleans to allow httpd proxy operation:
 /usr/sbin/setsebool -P httpd_can_network_connect 1
 
 
-6. Startup scripts
+7. Startup scripts
 
 * GeoServer: /etc/systemd/system/geoserver.service
 * PostgreSQL: enabled via systemctl
 * GeoBlacklight: /etc/systemd/system/geoblacklight.service
 * Solr: enabled via systemctl
 
-7. TODO
+8. TODO
 
 * May not need: Figure out how (if) authentication to solr is needed or supported by GeoBlacklight. For now, run with blockUnknown: false in "/var/solr/data/security.json"
 * SSL support: GeoBlacklight
