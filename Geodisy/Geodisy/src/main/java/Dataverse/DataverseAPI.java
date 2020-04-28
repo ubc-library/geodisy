@@ -228,13 +228,24 @@ public class DataverseAPI extends SourceAPI {
         HashSet<String> answer = new HashSet<>();
         int start = 0;
         String result;
-        while(moreEntries&&start<NUMBER_OF_RECS_TO_HARVEST){
-            HTTPCallerDataverse hC = new HTTPCallerDataverse();
-            result = hC.callHTTP(searchURL+"&start="+ start);
-            if(result.equals("HTTP Fail"))
-                break;
-            moreEntries = parseResponseForDOIs(result,start, answer);
-            start+=10;
+        if(NUMBER_OF_RECS_TO_HARVEST==0){
+            while(moreEntries){
+                HTTPCallerDataverse hC = new HTTPCallerDataverse();
+                result = hC.callHTTP(searchURL+"&start="+ start);
+                if(result.equals("HTTP Fail"))
+                    break;
+                moreEntries = parseResponseForDOIs(result,start, answer);
+                start+=10;
+            }
+        }else {
+            while (moreEntries && start < NUMBER_OF_RECS_TO_HARVEST) {
+                HTTPCallerDataverse hC = new HTTPCallerDataverse();
+                result = hC.callHTTP(searchURL + "&start=" + start);
+                if (result.equals("HTTP Fail"))
+                    break;
+                moreEntries = parseResponseForDOIs(result, start, answer);
+                start += 10;
+            }
         }
         return answer;
     }
