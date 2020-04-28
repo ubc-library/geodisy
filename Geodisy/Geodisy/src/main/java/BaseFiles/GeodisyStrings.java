@@ -5,7 +5,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import static BaseFiles.PrivateStrings.*;
 
 public class GeodisyStrings {
-    private final static boolean DEV = false;
+    public final static boolean TEST = false; //change this to false when in production
     public final static boolean GEOSPATIAL_ONLY = false;
     public final static String GIT_PASSWORD = PRIVATE_GIT_PASSWORD;
     public final static String GEOSERVER_PASSWORD = PRIVATE_GEOSERVER_PASSWORD;
@@ -37,17 +37,12 @@ public class GeodisyStrings {
                     .toLowerCase().startsWith("windows");
             if(isWindows)
                 return WINDOWS_ROOT;
-            else {
-                if(DEV)
-                    return EVAN_VM_CENTOS_ROOT;
-                else
-                    return FRDR_VM_CENTOS_ROOT;
-            }
+            else
+                return FRDR_VM_CENTOS_ROOT;
         }
 
     //File paths
         private final static String WINDOWS_ROOT = "C:\\geodisy\\Geodisy\\Geodisy\\";
-        private final static String EVAN_VM_CENTOS_ROOT = "/home/centos/Geodisy/";
         private final static String FRDR_VM_CENTOS_ROOT = "/home/centos/geodisy/Geodisy/Geodisy/";
         public final static String GEODISY_PATH_ROOT = getRoot();
         public final static String SAVED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles");
@@ -175,11 +170,9 @@ public class GeodisyStrings {
     //Geocombine
 
     public final static String SOLR_PATH_PROD = "SOLR_URL=http://www.example.com:1234/solr/collection ";
-    public final static String SOLR_PATH_TEST = "";
-    public final static String SOLR_PATH = IS_WINDOWS? SOLR_PATH_TEST:SOLR_PATH_PROD;
     public final static String DEV_ADDRESS = "geoservertest.frdr-dfdr.ca";
     public final static String PROD_ADDRESS = "geoserver.frdr.ca";
-    public final static String ADDRESS = addressToUse(TEST);
+    public final static String ADDRESS = addressToUse();
     public final static String VM_BASE_PATH_DEV = "C:/geodisy/Geodisy/Geodisy/";
     public final static String VM_BASE_PATH_PROD = "https://" + ADDRESS + "/";
     public final static String BASE_PATH = vmToUse();
@@ -204,8 +197,8 @@ public class GeodisyStrings {
             return VM_BASE_PATH_PROD;
     }
 
-    public static String addressToUse(boolean test){
-        if(test)
+    public static String addressToUse(){
+        if(TEST)
             return DEV_ADDRESS;
         else
             return PROD_ADDRESS;
