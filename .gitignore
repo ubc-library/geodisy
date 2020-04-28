@@ -140,3 +140,6 @@ FRDR/
 Geodisy/.idea/
 GeodisyGBL/
 *.MF
+Geodisy/Geodisy/src/main/target/classes/META-INF/
+
+Geodisy/Geodisy/src/main/target/test-classes/META-INF/

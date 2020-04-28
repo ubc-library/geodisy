@@ -20,23 +20,6 @@ public class GeoCombine {
         processBuilder.command("/bin/bash", "-c", MOVE_METADATA);
 
         Process p = null;
-        try {
-            System.out.println("Moving metadata");
-            p = processBuilder.start();
-            p.waitFor();
-            p.destroy();
-        } catch (IOException | InterruptedException e) {
-            logger.error("Something went wrong calling moving metadata");
-        }
-        try{
-            System.out.println("Deleting old location of metadata");
-            processBuilder.command("/bin/bash", "-c", DELETE_DUPLICATE_META_FOLDER);
-            p = processBuilder.start();
-            p.waitFor();
-            p.destroy();
-        } catch (IOException | InterruptedException e) {
-            logger.error("Something went wrong calling deleting old metadata files (from pre-move location)");
-        }
         try{
             System.out.println("Clearing Solr");
             processBuilder.command("/bin/bash", "-c", CLEAR_SOLR);

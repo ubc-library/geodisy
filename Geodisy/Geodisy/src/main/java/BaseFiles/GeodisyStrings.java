@@ -168,8 +168,10 @@ public class GeodisyStrings {
 
 
     //Geocombine
-
-    public final static String SOLR_PATH_PROD = "SOLR_URL=http://www.example.com:1234/solr/collection ";
+    //Add value (including space at end) to SOLR_PATH if you want to index to somewhere other than what is in the rake file
+    public final static String SOLR_PATH_PROD = ""; //"SOLR_URL=http://www.example.com:1234/solr/collection ";
+    //Add value (including space at end) to OGM_PATH if you are harvesting from somewhere other than what's in the rake file
+    public final static String OGM_PATH = ""; //"OGM_PATH=/var/www/geoserver.frdr.ca/html/geodisy/ ";
     public final static String DEV_ADDRESS = "geoservertest.frdr-dfdr.ca";
     public final static String PROD_ADDRESS = "geoserver.frdr.ca";
     public final static String ADDRESS = addressToUse();
@@ -178,16 +180,12 @@ public class GeodisyStrings {
     public final static String BASE_PATH = vmToUse();
     public final static String END_XML_JSON_FILE_PATH = BASE_PATH + "geodisy/";
     public final static String PATH_TO_XML_JSON_FILES = END_XML_JSON_FILE_PATH;
-    public final static String OGM_PATH = "OGM_PATH=/var/www/geoserver.frdr.ca/html/geodisy/";
     public final static String MOVE_METADATA = "rsync -auhv " + getRoot() + "metadata/* /var/www/" + ADDRESS + "/html/geodisy/";
     //TODO figure out where to move the data if it needs to move at all
     public final static String MOVE_DATA = "rsync -auhv " + getRoot() + "datasetFiles/* /var/www/" + ADDRESS + "/html/geodisy/";
     //TODO need to update the SOLR clear to access the solr index on geo.frdr.ca VM
-    public final static String CLEAR_SOLR = "sudo su - root -c \"cd /root/solr-8.3.0/bin/ && ./post -c geoblacklight-prod delete_ALL.xml\"";
-    public final static String DELETE_DUPLICATE_META_FOLDER = "rm -rf " + getRoot() + "metadata/*";
-    public final static String DELETE_DUPLICATE_DATA_FOLDER = "rm -rf " + getRoot() + "datasetFiles/*";
-    public final static String GEOCOMBINE = OGM_PATH +" /home/centos/geodisy/bin/bundle exec rake geocombine:index";
-    //public final static String GEOCOMBINE = "/bin/sh /home/centos/Geodisy/combine.sh";
+    public final static String CLEAR_SOLR = "sudo su - root -c \"cd /root/solr-8.3.0/bin/ && ./post -c geoblacklight-core delete_ALL.xml\"";
+    public final static String GEOCOMBINE = "sudo su - geoblack -c  \"cd /home/geoblack/GeoCombine && "+ SOLR_PATH_PROD + OGM_PATH +"bundle exec rake geocombine:index\"";
     public final static String BASE_LOCATION_TO_STORE_METADATA = "metadata/";
 
     public static String vmToUse(){
