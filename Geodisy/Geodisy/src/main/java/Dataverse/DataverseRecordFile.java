@@ -101,7 +101,7 @@ public class DataverseRecordFile {
 
     public LinkedList<DataverseRecordFile> retrieveFile(DataverseJavaObject djo) {
         FolderFileParser ffp = new FolderFileParser();
-        System.out.println("downloading file: " + originalTitle);
+        //System.out.println("downloading file: " + originalTitle);
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
         DownloadedFiles downloads = DownloadedFiles.getDownloadedFiles();
         downloads.addDownload(originalTitle,djo.getDOI(),dbID);
@@ -133,7 +133,7 @@ public class DataverseRecordFile {
                 if (f.isFile()) {
                     String name = f.getName();
                     if (name.endsWith(".tab")) {
-                        System.out.println("Converting tab file");
+                        //System.out.println("Converting tab file");
                         drfs.add(ffp.convertTab(f, dirPath, name, this));
                         f.delete();
                     }else if(name.endsWith(".zip"))

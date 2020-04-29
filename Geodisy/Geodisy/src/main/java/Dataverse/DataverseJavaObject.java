@@ -179,7 +179,7 @@ public class DataverseJavaObject extends SourceJavaObject {
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
         for (DataverseRecordFile dRF : dataFiles) {
             if (GeodisyStrings.fileTypesToIgnore(dRF.translatedTitle)) {
-                System.out.println("Ignored file: " + dRF.translatedTitle);
+                //System.out.println("Ignored file: " + dRF.translatedTitle);
                 continue;
             }
             drfs.addAll(dRF.retrieveFile(this));
