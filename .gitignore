@@ -59,7 +59,6 @@ Geodisy/Geodisy/classes/artifacts/Geodisy_jar/savedFiles/
 
 Geodisy/Geodisy/classes/artifacts/Geodisy_jar/logs/recordsToCheck\.log
 
-Geodisy/Geodisy/classes/artifacts/Geodisy_jar/Geodisy\.jar
 
 Geodisy/Geodisy/xmlTestDJO\.xml
 
@@ -134,3 +133,20 @@ Geodisy/ModifyGeoserver/
 Geodisy/Geodisy/.idea/workspace.xml
 
 *.class
+
+Geodisy/Geodisy/target/classes/META-INF/Geodisy.kotlin_module
+
+Geodisy/ISO19115To19139/.idea/
+Geodisy/ISO19115To19139/out/production/ISO19115To19139/META-INF/
+Geodisy/ISO19115To19139/src/com/company/SP/
+Geodisy/ISO19115To19139/out/production/ISO19115To19139/com/company/SP/
+FRDR/
+Geodisy/.idea/
+GeodisyGBL/
+*.MF
+Geodisy/Geodisy/src/main/target/classes/META-INF/
+
+Geodisy/Geodisy/src/main/target/test-classes/META-INF/
+
+Geodisy/out/test/test/META-INF/test.kotlin_module
+Geodisy/Geodisy/jdom-1.0.jar

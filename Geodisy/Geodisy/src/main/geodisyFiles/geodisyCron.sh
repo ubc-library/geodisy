@@ -1,0 +1,1 @@
+sudo su - centos -c "cd /home/centos/geodisy/Geodisy/Geodisy/classes/artifacts/Geodisy && java -jar Geodisy.jar"

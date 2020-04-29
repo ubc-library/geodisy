@@ -1,6 +1,5 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 
-import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONObject;
@@ -311,7 +310,7 @@ public class GeographicBoundingBox extends CompoundJSONField {
     public void setIsGeneratedFromGeoFile(boolean generated){this.generated=generated;}
 
     public String getOpenGeoMetaLocation() {
-        return OPEN_GEO_METADATA_BASE+folderized(doi)+"iso19115.xml";
+        return OPEN_GEO_METADATA_BASE+folderized(doi) + ISO_19139_XML;
     }
 
     private String folderized(String doi) {

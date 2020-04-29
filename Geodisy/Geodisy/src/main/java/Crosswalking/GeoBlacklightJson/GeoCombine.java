@@ -2,6 +2,7 @@ package Crosswalking.GeoBlacklightJson;
 
 import BaseFiles.GeoLogger;
 import Crosswalking.XML.XMLTools.JGit;
+import org.apache.solr.client.solrj.SolrServerException;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,31 +21,22 @@ public class GeoCombine {
         processBuilder.command("/bin/bash", "-c", MOVE_METADATA);
 
         Process p = null;
-        try {
+        try{
             System.out.println("Moving metadata");
             p = processBuilder.start();
             p.waitFor();
             p.destroy();
-        } catch (IOException | InterruptedException e) {
-            logger.error("Something went wrong calling moving metadata");
-        }
-        try{
-            System.out.println("Deleting old location of metadata");
-            processBuilder.command("/bin/bash", "-c", DELETE_DUPLICATE_META_FOLDER);
-            p = processBuilder.start();
-            p.waitFor();
-            p.destroy();
-        } catch (IOException | InterruptedException e) {
-            logger.error("Something went wrong calling deleting old metadata files (from pre-move location)");
+        } catch (IOException|InterruptedException e){
+            logger.error("Something went wrong trying to move the metadata");
         }
         try{
             System.out.println("Clearing Solr");
-            processBuilder.command("/bin/bash", "-c", CLEAR_SOLR);
-            p = processBuilder.start();
-            p.waitFor();
-            p.destroy();
-        } catch (IOException | InterruptedException e) {
-            logger.error("Something went wrong emptying SOLR");
+            SOLR solr = new SOLR();
+            solr.clearIndex();
+        } catch (SolrServerException e) {
+            logger.error("Failed to clear the SOLR index for some reason");
+        } catch (IOException e) {
+            logger.error("IOException when trying to clear solr index");
         }
         try{
             System.out.println("Calling Geocombine");

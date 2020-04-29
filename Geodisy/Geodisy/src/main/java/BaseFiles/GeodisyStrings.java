@@ -5,7 +5,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import static BaseFiles.PrivateStrings.*;
 
 public class GeodisyStrings {
-    private final static boolean DEV = false;
+    public final static boolean TEST = false; //change this to false when in production
     public final static boolean GEOSPATIAL_ONLY = false;
     public final static String GIT_PASSWORD = PRIVATE_GIT_PASSWORD;
     public final static String GEOSERVER_PASSWORD = PRIVATE_GEOSERVER_PASSWORD;
@@ -14,8 +14,7 @@ public class GeodisyStrings {
     public final static String POSTGIS_USER_PASSWORD = PRIVATE_POSTGIS_USER_PASSWORD;
     public final static String OPENGEOMETADATA_USERNAME = PRIVATE_OPENGEOMETADATA_USERNAME;
     public final static String OPENGEOMETADATA_PASSWORD = PRIVATE_OPENGEOMETADATA_PASSWORD;
-    public final static boolean TEST = false; //change this to false when in production
-    public final static int NUMBER_OF_RECS_TO_HARVEST = 5000;
+    public final static int NUMBER_OF_RECS_TO_HARVEST = 0;
     public final static String[] HUGE_RECORDS_TO_IGNORE_UNTIL_LATER = {"10.5683/SP2/FJWIL8","10.5683/SP/Y3HRN","10864/GSSJX","10.5683/SP2/JP4WDF","10864/9KJ1L","10864/11086","10864/9VNIK","10.5683/SP/Y3HMRN","10.5683/SP/OEIP77","10.5683/SP/IP9ERW","10.5683/SP/NTUOK9","10864/11369","10864/11175","10.5683/SP/BT7HN2","10.5683/SP/4RFHBJ","10.5683/SP/T7ZJAF","10.5683/SP/RZM9HE","10.5683/SP/RAJQ2P","10.5683/SP2/AAGZDG","10.5683/SP2/1XRF9U","10.5683/SP2/MICSLT"};
     public final static String[] PROCESS_THESE_DOIS = {};// {"10.5683/SP2/J8581N","10.5683/SP2/JISB1K","10.5683/SP2/YPVTYT","10.5682/SP2/PONAP6"}; //"10.5683/SP2/UEJGTV" "10864/11669" "10.5683/SP2/GKJPIQ""10.5683/SP2/KYHUNF""10.5683/SP/EGOYE3""10.5683/SP2/LAWLTI""10.5072/FK2/PLD5VK","10.5683/SP2/UEJGTV","10.5683/SP/SBTXLS","10.5683/SP/UYBROL","10864/XER6B","10864/10197""10.5683/SP/OZ0WB0","10.5683/SP/S0MQVP","10.5683/SP/5S5Y9T","10.5683/SP/30JPOR","10.5683/SP/ASR2XE","10.5683/SP2/1VWZNC","10.5683/SP/AB5A9O","10.5683/SP2/YNOJSD","10.5683/SP/AB5A9O","10.5683/SP/2ZARY2","10.5683/SP2/ZDAHQG","10.5683/SP2/JFQ1SZ"
     //Repositories (add new repository URLS to a appropriate repository URL array below)
@@ -38,17 +37,12 @@ public class GeodisyStrings {
                     .toLowerCase().startsWith("windows");
             if(isWindows)
                 return WINDOWS_ROOT;
-            else {
-                if(DEV)
-                    return EVAN_VM_CENTOS_ROOT;
-                else
-                    return FRDR_VM_CENTOS_ROOT;
-            }
+            else
+                return FRDR_VM_CENTOS_ROOT;
         }
 
     //File paths
         private final static String WINDOWS_ROOT = "C:\\geodisy\\Geodisy\\Geodisy\\";
-        private final static String EVAN_VM_CENTOS_ROOT = "/home/centos/Geodisy/";
         private final static String FRDR_VM_CENTOS_ROOT = "/home/centos/geodisy/Geodisy/Geodisy/";
         public final static String GEODISY_PATH_ROOT = getRoot();
         public final static String SAVED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles");
@@ -72,6 +66,7 @@ public class GeodisyStrings {
         public final static String XML_TEST_FILE = GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/XMLTestDJO.xml");
         public final static String DATASET_FILES_PATH = replaceSlashes("datasetFiles/");
         public final static String OPEN_GEO_METADATA_BASE = "https://github.com/OpenGeoMetadata/ca.frdr.geodisy/";
+        public final static String ISO_19139_XML = "iso19139.xml";
 
     //Geonames
         public final static String GEONAMES_SEARCH_BASE = "http://api.geonames.org/search?q=";
@@ -100,6 +95,9 @@ public class GeodisyStrings {
         private final static String GDAL_TRANSLATE_CLOUD = "/usr/gdal30/bin/gdal_translate -of GTiff ";
         public final static String OGR2OGR = getOgr2Ogr();
         public final static String GDAL_TRANSLATE = getGdalTranslate();
+        public final static String GDALWARP = getGdalWarp();
+        public final static String GDAL_WARP_LOCAL = "gdalwarp -overwrite -t_srs EPSG:3857 -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW {} {}";
+        public final static String GDAL_WARP_CLOUD = "/user/gdal30/bin/gdalwarp -overwrite -t_srs EPSG:3857 -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW {} {}";
         public final static String[] PROCESSABLE_EXTENSIONS = ArrayUtils.addAll(GDALINFO_PROCESSABLE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS);
 
         private static String getOgr2Ogr(){
@@ -116,6 +114,13 @@ public class GeodisyStrings {
                 return GDAL_TRANSLATE_LOCAL;
             else
                 return GDAL_TRANSLATE_CLOUD;
+        }
+
+        private static String getGdalWarp(){
+            if(IS_WINDOWS)
+                return GDAL_WARP_LOCAL;
+            else
+                return GDAL_WARP_CLOUD;
         }
     private static String getGdalInfo(){
         //if(IS_WINDOWS)
@@ -167,40 +172,37 @@ public class GeodisyStrings {
 
 
     //Geocombine
-
-    public final static String SOLR_PATH_PROD = "SOLR_URL=http://www.example.com:1234/solr/collection ";
-    public final static String SOLR_PATH_TEST = "";
-    public final static String SOLR_PATH = IS_WINDOWS? SOLR_PATH_TEST:SOLR_PATH_PROD;
-    public final static String DEV_ADDRESS = "geo.frdr.ca";
-    public final static String PROD_ADDRESS = "geo.frdr.ca";
-    public final static String ADDRESS = addressToUse(TEST);
-    public final static String VM_BASE_PATH_DEV = "C:/geodisy/Geodisy/Geodisy/";
-    public final static String VM_BASE_PATH_PROD = "https://" + ADDRESS + "/";
-    public final static String BASE_PATH = vmToUse();
+    //Add value (including space at end) to SOLR_PATH if you want to index to somewhere other than what is in the rake file
+    public final static String SOLR_PATH_PROD = ""; //"SOLR_URL=http://www.example.com:1234/solr/collection ";
+    //Add value (including space at end) to OGM_PATH if you are harvesting from somewhere other than what's in the rake file
+    public final static String OGM_PATH = ""; //"OGM_PATH=/var/www/geoserver.frdr.ca/html/geodisy/ ";
+    public final static String BACKEND_DEV_ADDRESS = "geoservertest.frdr-dfdr.ca";
+    public final static String BACKEND_PROD_ADDRESS = "geoserver.frdr.ca";
+    public final static String FRONTEND_DEV_ADDRESS = "geotest.frdr-dfdr.ca";
+    public final static String FRONTEND_PROD_ADDRESS = "geo.frdr.ca";
+    public final static String BACKEND_ADDRESS = beAddressToUse();
+    public final static String FRONTEND_ADDRESS = feAddressToUse();
+    public final static String BASE_PATH = "https://" + BACKEND_ADDRESS + "/";
     public final static String END_XML_JSON_FILE_PATH = BASE_PATH + "geodisy/";
     public final static String PATH_TO_XML_JSON_FILES = END_XML_JSON_FILE_PATH;
-    public final static String OGM_PATH = "OGM_PATH=/var/www/geoserver.frdr.ca/html/geodisy/";
-    public final static String MOVE_METADATA = "rsync -auhv " + getRoot() + "metadata/* /var/www/" + ADDRESS + "/html/geodisy/";
-    public final static String MOVE_DATA = "rsync -auhv " + getRoot() + "datasetFiles/* /var/www/" + ADDRESS + "/html/geodisy/";
-    public final static String CLEAR_SOLR = "sudo su - root -c \"cd /root/solr-8.3.0/bin/ && ./post -c geoblacklight-prod delete_ALL.xml\"";
-    public final static String DELETE_DUPLICATE_META_FOLDER = "rm -rf " + getRoot() + "metadata/*";
-    public final static String DELETE_DUPLICATE_DATA_FOLDER = "rm -rf " + getRoot() + "datasetFiles/*";
-    public final static String GEOCOMBINE = OGM_PATH +" /home/centos/geodisy/bin/bundle exec rake geocombine:index";
-    //public final static String GEOCOMBINE = "/bin/sh /home/centos/Geodisy/combine.sh";
+    public final static String MOVE_METADATA = "rsync -auhv " + getRoot() + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
+    //TODO figure out where to move the data if it needs to move at all
+    public final static String MOVE_DATA = "rsync -auhv " + getRoot() + "datasetFiles/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
+    public final static String GEOCOMBINE = "sudo su - geoblack -c  \"cd /home/geoblack/GeoCombine && "+ SOLR_PATH_PROD + OGM_PATH +"bundle exec rake geocombine:index\"";
     public final static String BASE_LOCATION_TO_STORE_METADATA = "metadata/";
 
-    public static String vmToUse(){
-        if(IS_WINDOWS)
-            return VM_BASE_PATH_DEV;
+    public static String beAddressToUse(){
+        if(TEST)
+            return BACKEND_DEV_ADDRESS;
         else
-            return VM_BASE_PATH_PROD;
+            return BACKEND_PROD_ADDRESS;
     }
 
-    public static String addressToUse(boolean test){
-        if(test)
-            return DEV_ADDRESS;
+    public static String feAddressToUse(){
+        if(TEST)
+            return FRONTEND_DEV_ADDRESS;
         else
-            return PROD_ADDRESS;
+            return FRONTEND_PROD_ADDRESS;
     }
     public static boolean fileTypesToIgnore(String title){
         String[] temp = ArrayUtils.addAll(OGRINFO_VECTOR_FILE_EXTENSIONS,GDALINFO_RASTER_FILE_EXTENSIONS);
