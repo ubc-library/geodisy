@@ -5,7 +5,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import static BaseFiles.PrivateStrings.*;
 
 public class GeodisyStrings {
-    public final static boolean TEST = true; //change this to false when in production
+    public final static boolean TEST = false; //change this to false when in production
     public final static boolean GEOSPATIAL_ONLY = false;
     public final static String GIT_PASSWORD = PRIVATE_GIT_PASSWORD;
     public final static String GEOSERVER_PASSWORD = PRIVATE_GEOSERVER_PASSWORD;
