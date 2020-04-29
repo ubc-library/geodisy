@@ -5,7 +5,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import static BaseFiles.PrivateStrings.*;
 
 public class GeodisyStrings {
-    public final static boolean TEST = false; //change this to false when in production
+    public final static boolean TEST = true; //change this to false when in production
     public final static boolean GEOSPATIAL_ONLY = false;
     public final static String GIT_PASSWORD = PRIVATE_GIT_PASSWORD;
     public final static String GEOSERVER_PASSWORD = PRIVATE_GEOSERVER_PASSWORD;
@@ -172,34 +172,33 @@ public class GeodisyStrings {
     public final static String SOLR_PATH_PROD = ""; //"SOLR_URL=http://www.example.com:1234/solr/collection ";
     //Add value (including space at end) to OGM_PATH if you are harvesting from somewhere other than what's in the rake file
     public final static String OGM_PATH = ""; //"OGM_PATH=/var/www/geoserver.frdr.ca/html/geodisy/ ";
-    public final static String DEV_ADDRESS = "geoservertest.frdr-dfdr.ca";
-    public final static String PROD_ADDRESS = "geoserver.frdr.ca";
-    public final static String ADDRESS = addressToUse();
-    public final static String VM_BASE_PATH_DEV = "C:/geodisy/Geodisy/Geodisy/";
-    public final static String VM_BASE_PATH_PROD = "https://" + ADDRESS + "/";
-    public final static String BASE_PATH = vmToUse();
+    public final static String BACKEND_DEV_ADDRESS = "geoservertest.frdr-dfdr.ca";
+    public final static String BACKEND_PROD_ADDRESS = "geoserver.frdr.ca";
+    public final static String FRONTEND_DEV_ADDRESS = "geotest.frdr-dfdr.ca";
+    public final static String FRONTEND_PROD_ADDRESS = "geo.frdr.ca";
+    public final static String BACKEND_ADDRESS = beAddressToUse();
+    public final static String FRONTEND_ADDRESS = feAddressToUse();
+    public final static String BASE_PATH = "https://" + BACKEND_ADDRESS + "/";
     public final static String END_XML_JSON_FILE_PATH = BASE_PATH + "geodisy/";
     public final static String PATH_TO_XML_JSON_FILES = END_XML_JSON_FILE_PATH;
-    public final static String MOVE_METADATA = "rsync -auhv " + getRoot() + "metadata/* /var/www/" + ADDRESS + "/html/geodisy/";
+    public final static String MOVE_METADATA = "rsync -auhv " + getRoot() + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
     //TODO figure out where to move the data if it needs to move at all
-    public final static String MOVE_DATA = "rsync -auhv " + getRoot() + "datasetFiles/* /var/www/" + ADDRESS + "/html/geodisy/";
-    //TODO need to update the SOLR clear to access the solr index on geo.frdr.ca VM
-    public final static String CLEAR_SOLR = "sudo su - root -c \"cd /root/solr-8.3.0/bin/ && ./post -c geoblacklight-core delete_ALL.xml\"";
+    public final static String MOVE_DATA = "rsync -auhv " + getRoot() + "datasetFiles/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
     public final static String GEOCOMBINE = "sudo su - geoblack -c  \"cd /home/geoblack/GeoCombine && "+ SOLR_PATH_PROD + OGM_PATH +"bundle exec rake geocombine:index\"";
     public final static String BASE_LOCATION_TO_STORE_METADATA = "metadata/";
 
-    public static String vmToUse(){
-        if(IS_WINDOWS)
-            return VM_BASE_PATH_DEV;
+    public static String beAddressToUse(){
+        if(TEST)
+            return BACKEND_DEV_ADDRESS;
         else
-            return VM_BASE_PATH_PROD;
+            return BACKEND_PROD_ADDRESS;
     }
 
-    public static String addressToUse(){
+    public static String feAddressToUse(){
         if(TEST)
-            return DEV_ADDRESS;
+            return FRONTEND_DEV_ADDRESS;
         else
-            return PROD_ADDRESS;
+            return FRONTEND_PROD_ADDRESS;
     }
     public static boolean fileTypesToIgnore(String title){
         String[] temp = ArrayUtils.addAll(OGRINFO_VECTOR_FILE_EXTENSIONS,GDALINFO_RASTER_FILE_EXTENSIONS);

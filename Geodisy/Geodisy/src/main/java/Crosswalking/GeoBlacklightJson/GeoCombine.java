@@ -2,6 +2,7 @@ package Crosswalking.GeoBlacklightJson;
 
 import BaseFiles.GeoLogger;
 import Crosswalking.XML.XMLTools.JGit;
+import org.apache.solr.client.solrj.SolrServerException;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,12 +23,12 @@ public class GeoCombine {
         Process p = null;
         try{
             System.out.println("Clearing Solr");
-            processBuilder.command("/bin/bash", "-c", CLEAR_SOLR);
-            p = processBuilder.start();
-            p.waitFor();
-            p.destroy();
-        } catch (IOException | InterruptedException e) {
-            logger.error("Something went wrong emptying SOLR");
+            SOLR solr = new SOLR();
+            solr.clearIndex();
+        } catch (SolrServerException e) {
+            logger.error("Failed to clear the SOLR index for some reason");
+        } catch (IOException e) {
+            logger.error("IOException when trying to clear solr index");
         }
         try{
             System.out.println("Calling Geocombine");

@@ -5,6 +5,13 @@ package BaseFiles;
  * and open the template in the editor.
  */
 
+import Crosswalking.GeoBlacklightJson.SOLR;
+import org.apache.solr.client.solrj.SolrServerException;
+
+import java.io.IOException;
+
+import static BaseFiles.GeodisyStrings.TEST;
+
 /**
  *
  * @author pdante
@@ -19,7 +26,12 @@ public class Main {
         //Run the below to remove a single records
         //RemoveRecord rr = new RemoveRecord();
         //rr.removeRecord();
-
+        String dev;
+        if(TEST)
+            dev = "Using the dev servers, is this correct?";
+        else
+            dev = "Using the prod severs, is this correct?";
+        System.out.println(dev);
         GeodisyTask geodisyTask = new GeodisyTask();
         geodisyTask.run();
 
