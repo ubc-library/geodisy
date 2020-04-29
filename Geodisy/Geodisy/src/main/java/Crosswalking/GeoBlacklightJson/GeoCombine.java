@@ -22,6 +22,14 @@ public class GeoCombine {
 
         Process p = null;
         try{
+            System.out.println("Moving metadata");
+            p = processBuilder.start();
+            p.waitFor();
+            p.destroy();
+        } catch (IOException|InterruptedException e){
+            logger.error("Something went wrong trying to move the metadata");
+        }
+        try{
             System.out.println("Clearing Solr");
             SOLR solr = new SOLR();
             solr.clearIndex();
