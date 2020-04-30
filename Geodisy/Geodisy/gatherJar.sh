@@ -1,0 +1,1 @@
+cp /home/centos/geodisy/Geodisy/out.artifacts/Geodisy_jar/Geodisy.jar /home/centos/geodisy/Geodisy/Geodisy/

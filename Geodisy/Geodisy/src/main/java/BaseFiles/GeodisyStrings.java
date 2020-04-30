@@ -188,7 +188,7 @@ public class GeodisyStrings {
     public final static String MOVE_METADATA = "sudo rsync -auhv " + getRoot() + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
     //TODO figure out where to move the data if it needs to move at all
     public final static String MOVE_DATA = "sudo rsync -auhv " + getRoot() + "datasetFiles/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
-    public final static String GEOCOMBINE = "sh combine.sh";
+    public final static String GEOCOMBINE = "sh geodisyFiles/combine.sh";
     public final static String BASE_LOCATION_TO_STORE_METADATA = "metadata/";
 
     public static String beAddressToUse(){
