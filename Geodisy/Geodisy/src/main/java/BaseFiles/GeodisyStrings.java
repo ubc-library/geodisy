@@ -183,7 +183,7 @@ public class GeodisyStrings {
     public final static String BACKEND_ADDRESS = beAddressToUse();
     public final static String FRONTEND_ADDRESS = feAddressToUse();
     public final static String BASE_PATH = "https://" + BACKEND_ADDRESS + "/";
-    public final static String END_XML_JSON_FILE_PATH = BASE_PATH + "geodisy/";
+    public final static String END_XML_JSON_FILE_PATH = "http://" + BASE_PATH + "geodisy/";
     public final static String PATH_TO_XML_JSON_FILES = END_XML_JSON_FILE_PATH;
     public final static String MOVE_METADATA = "sudo rsync -auhv " + getRoot() + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
     //TODO figure out where to move the data if it needs to move at all

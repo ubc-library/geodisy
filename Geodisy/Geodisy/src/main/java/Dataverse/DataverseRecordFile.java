@@ -47,7 +47,7 @@ public class DataverseRecordFile {
         this.fileIdent = fileIdent;
         this.dbID = dbID;
         this.server = server;
-        recordURL = server+"api/access/datafile/" + dbID + "?format=original";
+        recordURL = server+"api/access/datafile/" + dbID;
         this.datasetIdent = datasetIdent.replace(".","_").replace("/","_");
         gbb = new GeographicBoundingBox(datasetIdent);
 
@@ -64,7 +64,7 @@ public class DataverseRecordFile {
         this.dbID = dbID;
         this.fileIdent = "";
         this.server = server;
-        recordURL = server+"api/access/datafile/" + dbID + "?format=original";
+        recordURL = server+"api/access/datafile/" + dbID;
         this.datasetIdent = datasetIdent.replace(".","_").replace("/","_");
         gbb = new GeographicBoundingBox(datasetIdent);
 

@@ -212,7 +212,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             if(dgrf.hasValidBB()) {
                 tempRec = temp.translateFile(this);
                 dgrf.setTranslatedTitle(tempRec.translatedTitle);
-                dgrf.setFileURL(server+"api/access/datafile/" + dgrf.dbID + "?format=original");
+                dgrf.setFileURL(server+"api/access/datafile/" + dgrf.dbID);
                 if (!tempRec.getOriginalTitle().isEmpty())
                     newRecs.add(tempRec);
                 if(!dgrf.getTranslatedTitle().isEmpty())
@@ -255,7 +255,7 @@ public class DataverseJavaObject extends SourceJavaObject {
         for(DataverseRecordFile drf : dataFiles){
             if(drf.getTranslatedTitle().equals(name)) {
                 dvgr = new DataverseGeoRecordFile(drf);
-                dvgr.setFileURL(server+"api/access/datafile/" + drf.dbID + "?format=original");
+                dvgr.setFileURL(server+"api/access/datafile/" + drf.dbID);
                 return dvgr;
             }
         }
