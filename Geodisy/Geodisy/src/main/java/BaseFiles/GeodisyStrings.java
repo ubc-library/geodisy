@@ -185,7 +185,7 @@ public class GeodisyStrings {
     public final static String BASE_PATH = "https://" + BACKEND_ADDRESS + "/";
     public final static String END_XML_JSON_FILE_PATH = "http://" + BASE_PATH + "geodisy/";
     public final static String PATH_TO_XML_JSON_FILES = END_XML_JSON_FILE_PATH;
-    public final static String MOVE_METADATA = "sudo rsync -auhv " + getRoot() + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
+    public final static String MOVE_METADATA = "sudo rsync -upgo " + getRoot() + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
     //TODO figure out where to move the data if it needs to move at all
     public final static String MOVE_DATA = "sudo rsync -auhv " + getRoot() + "datasetFiles/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
     public final static String GEOCOMBINE = "sh geodisyFiles/combine.sh";
