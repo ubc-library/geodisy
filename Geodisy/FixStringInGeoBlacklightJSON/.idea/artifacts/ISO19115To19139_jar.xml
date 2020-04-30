@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ISO19115To19139:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ISO19115To19139_jar</output-path>
+    <root id="archive" name="ISO19115To19139.jar">
+      <element id="module-output" name="FixStringInGeoBlacklightJSON" />
+    </root>
+  </artifact>
+</component>

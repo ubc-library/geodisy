@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="ISO19115To19139:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="07a8802e-39b7-4617-83b8-a1b630ded6b7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/com/company/ChangeDownload.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Geodisy/src/main/java/BaseFiles/GeodisyStrings.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Geodisy/src/main/java/BaseFiles/GeodisyStrings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Geodisy/src/main/java/BaseFiles/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Geodisy/src/main/java/BaseFiles/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Geodisy/src/main/java/Dataverse/DataverseJavaObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Geodisy/src/main/java/Dataverse/DataverseJavaObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Geodisy/src/main/java/Dataverse/DataverseRecordFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Geodisy/src/main/java/Dataverse/DataverseRecordFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/ISO19115To19139_jar/ISO19115To19139.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/ISO19115To19139_jar/ISO19115To19139.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/artifacts/Geodisy_jar/Geodisy.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../out/artifacts/Geodisy_jar/Geodisy.jar" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1bCctFqVQkqOT5Z3HYbkBlYRAjr" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15527344" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="FixStringInGeoBlacklightJSON" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="FixStringInGeoBlacklightJSON" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="07a8802e-39b7-4617-83b8-a1b630ded6b7" name="Default Changelist" comment="" />
+      <created>1588139728635</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1588139728635</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588228778660">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.294.1680.1010/0.0.1920.1040@0.0.1920.1040" timestamp="1588228778660" />
+    <state x="690" y="310" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1588221823142">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="310" key="#com.intellij.ide.util.TreeClassChooserDialog/1920.294.1680.1010/0.0.1920.1040@0.0.1920.1040" timestamp="1588221823142" />
+    <state x="440" y="94" key="SettingsEditor" timestamp="1588231516936">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="440" y="94" key="SettingsEditor/1920.294.1680.1010/0.0.1920.1040@0.0.1920.1040" timestamp="1588231516936" />
+    <state x="667" y="255" width="585" height="530" key="find.popup" timestamp="1588226431457">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="667" y="255" width="585" height="530" key="find.popup/1920.294.1680.1010/0.0.1920.1040@0.0.1920.1040" timestamp="1588226431457" />
+  </component>
+</project>
