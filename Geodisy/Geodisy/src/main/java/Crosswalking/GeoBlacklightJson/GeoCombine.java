@@ -41,12 +41,11 @@ public class GeoCombine {
         try{
             System.out.println("Calling Geocombine");
             processBuilder.command("/bin/bash", "-c", GEOCOMBINE);
-            processBuilder.directory(new File("/home/geoblack/GeoCombine"));
             p = processBuilder.start();
             p.waitFor();
             p.destroy();
         } catch (IOException | InterruptedException e) {
-            logger.error("Something went wrong calling GeoCombine to index files");
+            logger.error("Something went wrong calling GeoCombine to index files: " + e);
         }
     }
 }

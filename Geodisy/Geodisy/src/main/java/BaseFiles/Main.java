@@ -5,6 +5,7 @@ package BaseFiles;
  * and open the template in the editor.
  */
 
+import Crosswalking.GeoBlacklightJson.GeoCombine;
 import Crosswalking.GeoBlacklightJson.SOLR;
 import org.apache.solr.client.solrj.SolrServerException;
 
@@ -34,6 +35,9 @@ public class Main {
         System.out.println(dev);
         GeodisyTask geodisyTask = new GeodisyTask();
         geodisyTask.run();
+
+        /*GeoCombine geoCombine = new GeoCombine();
+        geoCombine.index();*/
 
         //Run the below solo to download
         /*DownloadRecord downloadRecord = new DownloadRecord();
