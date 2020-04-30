@@ -35,7 +35,7 @@ public class Main {
         if(TEST)
             dev = "Using the dev servers, is this correct?";
         else
-            dev = "Using the prod severs, is this correct?";
+            dev = "Using the prod servers, is this correct?";
         System.out.println(dev);
         GeodisyTask geodisyTask = new GeodisyTask();
         geodisyTask.run();
