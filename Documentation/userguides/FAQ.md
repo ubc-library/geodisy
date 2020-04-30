@@ -33,9 +33,9 @@ This does not mean that data sets will not work with a geographic information sy
 
 Although _Geodisy_ is a geospatial search tool, it searches for any type of data which has a geographic component in the _description_ of the data. This means that it's possible to find data **about** a place. A map-based search has traditionally returned only items that can be viewed in an application specifically for mapping, but Geodisy returns all types of data. Searching for data in Nigeria will return survey data **about** Nigeria, even though the data set may not contain latitude/longitude points or imagery.
 
-### What is the ISO 19115 metadata link?
+### What is the ISO 19139 metadata link?
 
-All items appearing in _Geodisy_ will have [ISO 19115] (https://www.iso.org/standard/26020.html) geospatial metadata created when added to Geodisy, which is an international standard used for describing geographic data. This ensures that:
+All items appearing in _Geodisy_ will have [ISO 19115](https://www.iso.org/standard/53798.html) geospatial metadata created when added to Geodisy that is available in [ISO 19139](https://www.iso.org/standard/32557.html) XML format. ISO 19115 is an international standard used for describing geographic data. This ensures that:
 
 * all metadata appearing in _Geodisy_ will have a consistent, standardized schema  
 * Geographic information not present in the source record but discovered by _Geodisy_ will be added to metadata in consistent fashion  
