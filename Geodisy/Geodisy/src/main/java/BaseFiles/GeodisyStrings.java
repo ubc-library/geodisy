@@ -5,7 +5,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import static BaseFiles.PrivateStrings.*;
 
 public class GeodisyStrings {
-    public final static boolean TEST = false; //change this to false when in production
+    public static boolean TEST; //change this to false when in production by adding an argument when starting the jar
     public final static boolean GEOSPATIAL_ONLY = false;
     public final static String GIT_PASSWORD = PRIVATE_GIT_PASSWORD;
     public final static String GEOSERVER_PASSWORD = PRIVATE_GEOSERVER_PASSWORD;
@@ -180,9 +180,9 @@ public class GeodisyStrings {
     public final static String BACKEND_PROD_ADDRESS = "geoserver.frdr.ca";
     public final static String FRONTEND_DEV_ADDRESS = "geotest.frdr-dfdr.ca";
     public final static String FRONTEND_PROD_ADDRESS = "geo.frdr.ca";
-    public final static String BACKEND_ADDRESS = beAddressToUse();
-    public final static String FRONTEND_ADDRESS = feAddressToUse();
-    public final static String BASE_PATH = "https://" + BACKEND_ADDRESS + "/";
+    public static String BACKEND_ADDRESS = beAddressToUse();
+    public static String FRONTEND_ADDRESS = feAddressToUse();
+    public final static String BASE_PATH = BACKEND_ADDRESS + "/";
     public final static String END_XML_JSON_FILE_PATH = "http://" + BASE_PATH + "geodisy/";
     public final static String PATH_TO_XML_JSON_FILES = END_XML_JSON_FILE_PATH;
     public final static String MOVE_METADATA = "sudo rsync -upgo " + getRoot() + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
