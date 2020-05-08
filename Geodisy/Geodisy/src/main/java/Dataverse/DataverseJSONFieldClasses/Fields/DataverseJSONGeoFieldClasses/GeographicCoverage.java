@@ -6,12 +6,11 @@ import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.City;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Province;
-import org.apache.commons.lang3.ArrayUtils;
 import org.json.JSONObject;
 
 import java.util.*;
 
-import static Dataverse.DVFieldNameStrings.*;
+import static Strings.DVFieldNameStrings.*;
 
 public class GeographicCoverage extends CompoundJSONField {
     private String givenCountry, givenProvince, givenCity, otherGeographicCoverage, doi, commonCountry, commonProvince, commonCity;

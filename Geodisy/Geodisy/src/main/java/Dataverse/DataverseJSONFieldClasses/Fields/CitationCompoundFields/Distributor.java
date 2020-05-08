@@ -4,7 +4,7 @@ package Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
-import static Dataverse.DVFieldNameStrings.*;
+import static Strings.DVFieldNameStrings.*;
 
 public class Distributor extends CompoundJSONField {
     private String distributorName, distributorAffiliation, distributorAbbreviation, distributorURL, distributorLogoURL;

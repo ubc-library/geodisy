@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 
-import static BaseFiles.GeodisyStrings.*;
+import static Strings.GeodisyStrings.*;
 
 
 public class GdalTest {

@@ -18,7 +18,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 
-import static BaseFiles.GeodisyStrings.COUNTRY_VALS;
+import static Strings.GeodisyStrings.COUNTRY_VALS;
 
 
 public class GetAltCountryNames {

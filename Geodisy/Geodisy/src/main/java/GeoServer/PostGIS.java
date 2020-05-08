@@ -1,18 +1,14 @@
 package GeoServer;
 
 import BaseFiles.GeoLogger;
-import BaseFiles.GeodisyStrings;
 import Dataverse.DataverseJavaObject;
-import Dataverse.GDAL;
 
 
 import java.io.IOException;
 
 
-import static BaseFiles.GeodisyStrings.GEODISY_PATH_ROOT;
-import static BaseFiles.GeodisyStrings.RASTER;
-import static Dataverse.DVFieldNameStrings.PERSISTENT_ID;
-import static GeoServer.GeoserverStrings.*;
+import static Strings.DVFieldNameStrings.PERSISTENT_ID;
+import static Strings.GeoserverStrings.*;
 
 public class PostGIS {
     GeoLogger logger;

@@ -1,7 +1,7 @@
 package Dataverse.FindingBoundingBoxes.LocationTypes;
 import java.io.Serializable;
 
-import static BaseFiles.GeodisyStrings.*;
+import static Strings.GeodisyStrings.*;
 
 public class BoundingBox implements Serializable {
     private static final long serialVersionUID = -515599959188846468L;

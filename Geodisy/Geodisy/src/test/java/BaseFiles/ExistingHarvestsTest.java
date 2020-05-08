@@ -5,6 +5,7 @@ import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordInfo;
 import Dataverse.ExistingHarvests;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
+import Strings.GeodisyStrings;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.HashMap;
 
-import static BaseFiles.GeodisyStrings.*;
+import static Strings.GeodisyStrings.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ExistingHarvestsTest {

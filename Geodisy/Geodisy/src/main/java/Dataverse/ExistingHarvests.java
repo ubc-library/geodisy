@@ -3,13 +3,12 @@ package Dataverse;
 import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
-import org.apache.commons.lang3.ObjectUtils;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import static BaseFiles.GeodisyStrings.*;
+import static Strings.GeodisyStrings.*;
 
 /**
  * Class that holds bounding boxes that have already been found and what versions of records have already been downloaded.

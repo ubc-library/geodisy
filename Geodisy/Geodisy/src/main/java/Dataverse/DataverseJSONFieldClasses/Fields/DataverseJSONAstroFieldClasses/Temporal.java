@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import java.util.*;
 
-import static Dataverse.DVFieldNameStrings.*;
+import static Strings.DVFieldNameStrings.*;
 
 public class Temporal extends CompoundJSONField {
     private String resolution, doi;

@@ -5,13 +5,12 @@ import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
 import Dataverse.DataverseJavaObject;
-import Dataverse.DataverseRecordFile;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
-import static Dataverse.DVFieldNameStrings.*;
+import static Strings.DVFieldNameStrings.*;
 
 public class GeographicFields extends MetadataType {
     List<GeographicCoverage> geoCovers;

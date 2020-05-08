@@ -1,6 +1,6 @@
 package tests.DataverseTestCases;
 
-import Dataverse.DVFieldNameStrings;
+import Strings.DVFieldNameStrings;
 import Dataverse.SourceJavaObject;
 import org.junit.Test;
 

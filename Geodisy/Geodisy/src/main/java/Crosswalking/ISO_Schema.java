@@ -18,8 +18,8 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 
-import static BaseFiles.GeodisyStrings.BASE_LOCATION_TO_STORE_METADATA;
-import static BaseFiles.GeodisyStrings.ISO_19139_XML;
+import static Strings.GeodisyStrings.BASE_LOCATION_TO_STORE_METADATA;
+import static Strings.GeodisyStrings.ISO_19139_XML;
 
 
 /**

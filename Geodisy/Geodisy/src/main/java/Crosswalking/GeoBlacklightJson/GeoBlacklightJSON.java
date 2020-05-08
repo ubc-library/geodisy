@@ -3,7 +3,6 @@ package Crosswalking.GeoBlacklightJson;
 import BaseFiles.FileWriter;
 import Crosswalking.MetadataSchema;
 import Dataverse.DataverseGeoRecordFile;
-import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Description;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordFile;
@@ -15,8 +14,6 @@ import java.io.File;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import static Dataverse.DVFieldNameStrings.DS_DESCRIPT;
 
 /**
  * Takes a DataverseJavaObject and creates a GeoBlacklight JSON from it

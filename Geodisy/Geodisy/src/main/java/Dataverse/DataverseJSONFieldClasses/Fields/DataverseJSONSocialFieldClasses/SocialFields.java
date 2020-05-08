@@ -3,15 +3,11 @@ package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClass
 import BaseFiles.GeoLogger;
 import Dataverse.DataverseJSONFieldClasses.MetadataType;
 import Dataverse.DataverseJavaObject;
-import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.List;
 
-import static Dataverse.DVFieldNameStrings.*;
+import static Strings.DVFieldNameStrings.*;
 
 public class SocialFields extends MetadataType {
     private SimpleSocialFields simpleSocialFields;

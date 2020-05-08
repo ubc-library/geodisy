@@ -4,7 +4,7 @@ package Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
-import static Dataverse.DVFieldNameStrings.*;
+import static Strings.DVFieldNameStrings.*;
 
 public class RelatedPublication extends CompoundJSONField {
     private String publicationCitation, publicationIDType, publicationIDNumber, publicationURL;

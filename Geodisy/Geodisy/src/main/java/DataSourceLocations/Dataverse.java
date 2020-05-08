@@ -5,7 +5,7 @@
  */
 package DataSourceLocations;
 
-import static BaseFiles.GeodisyStrings.DATAVERSE_URLS;
+import static Strings.GeodisyStrings.DATAVERSE_URLS;
 
 /**
  * Class holds the list of all the dataverse urls that are being harvested from

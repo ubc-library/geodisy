@@ -2,8 +2,6 @@ package Dataverse;
 
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 
-import static BaseFiles.GeodisyStrings.PATH_TO_XML_JSON_FILES;
-
 public class DataverseGeoRecordFile extends DataverseRecordFile {
     GDALInformation gdalInfo;
 

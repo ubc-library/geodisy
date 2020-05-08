@@ -13,10 +13,10 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.UUID;
 
-import static BaseFiles.GeodisyStrings.CHARACTER;
-import static BaseFiles.GeodisyStrings.XML_NS;
-import static Crosswalking.XML.XMLTools.XMLStrings.*;
-import static Dataverse.DVFieldNameStrings.*;
+import static Strings.GeodisyStrings.CHARACTER;
+import static Strings.GeodisyStrings.XML_NS;
+import static Strings.XMLStrings.*;
+import static Strings.DVFieldNameStrings.*;
 
 public class ISOXMLGen extends DjoXMLGenerator {
     private CitationFields citationFields;

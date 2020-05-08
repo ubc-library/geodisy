@@ -4,8 +4,8 @@ import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONObject;
 
-import static BaseFiles.GeodisyStrings.*;
-import static Dataverse.DVFieldNameStrings.*;
+import static Strings.GeodisyStrings.*;
+import static Strings.DVFieldNameStrings.*;
 
 public class GeographicBoundingBox extends CompoundJSONField {
     private BoundingBox bb;

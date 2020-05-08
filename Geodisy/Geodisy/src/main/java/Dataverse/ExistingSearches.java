@@ -2,7 +2,7 @@ package Dataverse;
 
 import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
-import BaseFiles.GeodisyStrings;
+import Strings.GeodisyStrings;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,6 +1,6 @@
 package Dataverse;
 
-import BaseFiles.GeodisyStrings;
+import Strings.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
@@ -13,7 +13,7 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import static Dataverse.DVFieldNameStrings.PROTOCOL;
+import static Strings.DVFieldNameStrings.PROTOCOL;
 
 public abstract class SourceJavaObject {
     protected CitationFields citationFields;

@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import org.apache.commons.text.WordUtils;
 
-import static BaseFiles.GeodisyStrings.COUNTRY_VALS;
+import static Strings.GeodisyStrings.COUNTRY_VALS;
 
 /**
  * A basically static class that opens a file that holds all the Country codes and bounding box values

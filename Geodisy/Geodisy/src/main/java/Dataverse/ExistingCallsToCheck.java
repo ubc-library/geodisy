@@ -6,7 +6,7 @@ import BaseFiles.GeoLogger;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import static BaseFiles.GeodisyStrings.EXISTING_CHECKS;
+import static Strings.GeodisyStrings.EXISTING_CHECKS;
 
 
 public class ExistingCallsToCheck extends ExistingSearches implements Serializable{

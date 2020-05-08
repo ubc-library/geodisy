@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.util.LinkedList;
 import java.util.List;
 
-import static BaseFiles.GeodisyStrings.SANDBOX_DV_URL;
+import static Strings.GeodisyStrings.SANDBOX_DV_URL;
 
 public class FixSpecificRecords {
     String doi;

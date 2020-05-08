@@ -8,8 +8,8 @@ import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import java.io.*;
 import java.util.HashMap;
 
-import static BaseFiles.GeodisyStrings.EXISTING_BBOXES;
-import static BaseFiles.GeodisyStrings.EXISTING_RECORDS;
+import static Strings.GeodisyStrings.EXISTING_BBOXES;
+import static Strings.GeodisyStrings.EXISTING_RECORDS;
 
 /**
  * Class for getting the list of records that have already been downloaded

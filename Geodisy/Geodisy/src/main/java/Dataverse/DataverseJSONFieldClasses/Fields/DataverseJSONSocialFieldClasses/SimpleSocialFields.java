@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 
-import static Dataverse.DVFieldNameStrings.*;
+import static Strings.DVFieldNameStrings.*;
 
 public class SimpleSocialFields extends CompoundJSONField {
     private String timeMethod, dataCollector, collectorTraining, frequencyOfDataCollection, samplingProcedure,

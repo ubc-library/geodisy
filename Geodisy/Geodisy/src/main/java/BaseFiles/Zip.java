@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import static BaseFiles.GeodisyStrings.ISO_19139_XML;
+import static Strings.GeodisyStrings.ISO_19139_XML;
 
 public class Zip {
     GeoLogger logger = new GeoLogger(this.getClass());

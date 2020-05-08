@@ -5,13 +5,7 @@ package BaseFiles;
  * and open the template in the editor.
  */
 
-import Crosswalking.GeoBlacklightJson.GeoCombine;
-import Crosswalking.GeoBlacklightJson.SOLR;
-import org.apache.solr.client.solrj.SolrServerException;
-
-import java.io.IOException;
-
-import static BaseFiles.GeodisyStrings.TEST;
+import static Strings.GeodisyStrings.TEST;
 
 /**
  *

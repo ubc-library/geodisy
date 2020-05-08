@@ -4,6 +4,7 @@ import Crosswalking.GeoBlacklightJson.GeoCombine;
 import Crosswalking.XML.XMLTools.JGit;
 import Dataverse.*;
 import Dataverse.FindingBoundingBoxes.Countries;
+import Strings.GeodisyStrings;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import static BaseFiles.GeodisyStrings.*;
+import static Strings.GeodisyStrings.*;
 
 public class GeodisyTask {
     GeoLogger logger = new GeoLogger(this.getClass());

@@ -15,17 +15,15 @@ import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.G
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 import java.nio.file.Files;
 
-import static BaseFiles.GeodisyStrings.*;
-import static Crosswalking.XML.XMLTools.XMLStrings.OPEN_METADATA_LOCAL_REPO;
-import static Dataverse.DVFieldNameStrings.*;
-import static GeoServer.GeoserverStrings.*;
+import static Strings.GeodisyStrings.*;
+import static Strings.XMLStrings.OPEN_METADATA_LOCAL_REPO;
+import static Strings.DVFieldNameStrings.*;
+import static Strings.GeoserverStrings.*;
 
 /**
  *

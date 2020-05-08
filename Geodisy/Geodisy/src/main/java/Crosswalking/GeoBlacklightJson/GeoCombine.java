@@ -1,14 +1,11 @@
 package Crosswalking.GeoBlacklightJson;
 
 import BaseFiles.GeoLogger;
-import Crosswalking.XML.XMLTools.JGit;
 import org.apache.solr.client.solrj.SolrServerException;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
-import static BaseFiles.GeodisyStrings.*;
+import static Strings.GeodisyStrings.*;
 
 public class GeoCombine {
     GeoLogger logger;

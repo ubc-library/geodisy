@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 
-import static Dataverse.DVFieldNameStrings.*;
+import static Strings.DVFieldNameStrings.*;
 
 public class AstroFields extends MetadataSimple {
     private SimpleAstroFields simpleAstroFields;

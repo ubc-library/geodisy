@@ -10,17 +10,16 @@ import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.G
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicUnit;
 import Dataverse.DataverseJavaObject;
-import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.w3c.dom.Element;
 
 
 import java.util.LinkedList;
 import java.util.List;
 
-import static BaseFiles.GeodisyStrings.CHARACTER;
-import static BaseFiles.GeodisyStrings.DECIMAL;
-import static Crosswalking.XML.XMLTools.XMLStrings.*;
-import static Dataverse.DVFieldNameStrings.*;
+import static Strings.GeodisyStrings.CHARACTER;
+import static Strings.GeodisyStrings.DECIMAL;
+import static Strings.XMLStrings.*;
+import static Strings.DVFieldNameStrings.*;
 
 public class GeographicInfo extends SubElement {
 GeographicFields gf;

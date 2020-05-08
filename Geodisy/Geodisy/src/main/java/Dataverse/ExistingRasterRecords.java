@@ -2,7 +2,7 @@ package Dataverse;
 
 import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
-import BaseFiles.GeodisyStrings;
+import Strings.GeodisyStrings;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import static BaseFiles.GeodisyStrings.RASTER_RECORDS;
+import static Strings.GeodisyStrings.RASTER_RECORDS;
 
 
 public class ExistingRasterRecords extends ExisitingFile implements Serializable {

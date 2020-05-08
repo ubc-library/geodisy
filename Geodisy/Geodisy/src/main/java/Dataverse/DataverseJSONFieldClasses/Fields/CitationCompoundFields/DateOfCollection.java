@@ -1,11 +1,10 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields;
 
 import Dataverse.DataverseJSONFieldClasses.CompoundDateJSONField;
-import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Date;
 import org.json.JSONObject;
 
-import static Dataverse.DVFieldNameStrings.*;
+import static Strings.DVFieldNameStrings.*;
 
 public class DateOfCollection extends CompoundDateJSONField {
     private Date dateOfCollectionStart, dateOfCollectionEnd;

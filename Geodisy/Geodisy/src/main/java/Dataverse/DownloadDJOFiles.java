@@ -1,14 +1,14 @@
 package Dataverse;
 
 
-import BaseFiles.GeodisyStrings;
+import Strings.GeodisyStrings;
 
 import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import static BaseFiles.GeodisyStrings.DATASET_FILES_PATH;
+import static Strings.GeodisyStrings.DATASET_FILES_PATH;
 
 public class DownloadDJOFiles {
     DataverseJavaObject djo;

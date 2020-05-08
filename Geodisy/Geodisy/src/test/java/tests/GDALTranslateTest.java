@@ -2,7 +2,6 @@ package tests;
 
 import Dataverse.GDAL;
 import Dataverse.GDALTranslate;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,8 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
-import static BaseFiles.GeodisyStrings.GDAL_TRANSLATE;
-import static BaseFiles.GeodisyStrings.OGR2OGR;
+import static Strings.GeodisyStrings.OGR2OGR;
 
 public class GDALTranslateTest {
     @BeforeEach

@@ -1,8 +1,7 @@
 package Dataverse;
 
 import BaseFiles.GeoLogger;
-import BaseFiles.GeodisyStrings;
-import Crosswalking.GeoBlacklightJson.GeoBlacklightStrings;
+import Strings.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
@@ -14,8 +13,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.*;
 
-import static BaseFiles.GeodisyStrings.*;
-import static Dataverse.DVFieldNameStrings.*;
+import static Strings.GeodisyStrings.*;
+import static Strings.DVFieldNameStrings.*;
 
 /**
  * Java object structure to parse Dataverse Json into

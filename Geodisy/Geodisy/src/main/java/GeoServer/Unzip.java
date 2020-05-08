@@ -1,24 +1,19 @@
 package GeoServer;
 
 import BaseFiles.GeoLogger;
-import BaseFiles.GeodisyStrings;
+import Strings.GeodisyStrings;
 
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordFile;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import sun.awt.image.ImageWatched;
 
 import java.io.*;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.util.Enumeration;
 import java.util.LinkedList;
 
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 /**
  * Class for unzipping a file right before uploading things to Geosever

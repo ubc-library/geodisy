@@ -7,9 +7,9 @@ import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasse
 import Dataverse.DataverseJavaObject;
 import org.w3c.dom.Element;
 
-import static BaseFiles.GeodisyStrings.CHARACTER;
-import static Crosswalking.XML.XMLTools.XMLStrings.*;
-import static Dataverse.DVFieldNameStrings.DATA_COLLECTOR;
+import static Strings.GeodisyStrings.CHARACTER;
+import static Strings.XMLStrings.*;
+import static Strings.DVFieldNameStrings.DATA_COLLECTOR;
 
 public class SocialFieldInfo extends SubElement {
     SocialFields sf;

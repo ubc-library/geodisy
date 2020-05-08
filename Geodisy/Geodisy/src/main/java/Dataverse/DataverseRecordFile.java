@@ -1,7 +1,7 @@
 package Dataverse;
 
 import BaseFiles.GeoLogger;
-import BaseFiles.GeodisyStrings;
+import Strings.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import GeoServer.FolderFileParser;
@@ -16,8 +16,8 @@ import java.util.LinkedList;
 import java.util.Stack;
 
 
-import static BaseFiles.GeodisyStrings.*;
-import static Dataverse.DVFieldNameStrings.*;
+import static Strings.GeodisyStrings.*;
+import static Strings.DVFieldNameStrings.*;
 
 
 /**
