@@ -241,6 +241,7 @@ public class CitationFields extends MetadataSimple {
         simpleCitationFields.setField(LICENSE,parseSimpleValue(current,LICENSE));
         simpleCitationFields.setField(MAJOR_VERSION,parseSimpleValue(current,MAJOR_VERSION));
         simpleCitationFields.setField(MINOR_VERSION,parseSimpleValue(current,MINOR_VERSION));
+        simpleCitationFields.setField(LAST_MOD_DATE,parseSimpleValue(current,LAST_MOD_DATE));
         getTOSAndAccessFields(current);
 
     }
