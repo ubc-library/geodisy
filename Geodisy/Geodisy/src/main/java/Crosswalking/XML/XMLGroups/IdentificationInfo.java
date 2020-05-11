@@ -51,6 +51,7 @@ public class IdentificationInfo extends SubElement {
     //JournalFields journalCF;
     String noteText,  distDate;
     XMLStack stack;
+    XMLStack secondaryStack;
 
     public IdentificationInfo(DataverseJavaObject djo, XMLDocObject doc, Element root) {
         super(djo,doc,root);
@@ -546,6 +547,7 @@ public class IdentificationInfo extends SubElement {
         Element levelL = doc.createGMDElement(CI_CITE);
         levelL.appendChild(getPURL());
         levelL.appendChild(getSystemVals());
+        levelL = getVersionVals(levelL);
 
         String subtitleVal = simpleCF.getField(SUBTITLE);
         String title = simpleCF.getField(TITLE);
@@ -589,15 +591,17 @@ public class IdentificationInfo extends SubElement {
         stack.push(levelM);
         stack.push(doc.createGMDElement(CI_DATE)); //N
         stack.push(doc.createGMDElement(XMLDATE)); //O
-        levelM = stack.zip(doc.addGCOVal(simpleCF.getField(PUB_DATE),DATE_TIME));
+        levelM = stack.zip(doc.addGCOVal(simpleCF.getField(PUB_DATE), DATE_TIME));
         stack.push(levelM);
         stack.push(doc.createGMDElement(CI_DATE)); //N
-        levelM = stack.zip(doc.addGMDVal("publication","CI_DateTypeCode" ));
+        levelM = stack.zip(doc.addGMDVal("publication", "CI_DateTypeCode"));
+        return levelM;
+    }
 
-        /*
+    private Element getVersionVals(Element levelL){
         //Version
-        levelL.appendChild(levelM);
-        levelM = doc.createGMDElement("edition");
+        stack = new XMLStack();
+        Element levelM = doc.createGMDElement(EDITION);
         levelM.appendChild(doc.addGCOVal(Integer.toString(simpleCF.getVersion()),CHARACTER));
         levelL.appendChild(levelM);
         levelM = doc.createGMDElement("editionDate");
@@ -605,16 +609,14 @@ public class IdentificationInfo extends SubElement {
         stack.push(levelM);
         stack.push(doc.createGMDElement(CI_DATE)); //N
         stack.push(doc.createGMDElement(XMLDATE)); //O
-        levelM = stack.zip(doc.addGCOVal(simpleCF.getField(DIST_DATE),CHARACTER));
+        levelM = stack.zip(doc.addGCOVal(simpleCF.getField(LAST_MOD_DATE),CHARACTER));
         levelL.appendChild(levelM);
         levelM = doc.createGMDElement("editionDate");
         stack.push(levelM);
         stack.push(doc.createGMDElement(CI_DATE));
         levelM = stack.zip(doc.addGMDVal("lastUpdate","CI_DateTypeCode" ));
         levelL.appendChild(levelM);
-         */
-
-        return levelM;
+        return levelL;
     }
 
     private Element getPURL() {
