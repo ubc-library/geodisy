@@ -5,19 +5,17 @@ yum -y update
 
 Unless otherwise noted, commands executed in a root shell
 
-1. Install GeoServer 2.17.x (Stable)
+1. Install GeoServer 2.16.x (Stable)
 * Install Java 8
 yum install java-1.8.0-openjdk
 
 * Install Platform Independent binary from http://geoserver.org/release/stable/
-wget http://sourceforge.net/projects/geoserver/files/GeoServer/2.17.0/geoserver-2.17.0-bin.zip
+wget http://sourceforge.net/projects/geoserver/files/GeoServer/2.16.0/geoserver-2.16.0-bin.zip
 mkdir -p /opt/share/geoserver
-mkdir -p /opt/share/geoserver/geoserver-2.17.0
-unzip geoserver-2.17.0-bin.zip in /opt/share/geoserver/geoserver-2.17.0
+unzip geoserver-2.16.0-bin.zip in /opt/share/geoserver
 useradd -r geoserver
 
 chown -R geoserver /opt/share/geoserver/
-chown -R geoserver /opt/share/geoserver/geoserver-2.17.0
 
 * As geoserver user (manual startup)
 
@@ -53,17 +51,6 @@ admin
 Geoserver w/import extension
 Download importer extension Core from http://geoserver.org/release/stable/
 unzip geoserver-2.16.0-importer-plugin.zip into /opt/share/geoserver/geoserver-2.16.0/webapps/geoserver/WEB-INF/lib
-
-* Install other extensions
-wget the following into /opt/share/geoserver/ and then unzip them to /opt/share/geoserver/geoserver-2.17.0/webapps/geoserver/WEB-INF/lib/
-        http://sourceforge.net/projects/geoserver/files/GeoServer/2.17.0/extensions/geoserver-2.17.0-gdal-plugin.zip
-        http://sourceforge.net/projects/geoserver/files/GeoServer/2.17.0/extensions/geoserver-2.17.0-wps-plugin.zip
-        http://sourceforge.net/projects/geoserver/files/GeoServer/2.17.0/extensions/geoserver-2.17.0-ogr-wps-plugin.zip
-        http://sourceforge.net/projects/geoserver/files/GeoServer/2.17.0/extensions/geoserver-2.17.0-ogr-wfs-plugin.zip
-        http://sourceforge.net/projects/geoserver/files/GeoServer/2.17.0/extensions/geoserver-2.17.0-netcdf-plugin.zip
-        http://sourceforge.net/projects/geoserver/files/GeoServer/2.17.0/extensions/geoserver-2.17.0-netcdf-out-plugin.zip
-        http://sourceforge.net/projects/geoserver/files/GeoServer/2.17.0/extensions/geoserver-2.17.0-excel-plugin.zip
-
 
 * Apache reverse proxy
 yum install mod_ssl openssl
@@ -279,21 +266,39 @@ bundle install
 - In GeoCombine dir, mkdir tmp
 - Run rake geocombine:clone and then rake geocombine:index
 
+6. Install Docker and GDAL 2.4.1 
 
-6. SELinux config
+GDAL 3.x currently doesn't create Geoserver-readable Geotiffs, so an older version of GDAL is needed to create Geotiffs.
+
+*Docker
+
+sudo yum check-update
+curl -fsSL https://get.docker.com/ | sh
+sudo systemctl start docker
+sudo systemctl status docker
+sudo systemctl enable docker
+
+*GDAL 2.4.1 Docker Image
+docker pull osgeo/gdal:alpine-ultrasmall-v2.4.1
+
+In ~/.bash_profile:
+    export GDAL_DOCK="sudo docker run --rm -v /home:/home osgeo/gdal:alpine-ultrasmall-v2.4.1"
+
+
+7. SELinux config
 
 * If running SELinux, apply the necessary booleans to allow httpd proxy operation:
 /usr/sbin/setsebool -P httpd_can_network_connect 1
 
 
-7. Startup scripts
+8. Startup scripts
 
 * GeoServer: /etc/systemd/system/geoserver.service
 * PostgreSQL: enabled via systemctl
 * GeoBlacklight: /etc/systemd/system/geoblacklight.service
 * Solr: enabled via systemctl
 
-8. TODO
+9. TODO
 
 * May not need: Figure out how (if) authentication to solr is needed or supported by GeoBlacklight. For now, run with blockUnknown: false in "/var/solr/data/security.json"
 * SSL support: GeoBlacklight
