@@ -109,30 +109,50 @@ public class GeoServerAPI extends DestinationAPI {
     public void uploadRaster(DataverseGeoRecordFile dgrf){
         String fileName = dgrf.getFileName();
         GeographicBoundingBox gbb = dgrf.getGBB();
-        String createCoverstore = " admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:image/tiff") +  "-d '<coverageStore><name>" + dgrf.getGeoserverLabel() + "</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>"+ OPEN_METADATA_LOCAL_REPO + dgrf.getDatasetIdent() + dgrf.getTranslatedTitle() + "</url></coverageStore>' \"http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores?configure=all\"";
-        String call = "curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:text/xml") + " -d '<coverageStore><name>"+ dgrf.getGeoserverLabel() + "</name><nativeCRS>" + dgrf.getNativeCRS() + "</nativeCRS><srs>" + dgrf.getProjection() + "</srs><latLonBoundingBox><minx>" + gbb.getField(WEST_LONG) + "</minx><maxx>" + gbb.getField(EAST_LONG) + "</maxx><miny>"+ gbb.getField(SOUTH_LAT) + "</miny><maxy>" + gbb.getField(NORTH_LAT) + "</maxy><crs>" + dgrf.getProjection() + "</crs></latLonBoundingBox></coverageStore>' \"http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores?configure=all\"";
+        String deleteCoveragestore = " admin:" + GEOSERVER_PASSWORD + " -XDELETE " + stringed("http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores/" + dgrf.getGeoserverLabel());
+        String createCoveragestore = " admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:text/xml") +  " -d '<coverageStore><name>" + dgrf.getGeoserverLabel() + "</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>"+ GEODISY_PATH_ROOT + dgrf.getDatasetIdent() + dgrf.getTranslatedTitle() + "</url></coverageStore>'" + stringed("http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores?configure=all");
+        String addRasterLayer = " admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:application/xml") + " -d '<coverage><name>"+ dgrf.getGeoserverLabel() + "</name><nativeCRS>" + dgrf.getNativeCRS() + "</nativeCRS><title>" + dgrf.getTranslatedTitle() + "</title><enabled>True</enabled></coverageStore>' " + stringed("http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores/"+ dgrf.getGeoserverLabel() + "/coverages");
         Process p;
             ProcessBuilder processBuilder= new ProcessBuilder();
             try {
-                processBuilder.command("curl", "-u", createCoverstore);
-                p = processBuilder.start();
-                p.waitFor();
-                p.destroy();
-                try {
-                    processBuilder.command("curl", "-u", call);
-                    p = processBuilder.start();
-                    p.waitFor();
-                    p.destroy();
-                }catch (InterruptedException | IOException f){
-                    logger.error("Something went wrong creating raster layer for " + dgrf.getGeoserverLabel() + ". Error stream: " + p.getErrorStream().read());
-                }
-            }catch (InterruptedException | IOException e){
-                logger.error("Something went wrong creating a raster coverstore for " + dgrf.getGeoserverLabel());
+                deleteOldCoverstore(processBuilder, deleteCoveragestore);
+                createCoverstore(processBuilder, createCoveragestore);
+                createLayer(processBuilder, addRasterLayer);
+            }catch (InterruptedException | IOException f){
+                logger.error("Error trying to add raster to geoserver: doi=" + sjo.getDOI() + ", geoserver label=" + dgrf.getGeoserverLabel() + ", file name=" + dgrf.getFileName());
             }
+
 
         ExistingRasterRecords existingRasterRecords = ExistingRasterRecords.getExistingRasters();
         existingRasterRecords.addOrReplaceRecord(sjo.getDOI(),fileName);
     }
+
+    private void createLayer(ProcessBuilder processBuilder, String addRasterLayer) throws InterruptedException, IOException{
+        Process p;
+        processBuilder.command("curl", "-u", addRasterLayer);
+        p = processBuilder.start();
+        p.waitFor();
+        p.destroy();
+    }
+
+    private void createCoverstore(ProcessBuilder processBuilder, String createCoveragestore) throws InterruptedException, IOException{
+        Process p;
+        processBuilder.command("curl", "-u", createCoveragestore);
+        p = processBuilder.start();
+        p.waitFor();
+        p.destroy();
+    }
+
+    private void deleteOldCoverstore(ProcessBuilder processBuilder, String deleteCoveragestore) throws InterruptedException, IOException{
+        Process p;
+        processBuilder.command("curl", "-u", deleteCoveragestore);
+        p = processBuilder.start();
+        p.waitFor();
+        p.destroy();
+
+    }
+
+
     private void saveJsonToFile(String jsonString) {
         FileWriter fileWriter = new FileWriter();
         String doi = sjo.getDOI();
