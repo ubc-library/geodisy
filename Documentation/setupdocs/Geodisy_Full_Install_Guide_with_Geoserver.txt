@@ -279,7 +279,7 @@ sudo systemctl status docker
 sudo systemctl enable docker
 
 *GDAL 2.4.1 Docker Image
-docker pull osgeo/gdal:alpine-ultrasmall-v2.4.1
+sudo docker pull osgeo/gdal:alpine-ultrasmall-v2.4.1
 
 In ~/.bash_profile:
     export GDAL_DOCK="sudo docker run --rm -v /home:/home osgeo/gdal:alpine-ultrasmall-v2.4.1"
