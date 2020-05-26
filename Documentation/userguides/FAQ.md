@@ -6,7 +6,7 @@
 	* Use the + and - buttons in the top left of the map to zoom in and out  
 	* Use your mouse’s scroll wheel to zoom in and out    
 	* Click and drag within the map  
-	* Press the Shift key and click to draw a box for the map to zoom toward  
+	* Hold the shift key and click to draw a box for the map to zoom toward  
 	* On a mobile device, use two fingers to zoom and drag within the map  
 
 2. Click **Search here** to see the results	 
