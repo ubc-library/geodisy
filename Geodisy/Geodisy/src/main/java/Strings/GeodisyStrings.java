@@ -42,7 +42,7 @@ public class GeodisyStrings {
         }
 
     //File paths
-        private final static String WINDOWS_ROOT = "C:\\geodisy\\Geodisy\\Geodisy\\";
+        private final static String WINDOWS_ROOT = "D:\\Work\\Geodisy\\Geodisy\\";
         private final static String FRDR_VM_CENTOS_ROOT = "/home/centos/geodisy/Geodisy/Geodisy/";
         public final static String GEODISY_PATH_ROOT = getRoot();
         public final static String SAVED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles");
