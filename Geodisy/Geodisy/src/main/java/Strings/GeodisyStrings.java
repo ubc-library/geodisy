@@ -5,7 +5,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import static Strings.PrivateStrings.*;
 
 public class GeodisyStrings {
-    public static boolean TEST; //change this to false when in production by adding an argument when starting the jar
+    public static boolean TEST; //This will be false if there are no arguments when calling the jar
     public final static boolean GEOSPATIAL_ONLY = false;
     public final static String GIT_PASSWORD = PRIVATE_GIT_PASSWORD;
     public final static String GEOSERVER_PASSWORD = PRIVATE_GEOSERVER_PASSWORD;
