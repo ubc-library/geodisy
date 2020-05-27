@@ -11,18 +11,16 @@ import BaseFiles.HTTPCaller;
 import Crosswalking.GeoBlacklightJson.HTTPCombineCaller;
 import Dataverse.*;
 
-import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 
+import java.io.InputStream;
 import java.nio.file.Files;
 
 import static Strings.GeodisyStrings.*;
-import static Strings.XMLStrings.OPEN_METADATA_LOCAL_REPO;
-import static Strings.DVFieldNameStrings.*;
 import static Strings.GeoserverStrings.*;
 
 /**
@@ -30,7 +28,6 @@ import static Strings.GeoserverStrings.*;
  * @author pdante
  */
 public class GeoServerAPI extends DestinationAPI {
-    //TODO write BaseFiles.API to connect to GeoServer
     SourceJavaObject sjo;
     HTTPCallerGeosever caller;
 
@@ -39,105 +36,168 @@ public class GeoServerAPI extends DestinationAPI {
         caller = new HTTPCallerGeosever();
         logger =  new GeoLogger(this.getClass());
     }
-        //TODO fix this to access layers from POSTGIS
-    public void addPostGISLayer(String geoserverlabel, String filename){
-        String vectorDB = VECTOR_DB;
-        String call = "curl -v -u "+ GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H \"Content-type: text/xml\" -d \"<featureType><name>" + geoserverlabel.toLowerCase() + "</name><nativeCRS>EPSG:4326</nativeCRS><srs>EPSG:4326</srs><enabled>true</enabled></featureType>\" http://localhost:8080/geoserver/rest/workspaces/geodisy/datastores/" + vectorDB + "/featuretypes";
-        String deleteFirst = "curl -v -u "+ GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -X DELETE \"http://localhost:8080/geoserver/rest/workspaces/geodisy/" + geoserverlabel.toLowerCase() + "\"?recurse=true -H  \"accept: application/json\" -H  \"content-type: application/json\"";
-        //String modifyName = "curl -v -u "+ GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H \"Content-type: text/xml\" -d \"<GeoServerLayer><enabled>true</enabled><name>" + geoserverlabel.toLowerCase() + "</name><title>" + filename + "</title></GeoServerLayer>\"  \"http://localhost:8080/geoserver/gwc/rest/layers/" + geoserverlabel.toLowerCase() +".xml\"";
-        ProcessBuilder processBuilder= new ProcessBuilder();
-        processBuilder.command("bash", "-c",deleteFirst);
 
+    private boolean generateWorkspace(String workspaceName) {
+        ProcessBuilder processBuilder= new ProcessBuilder();
         try {
-            //Delete existing layer
+            String generateWorkspace = "admin:" + GEOSERVER_PASSWORD + "-XPOST -H \"Content-type: text/xml\" -d \"<workspace><name>" + workspaceName + "</name></workspace>\" http://localhost:8080/geoserver/rest/workspaces";
+            processBuilder.command("curl", "-u", generateWorkspace);
             Process p = processBuilder.start();
             p.waitFor();
             p.destroy();
+        } catch (InterruptedException|IOException e) {
+            logger.error("Something went wrong trying to create the workspace " + workspaceName + " in geoserver");
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean addVector(String fileName,String geoserverLabel){
+        boolean success = addVectorToPostGIS(fileName,geoserverLabel);
+        if(!success) return success;
+        return addPostGISLayerToGeoserver(geoserverLabel,fileName);
+    }
+
+        private boolean addVectorToPostGIS(String fileName, String geoserverlabel) {
+            PostGIS postGIS = new PostGIS();
+            return postGIS.addFile2PostGIS((DataverseJavaObject) sjo, fileName,geoserverlabel);
+        }
+
+        //TODO fix this?
+        public boolean addPostGISLayerToGeoserver(String geoserverlabel, String filename){
+        String vectorDB = VECTOR_DB;
+        String title = filename.substring(0,filename.lastIndexOf('.'));
+        ProcessBuilder processBuilder= new ProcessBuilder();
+
+        try {
+            //Delete existing layer
+            String deleteFirst = GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -X DELETE \"http://localhost:8080/geoserver/rest/workspaces/geodisy/layers/" + geoserverlabel.toLowerCase() + "\"";
+            processBuilder.command("curl", "-u",deleteFirst);
+            Process p = processBuilder.start();
+            p.waitFor();
+            p.destroy();
+
             //bring new layer over from POSTGIS
-            processBuilder.command("bash", "-c",call);
+            String call = GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H \"Content-type: text/xml\" -d \"<featureType><name>" + geoserverlabel.toLowerCase() + "</name><title>"+ title +"</title><nativeCRS>EPSG:4326</nativeCRS><srs>EPSG:4326</srs><enabled>true</enabled></featureType>\" http://localhost:8080/geoserver/rest/workspaces/geodisy/datastores/" + vectorDB + "/featuretypes";
+            processBuilder.command("curl", "-u",call);
             p = processBuilder.start();
             p.waitFor();
             p.destroy();
-            //processBuilder.command("bash", "-c",modifyName);
         } catch (IOException | InterruptedException e) {
             logger.error("Something went wrong adding vector layer " + geoserverlabel + " from POSTGIS");
-        }
-    }
-
-    private boolean addVectorToPostGIS(String fileName, String geoserverlabel) {
-        PostGIS postGIS = new PostGIS();
-        return postGIS.addFile2PostGIS((DataverseJavaObject) sjo, fileName,geoserverlabel);
-        //TODO uncomment this once I have getting the layers from postgis to geoserver
-        //addVectorToGeoserver(fileName);
-    }
-
-
-     /**
-    //TODO need to get vector files from POSTGRIS, is this the way?
-    private boolean addVectorToGeoserver(String fileName) {
-        JSONObject jo = new JSONObject();
-        JSONObject outer = new JSONObject();
-        jo.put("name",sjo.getSimpleFieldVal(PERSISTENT_ID));
-        jo.put("title",fileName);
-        outer.put("featureType",jo);
-        createFileUploadJSON(jo);
-        String urlString = GEOSERVER_REST + "workspaces/geodisy/datastores/shapefiles/featuretypes";
-        String command = "curl -U " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type: application/json") + "-d @" + DATASET_FILES_PATH + "import.json" + urlString;
-        try {
-            Process p = Runtime.getRuntime().exec(command);
-            p.waitFor();
-            p.destroy();
-        } catch (InterruptedException | IOException e) {
-            logger.error("Something went wrong trying to add a vector to geoserver from postGIS. File name was: " + fileName);
             return false;
         }
-    return true;
-    }*/
-
-    private void createFileUploadJSON(JSONObject jo) {
-        FileWriter file = new FileWriter(DATASET_FILES_PATH + "input.json");
-        file.write(jo.toString());
+        return true;
     }
 
-    public boolean addVectorTest(String fileName,String geoserverLabel){
-        return addVectorToPostGIS(fileName,geoserverLabel);
-    }
-
-    public boolean addVector(String fileName,String geoserverLabel){
-        return addVectorToPostGIS(fileName,geoserverLabel);
-    }
-    public void uploadRaster(DataverseGeoRecordFile dgrf){
+    @Override
+    public boolean addRaster(DataverseGeoRecordFile dgrf){
         String fileName = dgrf.getFileName();
-        GeographicBoundingBox gbb = dgrf.getGBB();
-        String createCoverstore = " admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:image/tiff") +  "-d '<coverageStore><name>" + dgrf.getGeoserverLabel() + "</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>"+ OPEN_METADATA_LOCAL_REPO + dgrf.getDatasetIdent() + dgrf.getTranslatedTitle() + "</url></coverageStore>' \"http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores?configure=all\"";
-        String call = "curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:text/xml") + " -d '<coverageStore><name>"+ dgrf.getGeoserverLabel() + "</name><nativeCRS>" + dgrf.getNativeCRS() + "</nativeCRS><srs>" + dgrf.getProjection() + "</srs><latLonBoundingBox><minx>" + gbb.getField(WEST_LONG) + "</minx><maxx>" + gbb.getField(EAST_LONG) + "</maxx><miny>"+ gbb.getField(SOUTH_LAT) + "</miny><maxy>" + gbb.getField(NORTH_LAT) + "</maxy><crs>" + dgrf.getProjection() + "</crs></latLonBoundingBox></coverageStore>' \"http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores?configure=all\"";
-        Process p;
             ProcessBuilder processBuilder= new ProcessBuilder();
-            try {
-                processBuilder.command("curl", "-u", createCoverstore);
-                p = processBuilder.start();
-                p.waitFor();
-                p.destroy();
-                try {
-                    processBuilder.command("curl", "-u", call);
-                    p = processBuilder.start();
-                    p.waitFor();
-                    p.destroy();
-                }catch (InterruptedException | IOException f){
-                    logger.error("Something went wrong creating raster layer for " + dgrf.getGeoserverLabel() + ". Error stream: " + p.getErrorStream().read());
-                }
-            }catch (InterruptedException | IOException e){
-                logger.error("Something went wrong creating a raster coverstore for " + dgrf.getGeoserverLabel());
+
+            try { deleteOldCoverstore(processBuilder, dgrf);
+            }catch (InterruptedException | IOException f) {
+                logger.error("Error trying to delete existing raster from geoserver: doi=" + sjo.getDOI() + ", geoserver label=" + dgrf.getGeoserverLabel() + ", file name=" + fileName);
+                return false;
             }
 
+            try { normalizeRaster(processBuilder,dgrf);
+            }catch (InterruptedException | IOException f) {
+                logger.error("Error trying to normalize raster from geoserver: doi=" + sjo.getDOI() + ", geoserver label=" + dgrf.getGeoserverLabel() + ", file name=" + fileName);
+                return false;
+            }
+
+            try { renameRasterToOrig(processBuilder,dgrf.getDatasetIdent(),fileName);
+            }catch (InterruptedException | IOException f) {
+                logger.error("Error trying to rename raster back to correct name from geoserver: doi=" + sjo.getDOI() + ", geoserver label=" + dgrf.getGeoserverLabel() + ", file name=" + fileName);
+                return false;
+            }
+
+            try { addRasterOverviews(processBuilder,dgrf);
+            }catch (InterruptedException | IOException f) {
+                logger.error("Error trying to update raster with overviews from geoserver: doi=" + sjo.getDOI() + ", geoserver label=" + dgrf.getGeoserverLabel() + ", file name=" + fileName);
+                return false;
+            }
+
+            try { createCoverstore(processBuilder, dgrf);
+            }catch (InterruptedException | IOException f) {
+                logger.error("Error trying to create a coverstore for raster from geoserver: doi=" + sjo.getDOI() + ", geoserver label=" + dgrf.getGeoserverLabel() + ", file name=" + fileName);
+                return false;
+            }
+
+            try{ addRasterLayer(processBuilder, dgrf);
+            }catch (InterruptedException | IOException f){
+            logger.error("Error trying to add raster to geoserver: doi=" + sjo.getDOI() + ", geoserver label=" + dgrf.getGeoserverLabel() + ", file name=" + fileName);
+                return false;
+            }
         ExistingRasterRecords existingRasterRecords = ExistingRasterRecords.getExistingRasters();
         existingRasterRecords.addOrReplaceRecord(sjo.getDOI(),fileName);
+        return true;
     }
+
+        private void deleteOldCoverstore(ProcessBuilder processBuilder, DataverseGeoRecordFile dgrf) throws InterruptedException, IOException{
+            String deleteCoveragestore = " admin:" + GEOSERVER_PASSWORD + " -XDELETE " + stringed("http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores/" + dgrf.getGeoserverLabel() + "?recurse=true");
+            Process p;
+            processBuilder.command("curl", "-u", deleteCoveragestore);
+            p = processBuilder.start();
+            p.waitFor();
+            p.destroy();
+
+        }
+
+        private void normalizeRaster(ProcessBuilder processBuilder, DataverseGeoRecordFile dgrf) throws InterruptedException, IOException {
+            String warp = GDALWARP(DATA_DIR_LOC + dgrf.getDatasetIdent() + dgrf.getFileName());
+            Process p;
+            processBuilder.command("curl", "-u", warp);
+            p = processBuilder.start();
+            p.waitFor();
+            p.destroy();
+        }
+
+        private void renameRasterToOrig(ProcessBuilder processBuilder, String datasetID, String fileName) throws InterruptedException, IOException{
+            String rename = "mv " + DATA_DIR_LOC + datasetID + "1" + fileName + " " + DATA_DIR_LOC + datasetID + fileName;
+            Process p;
+            processBuilder.command("curl", "-u", rename);
+            p = processBuilder.start();
+            p.waitFor();
+            p.destroy();
+        }
+
+        private void addRasterOverviews(ProcessBuilder processBuilder, DataverseGeoRecordFile dgrf) throws InterruptedException, IOException {
+            String warp = GDALADDO(DATA_DIR_LOC + dgrf.getDatasetIdent() + dgrf.getFileName());
+            Process p;
+            processBuilder.command("curl", "-u", warp);
+            p = processBuilder.start();
+            p.waitFor();
+            p.destroy();
+        }
+
+        private void createCoverstore(ProcessBuilder processBuilder,  DataverseGeoRecordFile dgrf) throws InterruptedException, IOException{
+            String createCoveragestore = " admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:text/xml") +  " -d '<coverageStore><name>" + dgrf.getGeoserverLabel() + "</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>file:data/" + dgrf.getDatasetIdent() + dgrf.getFileName() + "</url></coverageStore>' " + stringed("http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores?configure=all");
+            Process p;
+            processBuilder.command("curl", "-u", createCoveragestore);
+            p = processBuilder.start();
+            p.waitFor();
+            p.destroy();
+        }
+
+        private void addRasterLayer(ProcessBuilder processBuilder, DataverseGeoRecordFile dgrf) throws InterruptedException, IOException{
+        String addRasterLayer = " admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:application/xml") + " -d '<coverage><name>"+ dgrf.getGeoserverLabel() + "</name><nativeCRS>" + RASTER_CRS + "</nativeCRS><title>" + dgrf.getTranslatedTitle() + "</title><enabled>True</enabled></coverage>' " + stringed("http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores/"+ dgrf.getGeoserverLabel() + "/coverages");
+        Process p;
+        processBuilder.command("curl", "-u", addRasterLayer);
+        p = processBuilder.start();
+        p.waitFor();
+        p.destroy();
+    }
+
+
+    /// Below methods seem unused at the moment
     private void saveJsonToFile(String jsonString) {
         FileWriter fileWriter = new FileWriter();
         String doi = sjo.getDOI();
         String doiPath = doi.replace("/","_");
-        String filePath = DATASET_FILES_PATH + doiPath + "/import.json";
+        String filePath = DATA_DIR_LOC + doiPath + "/import.json";
         try {
             fileWriter.writeStringToFile(jsonString,filePath);
         } catch (IOException e) {
@@ -242,19 +302,12 @@ public class GeoServerAPI extends DestinationAPI {
         return obj1;
     }
     //TODO generate new workspace
-    private boolean generateWorkspace(String workspaceName) {
-        String callURL = "curl -v -u admin:" + GEOSERVER_PASSWORD + "-XPOST -H \"Content-type: text/xml\" -d \"<workspace><name>" + workspaceName + "</name></workspace>\" http://localhost:8080/geoserver/rest/workspaces";
-        String response = caller.createWorkSpace(callURL);
-        return (response.contains("HTTP/1.1 201 Created")||response.contains("HTTP ERROR 401"));
-
-    }
 
     private boolean deleteWorkspace(String workspaceName){
         String callURL = "curl -v -u "+ GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -X DELETE http://localhost:8080/geoserver/rest/workspaces/" + workspaceName + "?recurse=true -H \"accept: application/json\" -H \"content-type: application/json\"";
         String response = caller.deleteWorkSpace(callURL);
         return response.contains("HTTP/1.1 200 OK")||response.contains("HTTP/1.1 404 Workspace");
     }
-
 
     private String createFileUploadJSON(String workspace,String store, String file) {
         String jsonModified = "";
@@ -289,6 +342,25 @@ public class GeoServerAPI extends DestinationAPI {
         return obj1;
     }
 
-    //TODO do I need to create something for this method. Bad coding if no.
-    protected void createJson(){}
+    /**TODO need to get vector files from POSTGRIS, is below method the way?
+     private boolean addVectorToGeoserver(String fileName) {
+     JSONObject jo = new JSONObject();
+     JSONObject outer = new JSONObject();
+     jo.put("name",sjo.getSimpleFieldVal(PERSISTENT_ID));
+     jo.put("title",fileName);
+     outer.put("featureType",jo);
+     createFileUploadJSON(jo);
+     String urlString = GEOSERVER_REST + "workspaces/geodisy/datastores/shapefiles/featuretypes";
+     String command = "curl -U " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type: application/json") + "-d @" + DATASET_FILES_PATH + "import.json" + urlString;
+     try {
+     Process p = Runtime.getRuntime().exec(command);
+     p.waitFor();
+     p.destroy();
+     } catch (InterruptedException | IOException e) {
+     logger.error("Something went wrong trying to add a vector to geoserver from postGIS. File name was: " + fileName);
+     return false;
+     }
+     return true;
+     }*/
+
 }

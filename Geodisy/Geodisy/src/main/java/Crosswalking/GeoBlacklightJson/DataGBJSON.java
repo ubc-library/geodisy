@@ -122,10 +122,10 @@ public class DataGBJSON extends GeoBlacklightJSON{
 
     @Override
     protected JSONArray addDataDownloadOptions(GeographicBoundingBox gbb, JSONArray ja) {
-        //TODO uncomment once Geoserver parts are working
-        /*ja.put(WMS);
+        if (gbb.getField(FILE_NAME).endsWith(".tif"))
+        ja.put(WMS);
         if (gbb.getField(FILE_NAME).endsWith(".shp"))
-            ja.put(WFS);*/
+            ja.put(WFS);
         if(!gbb.getField(FILE_URL).isEmpty())
             ja.put(DIRECT_FILE_DOWNLOAD + stringed(gbb.getField(FILE_URL)));
         return ja;

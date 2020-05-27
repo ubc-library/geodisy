@@ -100,8 +100,7 @@ public class DataverseAPI extends SourceAPI {
                 Long total = end.getTimeInMillis()-startTime;
                 System.out.println("Finished downloading " + doi +" after " + total + " milliseconds");
                 djo.updateRecordFileNumbers();
-                //TODO uncomment once we are using Geoserver
-                //djo.updateGeoserver();
+                djo.updateGeoserver();
 
                 if(djo.hasGeoGraphicCoverage())
                     djo = (DataverseJavaObject) getBBFromGeonames(djo);
@@ -325,7 +324,7 @@ public class DataverseAPI extends SourceAPI {
     protected String folderizedDOI(String doi){
         String folderizedDOI = doi.replace(".","_");
         folderizedDOI = folderizedDOI.replace("/","_");
-        return DATASET_FILES_PATH + folderizedDOI;
+        return DATA_DIR_LOC + folderizedDOI;
     }
     public void crosswalkRecord(SourceJavaObject sJO) {
         crosswalkSJOsToXML(sJO);

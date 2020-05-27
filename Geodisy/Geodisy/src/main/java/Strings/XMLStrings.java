@@ -39,6 +39,8 @@ public class XMLStrings {
     public final static String MD_LEGAL_CONSTRAINTS = "MD_LegalConstraints";
     public final static String OTHER_CONSTRAINTS = "otherConstraints";
     public final static String SUPPLEMENTAL_INFO = "supplementalInformation";
+    public final static String EDITION = "edition";
+    public final static String EDITION_DATA = "editionDate";
 
     //TODO figure out what file(s) to actually use
     public final static String ISO_19139_VALIDATION_FILE_PATH = "./geodisyFiles/gco.xsd";

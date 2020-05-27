@@ -106,7 +106,7 @@ public class DataverseRecordFile {
         DownloadedFiles downloads = DownloadedFiles.getDownloadedFiles();
         downloads.addDownload(originalTitle,djo.getDOI(),dbID);
         try {
-            String dirPath = GEODISY_PATH_ROOT+GeodisyStrings.replaceSlashes(DATASET_FILES_PATH + datasetIdent.replace("_", "/").replace(".","/") + "/");
+            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + datasetIdent.replace("_", "/").replace(".","/") + "/");
 
             File folder = new File(dirPath);
             folder.mkdirs();
@@ -157,7 +157,7 @@ public class DataverseRecordFile {
     public DataverseRecordFile translateFile(DataverseJavaObject djo) {
 
         //System.out.println("Made it to Translate File");
-        String dirPath = GEODISY_PATH_ROOT + DATASET_FILES_PATH + GeodisyStrings.replaceSlashes(datasetIdent.replace("_", "/") + "/");
+        String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + datasetIdent.replace("_", "/") + "/");
         //System.out.println(dirPath);
         File f = new File(dirPath + this.getTranslatedTitle());
         GDALTranslate gdalTranslate = new GDALTranslate();
@@ -186,7 +186,7 @@ public class DataverseRecordFile {
             } else {
                 String path = djo.getDOI().replace("/", "_");
                 path = path.replace(".", "_");
-                String badFilesPath = GeodisyStrings.replaceSlashes(GEODISY_PATH_ROOT + DATASET_FILES_PATH + path + "/" + name);
+                String badFilesPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + path + "/" + name);
                 File file = new File(badFilesPath);
                 file.delete();
                 return new DataverseRecordFile();

@@ -59,7 +59,7 @@ public class GDAL {
     public DataverseJavaObject generateBB(DataverseJavaObject djo) {
         String doi = djo.getDOI();
         String path = doi.replace(".","/");
-        String folderName = DATASET_FILES_PATH +path+"/";
+        String folderName = DATA_DIR_LOC +path+"/";
         LinkedList<DataverseGeoRecordFile> origRecords = djo.getGeoDataFiles();
         if(origRecords.size()==0)
             return djo;
@@ -79,7 +79,7 @@ public class GDAL {
         GeographicBoundingBox temp = new GeographicBoundingBox(doi);
         for(DataverseGeoRecordFile drf : origRecords) {
             String name = drf.getTranslatedTitle();
-            String filePath = DATASET_FILES_PATH + path + "/" + name;
+            String filePath = DATA_DIR_LOC + path + "/" + name;
             File file = new File(filePath);
 
             if (name.endsWith("tif")) {
@@ -178,7 +178,7 @@ public class GDAL {
     public GeographicBoundingBox generateBoundingBoxFromCSV(String fileName, DataverseJavaObject djo){
         String path = djo.getDOI().replace("/","_");
         path = path.replace(".","_");
-        String filePath = DATASET_FILES_PATH + path + "/" + fileName;
+        String filePath = DATA_DIR_LOC + path + "/" + fileName;
         String name = fileName;
         String ogrString = null;
         try {

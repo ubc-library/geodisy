@@ -8,6 +8,7 @@ package GeoServer;
 import BaseFiles.API;
 import BaseFiles.GeoLogger;
 import Crosswalking.GeoBlacklightJson.JSONCreator;
+import Dataverse.DataverseGeoRecordFile;
 
 /**
  *
@@ -15,5 +16,11 @@ import Crosswalking.GeoBlacklightJson.JSONCreator;
  */
 public abstract class DestinationAPI extends JSONCreator implements API {
     GeoLogger logger;
+
+    public abstract boolean addVector(String fileName,String geoserverLabel);
+
+    public abstract boolean addRaster(DataverseGeoRecordFile dgrf);
+
+
 
 }
