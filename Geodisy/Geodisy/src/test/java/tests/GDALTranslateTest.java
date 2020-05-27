@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
-import static Strings.GeodisyStrings.OGR2OGR;
+import static _Strings.GeodisyStrings.OGR2OGR;
 
 public class GDALTranslateTest {
     @BeforeEach

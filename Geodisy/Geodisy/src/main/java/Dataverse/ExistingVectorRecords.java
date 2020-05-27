@@ -2,7 +2,7 @@ package Dataverse;
 
 import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
-import Strings.GeodisyStrings;
+import _Strings.GeodisyStrings;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import static Strings.GeodisyStrings.VECTOR_RECORDS;
+import static _Strings.GeodisyStrings.VECTOR_RECORDS;
 
 
 public class ExistingVectorRecords extends ExisitingFile implements Serializable {

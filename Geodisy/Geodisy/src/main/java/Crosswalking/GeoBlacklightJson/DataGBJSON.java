@@ -1,8 +1,8 @@
 package Crosswalking.GeoBlacklightJson;
 
 import BaseFiles.GeoLogger;
-import Strings.GeodisyStrings;
-import Strings.DVFieldNameStrings;
+import _Strings.GeodisyStrings;
+import _Strings.DVFieldNameStrings;
 import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Author;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.DateOfCollection;
@@ -23,11 +23,11 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
-import static Strings.GeodisyStrings.*;
-import static Strings.GeoBlacklightStrings.*;
-import static Strings.GeoBlacklightStrings.RECORD_URL;
-import static Strings.XMLStrings.TEST_OPEN_METADATA_LOCAL_REPO;
-import static Strings.DVFieldNameStrings.*;
+import static _Strings.GeodisyStrings.*;
+import static _Strings.GeoBlacklightStrings.*;
+import static _Strings.GeoBlacklightStrings.RECORD_URL;
+import static _Strings.XMLStrings.TEST_OPEN_METADATA_LOCAL_REPO;
+import static _Strings.DVFieldNameStrings.*;
 
 public class DataGBJSON extends GeoBlacklightJSON{
     GeoLogger logger;

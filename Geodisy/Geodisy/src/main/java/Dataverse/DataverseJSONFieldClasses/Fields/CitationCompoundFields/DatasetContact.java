@@ -3,7 +3,7 @@ package Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields;
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
-import static Strings.DVFieldNameStrings.*;
+import static _Strings.DVFieldNameStrings.*;
 
 public class DatasetContact extends CompoundJSONField {
     private String datasetContactName, datasetContactAffiliation, datasetContactEmail;

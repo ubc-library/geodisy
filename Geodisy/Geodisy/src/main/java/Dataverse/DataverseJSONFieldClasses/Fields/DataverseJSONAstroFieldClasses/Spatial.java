@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 
-import static Strings.DVFieldNameStrings.*;
+import static _Strings.DVFieldNameStrings.*;
 
 public class Spatial extends CompoundJSONField {
     private String resolution, doi;

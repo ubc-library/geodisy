@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Set;
 
-import static Strings.GeodisyStrings.RASTER_RECORDS;
+import static _Strings.GeodisyStrings.RASTER_RECORDS;
 
 public class CheckRasterRecords {
     @Test

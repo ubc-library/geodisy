@@ -1,7 +1,7 @@
 package GeoServer;
 
 import BaseFiles.GeoLogger;
-import Strings.GeodisyStrings;
+import _Strings.GeodisyStrings;
 
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordFile;

@@ -5,7 +5,7 @@ import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 
 import org.json.JSONObject;
 
-import static Strings.DVFieldNameStrings.*;
+import static _Strings.DVFieldNameStrings.*;
 
 public class TopicClassification extends CompoundJSONField {
     private String topicClassValue, topicClassVocab, topicClassVocabURL;

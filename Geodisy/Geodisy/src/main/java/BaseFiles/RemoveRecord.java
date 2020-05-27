@@ -6,7 +6,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 
-import static Strings.GeodisyStrings.*;
+import static _Strings.GeodisyStrings.*;
 
 public class RemoveRecord {
     String record2Remove = "10.5072/FK2/GFCTVC";

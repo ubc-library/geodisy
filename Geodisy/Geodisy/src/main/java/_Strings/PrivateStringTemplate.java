@@ -1,4 +1,4 @@
-package Strings;
+package _Strings;
 
 public class PrivateStringTemplate {
     //This is an example of what Constants you will need to save in a class 'PrivateStrings' in the BaseFiles Package

@@ -19,8 +19,8 @@ import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import static Strings.GeodisyStrings.GEONAMES_SEARCH_BASE;
-import static Strings.GeodisyStrings.GEONAMES_USERNAME;
+import static _Strings.GeodisyStrings.GEONAMES_SEARCH_BASE;
+import static _Strings.GeodisyStrings.GEONAMES_USERNAME;
 
 
 public class Geonames {

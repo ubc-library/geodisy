@@ -1,7 +1,7 @@
-package Strings;
+package _Strings;
 
-import static Strings.GeodisyStrings.OPENGEOMETADATA_PASSWORD;
-import static Strings.GeodisyStrings.OPENGEOMETADATA_USERNAME;
+import static _Strings.GeodisyStrings.OPENGEOMETADATA_PASSWORD;
+import static _Strings.GeodisyStrings.OPENGEOMETADATA_USERNAME;
 
 public class XMLStrings {
     public final static String CI_RESPONSIBILITY = "CI_Responsibility";

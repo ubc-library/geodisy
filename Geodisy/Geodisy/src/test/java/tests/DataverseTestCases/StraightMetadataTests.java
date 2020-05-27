@@ -1,6 +1,6 @@
 package tests.DataverseTestCases;
 
-import Strings.DVFieldNameStrings;
+import _Strings.DVFieldNameStrings;
 import Dataverse.SourceJavaObject;
 import org.junit.jupiter.api.Test;
 

@@ -10,8 +10,8 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-import static Strings.GeodisyStrings.CHARACTER;
-import static Strings.DVFieldNameStrings.*;
+import static _Strings.GeodisyStrings.CHARACTER;
+import static _Strings.DVFieldNameStrings.*;
 
 public class JournalInfo extends SubElement {
     JournalFields journalFields;

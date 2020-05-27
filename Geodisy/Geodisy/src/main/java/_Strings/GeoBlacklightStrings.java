@@ -1,11 +1,11 @@
-package Strings;
+package _Strings;
 
 import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 
-import static Strings.GeodisyStrings.BACKEND_ADDRESS;
-import static Strings.GeodisyStrings.FRONTEND_ADDRESS;
-import static Strings.DVFieldNameStrings.*;
+import static _Strings.GeodisyStrings.BACKEND_ADDRESS;
+import static _Strings.GeodisyStrings.FRONTEND_ADDRESS;
+import static _Strings.DVFieldNameStrings.*;
 
 public class GeoBlacklightStrings {
 

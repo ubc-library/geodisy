@@ -7,7 +7,7 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 
 import java.io.IOException;
 
-import static Strings.GeodisyStrings.FRONTEND_ADDRESS;
+import static _Strings.GeodisyStrings.FRONTEND_ADDRESS;
 
 public class SOLR {
     private String SOLRAddress = "http://" + FRONTEND_ADDRESS + ":8983/solr/geoblacklight-core";

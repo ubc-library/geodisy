@@ -4,7 +4,7 @@ import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Date;
 import org.json.JSONObject;
 
-import static Strings.DVFieldNameStrings.*;
+import static _Strings.DVFieldNameStrings.*;
 
 public class JournalVolIssue extends CompoundJSONField {
     private String journalVolume, journalIssue;

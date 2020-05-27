@@ -3,7 +3,7 @@ package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClass
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
-import static Strings.DVFieldNameStrings.*;
+import static _Strings.DVFieldNameStrings.*;
 
 public class SocialScienceNotes extends CompoundJSONField {
     private String type, subject, text;

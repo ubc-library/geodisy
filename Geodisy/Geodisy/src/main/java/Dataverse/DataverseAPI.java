@@ -23,7 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-import static Strings.GeodisyStrings.*;
+import static _Strings.GeodisyStrings.*;
 
 /**
  *  Search Dataverse for datasets

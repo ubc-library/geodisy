@@ -11,9 +11,9 @@ import org.w3c.dom.Element;
 import java.util.List;
 
 
-import static Strings.GeodisyStrings.CHARACTER;
-import static Strings.XMLStrings.*;
-import static Strings.DVFieldNameStrings.DEPOSITOR;
+import static _Strings.GeodisyStrings.CHARACTER;
+import static _Strings.XMLStrings.*;
+import static _Strings.DVFieldNameStrings.DEPOSITOR;
 
 public class DistributionInfo extends SubElement {
     SimpleCitationFields simple;

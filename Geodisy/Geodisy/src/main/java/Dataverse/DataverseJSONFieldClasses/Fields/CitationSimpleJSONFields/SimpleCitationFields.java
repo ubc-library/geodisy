@@ -1,7 +1,7 @@
 package Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields;
 
 import Dataverse.DataverseJSONFieldClasses.JSONField;
-import static Strings.DVFieldNameStrings.*;
+import static _Strings.DVFieldNameStrings.*;
 
 public class SimpleCitationFields extends JSONField {
     /**

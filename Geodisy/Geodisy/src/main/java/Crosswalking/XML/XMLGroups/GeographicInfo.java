@@ -16,10 +16,10 @@ import org.w3c.dom.Element;
 import java.util.LinkedList;
 import java.util.List;
 
-import static Strings.GeodisyStrings.CHARACTER;
-import static Strings.GeodisyStrings.DECIMAL;
-import static Strings.XMLStrings.*;
-import static Strings.DVFieldNameStrings.*;
+import static _Strings.GeodisyStrings.CHARACTER;
+import static _Strings.GeodisyStrings.DECIMAL;
+import static _Strings.XMLStrings.*;
+import static _Strings.DVFieldNameStrings.*;
 
 public class GeographicInfo extends SubElement {
 GeographicFields gf;

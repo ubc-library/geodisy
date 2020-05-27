@@ -1,15 +1,15 @@
 package Dataverse;
 
 import BaseFiles.GeoLogger;
-import Strings.GeodisyStrings;
+import _Strings.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 
 import java.io.*;
 import java.util.LinkedList;
 
-import static Strings.GeodisyStrings.*;
-import static Strings.DVFieldNameStrings.*;
+import static _Strings.GeodisyStrings.*;
+import static _Strings.DVFieldNameStrings.*;
 
 public class GDAL {
     GeoLogger logger = new GeoLogger(this.getClass());

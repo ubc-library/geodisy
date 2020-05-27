@@ -5,7 +5,7 @@ package BaseFiles;
  * and open the template in the editor.
  */
 
-import static Strings.GeodisyStrings.TEST;
+import static _Strings.GeodisyStrings.TEST;
 
 /**
  *

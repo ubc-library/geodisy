@@ -16,10 +16,10 @@ import org.w3c.dom.Element;
 import java.util.LinkedList;
 import java.util.List;
 
-import static Strings.GeodisyStrings.*;
-import static Strings.XMLStrings.*;
-import static Strings.DVFieldNameStrings.*;
-import static Strings.DVFieldNameStrings.SOFTWARE;
+import static _Strings.GeodisyStrings.*;
+import static _Strings.XMLStrings.*;
+import static _Strings.DVFieldNameStrings.*;
+import static _Strings.DVFieldNameStrings.SOFTWARE;
 
 public class IdentificationInfo extends SubElement {
     List<OtherID> otherIds;

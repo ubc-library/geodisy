@@ -1,6 +1,6 @@
-package Strings;
+package _Strings;
 
-import static Strings.GeodisyStrings.getRoot;
+import static _Strings.GeodisyStrings.getRoot;
 
 public class GeoserverStrings {
 

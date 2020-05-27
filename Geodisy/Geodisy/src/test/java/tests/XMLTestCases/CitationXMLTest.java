@@ -16,7 +16,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 
-import static Strings.GeodisyStrings.*;
+import static _Strings.GeodisyStrings.*;
 import static org.junit.Assert.assertTrue;
 
 public class CitationXMLTest {

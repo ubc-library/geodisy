@@ -15,7 +15,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
 
-import static Strings.XMLStrings.*;
+import static _Strings.XMLStrings.*;
 
 /**
  * Class for dealing with creating XML files from XML Docs, deleting files, and keeping Github up to date

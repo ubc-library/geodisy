@@ -10,7 +10,7 @@ import org.json.JSONObject;
 
 import java.util.*;
 
-import static Strings.DVFieldNameStrings.*;
+import static _Strings.DVFieldNameStrings.*;
 
 public class GeographicCoverage extends CompoundJSONField {
     private String givenCountry, givenProvince, givenCity, otherGeographicCoverage, doi, commonCountry, commonProvince, commonCity;

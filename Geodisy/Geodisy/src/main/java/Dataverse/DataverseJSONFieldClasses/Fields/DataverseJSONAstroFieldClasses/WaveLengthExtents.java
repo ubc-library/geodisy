@@ -3,7 +3,7 @@ package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONAstroFieldClasse
 import Dataverse.DataverseJSONFieldClasses.JSONField;
 import org.json.JSONObject;
 
-import static Strings.DVFieldNameStrings.*;
+import static _Strings.DVFieldNameStrings.*;
 
 
 public class WaveLengthExtents extends JSONField {

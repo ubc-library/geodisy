@@ -7,8 +7,8 @@ import Dataverse.DataverseJavaObject;
 import java.io.IOException;
 
 
-import static Strings.DVFieldNameStrings.PERSISTENT_ID;
-import static Strings.GeoserverStrings.*;
+import static _Strings.DVFieldNameStrings.PERSISTENT_ID;
+import static _Strings.GeoserverStrings.*;
 
 public class PostGIS {
     GeoLogger logger;

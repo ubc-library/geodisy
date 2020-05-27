@@ -5,7 +5,7 @@ import org.apache.solr.client.solrj.SolrServerException;
 
 import java.io.IOException;
 
-import static Strings.GeodisyStrings.*;
+import static _Strings.GeodisyStrings.*;
 
 public class GeoCombine {
     GeoLogger logger;

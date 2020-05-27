@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Date;
 
-import static Strings.GeodisyStrings.GIT_PASSWORD;
+import static _Strings.GeodisyStrings.GIT_PASSWORD;
 
 
 public class GitTest {

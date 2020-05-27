@@ -9,7 +9,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.LinkedList;
 
-import static Strings.GeodisyStrings.DOWNLOADED_FILES;
+import static _Strings.GeodisyStrings.DOWNLOADED_FILES;
 
 public class DownloadedFiles {
     private static DownloadedFiles single_instance = null;

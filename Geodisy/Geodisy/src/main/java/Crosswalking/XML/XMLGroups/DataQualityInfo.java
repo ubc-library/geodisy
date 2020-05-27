@@ -10,10 +10,10 @@ import org.w3c.dom.Element;
 
 import java.util.LinkedList;
 
-import static Strings.GeodisyStrings.CHARACTER;
-import static Strings.XMLStrings.*;
-import static Strings.DVFieldNameStrings.*;
-import static Strings.DVFieldNameStrings.ACCESS_TO_SOURCES;
+import static _Strings.GeodisyStrings.CHARACTER;
+import static _Strings.XMLStrings.*;
+import static _Strings.DVFieldNameStrings.*;
+import static _Strings.DVFieldNameStrings.ACCESS_TO_SOURCES;
 
 public class DataQualityInfo extends SubElement {
     public DataQualityInfo(DataverseJavaObject djo, XMLDocObject doc, Element root) {

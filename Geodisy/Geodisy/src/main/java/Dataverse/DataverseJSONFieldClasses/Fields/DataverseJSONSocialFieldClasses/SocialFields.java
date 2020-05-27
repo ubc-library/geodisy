@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import static Strings.DVFieldNameStrings.*;
+import static _Strings.DVFieldNameStrings.*;
 
 public class SocialFields extends MetadataType {
     private SimpleSocialFields simpleSocialFields;

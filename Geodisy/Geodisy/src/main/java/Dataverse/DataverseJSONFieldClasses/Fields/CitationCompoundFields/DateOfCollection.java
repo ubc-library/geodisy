@@ -4,7 +4,7 @@ import Dataverse.DataverseJSONFieldClasses.CompoundDateJSONField;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Date;
 import org.json.JSONObject;
 
-import static Strings.DVFieldNameStrings.*;
+import static _Strings.DVFieldNameStrings.*;
 
 public class DateOfCollection extends CompoundDateJSONField {
     private Date dateOfCollectionStart, dateOfCollectionEnd;

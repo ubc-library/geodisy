@@ -9,7 +9,7 @@ import GeoServer.GeoServerAPI;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-import static Strings.GeodisyStrings.TEST;
+import static _Strings.GeodisyStrings.TEST;
 
 public class RasterUploadTest {
     @Test

@@ -4,13 +4,13 @@ import Crosswalking.JSONParsing.DataverseParser;
 import Dataverse.DataverseAPI;
 import Dataverse.DataverseJavaObject;
 import Dataverse.GDALTranslate;
-import Strings.GeodisyStrings;
+import _Strings.GeodisyStrings;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.util.Calendar;
 
-import static Strings.GeodisyStrings.*;
+import static _Strings.GeodisyStrings.*;
 
 public class DownloadRecord {
     String doi;

@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import static Strings.GeodisyStrings.*;
+import static _Strings.GeodisyStrings.*;
 
 /**
  * Class that holds bounding boxes that have already been found and what versions of records have already been downloaded.

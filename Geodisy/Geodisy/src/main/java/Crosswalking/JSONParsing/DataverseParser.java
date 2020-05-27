@@ -10,8 +10,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static Strings.GeodisyStrings.PROCESS_THESE_DOIS;
-import static Strings.DVFieldNameStrings.*;
+import static _Strings.GeodisyStrings.PROCESS_THESE_DOIS;
+import static _Strings.DVFieldNameStrings.*;
 
 
 

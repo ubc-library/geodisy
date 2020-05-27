@@ -1,7 +1,7 @@
 package Dataverse;
 
 import BaseFiles.GeoLogger;
-import Strings.GeodisyStrings;
+import _Strings.GeodisyStrings;
 
 
 import java.io.File;
@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 
-import static Strings.GeodisyStrings.*;
+import static _Strings.GeodisyStrings.*;
 
 public class GDALTranslate {
     GeoLogger logger;

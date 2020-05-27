@@ -3,7 +3,7 @@ package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClass
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import org.json.JSONObject;
 
-import static Strings.DVFieldNameStrings.*;
+import static _Strings.DVFieldNameStrings.*;
 
 public class TargetSampleSize extends CompoundJSONField {
     private String forumla;

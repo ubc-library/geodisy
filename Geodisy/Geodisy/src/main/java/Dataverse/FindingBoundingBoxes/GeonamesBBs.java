@@ -13,7 +13,7 @@ import java.net.*;
 import java.util.HashMap;
 import java.util.List;
 
-import static Strings.DVFieldNameStrings.*;
+import static _Strings.DVFieldNameStrings.*;
 
 /**
  * GeonamesBBs collects a bounding box for a record that has enough geospatial fields filled out.

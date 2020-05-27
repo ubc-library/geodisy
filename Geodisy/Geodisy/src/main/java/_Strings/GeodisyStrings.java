@@ -1,8 +1,8 @@
-package Strings;
+package _Strings;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import static Strings.PrivateStrings.*;
+import static _Strings.PrivateStrings.*;
 
 public class GeodisyStrings {
     public static boolean TEST; //This will be false if there are no arguments when calling the jar
