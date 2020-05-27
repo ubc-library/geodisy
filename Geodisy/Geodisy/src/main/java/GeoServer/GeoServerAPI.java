@@ -95,7 +95,7 @@ public class GeoServerAPI extends DestinationAPI {
     }*/
 
     private void createFileUploadJSON(JSONObject jo) {
-        FileWriter file = new FileWriter(DATASET_FILES_PATH + "input.json");
+        FileWriter file = new FileWriter(DATA_DIR_LOC + "input.json");
         file.write(jo.toString());
     }
 
@@ -157,7 +157,7 @@ public class GeoServerAPI extends DestinationAPI {
         FileWriter fileWriter = new FileWriter();
         String doi = sjo.getDOI();
         String doiPath = doi.replace("/","_");
-        String filePath = DATASET_FILES_PATH + doiPath + "/import.json";
+        String filePath = DATA_DIR_LOC + doiPath + "/import.json";
         try {
             fileWriter.writeStringToFile(jsonString,filePath);
         } catch (IOException e) {

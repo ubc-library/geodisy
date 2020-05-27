@@ -19,7 +19,7 @@ public class RemoveRecord {
         existingHarvests.saveExistingSearchs(existingHarvests.getRecordVersions(),EXISTING_RECORDS, "ExistingRecords");
         existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
     String folderized = record2Remove.replace(".","/");
-    File file = new File(DATASET_FILES_PATH + folderized);
+    File file = new File(DATA_DIR_LOC + folderized);
         try {
         FileUtils.deleteDirectory(file);
     } catch (

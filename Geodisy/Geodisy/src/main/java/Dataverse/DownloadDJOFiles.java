@@ -8,14 +8,14 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import static Strings.GeodisyStrings.DATASET_FILES_PATH;
+import static Strings.GeodisyStrings.DATA_DIR_LOC;
 
 public class DownloadDJOFiles {
     DataverseJavaObject djo;
 
     public DataverseJavaObject downloadFiles(DataverseJavaObject djo){
         this.djo = djo;
-        File f = new File(DATASET_FILES_PATH + djo.urlized(djo.citationFields.getDOI()));
+        File f = new File(DATA_DIR_LOC + djo.urlized(djo.citationFields.getDOI()));
         djo.deleteDir(f);
         List<DataverseRecordFile> temp = new LinkedList<>();
         DataverseRecordFile tempDRF = new DataverseRecordFile();

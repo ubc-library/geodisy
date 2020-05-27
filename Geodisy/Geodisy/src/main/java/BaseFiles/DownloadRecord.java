@@ -61,7 +61,7 @@ public class DownloadRecord {
         Long total = beginningEnd.getTimeInMillis()-startTime;
         System.out.println("Finished a download run at: " + beginningEnd.getTime() + " after " + total + " milliseconds");
         Long middle = beginningEnd.getTimeInMillis();
-        String path = DATASET_FILES_PATH + doiPathed + "/";
+        String path = DATA_DIR_LOC + doiPathed + "/";
         int count = translateFiles(path);
         Calendar endEnd = Calendar.getInstance();
         Long end = endEnd.getTimeInMillis();

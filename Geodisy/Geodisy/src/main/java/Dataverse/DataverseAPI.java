@@ -325,7 +325,7 @@ public class DataverseAPI extends SourceAPI {
     protected String folderizedDOI(String doi){
         String folderizedDOI = doi.replace(".","_");
         folderizedDOI = folderizedDOI.replace("/","_");
-        return DATASET_FILES_PATH + folderizedDOI;
+        return DATA_DIR_LOC + folderizedDOI;
     }
     public void crosswalkRecord(SourceJavaObject sJO) {
         crosswalkSJOsToXML(sJO);

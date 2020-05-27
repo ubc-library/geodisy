@@ -171,7 +171,7 @@ public class DataverseJavaObject extends SourceJavaObject {
      */
     //@Override
     public DataverseJavaObject downloadFiles() {
-        String path = GEODISY_PATH_ROOT + GeodisyStrings.replaceSlashes(DATASET_FILES_PATH + urlized(citationFields.getDOI()));
+        String path = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + urlized(citationFields.getDOI()));
         File f = new File(path);
         deleteDir(f);
         f.mkdir();
@@ -205,7 +205,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             if (temp.getDbID() == -1)
                 temp.setFileURL("");
             GDAL gdal = new GDAL();
-            String dirPath = GEODISY_PATH_ROOT + GeodisyStrings.replaceSlashes(DATASET_FILES_PATH + getDOI().replace(".","/") + "/");
+            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + getDOI().replace(".","/") + "/");
             dgrf = new DataverseGeoRecordFile(dRF);
             dgrf.setGbb(gdal.generateBB(new File(dirPath+temp.getTranslatedTitle()),getDOI(),dRF.getGBBFileNumber()));
             if(dgrf.hasValidBB()) {
@@ -228,7 +228,7 @@ public class DataverseJavaObject extends SourceJavaObject {
         for(DataverseRecordFile drf: getDataFiles()){
             fileNames.add(drf.getTranslatedTitle());
         }
-        File f = new File(GeodisyStrings.replaceSlashes(GEODISY_PATH_ROOT + DATASET_FILES_PATH + getDOI().replace("_", "/").replace(".","/") + "/"));
+        File f = new File(GeodisyStrings.replaceSlashes(DATA_DIR_LOC + getDOI().replace("_", "/").replace(".","/") + "/"));
         if(f.exists()&&f.isDirectory()){
             File[] files = f.listFiles();
             for(File file:files){
@@ -316,7 +316,7 @@ public class DataverseJavaObject extends SourceJavaObject {
     }*/
 
     private void createRecords(DataverseGeoRecordFile dgrf, int number, String type) {
-        String dirPath = DATASET_FILES_PATH + dgrf.getDatasetIdent().replace("_","/") + "/";
+        String dirPath = DATA_DIR_LOC + dgrf.getDatasetIdent().replace("_","/") + "/";
         String filePath = dirPath + dgrf.getTranslatedTitle();
         File fUpdate = new File(filePath);
         if(type.equals(VECTOR)) {
