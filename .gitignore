@@ -33,13 +33,10 @@ Time reports/
 
 Geodisy/Geodisy/Geodisy\.iml
 
-Geodisy/Geodisy/ExistingRecordsTest\.txt
-
 Geodisy/Geodisy/datasetFiles/
 
 Geodisy/Geodisy/logs/tempFile\.txt
 
-Geodisy/Geodisy/savedFiles/ExisitingRecords\.txt
 
 gdal-2\.4\.1/
 
@@ -64,7 +61,6 @@ Geodisy/Geodisy/xmlTestDJO\.xml
 
 Geodisy/Geodisy/XMLFiles/
 Geodisy/Geodisy/XMLFilesTest/
-Geodisy/Geodisy/savedFiles/
 *.log
 Geodisy/Geodisy/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/
 
