@@ -92,7 +92,8 @@ public class GeoServerAPI extends DestinationAPI {
 
     @Override
     public boolean addRaster(DataverseGeoRecordFile dgrf){
-        String fileName = dgrf.getFileName();
+        String fileName = dgrf.getOriginalTitle()+".tif";
+        System.out.println("FileName = " + fileName);
             ProcessBuilder processBuilder= new ProcessBuilder();
 
             try { deleteOldCoverstore(processBuilder, dgrf);
@@ -107,7 +108,7 @@ public class GeoServerAPI extends DestinationAPI {
                 return false;
             }
 
-            try { renameRasterToOrig(processBuilder,dgrf.getDatasetIdent(),fileName);
+            try { renameRasterToOrig(processBuilder,sjo.getDOI().replace(".","/"),fileName);
             }catch (InterruptedException | IOException f) {
                 logger.error("Error trying to rename raster back to correct name from geoserver: doi=" + sjo.getDOI() + ", geoserver label=" + dgrf.getGeoserverLabel() + ", file name=" + fileName);
                 return false;
@@ -146,27 +147,27 @@ public class GeoServerAPI extends DestinationAPI {
         }
 
         private void normalizeRaster(ProcessBuilder processBuilder, DataverseGeoRecordFile dgrf) throws InterruptedException, IOException {
-            String warp = GDALWARP(DATA_DIR_LOC + dgrf.getDatasetIdent() + dgrf.getFileName());
+            String warp = GDALWARP(DATA_DIR_LOC + sjo.getDOI().replace(".","/") + "/", dgrf.getOriginalTitle()+".tif");
             Process p;
-            processBuilder.command("curl", "-u", warp);
+            processBuilder.command("/usr/bin/bash", "-c", warp);
             p = processBuilder.start();
             p.waitFor();
             p.destroy();
         }
 
         private void renameRasterToOrig(ProcessBuilder processBuilder, String datasetID, String fileName) throws InterruptedException, IOException{
-            String rename = "mv " + DATA_DIR_LOC + datasetID + "1" + fileName + " " + DATA_DIR_LOC + datasetID + fileName;
+            String rename = "mv " + DATA_DIR_LOC + datasetID + "/1" + fileName + " " + DATA_DIR_LOC + datasetID + fileName;
             Process p;
-            processBuilder.command("curl", "-u", rename);
+            processBuilder.command("/usr/bin/bash", "-c", rename);
             p = processBuilder.start();
             p.waitFor();
             p.destroy();
         }
 
         private void addRasterOverviews(ProcessBuilder processBuilder, DataverseGeoRecordFile dgrf) throws InterruptedException, IOException {
-            String warp = GDALADDO(DATA_DIR_LOC + dgrf.getDatasetIdent() + dgrf.getFileName());
+            String addo = GDALADDO(DATA_DIR_LOC + sjo.getDOI().replace(".","/") + "/" + dgrf.getOriginalTitle()+".tif");
             Process p;
-            processBuilder.command("curl", "-u", warp);
+            processBuilder.command("/usr/bin/bash", "-c", addo);
             p = processBuilder.start();
             p.waitFor();
             p.destroy();

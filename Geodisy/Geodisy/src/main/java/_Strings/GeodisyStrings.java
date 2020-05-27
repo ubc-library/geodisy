@@ -24,9 +24,16 @@ public class GeodisyStrings {
         public final static String TEST_SCHOLARS_PORTAL = "https://demodv.scholarsportal.info/";
         public final static String SCHOLARS_PORTAL = "https://dataverse.scholarsportal.info/"; //Don't use this unless SP gives approval
         public final static String SCHOLARS_PORTAL_CLONE = "https://dvtest.scholarsportal.info/";
-        public final static String[] DATAVERSE_URLS = new String[]{SCHOLARS_PORTAL};
+        public static String[] DATAVERSE_URLS(){return getServers();}
 
-        public static boolean windowsComputerType(){
+        private static String[] getServers() {
+                /*if(TEST)
+                    return new String[]{SCHOLARS_PORTAL_CLONE};
+                else*/
+                    return new String[]{SCHOLARS_PORTAL};
+        }
+
+    public static boolean windowsComputerType(){
             return  System.getProperty("os.name")
                     .toLowerCase().startsWith("windows");
         }
@@ -94,19 +101,19 @@ public class GeodisyStrings {
         private final static String OGR2OGR_CLOUD = "/usr/gdal30/bin/ogr2ogr -t_srs EPSG:4326 -f \"ESRI Shapefile\" ";
         //GDAL for Raster conversion needs to be using GDAL version 2.x, so had to use a docker version of it for use with Centos
         public final static String GDAL_DOCKER = "sudo docker run --rm -v /home:/home osgeo/gdal:alpine-ultrasmall-v2.4.1 "; //base call for docker gdal, but need the program call added on
-        private final static String GDAL_TRANSLATE_CLOUD = GDAL_DOCKER + "gdal_translate -of GTiff ";
+        private final static String GDAL_TRANSLATE_CLOUD = "/usr/gdal30/bin/gdal_translate -of GTiff ";
         public final static String OGR2OGR = getOgr2Ogr();
         public final static String GDAL_TRANSLATE = getGdalTranslate();
         public final static String RASTER_CRS = "EPSG:3857";
-        public static String GDALWARP(String source){ return getGdalWarp(source);}
-        public static String GDAL_WARP_LOCAL(String source){ return "gdalwarp -overwrite -t_srs " + RASTER_CRS +" -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW {} {}" + source + "  1" + source ;}
+        public static String GDALWARP(String path,String fileName){ return getGdalWarp(path,fileName);}
+        public static String GDAL_WARP_LOCAL(String path, String filename){ return "gdalwarp -overwrite -t_srs " + RASTER_CRS +" -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW {} {}" + path + filename +" " + path + "1" + filename;}
 
-        public static String GDAL_WARP_CLOUD(String source){
-        return "/user/gdal30/bin/gdalwarp -overwrite -t_srs "+ RASTER_CRS +" -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW " + source + "  1" + source; }
+        public static String GDAL_WARP_CLOUD(String path, String fileName){
+        return "/usr/gdal30/bin/gdalwarp -overwrite -t_srs "+ RASTER_CRS +" -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW " + path + fileName + " " + path + "1"+ fileName; }
 
         public static String GDALADDO(String source){ return getGdalAddo(source);}
         public static String GDAL_ADDO_LOCAL(String source){return "gdaladdo " + source + " -r nearest --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
-        public static String GDAL_ADDO_CLOUD(String source){return "/user/gdal30/bin/gdaladdo " + source + " -r nearest --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
+        public static String GDAL_ADDO_CLOUD(String source){return "/usr/gdal30/bin/gdaladdo " + source + " -r nearest --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
         public final static String[] PROCESSABLE_EXTENSIONS = ArrayUtils.addAll(GDALINFO_PROCESSABLE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS);
         private static String getOgr2Ogr(){
             //if(IS_WINDOWS)
@@ -117,18 +124,17 @@ public class GeodisyStrings {
         }
 
         private static String getGdalTranslate(){
-           //if(IS_WINDOWS)
-           if(true) 
+           if(IS_WINDOWS)
                 return GDAL_TRANSLATE_LOCAL;
             else
                 return GDAL_TRANSLATE_CLOUD;
         }
 
-        private static String getGdalWarp(String source){
+        private static String getGdalWarp(String path, String fileName){
             if(IS_WINDOWS)
-                return GDAL_WARP_LOCAL(source);
+                return GDAL_WARP_LOCAL(path, fileName);
             else
-                return GDAL_WARP_CLOUD(source);
+                return GDAL_WARP_CLOUD(path, fileName);
         }
 
         private static String getGdalAddo(String source){
@@ -138,15 +144,13 @@ public class GeodisyStrings {
                 return GDAL_ADDO_CLOUD(source);
         }
     private static String getGdalInfo(){
-        //if(IS_WINDOWS)
-        if(true)
+        if(IS_WINDOWS)
             return GDALINFO_LOCAL;
         else
             return GDALINFO_CLOUD;
     }
     private static String getOgrInfo(){
-        //if(IS_WINDOWS)
-        if(true)
+        if(IS_WINDOWS)
             return OGRINFO_LOCAL;
         else
             return OGRINFO_CLOUD;
@@ -202,7 +206,7 @@ public class GeodisyStrings {
     public final static String PATH_TO_XML_JSON_FILES = END_XML_JSON_FILE_PATH;
     public final static String MOVE_METADATA = "sudo rsync -upgo " + getRoot() + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
     //TODO figure out where to move the data if it needs to move at all
-    public final static String DATA_DIR_LOC = "/opt/share/geoserver/geoserver-2.17.0/data_dir/data";
+    public final static String DATA_DIR_LOC = "/opt/share/geoserver/geoserver-2.17.0/data_dir/data/";
     public final static String MOVE_DATA = "sudo rsync -auhv " + getRoot() + "datasetFiles/* " + DATA_DIR_LOC;
     public final static String GEOCOMBINE = "sh geodisyFiles/combine.sh";
     public final static String BASE_LOCATION_TO_STORE_METADATA = "metadata/";

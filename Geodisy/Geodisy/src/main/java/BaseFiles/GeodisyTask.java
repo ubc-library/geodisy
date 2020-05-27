@@ -60,8 +60,10 @@ public class GeodisyTask {
 
             if(!IS_WINDOWS) {
                 sendRecordsToGeoBlacklight();
-                JGit jgit = new JGit();
-                jgit.updateRemoteMetadata();
+                if(!TEST) {
+                    JGit jgit = new JGit();
+                    jgit.updateRemoteMetadata();
+                }
             }
             /**
              * Saving a record of all the files that were downloaded

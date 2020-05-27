@@ -273,7 +273,7 @@ public class DataverseRecordFile {
     }
 
     public void setGeoserverLabel(String s){
-        gbb.setField(BASE_GEOSERVER_LABEL,s);
+        gbb.setField(GEOSERVER_LABEL,s);
     }
 
     public String getGeoserverLabel(){
