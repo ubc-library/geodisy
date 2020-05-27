@@ -55,14 +55,6 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
             saveJSONToFile(geoBlacklightJson, doi, doi + " (File " + drf.getGBBFileNumber() + " of " + total + ")");
         else
             saveJSONToFile(geoBlacklightJson, doi, doi);
-        //Don't think I need this here, I'm making the geoserver calls earlier
-        /*String name = drf.getTranslatedTitle();
-        String transformType = RASTER;
-        if(name.endsWith(".shp")) {
-            addToPostGIS(name);
-            transformType = VECTOR;
-        }
-        addToGeoserver(name,transformType);*/
     }
 
     public File genDirs(String doi, String localRepoPath) {
@@ -73,22 +65,6 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
             fileDir.mkdirs();
         return fileDir;
     }
-
-    //I believe I'm calling Geoserver earlier, so don't need these
-    /*private void addToGeoserver(String nameStub, String transformType) {
-        GeoServerAPI geoServerAPI = new GeoServerAPI(javaObject);
-        if(transformType.equals(VECTOR))
-            geoServerAPI.uploadVector(nameStub);
-        else
-            geoServerAPI.uploadRaster(nameStub);//TODO need to remove this and add raster upload call
-    }
-
-    private void addToPostGIS(String nameStub) {
-        PostGIS postGis = new PostGIS();
-        postGis.addFile2PostGIS(javaObject,nameStub+".shp",VECTOR, TEST);
-        *//* Raster Data is added to Geoserver directly rather than through PostGIS*//*
-
-    }*/
 
     public String getDoi(){
         return doi;

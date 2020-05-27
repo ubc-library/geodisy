@@ -100,8 +100,7 @@ public class DataverseAPI extends SourceAPI {
                 Long total = end.getTimeInMillis()-startTime;
                 System.out.println("Finished downloading " + doi +" after " + total + " milliseconds");
                 djo.updateRecordFileNumbers();
-                //TODO uncomment once we are using Geoserver
-                //djo.updateGeoserver();
+                djo.updateGeoserver();
 
                 if(djo.hasGeoGraphicCoverage())
                     djo = (DataverseJavaObject) getBBFromGeonames(djo);
