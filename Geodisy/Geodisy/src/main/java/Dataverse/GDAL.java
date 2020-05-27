@@ -29,7 +29,6 @@ public class GDAL {
 
         ProcessBuilder processBuilder= new ProcessBuilder();
         processBuilder.command("/usr/bin/bash", "-c", gdal+filePath);
-        //System.out.println(gdal+filePath);
         int counter = 0;
         if (IS_WINDOWS) {
             process = Runtime.getRuntime()
