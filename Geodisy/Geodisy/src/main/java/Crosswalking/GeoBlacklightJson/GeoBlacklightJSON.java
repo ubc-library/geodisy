@@ -33,7 +33,6 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
         files = SourceRecordFiles.getSourceRecords();
     }
 
-    @Override
     public void createJson() {
         int countFile = geoFiles.size();
         int countMeta = geoMeta.size();

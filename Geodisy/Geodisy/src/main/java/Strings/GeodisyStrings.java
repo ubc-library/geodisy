@@ -92,14 +92,22 @@ public class GeodisyStrings {
         private final static String OGR2OGR_LOCAL = "ogr2ogr -f \"ESRI Shapefile\" -t_srs EPSG:4326 ";
         private final static String GDAL_TRANSLATE_LOCAL = "gdal_translate -of GTiff ";
         private final static String OGR2OGR_CLOUD = "/usr/gdal30/bin/ogr2ogr -t_srs EPSG:4326 -f \"ESRI Shapefile\" ";
-        private final static String GDAL_TRANSLATE_CLOUD = "/usr/gdal30/bin/gdal_translate -of GTiff ";
+        //GDAL for Raster conversion needs to be using GDAL version 2.x, so had to use a docker version of it for use with Centos
+        public final static String GDAL_DOCKER = "sudo docker run --rm -v /home:/home osgeo/gdal:alpine-ultrasmall-v2.4.1 "; //base call for docker gdal, but need the program call added on
+        private final static String GDAL_TRANSLATE_CLOUD = GDAL_DOCKER + "gdal_translate -of GTiff ";
         public final static String OGR2OGR = getOgr2Ogr();
         public final static String GDAL_TRANSLATE = getGdalTranslate();
-        public final static String GDALWARP = getGdalWarp();
-        public final static String GDAL_WARP_LOCAL = "gdalwarp -overwrite -t_srs EPSG:3857 -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW {} {}";
-        public final static String GDAL_WARP_CLOUD = "/user/gdal30/bin/gdalwarp -overwrite -t_srs EPSG:3857 -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW {} {}";
-        public final static String[] PROCESSABLE_EXTENSIONS = ArrayUtils.addAll(GDALINFO_PROCESSABLE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS);
+        public final static String RASTER_CRS = "EPSG:3857";
+        public static String GDALWARP(String source){ return getGdalWarp(source);}
+        public static String GDAL_WARP_LOCAL(String source){ return "gdalwarp -overwrite -t_srs " + RASTER_CRS +" -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW {} {}" + source + "  1" + source ;}
 
+        public static String GDAL_WARP_CLOUD(String source){
+        return "/user/gdal30/bin/gdalwarp -overwrite -t_srs "+ RASTER_CRS +" -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW " + source + "  1" + source; }
+
+        public static String GDALADDO(String source){ return getGdalAddo(source);}
+        public static String GDAL_ADDO_LOCAL(String source){return "gdaladdo " + source + " -r nearest --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
+        public static String GDAL_ADDO_CLOUD(String source){return "/user/gdal30/bin/gdaladdo " + source + " -r nearest --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
+        public final static String[] PROCESSABLE_EXTENSIONS = ArrayUtils.addAll(GDALINFO_PROCESSABLE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS);
         private static String getOgr2Ogr(){
             //if(IS_WINDOWS)
             if(true)
@@ -116,11 +124,18 @@ public class GeodisyStrings {
                 return GDAL_TRANSLATE_CLOUD;
         }
 
-        private static String getGdalWarp(){
+        private static String getGdalWarp(String source){
             if(IS_WINDOWS)
-                return GDAL_WARP_LOCAL;
+                return GDAL_WARP_LOCAL(source);
             else
-                return GDAL_WARP_CLOUD;
+                return GDAL_WARP_CLOUD(source);
+        }
+
+        private static String getGdalAddo(String source){
+            if(IS_WINDOWS)
+                return GDAL_ADDO_LOCAL(source);
+            else
+                return GDAL_ADDO_CLOUD(source);
         }
     private static String getGdalInfo(){
         //if(IS_WINDOWS)

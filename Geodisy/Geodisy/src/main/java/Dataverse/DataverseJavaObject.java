@@ -339,7 +339,7 @@ public class DataverseJavaObject extends SourceJavaObject {
 
     private void addRasterToGeoserver(DataverseGeoRecordFile drf) {
         GeoServerAPI geoServerAPI =  new GeoServerAPI(this);
-        geoServerAPI.uploadRaster(drf);
+        geoServerAPI.addRaster(drf);
     }
     @Override
     public String getDOIProtocal(){

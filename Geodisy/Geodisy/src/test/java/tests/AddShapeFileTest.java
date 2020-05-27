@@ -12,6 +12,6 @@ public class AddShapeFileTest {
         String fileName = "vectortest";
         String geoserverName = "testVectorAdd";
         GeoServerAPI geo = new GeoServerAPI(new DataverseJavaObject("server"));
-        Assert.assertTrue(geo.addVectorTest(fileName, geoserverName));
+        Assert.assertTrue(geo.addVector(fileName, geoserverName));
     }
 }

@@ -25,6 +25,6 @@ public class RasterUploadTest {
         recordFile.setProjection("EPSG:32633");
         DataverseGeoRecordFile geoRecordFile = new DataverseGeoRecordFile(recordFile);
         GeoServerAPI geoServerAPI = new GeoServerAPI(djo);
-        geoServerAPI.uploadRaster(geoRecordFile);
+        geoServerAPI.addRaster(geoRecordFile);
     }
 }
