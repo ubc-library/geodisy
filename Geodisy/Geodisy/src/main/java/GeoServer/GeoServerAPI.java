@@ -40,7 +40,7 @@ public class GeoServerAPI extends DestinationAPI {
         ProcessBuilder processBuilder= new ProcessBuilder();
         try {
             String generateWorkspace = "admin:" + GEOSERVER_PASSWORD + "-XPOST -H \"Content-type: text/xml\" -d \"<workspace><name>" + workspaceName + "</name></workspace>\" http://localhost:8080/geoserver/rest/workspaces";
-            processBuilder.command("curl", "-u", generateWorkspace);
+            processBuilder.command("/usr/bin/curl", "-u", generateWorkspace);
             Process p = processBuilder.start();
             p.waitFor();
             p.destroy();
@@ -72,14 +72,14 @@ public class GeoServerAPI extends DestinationAPI {
         try {
             //Delete existing layer
             String deleteFirst = GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -X DELETE \"http://localhost:8080/geoserver/rest/workspaces/geodisy/layers/" + geoserverlabel.toLowerCase() + "\"";
-            processBuilder.command("curl", "-u",deleteFirst);
+            processBuilder.command("/usr/bin/curl", "-u",deleteFirst);
             Process p = processBuilder.start();
             p.waitFor();
             p.destroy();
 
             //bring new layer over from POSTGIS
             String call = GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H \"Content-type: text/xml\" -d \"<featureType><name>" + geoserverlabel.toLowerCase() + "</name><title>"+ title +"</title><nativeCRS>EPSG:4326</nativeCRS><srs>EPSG:4326</srs><enabled>true</enabled></featureType>\" http://localhost:8080/geoserver/rest/workspaces/geodisy/datastores/" + vectorDB + "/featuretypes";
-            processBuilder.command("curl", "-u",call);
+            processBuilder.command("/usr/bin/curl", "-u",call);
             p = processBuilder.start();
             p.waitFor();
             p.destroy();
@@ -139,7 +139,7 @@ public class GeoServerAPI extends DestinationAPI {
         private void deleteOldCoverstore(ProcessBuilder processBuilder, DataverseGeoRecordFile dgrf) throws InterruptedException, IOException{
             String deleteCoveragestore = " admin:" + GEOSERVER_PASSWORD + " -XDELETE " + stringed("http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores/" + dgrf.getGeoserverLabel() + "?recurse=true");
             Process p;
-            processBuilder.command("curl", "-u", deleteCoveragestore);
+            processBuilder.command("/usr/bin/curl", "-u", deleteCoveragestore);
             p = processBuilder.start();
             p.waitFor();
             p.destroy();
@@ -174,9 +174,10 @@ public class GeoServerAPI extends DestinationAPI {
         }
 
         private void createCoverstore(ProcessBuilder processBuilder,  DataverseGeoRecordFile dgrf) throws InterruptedException, IOException{
-            String createCoveragestore = " admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:text/xml") +  " -d '<coverageStore><name>" + dgrf.getGeoserverLabel() + "</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>file:data/" + dgrf.getDatasetIdent() + dgrf.getFileName() + "</url></coverageStore>' " + stringed("http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores?configure=all");
+            String createCoveragestore = " admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:text/xml") +  " -d '<coverageStore><name>" + dgrf.getGeoserverLabel() + "</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>file:data/" + sjo.getDOI().replace(".","/") + "/" + dgrf.getOriginalTitle()+".tif" + "</url></coverageStore>' " + stringed("http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores?configure=all");
+            System.out.println("Create Coverstore: " + createCoveragestore);
             Process p;
-            processBuilder.command("curl", "-u", createCoveragestore);
+            processBuilder.command("/usr/bin/curl", "-u", createCoveragestore);
             p = processBuilder.start();
             p.waitFor();
             p.destroy();
@@ -184,8 +185,9 @@ public class GeoServerAPI extends DestinationAPI {
 
         private void addRasterLayer(ProcessBuilder processBuilder, DataverseGeoRecordFile dgrf) throws InterruptedException, IOException{
         String addRasterLayer = " admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:application/xml") + " -d '<coverage><name>"+ dgrf.getGeoserverLabel() + "</name><nativeCRS>" + RASTER_CRS + "</nativeCRS><title>" + dgrf.getTranslatedTitle() + "</title><enabled>True</enabled></coverage>' " + stringed("http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores/"+ dgrf.getGeoserverLabel() + "/coverages");
+        System.out.println("AddRaster: " + addRasterLayer);
         Process p;
-        processBuilder.command("curl", "-u", addRasterLayer);
+        processBuilder.command("/usr/bin/curl", "-u", addRasterLayer);
         p = processBuilder.start();
         p.waitFor();
         p.destroy();
@@ -242,7 +244,7 @@ public class GeoServerAPI extends DestinationAPI {
         FileWriter fileWriter = new FileWriter(storePath);
         fileWriter.write(jo.toString());
         HTTPCaller caller = new HTTPCombineCaller();
-        caller.callHTTP("curl -v -u admin:" + GEOSERVER_PASSWORD + "-XPOST -T "+ storePath +" -H \"Content-type: text/xml\" http://localhost:8080/geoserver/rest/workspaces/"+ WORKSPACE_NAME + "/datastores");
+        caller.callHTTP("/usr/bin/curl -v -u admin:" + GEOSERVER_PASSWORD + "-XPOST -T "+ storePath +" -H \"Content-type: text/xml\" http://localhost:8080/geoserver/rest/workspaces/"+ WORKSPACE_NAME + "/datastores");
         return deleteXMLFile(storePath);
     }
 
