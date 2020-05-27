@@ -38,7 +38,7 @@ public class GDAL {
             try {
                 process.waitFor();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                logger.error("Something went wrong running GDAL info on " + filePath);
             }
         }
 
