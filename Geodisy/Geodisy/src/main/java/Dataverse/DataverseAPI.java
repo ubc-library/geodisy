@@ -70,6 +70,9 @@ public class DataverseAPI extends SourceAPI {
 
                 if(processSpecificRecords(doi)) {
                     System.out.println("Processing only specic records, is that what you want? If not delete all doi in PROCESS_THESE_DOIS in GeodisyStrings class");
+                    for(String s:PROCESS_THESE_DOIS){
+                        System.out.println("Dataset: " + s);
+                    }
                 }
                 if(dontProcessSpecificRecords(doi))
                     continue;
