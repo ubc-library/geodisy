@@ -242,9 +242,9 @@ public class DataverseJavaObject extends SourceJavaObject {
     public void updateGeoserver() {
         for(DataverseGeoRecordFile dgrf:getGeoDataFiles()){
             if(dgrf.getTranslatedTitle().endsWith(".shp")) {
-                createRecords(dgrf, Integer.parseInt(dgrf.getGBBFileNumber()), VECTOR);
+                dgrf.onGeoserver = createRecords(dgrf, Integer.parseInt(dgrf.getGBBFileNumber()), VECTOR);
             }else if(dgrf.getTranslatedTitle().endsWith(".tif")) {
-                createRecords(dgrf, Integer.parseInt(dgrf.getGBBFileNumber()), RASTER);
+                dgrf.onGeoserver = createRecords(dgrf, Integer.parseInt(dgrf.getGBBFileNumber()), RASTER);
             }
         }
     }
@@ -315,16 +315,17 @@ public class DataverseJavaObject extends SourceJavaObject {
         dataFiles.add(temp);
     }*/
 
-    private void createRecords(DataverseGeoRecordFile dgrf, int number, String type) {
+    private boolean createRecords(DataverseGeoRecordFile dgrf, int number, String type) {
         String dirPath = DATA_DIR_LOC + dgrf.getDatasetIdent().replace("_","/") + "/";
         String filePath = dirPath + dgrf.getTranslatedTitle();
         File fUpdate = new File(filePath);
         if(type.equals(VECTOR)) {
-            addVectorToGeoserver(fUpdate.getName(),dgrf.getGeoserverLabel());
+            return addVectorToGeoserver(fUpdate.getName(),dgrf.getGeoserverLabel());
         }else if(type.equals(RASTER)){
-            addRasterToGeoserver(dgrf);
+            return addRasterToGeoserver(dgrf);
         } else{
             logger.error("Something went wrong parsing DataverseRecordFile: " + dgrf.getTranslatedTitle());
+            return false;
         }
     }
 
@@ -332,14 +333,14 @@ public class DataverseJavaObject extends SourceJavaObject {
         return simpleFieldVal.replace(".","_").replace("/","_").replace("\\\\","_").replace(":","");
     }
 
-    private void addVectorToGeoserver(String name, String geoserverLabel) {
+    private boolean addVectorToGeoserver(String name, String geoserverLabel) {
         GeoServerAPI geoServerAPI =  new GeoServerAPI(this);
-        geoServerAPI.addVector(name,geoserverLabel);
+        return geoServerAPI.addVector(name,geoserverLabel);
     }
 
-    private void addRasterToGeoserver(DataverseGeoRecordFile drf) {
+    private boolean addRasterToGeoserver(DataverseGeoRecordFile drf) {
         GeoServerAPI geoServerAPI =  new GeoServerAPI(this);
-        geoServerAPI.addRaster(drf);
+        return geoServerAPI.addRaster(drf);
     }
     @Override
     public String getDOIProtocal(){

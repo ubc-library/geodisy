@@ -85,13 +85,13 @@ public class DataGBJSON extends GeoBlacklightJSON{
         return number;
     }
 
-    private void addRecommendedFields(String geoserverLabel, GeographicBoundingBox gbb) {
+    private void addRecommendedFields(String geoserverLabel, GeographicBoundingBox gbb, boolean isOnGeoserver) {
         getDSDescriptionSingle();
         if(!gbb.getField(GEOMETRY).isEmpty())
             jo.put("layer_geom_type_s",gbb.getField(GEOMETRY));
         JSONArray ja = addBaseRecordInfo();
         if(!gbb.getField(GEOMETRY).equals(UNDETERMINED) && USE_GEOSERVER) {
-            ja = addDataDownloadOptions(gbb, ja);
+            ja = addDataDownloadOptions(gbb, ja, isOnGeoserver);
         }
         String externalServices = "{";
         for (Object o : ja) {
@@ -121,11 +121,13 @@ public class DataGBJSON extends GeoBlacklightJSON{
     }
 
     @Override
-    protected JSONArray addDataDownloadOptions(GeographicBoundingBox gbb, JSONArray ja) {
-        if (gbb.getField(FILE_NAME).endsWith(".tif"))
-        ja.put(WMS);
-        if (gbb.getField(FILE_NAME).endsWith(".shp"))
-            ja.put(WFS);
+    protected JSONArray addDataDownloadOptions(GeographicBoundingBox gbb, JSONArray ja, boolean isOnGeoserver) {
+        if(isOnGeoserver) {
+            if (gbb.getField(FILE_NAME).endsWith(".tif"))
+                ja.put(WMS);
+            if (gbb.getField(FILE_NAME).endsWith(".shp"))
+                ja.put(WFS);
+        }
         if(!gbb.getField(FILE_URL).isEmpty())
             ja.put(DIRECT_FILE_DOWNLOAD + stringed(gbb.getField(FILE_URL)));
         return ja;
@@ -141,11 +143,11 @@ public class DataGBJSON extends GeoBlacklightJSON{
 
     //TODO, check I am getting all the optional fields I should be
     @Override
-    protected JSONObject getOptionalFields(DataverseRecordFile drf, int totalRecordsInStudy) {
+    protected JSONObject getOptionalFields(DataverseGeoRecordFile drf, int totalRecordsInStudy) {
         GeographicBoundingBox gbb = drf.getGBB();
         String geoserverLabel = getGeoserverLabel(gbb).toLowerCase();
         getFileType(drf);
-        addRecommendedFields(geoserverLabel, gbb);
+        addRecommendedFields(geoserverLabel, gbb, drf.isOnGeoserver());
         getAuthors();
         getIssueDate();
         getLanguages();

@@ -159,7 +159,7 @@ public class GeoServerAPI extends DestinationAPI {
         }
 
         private void renameRasterToOrig(ProcessBuilder processBuilder, String datasetID, String fileName) throws InterruptedException, IOException{
-            String rename = "mv " + DATA_DIR_LOC + datasetID + "/1" + fileName + " " + DATA_DIR_LOC + datasetID + "/" + fileName;
+            String rename = "sudo mv -f " + DATA_DIR_LOC + datasetID + "/1" + fileName + " " + DATA_DIR_LOC + datasetID + "/" + fileName;
             Process p;
             processBuilder.command("/usr/bin/bash", "-c", rename);
             p = processBuilder.start();

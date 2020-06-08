@@ -109,11 +109,11 @@ public class GeodisyStrings {
         public static String GDAL_WARP_LOCAL(String path, String filename){ return "gdalwarp -overwrite -t_srs " + RASTER_CRS +" -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW {} {}" + path + filename +" " + path + "1" + filename;}
 
         public static String GDAL_WARP_CLOUD(String path, String fileName){
-        return "/usr/gdal30/bin/gdalwarp -overwrite -t_srs "+ RASTER_CRS +" -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW " + path + fileName + " " + path + "1"+ fileName; }
+        return "sudo /usr/gdal30/bin/gdalwarp -overwrite -t_srs "+ RASTER_CRS +" -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW " + path + fileName + " " + path + "1"+ fileName; }
 
         public static String GDALADDO(String source){ return getGdalAddo(source);}
         public static String GDAL_ADDO_LOCAL(String source){return "gdaladdo " + source + " -r nearest --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
-        public static String GDAL_ADDO_CLOUD(String source){return "/usr/gdal30/bin/gdaladdo " + source + " -r nearest --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
+        public static String GDAL_ADDO_CLOUD(String source){return "sudo /usr/gdal30/bin/gdaladdo " + source + " -r nearest --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
         public final static String[] PROCESSABLE_EXTENSIONS = ArrayUtils.addAll(GDALINFO_PROCESSABLE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS);
         private static String getOgr2Ogr(){
             //if(IS_WINDOWS)

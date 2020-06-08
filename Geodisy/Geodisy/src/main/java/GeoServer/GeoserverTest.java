@@ -8,14 +8,15 @@ import Dataverse.SourceJavaObject;
 public class GeoserverTest {
 
     public void testAddingARaster(){
-        String fileName = "age";
-        String filePath = "/geodata/geoserver/data";
+        String fileName = "age.tif";
+        String doi = "test";
         SourceJavaObject sjo = new DataverseJavaObject("server");
         CitationFields cf = sjo.getCitationFields();
-        cf.setDoi("testDOI");
+        cf.setDoi(doi);
+        sjo.setCitationFields(cf);
+        System.out.println(sjo.getDOI() + " = doi from sjo");
         GeoServerAPI geoServerAPI = new GeoServerAPI(sjo);
-        DataverseGeoRecordFile dgrf = new DataverseGeoRecordFile(cf.getDOI(),"temp.tif");
-        dgrf.setTranslatedTitle("temp.tif");
+        DataverseGeoRecordFile dgrf = new DataverseGeoRecordFile(doi,fileName);
         geoServerAPI.addRaster(dgrf);
     }
 }

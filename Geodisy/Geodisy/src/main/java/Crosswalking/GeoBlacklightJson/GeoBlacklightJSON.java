@@ -5,7 +5,6 @@ import Crosswalking.MetadataSchema;
 import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJavaObject;
-import Dataverse.DataverseRecordFile;
 import Dataverse.SourceRecordFiles;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -41,12 +40,12 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
         int count = 1;
         int total = list.size();
         int innerCount = 1;
-        for(DataverseRecordFile drf:list){
+        for(DataverseGeoRecordFile drf:list){
             createJSONFromFiles(drf, total);
         }
     }
 
-    private void createJSONFromFiles(DataverseRecordFile drf, int total) {
+    private void createJSONFromFiles(DataverseGeoRecordFile drf, int total) {
         boolean single = total == 1;
         getRequiredFields(drf.getGBB(), total);
         getOptionalFields(drf,total);
@@ -73,8 +72,8 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
 
 
 
-    protected abstract JSONObject getOptionalFields(DataverseRecordFile drf, int totalRecordsInStudy);
-    protected abstract JSONArray addDataDownloadOptions(GeographicBoundingBox bb, JSONArray ja); //for records with datasetfiles
+    protected abstract JSONObject getOptionalFields(DataverseGeoRecordFile drf, int totalRecordsInStudy);
+    protected abstract JSONArray addDataDownloadOptions(GeographicBoundingBox bb, JSONArray ja, boolean isOnGeoserver); //for records with datasetfiles
     protected abstract JSONArray addBaseRecordInfo(); //adds the base metadata external services that all records need regardless of existence of datafiles
     protected abstract void saveJSONToFile(String json, String doi, String folderName);
 }

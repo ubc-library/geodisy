@@ -211,6 +211,9 @@ public class SimpleCitationFields extends JSONField {
             case STUDY_COMPLETION:
                 setStudyComp(value);
                 break;
+            case PERSISTENT_ID:
+                setPersistentID(value);
+                break;
             default:
                 errorParsing(this.getClass().getName(),label);
     }

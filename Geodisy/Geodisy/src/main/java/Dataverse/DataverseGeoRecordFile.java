@@ -4,6 +4,7 @@ import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.G
 
 public class DataverseGeoRecordFile extends DataverseRecordFile {
     GDALInformation gdalInfo;
+    boolean onGeoserver = false;
 
     public DataverseGeoRecordFile(String title, String fileIdent, int dbID, String server, String datasetIdent) {
         super(title, fileIdent, dbID, server, datasetIdent);
@@ -39,6 +40,13 @@ public class DataverseGeoRecordFile extends DataverseRecordFile {
     public DataverseGeoRecordFile(){
         super();
         gdalInfo = new GDALInformation();
+    }
+
+    //For testing
+    public DataverseGeoRecordFile(String doi, String translatedTitle){
+        super();
+        setTranslatedTitle(translatedTitle);
+        setGeoserverLabel(doi);
     }
 
     @Override
@@ -97,5 +105,9 @@ public class DataverseGeoRecordFile extends DataverseRecordFile {
 
     public void setNativeCRS(String crs){
         gdalInfo.setNativeCRS(crs);
+    }
+
+    public boolean isOnGeoserver() {
+        return onGeoserver;
     }
 }
