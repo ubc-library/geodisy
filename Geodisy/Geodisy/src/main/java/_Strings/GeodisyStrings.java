@@ -206,7 +206,7 @@ public class GeodisyStrings {
     public final static String PATH_TO_XML_JSON_FILES = END_XML_JSON_FILE_PATH;
     public final static String MOVE_METADATA = "sudo rsync -upgo " + getRoot() + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
     //TODO figure out where to move the data if it needs to move at all
-    public final static String DATA_DIR_LOC = "/opt/share/geoserver/geoserver-2.17.0/data_dir/data/";
+    public final static String DATA_DIR_LOC = "/geodata/geoserver/data/";
     public final static String MOVE_DATA = "sudo rsync -auhv " + getRoot() + "datasetFiles/* " + DATA_DIR_LOC;
     public final static String GEOCOMBINE = "sh geodisyFiles/combine.sh";
     public final static String BASE_LOCATION_TO_STORE_METADATA = "metadata/";
