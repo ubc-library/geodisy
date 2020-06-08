@@ -341,10 +341,6 @@ public class CitationFields extends MetadataSimple {
         return series;
     }
 
-    @Override
-    public String getDoi() {
-        return simpleCitationFields.getPersistentID();
-    }
 
     @Override
     public void setDoi(String doi) {
@@ -495,7 +491,7 @@ public class CitationFields extends MetadataSimple {
     }
 
     public String getDOI(){
-        return getSimpleCitationFields().getPersistentID();
+        return simpleCitationFields.getPersistentID();
     }
 
     //If you update this method, also update copy in DataverseJavaObject

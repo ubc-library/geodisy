@@ -59,7 +59,7 @@ public class JournalFields extends MetadataSimple {
     }
 
     @Override
-    public String getDoi() {
+    public String getDOI() {
         return doi;
     }
 

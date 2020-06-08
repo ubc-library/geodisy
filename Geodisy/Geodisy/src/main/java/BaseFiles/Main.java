@@ -11,6 +11,7 @@ import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Simpl
 import Dataverse.DataverseJavaObject;
 import Dataverse.SourceJavaObject;
 import GeoServer.GeoServerAPI;
+import GeoServer.GeoserverTest;
 
 import static _Strings.DVFieldNameStrings.RECORD_URL;
 import static _Strings.GeodisyStrings.*;
@@ -39,11 +40,12 @@ public class Main {
         else
             dev = "Using the prod servers, is this correct?";
         System.out.println(dev);
-       GeodisyTask geodisyTask = new GeodisyTask();
-        geodisyTask.run();
+       /*GeodisyTask geodisyTask = new GeodisyTask();
+        geodisyTask.run();*/
 
-        /*System.out.println("Running a test on Raster Upload");
-        testRasterUploadToGeoserver();*/
+        System.out.println("Running a test on Raster Upload");
+        GeoserverTest gt = new GeoserverTest();
+        gt.testAddingARaster();
         /*GeoCombine geoCombine = new GeoCombine();
         geoCombine.index();*/
 
@@ -52,23 +54,6 @@ public class Main {
         downloadRecord.run("doi:10.5072/FK2/KZRG9F");*/
 
 
-    }
-
-    private static void testRasterUploadToGeoserver() {
-        SourceJavaObject sjo = new DataverseJavaObject(SCHOLARS_PORTAL);
-        CitationFields cf = sjo.getCitationFields();
-        SimpleCitationFields sf = cf.getSimpleCitationFields();
-        sf.setField(RECORD_URL,"10.5683/SP2/UEJGTV");
-        cf.setSimpleCitationFields(sf);
-        sjo.setCitationFields(cf);
-        DataverseGeoRecordFile dgrf = new DataverseGeoRecordFile();
-        dgrf.setOriginalTitle("VanOldStreamOriginalMapScan.zip");
-        dgrf.setTranslatedTitle("VanOldStreamOriginalMapScan.tif");
-        dgrf.setGeometryType(RASTER);
-        dgrf.setGeoserverLabel("g_10_5683_SP2_UEJGTV");
-        dgrf.setIsFromFile(true);
-        GeoServerAPI geo = new GeoServerAPI(sjo);
-        geo.addRaster(dgrf);
     }
 
 }

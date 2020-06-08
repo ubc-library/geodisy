@@ -78,7 +78,7 @@ public class LifeFields extends MetadataType {
     }
 
     @Override
-    public String getDoi() {
+    public String getDOI() {
         return doi;
     }
 

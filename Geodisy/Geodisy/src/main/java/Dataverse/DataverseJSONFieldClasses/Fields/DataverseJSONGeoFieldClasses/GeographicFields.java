@@ -152,7 +152,7 @@ public class GeographicFields extends MetadataType {
     }
 
     @Override
-    public String getDoi() {
+    public String getDOI() {
         return doi;
     }
 

@@ -23,7 +23,7 @@ public class PostGIS {
 
         String call = SHP_2_PGSQL + folderized(djo.getSimpleFieldVal(PERSISTENT_ID)) + "/" + fileName + " public." + geoserverLabel + PSQL_CALL + VECTOR_DB + POSTGIS_USER_CALL;
         ProcessBuilder processBuilder= new ProcessBuilder();
-        processBuilder.command("bash", "-c", call);
+        processBuilder.command("/usr/bin/bash", "-c", call);
         Process p;
         try {
             p = processBuilder.start();

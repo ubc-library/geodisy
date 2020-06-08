@@ -71,7 +71,7 @@ public class AstroFields extends MetadataSimple {
     }
 
     @Override
-    public String getDoi() {
+    public String getDOI() {
         return doi;
     }
 
