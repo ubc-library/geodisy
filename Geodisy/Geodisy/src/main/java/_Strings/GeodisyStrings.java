@@ -12,6 +12,7 @@ public class GeodisyStrings {
     public final static String GEOSERVER_USERNAME = PRIVATE_GEOSERVER_USERNAME;
     public final static String GEONAMES_USERNAME = PRIVATE_GEONAMES_USERNAME;
     public final static String POSTGIS_USER_PASSWORD = PRIVATE_POSTGIS_USER_PASSWORD;
+    public final static String POSTGIS_USER_NAME = PRIVATE_POSTGIS_USER_NAME;
     public final static String OPENGEOMETADATA_USERNAME = PRIVATE_OPENGEOMETADATA_USERNAME;
     public final static String OPENGEOMETADATA_PASSWORD = PRIVATE_OPENGEOMETADATA_PASSWORD;
     public final static int NUMBER_OF_RECS_TO_HARVEST = 0;

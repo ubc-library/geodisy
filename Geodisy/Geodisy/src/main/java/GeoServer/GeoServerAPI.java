@@ -55,17 +55,19 @@ public class GeoServerAPI extends DestinationAPI {
     public boolean addVector(String fileName,String geoserverLabel){
         boolean success = addVectorToPostGIS(fileName,geoserverLabel);
         if(!success) return success;
-        return addPostGISLayerToGeoserver(geoserverLabel,fileName);
+        success = addPostGISLayerToGeoserver(geoserverLabel,fileName);
+        if(!success) return success;
+        return updateTitleInGeoserver(geoserverLabel,fileName);
     }
-
-        private boolean addVectorToPostGIS(String fileName, String geoserverlabel) {
+    
+    private boolean addVectorToPostGIS(String fileName, String geoserverlabel) {
             PostGIS postGIS = new PostGIS();
             return postGIS.addFile2PostGIS((DataverseJavaObject) sjo, fileName,geoserverlabel);
         }
 
         //TODO fix this?
         public boolean addPostGISLayerToGeoserver(String geoserverlabel, String filename){
-        String vectorDB = VECTOR_DB;
+        String vectorDB = GEOSERVER_VECTOR_STORE;
         String title = filename.substring(0,filename.lastIndexOf('.'));
         ProcessBuilder processBuilder= new ProcessBuilder();
 
@@ -85,6 +87,35 @@ public class GeoServerAPI extends DestinationAPI {
             p.destroy();
         } catch (IOException | InterruptedException e) {
             logger.error("Something went wrong adding vector layer " + geoserverlabel + " from POSTGIS");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean updateTitleInGeoserver(String geoserverLabel, String fileName) {
+        String vectorDB = GEOSERVER_VECTOR_STORE;
+        String title = fileName.substring(0,fileName.lastIndexOf('.'));
+        ProcessBuilder processBuilder= new ProcessBuilder();
+        String call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -H 'Accept: text/xml' -XGET http://localhost:8080/geoserver/rest/workspaces/geodisy/datastores/"+ vectorDB + "/featuretypes/" + geoserverLabel+".xml";
+        try {
+            processBuilder.command("/usr/bin/bash", "-c",call);
+            Process p = processBuilder.start();
+            InputStream iS = p.getInputStream();
+            String xml = "";
+            for(int i = 0; i<iS.available();i++){
+                xml+=iS.read();
+            }
+            xml.replace("<title>"+geoserverLabel+"</title>","<title>"+title+"</title>");
+            call = "curl -v -u admin:geoserver -H 'Accept: application/xml' -H 'Content-type: application/xml' -XPUT http://localhost:8080/geoserver/rest/workspaces/geodisy/datastores/"+ vectorDB+"/featuretypes/" + geoserverLabel+ ".xml -d '" + xml + "'";
+            ProcessBuilder processBuilder2= new ProcessBuilder();
+            processBuilder2.command("/usr/bin/bash", "-c",call);
+            Process p2 = processBuilder.start();
+// wait for 10 seconds and then destroy the process
+            Thread.sleep(10000);
+            p2.destroy();
+            p.destroy();
+        } catch (IOException | InterruptedException e) {
+            logger.error("Something went wrong updating " + geoserverLabel + " with the title: " + title);
             return false;
         }
         return true;
@@ -141,6 +172,7 @@ public class GeoServerAPI extends DestinationAPI {
 
         private void deleteOldCoverstore(ProcessBuilder processBuilder, DataverseGeoRecordFile dgrf) throws InterruptedException, IOException{
             String deleteCoveragestore = "curl -u admin:" + GEOSERVER_PASSWORD + " -XDELETE " + stringed("http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores/" + dgrf.getGeoserverLabel().toLowerCase() + "?recurse=true");
+            System.out.println("Delete Coverstor: " + deleteCoveragestore);
             Process p;
             processBuilder.command("/usr/bin/bash", "-c", deleteCoveragestore);
             p = processBuilder.start();
@@ -151,6 +183,7 @@ public class GeoServerAPI extends DestinationAPI {
 
         private void normalizeRaster(ProcessBuilder processBuilder, DataverseGeoRecordFile dgrf, String fileName) throws InterruptedException, IOException {
             String warp = GDALWARP(DATA_DIR_LOC + sjo.getDOI().replace(".","/") + "/", fileName);
+            System.out.println("Normalize Raster: " + warp);
             Process p;
             processBuilder.command("/usr/bin/bash", "-c", warp);
             p = processBuilder.start();
@@ -160,6 +193,7 @@ public class GeoServerAPI extends DestinationAPI {
 
         private void renameRasterToOrig(ProcessBuilder processBuilder, String datasetID, String fileName) throws InterruptedException, IOException{
             String rename = "sudo mv -f " + DATA_DIR_LOC + datasetID + "/1" + fileName + " " + DATA_DIR_LOC + datasetID + "/" + fileName;
+            System.out.println("Rename raster: " + rename);
             Process p;
             processBuilder.command("/usr/bin/bash", "-c", rename);
             p = processBuilder.start();
@@ -169,6 +203,7 @@ public class GeoServerAPI extends DestinationAPI {
 
         private void addRasterOverviews(DataverseGeoRecordFile dgrf, ProcessBuilder processBuilder, String fileName) throws InterruptedException, IOException {
             String addo = GDALADDO(DATA_DIR_LOC + sjo.getDOI().replace(".","/") + "/" + fileName);
+            System.out.println("Add Raster overviews: " + addo);
             Process p;
             processBuilder.command("/usr/bin/bash", "-c", addo);
             p = processBuilder.start();

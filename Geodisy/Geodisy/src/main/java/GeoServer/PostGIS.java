@@ -8,6 +8,7 @@ import java.io.IOException;
 
 
 import static _Strings.DVFieldNameStrings.PERSISTENT_ID;
+import static _Strings.GeodisyStrings.DATA_DIR_LOC;
 import static _Strings.GeoserverStrings.*;
 
 public class PostGIS {
@@ -21,7 +22,7 @@ public class PostGIS {
     public boolean addFile2PostGIS(DataverseJavaObject djo, String fileName, String geoserverLabel) {
 
 
-        String call = SHP_2_PGSQL + folderized(djo.getSimpleFieldVal(PERSISTENT_ID)) + "/" + fileName + " public." + geoserverLabel + PSQL_CALL + VECTOR_DB + POSTGIS_USER_CALL;
+        String call = SHP_2_PGSQL + DATA_DIR_LOC + folderized(djo.getSimpleFieldVal(PERSISTENT_ID)) + "/" + fileName + " " + POSTGRES_SCHEMA + "." + geoserverLabel + PSQL_CALL + VECTOR_DB + POSTGIS_USER_CALL;
         ProcessBuilder processBuilder= new ProcessBuilder();
         processBuilder.command("/usr/bin/bash", "-c", call);
         Process p;
