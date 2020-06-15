@@ -9,7 +9,7 @@ public class GeoserverTest {
 
     public void testAddingARaster(){
         String fileName = "age.tif";
-        String doi = "test";
+        String doi = "rasterTest";
         SourceJavaObject sjo = new DataverseJavaObject("server");
         CitationFields cf = sjo.getCitationFields();
         cf.setDoi(doi);
@@ -18,5 +18,18 @@ public class GeoserverTest {
         GeoServerAPI geoServerAPI = new GeoServerAPI(sjo);
         DataverseGeoRecordFile dgrf = new DataverseGeoRecordFile(doi,fileName);
         geoServerAPI.addRaster(dgrf);
+    }
+
+    public void testAddingAVector(){
+        String fileName = "states.shp";
+        String doi = "vectorTest";
+        SourceJavaObject sjo = new DataverseJavaObject("server");
+        CitationFields cf = sjo.getCitationFields();
+        cf.setDoi(doi);
+        sjo.setCitationFields(cf);
+        System.out.println(sjo.getDOI() + " = doi from sjo");
+        GeoServerAPI geoServerAPI = new GeoServerAPI(sjo);
+        DataverseGeoRecordFile dgrf = new DataverseGeoRecordFile(doi,fileName);
+        geoServerAPI.addVector(fileName,doi);
     }
 }

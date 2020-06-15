@@ -40,12 +40,15 @@ public class Main {
         else
             dev = "Using the prod servers, is this correct?";
         System.out.println(dev);
-       /*GeodisyTask geodisyTask = new GeodisyTask();
-        geodisyTask.run();*/
+       GeodisyTask geodisyTask = new GeodisyTask();
+        geodisyTask.run();
 
-        System.out.println("Running a test on Raster Upload");
+        /*System.out.println("Running a test on Raster Upload");
         GeoserverTest gt = new GeoserverTest();
         gt.testAddingARaster();
+        gt.testAddingAVector();*/
+
+
         /*GeoCombine geoCombine = new GeoCombine();
         geoCombine.index();*/
 
