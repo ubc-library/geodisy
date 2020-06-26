@@ -1,5 +1,5 @@
 package _Strings;
-
+//DO NOT TRACK THIS WITH ACTUAL PASSWORDS IN A PUBLIC REPOSITORY!!!
 public class PrivateStrings {
     public final static String PRIVATE_GIT_PASSWORD = "";
     //public final static String GEOSERVER_PASSWORD = "";
