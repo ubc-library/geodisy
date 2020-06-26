@@ -21,7 +21,6 @@ public class GeodisyStrings {
     //Repositories (add new repository URLS to a appropriate repository URL array below)
         // New Repository Types need new URL Arrays [Geodisy 2]
 
-        public final static String SANDBOX_DV_URL = "https://206-12-90-131.cloud.computecanada.ca/"; //currently our sandbox
         public final static String TEST_SCHOLARS_PORTAL = "https://demodv.scholarsportal.info/";
         public final static String SCHOLARS_PORTAL = "https://dataverse.scholarsportal.info/"; //Don't use this unless SP gives approval
         public final static String SCHOLARS_PORTAL_CLONE = "https://dvtest.scholarsportal.info/";
