@@ -14,14 +14,12 @@ public class GeoBlacklightStrings {
 
     //GEOBLACKLIGHT
     public final static String GEOBLACKLIGHT_BASE = "http://" + FRONTEND_ADDRESS + ":3000/catalog/";
-    //TODO enter in the geoserver wfs location
     public final static String GEOSERVER_BASE = "\"https://" + BACKEND_ADDRESS + "/"; //may need geoserver/web/
     private final static String GEOSERVER_DOWNLOAD_BASE = GEOSERVER_BASE + "geoserver/geodisy/";
     public final static String GEOSERVER_RASTER_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "wms?service=WMS&version=1.1.0&request=GetMap&layers=geodisy:";
     public final static String GEOSERVER_VECTOR_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geodisy:";
     public final static String GEOSERVER_REST = GEOSERVER_BASE + "geoserver/web/";
     public final static String GEOSERVER_WFS_LOCATION = GEOSERVER_BASE+"geoserver/wfs\"";
-    //TODO enter in the geoserver wms location
     public final static String GEOSERVER_WMS_LOCATION = GEOSERVER_BASE+"geoserver/wms\"";
     public final static String EXTERNAL_SERVICES = "dct_references_s";
     public final static String RECORD_URL = "\"http://schema.org/url\":";
