@@ -27,6 +27,7 @@ public class Unzip {
     }
 
     private LinkedList<File> unzipFunction(String filePath, String destpath){
+        String basename = filePath.substring(filePath.lastIndexOf("/")+1,filePath.lastIndexOf("."));
         byte[] buffer = new byte[1024];
 
         try {
@@ -49,6 +50,10 @@ public class Unzip {
                 }
 
                 fileName = new File(fileName).getName();
+                if(!fileName.contains(basename)) {
+                    int end = basename.length()>3 ? 3 : basename.length();
+                    fileName = basename.substring(0,end) + "_" + fileName;
+                }
                 File newFile = new File(destpath + GeodisyStrings.replaceSlashes(File.separator) + fileName);
 
 
@@ -89,7 +94,7 @@ public class Unzip {
         return answer;
     }
 
-    //TODO call unzip when adding zipped files to Geoserver and then call deleteUnzippedFiles() after uploadVector is done to save space
+
     public LinkedList<DataverseRecordFile> unzip(String filePath, String destPath, DataverseRecordFile dRF, DataverseJavaObject djo ) throws NullPointerException{
         LinkedList<File> files = new LinkedList<>();
         File destDir = new File(destPath);

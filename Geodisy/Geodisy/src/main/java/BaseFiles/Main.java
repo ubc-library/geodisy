@@ -10,6 +10,7 @@ import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Citatio
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJavaObject;
 import Dataverse.SourceJavaObject;
+import FixScripts.FixGeoserverFiles;
 import GeoServer.GeoServerAPI;
 import GeoServer.GeoserverTest;
 
@@ -39,9 +40,12 @@ public class Main {
             dev = "Using the dev servers, is this correct?";
         else
             dev = "Using the prod servers, is this correct?";
-        System.out.println(dev);
+       /* System.out.println(dev);
        GeodisyTask geodisyTask = new GeodisyTask();
-        geodisyTask.run();
+        geodisyTask.run();*/
+
+        FixGeoserverFiles fgf = new FixGeoserverFiles();
+        fgf.startFixProcess();
 
         /*System.out.println("Running a test on Raster Upload");
         GeoserverTest gt = new GeoserverTest();

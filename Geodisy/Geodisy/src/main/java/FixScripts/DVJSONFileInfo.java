@@ -4,7 +4,6 @@ public class DVJSONFileInfo {
     String fileName = "";
     String fileExtension = "";
     String dbID = "";
-    int fileNumber = 0;
 
     public DVJSONFileInfo() {
     }
@@ -33,11 +32,4 @@ public class DVJSONFileInfo {
         this.dbID = dbID;
     }
 
-    public int getFileNumber() {
-        return fileNumber;
-    }
-
-    public void setFileNumber(int fileNumber) {
-        this.fileNumber = fileNumber;
-    }
 }

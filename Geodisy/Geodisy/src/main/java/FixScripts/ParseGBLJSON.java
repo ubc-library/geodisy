@@ -29,8 +29,18 @@ public class ParseGBLJSON {
 
     boolean isGeospatial(JSONObject json){
         String slug = json.getString("layer_slug_s");
-        String pattern = "[r,v]\\d+$";
-        return Pattern.matches(pattern,slug);
+        int slugLength = slug.length();
+        boolean firstNumber = false;
+        boolean secondLetter = false;
+        for(int i = slugLength-1; i>0; i--){
+            if(firstNumber && slug.substring(i,i+1).equals("v")||slug.substring(i,i+1).equals("r"))
+                return true;
+            else if (firstNumber && !Pattern.matches("\\d",slug.substring(i,i+1)))
+                return false;
+            if(Pattern.matches("\\d",slug.substring(i,i+1)))
+                firstNumber = true;
+        }
+        return false;
     }
 
     String getDOI(JSONObject json){
@@ -46,11 +56,16 @@ public class ParseGBLJSON {
     }
     String getDBID(JSONObject json){
         String resources = json.getString("dct_references_s");
+        System.out.println("dct_references: " + resources);
         JSONObject jsonResource = new JSONObject(resources);
-        String dbID = jsonResource.getString("\"http://schema.org/downloadUrl\"");
-        int lastSlash = dbID.lastIndexOf("/");
-        int length = dbID.length();
-        return dbID.substring(60,length-2);
+        String keys = "";
+        for(String s: jsonResource.keySet()){
+            keys += " ," + s;
+        }
+        System.out.println("Keys: " + keys);
+        String dbID = jsonResource.getString("http://schema.org/downloadUrl");
+        System.out.println("DBID: " + dbID);
+        return dbID.substring(58);
     }
     String getGeoserverLabel(JSONObject json){
         String slug = json.getString("layer_slug_s");
