@@ -20,8 +20,9 @@ public class DVJSON {
                 return dataverseJSON;
     }
 
-    public LinkedList<DVJSONFileInfo> getFileInfo(String doi){
+    public DVJSONFileInfo getFileInfo(String pid, String gBLID){
         String dvJSON = getDVJSON(doi);
+        String dvJSON = getDVJSON(pid);
         JSONObject base = new JSONObject(dvJSON);
         base = base.getJSONObject("datasetVersion");
         JSONArray files = base.getJSONArray("files");

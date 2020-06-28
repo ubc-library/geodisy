@@ -27,7 +27,7 @@ public class DataverseRecordInfo implements Serializable {
      */
     public DataverseRecordInfo(SourceJavaObject dataverseJavaObject, String loggerName){
         if(dataverseJavaObject!=null) {
-            doi = dataverseJavaObject.getDOI();
+            doi = dataverseJavaObject.getPID();
             version = dataverseJavaObject.getVersion();
         }
         setMajor(version/1000);

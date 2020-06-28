@@ -47,7 +47,7 @@ public class DataverseParserTest {
         assertTrue(getStartDate(dataverseJavaObject));
         assertEquals(dataverseJavaObject.getBoundingBox().getLongWest(),-125.160843);
         assertEquals(dataverseJavaObject.getBoundingBox().getLatNorth(),48.8592);
-        assertEquals(dataverseJavaObject.getDOI(),"10.5072/FK2/WWRAUI");
+        assertEquals(dataverseJavaObject.getPID(),"10.5072/FK2/WWRAUI");
         assertEquals(dataverseJavaObject.getSimpleFields().getField(TITLE),"Replication data for: Rocky intertidal monitoring: a protocol for assessing human impact in Barkley Sound");
 
     }

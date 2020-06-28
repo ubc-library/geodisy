@@ -343,8 +343,8 @@ public class CitationFields extends MetadataSimple {
 
 
     @Override
-    public void setDoi(String doi) {
-        simpleCitationFields.setField(PERSISTENT_ID,doi);
+    public void setPID(String pid) {
+        simpleCitationFields.setField(PERSISTENT_ID,pid);
 
     }
 
@@ -490,7 +490,7 @@ public class CitationFields extends MetadataSimple {
         this.simpleCitationFields = simpleCitationFields;
     }
 
-    public String getDOI(){
+    public String getPID(){
         return simpleCitationFields.getPersistentID();
     }
 

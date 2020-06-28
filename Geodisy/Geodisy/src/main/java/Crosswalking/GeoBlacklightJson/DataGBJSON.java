@@ -36,7 +36,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         super();
         javaObject = djo;
         geoBlacklightJson = "";
-        doi = djo.getDOI();
+        doi = djo.getPID();
         logger = new GeoLogger(this.getClass());
         geoFiles = djo.getGeoDataFiles();
         geoMeta = djo.getGeoDataMeta();

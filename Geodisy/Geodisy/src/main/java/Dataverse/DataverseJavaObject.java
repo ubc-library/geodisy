@@ -121,12 +121,12 @@ public class DataverseJavaObject extends SourceJavaObject {
             if(dataFile.has(PERSISTENT_ID)&& !dataFile.getString(PERSISTENT_ID).equals("")) {
                 dbID = (int) dataFile.get("id");
                 String doi = dataFile.getString(PERSISTENT_ID);
-                dRF = new DataverseRecordFile(title, doi,dataFile.getInt("id"), server, citationFields.getDOI());
+                dRF = new DataverseRecordFile(title, doi,dataFile.getInt("id"), server, citationFields.getPID());
                 dRF.setFileURL(server+DV_FILE_ACCESS_PATH+dbID);
                 dRF.setOriginalTitle(title);
             }else{
                 dbID = (int) dataFile.get("id");
-                dRF = new DataverseRecordFile(title,dbID,server,citationFields.getDOI());
+                dRF = new DataverseRecordFile(title,dbID,server,citationFields.getPID());
                 dRF.setOriginalTitle(title);
                 dRF.setFileURL(server+DV_FILE_ACCESS_PATH+dbID);
             }
@@ -155,7 +155,7 @@ public class DataverseJavaObject extends SourceJavaObject {
         String major, minor,doi;
         major = getCitationFields().getSimpleCitationFields().getField(MAJOR_VERSION);
         minor = getCitationFields().getSimpleCitationFields().getField(MINOR_VERSION);
-        doi = getCitationFields().getDOI();
+        doi = getCitationFields().getPID();
         DataverseRecordInfo answer = new DataverseRecordInfo();
         answer.setDoi(doi);
         answer.setMajor(major);
@@ -171,7 +171,7 @@ public class DataverseJavaObject extends SourceJavaObject {
      */
     //@Override
     public DataverseJavaObject downloadFiles() {
-        String path = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + urlized(citationFields.getDOI()));
+        String path = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + urlized(citationFields.getPID()));
         File f = new File(path);
         deleteDir(f);
         f.mkdir();
@@ -205,9 +205,9 @@ public class DataverseJavaObject extends SourceJavaObject {
             if (temp.getDbID() == -1)
                 temp.setFileURL("");
             GDAL gdal = new GDAL();
-            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + getDOI().replace(".","/") + "/");
+            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + getPID().replace(".","/") + "/");
             dgrf = new DataverseGeoRecordFile(dRF);
-            dgrf.setGbb(gdal.generateBB(new File(dirPath+temp.getTranslatedTitle()),getDOI(),dRF.getGBBFileNumber()));
+            dgrf.setGbb(gdal.generateBB(new File(dirPath+temp.getTranslatedTitle()), getPID(),dRF.getGBBFileNumber()));
             if(dgrf.hasValidBB()) {
                 tempRec = temp.translateFile(this);
                 dgrf.setTranslatedTitle(tempRec.translatedTitle);
@@ -228,13 +228,13 @@ public class DataverseJavaObject extends SourceJavaObject {
         for(DataverseRecordFile drf: getDataFiles()){
             fileNames.add(drf.getTranslatedTitle());
         }
-        File f = new File(GeodisyStrings.replaceSlashes(DATA_DIR_LOC + getDOI().replace("_", "/").replace(".","/") + "/"));
+        File f = new File(GeodisyStrings.replaceSlashes(DATA_DIR_LOC + getPID().replace("_", "/").replace(".","/") + "/"));
         if(f.exists()&&f.isDirectory()){
             File[] files = f.listFiles();
             for(File file:files){
                 if(!fileNames.contains(file.getName()))
                     continue;
-                newFiles.add(new DataverseRecordFile(file.getName(),-1,server,getDOI()));
+                newFiles.add(new DataverseRecordFile(file.getName(),-1,server, getPID()));
             }
         }
         return newFiles;
@@ -346,7 +346,7 @@ public class DataverseJavaObject extends SourceJavaObject {
     public String getDOIProtocal(){
         String answer = super.getDOIProtocal();
         if(answer.equals("Error")){
-            logger.warn("Unknown persistant URL protocal used with record: " + getDOI());
+            logger.warn("Unknown persistant URL protocal used with record: " + getPID());
             return "";
         } else
             return answer;
@@ -369,7 +369,7 @@ public class DataverseJavaObject extends SourceJavaObject {
                 dgrf.setFileNumber(raster);
                 raster++;
             }else{
-                logger.error("Somehow have a DataverseGeoRecordFile that doesn't end in shp or tif: File = " + dgrf.getTranslatedTitle() + " and doi = " + getDOI());
+                logger.error("Somehow have a DataverseGeoRecordFile that doesn't end in shp or tif: File = " + dgrf.getTranslatedTitle() + " and doi = " + getPID());
             }
         }
         int count = 1;

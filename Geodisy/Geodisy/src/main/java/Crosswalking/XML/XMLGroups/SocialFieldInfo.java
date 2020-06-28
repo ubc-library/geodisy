@@ -21,7 +21,7 @@ public class SocialFieldInfo extends SubElement {
         this.djo = djo;
         sf = djo.getSocialFields();
         dataCollector = sf.getField(DATA_COLLECTOR);
-        doi = djo.getDOI();
+        doi = djo.getPID();
     }
 
     @Override

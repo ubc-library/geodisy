@@ -12,9 +12,9 @@ public class GeoserverTest {
         String doi = "rasterTest";
         SourceJavaObject sjo = new DataverseJavaObject("server");
         CitationFields cf = sjo.getCitationFields();
-        cf.setDoi(doi);
+        cf.setPID(doi);
         sjo.setCitationFields(cf);
-        System.out.println(sjo.getDOI() + " = doi from sjo");
+        System.out.println(sjo.getPID() + " = doi from sjo");
         GeoServerAPI geoServerAPI = new GeoServerAPI(sjo);
         DataverseGeoRecordFile dgrf = new DataverseGeoRecordFile(doi,fileName);
         geoServerAPI.addRaster(dgrf);
@@ -25,9 +25,9 @@ public class GeoserverTest {
         String doi = "vectorTest";
         SourceJavaObject sjo = new DataverseJavaObject("server");
         CitationFields cf = sjo.getCitationFields();
-        cf.setDoi(doi);
+        cf.setPID(doi);
         sjo.setCitationFields(cf);
-        System.out.println(sjo.getDOI() + " = doi from sjo");
+        System.out.println(sjo.getPID() + " = doi from sjo");
         GeoServerAPI geoServerAPI = new GeoServerAPI(sjo);
         DataverseGeoRecordFile dgrf = new DataverseGeoRecordFile(doi,fileName);
         geoServerAPI.addVector(fileName,doi);

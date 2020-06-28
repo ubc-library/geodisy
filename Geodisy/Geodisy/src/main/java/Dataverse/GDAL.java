@@ -56,7 +56,7 @@ public class GDAL {
     }
     //Not used by main program
     public DataverseJavaObject generateBB(DataverseJavaObject djo) {
-        String doi = djo.getDOI();
+        String doi = djo.getPID();
         String path = doi.replace(".","/");
         String folderName = DATA_DIR_LOC +path+"/";
         LinkedList<DataverseGeoRecordFile> origRecords = djo.getGeoDataFiles();
@@ -175,7 +175,7 @@ public class GDAL {
     }
 
     public GeographicBoundingBox generateBoundingBoxFromCSV(String fileName, DataverseJavaObject djo){
-        String path = djo.getDOI().replace("/","_");
+        String path = djo.getPID().replace("/","_");
         path = path.replace(".","_");
         String filePath = DATA_DIR_LOC + path + "/" + fileName;
         String name = fileName;
@@ -184,13 +184,13 @@ public class GDAL {
             ogrString = getGDALInfo(filePath, name);
             if(ogrString.contains("FAILURE")) {
                 logger.warn("Something went wrong parsing " + name + " at " + filePath);
-                return new GeographicBoundingBox(djo.getDOI());
+                return new GeographicBoundingBox(djo.getPID());
             }
         GeographicBoundingBox temp = getVector(ogrString, IS_WINDOWS, name, filePath);
         temp.setIsGeneratedFromGeoFile(true);
         return temp;
         } catch (IOException e) {
-            logger.error("Something went wrong trying to check " + name + " from record " + djo.getDOI());
+            logger.error("Something went wrong trying to check " + name + " from record " + djo.getPID());
         }
         return new GeographicBoundingBox("junk");
     }

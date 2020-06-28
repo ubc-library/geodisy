@@ -39,7 +39,7 @@ public class GeonamesBBs extends FindBoundBox {
 
     public GeonamesBBs(DataverseJavaObject djo){
         this.djo = djo;
-        doi = this.djo.getDOI();
+        doi = this.djo.getPID();
         this.countries = Countries.getCountry();
         this.bBoxes = countries.getBoundingBoxes();
         geo = new Geonames();

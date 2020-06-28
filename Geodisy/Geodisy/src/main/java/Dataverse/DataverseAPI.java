@@ -92,9 +92,9 @@ public class DataverseAPI extends SourceAPI {
                 continue;
             }
             DataverseJavaObject djo = parser.parse(jo, dvURL);
-            doi = djo.getDOI();
-            if(djo.hasContent && existingHarvests.hasRecord(djo.getDOI()))
-                recordsThatNoLongerExist.remove(djo.getDOI());
+            doi = djo.getPID();
+            if(djo.hasContent && existingHarvests.hasRecord(djo.getPID()))
+                recordsThatNoLongerExist.remove(djo.getPID());
             if(djo.hasContent()&& (hasNewInfo(djo, existingHarvests)||PROCESS_THESE_DOIS.length>0)) {
                 System.out.println("Downloading record: " + doi);
                 long startTime = Calendar.getInstance().getTimeInMillis();
@@ -111,7 +111,7 @@ public class DataverseAPI extends SourceAPI {
                     crosswalkRecord(djo);
                     DataverseRecordInfo dri = new DataverseRecordInfo(djo,logger.getName());
                     existingHarvests.addOrReplaceRecord(dri);
-                    existingHarvests.addBBox(djo.getDOI(),djo.getBoundingBox());
+                    existingHarvests.addBBox(djo.getPID(),djo.getBoundingBox());
                     existingHarvests.saveExistingSearchs(existingHarvests.getRecordVersions(),EXISTING_RECORDS, "ExistingRecords");
                     existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
                     answers.add(djo);
@@ -222,7 +222,7 @@ public class DataverseAPI extends SourceAPI {
 
     private boolean hasNewInfo(DataverseJavaObject djo, ExistingHarvests es) {
         DataverseRecordInfo dri = new DataverseRecordInfo(djo, logger.getName());
-        return dri.newer(es.getRecordInfo(djo.getDOI()));
+        return dri.newer(es.getRecordInfo(djo.getPID()));
     }
 
     private HashSet<String> getRecords(String searchURL) {

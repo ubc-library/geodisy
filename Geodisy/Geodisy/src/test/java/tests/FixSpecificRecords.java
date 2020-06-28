@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.util.LinkedList;
 import java.util.List;
 
-import static _Strings.GeodisyStrings.SANDBOX_DV_URL;
+//import static _Strings.GeodisyStrings.SANDBOX_DV_URL;
 
 public class FixSpecificRecords {
     String doi;
@@ -34,7 +34,7 @@ public class FixSpecificRecords {
         return djo;
     }
 
-    @Test
+    /*@Test
     public void run(){
         dvURL = SANDBOX_DV_URL;
         doi = "doi:10.5072/FK2/SAUHWD";
@@ -43,7 +43,7 @@ public class FixSpecificRecords {
         djo.downloadFiles();
         DataverseAPI api = new DataverseAPI(dvURL);
         djo = api.generateBoundingBox(djo);
-        String localDoi = djo.getDOI();
+        String localDoi = djo.getPID();
         GeodisyTask geodisyTask = new GeodisyTask();
         List<SourceJavaObject> sJOs = new LinkedList<>();
         sJOs.add(djo);
@@ -58,5 +58,5 @@ public class FixSpecificRecords {
         JSONObject jo = getJSON(doi);
         DataverseJavaObject djo = parseDJO(jo);
         djo.downloadFiles();
-    }
+    }*/
 }

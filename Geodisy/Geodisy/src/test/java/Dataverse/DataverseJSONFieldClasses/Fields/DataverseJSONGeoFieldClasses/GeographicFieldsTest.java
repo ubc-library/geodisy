@@ -16,7 +16,7 @@ class GeographicFieldsTest {
         String fakeDOI = "10.10.10";
         String fakeServer = "noRealServer";
         GeographicFields gf = new GeographicFields(new DataverseJavaObject(fakeServer));
-        gf.setDoi(fakeDOI);
+        gf.setPID(fakeDOI);
         List<GeographicBoundingBox> bboxes = gf.getGeoBBoxes();
         GeographicBoundingBox gBB =  new GeographicBoundingBox(fakeDOI);
         gBB.setEastLongitude(-10);
