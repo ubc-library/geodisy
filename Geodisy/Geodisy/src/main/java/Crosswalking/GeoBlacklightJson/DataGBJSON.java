@@ -41,14 +41,13 @@ public class DataGBJSON extends GeoBlacklightJSON{
         geoFiles = djo.getGeoDataFiles();
         geoMeta = djo.getGeoDataMeta();
     }
-    //TODO check if Dataverse publisher field be included in the slug?
     @Override
     protected JSONObject getRequiredFields(GeographicBoundingBox gbb, int total){
         String number = gbb.getFileNumber();
         jo.put("geoblacklight_version","1.0");
         jo.put("dc_identifier_s", GeodisyStrings.urlSlashes(javaObject.getSimpleFieldVal(DVFieldNameStrings.RECORD_URL)));
         String geoserverLabel = getGeoserverLabel(gbb).toLowerCase();
-        jo.put("layer_slug_s", geoserverLabel);
+        jo.put("layer_slug_s", "geodisy:" + geoserverLabel);
         if(total>1) {
             number = padZeros(number,total);
             jo.put("dc_title_s", javaObject.getSimpleFields().getField(TITLE) + " (" + number + " of " + total + ")");
@@ -89,19 +88,11 @@ public class DataGBJSON extends GeoBlacklightJSON{
         getDSDescriptionSingle();
         if(!gbb.getField(GEOMETRY).isEmpty())
             jo.put("layer_geom_type_s",gbb.getField(GEOMETRY));
-        JSONArray ja = addBaseRecordInfo();
+        JSONObject j = addBaseRecordInfo();
         if(!gbb.getField(GEOMETRY).equals(UNDETERMINED) && USE_GEOSERVER) {
-            ja = addDataDownloadOptions(gbb, ja, isOnGeoserver);
+            j = addDataDownloadOptions(gbb, j, isOnGeoserver);
         }
-        String externalServices = "{";
-        for (Object o : ja) {
-            if (!externalServices.equals("{"))
-                externalServices += ",";
-            externalServices += (String) o;
-        }
-        externalServices += "}";
-
-        jo.put(EXTERNAL_SERVICES, externalServices);
+        jo.put(EXTERNAL_SERVICES, j);
         if(!geoserverLabel.isEmpty())
             jo.put("layer_id_s", geoserverLabel);
     }
@@ -109,7 +100,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
     private String getGeoserverLabel(GeographicBoundingBox gbb) {
         boolean generated = gbb.isGeneratedFromGeoFile();
         if (generated) {
-            return "geodisy:" + gbb.getField(GEOSERVER_LABEL);
+            return gbb.getField(GEOSERVER_LABEL);
         }
         else
             return gbb.getField(GEOSERVER_LABEL);
@@ -121,24 +112,23 @@ public class DataGBJSON extends GeoBlacklightJSON{
     }
 
     @Override
-    protected JSONArray addDataDownloadOptions(GeographicBoundingBox gbb, JSONArray ja, boolean isOnGeoserver) {
+    protected JSONObject addDataDownloadOptions(GeographicBoundingBox gbb, JSONObject jo, boolean isOnGeoserver) {
         if(isOnGeoserver) {
-            if (gbb.getField(FILE_NAME).endsWith(".tif"))
-                ja.put(WMS);
+            jo.put(WMS, GEOSERVER_WMS_LOCATION);
             if (gbb.getField(FILE_NAME).endsWith(".shp"))
-                ja.put(WFS);
+                jo.put(WFS, GEOSERVER_WFS_LOCATION);
         }
         if(!gbb.getField(FILE_URL).isEmpty())
-            ja.put(DIRECT_FILE_DOWNLOAD + stringed(gbb.getField(FILE_URL)));
-        return ja;
+            jo.put(DIRECT_FILE_DOWNLOAD, gbb.getField(FILE_URL));
+        return jo;
     }
 
     @Override
-    protected JSONArray addBaseRecordInfo(){
-        JSONArray ja = new JSONArray();
-        ja.put(RECORD_URL + GeodisyStrings.urlSlashes(stringed(javaObject.getSimpleFieldVal(DVFieldNameStrings.RECORD_URL))));
-        ja.put(ISO_METADATA + stringed(END_XML_JSON_FILE_PATH + GeodisyStrings.urlSlashes(javaObject.getSimpleFieldVal(PERSISTENT_ID).replace(".","/") + "/" + ISO_METADATA_FILE_ZIP)));
-        return ja;
+    protected JSONObject addBaseRecordInfo(){
+        JSONObject jo = new JSONObject();
+        jo.put(RECORD_URL,  GeodisyStrings.urlSlashes(javaObject.getSimpleFieldVal(DVFieldNameStrings.RECORD_URL)));
+        jo.put(ISO_METADATA, END_XML_JSON_FILE_PATH + GeodisyStrings.urlSlashes(javaObject.getSimpleFieldVal(PERSISTENT_ID).replace(".","/") + "/" + ISO_METADATA_FILE_ZIP));
+        return jo;
     }
 
     //TODO, check I am getting all the optional fields I should be

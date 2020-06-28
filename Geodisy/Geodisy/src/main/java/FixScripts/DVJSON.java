@@ -13,6 +13,7 @@ public class DVJSON {
         String baseURL = "https://dataverse.scholarsportal.info/api/datasets/export?exporter=dataverse_json&persistentId=";
         LinkedList<JSONObject> answers =  new LinkedList<>();
                 String pid = "doi:" + doi;
+                System.out.println("url for specific PID: " + baseURL + pid);
                 getMetadata = new HTTPCallerGeoNames();
                 String dataverseJSON = getMetadata.callHTTP(baseURL+pid);
                 if(dataverseJSON.equals("HTTP Fail"))
@@ -21,26 +22,31 @@ public class DVJSON {
     }
 
     public DVJSONFileInfo getFileInfo(String pid, String gBLID){
-        String dvJSON = getDVJSON(doi);
+        System.out.println("Accessing DV");
         String dvJSON = getDVJSON(pid);
         JSONObject base = new JSONObject(dvJSON);
         base = base.getJSONObject("datasetVersion");
         JSONArray files = base.getJSONArray("files");
-        LinkedList<DVJSONFileInfo> infoFiles = new LinkedList<>();
-        int fileNumber = 0;
+        DVJSONFileInfo dvji = new DVJSONFileInfo();
         for(Object o: files){
             JSONObject j = (JSONObject) o;
             j = j.getJSONObject("dataFile");
-            DVJSONFileInfo dvji = new DVJSONFileInfo();
-            dvji.setDbID(j.getString("id"));
-            dvji.setFileNumber(fileNumber);
+            String id = String.valueOf(j.getInt("id"));
+            System.out.println("Before check: GBLID = " + gBLID + " and DVID = " + id);
+            if (!id.equals(gBLID))
+                continue;
+
+
             String fileName = j.getString("filename");
             int period = fileName.lastIndexOf(".");
+            if(period==-1)
+                return dvji;
+            System.out.println("Got dv info for " + pid);
+            dvji.setDbID(String.valueOf(j.getInt("id")));
             dvji.setFileName(fileName.substring(0,period));
             dvji.setFileExtension(fileName.substring(period+1));
-            infoFiles.add(dvji);
-            fileNumber++;
+            return dvji;
         }
-        return infoFiles;
+        return dvji;
     }
 }
