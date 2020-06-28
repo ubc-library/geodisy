@@ -9,12 +9,11 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.Collection;
+
 import java.util.HashSet;
 import java.util.LinkedList;
 
 import static _Strings.GeoBlacklightStrings.*;
-import static _Strings.GeodisyStrings.BACKEND_ADDRESS;
 import static _Strings.GeodisyStrings.DATA_DIR_LOC;
 
 public class GeoFiles {
@@ -106,51 +105,36 @@ public class GeoFiles {
             String origLabel = r.g.geoserverLabel;
             String gBLJSON = r.g.geoblacklightJSON;
             gBLJSON = gBLJSON.replace(origLabel,r.geoserverLabel);
-            if(records.size()>1){
-                int start = gBLJSON.indexOf("dc_source_sm\":[");
-                if(start!=-1){
-                    start = start+15;
-                    int end = gBLJSON.indexOf("]",start);
-                    String recordsToAdd = "";
-                    for(String s: r.geoserverIDs){
-                        System.out.println("Writing related record IDs: " + s);
-                        recordsToAdd += "," + quoted(s);
-                    }
-                    recordsToAdd = recordsToAdd.substring(1);
-                    gBLJSON = gBLJSON.substring(0,start) + recordsToAdd + gBLJSON.substring(end);
-                } else {
-                    start = gBLJSON.indexOf("\"dc_rights_s\":\"Public\",")+23;
-                    String recordsToAdd = "\"dc_source_sm\":[";
-                    boolean first = true;
-                    for(String s: r.geoserverIDs){
-                        if(first)
-                            recordsToAdd += quoted(s);
-                        else
-                            recordsToAdd += "," + quoted(s);
-                    }
-                    recordsToAdd += "],";
-                    gBLJSON = gBLJSON.substring(0,start) + recordsToAdd + gBLJSON.substring(start);
-                }
-            }
+            try {
+                JSONObject gBLObject = new JSONObject(gBLJSON);
+                JSONArray source;
+                if(gBLObject.has("dc_source_sm"))
+                    source = gBLObject.getJSONArray("dc_source_sm");
+                else
+                    source = new JSONArray();
 
-                try {
-                    JSONObject jo = new JSONObject(gBLJSON);
-                    //ADD WMS functionality
-                    JSONObject refs = jo.getJSONObject(EXTERNAL_SERVICES);
-                    refs.put(WMS, GEOSERVER_WMS_LOCATION);
-                    if (!r.g.isRaster)
-                        refs.put(WFS, GEOSERVER_WFS_LOCATION);
-                    jo.put(EXTERNAL_SERVICES, refs);
-                    try (PrintWriter out = new PrintWriter(r.g.getGblJSONFilePath())) {
-                        out.println(jo.toString());
-                    } catch (FileNotFoundException e) {
-                        System.out.println("Something went wrong updating the GBLJSON at " + r.g.getGblJSONFilePath() + " with " + gBLJSON);
-                    }
-                } catch (JSONException err) {
-                    System.out.println("Error parsing json: " + gBLJSON);
+                for(String s: r.geoserverIDs){
+                    source.put(s);
                 }
+                gBLObject.put("dc_source_sm",source);
+
+                //ADD WMS functionality
+                JSONObject refs = gBLObject.getJSONObject(EXTERNAL_SERVICES);
+                refs.put(WMS, GEOSERVER_WMS_LOCATION);
+                //Add WFS if vector data
+                if (!r.g.isRaster)
+                    refs.put(WFS, GEOSERVER_WFS_LOCATION);
+                gBLObject.put(EXTERNAL_SERVICES, refs);
+                try (PrintWriter out = new PrintWriter(r.g.getGblJSONFilePath())) {
+                    out.println(gBLObject.toString());
+                } catch (FileNotFoundException e) {
+                    System.out.println("Something went wrong updating the GBLJSON at " + r.g.getGblJSONFilePath() + " with " + gBLJSON);
+                }
+            } catch (JSONException err) {
+                System.out.println("Error parsing json: " + gBLJSON);
             }
         }
+    }
 
 
     private String quoted(String s){
