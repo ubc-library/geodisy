@@ -123,7 +123,7 @@ public class GDAL {
                 return new GeographicBoundingBox(doi);
             }
             if(gdalInfo) {
-                temp = getRaster(gdalString);
+                temp = getRaster(gdalString, filePath, IS_WINDOWS, regularName );
                 projection = getProjection(gdalString);
             }
             else {
@@ -195,12 +195,18 @@ public class GDAL {
         return new GeographicBoundingBox("junk");
     }
 
-    private GeographicBoundingBox getRaster(String gdalString) {
+    private GeographicBoundingBox getRaster(String gdalString, String filePath, boolean isWindows, String fileName) throws IOException {
 
         GeographicBoundingBox temp = new GeographicBoundingBox("temp");
-            temp.setBB(getLatLongGdalInfo(gdalString));
-            temp.setField(GEOMETRY,RASTER);
-            temp.setWidthHeight(gdalString);
+        BoundingBox bb = getLatLongGdalInfo(gdalString);
+        if(bb.hasUTMCoords()) {
+            convertToWGS84(filePath, IS_WINDOWS, fileName);
+            gdalString = getGDALInfo(filePath,fileName);
+            bb = getLatLongGdalInfo(gdalString);
+        }
+        temp.setBB(bb);
+        temp.setField(GEOMETRY,RASTER);
+        temp.setWidthHeight(gdalString);
         return temp;
     }
 
@@ -368,7 +374,7 @@ public class GDAL {
             temp.setGeometryType(getGeometryType(gdalString));
             GeographicBoundingBox bb;
             if(GeodisyStrings.gdalinfoRasterExtention(name))
-                bb = getRaster(gdalString);
+                bb = getRaster(gdalString, file.getAbsolutePath() , IS_WINDOWS, file.getName() );
             else
                 bb = getVector(gdalString,IS_WINDOWS,file.getName(),file.getAbsolutePath());
             temp.setIsFromFile(true);
