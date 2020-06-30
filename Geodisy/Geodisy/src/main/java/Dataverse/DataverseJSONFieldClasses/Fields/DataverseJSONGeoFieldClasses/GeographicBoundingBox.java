@@ -62,10 +62,8 @@ public class GeographicBoundingBox extends CompoundJSONField {
         if(isGeneratedFromGeoFile()) {
             if (geometryType.equalsIgnoreCase(RASTER))
                 type = "r";
-            else if (geometryType.equalsIgnoreCase("Polygon"))
-                type = "v";
             else
-                type = "g";
+                type = "v";
         }else
             type = "m";
         answer = answer + type + fileNumber;
