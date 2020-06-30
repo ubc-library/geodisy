@@ -12,14 +12,7 @@ public class ParseGBLJSON {
     String json;
 
     public JSONObject readJSON(File file) throws IOException {
-        String path = file.getAbsolutePath();
-        List<String> jsonStringList = Files.readAllLines(Paths.get(path));
-        String jsonString = "";
-        for(String s:jsonStringList){
-            jsonString+=s;
-        }
-
-        return getJSONObject(jsonString);
+        return getJSONObject(new String(Files.readAllBytes(Paths.get(file.getPath()))));
     }
 
     JSONObject getJSONObject(String jsonString){
@@ -56,15 +49,12 @@ public class ParseGBLJSON {
     }
     String getDBID(JSONObject json){
         String resources = json.getString("dct_references_s");
-        System.out.println("dct_references: " + resources);
         JSONObject jsonResource = new JSONObject(resources);
         String keys = "";
         for(String s: jsonResource.keySet()){
             keys += " ," + s;
         }
-        System.out.println("Keys: " + keys);
         String dbID = jsonResource.getString("http://schema.org/downloadUrl");
-        System.out.println("DBID: " + dbID);
         return dbID.substring(58);
     }
     String getGeoserverLabel(JSONObject json){

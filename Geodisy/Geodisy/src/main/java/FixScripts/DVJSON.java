@@ -32,7 +32,6 @@ public class DVJSON {
             JSONObject j = (JSONObject) o;
             j = j.getJSONObject("dataFile");
             String id = String.valueOf(j.getInt("id"));
-            System.out.println("Before check: GBLID = " + gBLID + " and DVID = " + id);
             if (!id.equals(gBLID))
                 continue;
 
@@ -41,7 +40,6 @@ public class DVJSON {
             int period = fileName.lastIndexOf(".");
             if(period==-1)
                 return dvji;
-            System.out.println("Got dv info for " + pid);
             dvji.setDbID(String.valueOf(j.getInt("id")));
             dvji.setFileName(fileName.substring(0,period));
             dvji.setFileExtension(fileName.substring(period+1));

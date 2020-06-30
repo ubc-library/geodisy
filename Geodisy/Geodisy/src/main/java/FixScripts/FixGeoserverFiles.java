@@ -96,6 +96,7 @@ public class FixGeoserverFiles {
                 gBLF.setBoundBoxNumberAndType(parser.getBoundingBoxNumberAndType(jO));
                 gBLF.setGeoblacklightJSON(jO.toString());
                 gBLF.setGblJSONFilePath(file.getAbsolutePath());
+
             }
 
         } catch (IOException e) {

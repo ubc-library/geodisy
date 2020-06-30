@@ -92,7 +92,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         if(!gbb.getField(GEOMETRY).equals(UNDETERMINED) && USE_GEOSERVER) {
             j = addDataDownloadOptions(gbb, j, isOnGeoserver);
         }
-        jo.put(EXTERNAL_SERVICES, j);
+        jo.put(EXTERNAL_SERVICES, j.toString());
         if(!geoserverLabel.isEmpty())
             jo.put("layer_id_s", geoserverLabel);
     }
