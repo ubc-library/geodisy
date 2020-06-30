@@ -240,12 +240,18 @@ public class DataverseJavaObject extends SourceJavaObject {
         return newFiles;
     }
     public void updateGeoserver() {
+        Collections.sort(getGeoDataFiles(), new SortByFileName());
         for(DataverseGeoRecordFile dgrf:getGeoDataFiles()){
             if(dgrf.getTranslatedTitle().endsWith(".shp")) {
                 dgrf.onGeoserver = createRecords(dgrf, Integer.parseInt(dgrf.getGBBFileNumber()), VECTOR);
             }else if(dgrf.getTranslatedTitle().endsWith(".tif")) {
                 dgrf.onGeoserver = createRecords(dgrf, Integer.parseInt(dgrf.getGBBFileNumber()), RASTER);
             }
+        }
+    }
+    class SortByFileName implements Comparator<DataverseGeoRecordFile>{
+        public int compare(DataverseGeoRecordFile a, DataverseGeoRecordFile b){
+            return a.getTranslatedTitle().compareToIgnoreCase(b.getTranslatedTitle());
         }
     }
     //TODO
