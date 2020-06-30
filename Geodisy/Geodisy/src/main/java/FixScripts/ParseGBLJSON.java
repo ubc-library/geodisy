@@ -24,7 +24,6 @@ public class ParseGBLJSON {
         String slug = json.getString("layer_slug_s");
         int slugLength = slug.length();
         boolean firstNumber = false;
-        boolean secondLetter = false;
         for(int i = slugLength-1; i>0; i--){
             if(firstNumber && slug.substring(i,i+1).equals("v")||slug.substring(i,i+1).equals("r"))
                 return true;

@@ -118,6 +118,8 @@ public class GDAL {
         String projection =  "";
         try {
             gdalString = getGDALInfo(filePath, regularName);
+            System.out.println("What info we got:");
+            System.out.println(gdalString);
             if(gdalString.contains("FAILURE")) {
                 logger.warn("Something went wrong parsing " + regularName + " at " + filePath);
                 return new GeographicBoundingBox(doi);
@@ -199,6 +201,8 @@ public class GDAL {
 
         GeographicBoundingBox temp = new GeographicBoundingBox("temp");
         BoundingBox bb = getLatLongGdalInfo(gdalString);
+        if(isZeroPoint(bb))
+            return new GeographicBoundingBox("junk");
         if(bb.hasUTMCoords()) {
             convertToWGS84(filePath, IS_WINDOWS, fileName);
             gdalString = getGDALInfo(filePath,fileName);
@@ -210,18 +214,28 @@ public class GDAL {
         return temp;
     }
 
+    private boolean isZeroPoint(BoundingBox bb) {
+        return bb.getLongWest()==0 && bb.getLongEast()==0 && bb.getLatNorth()==0 && bb.getLatSouth()==0;
+    }
+
     private GeographicBoundingBox getVector(String gdalString, boolean isWindows, String name, String filePath) throws IOException {
         String geo = getGeometryType(gdalString);
         GeographicBoundingBox gbb = new GeographicBoundingBox("temp");
         BoundingBox temp;
         temp = getLatLongOgrInfo(gdalString);
+        if(isZeroPoint(temp))
+            return new GeographicBoundingBox("junk");
+        System.out.println("Bounding box: " + temp.getLatNorth() + "N, " + temp.getLatSouth() + "S, " + temp.getLongEast() + "E, " + temp.getLongWest() + "W");
         if (temp.hasUTMCoords()) {
             convertToWGS84(filePath, isWindows, name);
             gbb.setField(PROJECTION,"EPSG:4326");
             gdalString = getGDALInfo(filePath, name);
+            System.out.println("Gdalinfo after converting UTM:");
+            System.out.println(gdalString);
             if(gdalString.contains("FAILURE"))
                 return new GeographicBoundingBox("temp");
             temp = getLatLongOgrInfo(gdalString);
+            System.out.println("Bounding box: " + temp.getLatNorth() + "N, " + temp.getLatSouth() + "S, " + temp.getLongEast() + "E, " + temp.getLongWest() + "W");
         }
         else{
             try {
