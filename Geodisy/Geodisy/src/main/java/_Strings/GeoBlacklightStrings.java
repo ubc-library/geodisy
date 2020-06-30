@@ -13,14 +13,15 @@ public class GeoBlacklightStrings {
     public final static boolean USE_GEOSERVER = true;
 
     //GEOBLACKLIGHT
-    public final static String GEOBLACKLIGHT_BASE = "http://" + FRONTEND_ADDRESS + ":3000/catalog/";
-    public final static String GEOSERVER_BASE = "\"https://" + BACKEND_ADDRESS + "/"; //may need geoserver/web/
-    private final static String GEOSERVER_DOWNLOAD_BASE = GEOSERVER_BASE + "geoserver/geodisy/";
-    public final static String GEOSERVER_RASTER_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "wms?service=WMS&version=1.1.0&request=GetMap&layers=geodisy:";
-    public final static String GEOSERVER_VECTOR_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geodisy:";
-    public final static String GEOSERVER_REST = GEOSERVER_BASE + "geoserver/web/";
-    public final static String GEOSERVER_WFS_LOCATION = GEOSERVER_BASE+"geoserver/geodisy/wfs\"";
-    public final static String GEOSERVER_WMS_LOCATION = GEOSERVER_BASE+"geoserver/geodisy/wms\"";
+    public static String GEOBLACKLIGHT_BASE = "http://" + FRONTEND_ADDRESS + ":3000/catalog/";
+    public static String GEOSERVER_BASE;
+    public static String GEOSERVER_BASE_INSECURE;
+    private static String GEOSERVER_DOWNLOAD_BASE = GEOSERVER_BASE + "geoserver/geodisy/";
+    public static String GEOSERVER_RASTER_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "wms?service=WMS&version=1.1.0&request=GetMap&layers=geodisy:";
+    public static String GEOSERVER_VECTOR_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geodisy:";
+    public static String GEOSERVER_REST = GEOSERVER_BASE + "geoserver/web/";
+    public static String GEOSERVER_WFS_LOCATION = GEOSERVER_BASE_INSECURE+"geoserver/geodisy/wfs";
+    public static String GEOSERVER_WMS_LOCATION = GEOSERVER_BASE_INSECURE+"geoserver/geodisy/wms";
     public final static String EXTERNAL_SERVICES = "dct_references_s";
     public final static String RECORD_URL = "http://schema.org/url";
     public final static String WMS = "http://www.opengis.net/def/serviceType/ogc/wms";
@@ -50,4 +51,15 @@ public class GeoBlacklightStrings {
         return GEOSERVER_VECTOR_DOWNLOAD_BASE + drf.getGeoserverLabel() + "&maxfeatures=50&outputformat=SHAPE-ZIP\"";
     }
 
+    public static void load(){
+        GEOSERVER_BASE = "https://" + BACKEND_ADDRESS + "/";
+        GEOSERVER_BASE_INSECURE = "http://" + BACKEND_ADDRESS + ":8080/";
+        GEOSERVER_DOWNLOAD_BASE = GEOSERVER_BASE + "geoserver/geodisy/";
+        GEOSERVER_DOWNLOAD_BASE = GEOSERVER_BASE + "geoserver/geodisy/";
+        GEOSERVER_RASTER_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "wms?service=WMS&version=1.1.0&request=GetMap&layers=geodisy:";
+        GEOSERVER_VECTOR_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geodisy:";
+        GEOSERVER_REST = GEOSERVER_BASE + "geoserver/web/";
+        GEOSERVER_WFS_LOCATION = GEOSERVER_BASE_INSECURE+"geoserver/geodisy/wfs";
+        GEOSERVER_WMS_LOCATION = GEOSERVER_BASE_INSECURE+"geoserver/geodisy/wms";
+    }
 }
