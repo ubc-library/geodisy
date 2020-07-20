@@ -71,12 +71,12 @@ public class AstroFields extends MetadataSimple {
     }
 
     @Override
-    public String getDOI() {
+    public String getPID() {
         return doi;
     }
 
     @Override
-    public void setDoi(String doi) {
+    public void setPID(String doi) {
         this.doi = doi;
     }
 

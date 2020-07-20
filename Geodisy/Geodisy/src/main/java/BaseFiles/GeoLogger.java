@@ -29,7 +29,7 @@ public class GeoLogger {
         else {
             DataverseRecordInfo dri = new DataverseRecordInfo(djo, this.getName());
             ExistingCallsToCheck efc = ExistingCallsToCheck.getExistingCallsToCheck();
-            if (!efc.hasRecord(djo.getDOI())) {
+            if (!efc.hasRecord(djo.getPID())) {
                 efc.addOrReplaceRecord(dri, message);
             } else if (efc.isNewerRecord(dri, this.getName())) {
                 efc.addOrReplaceRecord(dri, message);

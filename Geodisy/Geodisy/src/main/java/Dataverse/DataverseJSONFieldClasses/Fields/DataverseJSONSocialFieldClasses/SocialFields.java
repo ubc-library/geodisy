@@ -17,7 +17,7 @@ public class SocialFields extends MetadataType {
 
     public SocialFields(DataverseJavaObject djo) {
         this.djo = djo;
-        this.doi = djo.getDOI();
+        this.doi = djo.getPID();
         this.simpleSocialFields = new SimpleSocialFields();
         this.targetSampleSize = new TargetSampleSize();
         this.socialScienceNotes = new SocialScienceNotes();
@@ -58,12 +58,12 @@ public class SocialFields extends MetadataType {
     }
 
     @Override
-    public String getDOI() {
+    public String getPID() {
         return doi;
     }
 
     @Override
-    public void setDoi(String doi) {
+    public void setPID(String doi) {
         this.doi=doi;
     }
 

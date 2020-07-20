@@ -77,7 +77,7 @@ public class ISOXMLGen extends DjoXMLGenerator {
         Element levelI = doc.createGMDElement("metadataIdentifier");
         Element levelJ = doc.createGMDElement("MD_Identifier");
         Element levelK = doc.createGMDElement("codeSpace");
-        UUID uuid = getUUID(djo.getDOI());
+        UUID uuid = getUUID(djo.getPID());
         Element levelL = doc.addGCOVal(uuid.toString(),CHARACTER);
         levelK.appendChild(levelL);
         levelJ.appendChild(levelK);
@@ -108,7 +108,7 @@ public class ISOXMLGen extends DjoXMLGenerator {
         XMLStack innerStack = new XMLStack();
         innerStack.push(levelL);
         innerStack.push(doc.createGMDElement(CODE));
-        levelL = innerStack.zip(doc.addGCOVal(djo.getDOI(),CHARACTER));
+        levelL = innerStack.zip(doc.addGCOVal(djo.getPID(),CHARACTER));
         innerStack.push(levelL);
         innerStack.push(doc.createGMDElement(CODE));
         levelL = innerStack.zip(doc.addGCOVal(djo.getDOIProtocal(),CHARACTER));

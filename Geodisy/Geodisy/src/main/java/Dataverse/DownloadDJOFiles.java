@@ -15,7 +15,7 @@ public class DownloadDJOFiles {
 
     public DataverseJavaObject downloadFiles(DataverseJavaObject djo){
         this.djo = djo;
-        File f = new File(DATA_DIR_LOC + djo.urlized(djo.citationFields.getDOI()));
+        File f = new File(DATA_DIR_LOC + djo.urlized(djo.citationFields.getPID()));
         djo.deleteDir(f);
         List<DataverseRecordFile> temp = new LinkedList<>();
         DataverseRecordFile tempDRF = new DataverseRecordFile();

@@ -73,7 +73,7 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
 
 
     protected abstract JSONObject getOptionalFields(DataverseGeoRecordFile drf, int totalRecordsInStudy);
-    protected abstract JSONArray addDataDownloadOptions(GeographicBoundingBox bb, JSONArray ja, boolean isOnGeoserver); //for records with datasetfiles
-    protected abstract JSONArray addBaseRecordInfo(); //adds the base metadata external services that all records need regardless of existence of datafiles
+    protected abstract JSONObject addDataDownloadOptions(GeographicBoundingBox bb, JSONObject ja, boolean isOnGeoserver); //for records with datasetfiles
+    protected abstract JSONObject addBaseRecordInfo(); //adds the base metadata external services that all records need regardless of existence of datafiles
     protected abstract void saveJSONToFile(String json, String doi, String folderName);
 }

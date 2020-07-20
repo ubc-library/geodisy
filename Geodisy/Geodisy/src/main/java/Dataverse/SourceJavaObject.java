@@ -59,8 +59,8 @@ public abstract class SourceJavaObject {
         }
         return false;
     }
-    protected String urlized(String doi) {
-        return doi.replace(".","/");
+    protected String urlized(String pid) {
+        return pid.replace(".","/");
 
     }
     protected void deleteDir(File f) {
@@ -75,8 +75,11 @@ public abstract class SourceJavaObject {
         }
         f.delete();
     }
-    public String getDOI(){
-        return citationFields.getDOI();
+    public String getPID(){
+        return citationFields.getPID();
+    }
+    public void setPID(String pid){
+        citationFields.setPID(pid);
     }
     public int getVersion(){
         return getCitationFields().getVersion();

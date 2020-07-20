@@ -78,7 +78,7 @@ GeoLogger logger;
         List<GeographicBoundingBox> gbbs = determineWhichBBs();
 
         if(gbbs.size()==0)
-            logger.error("Record with PERSISTENT_ID: " + djo.getDOI() + ", got to the creating XML stage without a valid bounding box.");
+            logger.error("Record with PERSISTENT_ID: " + djo.getPID() + ", got to the creating XML stage without a valid bounding box.");
         else {
             stack.push(root);
             stack.push(doc.createGMDElement(EXTENT)); //K

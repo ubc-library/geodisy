@@ -64,7 +64,6 @@ Geodisy/Geodisy/XMLFilesTest/
 *.log
 Geodisy/Geodisy/XMLFilesTest/GeodisyTestGit/GeodisyTestGit/
 
-Geodisy/Geodisy/src/main/java/BaseFiles/PrivateStrings.java
 
 *.class
 
@@ -149,8 +148,12 @@ Geodisy/Geodisy/jdom-1.0.jar
 
 FRDRGBL/
 
-Geodisy/Geodisy/src/main/java/Strings/PrivateStrings.java
 
 Monthly Check-ins/
 
-Geodisy/Geodisy/src/main/java/_Strings/PrivateStrings.java
+
+frdr_harvest/
+FixShp/
+20200619.sql
+
+Geodisy/Geodisy/geodisyFiles/tifs/

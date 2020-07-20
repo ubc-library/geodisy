@@ -26,7 +26,7 @@ public class GeographicFields extends MetadataType {
         this.geoBBoxes = new LinkedList<>();
         this.geoUnits = new LinkedList<>();
         fullBB = new BoundingBox();
-        this.doi = djo.getDOI();
+        this.doi = djo.getPID();
     }
 
     //Placeholder GeographicFields constructor
@@ -152,15 +152,15 @@ public class GeographicFields extends MetadataType {
     }
 
     @Override
-    public String getDOI() {
+    public String getPID() {
         return doi;
     }
 
     @Override
-    public void setDoi(String doi) {
+    public void setPID(String doi) {
         this.doi = doi;
         CitationFields cf = djo.getCitationFields();
-        cf.setDoi(doi);
+        cf.setPID(doi);
         djo.setCitationFields(cf);
     }
 

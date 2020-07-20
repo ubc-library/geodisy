@@ -45,5 +45,14 @@ public class Date extends JSONField implements DateField {
 
     }
 
+    public int getYear(){
+        Year y = Year.from(date);
+        //value -111111 is to indicate there was not a parsable date to get a year value from this TemporalAccessor
+        if(y==null ||y.toString()=="9999")
+            return -111111;
+        return y.getValue();
+
+    }
+
 
 }

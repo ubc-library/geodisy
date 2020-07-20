@@ -13,7 +13,7 @@ public abstract class MetadataType{
 
     public abstract MetadataType setFields(JSONObject jo);
     public abstract List getListField(String fieldName);
-    public abstract String getDOI();
-    public abstract void setDoi(String doi);
+    public abstract String getPID();
+    public abstract void setPID(String doi);
 
 }

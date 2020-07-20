@@ -56,7 +56,7 @@ public class GDAL {
     }
     //Not used by main program
     public DataverseJavaObject generateBB(DataverseJavaObject djo) {
-        String doi = djo.getDOI();
+        String doi = djo.getPID();
         String path = doi.replace(".","/");
         String folderName = DATA_DIR_LOC +path+"/";
         LinkedList<DataverseGeoRecordFile> origRecords = djo.getGeoDataFiles();
@@ -118,12 +118,14 @@ public class GDAL {
         String projection =  "";
         try {
             gdalString = getGDALInfo(filePath, regularName);
+            System.out.println("What info we got:");
+            System.out.println(gdalString);
             if(gdalString.contains("FAILURE")) {
                 logger.warn("Something went wrong parsing " + regularName + " at " + filePath);
                 return new GeographicBoundingBox(doi);
             }
             if(gdalInfo) {
-                temp = getRaster(gdalString);
+                temp = getRaster(gdalString, filePath, IS_WINDOWS, regularName );
                 projection = getProjection(gdalString);
             }
             else {
@@ -175,7 +177,7 @@ public class GDAL {
     }
 
     public GeographicBoundingBox generateBoundingBoxFromCSV(String fileName, DataverseJavaObject djo){
-        String path = djo.getDOI().replace("/","_");
+        String path = djo.getPID().replace("/","_");
         path = path.replace(".","_");
         String filePath = DATA_DIR_LOC + path + "/" + fileName;
         String name = fileName;
@@ -184,24 +186,36 @@ public class GDAL {
             ogrString = getGDALInfo(filePath, name);
             if(ogrString.contains("FAILURE")) {
                 logger.warn("Something went wrong parsing " + name + " at " + filePath);
-                return new GeographicBoundingBox(djo.getDOI());
+                return new GeographicBoundingBox(djo.getPID());
             }
         GeographicBoundingBox temp = getVector(ogrString, IS_WINDOWS, name, filePath);
         temp.setIsGeneratedFromGeoFile(true);
         return temp;
         } catch (IOException e) {
-            logger.error("Something went wrong trying to check " + name + " from record " + djo.getDOI());
+            logger.error("Something went wrong trying to check " + name + " from record " + djo.getPID());
         }
         return new GeographicBoundingBox("junk");
     }
 
-    private GeographicBoundingBox getRaster(String gdalString) {
+    private GeographicBoundingBox getRaster(String gdalString, String filePath, boolean isWindows, String fileName) throws IOException {
 
         GeographicBoundingBox temp = new GeographicBoundingBox("temp");
-            temp.setBB(getLatLongGdalInfo(gdalString));
-            temp.setField(GEOMETRY,RASTER);
-            temp.setWidthHeight(gdalString);
+        BoundingBox bb = getLatLongGdalInfo(gdalString);
+        if(isZeroPoint(bb))
+            return new GeographicBoundingBox("junk");
+        if(bb.hasUTMCoords()) {
+            convertToWGS84(filePath, IS_WINDOWS, fileName);
+            gdalString = getGDALInfo(filePath,fileName);
+            bb = getLatLongGdalInfo(gdalString);
+        }
+        temp.setBB(bb);
+        temp.setField(GEOMETRY,RASTER);
+        temp.setWidthHeight(gdalString);
         return temp;
+    }
+
+    private boolean isZeroPoint(BoundingBox bb) {
+        return bb.getLongWest()==0 && bb.getLongEast()==0 && bb.getLatNorth()==0 && bb.getLatSouth()==0;
     }
 
     private GeographicBoundingBox getVector(String gdalString, boolean isWindows, String name, String filePath) throws IOException {
@@ -209,13 +223,19 @@ public class GDAL {
         GeographicBoundingBox gbb = new GeographicBoundingBox("temp");
         BoundingBox temp;
         temp = getLatLongOgrInfo(gdalString);
+        if(isZeroPoint(temp))
+            return new GeographicBoundingBox("junk");
+        System.out.println("Bounding box: " + temp.getLatNorth() + "N, " + temp.getLatSouth() + "S, " + temp.getLongEast() + "E, " + temp.getLongWest() + "W");
         if (temp.hasUTMCoords()) {
             convertToWGS84(filePath, isWindows, name);
             gbb.setField(PROJECTION,"EPSG:4326");
             gdalString = getGDALInfo(filePath, name);
+            System.out.println("Gdalinfo after converting UTM:");
+            System.out.println(gdalString);
             if(gdalString.contains("FAILURE"))
                 return new GeographicBoundingBox("temp");
             temp = getLatLongOgrInfo(gdalString);
+            System.out.println("Bounding box: " + temp.getLatNorth() + "N, " + temp.getLatSouth() + "S, " + temp.getLongEast() + "E, " + temp.getLongWest() + "W");
         }
         else{
             try {
@@ -368,7 +388,7 @@ public class GDAL {
             temp.setGeometryType(getGeometryType(gdalString));
             GeographicBoundingBox bb;
             if(GeodisyStrings.gdalinfoRasterExtention(name))
-                bb = getRaster(gdalString);
+                bb = getRaster(gdalString, file.getAbsolutePath() , IS_WINDOWS, file.getName() );
             else
                 bb = getVector(gdalString,IS_WINDOWS,file.getName(),file.getAbsolutePath());
             temp.setIsFromFile(true);

@@ -19,7 +19,7 @@ public class RasterUploadTest {
         DataverseParser parser = new DataverseParser();
         JSONObject jo = new JSONObject(metadata);
         DataverseJavaObject djo = parser.parse(jo, "another fake server name");
-        DataverseRecordFile recordFile = new DataverseRecordFile(djo.getDOI(), new GeographicBoundingBox(djo.getDOI()));
+        DataverseRecordFile recordFile = new DataverseRecordFile(djo.getPID(), new GeographicBoundingBox(djo.getPID()));
         recordFile.setOriginalTitle("1910_rectified.tif");
         recordFile.setTranslatedTitle("1910_rectified.tif");
         recordFile.setProjection("EPSG:32633");

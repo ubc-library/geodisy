@@ -20,7 +20,7 @@ public class JournalFields extends MetadataSimple {
 
     public JournalFields(DataverseJavaObject djo) {
         this.djo = djo;
-        this.doi = djo.getDOI();
+        this.doi = djo.getPID();
         this.journalArticleType = "";
         this.journalVolIssues = new LinkedList<>();
     }
@@ -59,12 +59,12 @@ public class JournalFields extends MetadataSimple {
     }
 
     @Override
-    public String getDOI() {
+    public String getPID() {
         return doi;
     }
 
     @Override
-    public void setDoi(String doi) {
+    public void setPID(String doi) {
         this.doi = doi;
     }
 

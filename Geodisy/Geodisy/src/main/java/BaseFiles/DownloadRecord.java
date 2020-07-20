@@ -32,7 +32,7 @@ public class DownloadRecord {
         return djo;
     }
 
-    public void run(){
+/*    public void run(){
         dvURL = SANDBOX_DV_URL;
         doi = "doi:10.5072/FK2/SAUHWD";
         JSONObject jo = getJSON(doi);
@@ -40,7 +40,7 @@ public class DownloadRecord {
         djo.downloadFiles();
         DataverseAPI api = new DataverseAPI(dvURL);
         djo = api.generateBoundingBox(djo);
-        String localDoi = djo.getDOI();
+        String localDoi = djo.getPID();
         DataverseAPI d = new DataverseAPI(djo.getServer());
         d.crosswalkRecord(djo);
         String stop = "Place to pause program";
@@ -70,7 +70,7 @@ public class DownloadRecord {
         total = end-startTime;
         System.out.println("Finished total procedure in " + total + " milliseconds");
 
-    }
+    }*/
 
     private int translateFiles(String path) {
         File file = new File(path);

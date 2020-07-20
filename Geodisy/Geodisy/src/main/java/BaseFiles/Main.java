@@ -10,8 +10,10 @@ import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.Citatio
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJavaObject;
 import Dataverse.SourceJavaObject;
+import FixScripts.FixGeoserverFiles;
 import GeoServer.GeoServerAPI;
 import GeoServer.GeoserverTest;
+import _Strings.GeodisyStrings;
 
 import static _Strings.DVFieldNameStrings.RECORD_URL;
 import static _Strings.GeodisyStrings.*;
@@ -39,7 +41,7 @@ public class Main {
             dev = "Using the dev servers, is this correct?";
         else
             dev = "Using the prod servers, is this correct?";
-        System.out.println(dev);
+        GeodisyStrings.load();
        GeodisyTask geodisyTask = new GeodisyTask();
         geodisyTask.run();
 

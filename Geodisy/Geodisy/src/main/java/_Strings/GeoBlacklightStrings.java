@@ -3,9 +3,8 @@ package _Strings;
 import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 
-import static _Strings.GeodisyStrings.BACKEND_ADDRESS;
-import static _Strings.GeodisyStrings.FRONTEND_ADDRESS;
 import static _Strings.DVFieldNameStrings.*;
+import static _Strings.GeodisyStrings.*;
 
 public class GeoBlacklightStrings {
 
@@ -13,24 +12,24 @@ public class GeoBlacklightStrings {
     public final static boolean USE_GEOSERVER = true;
 
     //GEOBLACKLIGHT
-    public final static String GEOBLACKLIGHT_BASE = "http://" + FRONTEND_ADDRESS + ":3000/catalog/";
-    //TODO enter in the geoserver wfs location
-    public final static String GEOSERVER_BASE = "\"https://" + BACKEND_ADDRESS + "/"; //may need geoserver/web/
-    private final static String GEOSERVER_DOWNLOAD_BASE = GEOSERVER_BASE + "geoserver/geodisy/";
-    public final static String GEOSERVER_RASTER_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "wms?service=WMS&version=1.1.0&request=GetMap&layers=geodisy:";
-    public final static String GEOSERVER_VECTOR_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geodisy:";
-    public final static String GEOSERVER_REST = GEOSERVER_BASE + "geoserver/web/";
-    public final static String GEOSERVER_WFS_LOCATION = GEOSERVER_BASE+"geoserver/wfs\"";
-    //TODO enter in the geoserver wms location
-    public final static String GEOSERVER_WMS_LOCATION = GEOSERVER_BASE+"geoserver/wms\"";
+    public static String GEOBLACKLIGHT_BASE = "http://" + FRONTEND_ADDRESS + ":3000/catalog/";
+    public static String GEOSERVER_BASE;
+    public static String GEOSERVER_BASE_INSECURE;
+    private static String GEOSERVER_DOWNLOAD_BASE = GEOSERVER_BASE + "geoserver/geodisy/";
+    public static String GEOSERVER_RASTER_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "wms?service=WMS&version=1.1.0&request=GetMap&layers=geodisy:";
+    public static String GEOSERVER_VECTOR_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geodisy:";
+    public static String GEOSERVER_REST = GEOSERVER_BASE + "geoserver/web/";
+    public static String GEOSERVER_WFS_LOCATION = GEOSERVER_BASE_INSECURE+"geoserver/geodisy/wfs";
+    public static String GEOSERVER_WMS_LOCATION = GEOSERVER_BASE_INSECURE+"geoserver/geodisy/wms";
     public final static String EXTERNAL_SERVICES = "dct_references_s";
-    public final static String RECORD_URL = "\"http://schema.org/url\":";
-    public final static String WMS = "\"http://www.opengis.net/def/serviceType/ogc/wms\":"+GEOSERVER_WMS_LOCATION;
-    public final static String WFS = "\"http://www.opengis.net/def/serviceType/ogc/wfs\":"+GEOSERVER_WFS_LOCATION;
-    public final static String DIRECT_FILE_DOWNLOAD = "\"http://schema.org/downloadUrl\":";
-    public final static String ISO_METADATA = "\"http://lccn.loc.gov/sh85035852\":";
+    public final static String RECORD_URL = "http://schema.org/url";
+    public final static String WMS = "http://www.opengis.net/def/serviceType/ogc/wms";
+    public final static String WFS = "http://www.opengis.net/def/serviceType/ogc/wfs";
+    public final static String DIRECT_FILE_DOWNLOAD = "http://schema.org/downloadUrl";
+    public final static String ISO_METADATA = "http://lccn.loc.gov/sh85035852";
     public final static String ISO_METADATA_FILE_ZIP = "iso19139.zip";
-    public final static String[] METADATA_DOWNLOAD_SERVICES = {RECORD_URL, WMS, WFS,DIRECT_FILE_DOWNLOAD,ISO_METADATA};
+    public static String[] METADATA_DOWNLOAD_SERVICES = {RECORD_URL, WMS, WFS,DIRECT_FILE_DOWNLOAD,ISO_METADATA};
+    public final static String LAYER_ID = "layer_id_s";
 
     public static String getGeoDownloadUrl(DataverseGeoRecordFile dgrf){
         if(dgrf.getTranslatedTitle().endsWith("tif"))
@@ -52,4 +51,16 @@ public class GeoBlacklightStrings {
         return GEOSERVER_VECTOR_DOWNLOAD_BASE + drf.getGeoserverLabel() + "&maxfeatures=50&outputformat=SHAPE-ZIP\"";
     }
 
+    public static void load(){
+        GEOSERVER_BASE = "https://" + BACKEND_ADDRESS + "/";
+        GEOSERVER_BASE_INSECURE = (TEST)? "http://geotest.frdr.ca/" : "http://geo.frdr.ca/";
+        GEOSERVER_DOWNLOAD_BASE = GEOSERVER_BASE + "geoserver/geodisy/";
+        GEOSERVER_DOWNLOAD_BASE = GEOSERVER_BASE + "geoserver/geodisy/";
+        GEOSERVER_RASTER_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "wms?service=WMS&version=1.1.0&request=GetMap&layers=geodisy:";
+        GEOSERVER_VECTOR_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geodisy:";
+        GEOSERVER_REST = GEOSERVER_BASE + "geoserver/web/";
+        GEOSERVER_WFS_LOCATION = GEOSERVER_BASE_INSECURE+"geoserver/geodisy/wfs";
+        GEOSERVER_WMS_LOCATION = GEOSERVER_BASE_INSECURE+"geoserver/geodisy/wms";
+        METADATA_DOWNLOAD_SERVICES = new String[]{RECORD_URL, WMS, WFS,DIRECT_FILE_DOWNLOAD,ISO_METADATA};
+    }
 }

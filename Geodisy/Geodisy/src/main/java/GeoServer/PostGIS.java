@@ -8,7 +8,6 @@ import java.io.IOException;
 
 
 import static _Strings.DVFieldNameStrings.PERSISTENT_ID;
-import static _Strings.GeodisyStrings.DATA_DIR_LOC;
 import static _Strings.GeoserverStrings.*;
 
 public class PostGIS {
@@ -38,7 +37,7 @@ public class PostGIS {
             p.destroy();
             return true;
         } catch (IOException e) {
-            logger.error("Something went wrong trying to get " + djo.getDOI() + fileName + " into postGIS");
+            logger.error("Something went wrong trying to get " + djo.getPID() + fileName + " into postGIS");
         }
             return false;
     }

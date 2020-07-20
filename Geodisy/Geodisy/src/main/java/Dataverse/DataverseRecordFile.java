@@ -104,7 +104,7 @@ public class DataverseRecordFile {
         //System.out.println("downloading file: " + originalTitle);
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
         DownloadedFiles downloads = DownloadedFiles.getDownloadedFiles();
-        downloads.addDownload(originalTitle,djo.getDOI(),dbID);
+        downloads.addDownload(originalTitle,djo.getPID(),dbID);
         try {
             String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + datasetIdent.replace("_", "/").replace(".","/") + "/");
 
@@ -184,7 +184,7 @@ public class DataverseRecordFile {
                     replaceRecord();
                 }
             } else {
-                String path = djo.getDOI().replace("/", "_");
+                String path = djo.getPID().replace("/", "_");
                 path = path.replace(".", "_");
                 String badFilesPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + path + "/" + name);
                 File file = new File(badFilesPath);
