@@ -59,4 +59,12 @@ public class DateOfCollection extends CompoundDateJSONField {
                 return "Bad field name";
         }
     }
+
+    public int getStartYear(){
+        return dateOfCollectionStart.getYear();
+    }
+
+    public int getEndYear(){
+        return dateOfCollectionEnd.getYear();
+    }
 }

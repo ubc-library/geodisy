@@ -147,8 +147,34 @@ public class DataGBJSON extends GeoBlacklightJSON{
         getRelatedRecords(drf);
         getModifiedDate();
         getSolrYear();
+        getTemporalRange();
 
         return jo;
+    }
+
+    private void getTemporalRange() {
+        List<DateOfCollection> dates = javaObject.getCitationFields().getListField(DATE_OF_COLLECT);
+        int start = 1111111;
+        int end = -1111111;
+        for(DateOfCollection d: dates){
+            int year = d.getStartYear();
+            if(year<start)
+                start = year;
+            if(year>end)
+                end = year;
+            year = d.getEndYear();
+            if(year>end)
+                end = year;
+        }
+
+        String dateRange;
+        if(start==end)
+            dateRange = String.valueOf(start);
+        else
+            dateRange = start+"-"+end;
+
+        jo.put("dct_temporal_sm",dateRange);
+
     }
 
     private void getSolrYear() {
