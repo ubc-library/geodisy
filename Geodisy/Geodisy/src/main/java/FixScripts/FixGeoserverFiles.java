@@ -39,7 +39,6 @@ public class FixGeoserverFiles {
             for(File f: file.listFiles()){
                 if(f.getName().contains(".zip")) {
                     isBase = true;
-                    System.out.println("Got to zip level");
                 }
             }
             //If at a level that contains an ISO XML zip file start dealing with Geoblacklight json files because we've gotten to the single dataset depth in this branch
@@ -57,13 +56,10 @@ public class FixGeoserverFiles {
     private LinkedList<GBLFileToFix> getSpecificPIDFiles(File file, LinkedList<GBLFileToFix> gBLFs){
         if(file.getName().equals("geoblacklight.json")) {
             GBLFileToFix gBLF = getGBLInfo(file);
-            System.out.println("At GBLJSON level");
             if (gBLF.isGF()) {
-                System.out.println("Found a geospatial file");
                 gBLF = getDVInfo(gBLF);
                 if (!gBLF.getDvjsonFileInfo().getFileName().equals("")) {
                     gBLFs.add(gBLF);
-                    System.out.println("Got DV info for " +gBLF.getPID());
                 }
             }
         }else{

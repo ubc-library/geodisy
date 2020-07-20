@@ -50,9 +50,8 @@ public class Unzip {
                 }
 
                 fileName = new File(fileName).getName();
-                if(!fileName.contains(basename)) {
-                    int end = basename.length()>3 ? 3 : basename.length();
-                    fileName = basename.substring(0,end) + "_" + fileName;
+                if(!fileName.equals(basename)) {
+                    fileName = basename + "9_9" + fileName;
                 }
                 File newFile = new File(destpath + GeodisyStrings.replaceSlashes(File.separator) + fileName);
 

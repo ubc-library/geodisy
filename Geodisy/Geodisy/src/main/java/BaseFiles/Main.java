@@ -13,6 +13,7 @@ import Dataverse.SourceJavaObject;
 import FixScripts.FixGeoserverFiles;
 import GeoServer.GeoServerAPI;
 import GeoServer.GeoserverTest;
+import _Strings.GeodisyStrings;
 
 import static _Strings.DVFieldNameStrings.RECORD_URL;
 import static _Strings.GeodisyStrings.*;
@@ -40,12 +41,9 @@ public class Main {
             dev = "Using the dev servers, is this correct?";
         else
             dev = "Using the prod servers, is this correct?";
-       /* System.out.println(dev);
+        GeodisyStrings.load();
        GeodisyTask geodisyTask = new GeodisyTask();
-        geodisyTask.run();*/
-
-        FixGeoserverFiles fgf = new FixGeoserverFiles();
-        fgf.startFixProcess();
+        geodisyTask.run();
 
         /*System.out.println("Running a test on Raster Upload");
         GeoserverTest gt = new GeoserverTest();

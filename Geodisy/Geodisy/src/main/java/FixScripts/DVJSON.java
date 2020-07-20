@@ -13,7 +13,6 @@ public class DVJSON {
         String baseURL = "https://dataverse.scholarsportal.info/api/datasets/export?exporter=dataverse_json&persistentId=";
         LinkedList<JSONObject> answers =  new LinkedList<>();
                 String pid = "doi:" + doi;
-                System.out.println("url for specific PID: " + baseURL + pid);
                 getMetadata = new HTTPCallerGeoNames();
                 String dataverseJSON = getMetadata.callHTTP(baseURL+pid);
                 if(dataverseJSON.equals("HTTP Fail"))

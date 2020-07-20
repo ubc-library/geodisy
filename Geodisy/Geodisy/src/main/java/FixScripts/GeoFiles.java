@@ -43,15 +43,16 @@ public class GeoFiles {
         gBLFs.sort(new SortByGeoLabel());
         int counter = 0;
         for(GBLFileToFix gBLF:gBLFs){
-            System.out.println(gBLF.geoserverLabel);
             File[] files = datafolder.listFiles();
             Arrays.sort(files, new SortFileByFileName());
             for(File f: files){
                 if(processed.contains(f.getName()))
                     continue;
                 String fileName = f.getName();
-                if(!fileName.contains("."))
+                if(!fileName.contains(".")||fileName.endsWith(".aux.xml")) {
+                    processed.add(fileName);
                     continue;
+                }
                 String fileBaseName = fileName.substring(0,fileName.lastIndexOf("."));
                 String fileExtension = fileName.substring(fileName.lastIndexOf(".")+1);
                 String uploaded;
@@ -101,7 +102,6 @@ public class GeoFiles {
                             record.geoserverLabel = uploaded;
                             record.format = "Shapefile";
                             record.geomType = record.gbb.getField(GEOMETRY);
-                            System.out.println("Record's geoserver label: " + record.geoserverLabel);
                             if (records.size() > 0) {
                                 Record first = records.get(0);
                                 record.geoserverIDs.addAll(first.geoserverIDs);
@@ -121,7 +121,6 @@ public class GeoFiles {
         if(gBLFs.size()>counter && counter > 0){
             GBLFileToFix first = gBLFs.getFirst();
             String folder = first.gblJSONFilePath.substring(0,first.gblJSONFilePath.lastIndexOf("/")+1);
-            System.out.println("Removing excess files in " + folder);
             int end = gBLFs.size();
             for(int i = end; i>counter; i--){
                 File json = new File(folder+i+"geoblacklight.json");
@@ -143,17 +142,13 @@ public class GeoFiles {
                 JSONObject gBLObject = new JSONObject(gBLJSON);
                 JSONArray source;
                 if(r.geoserverIDs.size()>0) {
-                    if (gBLObject.has("dc_source_sm"))
-                        source = gBLObject.getJSONArray("dc_source_sm");
-                    else
-                        source = new JSONArray();
+                    source = new JSONArray();
                     for (String s : r.geoserverIDs) {
                         source.put(s);
                     }
                     gBLObject.put("dc_source_sm", source);
                 }
                 //UPDATE Bounding Box
-                System.out.println(r.geoserverLabel + " Bounding box = " + getBBString(r.gbb.getBB()));
                 if(r.gbb.hasBB()) {
                     String bb = "ENVELOPE(" + getBBString(r.gbb.getBB()) + ")";
                     gBLObject.remove("solr_geom");
@@ -164,6 +159,10 @@ public class GeoFiles {
                 gBLObject.put("layer_geom_type_s", r.gbb.getField(GEOMETRY));
                 gBLObject.remove("dc_format_s");
                 gBLObject.put("dc_format_s",r.format);
+
+                //UPDATE slug and layer_id
+                String slug = r.geoserverLabel.substring(r.geoserverLabel.indexOf(":")+1);
+                gBLObject.put("layer_slug_s",slug);
 
 
                 //ADD WMS functionality
@@ -190,7 +189,6 @@ public class GeoFiles {
 
     private String uploadVectorFile(File f, GBLFileToFix gBLF, int vector) {
         String geoserverLabel = "g_"+gBLF.pID.replace(".","_").replace("/","_")+ "v" + vector;
-        System.out.println("Geoserver Label created: " + geoserverLabel);
         geoserverLabel = geoserverLabel.toLowerCase();
         DataverseJavaObject djo = new DataverseJavaObject("server");
         djo.setPID(gBLF.getPID());

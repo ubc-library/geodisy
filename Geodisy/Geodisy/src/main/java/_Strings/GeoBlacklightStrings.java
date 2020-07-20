@@ -3,9 +3,8 @@ package _Strings;
 import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 
-import static _Strings.GeodisyStrings.BACKEND_ADDRESS;
-import static _Strings.GeodisyStrings.FRONTEND_ADDRESS;
 import static _Strings.DVFieldNameStrings.*;
+import static _Strings.GeodisyStrings.*;
 
 public class GeoBlacklightStrings {
 
@@ -29,7 +28,8 @@ public class GeoBlacklightStrings {
     public final static String DIRECT_FILE_DOWNLOAD = "http://schema.org/downloadUrl";
     public final static String ISO_METADATA = "http://lccn.loc.gov/sh85035852";
     public final static String ISO_METADATA_FILE_ZIP = "iso19139.zip";
-    public final static String[] METADATA_DOWNLOAD_SERVICES = {RECORD_URL, WMS, WFS,DIRECT_FILE_DOWNLOAD,ISO_METADATA};
+    public static String[] METADATA_DOWNLOAD_SERVICES = {RECORD_URL, WMS, WFS,DIRECT_FILE_DOWNLOAD,ISO_METADATA};
+    public final static String LAYER_ID = "layer_id_s";
 
     public static String getGeoDownloadUrl(DataverseGeoRecordFile dgrf){
         if(dgrf.getTranslatedTitle().endsWith("tif"))
@@ -53,7 +53,7 @@ public class GeoBlacklightStrings {
 
     public static void load(){
         GEOSERVER_BASE = "https://" + BACKEND_ADDRESS + "/";
-        GEOSERVER_BASE_INSECURE = "http://" + BACKEND_ADDRESS + ":8080/";
+        GEOSERVER_BASE_INSECURE = (TEST)? "http://geotest.frdr.ca/" : "http://geo.frdr.ca/";
         GEOSERVER_DOWNLOAD_BASE = GEOSERVER_BASE + "geoserver/geodisy/";
         GEOSERVER_DOWNLOAD_BASE = GEOSERVER_BASE + "geoserver/geodisy/";
         GEOSERVER_RASTER_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "wms?service=WMS&version=1.1.0&request=GetMap&layers=geodisy:";
@@ -61,5 +61,6 @@ public class GeoBlacklightStrings {
         GEOSERVER_REST = GEOSERVER_BASE + "geoserver/web/";
         GEOSERVER_WFS_LOCATION = GEOSERVER_BASE_INSECURE+"geoserver/geodisy/wfs";
         GEOSERVER_WMS_LOCATION = GEOSERVER_BASE_INSECURE+"geoserver/geodisy/wms";
+        METADATA_DOWNLOAD_SERVICES = new String[]{RECORD_URL, WMS, WFS,DIRECT_FILE_DOWNLOAD,ISO_METADATA};
     }
 }
