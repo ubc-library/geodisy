@@ -154,25 +154,58 @@ public class DataGBJSON extends GeoBlacklightJSON{
 
     private void getTemporalRange() {
         List<DateOfCollection> dates = javaObject.getCitationFields().getListField(DATE_OF_COLLECT);
-        int start = 1111111;
-        int end = -1111111;
+        String dateRange = "";
+        int count = 1;
         for(DateOfCollection d: dates){
-            int year = d.getStartYear();
-            if(year<start)
-                start = year;
-            if(year>end)
-                end = year;
-            year = d.getEndYear();
-            if(year>end)
-                end = year;
+            int start = d.getStartYear();
+            int end = d.getEndYear();
+            if(start==-111111){
+                if(end==-111111) {
+                    continue;
+                }
+                else{
+                    if(count == 1) {
+                        dateRange += end;
+                        count++;
+                        continue;
+                    } else {
+                        dateRange += ", " + end;
+                        count++;
+                        continue;
+                    }
+                }
+            }else{
+                if(end == -111111){
+                    if(count == 1) {
+                        dateRange += start;
+                        count++;
+                        continue;
+                    } else {
+                        dateRange += ", " + start;
+                    }
+                } else{
+                    String range = "";
+                    if(start<end){
+                        range = start + "-" + end;
+                    }else if (start==end) {
+                        range = start + "";
+                    }else {
+                        range = end + "_" + start;
+                    }
+                    if(count>1) {
+                        dateRange += ", " + range;
+                        count++;
+                        continue;
+                    }
+                    else {
+                        dateRange += range;
+                        count++;
+                        continue;
+                    }
+                }
+            }
+
         }
-
-        String dateRange;
-        if(start==end)
-            dateRange = String.valueOf(start);
-        else
-            dateRange = start+"-"+end;
-
         jo.put("dct_temporal_sm",dateRange);
 
     }
