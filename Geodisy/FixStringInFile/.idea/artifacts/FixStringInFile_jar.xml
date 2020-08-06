@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="FixStringInFile:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/FixStringInFile_jar</output-path>
-    <root id="archive" name="FixStringInFile.jar">
-      <element id="module-output" name="FixStringInFile" />
-    </root>
-  </artifact>
-</component>
