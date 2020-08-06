@@ -145,3 +145,18 @@ Geodisy/Geodisy/src/main/target/test-classes/META-INF/
 
 Geodisy/out/test/test/META-INF/test.kotlin_module
 Geodisy/Geodisy/jdom-1.0.jar
+
+frdr_harvest/
+FRDRGBL/
+*/.idea/
+
+
+Geodisy/Scripts/FixShp/.idea/
+
+Geodisy/Scripts/ISO19115To19139/.idea/
+
+Geodisy/Scripts/FixStringInFile/.idea/
+
+Monthly Check-ins/
+
+*.jar
