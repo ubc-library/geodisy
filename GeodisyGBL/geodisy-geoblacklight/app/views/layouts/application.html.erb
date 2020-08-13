@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geodisy</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_tag '$.fx.off = true;' if Rails.env.test? %>
+</head>
+
+  <body class="<%= render_body_class %>">
+  <%= render :partial => 'shared/header_navbar' %>
+
+
+  <%= render partial: 'shared/ajax_modal' %>
+
+  <div id="main-container" class="<%= container_classes %>">
+
+    <%= content_tag :h1, application_name, class: 'sr-only application-heading' %>
+
+                                                                         
+
+    <div class="row">
+      <%= yield %>
+    </div>
+  </div>
+
+  <%= render :partial => 'shared/geo_footer' %>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+@import 'bootstrap';
+@import 'geodisy/geo_footer';
+@import 'geodisy/geo_beta'
+
+$logo-image: image_url('blacklight/geodisy.svg') !default
+
+.navbar-logo {  /* The main logo image for the Blacklight instance */
+  @if $logo-image {
+    background: transparent $logo-image no-repeat top left;
+  }
+}
+#map_instructions{
+	text-align: left;
+	padding-top: 2px;
+}
+
+ .blacklight-dc_description_s {
+   white-space: pre-line;
+ }
