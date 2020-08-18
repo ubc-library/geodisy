@@ -53,7 +53,7 @@ public class GetAltCountryNames {
                         }
                         continue;
                     }
-                    System.out.println(name + ": " + countryFullString.substring(0,15));
+                    //System.out.println(name + ": " + countryFullString.substring(0,15));
                     Document countryFullDoc = geo.getXMLDoc(countryFullString);
                     countryFullDoc.getDocumentElement().normalize();
                     Element root = countryFullDoc.getDocumentElement();

@@ -42,7 +42,7 @@ public class Main {
         else
             dev = "Using the prod servers, is this correct?";
         GeodisyStrings.load();
-       GeodisyTask geodisyTask = new GeodisyTask();
+        GeodisyTask geodisyTask = new GeodisyTask();
         geodisyTask.run();
 
         /*System.out.println("Running a test on Raster Upload");
