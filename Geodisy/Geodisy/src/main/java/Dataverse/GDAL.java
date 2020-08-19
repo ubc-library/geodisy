@@ -230,8 +230,8 @@ public class GDAL {
             convertToWGS84(filePath, isWindows, name);
             gbb.setField(PROJECTION,"EPSG:4326");
             gdalString = getGDALInfo(filePath, name);
-            System.out.println("Gdalinfo after converting UTM:");
-            System.out.println(gdalString);
+            //System.out.println("Gdalinfo after converting UTM:");
+            //System.out.println(gdalString);
             if(gdalString.contains("FAILURE"))
                 return new GeographicBoundingBox("temp");
             temp = getLatLongOgrInfo(gdalString);
