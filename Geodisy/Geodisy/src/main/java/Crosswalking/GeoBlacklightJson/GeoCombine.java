@@ -33,12 +33,12 @@ public class GeoCombine {
         }
     }
 
-    public void combine(String path){
+    public void combine(String path,String bash, String flag){
         ProcessBuilder processBuilder = new ProcessBuilder();
         Process p = null;
         try{
             System.out.println("Calling Geocombine");
-            processBuilder.command("/bin/bash", "-c", path);
+            processBuilder.command(bash, flag, path);
             p = processBuilder.start();
             p.waitFor();
             p.destroy();

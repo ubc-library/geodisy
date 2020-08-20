@@ -51,10 +51,16 @@ public class Main {
         GeoserverTest gt = new GeoserverTest();
         gt.testAddingARaster();
         gt.testAddingAVector();*/
-
-
+        String combine = GEOCOMBINE;
+        String bash = "/bin/bash";
+        String flag = ", -c";
+        if(args.length==3) {
+            combine = args[0];
+            bash = args[1];
+            flag = args[2];
+        }
         GeoCombine geoCombine = new GeoCombine();
-        geoCombine.combine(GEOCOMBINE);
+        geoCombine.combine(combine, bash, flag);
 
         //Run the below solo to download
         /*DownloadRecord downloadRecord = new DownloadRecord();
