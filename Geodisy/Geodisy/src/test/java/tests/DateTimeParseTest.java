@@ -22,14 +22,14 @@ public class DateTimeParseTest{
     @Test
     public void testDateTimeParsing(){
 
-        assertEquals(checkDateString(dateOnly), "2015-07-13");
-        assertEquals(checkDateString(dateTime), "2014-07-13T11:02:21Z");
-        assertEquals(checkDateString(dateBC), "-0002-01-02");
-        assertEquals(checkDateString(dateTimeBC), "-1000-11-20T03:41:11Z");
-        assertEquals(checkDateString(yearOnly), "1020");
-        assertEquals(checkDateString(yearOnlyBC), "-509");
-        assertEquals(checkDateString(yearMonth), "3021-12");
-        assertEquals(checkDateString(badDate), "9999");
+        assertEquals(checkDateString(dateOnly).toString(), "2015-07-13");
+        assertEquals(checkDateString(dateTime).toString(), "2014-07-13T11:02:21Z");
+        assertEquals(checkDateString(dateBC).toString(), "-0002-01-02");
+        assertEquals(checkDateString(dateTimeBC).toString(), "-1000-11-20T03:41:11Z");
+        assertEquals(checkDateString(yearOnly).toString(), "1020");
+        assertEquals(checkDateString(yearOnlyBC).toString(), "-509");
+        assertEquals(checkDateString(yearMonth).toString(), "3021-12");
+        assertEquals(checkDateString(badDate).toString(), "9999");
 
     }
 }

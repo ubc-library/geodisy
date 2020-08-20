@@ -272,7 +272,7 @@ public class CitationFields extends MetadataSimple {
     protected String getValueDate(JSONObject current, String fieldName) {
         if(!current.has(fieldName))
             return "9999";
-        return Date.checkDateString(current.getString(fieldName));
+        return Date.checkDateString(current.getString(fieldName)).toString();
     }
 
     public List<String> getList(JSONArray ja){

@@ -12,11 +12,15 @@ import java.time.temporal.TemporalAccessor;
  * a date with the year 9999. When getting a date, if the date is year 9999, it returns an empty string.
  */
 public class Date extends JSONField implements DateField {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu[-MM[-dd['T'HH:mm[:ss]['Z']]]]");
     TemporalAccessor date;
 
     public Date(String date) {
-       this.date = formatter.parseBest(checkDateString(date), ZonedDateTime::from, LocalDateTime::from, LocalDate::from, YearMonth::from, Year::from);
+       try {
+           this.date = checkDateString(date);
+       }catch (DateTimeParseException e){
+           this.date = checkDateString("9999");
+       }
+
     }
 
     public TemporalAccessor getDate() {
@@ -34,15 +38,11 @@ public class Date extends JSONField implements DateField {
         return getDateAsString();
     }
 
-    public static String checkDateString(String value){
+    public static TemporalAccessor checkDateString(String value) throws DateTimeParseException{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("[uuuu[-MM[-dd['T'HH:mm:ss[X]]]]");
-        try {
-            TemporalAccessor date = formatter.parseBest(value, ZonedDateTime::from, LocalDateTime::from, LocalDate::from, YearMonth::from, Year::from);
-            return date.toString();
-        }catch (DateTimeParseException e){
-            return "9999";
-        }
 
+            TemporalAccessor date = formatter.parseBest(value, ZonedDateTime::from, LocalDateTime::from, LocalDate::from, YearMonth::from, Year::from);
+            return date;
     }
 
     public int getYear(){

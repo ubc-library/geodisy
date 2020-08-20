@@ -59,7 +59,7 @@ public class GeodisyStrings {
 
         private static String[] getServers() {
                 if(TEST)
-                    return new String[]{SCHOLARS_PORTAL_CLONE};
+                    return new String[]{TEST_SCHOLARS_PORTAL};
                 else
                     return new String[]{SCHOLARS_PORTAL};
         }
@@ -225,7 +225,7 @@ public class GeodisyStrings {
     public final static String SOLR_PATH_PROD = ""; //"SOLR_URL=http://www.example.com:1234/solr/collection ";
     //Add value (including space at end) to OGM_PATH if you are harvesting from somewhere other than what's in the rake file
     public final static String OGM_PATH = ""; //"OGM_PATH=/var/www/geoserver.frdr.ca/html/geodisy/ ";
-    public final static String BACKEND_DEV_ADDRESS = "geoservertest.frdr-dfdr.ca";
+    public final static String BACKEND_DEV_ADDRESS = "geoservertest.frdr.ca";
     public final static String BACKEND_PROD_ADDRESS = "geoserver.frdr.ca";
     public final static String FRONTEND_DEV_ADDRESS = "geotest.frdr-dfdr.ca";
     public final static String FRONTEND_PROD_ADDRESS = "geo.frdr.ca";
@@ -234,10 +234,10 @@ public class GeodisyStrings {
     public static String BASE_PATH = BACKEND_ADDRESS + "/";
     public static String END_XML_JSON_FILE_PATH = "http://" + BASE_PATH + "geodisy/";
     public static String PATH_TO_XML_JSON_FILES = END_XML_JSON_FILE_PATH;
-    public static String MOVE_METADATA = "sudo rsync -upgo " + getRoot() + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
+    public static String MOVE_METADATA = "sudo rsync -upgor " + getRoot() + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
     public final static String DATA_DIR_LOC = "/geodata/geoserver/data/";
     public static String MOVE_DATA = "sudo rsync -auhv " + getRoot() + "datasetFiles/* " + DATA_DIR_LOC;
-    public static String GEOCOMBINE = "sh geodisyFiles/combine.sh";
+    public static String GEOCOMBINE = "sh " + getRoot() + "geodisyFiles/combine.sh";
     public final static String BASE_LOCATION_TO_STORE_METADATA = "metadata/";
 
     public static String beAddressToUse(){
