@@ -11,9 +11,9 @@ public class GeodisyStrings {
         BASE_PATH = BACKEND_ADDRESS + "/";
         END_XML_JSON_FILE_PATH = "http://" + BASE_PATH + "geodisy/";
         PATH_TO_XML_JSON_FILES = END_XML_JSON_FILE_PATH;
-        MOVE_METADATA = "sudo rsync -upgo " + getRoot() + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
-        String DATA_DIR_LOC = "/geodata/geoserver/data/";
+        MOVE_METADATA = "sudo rsync -auhv " + getRoot() + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
         MOVE_DATA = "sudo rsync -auhv " + getRoot() + "datasetFiles/* " + DATA_DIR_LOC;
+        GEOCOMBINE = "sh " + getRoot() + "geodisyFiles/combine.sh";
         GEODISY_PATH_ROOT = getRoot();
         SAVED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles");
         LOGS = GEODISY_PATH_ROOT + replaceSlashes("logs");
@@ -229,16 +229,19 @@ public class GeodisyStrings {
     public final static String BACKEND_PROD_ADDRESS = "geoserver.frdr.ca";
     public final static String FRONTEND_DEV_ADDRESS = "geotest.frdr-dfdr.ca";
     public final static String FRONTEND_PROD_ADDRESS = "geo.frdr.ca";
-    public static String BACKEND_ADDRESS = beAddressToUse();
-    public static String FRONTEND_ADDRESS = feAddressToUse();
-    public static String BASE_PATH = BACKEND_ADDRESS + "/";
-    public static String END_XML_JSON_FILE_PATH = "http://" + BASE_PATH + "geodisy/";
-    public static String PATH_TO_XML_JSON_FILES = END_XML_JSON_FILE_PATH;
-    public static String MOVE_METADATA = "sudo rsync -auhv " + getRoot() + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
     public final static String DATA_DIR_LOC = "/geodata/geoserver/data/";
-    public static String MOVE_DATA = "sudo rsync -auhv " + getRoot() + "datasetFiles/* " + DATA_DIR_LOC;
-    public static String GEOCOMBINE = "sh " + getRoot() + "geodisyFiles/combine.sh";
     public final static String BASE_LOCATION_TO_STORE_METADATA = "metadata/";
+
+    //Values are added by the load() method at the top of the class
+    public static String BACKEND_ADDRESS;
+    public static String FRONTEND_ADDRESS;
+    public static String BASE_PATH;
+    public static String END_XML_JSON_FILE_PATH;
+    public static String PATH_TO_XML_JSON_FILES;
+    public static String MOVE_METADATA;
+    public static String MOVE_DATA;
+    public static String GEOCOMBINE;
+
 
     public static String beAddressToUse(){
         if(TEST)
