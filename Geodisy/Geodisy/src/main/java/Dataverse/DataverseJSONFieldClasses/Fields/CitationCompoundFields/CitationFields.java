@@ -7,6 +7,8 @@ import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Simpl
 import Dataverse.DataverseJSONFieldClasses.MetadataSimple;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.time.format.DateTimeParseException;
 import java.util.LinkedList;
 import java.util.List;
 import static _Strings.DVFieldNameStrings.*;
@@ -272,7 +274,13 @@ public class CitationFields extends MetadataSimple {
     protected String getValueDate(JSONObject current, String fieldName) {
         if(!current.has(fieldName))
             return "9999";
-        return Date.checkDateString(current.getString(fieldName)).toString();
+        String answer;
+        try{
+            answer = Date.checkDateString(current.getString(fieldName)).toString();
+        } catch (DateTimeParseException e){
+            return "9999";
+        }
+        return answer;
     }
 
     public List<String> getList(JSONArray ja){
