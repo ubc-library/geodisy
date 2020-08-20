@@ -16,6 +16,9 @@ import GeoServer.GeoServerAPI;
 import GeoServer.GeoserverTest;
 import _Strings.GeodisyStrings;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static _Strings.DVFieldNameStrings.RECORD_URL;
 import static _Strings.GeodisyStrings.*;
 
@@ -51,16 +54,18 @@ public class Main {
         GeoserverTest gt = new GeoserverTest();
         gt.testAddingARaster();
         gt.testAddingAVector();*/
-        String combine = GEOCOMBINE;
-        String bash = "/bin/bash";
-        String flag = ", -c";
-        if(args.length==3) {
-            combine = args[0];
-            bash = args[1];
-            flag = args[2];
+        List<String> cmdList = new ArrayList<String>();
+        cmdList.add("/bin/bash");
+        cmdList.add("-c");
+        cmdList.add(GEOCOMBINE);
+        if(args.length>0) {
+            cmdList.clear();
+            for(String s:args) {
+                cmdList.add(s);
+            }
         }
         GeoCombine geoCombine = new GeoCombine();
-        geoCombine.combine(combine, bash, flag);
+        geoCombine.combine(cmdList);
 
         //Run the below solo to download
         /*DownloadRecord downloadRecord = new DownloadRecord();

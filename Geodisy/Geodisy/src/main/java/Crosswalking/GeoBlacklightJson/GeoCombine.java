@@ -4,6 +4,7 @@ import BaseFiles.GeoLogger;
 import org.apache.solr.client.solrj.SolrServerException;
 
 import java.io.IOException;
+import java.util.List;
 
 import static _Strings.GeodisyStrings.*;
 
@@ -33,12 +34,12 @@ public class GeoCombine {
         }
     }
 
-    public void combine(String path,String bash, String flag){
+    public void combine(List<String> bash){
         ProcessBuilder processBuilder = new ProcessBuilder();
         Process p = null;
         try{
             System.out.println("Calling Geocombine");
-            processBuilder.command(bash, flag, path);
+            processBuilder.command(bash);
             p = processBuilder.start();
             p.waitFor();
             p.destroy();
