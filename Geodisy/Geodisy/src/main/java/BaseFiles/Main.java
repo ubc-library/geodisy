@@ -5,6 +5,7 @@ package BaseFiles;
  * and open the template in the editor.
  */
 
+import Crosswalking.GeoBlacklightJson.GeoCombine;
 import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
@@ -32,7 +33,7 @@ public class Main {
         //Run the below to remove a single records
         //RemoveRecord rr = new RemoveRecord();
         //rr.removeRecord();
-        String dev;
+        /*String dev;
         if(args.length>0)
             TEST = true;
         else
@@ -41,9 +42,10 @@ public class Main {
             dev = "Using the dev servers, is this correct?";
         else
             dev = "Using the prod servers, is this correct?";
+        TEST = true;
         GeodisyStrings.load();
         GeodisyTask geodisyTask = new GeodisyTask();
-        geodisyTask.run();
+        geodisyTask.run();*/
 
         /*System.out.println("Running a test on Raster Upload");
         GeoserverTest gt = new GeoserverTest();
@@ -51,8 +53,8 @@ public class Main {
         gt.testAddingAVector();*/
 
 
-        /*GeoCombine geoCombine = new GeoCombine();
-        geoCombine.index();*/
+        GeoCombine geoCombine = new GeoCombine();
+        geoCombine.combine(GEOCOMBINE);
 
         //Run the below solo to download
         /*DownloadRecord downloadRecord = new DownloadRecord();
