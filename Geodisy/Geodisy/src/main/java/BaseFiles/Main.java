@@ -36,7 +36,7 @@ public class Main {
         //Run the below to remove a single records
         //RemoveRecord rr = new RemoveRecord();
         //rr.removeRecord();
-        /*String dev;
+        String dev;
         if(args.length>0)
             TEST = true;
         else
@@ -45,15 +45,25 @@ public class Main {
             dev = "Using the dev servers, is this correct?";
         else
             dev = "Using the prod servers, is this correct?";
-        TEST = true;
         GeodisyStrings.load();
         GeodisyTask geodisyTask = new GeodisyTask();
-        geodisyTask.run();*/
+        geodisyTask.run();
 
         /*System.out.println("Running a test on Raster Upload");
         GeoserverTest gt = new GeoserverTest();
         gt.testAddingARaster();
         gt.testAddingAVector();*/
+
+        //testCombine(args);
+
+        //Run the below solo to download
+        /*DownloadRecord downloadRecord = new DownloadRecord();
+        downloadRecord.run("doi:10.5072/FK2/KZRG9F");*/
+
+
+    }
+    //Only use this method for testing syntax for calling Geocombine
+    private static void testCombine(String[] args) {
         List<String> cmdList = new ArrayList<String>();
         cmdList.add("/bin/bash");
         cmdList.add("-c");
@@ -66,12 +76,6 @@ public class Main {
         }
         GeoCombine geoCombine = new GeoCombine();
         geoCombine.combine(cmdList);
-
-        //Run the below solo to download
-        /*DownloadRecord downloadRecord = new DownloadRecord();
-        downloadRecord.run("doi:10.5072/FK2/KZRG9F");*/
-
-
     }
 
 }

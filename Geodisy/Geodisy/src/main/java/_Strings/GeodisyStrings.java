@@ -234,7 +234,7 @@ public class GeodisyStrings {
     public static String BASE_PATH = BACKEND_ADDRESS + "/";
     public static String END_XML_JSON_FILE_PATH = "http://" + BASE_PATH + "geodisy/";
     public static String PATH_TO_XML_JSON_FILES = END_XML_JSON_FILE_PATH;
-    public static String MOVE_METADATA = "sudo rsync -upgor " + getRoot() + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
+    public static String MOVE_METADATA = "sudo rsync -auhv " + getRoot() + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
     public final static String DATA_DIR_LOC = "/geodata/geoserver/data/";
     public static String MOVE_DATA = "sudo rsync -auhv " + getRoot() + "datasetFiles/* " + DATA_DIR_LOC;
     public static String GEOCOMBINE = "sh " + getRoot() + "geodisyFiles/combine.sh";
