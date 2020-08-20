@@ -41,10 +41,6 @@ public class Date extends JSONField implements DateField {
     public static TemporalAccessor checkDateString(String value) throws DateTimeParseException{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("[uuuu[-MM[-dd['T'HH:mm:ss[X]]]]");
             TemporalAccessor date = formatter.parseBest(value, ZonedDateTime::from, LocalDateTime::from, LocalDate::from, YearMonth::from, Year::from);
-            ZonedDateTime z = ZonedDateTime.now();
-            LocalDateTime d = LocalDateTime.now();
-            if(date.getClass()==z.getClass()||date.getClass()==d.getClass())
-                date = java.time.LocalDate.from(date);
             return date;
     }
 
