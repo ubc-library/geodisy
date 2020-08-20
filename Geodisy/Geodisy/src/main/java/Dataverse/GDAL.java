@@ -225,7 +225,7 @@ public class GDAL {
         temp = getLatLongOgrInfo(gdalString);
         if(isZeroPoint(temp))
             return new GeographicBoundingBox("junk");
-        System.out.println("Bounding box: " + temp.getLatNorth() + "N, " + temp.getLatSouth() + "S, " + temp.getLongEast() + "E, " + temp.getLongWest() + "W");
+        //System.out.println("Bounding box: " + temp.getLatNorth() + "N, " + temp.getLatSouth() + "S, " + temp.getLongEast() + "E, " + temp.getLongWest() + "W");
         if (temp.hasUTMCoords()) {
             convertToWGS84(filePath, isWindows, name);
             gbb.setField(PROJECTION,"EPSG:4326");
@@ -235,7 +235,7 @@ public class GDAL {
             if(gdalString.contains("FAILURE"))
                 return new GeographicBoundingBox("temp");
             temp = getLatLongOgrInfo(gdalString);
-            System.out.println("Bounding box: " + temp.getLatNorth() + "N, " + temp.getLatSouth() + "S, " + temp.getLongEast() + "E, " + temp.getLongWest() + "W");
+            //System.out.println("Bounding box: " + temp.getLatNorth() + "N, " + temp.getLatSouth() + "S, " + temp.getLongEast() + "E, " + temp.getLongWest() + "W");
         }
         else{
             try {

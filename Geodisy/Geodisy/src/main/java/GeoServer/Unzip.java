@@ -26,8 +26,10 @@ public class Unzip {
         logger = new GeoLogger(this.getClass());
     }
 
-    private LinkedList<File> unzipFunction(String filePath, String destpath){
-        String basename = filePath.substring(filePath.lastIndexOf("/")+1,filePath.lastIndexOf("."));
+    private LinkedList<FileInfo> unzipFunction(String filePath, String destpath){
+        LinkedList<FileInfo> answer = new LinkedList<>();
+        String slash = GeodisyStrings.windowsComputerType()? "\\":"/";
+        String basename = filePath.substring(filePath.lastIndexOf(slash)+1,filePath.lastIndexOf("."));
         byte[] buffer = new byte[1024];
 
         try {
@@ -50,7 +52,8 @@ public class Unzip {
                 }
 
                 fileName = new File(fileName).getName();
-                if(!fileName.equals(basename)) {
+                String newFileName = fileName.substring(0,fileName.lastIndexOf("."));
+                if(!newFileName.equals(basename)) {
                     fileName = basename + "9_9" + fileName;
                 }
                 File newFile = new File(destpath + GeodisyStrings.replaceSlashes(File.separator) + fileName);
@@ -69,6 +72,12 @@ public class Unzip {
 
                 fos.close();
                 ze = zis.getNextEntry();
+                if(fileName.toLowerCase().endsWith(".zip")) {
+                    answer.addAll(unzipFunction(destpath + fileName, destpath));
+                    newFile.delete();
+                }else{
+                    answer.add(new FileInfo(newFile,basename+".zip"));
+                }
             }
 
             zis.closeEntry();
@@ -77,33 +86,25 @@ public class Unzip {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        LinkedList<File> answer = new LinkedList<>();
         File orig = new File(filePath);
         orig.delete();
-        File destination = new File(destpath);
 
 
-        for(File f:destination.listFiles()){
-            if(f.getName().toLowerCase().endsWith(".zip")) {
-                answer.addAll(unzipFunction(destpath + f.getName(), destpath));
-                f.delete();
-            }else
-                answer.add(f);
-        }
         return answer;
     }
 
 
     public LinkedList<DataverseRecordFile> unzip(String filePath, String destPath, DataverseRecordFile dRF, DataverseJavaObject djo ) throws NullPointerException{
-        LinkedList<File> files = new LinkedList<>();
+        LinkedList<FileInfo> files;
         File destDir = new File(destPath);
         destDir.mkdirs();
-        Path path = Paths.get(destPath);
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
         files = unzipFunction(filePath,destPath);
-        for(File f: files){
+        for(FileInfo f: files){
             DataverseRecordFile temp = new DataverseRecordFile(dRF);
-            temp.setTranslatedTitle(f.getName());
+            temp.setTranslatedTitle(f.getFileName());
+            temp.setOriginalTitle(f.getOrigName());
+            temp.setFileIdent(f.getFile().getAbsolutePath());
             drfs.add(temp);
         }
         return drfs;
