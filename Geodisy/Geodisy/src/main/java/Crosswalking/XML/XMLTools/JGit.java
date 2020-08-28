@@ -15,6 +15,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
 
+import static _Strings.GeodisyStrings.GEOCOMBINE;
+import static _Strings.GeodisyStrings.GITCALL;
 import static _Strings.XMLStrings.*;
 
 /**
@@ -33,24 +35,27 @@ public class JGit {
         File repo = new File(localRepoLocation);
         if(!repo.exists())
             cloneOpenGeoMetadataToLocal();
-        else {
-            accessLocal();
-        }
 
     }
 
     public void updateRemoteMetadata(){
-        String commitmessage = String.valueOf(ZonedDateTime.now(ZoneId.of("Canada/Pacific")));
-        AddCommand add = git.add().addFilepattern(".");
-        try {
-            add.call();
-        } catch (GitAPIException e) {
-            logger.error("Something went wrong trying to add files to git at " + commitmessage);
+        List<String> cmdList = new ArrayList<String>();
+        cmdList.add("/bin/bash");
+        cmdList.add("-c");
+        cmdList.add(GITCALL);
+        cmdList.add(OPEN_METADATA_LOCAL_REPO);
+        cmdList.add(String.valueOf(ZonedDateTime.now(ZoneId.of("Canada/Pacific"))));
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        Process p = null;
+        try{
+            System.out.println("Pushing Metadata to OpenGeoMetaData");
+            processBuilder.command(cmdList);
+            p = processBuilder.start();
+            p.waitFor();
+            p.destroy();
+        } catch (IOException | InterruptedException e) {
+            logger.error("Something went wrong pushing metadata to OpenGeoMetaData: " + e);
         }
-        CommitCommand commit = git.commit();
-        commit.setMessage(commitmessage);
-        pushToGit();
-
     }
 
     private void cloneOpenGeoMetadataToLocal() {
@@ -65,17 +70,6 @@ public class JGit {
         }
     }
 
-    private void accessLocal() {
-        FileRepositoryBuilder repositoryBuilder = new FileRepositoryBuilder();
-        repositoryBuilder.setMustExist(true);
-        repositoryBuilder.setGitDir(new File(localRepoLocation));
-        try {
-            xmlRepo = repositoryBuilder.build();
-        } catch (IOException e) {
-            logger.error("Something went wrong trying to access the local git repo at " + localRepoLocation);
-        }
-        git = new Git(xmlRepo);
-    }
 
     public JGit(String localRepoLocation){
         this.localRepoLocation = localRepoLocation;

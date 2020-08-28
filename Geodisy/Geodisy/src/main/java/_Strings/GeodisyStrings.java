@@ -14,6 +14,7 @@ public class GeodisyStrings {
         MOVE_METADATA = "sudo rsync -auhv " + getRoot() + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
         MOVE_DATA = "sudo rsync -auhv " + getRoot() + "datasetFiles/* " + DATA_DIR_LOC;
         GEOCOMBINE = "sh " + getRoot() + "geodisyFiles/combine.sh";
+        GITCALL = "sh " + getRoot() + "geodisyFiles/git.sh";
         GEODISY_PATH_ROOT = getRoot();
         SAVED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles");
         LOGS = GEODISY_PATH_ROOT + replaceSlashes("logs");
@@ -35,6 +36,7 @@ public class GeodisyStrings {
         XML_TEST_FILE = GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/XMLTestDJO.xml");
         DATASET_FILES_PATH = replaceSlashes("datasetFiles/");
         GeoBlacklightStrings.load();
+        XMLStrings.load();
     }
 
     public static boolean TEST; //This will be false if there are no arguments when calling the jar
@@ -241,6 +243,7 @@ public class GeodisyStrings {
     public static String MOVE_METADATA;
     public static String MOVE_DATA;
     public static String GEOCOMBINE;
+    public static String GITCALL;
 
 
     public static String beAddressToUse(){

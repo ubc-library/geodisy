@@ -1,7 +1,6 @@
 package _Strings;
 
-import static _Strings.GeodisyStrings.OPENGEOMETADATA_PASSWORD;
-import static _Strings.GeodisyStrings.OPENGEOMETADATA_USERNAME;
+import static _Strings.GeodisyStrings.*;
 
 public class XMLStrings {
     public final static String CI_RESPONSIBILITY = "CI_Responsibility";
@@ -46,9 +45,20 @@ public class XMLStrings {
     public final static String ISO_19139_VALIDATION_FILE_PATH = "./geodisyFiles/gco.xsd";
 
     //OPEN METADATA
-    public final static String OPEN_METADATA_LOCAL_REPO = "/var/www/geoserver.frdr.ca/html/geodisy/";
+    public static String OPEN_METADATA_LOCAL_REPO;
     public final static String TEST_OPEN_METADATA_LOCAL_REPO = "XMLFilesTest/";
     public final static String OPEN_METADATA_REMOTE_REPO = "https://github.com/OpenGeoMetadata/ca.frdr.geodisy/";
     public final static String OPEN_METADATA_REMOTE_USERNAME = OPENGEOMETADATA_USERNAME;
     public final static String OPEN_METADATA_REMOTE_PASSWORD = OPENGEOMETADATA_PASSWORD;
+
+    public static void load(){
+        OPEN_METADATA_LOCAL_REPO = getMetadataLocation();
+    }
+
+    public static String getMetadataLocation(){
+        if(TEST)
+            return "/var/www/geoservertest.frdr.ca/html/geodisy/";
+        else
+            return "/var/www/geoserver.frdr.ca/html/geodisy/";
+    }
 }
