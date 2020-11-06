@@ -1,0 +1,15 @@
+<% unless @relations.empty? %>
+  <div class="card relations">
+    <div class="card-header">
+      <%= t('geoblacklight.relations.title') %>
+    </div>
+
+    <ul class="list-group list-group-flush">
+      <!-- commenting out ancestors so we can use parent-child relationship for linked records-->
+     <!-- <%= render 'ancestors' unless @relations.ancestors['numFound'].to_i == 0 %>-->
+      <%= render 'descendants' unless @relations.descendants['numFound'].to_i == 0 %>
+    </ul>
+
+  </div>
+<% end %>
+

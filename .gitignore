@@ -137,7 +137,6 @@ Geodisy/ISO19115To19139/src/com/company/SP/
 Geodisy/ISO19115To19139/out/production/ISO19115To19139/com/company/SP/
 FRDR/
 Geodisy/.idea/
-GeodisyGBL/
 *.MF
 Geodisy/Geodisy/src/main/target/classes/META-INF/
 
@@ -171,3 +170,10 @@ iso19139.xml
 iso19139.zip
 
 Geodisy/Geodisy/src/.idea/
+
+*.jar
+*/.idea/
+Geodisy/Scripts/FixStringInGeoBlacklightJSON/.idea/
+Geodisy/Scripts/FixStringInFile/.idea/
+Geodisy/Scripts/MoveMetadataAndRunGeoCombine/.idea/
+Geodisy/Scripts/VectorToGeoserver/.idea/

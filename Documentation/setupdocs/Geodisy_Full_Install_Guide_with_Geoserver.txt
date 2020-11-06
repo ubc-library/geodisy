@@ -278,23 +278,24 @@ sudo systemctl enable docker
 *GDAL 2.4.1 Docker Image
 sudo docker pull osgeo/gdal:alpine-ultrasmall-v2.4.1
 
-in ~/.bash_profile:
+In ~/.bash_profile:
     export GDAL_DOCK="sudo docker run --rm -v /home:/home osgeo/gdal:alpine-ultrasmall-v2.4.1"
 
-6. SELinux config
+
+7. SELinux config
 
 * If running SELinux, apply the necessary booleans to allow httpd proxy operation:
 /usr/sbin/setsebool -P httpd_can_network_connect 1
 
 
-7. Startup scripts
+8. Startup scripts
 
 * GeoServer: /etc/systemd/system/geoserver.service
 * PostgreSQL: enabled via systemctl
 * GeoBlacklight: /etc/systemd/system/geoblacklight.service
 * Solr: enabled via systemctl
 
-8. TODO
+9. TODO
 
 * May not need: Figure out how (if) authentication to solr is needed or supported by GeoBlacklight. For now, run with blockUnknown: false in "/var/solr/data/security.json"
 * SSL support: GeoBlacklight

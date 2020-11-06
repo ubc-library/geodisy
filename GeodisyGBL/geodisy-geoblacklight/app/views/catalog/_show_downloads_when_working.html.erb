@@ -1,0 +1,34 @@
+<% document ||= @document %>
+
+<% if document_downloadable? %>
+  <% if document.direct_download.present? || document.hgl_download.present? || document.iiif_download.present? %>
+    <div class="card downloads">
+      <div class="card-header">
+        <h2><%= t('geoblacklight.download.download').pluralize %></h2>
+      </div>
+
+      <ul class="list-group list-group-flush js-download-list">
+        <%= render 'downloads_primary' %>
+      </ul>
+      <% if document.download_types.present? %>
+          <div class="card exports">
+            <div class="card-header">
+
+              <h2><%= t('geoblacklight.download.export_formats') %></h2>
+            </div>
+
+            <ul class="list-group list-group-flush">
+              <%= render 'downloads_generated' %>
+            </ul>
+          </div>
+        <% end %>
+    </div>
+  <% end %>
+
+<% elsif document.restricted? && document.same_institution? %>
+  <div class="card authentication">
+    <div class="card-header">
+      <%= link_to t('geoblacklight.tools.login_to_view'), new_user_session_path(referrer: request.original_url), class: ['btn', 'btn-default'] %>
+    </div>
+  </div>
+<% end %>

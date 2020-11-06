@@ -75,6 +75,7 @@ Because **Geodisy** is an open source project, all of our software is freely ava
 ||Alex Garnett | SFU |
 ||Amber Leahey | Scholars Portal|
 ||Jason Hlady | University of Saskatchewan|
+||Joel Farthing	| University of Saskatchewan|
 ||Venkat Mahadevan | UBC ARC|
 ||Todd Trann | University of Saskatchewan|
 ||Lee Wilson | Portage Network|
