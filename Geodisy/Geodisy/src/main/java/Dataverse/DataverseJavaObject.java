@@ -240,6 +240,7 @@ public class DataverseJavaObject extends SourceJavaObject {
         return newFiles;
     }
     public void updateGeoserver() {
+        System.out.println("Updating geoserver");
         Collections.sort(getGeoDataFiles(), new SortByFileName());
         for(DataverseGeoRecordFile dgrf:getGeoDataFiles()){
             if(dgrf.getTranslatedTitle().endsWith(".shp")) {
@@ -365,6 +366,7 @@ public class DataverseJavaObject extends SourceJavaObject {
         return false;
     }
     public void updateRecordFileNumbers() {
+        System.out.println("Updating Record File numbers");
         int vector = 1;
         int raster = 1;
         for(DataverseGeoRecordFile dgrf : getGeoDataFiles()){
