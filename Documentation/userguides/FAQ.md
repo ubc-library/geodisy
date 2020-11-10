@@ -47,12 +47,12 @@ All items appearing in _Geodisy_ will have [ISO 19115](https://www.iso.org/stand
 
 ### Where can I find links to guides about Geodisy and how it works?
 
-Documentation for Geodisy can be found on its home page: <https://ubc-library.github.io/geodisy>
+Documentation for Geodisy can be found on its home page: <https://github.com/ubc-library/geodisy/blob/master/Documentation/>
 
 Brief user guides are available for:
 
-* Adding metadata to records so that they're easily discoverable by Geodisy: [Depositor guide](https://ubc-library.github.io/geodisy/Documentation/userguides/pdf/GeodisyDepositorGuide.pdf)  
-* [Connecting your Dataverse repository to Geodisy at Canada's [Federated Research Data Repository](https://geo.frdr.ca): [Institutional guide](https://ubc-library.github.io/geodisy/Documentation/userguides/pdf/GeodisyInstitutionalGuide.pdf)
+* Adding metadata to records so that they're easily discoverable by Geodisy: [Depositor guide](https://github.com/ubc-library/geodisy/blob/master/Documentation/userguides/GeodisyDepositorGuide.md)  
+* [Connecting your Dataverse repository to Geodisy at Canada's [Federated Research Data Repository](https://geo.frdr.ca): [Institutional guide](https://github.com/ubc-library/geodisy/blob/master/Documentation/userguides/GeodisyInstitutionalGuide.md)
 
 ### How do Dataverse records become Geodisy records?
 
