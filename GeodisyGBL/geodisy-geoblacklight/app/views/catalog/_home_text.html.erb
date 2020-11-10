@@ -1,0 +1,14 @@
+<div class='container' style="font-size:14px; margin-bottom:1rem; padding-left:18rem; padding-right:18rem">
+  <div class='row text-center'>
+    <div class='col-sm'>
+      		<div>
+			<%= content_tag :h3, t('geoblacklight.home.map_heading') %>
+	      		<%= content_tag :div, '', id: 'map', data: { map: 'home', 'catalog-path'=> search_catalog_path , 'map-bbox' => params[:bbox], basemap: geoblacklight_basemap, leaflet_options: leaflet_options } %>
+		<div id="map_instructions">
+			<div>To use the map search:</div>
+			<div style="padding-left:1rem; text-indent:-1rem">1. Move the map to display your area of interest. You can also hold the shift key and click to draw a box for the map to zoom toward</div>
+			<div>2. Click "Search here" to see the results</div>
+		</div>
+    </div>
+  </div>
+</div>

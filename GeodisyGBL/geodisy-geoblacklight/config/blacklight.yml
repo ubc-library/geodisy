@@ -1,0 +1,10 @@
+development:
+  adapter: solr
+  url: <%= ENV['SOLR_URL'] || "http://127.0.0.1:8983/solr/geoblacklight-core" %>
+test: &test
+  adapter: solr
+  url: <%= ENV['SOLR_URL'] || "http://127.0.0.1:8983/solr/geoblacklight-core" %>
+production:
+  adapter: solr
+  url: <%= ENV['SOLR_URL'] || "http://127.0.0.1:8983/solr/geoblacklight-core" %>
+

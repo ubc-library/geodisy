@@ -1,0 +1,27 @@
+.geobl-homepage-masthead {
+  .search-query-form {
+    max-width: 100%;
+  }
+}
+
+#main-container {
+  .category-block {
+    min-height: 240px;
+
+    .category-icon {
+      font-size: 6em;
+    }
+  }
+
+  [data-map="home"] {
+    height: 600px;
+
+    .leaflet-control-container {
+      .search-control {
+        a {
+          color: $white;
+        }
+      }
+    }
+  }
+}

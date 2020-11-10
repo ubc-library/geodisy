@@ -1,8 +1,10 @@
 package _Strings;
 
+import _Strings.PrivateStrings.*;
 import org.apache.commons.lang3.ArrayUtils;
 
 import static _Strings.PrivateStrings.*;
+
 
 public class GeodisyStrings {
     public static void load() {
@@ -124,7 +126,7 @@ public class GeodisyStrings {
         public final static String[] GDALINFO_RASTER_FILE_EXTENSIONS = ArrayUtils.addAll(GDALINFO_PROCESSABLE_EXTENSIONS,NON_TIF_GEOTIFF_EXTENSIONS);
         private final static String[] NON_SHP_SHAPEFILE_EXTENSIONS = {".shx", ".dbf", ".sbn",".prj"};
         private final static String[] OGRINFO_PROCESSABLE_EXTENTIONS = {".geojson",".shp",".gpkg"}; //also .csv/.tab, but need to check if the csv is actually geospatial in nature
-        private final static String[] CSV_EXTENTIONS = {".csv", "tab"};
+        private final static String[] CSV_EXTENTIONS = {".csv", ".tab"};
         private final static String[] INTERIM_VECTOR = ArrayUtils.addAll(OGRINFO_PROCESSABLE_EXTENTIONS,CSV_EXTENTIONS);
         public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = ArrayUtils.addAll(NON_SHP_SHAPEFILE_EXTENSIONS, INTERIM_VECTOR);
         public final static String FINAL_OGRINFO_VECTOR_FILE_EXTENSIONS = ".shp";

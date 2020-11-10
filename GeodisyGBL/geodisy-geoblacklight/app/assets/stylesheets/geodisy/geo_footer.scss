@@ -1,0 +1,79 @@
+@import 'bootstrap';
+
+#geo-content {
+  padding-bottom: 220px !important;
+}
+
+#geo-footer-container {
+  background-color: #9B9B9B;
+  -webkit-box-shadow: 0 4px 8px -8px rgba(0, 0, 0, .2) inset;
+  box-shadow: 0 4px 8px -8px rgba(0, 0, 0, .2) inset;
+  clear: both;
+  margin-top: 0px;
+  min-height: 10px;
+  padding: 0 !important;
+  position: relative;
+  width: 100%;
+  text-align:center;
+  color:#e0e0e0
+}
+
+#geo-footer {
+  @extend .container;
+  display: table;
+  height: 80px;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: inline;
+      margin: 0 13px 3px 0;
+      padding: 0;
+                }
+        }
+
+  li a {
+    white-space: nowrap;
+        }
+}
+
+#geo-footer-img {
+  display: table-cell;
+  vertical-align: middle;
+  width: 162px;
+  padding-top: 16px;
+}
+
+#geo-footer-links {
+  display: table-cell;
+  font-size: small;
+  padding-left: 15px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+#global-footer {
+  max-width: 100%;
+
+  .row {
+    display: block;
+    flex-wrap: nowrap;
+  }
+
+  .span10 {
+    margin: 0 !important;
+  }
+
+  p {
+    max-width: 100%;
+        }
+
+  #bottom-text {
+    margin-right: 6px;
+        }
+}
+
+
