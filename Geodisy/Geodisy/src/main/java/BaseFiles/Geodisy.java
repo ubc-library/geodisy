@@ -26,9 +26,6 @@ import java.util.List;
  * @author pdante
  */
 public class Geodisy {
-    public Geodisy() {
-    }
-
     /**
      * Front side of middleware, this part harvests data from Dataverse
      */
