@@ -1,5 +1,7 @@
 package BaseFiles;
 
+import Dataverse.DataverseJavaObject;
+import Dataverse.FRDRAPI;
 import Dataverse.SourceJavaObject;
 
 import java.util.Collection;
@@ -7,20 +9,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class FRDRGeodisy extends Geodisy{
-    LinkedList<SourceJavaObject> records;
-    @Override
-    public List<SourceJavaObject> harvestDataverseMetadata(){
-        boolean moreRecords = true;
+    LinkedList<DataverseJavaObject> records;
+    public List<DataverseJavaObject> harvestFRDRMetadata(){
         records = new LinkedList<>();
-        while(moreRecords){
-            moreRecords = getFRDRRecord();
-        }
+        FRDRAPI frdrAPI = new FRDRAPI();
+        records = frdrAPI.callFRDRHarvester();
 
         return records;
     }
-
+    //TODO connect to frdr harvester for records
     private boolean getFRDRRecord() {
 
+        return false;
     }
 
 
