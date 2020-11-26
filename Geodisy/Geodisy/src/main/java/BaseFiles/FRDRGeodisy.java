@@ -17,11 +17,4 @@ public class FRDRGeodisy extends Geodisy{
 
         return records;
     }
-    //TODO connect to frdr harvester for records
-    private boolean getFRDRRecord() {
-
-        return false;
-    }
-
-
 }
