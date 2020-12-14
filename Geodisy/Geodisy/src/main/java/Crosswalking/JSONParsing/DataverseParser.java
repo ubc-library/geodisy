@@ -3,14 +3,11 @@ package Crosswalking.JSONParsing;
 import BaseFiles.GeoLogger;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJavaObject;
-import Dataverse.DataverseRecordInfo;
-import Dataverse.ExistingHarvests;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static _Strings.GeodisyStrings.PROCESS_THESE_DOIS;
 import static _Strings.DVFieldNameStrings.*;
 
 
