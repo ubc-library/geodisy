@@ -47,12 +47,6 @@ public class DataverseAPI extends SourceAPI {
         HashSet<String> dois = searchDV();
         LinkedList<JSONObject> jsons = downloadMetadata(dois);
         HashMap<String, DataverseRecordInfo> recordsThatNoLongerExist = new HashMap<>();
-        HashMap<String, DataverseRecordInfo> recs = existingHarvests.getRecordVersions();
-        if(PROCESS_THESE_DOIS.length==0) {
-            for (String key : recs.keySet()) {
-                recordsThatNoLongerExist.put(key, recs.get(key));
-            }
-        }
         DataverseParser parser = new DataverseParser();
         System.out.println("This is using the " + dvURL + " dataverse for getting files, should it be changed to something else?");
         int counter = jsons.size();
@@ -76,16 +70,14 @@ public class DataverseAPI extends SourceAPI {
                 }
                 if(dontProcessSpecificRecords(doi))
                     continue;
-                
+
             }catch (JSONException j){
                 logger.error("Tried to get a record but I got a blank or malformed JSONObject");
                 continue;
             }
             DataverseJavaObject djo = parser.parse(jo, dvURL);
             doi = djo.getPID();
-            if(djo.hasContent && existingHarvests.hasRecord(djo.getPID()))
-                recordsThatNoLongerExist.remove(djo.getPID());
-            if(djo.hasContent()&& (hasNewInfo(djo, existingHarvests)||PROCESS_THESE_DOIS.length>0)) {
+            if(djo.hasContent()) {
                 System.out.println("Downloading record: " + doi);
                 long startTime = Calendar.getInstance().getTimeInMillis();
                 djo = djo.downloadFiles();
@@ -100,20 +92,16 @@ public class DataverseAPI extends SourceAPI {
                 if(djo.hasBoundingBox()) {
                     crosswalkRecord(djo);
                     DataverseRecordInfo dri = new DataverseRecordInfo(djo,logger.getName());
-                    existingHarvests.addOrReplaceRecord(dri);
                     existingHarvests.addBBox(djo.getPID(),djo.getBoundingBox());
-                    existingHarvests.saveExistingSearchs(existingHarvests.getRecordVersions(),EXISTING_RECORDS, "ExistingRecords");
                     existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
                     answers.add(djo);
                 } else{
                     File folderToDelete = new File(doi);
                     deleteFolder(folderToDelete);
                 }
-                existingHarvests.addOrReplaceRecord(new DataverseRecordInfo(djo,logger.getName()));
             }else{
                 continue;
             }
-            existingHarvests.saveExistingSearchs(existingHarvests.getRecordVersions(),EXISTING_RECORDS, "ExistingRecords");
             existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
             System.out.println("Parsed and saved " + doi);
             DownloadedFiles dF = DownloadedFiles.getDownloadedFiles();
@@ -208,11 +196,6 @@ public class DataverseAPI extends SourceAPI {
         GDAL gdal = new GDAL();
         djo = gdal.generateBB(djo);
         return djo;
-    }
-
-    private boolean hasNewInfo(DataverseJavaObject djo, ExistingHarvests es) {
-        DataverseRecordInfo dri = new DataverseRecordInfo(djo, logger.getName());
-        return dri.newer(es.getRecordInfo(djo.getPID()));
     }
 
     private HashSet<String> getRecords(String searchURL) {

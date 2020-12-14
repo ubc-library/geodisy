@@ -9,7 +9,6 @@ import java.io.*;
 import java.util.HashMap;
 
 import static _Strings.GeodisyStrings.EXISTING_BBOXES;
-import static _Strings.GeodisyStrings.EXISTING_RECORDS;
 
 /**
  * Class for getting the list of records that have already been downloaded
@@ -34,12 +33,9 @@ public class ExistingSearchesFile {
     }
 
     public void writeExistingSearches(ExistingHarvests existingSearches) throws IOException {
-        HashMap<String, DataverseRecordInfo> records = new HashMap<>();
-        es.getRecordVersions().forEach((key, value)-> records.put(key,value));
         HashMap<String, BoundingBox> bboxes = new HashMap<>();
         es.getbBoxes().forEach((key,value)->bboxes.put(key,value));
         FileWriter writer = new FileWriter();
-        writer.writeObjectToFile(records,EXISTING_RECORDS);
         writer.writeObjectToFile(bboxes,EXISTING_BBOXES);
         }
 
@@ -52,12 +48,10 @@ public class ExistingSearchesFile {
         ExistingHarvests es;
         FileWriter writer = new FileWriter();
         try {
-            //TODO something is going wrong here. Says it's trying to convert a HashMap to Dataverse.ExistingHarvests. Maybe save the maps separately?
-            HashMap<String, DataverseRecordInfo> records = (HashMap<String, DataverseRecordInfo>) writer.readSavedObject(EXISTING_RECORDS);
+            //TODO something maybe going wrong here. Says it's trying to convert a HashMap to Dataverse.ExistingHarvests. Maybe gone now that there is only one map
             HashMap<String, BoundingBox> bBoxes = (HashMap<String, BoundingBox>) writer.readSavedObject(EXISTING_BBOXES);
             es = ExistingHarvests.getExistingHarvests();
             es.setbBoxes(bBoxes);
-            es.setRecords(records);
         } catch (FileNotFoundException e) {
             es = ExistingHarvests.getExistingHarvests();
             writeExistingSearches(es);

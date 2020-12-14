@@ -40,7 +40,6 @@ public class GeodisyTask {
             verifyFiles(fW);
 
             existingHarvests = ExistingHarvests.getExistingHarvests();
-            existingHarvests.saveExistingSearchs(existingHarvests.getRecordVersions(),EXISTING_RECORDS,"ExistingRecords");
             existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
             existingCallsToCheck = ExistingCallsToCheck.getExistingCallsToCheck();
             existingCallsToCheck.saveExistingSearchs(existingCallsToCheck.getRecords(),EXISTING_CHECKS,"ExistingCallsToCheck");
@@ -53,10 +52,6 @@ public class GeodisyTask {
 
             //This section is the initial search for new records in the repositories. We will need to add a new harvest call for each new repository type [Geodisy 2]
             List<SourceJavaObject> sJOs = geo.harvestDataverseMetadata();
-            for(SourceJavaObject sJO : sJOs) {
-                existingHarvests.addOrReplaceRecord(new DataverseRecordInfo(sJO, logger.getName()));
-            }
-            //deleteEmptyFolders();
 
             if(!IS_WINDOWS) {
                 sendRecordsToGeoBlacklight();
@@ -91,7 +86,6 @@ public class GeodisyTask {
             if(!startWarningLog.equals(endWarningLog)){
                 fW.writeStringToFile(endWarningLog,WARNING_LOG);
             }
-            existingHarvests.saveExistingSearchs(existingHarvests.getRecordVersions(),EXISTING_RECORDS, "ExistingRecords");
             existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
             //TODO Uncomment the following once Geoserver has been implemented
             /*ExistingRasterRecords existingRasterRecords = ExistingRasterRecords.getExistingRasters();
@@ -118,7 +112,6 @@ public class GeodisyTask {
             ExistingCallsToCheck.getExistingCallsToCheck();
         fW.verifyFileExistence(ERROR_LOG);
         fW.verifyFileExistence(WARNING_LOG);
-        fW.verifyFileExistence(EXISTING_RECORDS);
         fW.verifyFileExistence(EXISTING_BBOXES);
         fW.verifyFileExistence(EXISTING_CHECKS);
         fW.verifyFileExistence(DOWNLOADED_FILES);

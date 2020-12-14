@@ -20,7 +20,6 @@ public class GeodisyStrings {
         GEODISY_PATH_ROOT = getRoot();
         SAVED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles");
         LOGS = GEODISY_PATH_ROOT + replaceSlashes("logs");
-        EXISTING_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingRecords.txt");
         EXISTING_CHECKS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingChecks.txt");
         EXISTING_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingBBoxes.txt");
         DOWNLOADED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/DownloadedFiles.csv");
@@ -89,7 +88,6 @@ public class GeodisyStrings {
         public static String GEODISY_PATH_ROOT = getRoot();
         public static String SAVED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles");
         public static String LOGS = GEODISY_PATH_ROOT + replaceSlashes("logs");
-        public static  String EXISTING_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingRecords.txt");
         public static  String EXISTING_CHECKS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingChecks.txt");
         public static  String EXISTING_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingBBoxes.txt");
         public static  String DOWNLOADED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/DownloadedFiles.csv");

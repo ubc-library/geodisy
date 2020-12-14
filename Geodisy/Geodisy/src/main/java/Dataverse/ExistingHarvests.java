@@ -16,7 +16,6 @@ import static _Strings.GeodisyStrings.*;
 public class ExistingHarvests extends ExistingSearches implements Serializable {
     private static final long serialVersionUID = 8947943825774008362L;
     private static HashMap<String, BoundingBox> bBoxes;
-    private static HashMap<String, DataverseRecordInfo> recordVersions;
     private static ExistingHarvests single_instance = null;
 
     public static ExistingHarvests getExistingHarvests(){
@@ -31,12 +30,8 @@ public class ExistingHarvests extends ExistingSearches implements Serializable {
     private ExistingHarvests(){
         logger = new GeoLogger(this.getClass());
         bBoxes = readExistingBoundingBoxes();
-        recordVersions = readExistingRecords(EXISTING_RECORDS);
     }
 
-    public boolean isEmpty(){
-        return recordVersions.isEmpty();
-    }
     public void addBBox(String name, BoundingBox boundingBox){
         bBoxes.put(name,boundingBox);
     }
@@ -55,45 +50,13 @@ public class ExistingHarvests extends ExistingSearches implements Serializable {
         return bBoxes.size();
     }
 
-    public int numberOfRecords(){
-        return recordVersions.size();
-    }
-
-    public void addOrReplaceRecord(DataverseRecordInfo dataverseRecordInfo){
-        recordVersions.put(dataverseRecordInfo.getDoi(), dataverseRecordInfo);
-    }
-
-    public boolean isNewerRecord(DataverseRecordInfo dataverseRecordInfo){
-        return dataverseRecordInfo.newer(recordVersions.get(dataverseRecordInfo.getDoi()));
-    }
-
-
-    public DataverseRecordInfo getRecordInfo(String doi){
-        if(recordVersions.containsKey(doi))
-            return recordVersions.get(doi);
-        return new DataverseRecordInfo();
-    }
-
     public void deleteBBox(String location){
         bBoxes.remove(location);
     }
 
-    public boolean hasRecord(String doi){
-        return recordVersions.containsKey(doi);
-    }
-
-    public void deleteRecord(String doi){
-        bBoxes.remove(doi);
-        recordVersions.remove(doi);
-    }
 
     public void testSaveExistingSearches(){
         FileWriter fw  = new FileWriter();
-        try {
-            fw.writeObjectToFile(recordVersions,TEST_EXISTING_RECORDS);
-        } catch (IOException e) {
-            logger.error("Something went wrong saving existing searches");
-        }
         try {
             fw.writeObjectToFile(bBoxes,TEST_EXISTING_BBOXES);
         } catch (IOException e) {
@@ -122,15 +85,9 @@ public class ExistingHarvests extends ExistingSearches implements Serializable {
         return bBoxes;
     }
 
-    public  HashMap<String, DataverseRecordInfo> getRecordVersions() {
-        return recordVersions;
-    }
 
     public void setbBoxes(HashMap<String, BoundingBox> bboxes){
         bBoxes = bboxes;
     }
 
-    public void setRecords(HashMap<String,DataverseRecordInfo> records){
-        recordVersions = records;
-    }
 }
