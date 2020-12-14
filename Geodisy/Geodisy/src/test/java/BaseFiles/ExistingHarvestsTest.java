@@ -61,15 +61,10 @@ public class ExistingHarvestsTest {
         bbox.setLongEast(120);
         bbox.setLongWest(-20);
         bboxes.put("fake doi",bbox);
-        DataverseRecordInfo dri = new DataverseRecordInfo(djo,this.getClass().toString());
-        HashMap<String, DataverseRecordInfo> records = new HashMap<>();
-        records.put("fake doi",dri);
         assertEquals (bboxes.size(),1);
-        assertEquals (records.size(),1);
         FileWriter writer = new FileWriter();
         try {
             writer.writeObjectToFile(bboxes,TEST_EXISTING_BBOXES);
-            writer.writeObjectToFile(records,TEST_EXISTING_RECORDS);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -85,22 +80,18 @@ public class ExistingHarvestsTest {
             e.printStackTrace();
         }
         assertTrue (bboxes2.keySet().equals(bboxes.keySet()));
-        assertTrue(records2.keySet().equals(records.keySet()));
         BoundingBox box2 = new BoundingBox();
         box2.setLongWest(-15);
         box2.setLongEast(35);
         box2.setLatNorth(89);
         box2.setLatSouth(79);
         bboxes.put("fake doi2",box2);
-        records.put("fake doi2",new DataverseRecordInfo(djo,this.getClass().toString()+"2"));
         try {
             writer.writeObjectToFile(bboxes,TEST_EXISTING_BBOXES);
-            writer.writeObjectToFile(records,TEST_EXISTING_RECORDS);
         } catch (IOException e) {
             e.printStackTrace();
         }
         assertFalse (bboxes2.keySet().equals(bboxes.keySet()));
-        assertFalse(records2.keySet().equals(records.keySet()));
         try {
             bboxes2 = (HashMap<String, BoundingBox>) writer.readSavedObject(TEST_EXISTING_BBOXES);
 
@@ -111,7 +102,6 @@ public class ExistingHarvestsTest {
             e.printStackTrace();
         }
         assertTrue (bboxes2.keySet().equals(bboxes.keySet()));
-        assertTrue(records2.keySet().equals(records.keySet()));
     }
     @Test
     public void fixPerms(){

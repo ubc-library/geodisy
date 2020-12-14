@@ -11,7 +11,6 @@ import java.util.HashMap;
 
 public abstract class ExistingSearches extends ExisitingFile {
     GeoLogger logger;
-    public abstract boolean isEmpty();
 
     public void saveExistingSearchs(HashMap object, String path, String className){
         saveExistingFile(object,path,className);

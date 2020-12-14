@@ -91,7 +91,6 @@ public class DataverseAPI extends SourceAPI {
                     djo = (DataverseJavaObject) getBBFromGeonames(djo);
                 if(djo.hasBoundingBox()) {
                     crosswalkRecord(djo);
-                    DataverseRecordInfo dri = new DataverseRecordInfo(djo,logger.getName());
                     existingHarvests.addBBox(djo.getPID(),djo.getBoundingBox());
                     existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
                     answers.add(djo);

@@ -71,8 +71,6 @@ public class DataverseParser implements JSONParser {
             else
                 current = dataverseJSON;
             dJO.parseCitationFields(current);
-            ExistingHarvests es = ExistingHarvests.getExistingHarvests();
-            DataverseRecordInfo dRI = dJO.generateDRI();
             JSONObject metadata;
             metadata = dJO.getVersionSection(current).getJSONObject("metadataBlocks");
             if (metadata.has(GEOSPATIAL))

@@ -151,25 +151,13 @@ public class DataverseJavaObject extends SourceJavaObject {
         }
     }
 
-    public DataverseRecordInfo generateDRI(){
-        String major, minor,doi;
-        major = getCitationFields().getSimpleCitationFields().getField(MAJOR_VERSION);
-        minor = getCitationFields().getSimpleCitationFields().getField(MINOR_VERSION);
-        doi = getCitationFields().getPID();
-        DataverseRecordInfo answer = new DataverseRecordInfo();
-        answer.setDoi(doi);
-        answer.setMajor(major);
-        answer.setMinor(minor);
-        answer.setVersion(0);
-        return answer;
-    }
-
     /**
      *  Deletes the directory of the record's files if it exists and then downloads the updated
      *  files, excluding non-geospatial file types other than .zip
      *  If there aren't any geospatial files uploaded, the entire directory get's deleted.
      */
-    //@Override
+
+    @Override
     public DataverseJavaObject downloadFiles() {
         String path = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + urlized(citationFields.getPID()));
         File f = new File(path);
@@ -222,23 +210,7 @@ public class DataverseJavaObject extends SourceJavaObject {
         return this;
     }
 
-    private LinkedList<DataverseRecordFile> getNewFiles() {
-        HashSet<String> fileNames = new HashSet<>();
-        LinkedList<DataverseRecordFile> newFiles = new LinkedList<>();
-        for(DataverseRecordFile drf: getDataFiles()){
-            fileNames.add(drf.getTranslatedTitle());
-        }
-        File f = new File(GeodisyStrings.replaceSlashes(DATA_DIR_LOC + getPID().replace("_", "/").replace(".","/") + "/"));
-        if(f.exists()&&f.isDirectory()){
-            File[] files = f.listFiles();
-            for(File file:files){
-                if(!fileNames.contains(file.getName()))
-                    continue;
-                newFiles.add(new DataverseRecordFile(file.getName(),-1,server, getPID()));
-            }
-        }
-        return newFiles;
-    }
+    @Override
     public void updateGeoserver() {
         System.out.println("Updating geoserver");
         Collections.sort(getGeoDataFiles(), new SortByFileName());
