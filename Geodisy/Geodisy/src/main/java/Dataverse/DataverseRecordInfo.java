@@ -83,14 +83,23 @@ public class DataverseRecordInfo implements Serializable {
         this.major = major;
     }
     public void setMajor(String major){
-        this.major = Integer.parseInt(major);
+        try {
+            this.major = Integer.parseInt(major);
+        }catch (NumberFormatException e){
+            this.major = -1;
+        }
     }
 
     public void setMinor(int minor) {
         this.minor = minor;
     }
 
-    public void setMinor(String minor){this.minor = Integer.parseInt(minor);}
+    public void setMinor(String minor){
+        try {
+        this.minor = Integer.parseInt(minor);
+    }catch (NumberFormatException e){
+        this.minor = -1;
+    }}
 
     public void setVersion(int version){this.version = version;}
     public void setVersion(String version){this.version = Integer.parseInt(version);}

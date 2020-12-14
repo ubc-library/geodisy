@@ -76,17 +76,7 @@ public class DataverseAPI extends SourceAPI {
                 }
                 if(dontProcessSpecificRecords(doi))
                     continue;
-                //System.out.println("Parsing record " + doi);
-                if(PROCESS_THESE_DOIS.length==0) {
-                    if (existingHarvests.hasRecord(doi)) {
-                        JSONObject joInfo = jo.getJSONObject("datasetVersion");
-                        int version = joInfo.getInt("versionNumber") * 1000 + joInfo.getInt("versionMinorNumber");
-                        if (existingHarvests.getRecordInfo(doi).getVersion() == version) {
-                            recordsThatNoLongerExist.remove(doi);
-                            continue;
-                        }
-                    }
-                }
+                
             }catch (JSONException j){
                 logger.error("Tried to get a record but I got a blank or malformed JSONObject");
                 continue;

@@ -142,10 +142,16 @@ public class SimpleCitationFields extends JSONField {
                 setPublisher(value);
                 break;
             case MAJOR_VERSION:
-                setVersionMajor(Integer.parseInt(value));
+                if(value=="")
+                    setVersionMajor(-1);
+                else
+                    setVersionMajor(Integer.parseInt(value));
                 break;
             case MINOR_VERSION:
-                setVersionMinor(Integer.parseInt(value));
+                if(value=="")
+                    setVersionMinor(-1);
+                else
+                    setVersionMinor(Integer.parseInt(value));
                 break;
             case IDENTIFIER:
                 setIdentifier(value);
@@ -314,8 +320,8 @@ public class SimpleCitationFields extends JSONField {
         }
     }
     public int getVersion(){
-        int major = Integer.parseInt(getVersionMajor());
-        int minor = Integer.parseInt(getVersionMinor());
+        int major = Integer.parseInt(getVersionMajor().equals("") ? "-1": getVersionMajor());
+        int minor = Integer.parseInt(getVersionMinor().equals("") ? "-1": getVersionMinor());
         return major*1000+minor;
     }
 
@@ -493,10 +499,14 @@ public class SimpleCitationFields extends JSONField {
     }
 
     private String getVersionMajor() {
+        if(versionMajor == -1)
+            return "";
         return String.valueOf(versionMajor);
     }
 
     private String getVersionMinor() {
+        if(versionMinor == -1)
+            return "";
         return String.valueOf(versionMinor);
     }
 
