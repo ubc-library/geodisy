@@ -160,7 +160,7 @@ public class DataverseJavaObject extends SourceJavaObject {
         answer.setDoi(doi);
         answer.setMajor(major);
         answer.setMinor(minor);
-        answer.setVersion(Integer.parseInt(major)*1000 + minor);
+        answer.setVersion(0);
         return answer;
     }
 
