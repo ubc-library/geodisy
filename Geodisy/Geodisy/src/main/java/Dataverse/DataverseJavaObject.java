@@ -294,7 +294,8 @@ public class DataverseJavaObject extends SourceJavaObject {
         dataFiles.add(temp);
     }*/
 
-    private boolean createRecords(DataverseGeoRecordFile dgrf, int number, String type) {
+    @Override
+    protected boolean createRecords(DataverseGeoRecordFile dgrf, int number, String type) {
         String dirPath = DATA_DIR_LOC + dgrf.getDatasetIdent().replace("_","/") + "/";
         String filePath = dirPath + dgrf.getTranslatedTitle();
         File fUpdate = new File(filePath);
@@ -312,15 +313,6 @@ public class DataverseJavaObject extends SourceJavaObject {
         return simpleFieldVal.replace(".","_").replace("/","_").replace("\\\\","_").replace(":","");
     }
 
-    private boolean addVectorToGeoserver(String name, String geoserverLabel) {
-        GeoServerAPI geoServerAPI =  new GeoServerAPI(this);
-        return geoServerAPI.addVector(name,geoserverLabel);
-    }
-
-    private boolean addRasterToGeoserver(DataverseGeoRecordFile drf) {
-        GeoServerAPI geoServerAPI =  new GeoServerAPI(this);
-        return geoServerAPI.addRaster(drf);
-    }
     @Override
     public String getDOIProtocal(){
         String answer = super.getDOIProtocal();
@@ -330,32 +322,9 @@ public class DataverseJavaObject extends SourceJavaObject {
         } else
             return answer;
     }
-    public boolean hasDataRecord(String name){
-        for(DataverseRecordFile drf : dataFiles){
-            if(drf.getTranslatedTitle().equals(name))
-                return true;
-        }
-        return false;
-    }
+
+    @Override
     public void updateRecordFileNumbers() {
-        System.out.println("Updating Record File numbers");
-        int vector = 1;
-        int raster = 1;
-        for(DataverseGeoRecordFile dgrf : getGeoDataFiles()){
-            if(dgrf.getTranslatedTitle().toLowerCase().endsWith(".shp")) {
-                dgrf.setFileNumber(vector);
-                vector++;
-            }else if(dgrf.getTranslatedTitle().toLowerCase().endsWith(".tif")){
-                dgrf.setFileNumber(raster);
-                raster++;
-            }else{
-                logger.error("Somehow have a DataverseGeoRecordFile that doesn't end in shp or tif: File = " + dgrf.getTranslatedTitle() + " and doi = " + getPID());
-            }
-        }
-        int count = 1;
-        for(DataverseGeoRecordFile dgrf:getGeoDataMeta()){
-            dgrf.setFileNumber(count);
-            count++;
-        }
+        updateRecordFileNumbers(logger);
     }
 }

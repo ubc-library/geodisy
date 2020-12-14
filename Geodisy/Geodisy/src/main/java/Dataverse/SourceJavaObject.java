@@ -1,5 +1,7 @@
 package Dataverse;
 
+import BaseFiles.GeoLogger;
+import GeoServer.GeoServerAPI;
 import _Strings.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
@@ -35,6 +37,11 @@ public abstract class SourceJavaObject {
     public abstract void parseFiles(JSONArray fileFieldsArray);
     public abstract JSONObject getVersionSection(JSONObject current);
     public abstract DataverseJavaObject downloadFiles();
+    public boolean moreRecordsToGet;
+    public abstract void updateGeoserver();
+    protected abstract boolean createRecords(DataverseGeoRecordFile dgrf, int number, String type);
+    public abstract void updateRecordFileNumbers();
+
 
     public SourceJavaObject(String server) {
         this.citationFields = new CitationFields();
@@ -205,7 +212,44 @@ public abstract class SourceJavaObject {
         return gf.getGeoCovers().size()>0;
     }
 
+    protected boolean addVectorToGeoserver(String name, String geoserverLabel) {
+        GeoServerAPI geoServerAPI =  new GeoServerAPI(this);
+        return geoServerAPI.addVector(name,geoserverLabel);
+    }
 
+    protected boolean addRasterToGeoserver(DataverseGeoRecordFile drf) {
+        GeoServerAPI geoServerAPI =  new GeoServerAPI(this);
+        return geoServerAPI.addRaster(drf);
+    }
+
+    public void updateRecordFileNumbers(GeoLogger logger) {
+        System.out.println("Updating Record File numbers");
+        int vector = 1;
+        int raster = 1;
+        for(DataverseGeoRecordFile dgrf : getGeoDataFiles()){
+            if(dgrf.getTranslatedTitle().toLowerCase().endsWith(".shp")) {
+                dgrf.setFileNumber(vector);
+                vector++;
+            }else if(dgrf.getTranslatedTitle().toLowerCase().endsWith(".tif")){
+                dgrf.setFileNumber(raster);
+                raster++;
+            }else{
+                logger.error("Somehow have a DataverseGeoRecordFile that doesn't end in shp or tif: File = " + dgrf.getTranslatedTitle() + " and doi = " + getPID());
+            }
+        }
+        int count = 1;
+        for(DataverseGeoRecordFile dgrf:getGeoDataMeta()){
+            dgrf.setFileNumber(count);
+            count++;
+        }
+    }
+    public boolean hasDataRecord(String name){
+        for(DataverseRecordFile drf : dataFiles){
+            if(drf.getTranslatedTitle().equals(name))
+                return true;
+        }
+        return false;
+    }
 
 
     //public JournalFields getJournalFields(){ return journalFields;}
