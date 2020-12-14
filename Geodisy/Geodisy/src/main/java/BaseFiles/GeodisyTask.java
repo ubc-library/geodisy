@@ -51,7 +51,8 @@ public class GeodisyTask {
             Geodisy geo = new Geodisy();
 
             //This section is the initial search for new records in the repositories. We will need to add a new harvest call for each new repository type [Geodisy 2]
-            List<SourceJavaObject> sJOs = geo.harvestDataverseMetadata();
+            List<SourceJavaObject> sJOs = geo.harvestFRDRMetadata();
+            //deleteEmptyFolders();
 
             if(!IS_WINDOWS) {
                 sendRecordsToGeoBlacklight();

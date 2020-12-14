@@ -43,6 +43,11 @@ public class Geodisy {
         return records;
     }
 
+    public List<SourceJavaObject> harvestFRDRMetadata(){
+        FRDRGeodisy frdrGeodisy = new FRDRGeodisy();
+        return frdrGeodisy.harvestFRDRMetadata();
+    }
+
 
     /** 
      * Creates the universal part of the Dataverse BaseFiles.API search/retrieve

@@ -9,12 +9,12 @@ import org.json.simple.parser.ParseException;
 import java.util.LinkedList;
 
 public class FRDRAPI{
-    public LinkedList<DataverseJavaObject> callFRDRHarvester(){
+    public LinkedList<SourceJavaObject> callFRDRHarvester(){
         boolean done = true;
         String fullJSON = getJson();
         JSONParser jsonParser = new JSONParser();
         JSONObject json = new JSONObject();
-        LinkedList<DataverseJavaObject> djos = new LinkedList<>();
+        LinkedList<SourceJavaObject> djos = new LinkedList<>();
         try {
             json = (JSONObject) jsonParser.parse(fullJSON);
             done = json.getBoolean("finished");
