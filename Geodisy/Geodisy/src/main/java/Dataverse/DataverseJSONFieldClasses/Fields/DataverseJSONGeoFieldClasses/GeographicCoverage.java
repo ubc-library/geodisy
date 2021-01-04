@@ -78,7 +78,14 @@ public class GeographicCoverage extends CompoundJSONField {
 
     @Override
     public void setField(JSONObject field) {
-        for(String s:field.keySet()){
+        ArrayList<String> geofields =  new ArrayList<>();
+        geofields.add(COUNTRY);
+        geofields.add(STATE);
+        geofields.add(CITY);
+        geofields.add(OTHER_GEO_COV);
+        for(String s:geofields){
+            if(!field.has(s))
+                continue;
             JSONObject fieldTitle = (JSONObject) field.get(s);
             String title = fieldTitle.getString(TYPE_NAME);
             String value = fieldTitle.getString(VAL);
@@ -95,6 +102,8 @@ public class GeographicCoverage extends CompoundJSONField {
                     break;
                 case OTHER_GEO_COV:
                     this.otherGeographicCoverage = value;
+                    break;
+                case "":
                     break;
                 default:
                     errorParsing(this.getClass().getName(), title);
