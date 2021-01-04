@@ -50,18 +50,21 @@ public class GeodisyTask {
 
             Geodisy geo = new Geodisy();
 
-            //This section is the initial search for new records in the repositories. We will need to add a new harvest call for each new repository type [Geodisy 2]
+            //Call to get metadata from FRDR Harvester
             List<SourceJavaObject> sJOs = geo.harvestFRDRMetadata();
             //deleteEmptyFolders();
 
-            if(!IS_WINDOWS) {
+            /** We are no longer updating Open Geo Metadata records due to sparely populated metadata files
+            /if(!IS_WINDOWS) {
                 sendRecordsToGeoBlacklight();
                 if(!TEST) {
                     JGit jgit = new JGit();
                     jgit.updateRemoteMetadata();
                 }
-            }
+            }**
+             
             /**
+             *
              * Saving a record of all the files that were downloaded
              */
 
