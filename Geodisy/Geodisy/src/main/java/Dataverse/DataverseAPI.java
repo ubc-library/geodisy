@@ -31,13 +31,11 @@ import static _Strings.GeodisyStrings.*;
  */
 public class DataverseAPI extends SourceAPI {
     private final String dvURL;
-    private Set<DataverseRecordInfo> records;
     GeoLogger logger = new GeoLogger(this.getClass());
 
     public DataverseAPI(String dvURL) {
 
         this.dvURL = dvURL;
-        records = new HashSet<>();
 
     }
 
@@ -135,12 +133,7 @@ public class DataverseAPI extends SourceAPI {
 
     @Override
     protected void deleteMetadata(String doi) {
-
-        try {
-            FileUtils.deleteDirectory(new File(folderizedDOI(doi)));
-        } catch (IOException e) {
-            logger.error("Tried to delete records at " + doi);
-        }
+        super.deleteMetadata(logger, doi);
     }
     //TODO figure out how to delete files from Geoserver
     @Override
@@ -296,11 +289,6 @@ public class DataverseAPI extends SourceAPI {
         return jo.getJSONObject("datasetVersion").has("files");
     }
 
-    protected String folderizedDOI(String doi){
-        String folderizedDOI = doi.replace(".","_");
-        folderizedDOI = folderizedDOI.replace("/","_");
-        return DATA_DIR_LOC + folderizedDOI;
-    }
     public void crosswalkRecord(SourceJavaObject sJO) {
         crosswalkSJOsToXML(sJO);
         crosswalkSJOsToGeoBlackJSON(sJO);
