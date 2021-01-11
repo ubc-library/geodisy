@@ -107,6 +107,7 @@ public class Geonames {
     }
 
     private String addParameters(Map<String, String> parameters) {
+        parameters.put("username","geodisy");
         String answer = "";
         for(String s: parameters.keySet()){
             answer+= "&" + s + "=" + parameters.get(s);
