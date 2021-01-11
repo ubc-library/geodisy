@@ -227,25 +227,12 @@ public class GDAL {
         if(isZeroPoint(temp))
             return new GeographicBoundingBox("junk");
         //System.out.println("Bounding box: " + temp.getLatNorth() + "N, " + temp.getLatSouth() + "S, " + temp.getLongEast() + "E, " + temp.getLongWest() + "W");
-        if (temp.hasUTMCoords()) {
-            convertToWGS84(filePath, isWindows, name);
-            gbb.setField(PROJECTION,"EPSG:4326");
-            gdalString = getGDALInfo(filePath, name);
-            //System.out.println("Gdalinfo after converting UTM:");
-            //System.out.println(gdalString);
-            if(gdalString.contains("FAILURE"))
-                return new GeographicBoundingBox("temp");
-            temp = getLatLongOgrInfo(gdalString);
-            //System.out.println("Bounding box: " + temp.getLatNorth() + "N, " + temp.getLatSouth() + "S, " + temp.getLongEast() + "E, " + temp.getLongWest() + "W");
-        }
-        else{
-            try {
-                    String authority = getAuthority(gdalString);
-                    gbb.setField(PROJECTION, authority);
-            }catch (IndexOutOfBoundsException e){
-                logger.error("Couldn't determine projection for record " + name);
-            }
-        }
+        convertToWGS84(filePath, isWindows, name);
+        gbb.setField(PROJECTION,"EPSG:4326");
+        gdalString = getGDALInfo(filePath, name);
+        if(gdalString.contains("FAILURE"))
+            return new GeographicBoundingBox("temp");
+        temp = getLatLongOgrInfo(gdalString);
         if(gdalString.contains("Geometry:")){
             int start = gdalString.indexOf("Geometry:")+10;
             int end = gdalString.indexOf("Feature Count:");
