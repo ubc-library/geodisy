@@ -343,16 +343,20 @@ public class GeodisyStrings {
             path = path.replace("http:__","");
         if (path.contains(replaceSlashes("hdl")))
             if (path.contains("hdl.handle"))
-                return path.replace(replaceSlashes("\\hdl.handle.net"),"");
+                return path.replace(replaceSlashes("hdl.handle.net\\"),"");
             else
-                return path.replace(replaceSlashes("\\hdl\\handle\\net"),"");
+                return path.replace(replaceSlashes("hdl\\handle\\net\\"),"");
         else if (path.contains("hdl_handle_net_"))
             return path.replace("hdl_handle_net_","_");
+        else if (path.contains("hdl_handle_net"))
+            return path.replace("hdl_handle_net","");
 
         if(path.contains(replaceSlashes("doi.org\\")))
             return path.replace(replaceSlashes("doi.org\\"),"");
         if(path.contains(replaceSlashes("doi_org_")))
             return path.replace(replaceSlashes("doi_org_"),"_");
+        else if(path.contains(replaceSlashes("doi_org")))
+            return path.replace(replaceSlashes("doi_org"),"");
         if(path.contains(replaceSlashes("doi\\org\\")))
             return path.replace(replaceSlashes("doi\\org\\"),"");
 
