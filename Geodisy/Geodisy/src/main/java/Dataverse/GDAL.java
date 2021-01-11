@@ -118,6 +118,7 @@ public class GDAL {
         String projection =  "";
         try {
             gdalString = getGDALInfo(filePath, regularName);
+            System.out.println(regularName + " has info: " + gdalString);
             //System.out.println("What info we got:");
             //System.out.println(gdalString);
             if(gdalString.contains("FAILURE")) {
@@ -233,12 +234,7 @@ public class GDAL {
         if(gdalString.contains("FAILURE"))
             return new GeographicBoundingBox("temp");
         temp = getLatLongOgrInfo(gdalString);
-        if(gdalString.contains("Geometry:")){
-            int start = gdalString.indexOf("Geometry:")+10;
-            int end = gdalString.indexOf("Feature Count:");
-            gbb.setField(GEOMETRY,gdalString.substring(start,end));
-
-        }
+        gbb.setField(GEOMETRY,geo);
         if(temp.hasBoundingBox())
             gbb.setBB(temp);
         return gbb;
