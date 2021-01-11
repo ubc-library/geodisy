@@ -191,7 +191,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             if (dataFiles.get(i).getTranslatedTitle().endsWith("zip"))
                 dataFiles.remove(i);
         }
-        //dataFiles.addAll(getNewFiles());
+
         LinkedList<DataverseRecordFile> newRecs = new LinkedList<>();
         DataverseRecordFile tempRec;
         DataverseGeoRecordFile dgrf;
@@ -202,7 +202,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             if (temp.getDbID() == -1)
                 temp.setFileURL("");
             GDAL gdal = new GDAL();
-            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPS(getPID().replace(".","/") + "/"));
+            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPS(getPID()).replace(".","/") + "/");
             dgrf = new DataverseGeoRecordFile(dRF);
             dgrf.setGbb(gdal.generateBB(new File(dirPath+temp.getTranslatedTitle()), getPID(),dRF.getGBBFileNumber()));
             if(dgrf.hasValidBB()) {
