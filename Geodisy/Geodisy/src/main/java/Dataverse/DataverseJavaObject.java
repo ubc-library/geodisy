@@ -114,11 +114,19 @@ public class DataverseJavaObject extends SourceJavaObject {
             if(jo.getBoolean("restricted"))
                 continue;
             String title = jo.getString("label");
-            JSONObject dataFile = (JSONObject) jo.get("dataFile");
+            JSONObject dataFile = jo.getJSONObject("dataFile");
             DataverseRecordFile dRF;
             //Some Dataverses don't have individual DOIs for files, so for those I will use the database's file id instead
             int dbID;
-            if(dataFile.has(PERSISTENT_ID)&& !dataFile.getString(PERSISTENT_ID).equals("")) {
+            if(jo.has("frdr_harvester")){
+                String fileName = dataFile.getString("filename");
+                String frdr_server = dataFile.getString("server");
+                dbID = Integer.parseInt(dataFile.getString("record_id"));
+                dRF = new DataverseRecordFile(fileName, dbID, frdr_server, citationFields.getPID());
+                dRF.setFileURL(server+DV_FILE_ACCESS_PATH+dbID);
+                dRF.setOriginalTitle(title);
+            }
+            else if (dataFile.has(PERSISTENT_ID)&& !dataFile.getString(PERSISTENT_ID).equals("")) {
                 dbID = (int) dataFile.get("id");
                 String doi = dataFile.getString(PERSISTENT_ID);
                 dRF = new DataverseRecordFile(title, doi,dataFile.getInt("id"), server, citationFields.getPID());
