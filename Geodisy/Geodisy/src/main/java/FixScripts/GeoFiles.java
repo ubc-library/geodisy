@@ -2,9 +2,12 @@ package FixScripts;
 
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJavaObject;
+import Dataverse.ExistingGeoLabels;
+import Dataverse.ExistingGeoLabelsVals;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import Dataverse.GDAL;
 import GeoServer.GeoServerAPI;
+import _Strings.GeodisyStrings;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,10 +27,12 @@ public class GeoFiles {
     LinkedList<GBLFileToFix> gBLFs;
     String pID;
     String folder;
+    ExistingGeoLabelsVals eGL;
     public GeoFiles(LinkedList<GBLFileToFix> gBLFs) {
         this.gBLFs = gBLFs;
         pID = gBLFs.getFirst().getPID();
         folder = pID.replace(".","/");
+        eGL = ExistingGeoLabelsVals.getExistingGeoLabelsVals();
     }
     public void dealWithGBLFs(){
         System.out.println("Starting to find data files for" + pID);
@@ -69,7 +74,7 @@ public class GeoFiles {
                     GDAL gdal = new GDAL();
                     record.gbb = gdal.generateBB(f,"ddd","1");
                     if(record.gbb.hasBB()) {
-                        uploaded = uploadRasterFile(f, gBLF, raster);
+                        uploaded = uploadRasterFile(f, gBLF);
                         if (!uploaded.isEmpty()) {
                             record.g = gBLF;
                             record.geoserverLabel = uploaded;
@@ -94,7 +99,7 @@ public class GeoFiles {
                     Record record = new Record();
                     record.gbb = gdal.generateBB(f, "ddd", "1");
                     if (record.gbb.hasBB()) {
-                        uploaded = uploadVectorFile(f, gBLF, vector);
+                        uploaded = uploadVectorFile(f, gBLF);
                         if (!uploaded.isEmpty()) {
 
                             record.gbb = gdal.generateBB(f, "ddd", "1");
@@ -187,30 +192,34 @@ public class GeoFiles {
         return bb.getLongWest() + ", " + bb.getLongEast() + ", " + bb.getLatNorth() + ", " + bb.getLatSouth();
     }
 
-    private String uploadVectorFile(File f, GBLFileToFix gBLF, int vector) {
-        String geoserverLabel = "g_"+gBLF.pID.replace(".","_").replace("/","_")+ "v" + vector;
-        geoserverLabel = geoserverLabel.toLowerCase();
+    private String uploadVectorFile(File f, GBLFileToFix gBLF) {
+        String geoserverLabel = eGL.addVector(gBLF.getPID(), f.getName());
         DataverseJavaObject djo = new DataverseJavaObject("server");
         djo.setPID(gBLF.getPID());
         GeoServerAPI geoServerAPI = new GeoServerAPI(djo);
         boolean success = geoServerAPI.addVector(f.getName(),geoserverLabel);
-        if(success)
+        if(success) {
+            ExistingGeoLabels eGL = ExistingGeoLabels.getExistingLabels();
+            eGL.addOrReplaceGeoLabel(geoserverLabel, djo.getPID(), f.getName());
             return geoserverLabel;
+        }
         else
             return "";
     }
 
-    private String uploadRasterFile(File f, GBLFileToFix gBLF, int raster) {
-        String geoserverLabel = "g_"+gBLF.pID.replace(".","_").replace("/","_")+ "r" + raster;
-        geoserverLabel = geoserverLabel.toLowerCase();
+    private String uploadRasterFile(File f, GBLFileToFix gBLF) {
+        String geoserverLabel = eGL.addRaster(gBLF.getPID(),f.getName());
         DataverseJavaObject djo = new DataverseJavaObject("server");
         djo.setPID(gBLF.getPID());
         GeoServerAPI geoServerAPI = new GeoServerAPI(djo);
         gBLF.geoserverLabel = geoserverLabel;
         System.out.println("Uploading Raster: Name = "+f.getName() + ", geoserverLabel = " + geoserverLabel);
         boolean success = geoServerAPI.addRaster(f.getName(),geoserverLabel);
-        if(success)
+        if(success) {
+            ExistingGeoLabels eGL = ExistingGeoLabels.getExistingLabels();
+            eGL.addOrReplaceGeoLabel(geoserverLabel, djo.getPID(), f.getName());
             return geoserverLabel;
+        }
         else
             return "";
     }

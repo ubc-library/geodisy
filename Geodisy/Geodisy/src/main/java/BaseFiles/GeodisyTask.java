@@ -1,7 +1,6 @@
 package BaseFiles;
 
 import Crosswalking.GeoBlacklightJson.GeoCombine;
-import Crosswalking.XML.XMLTools.JGit;
 import Dataverse.*;
 import Dataverse.FindingBoundingBoxes.Countries;
 import _Strings.GeodisyStrings;
@@ -20,6 +19,8 @@ public class GeodisyTask {
     GeoLogger logger = new GeoLogger(this.getClass());
     ExistingHarvests existingHarvests;
     ExistingCallsToCheck existingCallsToCheck;
+    ExistingGeoLabels existingGeoLabels;
+    ExistingGeoLabelsVals existingGeoLabelsVals;
 
     SourceRecordFiles srf;
     public GeodisyTask() {
@@ -43,6 +44,8 @@ public class GeodisyTask {
             existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
             existingCallsToCheck = ExistingCallsToCheck.getExistingCallsToCheck();
             existingCallsToCheck.saveExistingSearchs(existingCallsToCheck.getRecords(),EXISTING_CHECKS,"ExistingCallsToCheck");
+            existingGeoLabels = ExistingGeoLabels.getExistingLabels();
+            existingGeoLabelsVals = ExistingGeoLabelsVals.getExistingGeoLabelsVals();
             srf = SourceRecordFiles.getSourceRecords();
 
             startErrorLog = new String(Files.readAllBytes(Paths.get(ERROR_LOG)));
@@ -91,11 +94,14 @@ public class GeodisyTask {
                 fW.writeStringToFile(endWarningLog,WARNING_LOG);
             }
             existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
+            existingGeoLabelsVals.saveExistingFile(existingGeoLabelsVals.getValues(), EXISTING_GEO_LABELS_VALS, "ExistingGeoLabelsVals");
+            existingGeoLabels.saveExistingFile(existingGeoLabels.getGeoLabels(),EXISTING_GEO_LABELS,"ExistingGeoLabels");
+
             //TODO Uncomment the following once Geoserver has been implemented
-            /*ExistingRasterRecords existingRasterRecords = ExistingRasterRecords.getExistingRasters();
+            ExistingRasterRecords existingRasterRecords = ExistingRasterRecords.getExistingRasters();
             existingRasterRecords.saveExistingFile(existingRasterRecords.getRecords(),RASTER_RECORDS, "ExistingRasterRecords");
             ExistingVectorRecords existingVectorRecords = ExistingVectorRecords.getExistingVectors();
-            existingVectorRecords.saveExistingFile(existingVectorRecords.getRecords(),VECTOR_RECORDS,"ExistingVectorRecords");*/
+            existingVectorRecords.saveExistingFile(existingVectorRecords.getRecords(),VECTOR_RECORDS,"ExistingVectorRecords");
 
 
         } catch (IOException  e) {
@@ -119,9 +125,9 @@ public class GeodisyTask {
         fW.verifyFileExistence(EXISTING_BBOXES);
         fW.verifyFileExistence(EXISTING_CHECKS);
         fW.verifyFileExistence(DOWNLOADED_FILES);
-        //TODO uncomment once Geoserver is working
-        /*fW.verifyFileExistence(RASTER_RECORDS);
-        fW.verifyFileExistence(VECTOR_RECORDS);*/
+        fW.verifyFileExistence(EXISTING_GEO_LABELS_VALS);
+        fW.verifyFileExistence(RASTER_RECORDS);
+        fW.verifyFileExistence(VECTOR_RECORDS);
     }
 
     private void deleteEmptyFolders() {

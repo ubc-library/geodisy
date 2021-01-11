@@ -1,6 +1,5 @@
 package _Strings;
 
-import _Strings.PrivateStrings.*;
 import org.apache.commons.lang3.ArrayUtils;
 
 import static _Strings.PrivateStrings.*;
@@ -22,6 +21,8 @@ public class GeodisyStrings {
         LOGS = GEODISY_PATH_ROOT + replaceSlashes("logs");
         EXISTING_CHECKS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingChecks.txt");
         EXISTING_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingBBoxes.txt");
+        EXISTING_GEO_LABELS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExisitingGeoLabels.txt");
+        EXISTING_GEO_LABELS_VALS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExisitingGeoLabelsVals.txt");
         DOWNLOADED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/DownloadedFiles.csv");
         VECTOR_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingVectorRecords.txt");
         TEST_EXISTING_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/TestExistingRecords.txt");
@@ -88,23 +89,25 @@ public class GeodisyStrings {
         public static String GEODISY_PATH_ROOT = getRoot();
         public static String SAVED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles");
         public static String LOGS = GEODISY_PATH_ROOT + replaceSlashes("logs");
-        public static  String EXISTING_CHECKS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingChecks.txt");
-        public static  String EXISTING_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingBBoxes.txt");
-        public static  String DOWNLOADED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/DownloadedFiles.csv");
-        public static  String VECTOR_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingVectorRecords.txt");
-        public static  String TEST_EXISTING_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/TestExistingRecords.txt");
-        public static  String TEST_EXISTING_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/TestExistingBBoxes.txt");
-        public static  String RASTER_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingRasterRecords.txt");
-        public static  String RECORDS_TO_CHECK = GEODISY_PATH_ROOT + replaceSlashes("logs/recordsToCheck.log");
-        public static  String EXISTING_CALL_TO_CHECK = GEODISY_PATH_ROOT + replaceSlashes("logs/existingCallToCheck.txt");
-        public static  String ERROR_LOG = GEODISY_PATH_ROOT + replaceSlashes("logs/error.log");
-        public static  String WARNING_LOG = GEODISY_PATH_ROOT + replaceSlashes("logs/warning.log");
+        public static String EXISTING_CHECKS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingChecks.txt");
+        public static String EXISTING_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingBBoxes.txt");
+        public static String EXISTING_GEO_LABELS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingGeoLabels.txt");
+        public static String EXISTING_GEO_LABELS_VALS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingGeoLabelsVals.txt");
+        public static String DOWNLOADED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/DownloadedFiles.csv");
+        public static String VECTOR_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingVectorRecords.txt");
+        public static String TEST_EXISTING_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/TestExistingRecords.txt");
+        public static String TEST_EXISTING_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/TestExistingBBoxes.txt");
+        public static String RASTER_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingRasterRecords.txt");
+        public static String RECORDS_TO_CHECK = GEODISY_PATH_ROOT + replaceSlashes("logs/recordsToCheck.log");
+        public static String EXISTING_CALL_TO_CHECK = GEODISY_PATH_ROOT + replaceSlashes("logs/existingCallToCheck.txt");
+        public static String ERROR_LOG = GEODISY_PATH_ROOT + replaceSlashes("logs/error.log");
+        public static String WARNING_LOG = GEODISY_PATH_ROOT + replaceSlashes("logs/warning.log");
         public final static String XML_NS = "http://www.isotc211.org/2005/";
-        public static  String COUNTRY_VALS =  GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/Geoname_countries.xml");
-        public static  String ALL_CITATION_METADATA = GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/AllCitationMetadata.json");
-        public static  String TEST_GEO_COVERAGE = GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/geocoverage.json");
-        public static  String XML_TEST_FILE = GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/XMLTestDJO.xml");
-        public static  String DATASET_FILES_PATH = replaceSlashes("datasetFiles/");
+        public static String COUNTRY_VALS =  GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/Geoname_countries.xml");
+        public static String ALL_CITATION_METADATA = GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/AllCitationMetadata.json");
+        public static String TEST_GEO_COVERAGE = GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/geocoverage.json");
+        public static String XML_TEST_FILE = GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/XMLTestDJO.xml");
+        public static String DATASET_FILES_PATH = replaceSlashes("datasetFiles/");
         public final static String OPEN_GEO_METADATA_BASE = "https://github.com/OpenGeoMetadata/ca.frdr.geodisy/";
         public final static String ISO_19139_XML = "iso19139.xml";
 
@@ -326,5 +329,33 @@ public class GeodisyStrings {
                 return true;
         }
         return false;
+    }
+
+    public static String removeHTTPS(String path) {
+        path = replaceSlashes(path);
+        if(path.contains(replaceSlashes("https:\\\\")))
+                path = path.replace("https:\\\\","");
+        if(path.contains(replaceSlashes("http:\\\\")))
+            path = path.replace("http:\\\\","");
+        if(path.contains("https:__"))
+            path = path.replace("https:__","");
+        if(path.contains("http:__"))
+            path = path.replace("http:__","");
+        if (path.contains(replaceSlashes("hdl")))
+            if (path.contains("hdl.handle"))
+                return path.replace(replaceSlashes("\\hdl.handle.net"),"");
+            else
+                return path.replace(replaceSlashes("\\hdl\\handle\\net"),"");
+        else if (path.contains("hdl_handle_net_"))
+            return path.replace("hdl_handle_net_","_");
+
+        if(path.contains(replaceSlashes("doi.org\\")))
+            return path.replace(replaceSlashes("doi.org\\"),"");
+        if(path.contains(replaceSlashes("doi_org_")))
+            return path.replace(replaceSlashes("doi_org_"),"_");
+        if(path.contains(replaceSlashes("doi\\org\\")))
+            return path.replace(replaceSlashes("doi\\org\\"),"");
+
+        return path;
     }
 }
