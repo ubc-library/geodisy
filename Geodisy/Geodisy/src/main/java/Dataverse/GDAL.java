@@ -141,13 +141,14 @@ public class GDAL {
                 gbb.setField(GEOMETRY,temp.getField(GEOMETRY));
                 gbb.setField(PROJECTION,projection);
                 gbb.setBB(temp.getBB());
+                ExistingGeoLabelsVals existingGeoLabelsVals = ExistingGeoLabelsVals.getExistingGeoLabelsVals();
                 if(lowerName.endsWith(".shp")) {
-                    gbb.setField(GEOSERVER_LABEL, doi);
+                    gbb.setField(GEOSERVER_LABEL,existingGeoLabelsVals.addVector(doi,file.getName()));
                     gbb.setFileNumber(Integer.valueOf(number));
                     return gbb;
                 }
                 else if(lowerName.endsWith(".tif")) {
-                    gbb.setField(GEOSERVER_LABEL, doi);
+                    gbb.setField(GEOSERVER_LABEL, existingGeoLabelsVals.addRaster(doi,file.getName()));
                     gbb.setFileNumber(Integer.valueOf(number));
                     return gbb;
                 }
