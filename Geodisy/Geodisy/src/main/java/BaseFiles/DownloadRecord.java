@@ -32,46 +32,6 @@ public class DownloadRecord {
         return djo;
     }
 
-/*    public void run(){
-        dvURL = SANDBOX_DV_URL;
-        doi = "doi:10.5072/FK2/SAUHWD";
-        JSONObject jo = getJSON(doi);
-        DataverseJavaObject djo = parseDJO(jo);
-        djo.downloadFiles();
-        DataverseAPI api = new DataverseAPI(dvURL);
-        djo = api.generateBoundingBox(djo);
-        String localDoi = djo.getPID();
-        DataverseAPI d = new DataverseAPI(djo.getServer());
-        d.crosswalkRecord(djo);
-        String stop = "Place to pause program";
-    }
-
-    public void run(String doi){
-        //download
-        long startTime = Calendar.getInstance().getTimeInMillis();
-        String doiPathed = replaceSlashes(doi.substring(4).replace(".","/"));
-        dvURL = SANDBOX_DV_URL;
-        this.doi = doi;
-        JSONObject jo = getJSON(doi);
-        DataverseJavaObject djo = parseDJO(jo);
-        djo.downloadFiles();
-
-        //transform to tiff
-        Calendar beginningEnd =  Calendar.getInstance();
-        Long total = beginningEnd.getTimeInMillis()-startTime;
-        System.out.println("Finished a download run at: " + beginningEnd.getTime() + " after " + total + " milliseconds");
-        Long middle = beginningEnd.getTimeInMillis();
-        String path = DATA_DIR_LOC + doiPathed + "/";
-        int count = translateFiles(path);
-        Calendar endEnd = Calendar.getInstance();
-        Long end = endEnd.getTimeInMillis();
-        total = end-middle;
-        System.out.println("Finished Processing Transformations of " + count + " png files in " + total + " milliseconds");
-        total = end-startTime;
-        System.out.println("Finished total procedure in " + total + " milliseconds");
-
-    }*/
-
     private int translateFiles(String path) {
         File file = new File(path);
         File[] files = file.listFiles();
