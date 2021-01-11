@@ -30,40 +30,45 @@ public class FRDRAPI extends SourceAPI{
     }
 
     public LinkedList<SourceJavaObject> callFRDRHarvester(boolean testing){
-        String fullJSON = getJson();
+        boolean done = false;
         LinkedList<SourceJavaObject> djos = new LinkedList<>();
-        try {
-            JSONTokener tokener = new JSONTokener(fullJSON);
-            JSONObject json = new JSONObject(tokener);
-            boolean done = (boolean)json.get("finished");
-            JSONArray records = json.getJSONArray("records");
-            DataverseParser parser = new DataverseParser();
+        DataverseParser parser = new DataverseParser();
+        // Repeatedly call the FRDR Harvester Export function until geting a json with finished: True
+        while(!done) {
+            String fullJSON = getJson();
+            try {
+                JSONTokener tokener = new JSONTokener(fullJSON);
+                JSONObject json = new JSONObject(tokener);
+                done = (boolean) json.get("finished");
+                JSONArray records = json.getJSONArray("records");
+                for (Object o : records) {
             for (Object o: records){
-                JSONObject jo = (JSONObject) o;
-                DataverseJavaObject djo = parser.frdrParse(jo);
-                if(djo.hasGeoGraphicCoverage())
-                    djo = (DataverseJavaObject) getBBFromGeonames(djo);
-                if(djo.hasBoundingBox())
-                    djos.add(parser.frdrParse(jo));
-                int record_id = jo.getInt("id");
-                updateFRDRHarvesterDB(record_id);
-                if(djo.hasContent && !testing) {
-                    System.out.println("Downloading record: " + djo.getPID());
-                    long startTime = Calendar.getInstance().getTimeInMillis();
-                    djo = djo.downloadFiles();
-                    Calendar end = Calendar.getInstance();
-                    Long total = end.getTimeInMillis() - startTime;
-                    System.out.println("Finished downloading " + djo.getPID() + " after " + total + " milliseconds");
-                    djo.updateRecordFileNumbers();
-                    djo.updateGeoserver();
+                    JSONObject jo = (JSONObject) o;
+                    DataverseJavaObject djo = parser.frdrParse(jo);
+                    if (djo.hasGeoGraphicCoverage())
+                        djo = (DataverseJavaObject) getBBFromGeonames(djo);
+                    if (djo.hasBoundingBox())
+                        djos.add(djo);
+                    int record_id = jo.getInt("id");
+
+                    //TODO remove next line comment and following line entirely after testing downloading
+                    updateFRDRHarvesterDB(record_id);
+
+                    if (djo.hasContent && !testing) {
+                        System.out.println("Downloading record: " + djo.getPID());
+                        long startTime = Calendar.getInstance().getTimeInMillis();
+                        djo = djo.downloadFiles();
+                        Calendar end = Calendar.getInstance();
+                        Long total = end.getTimeInMillis() - startTime;
+                        System.out.println("Finished downloading " + djo.getPID() + " after " + total + " milliseconds");
+                        djo.updateRecordFileNumbers();
+                        djo.updateGeoserver();
+                    }
                 }
+            } catch (JSONException e) {
+                System.out.println("Something went wrong parsing the FRDR JSON");
+                logger.error("Something went wrong parsing the FRDR JSON: \n" + fullJSON);
             }
-            if(!done) {
-                djos.addAll(callFRDRHarvester(testing));
-            }
-        } catch (JSONException e) {
-            System.out.println("Something went wrong parsing the FRDR JSON");
-            logger.error("Something went wrong parsing the FRDR JSON: \n" + fullJSON);
         }
         return djos;
     }
