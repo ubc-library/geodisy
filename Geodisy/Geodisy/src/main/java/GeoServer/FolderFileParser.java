@@ -3,6 +3,7 @@ package GeoServer;
 import BaseFiles.GeoLogger;
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordFile;
+import _Strings.GeodisyStrings;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -23,6 +24,11 @@ public class FolderFileParser {
             }
             else if(f.getName().toLowerCase().endsWith(".tab"))
                 recs.add(convertTab(f, dirPath,f.getName(),drf));
+            else if(GeodisyStrings.fileToAllow(f.getName())) {
+                DataverseRecordFile tempFile = new DataverseRecordFile(drf);
+                tempFile.setTranslatedTitle(f.getName());
+                recs.add(tempFile);
+            }
         }
         return recs;
     }

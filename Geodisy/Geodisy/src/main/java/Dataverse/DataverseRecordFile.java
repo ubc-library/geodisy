@@ -119,7 +119,6 @@ public class DataverseRecordFile {
                     120000); //2 minute read timeout
             File newFile = new File(filePath);
             if (translatedTitle.toLowerCase().endsWith(".zip")) {
-                Unzip zip = new Unzip();
                 try {
                     drfs = ffp.unzip(newFile, dirPath, this, djo);
                 }catch (NullPointerException f){
@@ -128,21 +127,14 @@ public class DataverseRecordFile {
                 new File(filePath).delete();
             }else if(newFile.isDirectory())
                 drfs = ffp.openFolders(newFile, dirPath,djo,this);
-            File[] listOfFiles = folder.listFiles();
-            for (File f : listOfFiles) {
-                if (f.isFile()) {
-                    String name = f.getName();
-                    if (name.endsWith(".tab")) {
-                        //System.out.println("Converting tab file");
-                        drfs.add(ffp.convertTab(f, dirPath, name, this));
-                        f.delete();
-                    }else if(name.endsWith(".zip"))
-                        drfs.addAll(ffp.unzip(f,dirPath,this,djo));
-                }else
-                    drfs.addAll(ffp.openFolders(f,dirPath,djo,this));
+            else if (newFile.getName().endsWith(".tab")) {
+                //System.out.println("Converting tab file");
+                drfs.add(ffp.convertTab(newFile, dirPath, newFile.getName(), this));
+                newFile.delete();
             }
-            if(!this.getOriginalTitle().endsWith("zip")&&!djo.hasDataRecord(this.getOriginalTitle()))
+            else if(GeodisyStrings.fileToAllow(newFile.getName())) {
                 drfs.add(this);
+            }
         } catch (FileNotFoundException e){
             logger.info(String.format("This dataset file %s couldn't be found from dataset %s. ", dbID, datasetIdent) + "Check out dataset " + datasetIdent, djo);
         }catch (MalformedURLException e) {
@@ -181,7 +173,7 @@ public class DataverseRecordFile {
                 if (temp.hasBB()) {
                     setOriginalTitle(name);
                     setTranslatedTitle(gdalTranslate.vectorTransform(dirPath, f.getName()));
-                    replaceRecord();
+                    return replaceRecord();
                 }
             } else {
                 String path = djo.getPID().replace("/", "_");

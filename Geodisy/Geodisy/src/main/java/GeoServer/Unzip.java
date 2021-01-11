@@ -76,7 +76,8 @@ public class Unzip {
                     answer.addAll(unzipFunction(destpath + fileName, destpath));
                     newFile.delete();
                 }else{
-                    answer.add(new FileInfo(newFile,basename+".zip"));
+                    if(GeodisyStrings.fileToAllow(newFile.getName()))
+                        answer.add(new FileInfo(newFile,basename+".zip"));
                 }
             }
 

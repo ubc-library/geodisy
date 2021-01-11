@@ -178,9 +178,20 @@ public class DataverseJavaObject extends SourceJavaObject {
                 //System.out.println("Ignored file: " + dRF.translatedTitle);
                 continue;
             }
-            drfs.addAll(dRF.retrieveFile(this));
-
+            LinkedList<DataverseRecordFile> temp = dRF.retrieveFile(this);
+            for(DataverseRecordFile d: temp){
+                boolean add = true;
+                for(DataverseRecordFile d2: drfs){
+                    if(d.getTranslatedTitle() == d2.getTranslatedTitle()) {
+                        add = false;
+                        break;
+                    }
+                }
+                if(add)
+                    drfs.add(d);
+            }
         }
+
         if(drfs.size()==0){
             f.delete();
             return this;
@@ -188,7 +199,8 @@ public class DataverseJavaObject extends SourceJavaObject {
 
         dataFiles = drfs;
         for (int i = 0; i < dataFiles.size(); i++) {
-            if (dataFiles.get(i).getTranslatedTitle().endsWith("zip"))
+            String name = dataFiles.get(i).getTranslatedTitle();
+            if (name.endsWith("zip") ||name.endsWith("tab"))
                 dataFiles.remove(i);
         }
 
@@ -198,15 +210,15 @@ public class DataverseJavaObject extends SourceJavaObject {
         for (DataverseRecordFile dRF : dataFiles) {
             if (!GeodisyStrings.isProcessable(dRF.translatedTitle))
                 continue;
-            DataverseRecordFile temp = new DataverseRecordFile(dRF);
-            if (temp.getDbID() == -1)
-                temp.setFileURL("");
+            if (dRF.getDbID() == -1)
+                dRF.setFileURL("");
             GDAL gdal = new GDAL();
             String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPS(getPID()).replace(".","/") + "/");
             dgrf = new DataverseGeoRecordFile(dRF);
-            dgrf.setGbb(gdal.generateBB(new File(dirPath+temp.getTranslatedTitle()), getPID(),dRF.getGBBFileNumber()));
+            dgrf.setGbb(gdal.generateBB(new File(dirPath+dRF.getTranslatedTitle()), getPID(),dRF.getGBBFileNumber()));
+            System.out.println(dRF.getTranslatedTitle() + " has a valid BB: " + dgrf.hasValidBB());
             if(dgrf.hasValidBB()) {
-                tempRec = temp.translateFile(this);
+                tempRec = dRF.translateFile(this);
                 dgrf.setTranslatedTitle(tempRec.translatedTitle);
                 dgrf.setFileURL(server+"api/access/datafile/" + dgrf.dbID);
                 if (!tempRec.getOriginalTitle().isEmpty())
