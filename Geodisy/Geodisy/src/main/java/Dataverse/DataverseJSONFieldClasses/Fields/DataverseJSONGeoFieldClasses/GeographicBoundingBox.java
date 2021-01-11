@@ -2,6 +2,7 @@ package Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses;
 
 import Dataverse.DataverseJSONFieldClasses.CompoundJSONField;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
+import _Strings.GeodisyStrings;
 import org.json.JSONObject;
 
 import static _Strings.GeodisyStrings.*;
@@ -67,7 +68,7 @@ public class GeographicBoundingBox extends CompoundJSONField {
         }else
             type = "m";
         answer = answer + type + fileNumber;
-        return answer.replace(".","_").replace("/","_").replace("\\","_");
+        return GeodisyStrings.removeHTTPS(answer).replace(".","_").replace("/","_").replace("\\","_");
     }
 
     public String getBaseGeoserverLocation(){
@@ -78,7 +79,7 @@ public class GeographicBoundingBox extends CompoundJSONField {
         else{
             String temp = geoserverLabel.substring(colon+1);
             temp = geoserverLabel.substring(0,colon) + temp;
-            temp.replace(".","_").replace("/","_").replace("\\","_");
+            GeodisyStrings.removeHTTPS(temp).replace(".","_").replace("/","_").replace("\\","_");
             answer = temp;
         }
         return answer;
@@ -241,7 +242,6 @@ public class GeographicBoundingBox extends CompoundJSONField {
             case PROJECTION:
                 return getProjection();
             case GEOSERVER_LABEL:
-                return getGeoserverLocation();
             case BASE_GEOSERVER_LABEL:
                 return geoserverLabel;
             case GEOMETRY:
@@ -262,6 +262,7 @@ public class GeographicBoundingBox extends CompoundJSONField {
 
 
     private void setGeoserverLabel(String value){
+
         geoserverLabel = value;
     }
 
@@ -312,7 +313,7 @@ public class GeographicBoundingBox extends CompoundJSONField {
     }
 
     private String folderized(String doi) {
-        String answer = doi;
+        String answer = GeodisyStrings.removeHTTPS(doi);
         answer = answer.replace(".","/");
         int loc = answer.lastIndexOf("/");
         if(loc==-1) {

@@ -46,7 +46,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         String number = gbb.getFileNumber();
         jo.put("geoblacklight_version","1.0");
         jo.put("dc_identifier_s", GeodisyStrings.urlSlashes(javaObject.getSimpleFieldVal(DVFieldNameStrings.RECORD_URL)));
-        String geoserverLabel = getGeoserverLabel(gbb).toLowerCase();
+        String geoserverLabel = getGeoserverLabel(gbb);
         jo.put("layer_slug_s", "geodisy:" + geoserverLabel);
         if(total>1) {
             number = padZeros(number,total);
@@ -98,12 +98,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
     }
 
     private String getGeoserverLabel(GeographicBoundingBox gbb) {
-        boolean generated = gbb.isGeneratedFromGeoFile();
-        if (generated) {
-            return gbb.getField(GEOSERVER_LABEL);
-        }
-        else
-            return gbb.getField(GEOSERVER_LABEL);
+        return gbb.getField(GEOSERVER_LABEL);
     }
 
 
@@ -127,7 +122,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
     protected JSONObject addBaseRecordInfo(){
         JSONObject jo = new JSONObject();
         jo.put(RECORD_URL,  GeodisyStrings.urlSlashes(javaObject.getSimpleFieldVal(DVFieldNameStrings.RECORD_URL)));
-        jo.put(ISO_METADATA, END_XML_JSON_FILE_PATH + GeodisyStrings.urlSlashes(javaObject.getSimpleFieldVal(PERSISTENT_ID).replace(".","/") + "/" + ISO_METADATA_FILE_ZIP));
+        jo.put(ISO_METADATA, END_XML_JSON_FILE_PATH + GeodisyStrings.urlSlashes(GeodisyStrings.removeHTTPS(javaObject.getSimpleFieldVal(PERSISTENT_ID)).replace(".","/") + "/" + ISO_METADATA_FILE_ZIP));
         return jo;
     }
 

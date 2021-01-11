@@ -48,7 +48,7 @@ public class DataverseRecordFile {
         this.dbID = dbID;
         this.server = server;
         recordURL = server+"api/access/datafile/" + dbID;
-        this.datasetIdent = datasetIdent.replace(".","_").replace("/","_");
+        this.datasetIdent = GeodisyStrings.removeHTTPS(datasetIdent.replace(".","_").replace("/","_"));
         gbb = new GeographicBoundingBox(datasetIdent);
 
     }
@@ -65,7 +65,7 @@ public class DataverseRecordFile {
         this.fileIdent = "";
         this.server = server;
         recordURL = server+"api/access/datafile/" + dbID;
-        this.datasetIdent = datasetIdent.replace(".","_").replace("/","_");
+        this.datasetIdent = GeodisyStrings.removeHTTPS(datasetIdent.replace(".","_").replace("/","_"));
         gbb = new GeographicBoundingBox(datasetIdent);
 
 
@@ -83,9 +83,10 @@ public class DataverseRecordFile {
      * @param gbb
      */
     public DataverseRecordFile(String datasetIdent, GeographicBoundingBox gbb){
-        this.fileIdent = datasetIdent;
+        String dI =  GeodisyStrings.removeHTTPS(datasetIdent);
+        this.fileIdent = dI;
         this.gbb = gbb;
-        this.gbb.setField(GEOSERVER_LABEL, datasetIdent.replace(".","_").replace("/","_").replace("\\","_"));
+        this.gbb.setField(GEOSERVER_LABEL, dI.replace(".","_").replace("/","_").replace("\\","_"));
     }
 
     public DataverseRecordFile(DataverseRecordFile drf){
@@ -106,7 +107,7 @@ public class DataverseRecordFile {
         DownloadedFiles downloads = DownloadedFiles.getDownloadedFiles();
         downloads.addDownload(originalTitle,djo.getPID(),dbID);
         try {
-            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + datasetIdent.replace("_", "/").replace(".","/") + "/");
+            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC.substring(0,DATA_DIR_LOC.length()-1) + GeodisyStrings.removeHTTPS(datasetIdent.replace("_", "/").replace(".","/") + "/"));
 
             File folder = new File(dirPath);
             folder.mkdirs();

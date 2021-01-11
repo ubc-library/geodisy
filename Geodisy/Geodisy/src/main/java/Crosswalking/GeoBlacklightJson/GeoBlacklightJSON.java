@@ -6,6 +6,7 @@ import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJavaObject;
 import Dataverse.SourceRecordFiles;
+import _Strings.GeodisyStrings;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -59,7 +60,7 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
     public File genDirs(String doi, String localRepoPath) {
         doi = FileWriter.fixPath(doi);
         localRepoPath = FileWriter.fixPath(localRepoPath);
-        File fileDir = new File(localRepoPath + doi.replace(".","/"));
+        File fileDir = new File(localRepoPath + GeodisyStrings.removeHTTPS(doi).replace(".","/"));
         if(!fileDir.exists())
             fileDir.mkdirs();
         return fileDir;

@@ -11,6 +11,7 @@ import BaseFiles.HTTPCaller;
 import Crosswalking.GeoBlacklightJson.HTTPCombineCaller;
 import Dataverse.*;
 
+import _Strings.GeodisyStrings;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -138,7 +139,7 @@ public class GeoServerAPI extends DestinationAPI {
             return false;
         }
 
-        try { renameRasterToOrig(processBuilder,sjo.getPID().replace(".","/"),fileName);
+        try { renameRasterToOrig(processBuilder, GeodisyStrings.removeHTTPS(sjo.getPID()).replace(".","/"),fileName);
         }catch (InterruptedException | IOException f) {
             logger.error("Error trying to rename raster back to correct name from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
             return false;
@@ -177,7 +178,7 @@ public class GeoServerAPI extends DestinationAPI {
         }
 
         private void normalizeRaster(ProcessBuilder processBuilder, String fileName) throws InterruptedException, IOException {
-            String warp = GDALWARP(DATA_DIR_LOC + sjo.getPID().replace(".","/") + "/", fileName);
+            String warp = GDALWARP(DATA_DIR_LOC + GeodisyStrings.removeHTTPS(sjo.getPID()).replace(".","/") + "/", fileName);
             Process p;
             processBuilder.command("/usr/bin/bash", "-c", warp);
             p = processBuilder.start();
@@ -195,7 +196,7 @@ public class GeoServerAPI extends DestinationAPI {
         }
 
         private void addRasterOverviews(ProcessBuilder processBuilder, String fileName) throws InterruptedException, IOException {
-            String addo = GDALADDO(DATA_DIR_LOC + sjo.getPID().replace(".","/") + "/" + fileName);
+            String addo = GDALADDO(DATA_DIR_LOC + GeodisyStrings.removeHTTPS(sjo.getPID()).replace(".","/") + "/" + fileName);
             Process p;
             processBuilder.command("/usr/bin/bash", "-c", addo);
             p = processBuilder.start();
@@ -204,7 +205,7 @@ public class GeoServerAPI extends DestinationAPI {
         }
 
         private void createCoverstore(String geoserverLable, ProcessBuilder processBuilder, String fileName) throws InterruptedException, IOException{
-            String createCoveragestore = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:text/xml") +  " -d '<coverageStore><name>" + geoserverLable.toLowerCase()+ "</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>file:" + sjo.getPID().replace(".","/") + "/" + fileName + "</url></coverageStore>' " + stringed("http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores?configure=all");
+            String createCoveragestore = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:text/xml") +  " -d '<coverageStore><name>" + geoserverLable.toLowerCase()+ "</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>file:" + GeodisyStrings.removeHTTPS(sjo.getPID()).replace(".","/") + "/" + fileName + "</url></coverageStore>' " + stringed("http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores?configure=all");
             Process p;
             processBuilder.command("/usr/bin/bash", "-c", createCoveragestore);
             p = processBuilder.start();

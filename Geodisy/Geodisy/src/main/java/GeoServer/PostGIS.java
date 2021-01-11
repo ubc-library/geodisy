@@ -2,6 +2,7 @@ package GeoServer;
 
 import BaseFiles.GeoLogger;
 import Dataverse.DataverseJavaObject;
+import _Strings.GeodisyStrings;
 
 
 import java.io.IOException;
@@ -43,7 +44,7 @@ public class PostGIS {
     }
 
     private String folderized(String simpleFieldVal) {
-        return simpleFieldVal.replace(".","/").replace("_","/");
+        return  GeodisyStrings.removeHTTPS(simpleFieldVal).replace(".","/").replace("_","/");
     }
 }
 

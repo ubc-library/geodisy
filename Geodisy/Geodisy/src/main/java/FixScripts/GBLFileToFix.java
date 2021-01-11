@@ -1,5 +1,7 @@
 package FixScripts;
 
+import _Strings.GeodisyStrings;
+
 public class GBLFileToFix {
     String pID;
     String geoserverLabel;
@@ -29,7 +31,7 @@ public class GBLFileToFix {
     }
 
     public void setGeoserverLabel(String geoserverEnd) {
-        geoserverLabel = "geodisy:" + pID.replace(".","_").replace("/","_")+geoserverEnd;
+        geoserverLabel = "geodisy:" + GeodisyStrings.removeHTTPS(pID).replace(".","_").replace("/","_")+geoserverEnd;
         geoserverLabel = geoserverLabel.toLowerCase();
     }
 

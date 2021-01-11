@@ -8,6 +8,7 @@ package Dataverse;
 import BaseFiles.API;
 import BaseFiles.GeoLogger;
 import BaseFiles.Geonames;
+import _Strings.GeodisyStrings;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 
@@ -40,7 +41,7 @@ public abstract class SourceAPI implements API {
         }
     }
     protected String folderizedDOI(String doi){
-        String folderizedDOI = doi.replace(".","_");
+        String folderizedDOI = GeodisyStrings.removeHTTPS(doi.replace(".","_"));
         folderizedDOI = folderizedDOI.replace("/","_");
         return DATA_DIR_LOC + folderizedDOI;
     }

@@ -1,5 +1,6 @@
 package FixScripts;
 
+import BaseFiles.Geodisy;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJavaObject;
 import Dataverse.ExistingGeoLabels;
@@ -31,7 +32,7 @@ public class GeoFiles {
     public GeoFiles(LinkedList<GBLFileToFix> gBLFs) {
         this.gBLFs = gBLFs;
         pID = gBLFs.getFirst().getPID();
-        folder = pID.replace(".","/");
+        folder = GeodisyStrings.removeHTTPS(pID).replace(".","/");
         eGL = ExistingGeoLabelsVals.getExistingGeoLabelsVals();
     }
     public void dealWithGBLFs(){
