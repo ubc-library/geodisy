@@ -31,6 +31,7 @@ public class FRDRAPI extends SourceAPI{
 
     public LinkedList<SourceJavaObject> callFRDRHarvester(boolean testing){
         boolean done = false;
+        int counter = 0;
         LinkedList<SourceJavaObject> djos = new LinkedList<>();
         DataverseParser parser = new DataverseParser();
         // Repeatedly call the FRDR Harvester Export function until geting a json with finished: True
@@ -42,13 +43,18 @@ public class FRDRAPI extends SourceAPI{
                 done = (boolean) json.get("finished");
                 JSONArray records = json.getJSONArray("records");
                 for (Object o : records) {
-            for (Object o: records){
+                    counter += 1;
                     JSONObject jo = (JSONObject) o;
                     DataverseJavaObject djo = parser.frdrParse(jo);
+                    System.out.println("#" + counter + " ID = " + djo.getPID());
                     if (djo.hasGeoGraphicCoverage())
                         djo = (DataverseJavaObject) getBBFromGeonames(djo);
-                    if (djo.hasBoundingBox())
+                    if (djo.hasBoundingBox()) {
                         djos.add(djo);
+                        System.out.println("Added");
+                    }
+                    else
+                        System.out.println("Not added");
                     int record_id = jo.getInt("id");
 
                     //TODO remove next line comment and following line entirely after testing downloading
