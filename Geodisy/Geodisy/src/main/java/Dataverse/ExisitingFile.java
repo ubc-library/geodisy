@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public abstract class ExisitingFile {
     GeoLogger logger;
-    public void saveExistingFile(HashMap object, String path, String className){
+    public void saveExistingFile(Object object, String path, String className){
         FileWriter fw  = new FileWriter();
         try {
             fw.writeObjectToFile(object,path);
