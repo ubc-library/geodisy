@@ -167,7 +167,7 @@ public class DataverseJavaObject extends SourceJavaObject {
 
     @Override
     public DataverseJavaObject downloadFiles() {
-        String path = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + urlized(citationFields.getPID()));
+        String path = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + urlized(GeodisyStrings.removeHTTPS(citationFields.getPID())));
         path = GeodisyStrings.removeHTTPS(path);
         File f = new File(path);
         deleteDir(f);

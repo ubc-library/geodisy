@@ -65,7 +65,7 @@ public class DataverseRecordFile {
         this.fileIdent = "";
         this.server = server;
         recordURL = server+"api/access/datafile/" + dbID;
-        this.datasetIdent = GeodisyStrings.removeHTTPS(datasetIdent.replace(".","_").replace("/","_"));
+        this.datasetIdent = GeodisyStrings.removeHTTPS(GeodisyStrings.replaceSlashes(datasetIdent)).replace(".","_").replace(GeodisyStrings.replaceSlashes("/"),"_");
         gbb = new GeographicBoundingBox(datasetIdent);
 
 
@@ -107,7 +107,7 @@ public class DataverseRecordFile {
         DownloadedFiles downloads = DownloadedFiles.getDownloadedFiles();
         downloads.addDownload(originalTitle,djo.getPID(),dbID);
         try {
-            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC.substring(0,DATA_DIR_LOC.length()-1) + GeodisyStrings.removeHTTPS(datasetIdent.replace("_", "/").replace(".","/") + "/"));
+            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPS(datasetIdent.replace("_", "/").replace(".","/") + "/"));
 
             File folder = new File(dirPath);
             folder.mkdirs();
