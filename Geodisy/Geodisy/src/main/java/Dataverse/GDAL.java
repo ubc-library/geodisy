@@ -224,16 +224,15 @@ public class GDAL {
         String geo = getGeometryType(gdalString);
         GeographicBoundingBox gbb = new GeographicBoundingBox("temp");
         BoundingBox temp;
-        temp = getLatLongOgrInfo(gdalString);
-        if(isZeroPoint(temp))
-            return new GeographicBoundingBox("junk");
         //System.out.println("Bounding box: " + temp.getLatNorth() + "N, " + temp.getLatSouth() + "S, " + temp.getLongEast() + "E, " + temp.getLongWest() + "W");
         convertToWGS84(filePath, isWindows, name);
         gbb.setField(PROJECTION,"EPSG:4326");
         gdalString = getGDALInfo(filePath, name);
-        if(gdalString.contains("FAILURE"))
-            return new GeographicBoundingBox("temp");
         temp = getLatLongOgrInfo(gdalString);
+        if(gdalString.contains("FAILURE"))
+            return new GeographicBoundingBox("junk");
+        if(isZeroPoint(temp))
+            return new GeographicBoundingBox("junk");
         gbb.setField(GEOMETRY,geo);
         if(temp.hasBoundingBox())
             gbb.setBB(temp);
