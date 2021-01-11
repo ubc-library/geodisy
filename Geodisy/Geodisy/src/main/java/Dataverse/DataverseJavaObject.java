@@ -160,6 +160,7 @@ public class DataverseJavaObject extends SourceJavaObject {
     @Override
     public DataverseJavaObject downloadFiles() {
         String path = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + urlized(citationFields.getPID()));
+        path = GeodisyStrings.removeHTTPS(path);
         File f = new File(path);
         deleteDir(f);
         f.mkdir();
@@ -193,7 +194,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             if (temp.getDbID() == -1)
                 temp.setFileURL("");
             GDAL gdal = new GDAL();
-            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + getPID().replace(".","/") + "/");
+            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPS(getPID().replace(".","/") + "/"));
             dgrf = new DataverseGeoRecordFile(dRF);
             dgrf.setGbb(gdal.generateBB(new File(dirPath+temp.getTranslatedTitle()), getPID(),dRF.getGBBFileNumber()));
             if(dgrf.hasValidBB()) {
@@ -296,7 +297,7 @@ public class DataverseJavaObject extends SourceJavaObject {
 
     @Override
     protected boolean createRecords(DataverseGeoRecordFile dgrf, int number, String type) {
-        String dirPath = DATA_DIR_LOC + dgrf.getDatasetIdent().replace("_","/") + "/";
+        String dirPath = DATA_DIR_LOC + GeodisyStrings.removeHTTPS(dgrf.getDatasetIdent().replace("_","/")) + "/";
         String filePath = dirPath + dgrf.getTranslatedTitle();
         File fUpdate = new File(filePath);
         if(type.equals(VECTOR)) {
