@@ -213,6 +213,10 @@ public class DataverseJavaObject extends SourceJavaObject {
                     newRecs.add(tempRec);
                 if(!dgrf.getTranslatedTitle().isEmpty())
                     geoDataFiles.add(dgrf);
+                ExistingGeoLabels existingGeoLabels = ExistingGeoLabels.getExistingLabels();
+                ExistingGeoLabelsVals existingGeoLabelsVals = ExistingGeoLabelsVals.getExistingGeoLabelsVals();
+                existingGeoLabels.saveExistingFile(existingGeoLabels.getGeoLabels(),EXISTING_GEO_LABELS,"ExistingGeoLabels");
+                existingGeoLabelsVals.saveExistingFile(existingGeoLabelsVals.getValues(),EXISTING_GEO_LABELS_VALS,"ExistingGeoLabelsVals");
             }
         }
         dataFiles = newRecs;

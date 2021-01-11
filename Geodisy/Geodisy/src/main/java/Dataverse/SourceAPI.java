@@ -8,6 +8,8 @@ package Dataverse;
 import BaseFiles.API;
 import BaseFiles.GeoLogger;
 import BaseFiles.Geonames;
+import Crosswalking.Crosswalk;
+import Crosswalking.GeoBlacklightJson.DataGBJSON;
 import _Strings.GeodisyStrings;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
@@ -44,5 +46,25 @@ public abstract class SourceAPI implements API {
         String folderizedDOI = GeodisyStrings.removeHTTPS(doi.replace(".","_"));
         folderizedDOI = folderizedDOI.replace("/","_");
         return DATA_DIR_LOC + folderizedDOI;
+    }
+
+    public void crosswalkRecord(SourceJavaObject sJO) {
+        crosswalkSJOsToXML(sJO);
+        crosswalkSJOsToGeoBlackJSON(sJO);
+    }
+
+    protected void crosswalkSJOsToGeoBlackJSON(SourceJavaObject sJO) {
+        DataverseJavaObject djo = (DataverseJavaObject) sJO;
+        DataGBJSON dataGBJSON = new DataGBJSON(djo);
+        dataGBJSON.createJson();
+    }
+
+    /**
+     * Create ISO XML file
+     * @param sJO
+     */
+    protected void crosswalkSJOsToXML(SourceJavaObject sJO) {
+        Crosswalk crosswalk = new Crosswalk();
+        crosswalk.convertSJO(sJO);
     }
 }

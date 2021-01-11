@@ -19,6 +19,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import static _Strings.GeodisyStrings.EXISTING_BBOXES;
+
 
 public class FRDRAPI extends SourceAPI{
     GeoLogger logger =  new GeoLogger(this.getClass());
@@ -49,17 +51,6 @@ public class FRDRAPI extends SourceAPI{
                     System.out.println("#" + counter + " ID = " + djo.getPID());
                     if (djo.hasGeoGraphicCoverage())
                         djo = (DataverseJavaObject) getBBFromGeonames(djo);
-                    if (djo.hasBoundingBox()) {
-                        djos.add(djo);
-                        System.out.println("Added");
-                    }
-                    else
-                        System.out.println("Not added");
-                    int record_id = jo.getInt("id");
-
-                    //TODO remove next line comment and following line entirely after testing downloading
-                    updateFRDRHarvesterDB(record_id);
-
                     if (djo.hasContent && !testing) {
                         System.out.println("Downloading record: " + djo.getPID());
                         long startTime = Calendar.getInstance().getTimeInMillis();
@@ -70,6 +61,20 @@ public class FRDRAPI extends SourceAPI{
                         djo.updateRecordFileNumbers();
                         djo.updateGeoserver();
                     }
+                    if (djo.hasBoundingBox()) {
+                        crosswalkRecord(djo);
+                        ExistingHarvests existingHarvests = ExistingHarvests.getExistingHarvests();
+                        existingHarvests.addBBox(djo.getPID(),djo.getBoundingBox());
+                        existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
+                        djos.add(djo);
+                        System.out.println("Added");
+                    }
+                    else
+                        System.out.println("Not added");
+                    int record_id = jo.getInt("id");
+
+                    //TODO remove next line comment and following line entirely after testing downloading
+                    updateFRDRHarvesterDB(record_id);
                 }
             } catch (JSONException e) {
                 System.out.println("Something went wrong parsing the FRDR JSON");

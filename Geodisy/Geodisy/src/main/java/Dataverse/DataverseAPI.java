@@ -289,23 +289,5 @@ public class DataverseAPI extends SourceAPI {
         return jo.getJSONObject("datasetVersion").has("files");
     }
 
-    public void crosswalkRecord(SourceJavaObject sJO) {
-        crosswalkSJOsToXML(sJO);
-        crosswalkSJOsToGeoBlackJSON(sJO);
-    }
 
-    private void crosswalkSJOsToGeoBlackJSON(SourceJavaObject sJO) {
-            DataverseJavaObject djo = (DataverseJavaObject) sJO;
-            DataGBJSON dataGBJSON = new DataGBJSON(djo);
-            dataGBJSON.createJson();
-    }
-
-    /**
-     * Create ISO XML file
-     * @param sJO
-     */
-    private void crosswalkSJOsToXML(SourceJavaObject sJO) {
-        Crosswalk crosswalk = new Crosswalk();
-        crosswalk.convertSJO(sJO);
-    }
 }
