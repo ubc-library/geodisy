@@ -1,6 +1,7 @@
 package Crosswalking.GeoBlacklightJson;
 
 import BaseFiles.GeoLogger;
+import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.Date;
 import _Strings.GeodisyStrings;
 import _Strings.DVFieldNameStrings;
 import Dataverse.DataverseGeoRecordFile;
@@ -16,12 +17,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
+import java.text.ParseException;
+import java.util.*;
 
 import static _Strings.GeodisyStrings.*;
 import static _Strings.GeoBlacklightStrings.*;
@@ -326,11 +323,8 @@ public class DataGBJSON extends GeoBlacklightJSON{
         String dateString = javaObject.getSimpleFields().getField(PUB_DATE);
         if(dateString.equals(""))
             return;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm:ss'Z'");
-        LocalDate date = LocalDate.parse(dateString);
-        LocalDateTime dateTime = date.atStartOfDay();
-        String dateTimeString = dateTime.format(formatter);
-        jo.put("dct_issued_dt",dateTimeString);
+        Date d = new Date(dateString);
+        jo.put("dct_issued_dt",d.getDateAsString());
     }
 
 
