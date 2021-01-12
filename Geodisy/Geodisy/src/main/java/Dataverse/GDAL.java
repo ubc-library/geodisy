@@ -298,6 +298,9 @@ public class GDAL {
                 start = end + 2;
                 end = gdalString.indexOf(")", start);
                 String north = gdalString.substring(start, end).trim();
+                logger.warn(String.format("North String: %s, South String: %s, East String: %s, West String: %s", north, south, east, west));
+                logger.warn(String.format("North parsed: %s, South parsed: %s, East parsed: %s, West parsed: %s", Double.parseDouble(north), Double.parseDouble(south), Double.parseDouble(east), Double.parseDouble(west)));
+
                 bb.setLongWest(west);
                 bb.setLongEast(east);
                 bb.setLatNorth(north);
