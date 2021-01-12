@@ -339,6 +339,8 @@ public class GeodisyStrings {
             path = path.replace("http:\\\\","");
         if(path.contains(replaceSlashes("http:\\")))
             path = path.replace("http:\\","");
+        if(path.contains(replaceSlashes("https:\\")))
+            path = path.replace("https:\\","");
         if(path.contains("https:__"))
             path = path.replace("https:__","");
         if(path.contains("http:__"))
