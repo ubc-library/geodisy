@@ -335,13 +335,13 @@ public class GeodisyStrings {
         path = replaceSlashes(path);
         System.out.println(String.format("Check %s against %s", path, replaceSlashes("https:\\\\")));
         if(path.contains(replaceSlashes("https:\\\\")))
-                path = path.replace("https:\\\\","");
+                path = path.replace(replaceSlashes("https:\\\\"),"");
         if(path.contains(replaceSlashes("http:\\\\")))
-            path = path.replace("http:\\\\","");
+            path = path.replace(replaceSlashes("http:\\\\"),"");
         if(path.contains(replaceSlashes("http:\\")))
-            path = path.replace("http:\\","");
+            path = path.replace(replaceSlashes("http:\\"),"");
         if(path.contains(replaceSlashes("https:\\")))
-            path = path.replace("https:\\","");
+            path = path.replace(replaceSlashes("https:\\"),"");
         if(path.contains("https:__"))
             path = path.replace("https:__","");
         if(path.contains("http:__"))
