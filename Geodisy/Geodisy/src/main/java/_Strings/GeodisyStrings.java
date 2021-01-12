@@ -333,7 +333,7 @@ public class GeodisyStrings {
 
     public static String removeHTTPS(String path) {
         path = replaceSlashes(path);
-        System.out.println(String.format("Check against %s", replaceSlashes("https:\\\\")));
+        System.out.println(String.format("Check %s against %s", path, replaceSlashes("https:\\\\")));
         if(path.contains(replaceSlashes("https:\\\\")))
                 path = path.replace("https:\\\\","");
         if(path.contains(replaceSlashes("http:\\\\")))
