@@ -256,12 +256,16 @@ public class GDAL {
         GDALTranslate gdalTranslate = new GDALTranslate();
         String path = new File(filePath).getPath();
         String stub;
+        System.out.println(filePath);
+        System.out.println(path);
         if(GeodisyStrings.ogrinfoVectorExtension(name))
             stub = gdalTranslate.vectorTransform(path,name);
         else
             stub = gdalTranslate.rasterTransform(path,name);
+        System.out.println(stub);
         if(!path.endsWith(stub))
             path = path.substring(0,path.lastIndexOf(GeodisyStrings.replaceSlashes("/"))+1) + stub;
+        System.out.println(path);
         File check = new File(path);
         if(!check.exists())
             logger.warn("Couldn't convert " + name +" to  WGS84");
