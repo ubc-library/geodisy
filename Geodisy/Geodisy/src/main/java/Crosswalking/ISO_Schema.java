@@ -6,6 +6,7 @@
 package Crosswalking;
 
 import BaseFiles.*;
+import _Strings.GeodisyStrings;
 import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Document;
 
@@ -65,7 +66,7 @@ public abstract class ISO_Schema implements XMLSchema {
 
     public File genDirs(String doi, String localRepoPath) {
         {
-            File fileDir = new File("./" + localRepoPath + doi.replace(".","/"));
+            File fileDir = new File(GeodisyStrings.replaceSlashes("./" + localRepoPath + GeodisyStrings.removeHTTPS(doi).replace(".","/")));
             if (!fileDir.exists())
                 fileDir.mkdirs();
 

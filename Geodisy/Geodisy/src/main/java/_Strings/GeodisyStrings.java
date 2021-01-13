@@ -116,7 +116,7 @@ public class GeodisyStrings {
 
 
     //GDAL
-        private final static String LOCAL_GDAL_PATH = "C:\\Program Files\\python39\\Lib\\site-packages\\osgeo\\";
+        private final static String LOCAL_GDAL_PATH = "C:\\\"Program Files\"\\python39\\Lib\\site-packages\\osgeo\\";
         private final static String GDALINFO_LOCAL = LOCAL_GDAL_PATH + "gdalinfo -approx_stats ";
         private final static String OGRINFO_LOCAL = LOCAL_GDAL_PATH + "ogrinfo -ro -al -so ";
         private final static String GDALINFO_CLOUD = "/usr/gdal30/bin/gdalinfo -approx_stats ";

@@ -31,7 +31,7 @@ public class GDAL {
 
         int counter = 0;
         if (IS_WINDOWS) {
-            processBuilder.command(gdal + filePath);
+            processBuilder.command("cmd.exe", "/c", gdal + filePath);
         } else {
             processBuilder.command("/usr/bin/bash", "-c", gdal+filePath);
         }
@@ -137,7 +137,7 @@ public class GDAL {
             if(temp.hasBB()) {
                 GeographicBoundingBox gbb = new GeographicBoundingBox(doi);
                 gbb.setIsGeneratedFromGeoFile(temp.isGeneratedFromGeoFile());
-                gbb.setField(FILE_NAME,lowerName);
+                gbb.setField(FILE_NAME,temp.getBB().getFileName());
                 gbb.setField(GEOMETRY,temp.getField(GEOMETRY));
                 gbb.setField(PROJECTION,projection);
                 gbb.setBB(temp.getBB());
@@ -204,10 +204,12 @@ public class GDAL {
         BoundingBox bb = getLatLongGdalInfo(gdalString);
         if(isZeroPoint(bb))
             return new GeographicBoundingBox("junk");
-        if(bb.hasUTMCoords()) {
-            convertToWGS84(filePath, IS_WINDOWS, fileName);
+        if(bb.hasUTMCoords()||!fileName.endsWith(".tif")) {
+            fileName = convertToAppropriateFileFormat(filePath, IS_WINDOWS, fileName);
+            filePath = filePath.substring(0,fileName.lastIndexOf("."))+"shp";
             gdalString = getGDALInfo(filePath,fileName);
             bb = getLatLongGdalInfo(gdalString);
+            bb.setFileName(fileName);
         }
         temp.setBB(bb);
         temp.setField(GEOMETRY,RASTER);
@@ -219,22 +221,27 @@ public class GDAL {
         return bb.getLongWest()==0 && bb.getLongEast()==0 && bb.getLatNorth()==0 && bb.getLatSouth()==0;
     }
 
-    private GeographicBoundingBox getVector(String gdalString, boolean isWindows, String name, String filePath) throws IOException {
+    private GeographicBoundingBox getVector(String gdalString, boolean isWindows, String fileName, String filePath) throws IOException {
         String geo = getGeometryType(gdalString);
         GeographicBoundingBox gbb = new GeographicBoundingBox("temp");
-        BoundingBox temp;
+        BoundingBox bb;
         //System.out.println("Bounding box: " + temp.getLatNorth() + "N, " + temp.getLatSouth() + "S, " + temp.getLongEast() + "E, " + temp.getLongWest() + "W");
-        convertToWGS84(filePath, isWindows, name);
         gbb.setField(PROJECTION,"EPSG:4326");
-        gdalString = getGDALInfo(filePath, name);
-        temp = getLatLongOgrInfo(gdalString);
+        bb = getLatLongOgrInfo(gdalString);
         if(gdalString.contains("FAILURE"))
             return new GeographicBoundingBox("junk");
-        if(isZeroPoint(temp))
+        if(isZeroPoint(bb))
             return new GeographicBoundingBox("junk");
+        if(bb.hasUTMCoords() || !fileName.endsWith("shp")) {
+            fileName = convertToAppropriateFileFormat(filePath, IS_WINDOWS, fileName);
+            filePath = filePath.substring(0,fileName.lastIndexOf("."))+"shp";
+            gdalString = getGDALInfo(filePath,fileName);
+            bb = getLatLongGdalInfo(gdalString);
+            bb.setFileName(fileName);
+        }
         gbb.setField(GEOMETRY,geo);
-        if(temp.hasBoundingBox())
-            gbb.setBB(temp);
+        if(bb.hasBoundingBox())
+            gbb.setBB(bb);
         return gbb;
     }
 
@@ -250,8 +257,8 @@ public class GDAL {
         String second = projectionString.substring(0, projLocEnd);
         return first + ":" + second;
     }
-
-    private void convertToWGS84(String filePath, boolean isWindows, String name) throws IOException {
+ 
+    private String convertToAppropriateFileFormat(String filePath, boolean isWindows, String name) throws IOException {
         GDALTranslate gdalTranslate = new GDALTranslate();
         String path = new File(filePath).getPath();
         String stub;
@@ -268,6 +275,7 @@ public class GDAL {
         File check = new File(path);
         if(!check.exists())
             logger.warn("Couldn't convert " + name +" to  WGS84");
+        return stub;
     }
 
     private BoundingBox compare(BoundingBox temp, BoundingBox fullExtent) {

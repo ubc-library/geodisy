@@ -76,7 +76,7 @@ public class GDALTranslate {
             Process process = null;
             try {
                 if (IS_WINDOWS) {
-                    processBuilder.command(call);
+                    processBuilder.command("cmd.exe", "/c", call);
                 } else {
                     processBuilder.command("bash", "-c", call);
                 }
@@ -91,7 +91,7 @@ public class GDALTranslate {
                     newFile.renameTo(new File(destPath + nameStub + ".tif"));
                     return true;
                 }else{
-                    //System.out.println("Translation failure #" + i);
+                    throw new IOException();
                 }
 
             } catch (IOException | InterruptedException e) {
@@ -107,7 +107,7 @@ public class GDALTranslate {
                 Process p;
                 try {
                     if (IS_WINDOWS) {
-                        processBuilder.command(call);
+                        processBuilder.command("cmd.exe", "/c", call);
                     } else {
                         processBuilder.command("bash", "-c", call);
                     }
@@ -151,7 +151,7 @@ public class GDALTranslate {
                         for(File f: files){
                             String fileName = f.getName();
                             if(fileName.startsWith("temp.")){
-                                fileName.replace("temp",nameStub);
+                                fileName = fileName.replace("temp",nameStub);
                                 f.renameTo(new File(destPath+fileName));
                             }
                         }

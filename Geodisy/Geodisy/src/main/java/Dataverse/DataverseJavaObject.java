@@ -219,18 +219,14 @@ public class DataverseJavaObject extends SourceJavaObject {
             dgrf.setGbb(gdal.generateBB(new File(dirPath+dRF.getTranslatedTitle()), getPID(),dRF.getGBBFileNumber()));
             System.out.println(dRF.getTranslatedTitle() + " has a valid BB: " + dgrf.hasValidBB());
             if(dgrf.hasValidBB()) {
-                tempRec = dRF.translateFile(this);
-                dgrf.setTranslatedTitle(tempRec.translatedTitle);
-                dgrf.setFileURL(server+"api/access/datafile/" + dgrf.dbID);
-                if (!tempRec.getOriginalTitle().isEmpty())
-                    newRecs.add(tempRec);
-                if(!dgrf.getTranslatedTitle().isEmpty())
-                    geoDataFiles.add(dgrf);
-                ExistingGeoLabels existingGeoLabels = ExistingGeoLabels.getExistingLabels();
-                ExistingGeoLabelsVals existingGeoLabelsVals = ExistingGeoLabelsVals.getExistingGeoLabelsVals();
-                existingGeoLabels.saveExistingFile(existingGeoLabels.getGeoLabels(),EXISTING_GEO_LABELS,"ExistingGeoLabels");
-                existingGeoLabelsVals.saveExistingFile(existingGeoLabelsVals.getValues(),EXISTING_GEO_LABELS_VALS,"ExistingGeoLabelsVals");
+                dgrf.setTranslatedTitle(dgrf.gbb.getField(FILE_NAME));
+                dgrf.setFileURL(server + "api/access/datafile/" + dgrf.dbID);
+                newRecs.add(dgrf);
             }
+            ExistingGeoLabels existingGeoLabels = ExistingGeoLabels.getExistingLabels();
+            ExistingGeoLabelsVals existingGeoLabelsVals = ExistingGeoLabelsVals.getExistingGeoLabelsVals();
+            existingGeoLabels.saveExistingFile(existingGeoLabels.getGeoLabels(),EXISTING_GEO_LABELS,"ExistingGeoLabels");
+            existingGeoLabelsVals.saveExistingFile(existingGeoLabelsVals.getValues(),EXISTING_GEO_LABELS_VALS,"ExistingGeoLabelsVals");
         }
         dataFiles = newRecs;
         return this;
