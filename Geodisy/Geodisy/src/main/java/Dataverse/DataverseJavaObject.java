@@ -315,9 +315,10 @@ public class DataverseJavaObject extends SourceJavaObject {
 
     @Override
     protected boolean createRecords(DataverseGeoRecordFile dgrf, int number, String type) {
-        String dirPath = DATA_DIR_LOC + GeodisyStrings.removeHTTPS(dgrf.getDatasetIdent().replace("_","/")) + "/";
+        String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPS(dgrf.getDatasetIdent().replace("_","/")) + "/");
         String filePath = dirPath + dgrf.getTranslatedTitle();
         File fUpdate = new File(filePath);
+        System.out.println(String.format("Filepath = %s, GeoserverLabel = %s",filePath, dgrf.getGeoserverLabel()));
         if(type.equals(VECTOR)) {
             return addVectorToGeoserver(fUpdate.getName(),dgrf.getGeoserverLabel());
         }else if(type.equals(RASTER)){

@@ -44,7 +44,7 @@ public class PostGIS {
     }
 
     private String folderized(String simpleFieldVal) {
-        return  GeodisyStrings.removeHTTPS(simpleFieldVal).replace(".","/").replace("_","/");
+        return  GeodisyStrings.replaceSlashes(GeodisyStrings.removeHTTPS(simpleFieldVal).replace(".","/").replace("_","/"));
     }
 }
 
