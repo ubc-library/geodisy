@@ -71,7 +71,6 @@ public class GDALTranslate {
 
         if(transformType.equals(RASTER)) {
             call = GDAL_TRANSLATE + sourcePath + " " + destPath + "temp.tif";
-            //System.out.println(call);
 
             Process process = null;
             try {
@@ -102,7 +101,6 @@ public class GDALTranslate {
             }
         } else{
                 call = OGR2OGR + destPath + "temp.shp " + sourcePath;
-                //System.out.println(call);
                 processBuilder.command("bash", "-c", call);
                 Process p;
                 try {
@@ -156,14 +154,11 @@ public class GDALTranslate {
                             }
                         }
                         return true;
-                    }else{
-                        //System.out.println("Translation failure #" + i);
                     }
                 } catch (IOException e) {
                     logger.error("Something went wrong converting " + name + " to shapefile");
                 }
             }
-        System.out.println("Couldn't convert file: " + sourcePath);
         file = new File(sourcePath);
         file.delete();
         return false;

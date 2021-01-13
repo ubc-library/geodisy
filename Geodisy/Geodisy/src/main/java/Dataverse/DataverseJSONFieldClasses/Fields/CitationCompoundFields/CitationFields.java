@@ -210,7 +210,6 @@ public class CitationFields extends MetadataSimple {
                     break;
                 default:
                     logger.error("Something went wrong parsing a compound field. Label is " + label);
-                    System.out.println("Something wrong parsing a compound field");
             }
         }
         else {
@@ -339,7 +338,6 @@ public class CitationFields extends MetadataSimple {
                 return datesOfCollection;
             default:
                 logger.error("Something went wrong parsing a compound field. Label is " + fieldName);
-                System.out.println("Something wrong parsing a compound field");
                 return new LinkedList();
         }
     }

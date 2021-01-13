@@ -233,8 +233,7 @@ public class DataverseAPI extends SourceAPI {
 
             }
         }catch (JSONException e){
-            System.out.println("Malformed JSON Error: " + result);
-            logger.error("Something was malformed with the JSON string returned from Dataverse");
+            logger.error("Something was malformed with the JSON string returned from Dataverse: " + result);
         }
         return more;
     }
@@ -266,7 +265,6 @@ public class DataverseAPI extends SourceAPI {
                 JSONObject jo = new JSONObject(dataverseJSON);
                 if(GEOSPATIAL_ONLY){
                     logger.error("Only accessing records with Files, this is not correct if a production run");
-                    System.out.println("Only accessing records with Files");
                     if(hasFiles(jo))
                         answers.add(jo);
                 }else

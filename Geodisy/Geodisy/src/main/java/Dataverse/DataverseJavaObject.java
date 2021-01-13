@@ -214,10 +214,8 @@ public class DataverseJavaObject extends SourceJavaObject {
                 dRF.setFileURL("");
             GDAL gdal = new GDAL();
             String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPS(getPID()).replace(".","/") + "/");
-            System.out.println(String.format("PID=%s, PID(withoutHTTPS)=%s",getPID(),GeodisyStrings.removeHTTPS(getPID())));
             dgrf = new DataverseGeoRecordFile(dRF);
             dgrf.setGbb(gdal.generateBB(new File(dirPath+dRF.getTranslatedTitle()), getPID(),dRF.getGBBFileNumber()));
-            System.out.println(dRF.getTranslatedTitle() + " has a valid BB: " + dgrf.hasValidBB());
             if(dgrf.hasValidBB()) {
                 dgrf.setTranslatedTitle(dgrf.gbb.getField(FILE_NAME));
                 dgrf.setFileURL(server + "api/access/datafile/" + dgrf.dbID);

@@ -1,5 +1,6 @@
 package FixScripts;
 
+import BaseFiles.GeoLogger;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJavaObject;
 import Dataverse.ExistingGeoLabels;
@@ -28,6 +29,7 @@ public class GeoFiles {
     String pID;
     String folder;
     ExistingGeoLabelsVals eGLV;
+    GeoLogger logger = new GeoLogger(this.getClass());
     public GeoFiles(LinkedList<GBLFileToFix> gBLFs) {
         this.gBLFs = gBLFs;
         pID = gBLFs.getFirst().getPID();
@@ -182,7 +184,7 @@ public class GeoFiles {
                     System.out.println("Something went wrong updating the GBLJSON at " + r.g.getGblJSONFilePath() + " with " + gBLJSON);
                 }
             } catch (JSONException err) {
-                System.out.println("Error parsing json: " + gBLJSON);
+                logger.error("Error parsing json: " + gBLJSON);
             }
         }
     }
@@ -212,7 +214,6 @@ public class GeoFiles {
         djo.setPID(gBLF.getPID());
         GeoServerAPI geoServerAPI = new GeoServerAPI(djo);
         gBLF.geoserverLabel = geoserverLabel;
-        System.out.println("Uploading Raster: Name = "+f.getName() + ", geoserverLabel = " + geoserverLabel);
         boolean success = geoServerAPI.addRaster(f.getName(),geoserverLabel);
         if(success) {
             ExistingGeoLabels eGL = ExistingGeoLabels.getExistingLabels();

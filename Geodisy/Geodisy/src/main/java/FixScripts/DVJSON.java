@@ -21,7 +21,6 @@ public class DVJSON {
     }
 
     public DVJSONFileInfo getFileInfo(String pid, String gBLID){
-        System.out.println("Accessing DV");
         String dvJSON = getDVJSON(pid);
         JSONObject base = new JSONObject(dvJSON);
         base = base.getJSONObject("datasetVersion");

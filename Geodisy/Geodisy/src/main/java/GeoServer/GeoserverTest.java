@@ -14,7 +14,6 @@ public class GeoserverTest {
         CitationFields cf = sjo.getCitationFields();
         cf.setPID(doi);
         sjo.setCitationFields(cf);
-        System.out.println(sjo.getPID() + " = doi from sjo");
         GeoServerAPI geoServerAPI = new GeoServerAPI(sjo);
         DataverseGeoRecordFile dgrf = new DataverseGeoRecordFile(doi,fileName);
         geoServerAPI.addRaster(dgrf);
@@ -27,7 +26,6 @@ public class GeoserverTest {
         CitationFields cf = sjo.getCitationFields();
         cf.setPID(doi);
         sjo.setCitationFields(cf);
-        System.out.println(sjo.getPID() + " = doi from sjo");
         GeoServerAPI geoServerAPI = new GeoServerAPI(sjo);
         DataverseGeoRecordFile dgrf = new DataverseGeoRecordFile(doi,fileName);
         geoServerAPI.addVector(fileName,doi);

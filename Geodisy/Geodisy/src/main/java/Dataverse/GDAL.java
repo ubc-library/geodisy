@@ -117,9 +117,6 @@ public class GDAL {
         String projection =  "";
         try {
             gdalString = getGDALInfo(filePath, regularName);
-            System.out.println(regularName + " has info: " + gdalString);
-            //System.out.println("What info we got:");
-            //System.out.println(gdalString);
             if(gdalString.contains("FAILURE")) {
                 logger.warn("Something went wrong parsing " + regularName + " at " + filePath);
                 return new GeographicBoundingBox(doi);
@@ -262,16 +259,12 @@ public class GDAL {
         GDALTranslate gdalTranslate = new GDALTranslate();
         String path = new File(filePath).getPath();
         String stub;
-        System.out.println(filePath);
-        System.out.println(path);
         if(GeodisyStrings.ogrinfoVectorExtension(name))
             stub = gdalTranslate.vectorTransform(path,name);
         else
             stub = gdalTranslate.rasterTransform(path,name);
-        System.out.println(stub);
         if(!path.endsWith(stub))
             path = path.substring(0,path.lastIndexOf(GeodisyStrings.replaceSlashes("/"))+1) + stub;
-        System.out.println(path);
         File check = new File(path);
         if(!check.exists())
             logger.warn("Couldn't convert " + name +" to  WGS84");
@@ -309,9 +302,6 @@ public class GDAL {
                 start = end + 2;
                 end = gdalString.indexOf(")", start);
                 String north = gdalString.substring(start, end).trim();
-                logger.warn(String.format("North String: %s, South String: %s, East String: %s, West String: %s", north, south, east, west));
-                logger.warn(String.format("North parsed: %s, South parsed: %s, East parsed: %s, West parsed: %s", Double.parseDouble(north), Double.parseDouble(south), Double.parseDouble(east), Double.parseDouble(west)));
-
                 bb.setLongWest(west);
                 bb.setLongEast(east);
                 bb.setLatNorth(north);

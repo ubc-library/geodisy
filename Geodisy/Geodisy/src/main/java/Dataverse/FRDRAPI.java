@@ -67,17 +67,13 @@ public class FRDRAPI extends SourceAPI{
                         existingHarvests.addBBox(djo.getPID(),djo.getBoundingBox());
                         existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
                         djos.add(djo);
-                        System.out.println("Added");
                     }
-                    else
-                        System.out.println("Not added");
                     int record_id = jo.getInt("id");
 
                     //TODO remove next line comment and following line entirely after testing downloading
                     updateFRDRHarvesterDB(record_id);
                 }
             } catch (JSONException e) {
-                System.out.println("Something went wrong parsing the FRDR JSON");
                 logger.error("Something went wrong parsing the FRDR JSON: \n" + fullJSON);
             }
         }
