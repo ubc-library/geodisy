@@ -43,6 +43,10 @@ public class Geodisy {
         return records;
     }
 
+    /**
+     * Harvesting metadata from FRDR Harvester
+     * @return
+     */
     public List<SourceJavaObject> harvestFRDRMetadata(){
         FRDRGeodisy frdrGeodisy = new FRDRGeodisy();
         return frdrGeodisy.harvestFRDRMetadata();

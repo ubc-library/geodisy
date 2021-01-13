@@ -1,6 +1,5 @@
 package FixScripts;
 
-import BaseFiles.Geodisy;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJavaObject;
 import Dataverse.ExistingGeoLabels;
@@ -28,12 +27,12 @@ public class GeoFiles {
     LinkedList<GBLFileToFix> gBLFs;
     String pID;
     String folder;
-    ExistingGeoLabelsVals eGL;
+    ExistingGeoLabelsVals eGLV;
     public GeoFiles(LinkedList<GBLFileToFix> gBLFs) {
         this.gBLFs = gBLFs;
         pID = gBLFs.getFirst().getPID();
         folder = GeodisyStrings.removeHTTPS(pID).replace(".","/");
-        eGL = ExistingGeoLabelsVals.getExistingGeoLabelsVals();
+        eGLV = ExistingGeoLabelsVals.getExistingGeoLabelsVals();
     }
     public void dealWithGBLFs(){
         System.out.println("Starting to find data files for" + pID);
@@ -61,7 +60,7 @@ public class GeoFiles {
                 }
                 String fileBaseName = fileName.substring(0,fileName.lastIndexOf("."));
                 String fileExtension = fileName.substring(fileName.lastIndexOf(".")+1);
-                String uploaded;
+                String geoserverLable;
                 String dVFileName = gBLF.getDvjsonFileInfo().getFileName();
                 String baseDVF;
                 if(dVFileName.contains("."))
@@ -75,17 +74,17 @@ public class GeoFiles {
                     GDAL gdal = new GDAL();
                     record.gbb = gdal.generateBB(f,"ddd","1");
                     if(record.gbb.hasBB()) {
-                        uploaded = uploadRasterFile(f, gBLF);
-                        if (!uploaded.isEmpty()) {
+                        geoserverLable = uploadRasterFile(f, gBLF);
+                        if (!geoserverLable.isEmpty()) {
                             record.g = gBLF;
-                            record.geoserverLabel = uploaded;
+                            record.geoserverLabel = geoserverLable;
                             record.format = "GeoTIFF";
                             record.geomType = "Raster";
                             if (records.size() > 0) {
                                 Record first = records.get(0);
                                 record.geoserverIDs.addAll(first.geoserverIDs);
                                 record.geoserverIDs.add(first.geoserverLabel);
-                                updateRecords(records, uploaded);
+                                updateRecords(records, geoserverLable);
                             }
 
                             records.add(record);
@@ -100,19 +99,18 @@ public class GeoFiles {
                     Record record = new Record();
                     record.gbb = gdal.generateBB(f, "ddd", "1");
                     if (record.gbb.hasBB()) {
-                        uploaded = uploadVectorFile(f, gBLF);
-                        if (!uploaded.isEmpty()) {
-
+                        geoserverLable = uploadVectorFile(f, gBLF);
+                        if (!geoserverLable.isEmpty()) {
                             record.gbb = gdal.generateBB(f, "ddd", "1");
                             record.g = gBLF;
-                            record.geoserverLabel = uploaded;
+                            record.geoserverLabel = geoserverLable;
                             record.format = "Shapefile";
                             record.geomType = record.gbb.getField(GEOMETRY);
                             if (records.size() > 0) {
                                 Record first = records.get(0);
                                 record.geoserverIDs.addAll(first.geoserverIDs);
                                 record.geoserverIDs.add(first.geoserverLabel);
-                                updateRecords(records, uploaded);
+                                updateRecords(records, geoserverLable);
                             }
                             records.add(record);
                         }
@@ -194,7 +192,7 @@ public class GeoFiles {
     }
 
     private String uploadVectorFile(File f, GBLFileToFix gBLF) {
-        String geoserverLabel = eGL.addVector(gBLF.getPID(), f.getName());
+        String geoserverLabel = eGLV.addVector(gBLF.getPID(), f.getName());
         DataverseJavaObject djo = new DataverseJavaObject("server");
         djo.setPID(gBLF.getPID());
         GeoServerAPI geoServerAPI = new GeoServerAPI(djo);
@@ -209,7 +207,7 @@ public class GeoFiles {
     }
 
     private String uploadRasterFile(File f, GBLFileToFix gBLF) {
-        String geoserverLabel = eGL.addRaster(gBLF.getPID(),f.getName());
+        String geoserverLabel = eGLV.addRaster(gBLF.getPID(),f.getName());
         DataverseJavaObject djo = new DataverseJavaObject("server");
         djo.setPID(gBLF.getPID());
         GeoServerAPI geoServerAPI = new GeoServerAPI(djo);

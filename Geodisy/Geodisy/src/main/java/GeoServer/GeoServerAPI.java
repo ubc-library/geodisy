@@ -375,26 +375,4 @@ public class GeoServerAPI extends DestinationAPI {
         obj1.put(stringed("data"),array);
         return obj1;
     }
-
-    /**TODO need to get vector files from POSTGRIS, is below method the way?
-     private boolean addVectorToGeoserver(String fileName) {
-     JSONObject jo = new JSONObject();
-     JSONObject outer = new JSONObject();
-     jo.put("name",sjo.getSimpleFieldVal(PERSISTENT_ID));
-     jo.put("title",fileName);
-     outer.put("featureType",jo);
-     createFileUploadJSON(jo);
-     String urlString = GEOSERVER_REST + "workspaces/geodisy/datastores/shapefiles/featuretypes";
-     String command = "curl -U " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type: application/json") + "-d @" + DATASET_FILES_PATH + "import.json" + urlString;
-     try {
-     Process p = Runtime.getRuntime().exec(command);
-     p.waitFor();
-     p.destroy();
-     } catch (InterruptedException | IOException e) {
-     logger.error("Something went wrong trying to add a vector to geoserver from postGIS. File name was: " + fileName);
-     return false;
-     }
-     return true;
-     }*/
-
 }
