@@ -72,16 +72,16 @@ public class GDALTranslate {
         if(transformType.equals(RASTER)) {
             call = GDAL_TRANSLATE + sourcePath + " " + destPath + "temp.tif";
             //System.out.println(call);
-            processBuilder.command("bash", "-c", call);
+
             Process process = null;
             try {
-
                 if (IS_WINDOWS) {
-                    Runtime.getRuntime().exec(call).waitFor();
+                    processBuilder.command(call);
                 } else {
-                    process = processBuilder.start();
-                    process.waitFor(120, TimeUnit.SECONDS);
+                    processBuilder.command("bash", "-c", call);
                 }
+                process = processBuilder.start();
+                process.waitFor(120, TimeUnit.SECONDS);
                 if(name.endsWith(".tif"))
                     return true;
                 File newFile = new File(destPath + "temp.tif");
@@ -104,19 +104,20 @@ public class GDALTranslate {
                 call = OGR2OGR + destPath + "temp.shp " + sourcePath;
                 //System.out.println(call);
                 processBuilder.command("bash", "-c", call);
+                Process p;
                 try {
                     if (IS_WINDOWS) {
-                        Runtime.getRuntime().exec(call).waitFor();
+                        processBuilder.command(call);
                     } else {
-                        Process p = processBuilder.start();
-                        try {
-                            p.waitFor(120, TimeUnit.SECONDS);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        p.destroy();
-
+                        processBuilder.command("bash", "-c", call);
                     }
+                    p = processBuilder.start();
+                    try {
+                        p.waitFor(120, TimeUnit.SECONDS);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    p.destroy();
                     if(name.toLowerCase().endsWith(".shp")) {
                         File[] files = new File(destPath).listFiles();
                         Set<String> extensions = new HashSet<>();
@@ -158,7 +159,7 @@ public class GDALTranslate {
                     }else{
                         //System.out.println("Translation failure #" + i);
                     }
-                } catch (IOException | InterruptedException e) {
+                } catch (IOException e) {
                     logger.error("Something went wrong converting " + name + " to shapefile");
                 }
             }

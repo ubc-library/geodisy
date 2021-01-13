@@ -28,20 +28,19 @@ public class GDAL {
             return "FAILURE";
 
         ProcessBuilder processBuilder= new ProcessBuilder();
-        processBuilder.command("/usr/bin/bash", "-c", gdal+filePath);
+
         int counter = 0;
         if (IS_WINDOWS) {
-            process = Runtime.getRuntime()
-                    .exec(String.format(gdal + filePath));
+            processBuilder.command(gdal + filePath);
         } else {
-            process = processBuilder.start();
-            try {
-                process.waitFor();
-            } catch (InterruptedException e) {
-                logger.error("Something went wrong running GDAL info on " + filePath);
-            }
+            processBuilder.command("/usr/bin/bash", "-c", gdal+filePath);
         }
-
+        process = processBuilder.start();
+        try {
+            process.waitFor();
+        } catch (InterruptedException e) {
+            logger.error("Something went wrong running GDAL info on " + filePath);
+        }
         BufferedReader stdInput = new BufferedReader(new
                 InputStreamReader(process.getInputStream()));
 
