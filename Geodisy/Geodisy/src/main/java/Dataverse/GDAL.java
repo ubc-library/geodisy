@@ -203,7 +203,7 @@ public class GDAL {
             return new GeographicBoundingBox("junk");
         if(bb.hasUTMCoords()||!fileName.endsWith(".tif")) {
             fileName = convertToAppropriateFileFormat(filePath, IS_WINDOWS, fileName);
-            filePath = filePath.substring(0,fileName.lastIndexOf("."))+"shp";
+            filePath = filePath.substring(0,filePath.lastIndexOf("."))+".tif";
             gdalString = getGDALInfo(filePath,fileName);
             bb = getLatLongGdalInfo(gdalString);
             bb.setFileName(fileName);
@@ -231,7 +231,7 @@ public class GDAL {
             return new GeographicBoundingBox("junk");
         if(bb.hasUTMCoords() || !fileName.endsWith("shp")) {
             fileName = convertToAppropriateFileFormat(filePath, IS_WINDOWS, fileName);
-            filePath = filePath.substring(0,fileName.lastIndexOf("."))+"shp";
+            filePath = filePath.substring(0,filePath.lastIndexOf("."))+".shp"
             gdalString = getGDALInfo(filePath,fileName);
             bb = getLatLongGdalInfo(gdalString);
             bb.setFileName(fileName);
