@@ -54,7 +54,7 @@ public class FRDRAPI extends SourceAPI{
                     if (djo.hasContent && !testing) {
                         System.out.println("Downloading record: " + djo.getPID());
                         long startTime = Calendar.getInstance().getTimeInMillis();
-                        djo = djo.downloadFiles();
+                        djo.setGeoDataFiles(djo.downloadFiles());
                         Calendar end = Calendar.getInstance();
                         Long total = end.getTimeInMillis() - startTime;
                         System.out.println("Finished downloading " + djo.getPID() + " after " + total + " milliseconds");

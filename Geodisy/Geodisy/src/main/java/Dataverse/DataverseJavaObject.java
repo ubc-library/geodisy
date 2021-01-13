@@ -166,7 +166,7 @@ public class DataverseJavaObject extends SourceJavaObject {
      */
 
     @Override
-    public DataverseJavaObject downloadFiles() {
+    public LinkedList<DataverseGeoRecordFile> downloadFiles() {
         String path = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + urlized(GeodisyStrings.removeHTTPS(citationFields.getPID())));
         path = GeodisyStrings.removeHTTPS(path);
         File f = new File(path);
@@ -194,7 +194,7 @@ public class DataverseJavaObject extends SourceJavaObject {
 
         if(drfs.size()==0){
             f.delete();
-            return this;
+            return new LinkedList<DataverseGeoRecordFile>();
         }
 
         dataFiles = drfs;
@@ -204,8 +204,7 @@ public class DataverseJavaObject extends SourceJavaObject {
                 dataFiles.remove(i);
         }
 
-        LinkedList<DataverseRecordFile> newRecs = new LinkedList<>();
-        DataverseRecordFile tempRec;
+        LinkedList<DataverseGeoRecordFile> newRecs = new LinkedList<>();
         DataverseGeoRecordFile dgrf;
         for (DataverseRecordFile dRF : dataFiles) {
             if (!GeodisyStrings.isProcessable(dRF.translatedTitle))
@@ -215,7 +214,8 @@ public class DataverseJavaObject extends SourceJavaObject {
             GDAL gdal = new GDAL();
             String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPS(getPID()).replace(".","/") + "/");
             dgrf = new DataverseGeoRecordFile(dRF);
-            dgrf.setGbb(gdal.generateBB(new File(dirPath+dRF.getTranslatedTitle()), getPID(),dRF.getGBBFileNumber()));
+            GeographicBoundingBox gbb = gdal.generateBB(new File(dirPath+dRF.getTranslatedTitle()), getPID(),dRF.getGBBFileNumber());
+            dgrf.setGbb(gbb, gbb.getField(FILE_NAME));
             if(dgrf.hasValidBB()) {
                 dgrf.setTranslatedTitle(dgrf.gbb.getField(FILE_NAME));
                 dgrf.setFileURL(server + "api/access/datafile/" + dgrf.dbID);
@@ -226,8 +226,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             existingGeoLabels.saveExistingFile(existingGeoLabels.getGeoLabels(),EXISTING_GEO_LABELS,"ExistingGeoLabels");
             existingGeoLabelsVals.saveExistingFile(existingGeoLabelsVals.getValues(),EXISTING_GEO_LABELS_VALS,"ExistingGeoLabelsVals");
         }
-        dataFiles = newRecs;
-        return this;
+        return newRecs;
     }
 
     @Override

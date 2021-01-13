@@ -347,7 +347,7 @@ public class DataverseRecordFile {
     }
 
 
-    public void setGbb(GeographicBoundingBox gbb) {
+    public void setGbb(GeographicBoundingBox gbb, boolean isRaster) {
         this.gbb = gbb;
     }
 

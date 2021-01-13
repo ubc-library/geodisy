@@ -78,7 +78,7 @@ public class DataverseAPI extends SourceAPI {
             if(djo.hasContent()) {
                 System.out.println("Downloading record: " + doi);
                 long startTime = Calendar.getInstance().getTimeInMillis();
-                djo = djo.downloadFiles();
+                djo.setGeoDataFiles(djo.downloadFiles());
                 Calendar end =  Calendar.getInstance();
                 Long total = end.getTimeInMillis()-startTime;
                 System.out.println("Finished downloading " + doi +" after " + total + " milliseconds");

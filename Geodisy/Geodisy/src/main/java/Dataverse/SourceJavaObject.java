@@ -36,7 +36,7 @@ public abstract class SourceJavaObject {
     // public abstract void parseJournalFields(JSONArray journalFieldsArray);
     public abstract void parseFiles(JSONArray fileFieldsArray);
     public abstract JSONObject getVersionSection(JSONObject current);
-    public abstract DataverseJavaObject downloadFiles();
+    public abstract LinkedList<DataverseGeoRecordFile> downloadFiles();
     public boolean moreRecordsToGet;
     public abstract void updateGeoserver();
     protected abstract boolean createRecords(DataverseGeoRecordFile dgrf, int number, String type);

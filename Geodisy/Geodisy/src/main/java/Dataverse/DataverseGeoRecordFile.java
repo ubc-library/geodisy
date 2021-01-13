@@ -2,6 +2,8 @@ package Dataverse;
 
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 
+import static _Strings.DVFieldNameStrings.GDAL_STRING;
+
 public class DataverseGeoRecordFile extends DataverseRecordFile {
     GDALInformation gdalInfo;
     boolean onGeoserver = false;
@@ -26,7 +28,7 @@ public class DataverseGeoRecordFile extends DataverseRecordFile {
         if(!drf.getFileIdent().equals(""))
             fileIdent = drf.getFileIdent();
         gdalInfo = new GDALInformation();
-        setGbb(drf.getGBB());
+        setGbb(drf.getGBB(), drf.translatedTitle);
         this.setFileNumber(Integer.valueOf(drf.getGBBFileNumber()));
         this.setOriginalTitle(drf.getOriginalTitle());
         this.setProjection(drf.getProjection());
@@ -109,5 +111,16 @@ public class DataverseGeoRecordFile extends DataverseRecordFile {
 
     public boolean isOnGeoserver() {
         return onGeoserver;
+    }
+
+    @Override
+    public void setGbb(GeographicBoundingBox gbb, boolean isRaster){
+        this.gbb = gbb;
+        this.gdalInfo = new GDALInformation();
+        this.gdalInfo.setFullGdalString(gbb.getField(GDAL_STRING), isRaster);
+    }
+
+    public void setGbb(GeographicBoundingBox gbb, String filename){
+        setGbb(gbb,filename.endsWith(".tif"));
     }
 }

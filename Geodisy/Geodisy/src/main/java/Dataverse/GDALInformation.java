@@ -9,9 +9,9 @@ public class GDALInformation {
     private String minY = "";
     private String maxY = "";
 
-    private void extractCRS(boolean raster){
+    private void extractCRS(boolean isRaster){
         try{
-            if(raster) {
+            if(isRaster) {
                     int start = fullGdalString.indexOf("PROJCS[");
                     String temp = fullGdalString.substring(start);
                     int count = 1;

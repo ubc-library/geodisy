@@ -95,7 +95,7 @@ public class GDAL {
             } else {
                 logger.error("Somehow got a DataverseGeoRecordFile that isn't for a shp or tif. File name" + name);
             }
-            drf.setGbb(temp);
+            drf.setGbb(temp, temp.getField(FILE_NAME));
             records.add(drf);
         }
         djo.setGeoDataFiles(records);
@@ -138,7 +138,9 @@ public class GDAL {
                 gbb.setField(GEOMETRY,temp.getField(GEOMETRY));
                 gbb.setField(PROJECTION,projection);
                 gbb.setBB(temp.getBB());
+                gbb.setField(GDAL_STRING,gdalString);
                 ExistingGeoLabelsVals existingGeoLabelsVals = ExistingGeoLabelsVals.getExistingGeoLabelsVals();
+                lowerName = gbb.getField(FILE_NAME);
                 if(lowerName.endsWith(".shp")) {
                     gbb.setField(GEOSERVER_LABEL,existingGeoLabelsVals.addVector(doi,file.getName()));
                     gbb.setFileNumber(Integer.valueOf(number));
@@ -231,11 +233,11 @@ public class GDAL {
             return new GeographicBoundingBox("junk");
         if(bb.hasUTMCoords() || !fileName.endsWith("shp")) {
             fileName = convertToAppropriateFileFormat(filePath, IS_WINDOWS, fileName);
-            filePath = filePath.substring(0,filePath.lastIndexOf("."))+".shp"
+            filePath = filePath.substring(0,filePath.lastIndexOf("."))+".shp";
             gdalString = getGDALInfo(filePath,fileName);
-            bb = getLatLongGdalInfo(gdalString);
-            bb.setFileName(fileName);
+            bb = getLatLongOgrInfo(gdalString);
         }
+        bb.setFileName(fileName);
         gbb.setField(GEOMETRY,geo);
         if(bb.hasBoundingBox())
             gbb.setBB(bb);

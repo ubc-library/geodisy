@@ -19,6 +19,16 @@ public class GeographicBoundingBox extends CompoundJSONField {
     private int fileNumber = 0;
     String fileURL = "";
 
+    public String getGDALString() {
+        return gdalString;
+    }
+
+    public void setGDALString(String gdalString) {
+        this.gdalString = gdalString;
+    }
+
+    String gdalString = "";
+
 
     public GeographicBoundingBox(String doi) {
         this.doi = doi;
@@ -212,6 +222,10 @@ public class GeographicBoundingBox extends CompoundJSONField {
                 break;
             case PLACE:
                 bb.setPlace(value);
+                break;
+            case GDAL_STRING:
+                setGDALString(value);
+                break;
             default:
                 errorParsing(this.getClass().getName(),title);
         }
@@ -302,6 +316,7 @@ public class GeographicBoundingBox extends CompoundJSONField {
     }
     public void setBB(BoundingBox b){
         bb = b;
+        fileName = b.getFileName();
     }
     public boolean isGeneratedFromGeoFile(){
         return generated;

@@ -185,6 +185,7 @@ public class DVFieldNameStrings {
     public final static String HEIGHT = "height";
     public final static String PLACE = "place";
     public final static String BASE_GEOSERVER_LABEL = "baseGeoLable";
+    public final static String GDAL_STRING = "gdalString";
 
 
     //Geographic Coverage Field Names
