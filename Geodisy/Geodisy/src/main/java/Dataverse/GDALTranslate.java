@@ -4,8 +4,10 @@ import BaseFiles.GeoLogger;
 import _Strings.GeodisyStrings;
 
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -111,7 +113,11 @@ public class GDALTranslate {
                     }
                     p = processBuilder.start();
                     try {
-                        p.waitFor(120, TimeUnit.SECONDS);
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                        String line;
+                        while ((line = reader.readLine()) != null)
+                            continue;
+                        p.waitFor();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

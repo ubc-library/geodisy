@@ -3,7 +3,9 @@ package Crosswalking.GeoBlacklightJson;
 import BaseFiles.GeoLogger;
 import org.apache.solr.client.solrj.SolrServerException;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import static _Strings.GeodisyStrings.*;
@@ -27,6 +29,10 @@ public class GeoCombine {
             System.out.println("Calling Geocombine");
             processBuilder.command("/bin/bash", "-c", GEOCOMBINE);
             p = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null)
+                continue;
             p.waitFor();
             p.destroy();
         } catch (IOException | InterruptedException e) {
@@ -41,6 +47,10 @@ public class GeoCombine {
             System.out.println("Calling Geocombine");
             processBuilder.command(bash);
             p = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null)
+                continue;
             p.waitFor();
             p.destroy();
         } catch (IOException | InterruptedException e) {
@@ -55,6 +65,10 @@ public class GeoCombine {
         try{
             System.out.println("Moving metadata");
             p = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null)
+                continue;
             p.waitFor();
             p.destroy();
         } catch (IOException|InterruptedException e){

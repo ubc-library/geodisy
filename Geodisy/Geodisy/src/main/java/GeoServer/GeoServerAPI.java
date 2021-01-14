@@ -43,6 +43,10 @@ public class GeoServerAPI extends DestinationAPI {
             Process p;
             processBuilder.command("/usr/bin/bash", "-c", generateWorkspace);
             p = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null)
+                continue;
             p.waitFor();
             p.destroy();
         } catch (InterruptedException|IOException e) {
@@ -79,6 +83,10 @@ public class GeoServerAPI extends DestinationAPI {
             String call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H \"Content-type: text/xml\" -d \"<featureType><name>" + geoserverlabel.toLowerCase() + "</name><title>"+ title +"</title><nativeCRS>EPSG:4326</nativeCRS><srs>EPSG:4326</srs><enabled>true</enabled></featureType>\" http://localhost:8080/geoserver/rest/workspaces/geodisy/datastores/" + vectorDB + "/featuretypes";
             processBuilder.command("/usr/bin/bash", "-c",call);
             Process p = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null)
+                continue;
             p.waitFor();
             p.destroy();
         } catch (IOException | InterruptedException e) {
@@ -174,6 +182,10 @@ public class GeoServerAPI extends DestinationAPI {
             Process p;
             processBuilder.command("/usr/bin/bash", "-c", deleteCoveragestore);
             p = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null)
+                continue;
             p.waitFor();
             p.destroy();
 
@@ -184,6 +196,10 @@ public class GeoServerAPI extends DestinationAPI {
             Process p;
             processBuilder.command("/usr/bin/bash", "-c", warp);
             p = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null)
+                continue;
             p.waitFor();
             p.destroy();
         }
@@ -193,6 +209,10 @@ public class GeoServerAPI extends DestinationAPI {
             Process p;
             processBuilder.command("/usr/bin/bash", "-c", rename);
             p = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null)
+                continue;
             p.waitFor();
             p.destroy();
         }
@@ -202,6 +222,10 @@ public class GeoServerAPI extends DestinationAPI {
             Process p;
             processBuilder.command("/usr/bin/bash", "-c", addo);
             p = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null)
+                continue;
             p.waitFor();
             p.destroy();
         }
@@ -211,6 +235,10 @@ public class GeoServerAPI extends DestinationAPI {
             Process p;
             processBuilder.command("/usr/bin/bash", "-c", createCoveragestore);
             p = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null)
+                continue;
             p.waitFor();
             p.destroy();
         }
@@ -223,6 +251,10 @@ public class GeoServerAPI extends DestinationAPI {
         Process p;
         processBuilder.command("/usr/bin/bash", "-c", addRasterLayer);
         p = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null)
+                continue;
         p.waitFor();
         p.destroy();
     }
