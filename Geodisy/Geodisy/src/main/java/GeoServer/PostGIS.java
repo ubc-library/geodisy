@@ -6,6 +6,7 @@ import _Strings.GeodisyStrings;
 
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 
 import static _Strings.DVFieldNameStrings.PERSISTENT_ID;
@@ -30,7 +31,7 @@ public class PostGIS {
         try {
             p = processBuilder.start();
             try {
-                p.waitFor();
+                p.waitFor(2, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
                 logger.error("Something went wrong trying to upload " + geoserverLabel + " to postgis");
             }finally{
