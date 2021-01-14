@@ -45,14 +45,14 @@ public class Main {
             dev = "Using the dev servers, is this correct?";
         else
             dev = "Using the prod servers, is this correct?";
-        /*GeodisyStrings.load();
+        GeodisyStrings.load();
         GeodisyTask geodisyTask = new GeodisyTask();
-        geodisyTask.run();*/
+        geodisyTask.run();
 
-        System.out.println("Running a test on Raster Upload");
+        /*System.out.println("Running a test on Raster Upload");
         GeoserverTest gt = new GeoserverTest();
         gt.testAddingARaster();
-        gt.testAddingAVector();
+        gt.testAddingAVector();*/
 
         //testCombine(args);
 
