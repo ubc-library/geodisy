@@ -25,14 +25,15 @@ public class GeoserverTest {
         for (String s : files) {
             System.out.println(s);
             String fileName = s;
-            String doi = "vectorTest" + count;
+            String doi = "vectorTest";
             SourceJavaObject sjo = new DataverseJavaObject("server");
             CitationFields cf = sjo.getCitationFields();
             cf.setPID(doi);
             sjo.setCitationFields(cf);
-            GeoServerAPI geoServerAPI = new GeoServerAPI(sjo);
             DataverseGeoRecordFile dgrf = new DataverseGeoRecordFile(doi, fileName);
-            geoServerAPI.addVector(fileName, doi);
+            GeoServerAPI geoServerAPI = new GeoServerAPI(sjo);
+            geoServerAPI.addVector(fileName, doi+count);
+            count++;
         }
     }
 }
