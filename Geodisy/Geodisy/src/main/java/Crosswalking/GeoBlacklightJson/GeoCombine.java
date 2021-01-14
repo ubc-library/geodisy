@@ -60,6 +60,7 @@ public class GeoCombine {
 
     public void moveMetadata(){
         ProcessBuilder processBuilder = new ProcessBuilder();
+        System.out.println("Moving metadata: " + MOVE_METADATA);
         processBuilder.command("/bin/bash", "-c", MOVE_METADATA);
         Process p = null;
         try{
