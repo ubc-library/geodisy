@@ -125,7 +125,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
 
     //TODO, check I am getting all the optional fields I should be
     @Override
-    protected JSONObject getOptionalFields(DataverseGeoRecordFile drf, int totalRecordsInStudy) {
+    protected JSONObject getOptionalFields(DataverseRecordFile drf, int totalRecordsInStudy) {
         GeographicBoundingBox gbb = drf.getGBB();
         String geoserverLabel = getGeoserverLabel(gbb).toLowerCase();
         getFileType(drf);

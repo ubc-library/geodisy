@@ -362,4 +362,8 @@ public class DataverseRecordFile {
     public void setFileURL(String fileURL) {
         gbb.setField(FILE_URL,fileURL);
     }
+
+    public boolean isOnGeoserver(){
+        return false;
+    }
 }

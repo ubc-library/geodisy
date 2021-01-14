@@ -5,6 +5,7 @@ import Crosswalking.MetadataSchema;
 import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJavaObject;
+import Dataverse.DataverseRecordFile;
 import Dataverse.SourceRecordFiles;
 import _Strings.GeodisyStrings;
 import org.json.JSONArray;
@@ -41,20 +42,20 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
         int count = 1;
         int total = list.size();
         int innerCount = 1;
-        for(DataverseGeoRecordFile drf:list){
+        for(DataverseRecordFile drf:list){
             createJSONFromFiles(drf, total);
         }
     }
 
-    private void createJSONFromFiles(DataverseGeoRecordFile drf, int total) {
+    private void createJSONFromFiles(DataverseRecordFile drf, int total) {
         boolean single = total == 1;
         getRequiredFields(drf.getGBB(), total);
         getOptionalFields(drf,total);
         geoBlacklightJson = jo.toString();
         if (!single)
-            saveJSONToFile(geoBlacklightJson, doi, doi + " (File " + drf.getGBBFileNumber() + " of " + total + ")");
+            saveJSONToFile(geoBlacklightJson, doi, GeodisyStrings.replaceSlashes(GeodisyStrings.removeHTTPS(doi)) + " (File " + drf.getGBBFileNumber() + " of " + total + ")");
         else
-            saveJSONToFile(geoBlacklightJson, doi, doi);
+            saveJSONToFile(geoBlacklightJson, doi, GeodisyStrings.replaceSlashes(GeodisyStrings.removeHTTPS(doi)));
     }
 
     public File genDirs(String doi, String localRepoPath) {
@@ -73,8 +74,9 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
 
 
 
-    protected abstract JSONObject getOptionalFields(DataverseGeoRecordFile drf, int totalRecordsInStudy);
+    protected abstract JSONObject getOptionalFields(DataverseRecordFile drf, int totalRecordsInStudy);
     protected abstract JSONObject addDataDownloadOptions(GeographicBoundingBox bb, JSONObject ja, boolean isOnGeoserver); //for records with datasetfiles
     protected abstract JSONObject addBaseRecordInfo(); //adds the base metadata external services that all records need regardless of existence of datafiles
     protected abstract void saveJSONToFile(String json, String doi, String folderName);
+
 }

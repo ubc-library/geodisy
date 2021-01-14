@@ -109,6 +109,7 @@ public class DataverseGeoRecordFile extends DataverseRecordFile {
         gdalInfo.setNativeCRS(crs);
     }
 
+    @Override
     public boolean isOnGeoserver() {
         return onGeoserver;
     }
