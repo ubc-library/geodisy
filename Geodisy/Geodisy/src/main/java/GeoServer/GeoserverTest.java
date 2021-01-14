@@ -21,7 +21,7 @@ public class GeoserverTest {
 
     public void testAddingAVector() {
         int count = 0;
-        String[] files = {"Stops_09Aug19.shp", "Stops_09Aug19_shp9_9Stops_09Aug19", "Shapes_Trips_Routes_09Aug19_shp9_9Shapes_Trips_Routes_09Aug19.shp", "Shapes_Trips_Routes_09Aug19.shp"};
+        String[] files = {"Stops_09Aug19.shp", "Stops_09Aug19_shp9_9Stops_09Aug19.shp", "Shapes_Trips_Routes_09Aug19_shp9_9Shapes_Trips_Routes_09Aug19.shp", "Shapes_Trips_Routes_09Aug19.shp"};
         for (String s : files) {
             System.out.println(s);
             String fileName = s;
