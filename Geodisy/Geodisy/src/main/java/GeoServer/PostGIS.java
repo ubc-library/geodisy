@@ -5,7 +5,9 @@ import Dataverse.DataverseJavaObject;
 import _Strings.GeodisyStrings;
 
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
 
 
@@ -31,7 +33,11 @@ public class PostGIS {
         try {
             p = processBuilder.start();
             try {
-                p.waitFor(5, TimeUnit.SECONDS);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                String line;
+                while ((line = reader.readLine()) != null)
+                    continue;
+                p.waitFor();
             } catch (InterruptedException e) {
                 logger.error("Something went wrong trying to upload " + geoserverLabel + " to postgis");
             }finally{
