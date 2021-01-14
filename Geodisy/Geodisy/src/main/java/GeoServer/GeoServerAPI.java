@@ -54,8 +54,10 @@ public class GeoServerAPI extends DestinationAPI {
 
     @Override
     public boolean addVector(String fileName,String geoserverLabel){
+        System.out.println("Adding to POSTGIS");
         boolean success = addVectorToPostGIS(fileName,geoserverLabel);
         if(!success) return success;
+        System.out.println("Adding to Geoserver");
         success = addPostGISLayerToGeoserver(geoserverLabel,fileName);
         if(!success) return success;
         return updateTitleInGeoserver(geoserverLabel,fileName);

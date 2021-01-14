@@ -19,15 +19,20 @@ public class GeoserverTest {
         geoServerAPI.addRaster(dgrf);
     }
 
-    public void testAddingAVector(){
-        String fileName = "states.shp";
-        String doi = "vectorTest";
-        SourceJavaObject sjo = new DataverseJavaObject("server");
-        CitationFields cf = sjo.getCitationFields();
-        cf.setPID(doi);
-        sjo.setCitationFields(cf);
-        GeoServerAPI geoServerAPI = new GeoServerAPI(sjo);
-        DataverseGeoRecordFile dgrf = new DataverseGeoRecordFile(doi,fileName);
-        geoServerAPI.addVector(fileName,doi);
+    public void testAddingAVector() {
+        int count = 0;
+        String[] files = {"Stops_09Aug19.shp", "Stops_09Aug19_shp9_9Stops_09Aug19", "Shapes_Trips_Routes_09Aug19_shp9_9Shapes_Trips_Routes_09Aug19.shp", "Shapes_Trips_Routes_09Aug19.shp"};
+        for (String s : files) {
+            System.out.println(s);
+            String fileName = s;
+            String doi = "vectorTest" + count;
+            SourceJavaObject sjo = new DataverseJavaObject("server");
+            CitationFields cf = sjo.getCitationFields();
+            cf.setPID(doi);
+            sjo.setCitationFields(cf);
+            GeoServerAPI geoServerAPI = new GeoServerAPI(sjo);
+            DataverseGeoRecordFile dgrf = new DataverseGeoRecordFile(doi, fileName);
+            geoServerAPI.addVector(fileName, doi);
+        }
     }
 }
