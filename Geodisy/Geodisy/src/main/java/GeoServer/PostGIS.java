@@ -31,7 +31,7 @@ public class PostGIS {
         try {
             p = processBuilder.start();
             try {
-                p.waitFor(2, TimeUnit.SECONDS);
+                p.waitFor(5, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
                 logger.error("Something went wrong trying to upload " + geoserverLabel + " to postgis");
             }finally{
