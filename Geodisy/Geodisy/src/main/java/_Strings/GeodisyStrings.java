@@ -233,7 +233,7 @@ public class GeodisyStrings {
     public final static String OGM_PATH = ""; //"OGM_PATH=/var/www/geoserver.frdr.ca/html/geodisy/ ";
     public final static String BACKEND_DEV_ADDRESS = "geoservertest.frdr.ca";
     public final static String BACKEND_PROD_ADDRESS = "geoserver.frdr.ca";
-    public final static String FRONTEND_DEV_ADDRESS = "geotest.frdr-dfdr.ca";
+    public final static String FRONTEND_DEV_ADDRESS = "206-12-95-26.cloud.computecanada.ca";
     public final static String FRONTEND_PROD_ADDRESS = "geo.frdr.ca";
     public final static String DATA_DIR_LOC = dataDir();
     public final static String DATA_DIR_LOC_CLOUD = "/geodata/geoserver/data/";
