@@ -225,7 +225,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
 
     private void getModifiedDate() {
         String modDate = javaObject.getSimpleFieldVal(LAST_MOD_DATE);
-        if(!modDate.isEmpty() && modDate!="9999")
+        if(!modDate.isEmpty() && !modDate.equals("9999"))
             jo.put("layer_modified_dt",modDate);
     }
 

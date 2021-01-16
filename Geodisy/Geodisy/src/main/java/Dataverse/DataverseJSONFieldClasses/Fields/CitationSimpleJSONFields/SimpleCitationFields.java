@@ -461,31 +461,31 @@ public class SimpleCitationFields extends JSONField {
     }
 
     private String getProductionDate() {
-        if(productionDate==null)
+        if(productionDate==null||productionDate.getDateAsString().equals("9999"))
             return "";
         return productionDate.getDateAsString();
     }
 
     private String getDistributionDate() {
-        if(distributionDate==null)
+        if(distributionDate==null||distributionDate.getDateAsString().equals("9999"))
             return "";
         return distributionDate.getDateAsString();
     }
 
     private String getDateOfDeposit() {
-        if(dateOfDeposit==null)
+        if(dateOfDeposit==null|| dateOfDeposit.getDateAsString().equals("9999"))
             return "";
         return dateOfDeposit.getDateAsString();
     }
 
     private String getPublicationDate() {
-        if(publicationDate==null)
+        if(publicationDate==null || publicationDate.getDateAsString().equals("9999"))
             return "";
         return publicationDate.getDateAsString();
     }
 
     private String getLastModDate() {
-        if(lastModDate==null)
+        if(lastModDate==null || lastModDate.getDateAsString().equals("9999"))
             return "";
         return lastModDate.getDateAsString();
     }
