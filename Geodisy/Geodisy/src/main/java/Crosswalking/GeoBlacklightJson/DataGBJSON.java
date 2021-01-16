@@ -198,7 +198,8 @@ public class DataGBJSON extends GeoBlacklightJSON{
             }
 
         }
-        jo.put("dct_temporal_sm",dateRange);
+        if(!dateRange.equals(""))
+            jo.put("dct_temporal_sm",dateRange);
 
     }
 
@@ -224,7 +225,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
 
     private void getModifiedDate() {
         String modDate = javaObject.getSimpleFieldVal(LAST_MOD_DATE);
-        if(!modDate.isEmpty())
+        if(!modDate.isEmpty() && modDate!="9999")
             jo.put("layer_modified_dt",modDate);
     }
 
@@ -324,7 +325,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         if(dateString.equals(""))
             return;
         Date d = new Date(dateString);
-        jo.put("dct_issued_dt",d.getDateAsString());
+        jo.put("dct_issued_s",d.getDateAsString());
     }
 
 
