@@ -18,7 +18,7 @@ public class GeoBlacklightStrings {
     private static String GEOSERVER_DOWNLOAD_BASE = GEOSERVER_BASE + "geoserver/geodisy/";
     public static String GEOSERVER_RASTER_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "wms?service=WMS&version=1.1.0&request=GetMap&layers=geodisy:";
     public static String GEOSERVER_VECTOR_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geodisy:";
-    public static String GEOSERVER_REST = GEOSERVER_BASE + "geoserver/web/";
+    public static String GEOSERVER_REST;
     public static String GEOSERVER_WFS_LOCATION = GEOSERVER_BASE_INSECURE+"geoserver/geodisy/wfs";
     public static String GEOSERVER_WMS_LOCATION = GEOSERVER_BASE_INSECURE+"geoserver/geodisy/wms";
     public final static String EXTERNAL_SERVICES = "dct_references_s";
@@ -53,7 +53,7 @@ public class GeoBlacklightStrings {
 
     public static void load(){
         GEOSERVER_BASE = "https://" + BACKEND_ADDRESS + "/";
-        GEOSERVER_BASE_INSECURE = (TEST)? "http://geotest.frdr.ca/" : "http://geo.frdr.ca/";
+        GEOSERVER_BASE_INSECURE = (TEST)? "http://geoservertest.frdr-dfdr.ca/" : "http://geo.frdr-dfdr.ca/";
         GEOSERVER_DOWNLOAD_BASE = GEOSERVER_BASE + "geoserver/geodisy/";
         GEOSERVER_DOWNLOAD_BASE = GEOSERVER_BASE + "geoserver/geodisy/";
         GEOSERVER_RASTER_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "wms?service=WMS&version=1.1.0&request=GetMap&layers=geodisy:";
