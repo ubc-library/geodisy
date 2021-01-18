@@ -84,7 +84,7 @@ public class Unzip {
             zis.closeEntry();
             zis.close();
 
-        } catch (IOException ex) {
+        } catch (IOException | IllegalArgumentException ex) {
             ex.printStackTrace();
         }
         File orig = new File(filePath);
