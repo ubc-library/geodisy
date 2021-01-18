@@ -112,19 +112,7 @@ public class DataverseAPI extends SourceAPI {
         return answers;
     }
 
-    private boolean dontProcessSpecificRecords(String doi) {
-        HashSet<String> dois = new HashSet<>();
-        String[] doiArray = HUGE_RECORDS_TO_IGNORE_UNTIL_LATER;
-        if (doiArray.length == 0)
-            return false;
-        for (String d : doiArray){
-            dois.add(d.toLowerCase());
-            if(doi.endsWith(d.toLowerCase()))
-                return true;
 
-        }
-        return dois.contains(doi.toLowerCase());
-    }
     //Only process dois in the below doi array (only for testing, really)
     private boolean processSpecificRecords(String doi) {
 

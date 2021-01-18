@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 
 import static _Strings.GeodisyStrings.DATA_DIR_LOC;
+import static _Strings.GeodisyStrings.HUGE_RECORDS_TO_IGNORE_UNTIL_LATER;
 
 /**
  *
@@ -66,5 +67,15 @@ public abstract class SourceAPI implements API {
     protected void crosswalkSJOsToXML(SourceJavaObject sJO) {
         Crosswalk crosswalk = new Crosswalk();
         crosswalk.convertSJO(sJO);
+    }
+    protected boolean dontProcessSpecificRecords(String doi) {
+        String[] doiArray = HUGE_RECORDS_TO_IGNORE_UNTIL_LATER;
+        if (doiArray.length == 0)
+            return false;
+        for (String d : doiArray){
+            if(doi.endsWith(d.toLowerCase()))
+                return true;
+        }
+        return false;
     }
 }

@@ -2,6 +2,7 @@ package Dataverse;
 
 import BaseFiles.GeoLogger;
 import Crosswalking.JSONParsing.DataverseParser;
+import _Strings.GeodisyStrings;
 import org.json.JSONException;
 import org.json.JSONTokener;
 import org.json.JSONArray;
@@ -54,12 +55,14 @@ public class FRDRAPI extends SourceAPI{
                     if (djo.hasContent && !testing) {
                         System.out.println("Downloading record: " + djo.getPID());
                         long startTime = Calendar.getInstance().getTimeInMillis();
-                        djo.setGeoDataFiles(djo.downloadFiles());
-                        Calendar end = Calendar.getInstance();
-                        Long total = end.getTimeInMillis() - startTime;
-                        System.out.println("Finished downloading " + djo.getPID() + " after " + total + " milliseconds");
-                        djo.updateRecordFileNumbers();
-                        djo.updateGeoserver();
+                        if(!dontProcessSpecificRecords(djo.getPID())) {
+                            djo.setGeoDataFiles(djo.downloadFiles());
+                            Calendar end = Calendar.getInstance();
+                            Long total = end.getTimeInMillis() - startTime;
+                            System.out.println("Finished downloading " + djo.getPID() + " after " + total + " milliseconds");
+                            djo.updateRecordFileNumbers();
+                            djo.updateGeoserver();
+                        }
                     }
                     if (djo.hasBoundingBox()) {
                         crosswalkRecord(djo);
