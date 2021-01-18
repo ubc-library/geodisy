@@ -66,7 +66,7 @@ public abstract class ISO_Schema implements XMLSchema {
 
     public File genDirs(String doi, String localRepoPath) {
         {
-            File fileDir = new File(GeodisyStrings.replaceSlashes("./" + localRepoPath + GeodisyStrings.removeHTTPS(doi).replace(".","/")));
+            File fileDir = new File(GeodisyStrings.replaceSlashes(localRepoPath + GeodisyStrings.removeHTTPS(doi).replace(".","/")));
             if (!fileDir.exists())
                 fileDir.mkdirs();
 
@@ -78,7 +78,7 @@ public abstract class ISO_Schema implements XMLSchema {
         File fileDir = genDirs(doi.replace(".","/"), localRepoPath);
         try {
             FileUtils.cleanDirectory(fileDir);
-        } catch (IOException e) {
+        } catch (IOException |IllegalArgumentException e) {
             logger.error("Something went wrong cleaning the base directory for the XML/JSON");
         }
         return fileDir;
