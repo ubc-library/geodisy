@@ -102,6 +102,7 @@ public class Unzip {
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
         files = unzipFunction(filePath,destPath);
         for(FileInfo f: files){
+            System.out.println(f.getFileName());
             DataverseRecordFile temp = new DataverseRecordFile(dRF);
             temp.setTranslatedTitle(f.getFileName());
             temp.setOriginalTitle(f.getOrigName());

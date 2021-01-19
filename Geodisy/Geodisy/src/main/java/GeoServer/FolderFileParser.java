@@ -86,7 +86,7 @@ public class FolderFileParser {
 
     public LinkedList<DataverseRecordFile> unzip(File f, String dirPath, DataverseRecordFile drf, DataverseJavaObject djo){
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
-        String filePath = f.getAbsolutePath();
+        String filePath = GeodisyStrings.replaceSlashes(f.getAbsolutePath());
         Unzip zip = new Unzip();
         try {
             System.out.println("Unzipping file " + f.getName());
