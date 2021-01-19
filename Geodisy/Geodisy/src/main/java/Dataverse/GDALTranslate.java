@@ -1,6 +1,7 @@
 package Dataverse;
 
 import BaseFiles.GeoLogger;
+import BaseFiles.Geodisy;
 import _Strings.GeodisyStrings;
 
 
@@ -73,7 +74,7 @@ public class GDALTranslate {
 
         if(transformType.equals(RASTER)) {
             call = GDAL_TRANSLATE + sourcePath + " " + destPath + "temp.tif";
-
+            call = GeodisyStrings.replaceSlashes(call);
             Process process = null;
             try {
                 if (IS_WINDOWS) {
@@ -103,6 +104,7 @@ public class GDALTranslate {
             }
         } else{
                 call = OGR2OGR + destPath + "temp.shp " + sourcePath;
+                call = GeodisyStrings.replaceSlashes(call);
                 processBuilder.command("bash", "-c", call);
                 Process p;
                 try {
