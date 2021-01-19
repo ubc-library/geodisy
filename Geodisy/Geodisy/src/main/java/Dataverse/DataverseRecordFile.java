@@ -10,6 +10,7 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.Stack;
@@ -129,7 +130,6 @@ public class DataverseRecordFile {
             else if (newFile.getName().endsWith(".tab")) {
                 //System.out.println("Converting tab file");
                 drfs.add(ffp.convertTab(newFile, dirPath, newFile.getName(), this));
-                newFile.delete();
             }
             else if(GeodisyStrings.fileToAllow(newFile.getName())) {
                 drfs.add(this);
