@@ -328,12 +328,9 @@ public class SimpleCitationFields extends JSONField {
     private void setPersistentID(String persistentURL) {
         pURL = persistentURL;
         String filteredDOI = filterURL(persistentURL);
-        if(filteredDOI.isEmpty()) {
-            this.pID = filteredDOI;
+        if(filteredDOI.isEmpty())
             logger.error("Something went wrong as the PERSISTENT_ID us wonky: " + persistentURL);
-        }else {
-            this.pID = filteredDOI.substring(filteredDOI.indexOf(getField(AUTHORITY)));
-        }
+        this.pID = filteredDOI;
     }
 
     private void setTitle(String title) {

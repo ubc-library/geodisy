@@ -204,6 +204,8 @@ public abstract class SourceJavaObject {
             return "ark";
         if(protocol.contains("urn"))
             return "urn";
+        if(protocol.contains(""))
+            return "unspecified_in_metadata";
         return "Error";
     }
 

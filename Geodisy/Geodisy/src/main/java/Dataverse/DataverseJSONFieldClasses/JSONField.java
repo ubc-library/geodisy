@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 import static org.apache.commons.validator.routines.UrlValidator.ALLOW_ALL_SCHEMES;
 
@@ -22,10 +23,13 @@ public abstract class JSONField {
      */
     protected String filterURL(String value) {
         try {
-            new URI(value).parseServerAuthority();
+            new URL(value).toURI();
             return value;
-        } catch (URISyntaxException e) {
-            logger.warn("Got an invalid url: " + value);
+        }
+
+        // If there was an Exception
+        // while creating URL object
+        catch (Exception e) {
             return "";
         }
     }
