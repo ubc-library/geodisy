@@ -14,10 +14,9 @@ public class GeoBlacklightStrings {
     //GEOBLACKLIGHT
     public static String GEOBLACKLIGHT_BASE = "http://" + FRONTEND_ADDRESS + ":3000/catalog/";
     public static String GEOSERVER_BASE;
-    public static String GEOSERVER_BASE_INSECURE;
-    private static String GEOSERVER_DOWNLOAD_BASE = GEOSERVER_BASE + "geoserver/geodisy/";
-    public static String GEOSERVER_RASTER_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "wms?service=WMS&version=1.1.0&request=GetMap&layers=geodisy:";
-    public static String GEOSERVER_VECTOR_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geodisy:";
+    private static String GEOSERVER_DOWNLOAD_BASE;
+    public static String GEOSERVER_RASTER_DOWNLOAD_BASE;
+    public static String GEOSERVER_VECTOR_DOWNLOAD_BASE;
     public static String GEOSERVER_REST;
     public static String GEOSERVER_WFS_LOCATION;
     public static String GEOSERVER_WMS_LOCATION;
@@ -52,15 +51,14 @@ public class GeoBlacklightStrings {
     }
 
     public static void load(){
-        GEOSERVER_BASE = "https://" + BACKEND_ADDRESS + "/";
-        GEOSERVER_BASE_INSECURE = (TEST)? "http://geotest.frdr-dfdr.ca/" : "http://geo.frdr-dfdr.ca/";
-        GEOSERVER_DOWNLOAD_BASE = GEOSERVER_BASE + "geoserver/geodisy/";
-        GEOSERVER_DOWNLOAD_BASE = GEOSERVER_BASE + "geoserver/geodisy/";
+        GEOSERVER_BASE = (TEST)? "https://geotest.frdr-dfdr.ca/geoserver/" : "https://geo.frdr-dfdr.ca/geoserver/";
+        GEOSERVER_DOWNLOAD_BASE = GEOSERVER_BASE + "geodisy/";
         GEOSERVER_RASTER_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "wms?service=WMS&version=1.1.0&request=GetMap&layers=geodisy:";
         GEOSERVER_VECTOR_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geodisy:";
-        GEOSERVER_REST = GEOSERVER_BASE + "geoserver/web/";
-        GEOSERVER_WFS_LOCATION = GEOSERVER_BASE_INSECURE+"geoserver/geodisy/wfs";
-        GEOSERVER_WMS_LOCATION = GEOSERVER_BASE_INSECURE+"geoserver/geodisy/wms";
+        GEOSERVER_REST = GEOSERVER_BASE + "rest/";
+        GEOSERVER_WFS_LOCATION = GEOSERVER_BASE+"geodisy/wfs";
+        GEOSERVER_WMS_LOCATION = GEOSERVER_BASE+"geodisy/wms";
         METADATA_DOWNLOAD_SERVICES = new String[]{RECORD_URL, WMS, WFS,DIRECT_FILE_DOWNLOAD,ISO_METADATA};
+
     }
 }

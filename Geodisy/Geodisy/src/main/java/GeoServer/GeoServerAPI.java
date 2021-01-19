@@ -19,6 +19,7 @@ import java.io.*;
 
 import java.nio.file.Files;
 
+import static _Strings.GeoBlacklightStrings.GEOSERVER_REST;
 import static _Strings.GeodisyStrings.*;
 import static _Strings.GeoserverStrings.*;
 
@@ -35,10 +36,10 @@ public class GeoServerAPI extends DestinationAPI {
         caller = new HTTPCallerGeosever();
         logger =  new GeoLogger(this.getClass());
     }
-
+    //TODO FIGURE OUT GEOSERVER REST ENDPOINT WITH JOEL
     private boolean generateWorkspace(String workspaceName) {
         try {
-            String generateWorkspace = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + "-XPOST -H \"Content-type: text/xml\" -d \"<workspace><name>" + workspaceName + "</name></workspace>\" http://localhost:8080/geoserver/rest/workspaces";
+            String generateWorkspace = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + "-XPOST -H \"Content-type: text/xml\" -d \"<workspace><name>" + workspaceName + "</name></workspace>\" " + GEOSERVER_REST + "workspaces";
             ProcessBuilder processBuilder= new ProcessBuilder();
             Process p;
             processBuilder.command("/usr/bin/bash", "-c", generateWorkspace);
@@ -80,7 +81,7 @@ public class GeoServerAPI extends DestinationAPI {
 
         try {
             //bring new layer over from POSTGIS
-            String call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H \"Content-type: text/xml\" -d \"<featureType><name>" + geoserverlabel.toLowerCase() + "</name><title>"+ title +"</title><nativeCRS>EPSG:4326</nativeCRS><srs>EPSG:4326</srs><enabled>true</enabled></featureType>\" http://localhost:8080/geoserver/rest/workspaces/geodisy/datastores/" + vectorDB + "/featuretypes";
+            String call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H \"Content-type: text/xml\" -d \"<featureType><name>" + geoserverlabel.toLowerCase() + "</name><title>"+ title +"</title><nativeCRS>EPSG:4326</nativeCRS><srs>EPSG:4326</srs><enabled>true</enabled></featureType>\" " + GEOSERVER_REST + "workspaces/geodisy/datastores/" + vectorDB + "/featuretypes";
             processBuilder.command("/usr/bin/bash", "-c",call);
             Process p = processBuilder.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -100,7 +101,8 @@ public class GeoServerAPI extends DestinationAPI {
         String vectorDB = GEOSERVER_VECTOR_STORE;
         String title = fileName.substring(0,fileName.lastIndexOf('.'));
         ProcessBuilder processBuilder= new ProcessBuilder();
-        String call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -H 'Accept: text/xml' -XGET http://localhost:8080/geoserver/rest/workspaces/geodisy/datastores/"+ vectorDB + "/featuretypes/" + geoserverLabel+".xml";
+        String call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -H 'Accept: text/xml' -XGET "+ GeodisyStrings.getRoot() + "/geoserver/rest/workspaces/geodisy/datastores/"+ vectorDB + "/featuretypes/" + geoserverLabel+".xml";
+        call = GeodisyStrings.replaceSlashes(call);
         try {
             processBuilder.command("/usr/bin/bash", "-c",call);
             Process p = processBuilder.start();
@@ -110,7 +112,7 @@ public class GeoServerAPI extends DestinationAPI {
                 xml+=iS.read();
             }
             xml.replace("<title>"+geoserverLabel+"</title>","<title>"+title+"</title>");
-            call = "curl -u admin:geoserver -H 'Accept: application/xml' -H 'Content-type: application/xml' -XPUT http://localhost:8080/geoserver/rest/workspaces/geodisy/datastores/"+ vectorDB+"/featuretypes/" + geoserverLabel+ ".xml -d '" + xml + "'";
+            call = "curl -u admin:geoserver -H 'Accept: application/xml' -H 'Content-type: application/xml' -XPUT " + GEOSERVER_REST + " workspaces/geodisy/datastores/"+ vectorDB+"/featuretypes/" + geoserverLabel+ ".xml -d '" + xml + "'";
             ProcessBuilder processBuilder2= new ProcessBuilder();
             processBuilder2.command("/usr/bin/bash", "-c",call);
             Process p2 = processBuilder.start();
@@ -178,7 +180,7 @@ public class GeoServerAPI extends DestinationAPI {
     }
 
         private void deleteOldCoverstore(ProcessBuilder processBuilder, String geoserverLable) throws InterruptedException, IOException{
-            String deleteCoveragestore = "curl -u admin:" + GEOSERVER_PASSWORD + " -XDELETE " + stringed("http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores/" + geoserverLable.toLowerCase() + "?recurse=true");
+            String deleteCoveragestore = "curl -u admin:" + GEOSERVER_PASSWORD + " -XDELETE " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores/" + geoserverLable.toLowerCase() + "?recurse=true");
             Process p;
             processBuilder.command("/usr/bin/bash", "-c", deleteCoveragestore);
             p = processBuilder.start();
@@ -231,7 +233,7 @@ public class GeoServerAPI extends DestinationAPI {
         }
 
         private void createCoverstore(String geoserverLable, ProcessBuilder processBuilder, String fileName) throws InterruptedException, IOException{
-            String createCoveragestore = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:text/xml") +  " -d '<coverageStore><name>" + geoserverLable.toLowerCase()+ "</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>file:" + GeodisyStrings.removeHTTPSAndReplaceAuthority(sjo.getPID()).replace(".","/") + "/" + fileName + "</url></coverageStore>' " + stringed("http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores?configure=all");
+            String createCoveragestore = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:text/xml") +  " -d '<coverageStore><name>" + geoserverLable.toLowerCase()+ "</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>file:" + GeodisyStrings.removeHTTPSAndReplaceAuthority(sjo.getPID()).replace(".","/") + "/" + fileName + "</url></coverageStore>' " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores?configure=all");
             Process p;
             processBuilder.command("/usr/bin/bash", "-c", createCoveragestore);
             p = processBuilder.start();
@@ -247,7 +249,7 @@ public class GeoServerAPI extends DestinationAPI {
         String title = translatedTitle;
         if(title.contains("."))
             title=title.substring(0,title.lastIndexOf("."));
-        String addRasterLayer = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:application/xml") + " -d '<coverage><name>"+ geoserverLabel.toLowerCase() + "</name><nativeCRS>" + RASTER_CRS + "</nativeCRS><title>" + title + "</title><enabled>True</enabled></coverage>' " + stringed("http://localhost:8080/geoserver/rest/workspaces/geodisy/coveragestores/"+ geoserverLabel.toLowerCase() + "/coverages");
+        String addRasterLayer = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:application/xml") + " -d '<coverage><name>"+ geoserverLabel.toLowerCase() + "</name><nativeCRS>" + RASTER_CRS + "</nativeCRS><title>" + title + "</title><enabled>True</enabled></coverage>' " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores/"+ geoserverLabel.toLowerCase() + "/coverages");
         Process p;
         processBuilder.command("/usr/bin/bash", "-c", addRasterLayer);
         p = processBuilder.start();
@@ -274,7 +276,7 @@ public class GeoServerAPI extends DestinationAPI {
     }
 
     private String generateUploadCall() {
-        String curlCall = "/usr/bin/curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H \"Content-type: application/json\" -d @_tempFiles/import.json \"http://localhost:8080/geoserver/rest/imports\"";
+        String curlCall = "/usr/bin/curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H \"Content-type: application/json\" -d @_tempFiles/import.json \""+ GEOSERVER_REST + "imports\"";
         return curlCall;
     }
 
@@ -310,7 +312,7 @@ public class GeoServerAPI extends DestinationAPI {
         FileWriter fileWriter = new FileWriter(storePath);
         fileWriter.write(jo.toString());
         HTTPCaller caller = new HTTPCombineCaller();
-        caller.callHTTP("/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + "-XPOST -T "+ storePath +" -H \"Content-type: text/xml\" http://localhost:8080/geoserver/rest/workspaces/"+ WORKSPACE_NAME + "/datastores");
+        caller.callHTTP("/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + "-XPOST -T "+ storePath +" -H \"Content-type: text/xml\" "+ GEOSERVER_REST + "workspaces/"+ WORKSPACE_NAME + "/datastores");
         return deleteXMLFile(storePath);
     }
 
@@ -372,7 +374,7 @@ public class GeoServerAPI extends DestinationAPI {
     //TODO generate new workspace
 
     private boolean deleteWorkspace(String workspaceName){
-        String callURL = "curl -u "+ GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -X DELETE http://localhost:8080/geoserver/rest/workspaces/" + workspaceName + "?recurse=true -H \"accept: application/json\" -H \"content-type: application/json\"";
+        String callURL = "curl -u "+ GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -X DELETE "+ GEOSERVER_REST + "workspaces/" + workspaceName + "?recurse=true -H \"accept: application/json\" -H \"content-type: application/json\"";
         String response = caller.deleteWorkSpace(callURL);
         return response.contains("HTTP/1.1 200 OK")||response.contains("HTTP/1.1 404 Workspace");
     }
