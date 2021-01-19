@@ -108,6 +108,7 @@ public class GDALTranslate {
                 System.out.println(call);
                 processBuilder.command("bash", "-c", call);
                 Process p;
+                String output ="";
                 try {
                     if (IS_WINDOWS) {
                         processBuilder.command("cmd.exe", "/c", call);
@@ -118,13 +119,18 @@ public class GDALTranslate {
                     try {
                         BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
                         String line;
-                        while ((line = reader.readLine()) != null)
+                        while ((line = reader.readLine()) != null) {
+                            output += line;
                             continue;
+                        }
                         p.waitFor();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     p.destroy();
+                    System.out.println(output);
+                    if(output.contains("FAILURE"))
+                        return false;
                     if(name.toLowerCase().endsWith(".shp")) {
                         File[] files = new File(destPath).listFiles();
                         Set<String> extensions = new HashSet<>();
@@ -152,6 +158,14 @@ public class GDALTranslate {
 
                     File newFile = new File(destPath+"temp.shp");
                     if(newFile.exists()) {
+                        if(sourcePath.endsWith(".shp")){
+                            String stub = sourcePath.substring(0,sourcePath.indexOf(".shp"));
+                            for(String ex: NON_SHP_SHAPEFILE_EXTENSIONS){
+                                File file1 = new File(stub+ex);
+                                if(file1.exists())
+                                    file1.delete();
+                            }
+                        }
                         file = new File(sourcePath);
                         file.delete();
                         File[] files = new File(destPath).listFiles();
