@@ -237,8 +237,8 @@ public class GeodisyStrings {
     public final static String FRONTEND_DEV_ADDRESS = "206-12-95-26.cloud.computecanada.ca";
     public final static String FRONTEND_PROD_ADDRESS = "geo.frdr.ca";
     public final static String DATA_DIR_LOC = dataDir();
-    public final static String DATA_DIR_LOC_CLOUD = "/geodata/downloads/";
-    public final static String DATA_DIR_LOC_LOCAL = "D:/geodata/downloads/";
+    public final static String DATA_DIR_LOC_CLOUD = "/geodata/geoserver/data/downloads/";
+    public final static String DATA_DIR_LOC_LOCAL = "D:/geodata/geoserver/data/downloads/";
     public final static String BASE_LOCATION_TO_STORE_METADATA = "metadata/";
 
     //Values are added by the load() method at the top of the class
