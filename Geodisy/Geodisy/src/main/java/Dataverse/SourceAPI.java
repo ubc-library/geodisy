@@ -73,7 +73,7 @@ public abstract class SourceAPI implements API {
         if (doiArray.length == 0)
             return false;
         for (String d : doiArray){
-            if(doi.endsWith(d.toLowerCase()))
+            if(doi.toLowerCase().endsWith(d.toLowerCase()))
                 return true;
         }
         return false;

@@ -52,7 +52,7 @@ public class GeodisyStrings {
     public final static String OPENGEOMETADATA_PASSWORD = PRIVATE_OPENGEOMETADATA_PASSWORD;
     public final static int NUMBER_OF_RECS_TO_HARVEST = 0;
     //These records will not have files downloaded for now
-    public final static String[] HUGE_RECORDS_TO_IGNORE_UNTIL_LATER = {"10.5683/SP2/FJWIL8","10.5683/SP/Y3HRN","10864/GSSJX","10.5683/SP2/JP4WDF","10864/9KJ1L","10864/11086","10864/9VNIK","10.5683/SP/Y3HMRN","10.5683/SP/OEIP77","10.5683/SP/IP9ERW","10.5683/SP/NTUOK9","10864/11369","10864/11175","10.5683/SP/BT7HN2","10.5683/SP/4RFHBJ","10.5683/SP/T7ZJAF","10.5683/SP/RZM9HE","10.5683/SP/RAJQ2P","10.5683/SP2/AAGZDG","10.5683/SP2/1XRF9U","10.5683/SP2/MICSLT", "10.5683/SP2/5T2RD9", "10.5683/SP2/FVQSQG","11272.1/AB2/TSDGES","11272.1/AB2/7HKU08","10.5683/SP2/1XRF9U","11272.1/AB2/GMEFD3","10.5683/SP2/TTJNIU"};
+    public final static String[] HUGE_RECORDS_TO_IGNORE_UNTIL_LATER = {"10.5683/SP2/FJWIL8","10.5683/SP/Y3HRN","10864/GSSJX","10.5683/SP2/JP4WDF","10864/9KJ1L","10864/11086","10864/9VNIK","10.5683/SP/Y3HMRN","10.5683/SP/OEIP77","10.5683/SP/IP9ERW","10.5683/SP/NTUOK9","10864/11369","10864/11175","10.5683/SP/BT7HN2","10.5683/SP/4RFHBJ","10.5683/SP/T7ZJAF","10.5683/SP/RZM9HE","10.5683/SP/RAJQ2P","10.5683/SP2/AAGZDG","10.5683/SP2/1XRF9U","10.5683/SP2/MICSLT", "10.5683/SP2/5T2RD9", "10.5683/SP2/FVQSQG","11272.1/AB2/TSDGES","11272.1/AB2/7HKU08","10.5683/SP2/1XRF9U","11272.1/AB2/GMEFD3","10.5683/SP2/TTJNIU","10.5683/SP2/UCCFVQ"};
     public final static String[] PROCESS_THESE_DOIS = {};// { "10.5683/SP2/M0Q0JB","10.5683/SP2/J8581N","10.5683/SP2/JISB1K","10.5683/SP2/YPVTYT","10.5682/SP2/PONAP6"}; //"10.5683/SP2/UEJGTV" "10864/11669" "10.5683/SP2/GKJPIQ""10.5683/SP2/KYHUNF""10.5683/SP/EGOYE3""10.5683/SP2/LAWLTI""10.5072/FK2/PLD5VK","10.5683/SP2/UEJGTV","10.5683/SP/SBTXLS","10.5683/SP/UYBROL","10864/XER6B","10864/10197""10.5683/SP/OZ0WB0","10.5683/SP/S0MQVP","10.5683/SP/5S5Y9T","10.5683/SP/30JPOR","10.5683/SP/ASR2XE","10.5683/SP2/1VWZNC","10.5683/SP/AB5A9O","10.5683/SP2/YNOJSD","10.5683/SP/AB5A9O","10.5683/SP/2ZARY2","10.5683/SP2/ZDAHQG","10.5683/SP2/JFQ1SZ"
     //Repositories (add new repository URLS to a appropriate repository URL array below)
         // New Repository Types need new URL Arrays [Geodisy 2]
@@ -351,29 +351,75 @@ public class GeodisyStrings {
             path = path.replace(replaceSlashes("http:\\"),"");
         if(path.contains(replaceSlashes("https:\\")))
             path = path.replace(replaceSlashes("https:\\"),"");
-        if(path.contains("https:__"))
-            path = path.replace("https:__","");
-        if(path.contains("http:__"))
-            path = path.replace("http:__","");
-        if (path.contains(replaceSlashes("hdl")))
-            if (path.contains("hdl.handle"))
-                return path.replace(replaceSlashes("hdl.handle.net\\"),"");
-            else
-                return path.replace(replaceSlashes("hdl\\handle\\net\\"),"");
-        else if (path.contains("hdl_handle_net_"))
-            return path.replace("hdl_handle_net_","_");
-        else if (path.contains("hdl_handle_net"))
-            return path.replace("hdl_handle_net","");
 
-        if(path.contains(replaceSlashes("doi.org\\")))
-            return path.replace(replaceSlashes("doi.org\\"),"");
-        if(path.contains(replaceSlashes("doi_org_")))
-            return path.replace(replaceSlashes("doi_org_"),"_");
-        else if(path.contains(replaceSlashes("doi_org")))
-            return path.replace(replaceSlashes("doi_org"),"");
-        if(path.contains(replaceSlashes("doi\\org\\")))
-            return path.replace(replaceSlashes("doi\\org\\"),"");
+        path = nonUniqueFromPid(path);
 
+        String slash = GeodisyStrings.replaceSlashes("/");
+
+        path = path.replace("=","_");
+        if(path.contains(slash)) {
+            path = path.replace(".", slash);
+            path = path.replace("?", slash);
+        }
+        else {
+            path = path.replace(".", "_");
+            path = path.replace("?", "_");
+        }
+        if(path.startsWith("D:"))
+            path = path.replace("D:","D***");
+        if(path.startsWith("C:"))
+            path = path.replace("C:","C***");
+        path = path.replace(":","_");
+        path = path.replace("D***","D:");
+        path = path.replace("C***","C:");
+
+        path = replaceSlashes(path);
+
+
+        return path;
+    }
+
+    private static String nonUniqueFromPid(String path) {
+        String[][] nonUnique = {
+                {"hdl.handle.net/","hnd/"}
+                ,{"doi.org/","doi/"}
+                ,{"www.polardata.ca/pdcsearch/PDCSearchDOI.jsp?","pdc/"}
+                ,{"researchdata.sfu.ca/islandora/object/", "sfu/"}
+                ,{"donnees.montreal.ca/dataset/", "montreal/"}
+                ,{"catalogue.cioos.ca/dataset/", "cioos/"}
+                ,{"data.ontario.ca/dataset/", "on/"}
+                ,{"data.surrey.ca/dataset/","surrey/"}
+                ,{"hecate.hakai.org/geonetwork/srv/eng/catalog.search#/metadata/","geonet/"}
+                ,{"lwbin-datahub.ad.umanitoba.ca/dataset/","umb/"}
+                ,{"data.calgary.ca/d/","calgary/"}
+                ,{"search2.odesi.ca/#/details?uri=%2F","odesi/"}
+                ,{"catalogue.data.gov.bc.ca/dataset/","bc/"}
+                ,{"open.toronto.ca/dataset/","toronto/"}
+                ,{"opendatakingston.cityofkingston.ca/explore/dataset/","kingston/"}
+                ,{"data.princeedwardisland.ca/d/","pei/"}
+                ,{"data.winnipeg.ca/d/","winnipeg/"}
+                ,{"opendata.vancouver.ca/explore/dataset/","vancouver/"}
+                ,{"data.novascotia.ca/d/","ns/"}
+                ,{"www.donneesquebec.ca/recherche/fr/dataset/","quebec/"}
+                ,{"digital.library.yorku.ca/", "yorku/"}};
+        for(String[] u: nonUnique){
+            String uPath = GeodisyStrings.replaceSlashes(u[0]);
+            String endPathVal = GeodisyStrings.replaceSlashes(u[1]);
+            String slash = GeodisyStrings.replaceSlashes("\\");
+            if(path.contains(uPath))
+                path = path.replace(uPath,endPathVal);
+            String underUPath = uPath.replace(slash,"_").replace(".","_");
+            if(path.contains(underUPath)) {
+                path = path.replace(underUPath, endPathVal.replace(slash,"_").replace(".","_"));
+                if(path.contains("%2F"))
+                    path.replace("%2F","_");
+            }
+            if(path.contains(uPath.substring(0, uPath.length()-1)))
+                path = path.replace(endPathVal.substring(endPathVal.length()-1),"");
+            if(path.contains((uPath.replace(".",slash))))
+              path = path.replace(endPathVal.replace(".",slash),"");
+            path = path.replace("%2F",slash);
+        }
         return path;
     }
 }
