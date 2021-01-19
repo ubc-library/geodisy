@@ -78,7 +78,7 @@ public class GeographicBoundingBox extends CompoundJSONField {
         }else
             type = "m";
         answer = answer + type + fileNumber;
-        return GeodisyStrings.removeHTTPS(answer).replace(".","_").replace("/","_").replace("\\","_");
+        return GeodisyStrings.removeHTTPSAndReplaceAuthority(answer).replace(".","_").replace("/","_").replace("\\","_");
     }
 
     public String getBaseGeoserverLocation(){
@@ -89,7 +89,7 @@ public class GeographicBoundingBox extends CompoundJSONField {
         else{
             String temp = geoserverLabel.substring(colon+1);
             temp = geoserverLabel.substring(0,colon) + temp;
-            GeodisyStrings.removeHTTPS(temp).replace(".","_").replace("/","_").replace("\\","_");
+            GeodisyStrings.removeHTTPSAndReplaceAuthority(temp).replace(".","_").replace("/","_").replace("\\","_");
             answer = temp;
         }
         return answer;
@@ -333,7 +333,7 @@ public class GeographicBoundingBox extends CompoundJSONField {
     }
 
     private String folderized(String doi) {
-        String answer = GeodisyStrings.removeHTTPS(doi);
+        String answer = GeodisyStrings.removeHTTPSAndReplaceAuthority(doi);
         answer = answer.replace(".","/");
         int loc = answer.lastIndexOf("/");
         if(loc==-1) {

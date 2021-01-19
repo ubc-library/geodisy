@@ -16,7 +16,7 @@ public class RemoveRecord {
         fW.verifyFileExistence(EXISTING_BBOXES);
     ExistingHarvests existingHarvests = ExistingHarvests.getExistingHarvests();
         existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
-    String folderized = GeodisyStrings.removeHTTPS(record2Remove).replace(".","/");
+    String folderized = GeodisyStrings.removeHTTPSAndReplaceAuthority(record2Remove).replace(".","/");
     File file = new File(DATA_DIR_LOC + folderized);
         try {
         FileUtils.deleteDirectory(file);

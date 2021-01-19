@@ -5,7 +5,6 @@ import _Strings.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import GeoServer.FolderFileParser;
-import GeoServer.Unzip;
 import org.apache.commons.io.FileUtils;
 
 
@@ -48,7 +47,7 @@ public class DataverseRecordFile {
         this.dbID = dbID;
         this.server = server;
         recordURL = server+"api/access/datafile/" + dbID;
-        this.datasetIdent = GeodisyStrings.removeHTTPS(datasetIdent.replace(".","_").replace("/","_"));
+        this.datasetIdent = GeodisyStrings.removeHTTPSAndReplaceAuthority(datasetIdent.replace(".","_").replace("/","_"));
         gbb = new GeographicBoundingBox(datasetIdent);
 
     }
@@ -65,7 +64,7 @@ public class DataverseRecordFile {
         this.fileIdent = "";
         this.server = server;
         recordURL = server+"api/access/datafile/" + dbID;
-        this.datasetIdent = GeodisyStrings.removeHTTPS(GeodisyStrings.replaceSlashes(datasetIdent)).replace(".","_").replace(GeodisyStrings.replaceSlashes("/"),"_");
+        this.datasetIdent = GeodisyStrings.removeHTTPSAndReplaceAuthority(GeodisyStrings.replaceSlashes(datasetIdent)).replace(".","_").replace(GeodisyStrings.replaceSlashes("/"),"_");
         gbb = new GeographicBoundingBox(datasetIdent);
 
 
@@ -83,7 +82,7 @@ public class DataverseRecordFile {
      * @param gbb
      */
     public DataverseRecordFile(String datasetIdent, GeographicBoundingBox gbb){
-        String dI =  GeodisyStrings.removeHTTPS(datasetIdent);
+        String dI =  GeodisyStrings.removeHTTPSAndReplaceAuthority(datasetIdent);
         this.fileIdent = dI;
         this.gbb = gbb;
         this.gbb.setField(GEOSERVER_LABEL, dI.replace(".","_").replace("/","_").replace("\\","_"));
@@ -107,7 +106,7 @@ public class DataverseRecordFile {
         DownloadedFiles downloads = DownloadedFiles.getDownloadedFiles();
         downloads.addDownload(originalTitle,djo.getPID(),dbID);
         try {
-            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPS(datasetIdent.replace("_", "/").replace(".","/") + "/"));
+            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(datasetIdent.replace("_", "/").replace(".","/") + "/"));
 
             File folder = new File(dirPath);
             folder.mkdirs();

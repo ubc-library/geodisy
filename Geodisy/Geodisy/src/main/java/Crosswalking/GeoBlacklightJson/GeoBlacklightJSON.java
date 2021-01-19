@@ -8,7 +8,6 @@ import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordFile;
 import Dataverse.SourceRecordFiles;
 import _Strings.GeodisyStrings;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -53,15 +52,15 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
         getOptionalFields(drf,total);
         geoBlacklightJson = jo.toString();
         if (!single)
-            saveJSONToFile(geoBlacklightJson, doi, GeodisyStrings.replaceSlashes(GeodisyStrings.removeHTTPS(doi)) + " (File " + drf.getGBBFileNumber() + " of " + total + ")");
+            saveJSONToFile(geoBlacklightJson, doi, GeodisyStrings.replaceSlashes(GeodisyStrings.removeHTTPSAndReplaceAuthority(doi)) + " (File " + drf.getGBBFileNumber() + " of " + total + ")");
         else
-            saveJSONToFile(geoBlacklightJson, doi, GeodisyStrings.replaceSlashes(GeodisyStrings.removeHTTPS(doi)));
+            saveJSONToFile(geoBlacklightJson, doi, GeodisyStrings.replaceSlashes(GeodisyStrings.removeHTTPSAndReplaceAuthority(doi)));
     }
 
     public File genDirs(String doi, String localRepoPath) {
         doi = FileWriter.fixPath(doi);
         localRepoPath = FileWriter.fixPath(localRepoPath);
-        File fileDir = new File(GeodisyStrings.replaceSlashes(GeodisyStrings.getRoot() +localRepoPath + GeodisyStrings.removeHTTPS(doi).replace(".","/")));
+        File fileDir = new File(GeodisyStrings.replaceSlashes(GeodisyStrings.getRoot() +localRepoPath + GeodisyStrings.removeHTTPSAndReplaceAuthority(doi).replace(".","/")));
         if(!fileDir.exists())
             fileDir.mkdirs();
         return fileDir;

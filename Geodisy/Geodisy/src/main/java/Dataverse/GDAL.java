@@ -56,7 +56,7 @@ public class GDAL {
     //Not used by main program
     public DataverseJavaObject generateBB(DataverseJavaObject djo) {
         String doi = djo.getPID();
-        String path = GeodisyStrings.removeHTTPS(doi).replace(".","/");
+        String path = GeodisyStrings.removeHTTPSAndReplaceAuthority(doi).replace(".","/");
         String folderName = DATA_DIR_LOC +path+"/";
         LinkedList<DataverseGeoRecordFile> origRecords = djo.getGeoDataFiles();
         if(origRecords.size()==0)
@@ -177,7 +177,7 @@ public class GDAL {
     }
 
     public GeographicBoundingBox generateBoundingBoxFromCSV(String fileName, DataverseJavaObject djo){
-        String path = GeodisyStrings.removeHTTPS(djo.getPID()).replace("/","_");
+        String path = GeodisyStrings.removeHTTPSAndReplaceAuthority(djo.getPID()).replace("/","_");
         path = path.replace(".","_");
         String filePath = DATA_DIR_LOC + path + "/" + fileName;
         String name = fileName;

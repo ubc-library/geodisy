@@ -8,7 +8,6 @@ import _Strings.GeodisyStrings;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.concurrent.TimeUnit;
 
 
 import static _Strings.DVFieldNameStrings.PERSISTENT_ID;
@@ -51,7 +50,7 @@ public class PostGIS {
     }
 
     private String folderized(String simpleFieldVal) {
-        return  GeodisyStrings.replaceSlashes(GeodisyStrings.removeHTTPS(simpleFieldVal).replace(".","/").replace("_","/"));
+        return  GeodisyStrings.replaceSlashes(GeodisyStrings.removeHTTPSAndReplaceAuthority(simpleFieldVal).replace(".","/").replace("_","/"));
     }
 }
 

@@ -44,7 +44,7 @@ public abstract class SourceAPI implements API {
         }
     }
     protected String folderizedDOI(String doi){
-        String folderizedDOI = GeodisyStrings.removeHTTPS(doi.replace(".","_"));
+        String folderizedDOI = GeodisyStrings.removeHTTPSAndReplaceAuthority(doi.replace(".","_"));
         folderizedDOI = folderizedDOI.replace("/","_");
         return DATA_DIR_LOC + folderizedDOI;
     }

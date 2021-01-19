@@ -340,17 +340,20 @@ public class GeodisyStrings {
         }
         return false;
     }
-
-    public static String removeHTTPS(String path) {
+    public static String removeHTTPS(String path){
         path = replaceSlashes(path);
         if(path.contains(replaceSlashes("https:\\\\")))
-                path = path.replace(replaceSlashes("https:\\\\"),"");
+            path = path.replace(replaceSlashes("https:\\\\"),"");
         if(path.contains(replaceSlashes("http:\\\\")))
             path = path.replace(replaceSlashes("http:\\\\"),"");
         if(path.contains(replaceSlashes("http:\\")))
             path = path.replace(replaceSlashes("http:\\"),"");
         if(path.contains(replaceSlashes("https:\\")))
             path = path.replace(replaceSlashes("https:\\"),"");
+        return path;
+    }
+    public static String removeHTTPSAndReplaceAuthority(String path) {
+        path = removeHTTPS(path);
 
         path = nonUniqueFromPid(path);
 

@@ -45,7 +45,7 @@ public abstract class ISO_Schema implements XMLSchema {
                 DOMSource source = new DOMSource(doc);
 
                 String loc = BASE_LOCATION_TO_STORE_METADATA;
-                File fileDir = genBaseDirs(GeodisyStrings.removeHTTPS(doi), loc);
+                File fileDir = genBaseDirs(GeodisyStrings.removeHTTPSAndReplaceAuthority(doi), loc);
                 File file = new File(fileDir + "/" + ISO_19139_XML);
                 FileWriter writer = new FileWriter(file);
                 StreamResult result = new StreamResult(writer.getFw());
@@ -66,7 +66,7 @@ public abstract class ISO_Schema implements XMLSchema {
 
     public File genDirs(String doi, String localRepoPath) {
         {
-            File fileDir = new File(GeodisyStrings.replaceSlashes(GeodisyStrings.getRoot() + localRepoPath + GeodisyStrings.removeHTTPS(doi).replace(".","/")));
+            File fileDir = new File(GeodisyStrings.replaceSlashes(GeodisyStrings.getRoot() + localRepoPath + GeodisyStrings.removeHTTPSAndReplaceAuthority(doi).replace(".","/")));
             if (!fileDir.exists())
                 fileDir.mkdirs();
 

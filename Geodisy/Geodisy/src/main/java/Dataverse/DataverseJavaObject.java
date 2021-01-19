@@ -5,7 +5,6 @@ import _Strings.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
-import GeoServer.GeoServerAPI;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -167,8 +166,8 @@ public class DataverseJavaObject extends SourceJavaObject {
 
     @Override
     public LinkedList<DataverseGeoRecordFile> downloadFiles() {
-        String path = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + urlized(GeodisyStrings.removeHTTPS(citationFields.getPID())));
-        path = GeodisyStrings.removeHTTPS(path);
+        String path = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + urlized(GeodisyStrings.removeHTTPSAndReplaceAuthority(citationFields.getPID())));
+        path = GeodisyStrings.removeHTTPSAndReplaceAuthority(path);
         File f = new File(path);
         deleteDir(f);
         f.mkdir();
@@ -212,7 +211,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             if (dRF.getDbID() == -1)
                 dRF.setFileURL("");
             GDAL gdal = new GDAL();
-            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPS(getPID()).replace(".","/") + "/");
+            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(getPID()).replace(".","/") + "/");
             dgrf = new DataverseGeoRecordFile(dRF);
             GeographicBoundingBox gbb = gdal.generateBB(new File(dirPath+dRF.getTranslatedTitle()), getPID(),dRF.getGBBFileNumber());
             dgrf.setGbb(gbb, gbb.getField(FILE_NAME));
@@ -315,7 +314,7 @@ public class DataverseJavaObject extends SourceJavaObject {
 
     @Override
     protected boolean createRecords(DataverseGeoRecordFile dgrf, int number, String type) {
-        String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPS(dgrf.getDatasetIdent().replace("_","/")) + "/");
+        String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(dgrf.getDatasetIdent().replace("_","/")) + "/");
         String filePath = dirPath + dgrf.getTranslatedTitle();
         File fUpdate = new File(filePath);
         System.out.println(String.format("Filepath = %s, GeoserverLabel = %s",filePath, dgrf.getGeoserverLabel()));

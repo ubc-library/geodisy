@@ -17,7 +17,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.*;
 
 import static _Strings.GeodisyStrings.*;
@@ -119,7 +118,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
     protected JSONObject addBaseRecordInfo(){
         JSONObject jo = new JSONObject();
         jo.put(RECORD_URL,  GeodisyStrings.urlSlashes(javaObject.getSimpleFieldVal(DVFieldNameStrings.RECORD_URL)));
-        jo.put(ISO_METADATA, END_XML_JSON_FILE_PATH + GeodisyStrings.urlSlashes(GeodisyStrings.removeHTTPS(javaObject.getSimpleFieldVal(PERSISTENT_ID)).replace(".","/") + "/" + ISO_METADATA_FILE_ZIP));
+        jo.put(ISO_METADATA, END_XML_JSON_FILE_PATH + GeodisyStrings.urlSlashes(GeodisyStrings.removeHTTPSAndReplaceAuthority(javaObject.getSimpleFieldVal(PERSISTENT_ID)).replace(".","/") + "/" + ISO_METADATA_FILE_ZIP));
         return jo;
     }
 

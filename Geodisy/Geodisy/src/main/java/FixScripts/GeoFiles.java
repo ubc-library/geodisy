@@ -33,7 +33,7 @@ public class GeoFiles {
     public GeoFiles(LinkedList<GBLFileToFix> gBLFs) {
         this.gBLFs = gBLFs;
         pID = gBLFs.getFirst().getPID();
-        folder = GeodisyStrings.removeHTTPS(pID).replace(".","/");
+        folder = GeodisyStrings.removeHTTPSAndReplaceAuthority(pID).replace(".","/");
         eGLV = ExistingGeoLabelsVals.getExistingGeoLabelsVals();
     }
     public void dealWithGBLFs(){
