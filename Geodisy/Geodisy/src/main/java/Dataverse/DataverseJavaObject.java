@@ -220,6 +220,21 @@ public class DataverseJavaObject extends SourceJavaObject {
                 dgrf.setFileURL(server + "api/access/datafile/" + dgrf.dbID);
                 newRecs.add(dgrf);
             }
+            else{
+                String name = dgrf.getTranslatedTitle();
+                File f1;
+                if(name.endsWith("shp")){
+                    String stub = name.substring(0,name.lastIndexOf(".shp"));
+                    for(String ex: NON_SHP_SHAPEFILE_EXTENSIONS){
+                        f1 = new File(dirPath+stub+ex);
+                        if(f1.exists())
+                            f1.delete();
+                    }
+                }
+                f1 = new File(dirPath+name);
+                if(f1.exists())
+                    f1.delete();
+            }
             ExistingGeoLabels existingGeoLabels = ExistingGeoLabels.getExistingLabels();
             ExistingGeoLabelsVals existingGeoLabelsVals = ExistingGeoLabelsVals.getExistingGeoLabelsVals();
             existingGeoLabels.saveExistingFile(existingGeoLabels.getGeoLabels(),EXISTING_GEO_LABELS,"ExistingGeoLabels");
