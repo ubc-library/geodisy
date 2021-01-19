@@ -60,8 +60,10 @@ public class FRDRAPI extends SourceAPI{
                             Calendar end = Calendar.getInstance();
                             Long total = end.getTimeInMillis() - startTime;
                             System.out.println("Finished downloading " + djo.getPID() + " after " + total + " milliseconds");
-                            djo.updateRecordFileNumbers();
-                            djo.updateGeoserver();
+                            if(djo.geoDataFiles.size()>0||djo.geoDataMeta.size()>0)
+                                djo.updateRecordFileNumbers();
+                            if(djo.geoDataFiles.size()>0)
+                                djo.updateGeoserver();
                         }
                     }
                     if (djo.hasBoundingBox()) {

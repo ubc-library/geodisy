@@ -61,7 +61,7 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
     public File genDirs(String doi, String localRepoPath) {
         doi = FileWriter.fixPath(doi);
         localRepoPath = FileWriter.fixPath(localRepoPath);
-        File fileDir = new File(localRepoPath + GeodisyStrings.removeHTTPS(doi).replace(".","/"));
+        File fileDir = new File(GeodisyStrings.replaceSlashes(GeodisyStrings.getRoot() +localRepoPath + GeodisyStrings.removeHTTPS(doi).replace(".","/")));
         if(!fileDir.exists())
             fileDir.mkdirs();
         return fileDir;
