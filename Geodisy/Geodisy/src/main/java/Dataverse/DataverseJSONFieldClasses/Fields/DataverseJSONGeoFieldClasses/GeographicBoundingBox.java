@@ -178,6 +178,9 @@ public class GeographicBoundingBox extends CompoundJSONField {
             case SOUTH_LAT_LONG:
                 setSouthLatitude(value);
                 break;
+            case GDAL_STRING:
+                setGDALString(value);
+                break;
             default:
                 errorParsing(this.getClass().getName(),title);
         }
@@ -268,6 +271,8 @@ public class GeographicBoundingBox extends CompoundJSONField {
                 return getHeight();
             case PLACE:
                 return bb.getPlace();
+            case GDAL_STRING:
+                return gdalString;
             default:
                 errorGettingValue(this.getClass().getName(),fieldName);
                 return "Bad fieldName";
