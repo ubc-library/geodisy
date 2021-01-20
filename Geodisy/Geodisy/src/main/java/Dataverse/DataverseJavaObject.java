@@ -213,12 +213,11 @@ public class DataverseJavaObject extends SourceJavaObject {
                 dRF.setFileURL("");
             GDAL gdal = new GDAL();
             String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(getPID()).replace(".","/") + "/");
-            System.out.println(dirPath);
             dgrf = new DataverseGeoRecordFile(dRF);
+            System.out.println("Trying to generate a BB");
             GeographicBoundingBox gbb = gdal.generateBB(new File(dirPath+dRF.getTranslatedTitle()), getPID(),dRF.getGBBFileNumber());
             dgrf.setGbb(gbb, gbb.getField(FILE_NAME));
             if(dgrf.hasValidBB()) {
-                System.out.println(dgrf.gbb.getField(FILE_NAME) + "has a valid BB");
                 dgrf.setTranslatedTitle(dgrf.gbb.getField(FILE_NAME));
                 dgrf.setFileURL(server + "api/access/datafile/" + dgrf.dbID);
                 newRecs.add(dgrf);
@@ -335,7 +334,6 @@ public class DataverseJavaObject extends SourceJavaObject {
         String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(dgrf.getDatasetIdent().replace("_","/")) + "/");
         String filePath = dirPath + dgrf.getTranslatedTitle();
         File fUpdate = new File(filePath);
-        System.out.println(String.format("Filepath = %s, GeoserverLabel = %s",filePath, dgrf.getGeoserverLabel()));
         if(type.equals(VECTOR)) {
             return addVectorToGeoserver(fUpdate.getName(),dgrf.getGeoserverLabel());
         }else if(type.equals(RASTER)){
