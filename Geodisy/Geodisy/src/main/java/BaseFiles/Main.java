@@ -48,7 +48,11 @@ public class Main {
             dev = "Using the prod servers, is this correct?";
         GeodisyStrings.load();
         GeodisyTask geodisyTask = new GeodisyTask();
-        geodisyTask.run();
+        /*geodisyTask.run();*/
+        PostGIS postGIS = new PostGIS();
+        DataverseJavaObject djo = new DataverseJavaObject("Fake");
+        djo.setPID("https://hdl.handle.net/11272.1/AB2/OFSCDC");
+        postGIS.addFile2PostGIS(djo,"KelownaRoutes.shp","v0000000001");
 
         /*System.out.println("Running a test on Raster Upload");
         GeoserverTest gt = new GeoserverTest();
