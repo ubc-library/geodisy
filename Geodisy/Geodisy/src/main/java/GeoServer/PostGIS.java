@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 
 
 import static _Strings.DVFieldNameStrings.PERSISTENT_ID;
+import static _Strings.GeodisyStrings.DATA_DIR_LOC;
 import static _Strings.GeoserverStrings.*;
 
 public class PostGIS {
@@ -26,6 +27,8 @@ public class PostGIS {
 
         String call = SHP_2_PGSQL + folderized(djo.getSimpleFieldVal(PERSISTENT_ID)) + "/" + fileName + " " + POSTGRES_SCHEMA + geoserverLabel + PSQL_CALL + VECTOR_DB + POSTGIS_USER_CALL;
         call = GeodisyStrings.replaceSlashes(call);
+        System.out.println(DATA_DIR_LOC);
+        System.out.println(SHP_2_PGSQL);
         System.out.println(call);
         ProcessBuilder processBuilder= new ProcessBuilder();
         processBuilder.command("/usr/bin/bash", "-c", call);

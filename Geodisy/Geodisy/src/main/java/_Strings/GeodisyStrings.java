@@ -42,6 +42,7 @@ public class GeodisyStrings {
         WARNING_LOG = GEODISY_PATH_ROOT + replaceSlashes("logs/warning.log");
         GeoBlacklightStrings.load();
         XMLStrings.load();
+        GeoserverStrings.load();
         GDALINFO = getGdalInfo();
         OGRINFO = getOgrInfo();
         OGR2OGR = getOgr2Ogr();
