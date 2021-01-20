@@ -117,16 +117,7 @@ public class GDALTranslate {
                     }
                     p = processBuilder.start();
                     try {
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-                        String line;
-                        System.out.println("Got here");
-                        while ((line = reader.readLine()) != null) {
-                            output += line;
-                            System.out.println(output);
-                            continue;
-                        }
-                        System.out.println("Approaching p.waitFor()");
-                        p.waitFor();
+                        p.waitFor(3,TimeUnit.SECONDS);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
