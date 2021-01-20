@@ -62,7 +62,7 @@ public class Main {
         downloadRecord.run("doi:10.5072/FK2/KZRG9F");*/
 
         GDALTest gdalTest = new GDALTest();
-        gdalTest.testUnzip();
+        gdalTest.testTransform();
 
     }
     //Only use this method for testing syntax for calling Geocombine
