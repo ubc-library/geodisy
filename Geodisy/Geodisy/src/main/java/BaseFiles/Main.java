@@ -53,11 +53,13 @@ public class Main {
         PostGIS postGIS = new PostGIS();
         DataverseJavaObject djo = new DataverseJavaObject("Fake");
         djo.setPID("https://hdl.handle.net/11272.1/AB2/OFSCDC");
-        String geoserverLabel = "v0000000001";
+        /*String geoserverLabel = "v0000000001";
         String fileName = "KelownaRoutes.shp";
-        postGIS.addFile2PostGIS(djo,fileName,geoserverLabel);
+        postGIS.addFile2PostGIS(djo,fileName,geoserverLabel);*/
         GeoServerAPI geoServerAPI = new GeoServerAPI(djo);
-        geoServerAPI.addPostGISLayerToGeoserver(geoserverLabel,fileName);
+        //geoServerAPI.addPostGISLayerToGeoserver(geoserverLabel,fileName);
+        djo.setPID("https://hdl.handle.net/11272.1/AB2/LSCA5E");
+        geoServerAPI.addRaster("2009Hillshade.tif","r0000000001");
 
         /*System.out.println("Running a test on Raster Upload");
         GeoserverTest gt = new GeoserverTest();
