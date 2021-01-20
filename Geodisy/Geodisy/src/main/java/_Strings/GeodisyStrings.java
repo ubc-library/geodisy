@@ -7,6 +7,7 @@ import static _Strings.PrivateStrings.*;
 
 public class GeodisyStrings {
     public static void load() {
+        DATA_DIR_LOC = dataDir();
         BACKEND_ADDRESS = beAddressToUse();
         FRONTEND_ADDRESS = feAddressToUse();
         BASE_PATH = BACKEND_ADDRESS + "/";
@@ -37,8 +38,14 @@ public class GeodisyStrings {
         TEST_GEO_COVERAGE = GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/geocoverage.json");
         XML_TEST_FILE = GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/XMLTestDJO.xml");
         DATASET_FILES_PATH = replaceSlashes("datasetFiles/");
+        ERROR_LOG = GEODISY_PATH_ROOT + replaceSlashes("logs/error.log");
+        WARNING_LOG = GEODISY_PATH_ROOT + replaceSlashes("logs/warning.log");
         GeoBlacklightStrings.load();
         XMLStrings.load();
+        GDALINFO = getGdalInfo();
+        OGRINFO = getOgrInfo();
+        OGR2OGR = getOgr2Ogr();
+        GDAL_TRANSLATE = getGdalTranslate();
     }
 
     public static boolean TEST; //This will be false if there are no arguments when calling the jar
@@ -87,27 +94,27 @@ public class GeodisyStrings {
     //File paths
         private final static String WINDOWS_ROOT = "D:\\Work\\Geodisy\\Geodisy\\";
         private final static String FRDR_VM_CENTOS_ROOT = "/home/centos/geodisy/Geodisy/Geodisy/";
-        public static String GEODISY_PATH_ROOT = getRoot();
-        public static String SAVED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles");
-        public static String LOGS = GEODISY_PATH_ROOT + replaceSlashes("logs");
-        public static String EXISTING_CHECKS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingChecks.txt");
-        public static String EXISTING_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingBBoxes.txt");
-        public static String EXISTING_GEO_LABELS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingGeoLabels.txt");
-        public static String EXISTING_GEO_LABELS_VALS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingGeoLabelsVals.txt");
-        public static String DOWNLOADED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/DownloadedFiles.csv");
-        public static String VECTOR_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingVectorRecords.txt");
-        public static String TEST_EXISTING_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/TestExistingRecords.txt");
-        public static String TEST_EXISTING_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/TestExistingBBoxes.txt");
-        public static String RASTER_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingRasterRecords.txt");
-        public static String RECORDS_TO_CHECK = GEODISY_PATH_ROOT + replaceSlashes("logs/recordsToCheck.log");
-        public static String EXISTING_CALL_TO_CHECK = GEODISY_PATH_ROOT + replaceSlashes("logs/existingCallToCheck.txt");
-        public static String ERROR_LOG = GEODISY_PATH_ROOT + replaceSlashes("logs/error.log");
-        public static String WARNING_LOG = GEODISY_PATH_ROOT + replaceSlashes("logs/warning.log");
+        public static String GEODISY_PATH_ROOT;
+        public static String SAVED_FILES;
+        public static String LOGS;
+        public static String EXISTING_CHECKS;
+        public static String EXISTING_BBOXES;
+        public static String EXISTING_GEO_LABELS;
+        public static String EXISTING_GEO_LABELS_VALS;
+        public static String DOWNLOADED_FILES;
+        public static String VECTOR_RECORDS;
+        public static String TEST_EXISTING_RECORDS;
+        public static String TEST_EXISTING_BBOXES;
+        public static String RASTER_RECORDS;
+        public static String RECORDS_TO_CHECK;
+        public static String EXISTING_CALL_TO_CHECK;
+        public static String ERROR_LOG;
+        public static String WARNING_LOG;
         public final static String XML_NS = "http://www.isotc211.org/2005/";
-        public static String COUNTRY_VALS =  GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/Geoname_countries.xml");
-        public static String ALL_CITATION_METADATA = GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/AllCitationMetadata.json");
-        public static String TEST_GEO_COVERAGE = GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/geocoverage.json");
-        public static String XML_TEST_FILE = GEODISY_PATH_ROOT + replaceSlashes("geodisyFiles/XMLTestDJO.xml");
+        public static String COUNTRY_VALS;
+        public static String ALL_CITATION_METADATA;
+        public static String TEST_GEO_COVERAGE;
+        public static String XML_TEST_FILE;
         public static String DATASET_FILES_PATH = replaceSlashes("datasetFiles/");
         public final static String OPEN_GEO_METADATA_BASE = "https://github.com/OpenGeoMetadata/ca.frdr.geodisy/";
         public final static String ISO_19139_XML = "iso19139.xml";
@@ -122,8 +129,8 @@ public class GeodisyStrings {
         private final static String OGRINFO_LOCAL = LOCAL_GDAL_PATH + "ogrinfo -ro -al -so ";
         private final static String GDALINFO_CLOUD = "/usr/gdal30/bin/gdalinfo -approx_stats ";
         private final static String OGRINFO_CLOUD = "/usr/gdal30/bin/ogrinfo -ro -al -so ";
-        public final static String GDALINFO = getGdalInfo();
-        public final static String OGRINFO = getOgrInfo();
+        public static String GDALINFO;
+        public static String OGRINFO;
         private final static String[] GDALINFO_PROCESSABLE_EXTENSIONS = { ".tif", ".tiff",".xyz", ".png"};
         private final static String[] NON_TIF_GEOTIFF_EXTENSIONS = {".aux.xml",".tab",".twf",".tifw", ".tiffw",".wld", ".tif.prj",".tfw"};
         public final static String[] GDALINFO_RASTER_FILE_EXTENSIONS = ArrayUtils.addAll(GDALINFO_PROCESSABLE_EXTENSIONS,NON_TIF_GEOTIFF_EXTENSIONS);
@@ -140,8 +147,8 @@ public class GeodisyStrings {
         //GDAL for Raster conversion needs to be using GDAL version 2.x, so had to use a docker version of it for use with Centos
         public final static String GDAL_DOCKER = "sudo docker run --rm -v /home:/home osgeo/gdal:alpine-ultrasmall-v2.4.1 "; //base call for docker gdal, but need the program call added on
         private final static String GDAL_TRANSLATE_CLOUD = "/usr/gdal30/bin/gdal_translate -of GTiff ";
-        public final static String OGR2OGR = getOgr2Ogr();
-        public final static String GDAL_TRANSLATE = getGdalTranslate();
+        public static String OGR2OGR;
+        public static String GDAL_TRANSLATE;
         public final static String RASTER_CRS = "EPSG:3857";
         public static String GDALWARP(String path,String fileName){ return getGdalWarp(path,fileName);}
         public static String GDAL_WARP_LOCAL(String path, String filename){ return LOCAL_GDAL_PATH + "gdalwarp -overwrite -t_srs " + RASTER_CRS +" -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW {} {}" + path + filename +" " + path + "1" + filename;}
@@ -236,7 +243,7 @@ public class GeodisyStrings {
     public final static String BACKEND_PROD_ADDRESS = "geoserver.frdr.ca";
     public final static String FRONTEND_DEV_ADDRESS = "206-12-95-26.cloud.computecanada.ca";
     public final static String FRONTEND_PROD_ADDRESS = "geo.frdr.ca";
-    public final static String DATA_DIR_LOC = dataDir();
+    public static String DATA_DIR_LOC;
     public final static String DATA_DIR_LOC_CLOUD = "/geodata/geoserver/data/downloads/";
     public final static String DATA_DIR_LOC_LOCAL = "D:/geodata/geoserver/data/downloads/";
     public final static String BASE_LOCATION_TO_STORE_METADATA = "metadata/";
