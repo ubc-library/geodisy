@@ -47,8 +47,8 @@ public class Main {
         else
             dev = "Using the prod servers, is this correct?";
         GeodisyStrings.load();
-        /*GeodisyTask geodisyTask = new GeodisyTask();
-        geodisyTask.run();*/
+        GeodisyTask geodisyTask = new GeodisyTask();
+        geodisyTask.run();
 
         /*System.out.println("Running a test on Raster Upload");
         GeoserverTest gt = new GeoserverTest();
@@ -61,10 +61,10 @@ public class Main {
         /*DownloadRecord downloadRecord = new DownloadRecord();
         downloadRecord.run("doi:10.5072/FK2/KZRG9F");*/
 
-        GDALTest gdalTest = new GDALTest();
+        /*GDALTest gdalTest = new GDALTest();
         gdalTest.testUnzip();
         System.out.println("Finished unzipping");
-        gdalTest.testTransform();
+        gdalTest.testTransform();*/
 
     }
     //Only use this method for testing syntax for calling Geocombine
