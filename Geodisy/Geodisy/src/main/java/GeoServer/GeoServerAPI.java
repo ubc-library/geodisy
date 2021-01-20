@@ -278,7 +278,7 @@ public class GeoServerAPI extends DestinationAPI {
     }
 
     private void addRasterLayer(ProcessBuilder processBuilder, String geoserverLabel, String translatedTitle)throws InterruptedException, IOException{
-        String fileLocation = DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(sjo.getPID()).replace(".","/")+ translatedTitle;
+        String fileLocation = DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority((sjo.getPID())+"/").replace(".","/")+  translatedTitle;
         String addRaster = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPUT -H \"Content-type: text/plain\" -d 'file://" + fileLocation + "' " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores/"+ geoserverLabel.toLowerCase() + "/external.geotiff?configure=first&coverageName=" + translatedTitle);
         Process p;
         System.out.println(addRaster);
