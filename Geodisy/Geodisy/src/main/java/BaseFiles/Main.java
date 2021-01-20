@@ -53,7 +53,11 @@ public class Main {
         PostGIS postGIS = new PostGIS();
         DataverseJavaObject djo = new DataverseJavaObject("Fake");
         djo.setPID("https://hdl.handle.net/11272.1/AB2/OFSCDC");
-        postGIS.addFile2PostGIS(djo,"KelownaRoutes.shp","v0000000001");
+        String geoserverLabel = "v0000000001";
+        String fileName = "KelownaRoutes.shp";
+        postGIS.addFile2PostGIS(djo,fileName,geoserverLabel);
+        GeoServerAPI geoServerAPI = new GeoServerAPI(djo);
+        geoServerAPI.addPostGISLayerToGeoserver(geoserverLabel,fileName);
 
         /*System.out.println("Running a test on Raster Upload");
         GeoserverTest gt = new GeoserverTest();
