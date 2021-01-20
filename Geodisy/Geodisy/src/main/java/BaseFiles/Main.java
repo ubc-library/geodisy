@@ -15,6 +15,7 @@ import Dataverse.SourceJavaObject;
 import FixScripts.FixGeoserverFiles;
 import GeoServer.GeoServerAPI;
 import GeoServer.GeoserverTest;
+import GeoServer.PostGIS;
 import _Strings.GeodisyStrings;
 
 import java.util.ArrayList;
