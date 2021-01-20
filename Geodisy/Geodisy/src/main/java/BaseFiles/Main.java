@@ -10,6 +10,7 @@ import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
 import Dataverse.DataverseJavaObject;
+import Dataverse.GDALTest;
 import Dataverse.SourceJavaObject;
 import FixScripts.FixGeoserverFiles;
 import GeoServer.GeoServerAPI;
@@ -46,8 +47,8 @@ public class Main {
         else
             dev = "Using the prod servers, is this correct?";
         GeodisyStrings.load();
-        GeodisyTask geodisyTask = new GeodisyTask();
-        geodisyTask.run();
+        /*GeodisyTask geodisyTask = new GeodisyTask();
+        geodisyTask.run();*/
 
         /*System.out.println("Running a test on Raster Upload");
         GeoserverTest gt = new GeoserverTest();
@@ -60,6 +61,8 @@ public class Main {
         /*DownloadRecord downloadRecord = new DownloadRecord();
         downloadRecord.run("doi:10.5072/FK2/KZRG9F");*/
 
+        GDALTest gdalTest = new GDALTest();
+        gdalTest.testUnzip();
 
     }
     //Only use this method for testing syntax for calling Geocombine
