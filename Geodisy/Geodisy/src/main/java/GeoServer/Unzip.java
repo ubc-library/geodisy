@@ -85,7 +85,7 @@ public class Unzip {
             zis.close();
 
         } catch (IOException | IllegalArgumentException ex) {
-            ex.printStackTrace();
+            logger.error("Something went wrong trying to parse: " + filePath + " Stack:" + ex.toString());
         }
         File orig = new File(filePath);
         orig.delete();

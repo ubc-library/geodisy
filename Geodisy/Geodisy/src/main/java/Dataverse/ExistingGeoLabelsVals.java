@@ -83,7 +83,7 @@ public class ExistingGeoLabelsVals extends ExistingSearches implements Serializa
             logger.error("Something went wrong reading the Existing GeoLabels file");
             lastRasterAndVectorIDs = newVals;
         } catch (ClassNotFoundException e) {
-            logger.error("Something went wrong parsing the Existing BBoxes file");
+            logger.error("Something went wrong parsing the Existing GeoLabels file");
             lastRasterAndVectorIDs = newVals;
         }catch (NullPointerException e){
             lastRasterAndVectorIDs = newVals;
