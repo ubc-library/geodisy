@@ -50,7 +50,11 @@ public class DataGBJSON extends GeoBlacklightJSON{
         }
         else
             jo.put("dc_title_s",javaObject.getSimpleFields().getField(TITLE));
-        jo.put("dc_rights_s","Public");
+        String license = javaObject.getSimpleFields().getField(LICENSE);
+        if(license.toLowerCase().equals("public"))
+            jo.put("dc_rights_s","Public");
+        else
+            jo.put("dc_rights_s","Restricted");
         jo.put("dct_provenance_s",javaObject.getSimpleFields().getField(PUBLISHER));
         jo.put("dc_publisher_s",javaObject.getSimpleFields().getField(PUBLISHER));
         jo.put("solr_geom","ENVELOPE(" + getBBString(gbb.getBB()) + ")");
