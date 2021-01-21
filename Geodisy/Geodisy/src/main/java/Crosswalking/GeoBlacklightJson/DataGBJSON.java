@@ -51,7 +51,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         else
             jo.put("dc_title_s",javaObject.getSimpleFields().getField(TITLE));
         String license = javaObject.getSimpleFields().getField(LICENSE);
-        if(license.toLowerCase().equals("public"))
+        if(license.toLowerCase().equals("public")||license.isEmpty())
             jo.put("dc_rights_s","Public");
         else
             jo.put("dc_rights_s","Restricted");
