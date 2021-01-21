@@ -105,7 +105,6 @@ public class GDALTranslate {
         } else{
                 call = OGR2OGR + destPath + "temp.shp " + sourcePath;
                 call = GeodisyStrings.replaceSlashes(call);
-                System.out.println(call);
                 processBuilder.command("bash", "-c", call);
                 Process p;
                 String output ="";

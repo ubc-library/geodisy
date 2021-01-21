@@ -214,7 +214,6 @@ public class DataverseJavaObject extends SourceJavaObject {
             GDAL gdal = new GDAL();
             String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(getPID()).replace(".","/") + "/");
             dgrf = new DataverseGeoRecordFile(dRF);
-            System.out.println("Trying to generate a BB");
             GeographicBoundingBox gbb = gdal.generateBB(new File(dirPath+dRF.getTranslatedTitle()), getPID(),dRF.getGBBFileNumber());
             dgrf.setGbb(gbb, gbb.getField(FILE_NAME));
             if(dgrf.hasValidBB()) {
