@@ -213,6 +213,7 @@ public class GDAL {
         temp.setBB(bb);
         temp.setField(GEOMETRY,RASTER);
         temp.setWidthHeight(gdalString);
+        temp.setField(FILE_NAME,fileName);
         return temp;
     }
 
