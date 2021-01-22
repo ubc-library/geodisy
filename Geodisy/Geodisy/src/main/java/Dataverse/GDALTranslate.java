@@ -102,7 +102,8 @@ public class GDALTranslate {
                 if(process!=null)
                     process.destroy();
             }
-        } else{
+        } else
+            {
                 call = OGR2OGR + destPath + "temp.shp " + sourcePath;
                 call = GeodisyStrings.replaceSlashes(call);
                 processBuilder.command("bash", "-c", call);
@@ -176,7 +177,8 @@ public class GDALTranslate {
                 }
             }
         file = new File(sourcePath);
-        file.delete();
+        if(!sourcePath.endsWith(".tif")&&!sourcePath.endsWith(".shp"))
+            file.delete();
         return false;
     }
 
