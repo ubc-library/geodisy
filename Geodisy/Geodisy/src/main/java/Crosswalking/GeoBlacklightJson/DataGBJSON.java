@@ -103,7 +103,23 @@ public class DataGBJSON extends GeoBlacklightJSON{
 
 
     private String getBBString(BoundingBox bb){
-        return bb.getLongWest() + ", " + bb.getLongEast() + ", " + bb.getLatNorth() + ", " + bb.getLatSouth();
+        double west = bb.getLongWest();
+        double east = bb.getLongEast();
+        double north = bb.getLatNorth();
+        double south = bb.getLatSouth();
+        if(north==south && east!=west) {
+            if (north > -90.0)
+                south = south - 0.1;
+            else
+                north = north + 0.1;
+        }
+        if(north!=south && east==west) {
+            if (west > -180.0)
+                west = west - 0.1;
+            else
+                east = east + 0.1;
+        }
+        return west + ", " + east + ", " + north + ", " + south;
     }
 
     @Override
