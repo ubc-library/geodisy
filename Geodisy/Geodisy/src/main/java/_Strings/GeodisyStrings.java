@@ -11,8 +11,8 @@ public class GeodisyStrings {
         BACKEND_ADDRESS = beAddressToUse();
         FRONTEND_ADDRESS = feAddressToUse();
         BASE_PATH = BACKEND_ADDRESS + "/";
-        END_XML_JSON_FILE_PATH = "http://" + BASE_PATH + "geodisy/";
-        PATH_TO_XML_JSON_FILES = END_XML_JSON_FILE_PATH;
+        END_XML_JSON_FILE_PATH = "http://" + FRONTEND_ADDRESS + "/metadata/geodisy/";
+        PATH_TO_XML_JSON_FILES = "http://" + BASE_PATH + "geodisy/";
         MOVE_METADATA = "sudo rsync -auhv " + getRoot() + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
         MOVE_DATA = "sudo rsync -auhv " + getRoot() + "datasetFiles/* " + DATA_DIR_LOC;
         GEOCOMBINE = "sh " + getRoot() + "geodisyFiles/combine.sh";
