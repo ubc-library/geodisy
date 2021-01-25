@@ -144,11 +144,13 @@ public class GDAL {
                 if(lowerName.endsWith(".shp")) {
                     gbb.setField(GEOSERVER_LABEL,existingGeoLabelsVals.addVector(doi,file.getName()));
                     gbb.setFileNumber(Integer.valueOf(number));
+                    existingGeoLabelsVals.saveExistingGeoLabels();
                     return gbb;
                 }
                 else if(lowerName.endsWith(".tif")) {
                     gbb.setField(GEOSERVER_LABEL, existingGeoLabelsVals.addRaster(doi,file.getName()));
                     gbb.setFileNumber(Integer.valueOf(number));
+                    existingGeoLabelsVals.saveExistingGeoLabels();
                     return gbb;
                 }
                 else {

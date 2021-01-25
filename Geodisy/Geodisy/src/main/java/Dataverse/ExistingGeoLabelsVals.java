@@ -5,6 +5,7 @@ import BaseFiles.GeoLogger;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashMap;
 
 import static _Strings.GeodisyStrings.*;
 
@@ -37,12 +38,16 @@ public class ExistingGeoLabelsVals extends ExistingSearches implements Serializa
         if(eGL.hasGeoFile(pID,fileName))
             return eGL.getGeoLabel(pID,fileName);
         lastRasterAndVectorIDs[0] = lastRasterAndVectorIDs[0] +1;
+        String label = "r" + extendedNum(String.valueOf(lastRasterAndVectorIDs[0]));
+        eGL.addOrReplaceGeoLabel(label,pID,fileName);
         return getCurrentRaster();
     }
     public String addVector(String pID, String fileName){
         if(eGL.hasGeoFile(pID,fileName))
             return eGL.getGeoLabel(pID,fileName);
         lastRasterAndVectorIDs[1] = lastRasterAndVectorIDs[1] +1;
+        String label = "v" + extendedNum(String.valueOf(lastRasterAndVectorIDs[1]));
+        eGL.addOrReplaceGeoLabel(label,pID,fileName);
         return getCurrentVector();
     }
 
@@ -91,6 +96,12 @@ public class ExistingGeoLabelsVals extends ExistingSearches implements Serializa
     }
     public int[] getValues(){
         return lastRasterAndVectorIDs;
+    }
+
+    public void saveExistingGeoLabels(){
+        saveExistingFile(ExistingGeoLabelsVals.lastRasterAndVectorIDs,EXISTING_GEO_LABELS_VALS,this.getClass().getName());
+        ExistingGeoLabels e = ExistingGeoLabels.getExistingLabels();
+        saveExistingFile(e.getGeoLabels(),EXISTING_GEO_LABELS,e.getClass().getName());
     }
 
 }
