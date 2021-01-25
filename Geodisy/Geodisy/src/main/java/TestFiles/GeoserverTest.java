@@ -1,9 +1,10 @@
-package GeoServer;
+package TestFiles;
 
 import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
 import Dataverse.DataverseJavaObject;
 import Dataverse.SourceJavaObject;
+import GeoServer.GeoServerAPI;
 
 public class GeoserverTest {
 
