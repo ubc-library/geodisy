@@ -87,8 +87,8 @@ public class GeodisyStrings {
         public final static boolean IS_WINDOWS = windowsComputerType();
 
     //Flask values
-        public static String DEV_HARVESTER_BASE = "https://dev3.frdr.ca/harvesterapi/";
-        public static String PROD_HARVESTER_BASE = "https://prod-web-g1.frdr.ca/harvesterapi/";
+        public static String DEV_HARVESTER_BASE = ENDPOINT_STRINGS.DEV_HARVESTER_BASE;
+        public static String PROD_HARVESTER_BASE = ENDPOINT_STRINGS.PROD_HARVESTER_BASE;
         public static String HARVESTER_BASE;
         public static String EXPORTER;
         public static String MARK_AS_PROCESSED;

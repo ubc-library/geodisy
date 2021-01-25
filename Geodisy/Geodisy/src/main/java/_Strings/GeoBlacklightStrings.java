@@ -12,7 +12,7 @@ public class GeoBlacklightStrings {
     public final static boolean USE_GEOSERVER = true;
 
     //GEOBLACKLIGHT
-    //public static String GEOBLACKLIGHT_BASE = "http://" + FRONTEND_ADDRESS + ":3000/catalog/";
+    //public static String GEOBLACKLIGHT_BASE = FRONTEND_ADDRESS + ":3000/catalog/";
     public static String GEOSERVER_BASE;
     public static String GEOSERVER_BASE_DEV;
     public static String GEOSERVER_BASE_PROD;
