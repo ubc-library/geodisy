@@ -20,7 +20,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-import static _Strings.GeodisyStrings.EXISTING_BBOXES;
+import static _Strings.GeodisyStrings.*;
 
 
 public class FRDRAPI extends SourceAPI{
@@ -89,7 +89,7 @@ public class FRDRAPI extends SourceAPI{
         try {
             //TODO update url with actual prod url
             //String generateWorkspace = "/usr/bin/curl -X PUT -H \"Content-Type: application/json\" -d '{\"geodisy_harvested\":1}' https://dev3.frdr.ca/harvestapi/record/" + record_id;
-            URL url = new URL("https://dev3.frdr.ca/harvestapi/records/" + record_id);
+            URL url = new URL(MARK_AS_PROCESSED + record_id);
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
             conn.setRequestMethod("PUT");
             conn.setRequestProperty("Content-Type","application/json; charset=UTF-8");
@@ -125,7 +125,7 @@ public class FRDRAPI extends SourceAPI{
     public String getJson() {
         //TODO set this up once Joel has given me the API endpoint to hit
         try {
-            URL url = new URL("https://dev3.frdr.ca/harvestapi/exporter");
+            URL url = new URL(EXPORTER);
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();

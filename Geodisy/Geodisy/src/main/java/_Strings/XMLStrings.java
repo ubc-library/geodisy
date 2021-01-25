@@ -52,13 +52,6 @@ public class XMLStrings {
     public final static String OPEN_METADATA_REMOTE_PASSWORD = OPENGEOMETADATA_PASSWORD;
 
     public static void load(){
-        OPEN_METADATA_LOCAL_REPO = getMetadataLocation();
-    }
-
-    public static String getMetadataLocation(){
-        if(TEST)
-            return "/var/www/geoservertest.frdr.ca/html/geodisy/";
-        else
-            return "/var/www/geoserver.frdr.ca/html/geodisy/";
+        OPEN_METADATA_LOCAL_REPO = "/var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
     }
 }

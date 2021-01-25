@@ -10,9 +10,8 @@ public class GeodisyStrings {
         DATA_DIR_LOC = dataDir();
         BACKEND_ADDRESS = beAddressToUse();
         FRONTEND_ADDRESS = feAddressToUse();
-        BASE_PATH = BACKEND_ADDRESS + "/";
-        END_XML_JSON_FILE_PATH = "http://" + FRONTEND_ADDRESS + "/metadata/geodisy/";
-        PATH_TO_XML_JSON_FILES = "http://" + BASE_PATH + "geodisy/";
+        END_XML_JSON_FILE_PATH = FRONTEND_ADDRESS + "/metadata/geodisy/";
+        PATH_TO_XML_JSON_FILES = BACKEND_ADDRESS + "/geodisy/";
         MOVE_METADATA = "sudo rsync -auhv " + getRoot() + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
         MOVE_DATA = "sudo rsync -auhv " + getRoot() + "datasetFiles/* " + DATA_DIR_LOC;
         GEOCOMBINE = "sh " + getRoot() + "geodisyFiles/combine.sh";
@@ -40,6 +39,9 @@ public class GeodisyStrings {
         DATASET_FILES_PATH = replaceSlashes("datasetFiles/");
         ERROR_LOG = GEODISY_PATH_ROOT + replaceSlashes("logs/error.log");
         WARNING_LOG = GEODISY_PATH_ROOT + replaceSlashes("logs/warning.log");
+        HARVESTER_BASE = harvesterBase();
+        EXPORTER = HARVESTER_BASE + "exporter";
+        MARK_AS_PROCESSED = HARVESTER_BASE + "records/";
         GeoBlacklightStrings.load();
         XMLStrings.load();
         GeoserverStrings.load();
@@ -90,6 +92,19 @@ public class GeodisyStrings {
                 return WINDOWS_ROOT;
             else
                 return FRDR_VM_CENTOS_ROOT;
+        }
+    //Flask values
+        public static String DEV_HARVESTER_BASE = "https://dev3.frdr.ca/harvesterapi/";
+        public static String PROD_HARVESTER_BASE = "https://dev3.frdr.ca/harvesterapi/";
+        public static String HARVESTER_BASE;
+        public static String EXPORTER;
+        public static String MARK_AS_PROCESSED;
+
+        public static String harvesterBase(){
+            if (TEST) {
+                return DEV_HARVESTER_BASE;
+            } else
+                return PROD_HARVESTER_BASE;
         }
 
     //File paths
@@ -241,9 +256,9 @@ public class GeodisyStrings {
     //Add value (including space at end) to OGM_PATH if you are harvesting from somewhere other than what's in the rake file
     public final static String OGM_PATH = ""; //"OGM_PATH=/var/www/geoserver.frdr.ca/html/geodisy/ ";
     public final static String BACKEND_DEV_ADDRESS = "geoservertest.frdr.ca";
-    public final static String BACKEND_PROD_ADDRESS = "geoserver.frdr.ca";
-    public final static String FRONTEND_DEV_ADDRESS = "206-12-95-26.cloud.computecanada.ca";
-    public final static String FRONTEND_PROD_ADDRESS = "geo.frdr.ca";
+    public final static String BACKEND_PROD_ADDRESS = "prod-gs-g1.frdr.ca";
+    public final static String FRONTEND_DEV_ADDRESS = "https://206-12-95-26.cloud.computecanada.ca";
+    public final static String FRONTEND_PROD_ADDRESS = "https://geo.frdr-dfdr.ca";
     public static String DATA_DIR_LOC;
     public final static String DATA_DIR_LOC_CLOUD = "/geodata/geoserver/data/downloads/";
     public final static String DATA_DIR_LOC_LOCAL = "D:/geodata/geoserver/data/downloads/";
@@ -252,7 +267,6 @@ public class GeodisyStrings {
     //Values are added by the load() method at the top of the class
     public static String BACKEND_ADDRESS;
     public static String FRONTEND_ADDRESS;
-    public static String BASE_PATH;
     public static String END_XML_JSON_FILE_PATH;
     public static String PATH_TO_XML_JSON_FILES;
     public static String MOVE_METADATA;
