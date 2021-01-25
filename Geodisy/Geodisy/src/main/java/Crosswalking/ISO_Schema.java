@@ -19,8 +19,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 
-import static _Strings.GeodisyStrings.BASE_LOCATION_TO_STORE_METADATA;
-import static _Strings.GeodisyStrings.ISO_19139_XML;
+import static _Strings.GeodisyStrings.*;
 
 
 /**
@@ -66,7 +65,7 @@ public abstract class ISO_Schema implements XMLSchema {
 
     public File genDirs(String doi, String localRepoPath) {
         {
-            File fileDir = new File(GeodisyStrings.replaceSlashes(GeodisyStrings.getRoot() + localRepoPath + GeodisyStrings.removeHTTPSAndReplaceAuthority(doi).replace(".","/")));
+            File fileDir = new File(GeodisyStrings.replaceSlashes(GEODISY_PATH_ROOT + localRepoPath + GeodisyStrings.removeHTTPSAndReplaceAuthority(doi).replace(".","/")));
             if (!fileDir.exists())
                 fileDir.mkdirs();
 

@@ -14,6 +14,8 @@ public class GeoBlacklightStrings {
     //GEOBLACKLIGHT
     //public static String GEOBLACKLIGHT_BASE = "http://" + FRONTEND_ADDRESS + ":3000/catalog/";
     public static String GEOSERVER_BASE;
+    public static String GEOSERVER_BASE_DEV;
+    public static String GEOSERVER_BASE_PROD;
     private static String GEOSERVER_DOWNLOAD_BASE;
     public static String GEOSERVER_RASTER_DOWNLOAD_BASE;
     public static String GEOSERVER_VECTOR_DOWNLOAD_BASE;
@@ -51,7 +53,9 @@ public class GeoBlacklightStrings {
     }
 
     public static void load(){
-        GEOSERVER_BASE = (TEST)? "http://geotest.frdr-dfdr.ca/geoserver/" : "http://prod-gs-g1.frdr.ca:8080/geoserver/";
+        GEOSERVER_BASE_DEV = ENDPOINT_STRINGS.GEOSERVER_BASE_DEV;
+        GEOSERVER_BASE_PROD = ENDPOINT_STRINGS.GEOSERVER_BASE_PROD;
+        GEOSERVER_BASE = (TEST)? GEOSERVER_BASE_DEV : GEOSERVER_BASE_PROD;
         GEOSERVER_DOWNLOAD_BASE = GEOSERVER_BASE + "geodisy/";
         GEOSERVER_RASTER_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "wms?service=WMS&version=1.1.0&request=GetMap&layers=geodisy:";
         GEOSERVER_VECTOR_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geodisy:";

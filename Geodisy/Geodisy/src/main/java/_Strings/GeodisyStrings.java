@@ -8,15 +8,15 @@ import static _Strings.PrivateStrings.*;
 public class GeodisyStrings {
     public static void load() {
         DATA_DIR_LOC = dataDir();
-        BACKEND_ADDRESS = beAddressToUse();
-        FRONTEND_ADDRESS = feAddressToUse();
+        BACKEND_ADDRESS = (TEST)? BACKEND_DEV_ADDRESS: BACKEND_PROD_ADDRESS;
+        FRONTEND_ADDRESS = (TEST)? FRONTEND_DEV_ADDRESS: FRONTEND_PROD_ADDRESS;
         END_XML_JSON_FILE_PATH = FRONTEND_ADDRESS + "/metadata/geodisy/";
         PATH_TO_XML_JSON_FILES = BACKEND_ADDRESS + "/geodisy/";
-        MOVE_METADATA = "sudo rsync -auhv " + getRoot() + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
-        MOVE_DATA = "sudo rsync -auhv " + getRoot() + "datasetFiles/* " + DATA_DIR_LOC;
-        GEOCOMBINE = "sh " + getRoot() + "geodisyFiles/combine.sh";
-        GITCALL = "sh " + getRoot() + "geodisyFiles/git.sh";
-        GEODISY_PATH_ROOT = getRoot();
+        GEODISY_PATH_ROOT = (IS_WINDOWS)? WINDOWS_ROOT: FRDR_VM_CENTOS_ROOT;
+        MOVE_METADATA = "sudo rsync -auhv " + GEODISY_PATH_ROOT + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
+        MOVE_DATA = "sudo rsync -auhv " + GEODISY_PATH_ROOT + "datasetFiles/* " + DATA_DIR_LOC;
+        GEOCOMBINE = "sh " + GEODISY_PATH_ROOT + "geodisyFiles/combine.sh";
+        GITCALL = "sh " + GEODISY_PATH_ROOT + "geodisyFiles/git.sh";
         SAVED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles");
         LOGS = GEODISY_PATH_ROOT + replaceSlashes("logs");
         EXISTING_CHECKS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingChecks.txt");
@@ -39,16 +39,16 @@ public class GeodisyStrings {
         DATASET_FILES_PATH = replaceSlashes("datasetFiles/");
         ERROR_LOG = GEODISY_PATH_ROOT + replaceSlashes("logs/error.log");
         WARNING_LOG = GEODISY_PATH_ROOT + replaceSlashes("logs/warning.log");
-        HARVESTER_BASE = harvesterBase();
+        HARVESTER_BASE = (TEST)? DEV_HARVESTER_BASE: PROD_HARVESTER_BASE;
         EXPORTER = HARVESTER_BASE + "exporter";
         MARK_AS_PROCESSED = HARVESTER_BASE + "records/";
         GeoBlacklightStrings.load();
         XMLStrings.load();
         GeoserverStrings.load();
-        GDALINFO = getGdalInfo();
-        OGRINFO = getOgrInfo();
-        OGR2OGR = getOgr2Ogr();
-        GDAL_TRANSLATE = getGdalTranslate();
+        GDALINFO = (IS_WINDOWS)? GDALINFO_LOCAL: GDALINFO_CLOUD;
+        OGRINFO = (IS_WINDOWS)? OGRINFO_LOCAL: OGRINFO_CLOUD;
+        OGR2OGR = (IS_WINDOWS)? OGR2OGR_LOCAL: OGR2OGR_CLOUD;
+        GDAL_TRANSLATE = (IS_WINDOWS)? GDAL_TRANSLATE_LOCAL: GDAL_TRANSLATE_CLOUD;
     }
 
     public static boolean TEST; //This will be false if there are no arguments when calling the jar
@@ -85,17 +85,10 @@ public class GeodisyStrings {
         }
 
         public final static boolean IS_WINDOWS = windowsComputerType();
-        public static String getRoot(){
-            boolean isWindows = System.getProperty("os.name")
-                    .toLowerCase().startsWith("windows");
-            if(isWindows)
-                return WINDOWS_ROOT;
-            else
-                return FRDR_VM_CENTOS_ROOT;
-        }
+
     //Flask values
         public static String DEV_HARVESTER_BASE = "https://dev3.frdr.ca/harvesterapi/";
-        public static String PROD_HARVESTER_BASE = "https://dev3.frdr.ca/harvesterapi/";
+        public static String PROD_HARVESTER_BASE = "https://prod-web-g1.frdr.ca/harvesterapi/";
         public static String HARVESTER_BASE;
         public static String EXPORTER;
         public static String MARK_AS_PROCESSED;
@@ -108,8 +101,8 @@ public class GeodisyStrings {
         }
 
     //File paths
-        private final static String WINDOWS_ROOT = "D:\\Work\\Geodisy\\Geodisy\\";
-        private final static String FRDR_VM_CENTOS_ROOT = "/home/centos/geodisy/Geodisy/Geodisy/";
+        private final static String WINDOWS_ROOT = ENDPOINT_STRINGS.WINDOWS_ROOT;
+        private final static String FRDR_VM_CENTOS_ROOT = ENDPOINT_STRINGS.FRDR_VM_CENTOS_ROOT;
         public static String GEODISY_PATH_ROOT;
         public static String SAVED_FILES;
         public static String LOGS;
@@ -161,7 +154,7 @@ public class GeodisyStrings {
         private final static String GDAL_TRANSLATE_LOCAL = LOCAL_GDAL_PATH + "gdal_translate -of GTiff ";
         private final static String OGR2OGR_CLOUD = "/usr/gdal30/bin/ogr2ogr -t_srs EPSG:4326 -f \"ESRI Shapefile\" ";
         //GDAL for Raster conversion needs to be using GDAL version 2.x, so had to use a docker version of it for use with Centos
-        public final static String GDAL_DOCKER = "sudo docker run --rm -v /home:/home osgeo/gdal:alpine-ultrasmall-v2.4.1 "; //base call for docker gdal, but need the program call added on
+        //public final static String GDAL_DOCKER = "sudo docker run --rm -v /home:/home osgeo/gdal:alpine-ultrasmall-v2.4.1 "; //base call for docker gdal, but need the program call added on
         private final static String GDAL_TRANSLATE_CLOUD = "/usr/gdal30/bin/gdal_translate -of GTiff ";
         public static String OGR2OGR;
         public static String GDAL_TRANSLATE;
@@ -176,19 +169,6 @@ public class GeodisyStrings {
         public static String GDAL_ADDO_LOCAL(String source){return LOCAL_GDAL_PATH + "gdaladdo " + source + " -r nearest --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
         public static String GDAL_ADDO_CLOUD(String source){return "sudo /usr/gdal30/bin/gdaladdo " + source + " -r nearest --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
         public final static String[] PROCESSABLE_EXTENSIONS = ArrayUtils.addAll(GDALINFO_PROCESSABLE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS);
-        private static String getOgr2Ogr(){
-            if(IS_WINDOWS)
-                return OGR2OGR_LOCAL;
-            else
-                return OGR2OGR_CLOUD;
-        }
-
-        private static String getGdalTranslate(){
-           if(IS_WINDOWS)
-                return GDAL_TRANSLATE_LOCAL;
-            else
-                return GDAL_TRANSLATE_CLOUD;
-        }
 
         private static String getGdalWarp(String path, String fileName){
             if(IS_WINDOWS)
@@ -203,18 +183,6 @@ public class GeodisyStrings {
             else
                 return GDAL_ADDO_CLOUD(source);
         }
-    private static String getGdalInfo(){
-        if(IS_WINDOWS)
-            return GDALINFO_LOCAL;
-        else
-            return GDALINFO_CLOUD;
-    }
-    private static String getOgrInfo(){
-        if(IS_WINDOWS)
-            return OGRINFO_LOCAL;
-        else
-            return OGRINFO_CLOUD;
-    }
     
     public static String replaceSlashes(String s){
         if(IS_WINDOWS)
@@ -255,13 +223,13 @@ public class GeodisyStrings {
     public final static String SOLR_PATH_PROD = ""; //"SOLR_URL=http://www.example.com:1234/solr/collection ";
     //Add value (including space at end) to OGM_PATH if you are harvesting from somewhere other than what's in the rake file
     public final static String OGM_PATH = ""; //"OGM_PATH=/var/www/geoserver.frdr.ca/html/geodisy/ ";
-    public final static String BACKEND_DEV_ADDRESS = "geoservertest.frdr.ca";
-    public final static String BACKEND_PROD_ADDRESS = "prod-gs-g1.frdr.ca";
-    public final static String FRONTEND_DEV_ADDRESS = "https://206-12-95-26.cloud.computecanada.ca";
-    public final static String FRONTEND_PROD_ADDRESS = "https://geo.frdr-dfdr.ca";
+    public final static String BACKEND_DEV_ADDRESS = ENDPOINT_STRINGS.BACKEND_DEV_ADDRESS;
+    public final static String BACKEND_PROD_ADDRESS = ENDPOINT_STRINGS.BACKEND_PROD_ADDRESS;
+    public final static String FRONTEND_DEV_ADDRESS = ENDPOINT_STRINGS.FRONTEND_DEV_ADDRESS;
+    public final static String FRONTEND_PROD_ADDRESS = ENDPOINT_STRINGS.FRONTEND_PROD_ADDRESS;
     public static String DATA_DIR_LOC;
-    public final static String DATA_DIR_LOC_CLOUD = "/geodata/geoserver/data/downloads/";
-    public final static String DATA_DIR_LOC_LOCAL = "D:/geodata/geoserver/data/downloads/";
+    public final static String DATA_DIR_LOC_CLOUD = ENDPOINT_STRINGS.DATA_DIR_LOC_CLOUD;
+    public final static String DATA_DIR_LOC_LOCAL = ENDPOINT_STRINGS.DATA_DIR_LOC_LOCAL;
     public final static String BASE_LOCATION_TO_STORE_METADATA = "metadata/";
 
     //Values are added by the load() method at the top of the class
@@ -281,19 +249,7 @@ public class GeodisyStrings {
             return DATA_DIR_LOC_CLOUD;
     }
 
-    public static String beAddressToUse(){
-        if(TEST)
-            return BACKEND_DEV_ADDRESS;
-        else
-            return BACKEND_PROD_ADDRESS;
-    }
 
-    public static String feAddressToUse(){
-        if(TEST)
-            return FRONTEND_DEV_ADDRESS;
-        else
-            return FRONTEND_PROD_ADDRESS;
-    }
     public static boolean fileTypesToIgnore(String title){
         String[] temp = ArrayUtils.addAll(OGRINFO_VECTOR_FILE_EXTENSIONS,GDALINFO_RASTER_FILE_EXTENSIONS);
         for(String s: temp){

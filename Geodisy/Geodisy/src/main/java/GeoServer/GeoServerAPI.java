@@ -101,7 +101,7 @@ public class GeoServerAPI extends DestinationAPI {
         String vectorDB = GEOSERVER_VECTOR_STORE;
         String title = fileName.substring(0,fileName.lastIndexOf('.'));
         ProcessBuilder processBuilder= new ProcessBuilder();
-        String call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -H 'Accept: text/xml' -XGET "+ GeodisyStrings.getRoot() + "/geoserver/rest/workspaces/geodisy/datastores/"+ vectorDB + "/featuretypes/" + geoserverLabel+".xml";
+        String call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -H 'Accept: text/xml' -XGET "+ GEODISY_PATH_ROOT + "/geoserver/rest/workspaces/geodisy/datastores/"+ vectorDB + "/featuretypes/" + geoserverLabel+".xml";
         call = GeodisyStrings.replaceSlashes(call);
         try {
             processBuilder.command("/usr/bin/bash", "-c",call);

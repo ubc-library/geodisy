@@ -15,6 +15,8 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
+import static _Strings.GeodisyStrings.GEODISY_PATH_ROOT;
+
 /**
  * Takes a DataverseJavaObject and creates a GeoBlacklight JSON from it
  */
@@ -60,7 +62,7 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
     public File genDirs(String doi, String localRepoPath) {
         doi = FileWriter.fixPath(doi);
         localRepoPath = FileWriter.fixPath(localRepoPath);
-        File fileDir = new File(GeodisyStrings.replaceSlashes(GeodisyStrings.getRoot() +localRepoPath + GeodisyStrings.removeHTTPSAndReplaceAuthority(doi).replace(".","/")));
+        File fileDir = new File(GeodisyStrings.replaceSlashes(GEODISY_PATH_ROOT +localRepoPath + GeodisyStrings.removeHTTPSAndReplaceAuthority(doi).replace(".","/")));
         if(!fileDir.exists())
             fileDir.mkdirs();
         return fileDir;
