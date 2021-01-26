@@ -56,7 +56,7 @@ public class GeoBlacklightStrings {
         GEOSERVER_BASE_DEV = ENDPOINT_STRINGS.GEOSERVER_BASE_DEV;
         GEOSERVER_BASE_PROD = ENDPOINT_STRINGS.GEOSERVER_BASE_PROD;
         GEOSERVER_BASE = (TEST)? GEOSERVER_BASE_DEV : GEOSERVER_BASE_PROD;
-        GEOSERVER_DOWNLOAD_BASE = GEOSERVER_BASE + "geodisy/";
+        GEOSERVER_DOWNLOAD_BASE = FRONTEND_ADDRESS + "geoserver/geodisy/";
         GEOSERVER_RASTER_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "wms?service=WMS&version=1.1.0&request=GetMap&layers=geodisy:";
         GEOSERVER_VECTOR_DOWNLOAD_BASE = GEOSERVER_DOWNLOAD_BASE + "ows?service=WFS&version=1.0.0&request=GetFeature&typeName=geodisy:";
         GEOSERVER_REST = GEOSERVER_BASE + "rest/";
