@@ -17,9 +17,9 @@ public class ENDPOINT_STRINGS {
     public static final String FRDR_VM_CENTOS_ROOT      = "/home/centos/geodisy/Geodisy/Geodisy/";
 
 //    public static String DEV_HARVESTER_BASE             = "https://dev3.frdr.ca/harvesterapi/";
-    public static String PROD_HARVESTER_BASE            = "https://prod-web-g1.frdr.ca/harvesterapi/";
+    public static String PROD_HARVESTER_BASE            = "https://prod-web-g1.frdr.ca/harvestapi/";
 
     //FOR testing on TEST
 
-    public static String DEV_HARVESTER_BASE             = "https://test-web-1.frdr.ca/harvesterapi/";
+    public static String DEV_HARVESTER_BASE             = "https://test-web-1.frdr.ca/harvestapi/";
 }
