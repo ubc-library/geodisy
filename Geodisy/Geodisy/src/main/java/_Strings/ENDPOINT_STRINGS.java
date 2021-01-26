@@ -1,8 +1,8 @@
 package _Strings;
 
 public class ENDPOINT_STRINGS {
-    public static final String GEOSERVER_BASE_DEV       = "http://geotest.frdr-dfdr.ca/geoserver/";
-    public static final String GEOSERVER_BASE_PROD      = "http://prod-gs-g1.frdr.ca:8080/geoserver/";
+    public static final String GEOSERVER_BASE_DEV       = "https://geotest.frdr-dfdr.ca/geoserver/";
+    public static final String GEOSERVER_BASE_PROD      = "https://prod-gs-g1.frdr.ca:8080/geoserver/";
 
     public static final String FRONTEND_DEV_ADDRESS     = "https://206-12-95-26.cloud.computecanada.ca";
     public static final String FRONTEND_PROD_ADDRESS    = "https://geo.frdr-dfdr.ca";
@@ -16,8 +16,8 @@ public class ENDPOINT_STRINGS {
     public static final String WINDOWS_ROOT             = "D:\\Work\\Geodisy\\Geodisy\\";
     public static final String FRDR_VM_CENTOS_ROOT      = "/home/centos/geodisy/Geodisy/Geodisy/";
 
-//    public static String DEV_HARVESTER_BASE             = "https://dev3.frdr.ca/harvesterapi/";
-    public static String PROD_HARVESTER_BASE            = "https://prod-web-g1.frdr.ca/harvestapi/";
+    //public static String DEV_HARVESTER_BASE             = "https://dev3.frdr.ca/harvesterapi/";
+    public static String PROD_HARVESTER_BASE            = "http://prod-web-g1.frdr.ca/harvestapi/";
 
     //FOR testing on TEST
 
