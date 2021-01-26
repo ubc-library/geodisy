@@ -21,5 +21,5 @@ public class ENDPOINT_STRINGS {
 
     //FOR testing on TEST
 
-    public static String DEV_HARVESTER_BASE             = "https://test-web-1.frdr.ca/harvestapi/";
+    public static String DEV_HARVESTER_BASE             = "http://test-web-1.frdr.ca/harvestapi/";
 }
