@@ -177,7 +177,7 @@ public class GDALTranslate {
                 }
             }
         file = new File(sourcePath);
-        if(!sourcePath.endsWith(".tif")&&!sourcePath.endsWith(".shp"))
+        if(!(sourcePath.toLowerCase().endsWith(".tif")||sourcePath.toLowerCase().endsWith(".shp")))
             file.delete();
         return false;
     }

@@ -154,11 +154,11 @@ public class GeoServerAPI extends DestinationAPI {
             logger.error("Error trying to rename raster back to correct name from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
             return false;
         }
-        try { addRasterOverviews(processBuilder, fileName);
+        /*try { addRasterOverviews(processBuilder, fileName);
         }catch (InterruptedException | IOException f) {
             logger.error("Error trying to update raster with overviews from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
             return false;
-        }
+        }*/
 
         try { createCoverstore(geoserverLabel, processBuilder, fileName);
         }catch (InterruptedException | IOException f) {
@@ -185,6 +185,7 @@ public class GeoServerAPI extends DestinationAPI {
     private void deleteOldCoverstore(ProcessBuilder processBuilder, String geoserverLable) throws InterruptedException, IOException{
         String deleteCoveragestore = "curl -u admin:" + GEOSERVER_PASSWORD + " -XDELETE " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores/" + geoserverLable.toLowerCase() + "?recurse=true");
         Process p;
+        System.out.println("Delete Coverstore: " + deleteCoveragestore);
         processBuilder.command("/usr/bin/bash", "-c", deleteCoveragestore);
         p = processBuilder.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -199,6 +200,7 @@ public class GeoServerAPI extends DestinationAPI {
     private void normalizeRaster(ProcessBuilder processBuilder, String fileName) throws InterruptedException, IOException {
         String warp = GDALWARP(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(sjo.getPID()).replace(".","/") + "/", fileName);
         Process p;
+        System.out.println("Warp: " + warp);
         processBuilder.command("/usr/bin/bash", "-c", warp);
         p = processBuilder.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -212,6 +214,7 @@ public class GeoServerAPI extends DestinationAPI {
     private void renameRasterToOrig(ProcessBuilder processBuilder, String datasetID, String fileName) throws InterruptedException, IOException{
         String rename = "sudo mv -f " + DATA_DIR_LOC + datasetID + "/1" + fileName + " " + DATA_DIR_LOC + datasetID + "/" + fileName;
         Process p;
+        System.out.println("Rename: "+ rename);
         processBuilder.command("/usr/bin/bash", "-c", rename);
         p = processBuilder.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -238,6 +241,7 @@ public class GeoServerAPI extends DestinationAPI {
     private void createCoverstore(String geoserverLable, ProcessBuilder processBuilder, String fileName) throws InterruptedException, IOException{
         String createCoveragestore = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:text/xml") +  " -d '<coverageStore><name>" + geoserverLable.toLowerCase()+ "</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>file:" + GeodisyStrings.removeHTTPSAndReplaceAuthority(sjo.getPID()).replace(".","/") + "/" + fileName + "</url></coverageStore>' " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores?configure=all");
         Process p;
+        System.out.println("Create Coveragestore: " + createCoveragestore);
         processBuilder.command("/usr/bin/bash", "-c", createCoveragestore);
         p = processBuilder.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -254,6 +258,7 @@ public class GeoServerAPI extends DestinationAPI {
         title=title.substring(0,title.lastIndexOf("."));
     String enableCoverageStore = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:application/xml") + " -d '<coverage><name>"+ geoserverLabel.toLowerCase() + "</name><nativeCRS>" + RASTER_CRS + "</nativeCRS><title>" + title + "</title><enabled>True</enabled></coverage>' " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores/"+ geoserverLabel.toLowerCase() + "/coverages");
     Process p;
+    System.out.println("Enable CoverageStore:" + enableCoverageStore);
     processBuilder.command("/usr/bin/bash", "-c", enableCoverageStore);
     p = processBuilder.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -268,6 +273,7 @@ public class GeoServerAPI extends DestinationAPI {
         String fileLocation = DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority((sjo.getPID())+"/").replace(".","/")+  translatedTitle;
         String addRaster = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPUT -H \"Content-type: text/plain\" -d 'file://" + fileLocation + "' " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores/"+ geoserverLabel.toLowerCase() + "/external.geotiff?configure=first&coverageName=" + geoserverLabel);
         Process p;
+        System.out.println("Add Coverage Store");
         processBuilder.command("/usr/bin/bash", "-c", addRaster);
         p = processBuilder.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
