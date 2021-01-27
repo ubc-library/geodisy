@@ -45,7 +45,9 @@ public class GeodisyTask {
             existingCallsToCheck = ExistingCallsToCheck.getExistingCallsToCheck();
             existingCallsToCheck.saveExistingSearchs(existingCallsToCheck.getRecords(),EXISTING_CHECKS,"ExistingCallsToCheck");
             existingGeoLabels = ExistingGeoLabels.getExistingLabels();
+            existingGeoLabels.saveExistingFile(existingGeoLabels.getGeoLabels(),EXISTING_GEO_LABELS,ExistingGeoLabels.class.getName());
             existingGeoLabelsVals = ExistingGeoLabelsVals.getExistingGeoLabelsVals();
+            existingGeoLabelsVals.saveExistingFile(existingGeoLabelsVals.getValues(),EXISTING_GEO_LABELS_VALS,ExistingGeoLabelsVals.class.getName());
             srf = SourceRecordFiles.getSourceRecords();
 
             startErrorLog = new String(Files.readAllBytes(Paths.get(ERROR_LOG)));

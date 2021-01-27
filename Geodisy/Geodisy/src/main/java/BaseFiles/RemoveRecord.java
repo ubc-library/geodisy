@@ -10,12 +10,12 @@ import java.io.IOException;
 import static _Strings.GeodisyStrings.*;
 
 public class RemoveRecord {
-    String record2Remove = "10.5072/FK2/GFCTVC";
+    String record2Remove = "insert record's path to folderize like '10.5072/FK2/GFCTVC'";
     public void removeRecord() {
     FileWriter fW = new FileWriter();
-        fW.verifyFileExistence(EXISTING_BBOXES);
+    fW.verifyFileExistence(EXISTING_BBOXES);
     ExistingHarvests existingHarvests = ExistingHarvests.getExistingHarvests();
-        existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
+    existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
     String folderized = GeodisyStrings.removeHTTPSAndReplaceAuthority(record2Remove).replace(".","/");
     File file = new File(DATA_DIR_LOC + folderized);
         try {

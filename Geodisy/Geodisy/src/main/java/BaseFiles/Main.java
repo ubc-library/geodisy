@@ -6,22 +6,12 @@ package BaseFiles;
  */
 
 import Crosswalking.GeoBlacklightJson.GeoCombine;
-import Dataverse.DataverseGeoRecordFile;
-import Dataverse.DataverseJSONFieldClasses.Fields.CitationCompoundFields.CitationFields;
-import Dataverse.DataverseJSONFieldClasses.Fields.CitationSimpleJSONFields.SimpleCitationFields;
-import Dataverse.DataverseJavaObject;
-import Dataverse.GDALTest;
-import Dataverse.SourceJavaObject;
-import FixScripts.FixGeoserverFiles;
-import GeoServer.GeoServerAPI;
-import GeoServer.GeoserverTest;
-import GeoServer.PostGIS;
+import TestFiles.ExisitingLabelsTest;
 import _Strings.GeodisyStrings;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static _Strings.DVFieldNameStrings.RECORD_URL;
 import static _Strings.GeodisyStrings.*;
 
 /**
@@ -50,6 +40,9 @@ public class Main {
         GeodisyStrings.load();
         GeodisyTask geodisyTask = new GeodisyTask();
         geodisyTask.run();
+
+        //ExisitingLabelsTest exisitingLabelsTest = new ExisitingLabelsTest();
+        //exisitingLabelsTest.checkEGL();;
 
         //Testing uploading both Rasters and Vectors to Geoserver
         /*PostGIS postGIS = new PostGIS();

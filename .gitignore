@@ -177,3 +177,5 @@ Geodisy/Scripts/FixStringInGeoBlacklightJSON/.idea/
 Geodisy/Scripts/FixStringInFile/.idea/
 Geodisy/Scripts/MoveMetadataAndRunGeoCombine/.idea/
 Geodisy/Scripts/VectorToGeoserver/.idea/
+
+GenericGeodisyGBL/geodisy-geoblacklight
