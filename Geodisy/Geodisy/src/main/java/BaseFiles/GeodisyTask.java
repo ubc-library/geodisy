@@ -59,15 +59,15 @@ public class GeodisyTask {
             List<SourceJavaObject> sJOs = geo.harvestFRDRMetadata();
             //deleteEmptyFolders();
 
-
-            if(!IS_WINDOWS) {
+            //TODO Uncomment sendRecordsToGeoBlacklight() once harvesting of FRDR has been approved on Prod
+            /*if(!IS_WINDOWS) {
                 sendRecordsToGeoBlacklight();
-                /*We are no longer updating Open Geo Metadata records due to sparely populated metadata files
+                *//*We are no longer updating Open Geo Metadata records due to sparely populated metadata files
                 if(!TEST) {
                     JGit jgit = new JGit();
                     jgit.updateRemoteMetadata();
-                }*/
-            }
+                }*//*
+            }*/
              
             /**
              *
@@ -100,7 +100,6 @@ public class GeodisyTask {
             existingGeoLabelsVals.saveExistingFile(existingGeoLabelsVals.getValues(), EXISTING_GEO_LABELS_VALS, "ExistingGeoLabelsVals");
             existingGeoLabels.saveExistingFile(existingGeoLabels.getGeoLabels(),EXISTING_GEO_LABELS,"ExistingGeoLabels");
 
-            //TODO Uncomment the following once Geoserver has been implemented
             ExistingRasterRecords existingRasterRecords = ExistingRasterRecords.getExistingRasters();
             existingRasterRecords.saveExistingFile(existingRasterRecords.getRecords(),RASTER_RECORDS, "ExistingRasterRecords");
             ExistingVectorRecords existingVectorRecords = ExistingVectorRecords.getExistingVectors();
