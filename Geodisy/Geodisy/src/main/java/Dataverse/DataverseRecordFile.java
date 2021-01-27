@@ -116,7 +116,7 @@ public class DataverseRecordFile {
                     new URL(recordURL),
                     new File(filePath),
                     10000, //10 seconds connection timeout
-                    120000); //2 minute read timeout
+                    1200000); //20 minute read timeout
             File newFile = new File(filePath);
             if (translatedTitle.toLowerCase().endsWith(".zip")) {
                 try {
