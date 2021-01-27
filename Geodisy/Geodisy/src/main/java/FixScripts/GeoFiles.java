@@ -181,7 +181,7 @@ public class GeoFiles {
                 try (PrintWriter out = new PrintWriter(r.g.getGblJSONFilePath())) {
                     out.println(gBLObject.toString());
                 } catch (FileNotFoundException e) {
-                    System.out.println("Something went wrong updating the GBLJSON at " + r.g.getGblJSONFilePath() + " with " + gBLJSON);
+                    logger.error("Something went wrong updating the GBLJSON at " + r.g.getGblJSONFilePath() + " with " + gBLJSON);
                 }
             } catch (JSONException err) {
                 logger.error("Error parsing json: " + gBLJSON);
