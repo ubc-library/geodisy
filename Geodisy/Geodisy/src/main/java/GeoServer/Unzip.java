@@ -54,7 +54,7 @@ public class Unzip {
                 fileName = new File(fileName).getName();
                 String newFileName = fileName.substring(0,fileName.lastIndexOf("."));
                 if(!newFileName.equals(basename)) {
-                    fileName = basename + "9_9" + fileName;
+                    fileName = basename + "___" + fileName;
                 }
                 File newFile = new File(destpath + GeodisyStrings.replaceSlashes(File.separator) + fileName);
 
