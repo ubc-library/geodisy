@@ -44,12 +44,15 @@ public class DataGBJSON extends GeoBlacklightJSON{
         jo.put("dc_identifier_s", GeodisyStrings.urlSlashes(javaObject.getSimpleFieldVal(DVFieldNameStrings.RECORD_URL)));
         String geoserverLabel = getGeoserverLabel(gbb);
         jo.put("layer_slug_s", "geodisy:" + geoserverLabel);
+        String name = javaObject.getSimpleFields().getField(TITLE);
+        if(name.isEmpty())
+            name = "Unknown Study Name";
         if(total>1) {
             number = padZeros(number,total);
-            jo.put("dc_title_s", javaObject.getSimpleFields().getField(TITLE) + " (" + number + " of " + total + ")");
+            jo.put("dc_title_s", name + " (" + number + " of " + total + ")");
         }
         else
-            jo.put("dc_title_s",javaObject.getSimpleFields().getField(TITLE));
+            jo.put("dc_title_s", name);
         String license = javaObject.getSimpleFields().getField(LICENSE);
         if(license.toLowerCase().equals("public")||license.isEmpty())
             jo.put("dc_rights_s","Public");
@@ -108,12 +111,14 @@ public class DataGBJSON extends GeoBlacklightJSON{
         double north = bb.getLatNorth();
         double south = bb.getLatSouth();
         if(north==south && east!=west) {
+            logger.warn("Found a line bounding box for record at: " + doi);
             if (north > -90.0)
                 south = south - 0.1;
             else
                 north = north + 0.1;
         }
         if(north!=south && east==west) {
+            logger.warn("Found a line bounding box for record at: " + doi);
             if (west > -180.0)
                 west = west - 0.1;
             else

@@ -196,7 +196,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             return new LinkedList<DataverseGeoRecordFile>();
         }
 
-        System.out.println("removing old zip/tab files");
+
         dataFiles = drfs;
         for (int i = 0; i < dataFiles.size(); i++) {
             String name = dataFiles.get(i).getTranslatedTitle();
