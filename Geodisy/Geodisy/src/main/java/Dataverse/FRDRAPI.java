@@ -75,7 +75,6 @@ public class FRDRAPI extends SourceAPI{
                     }
                     int record_id = jo.getInt("id");
 
-                    //TODO remove next line comment and following line entirely after testing downloading
                     updateFRDRHarvesterDB(record_id);
                 }
             } catch (JSONException e) {
@@ -87,8 +86,6 @@ public class FRDRAPI extends SourceAPI{
 
     public void updateFRDRHarvesterDB(int record_id) {
         try {
-            //TODO update url with actual prod url
-            //String generateWorkspace = "/usr/bin/curl -X PUT -H \"Content-Type: application/json\" -d '{\"geodisy_harvested\":1}' https://dev3.frdr.ca/harvestapi/record/" + record_id;
             URL url = new URL(MARK_AS_PROCESSED + record_id);
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
             conn.setRequestMethod("PUT");
