@@ -134,13 +134,14 @@ public class DataverseRecordFile {
             else if(GeodisyStrings.fileToAllow(newFile.getName())) {
                 drfs.add(this);
             }
+        } catch(SocketTimeoutException e){
+            logger.error(String.format("Socket timed out downloading file %s, with fileIdent %s or dbID %d of Dataset with PID " + datasetIdent, translatedTitle, fileIdent, dbID));
         } catch (FileNotFoundException e){
             logger.info(String.format("This dataset file %s couldn't be found from dataset %s. ", dbID, datasetIdent) + "Check out dataset " + datasetIdent, djo);
-        }catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             logger.error(String.format("Something is wonky with the file PERSISTENT_ID " + fileIdent + " or the dbID " + dbID + " of Dataset with PID "+ datasetIdent));
         } catch (IOException e) {
             logger.error(String.format("Something went wrong with downloading file %s, with fileIdent %s or dbID %d of Dataset with PID " + datasetIdent, translatedTitle, fileIdent, dbID));
-            e.printStackTrace();
         }
         return drfs;
     }
