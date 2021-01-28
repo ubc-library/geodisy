@@ -1,7 +1,9 @@
 package Dataverse.FindingBoundingBoxes;
 
 import BaseFiles.Geonames;
+import Dataverse.ExistingLocations;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
+import Dataverse.FindingBoundingBoxes.LocationTypes.City;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Province;
 import org.w3c.dom.Document;
@@ -19,32 +21,33 @@ import java.util.HashMap;
 import org.apache.commons.text.WordUtils;
 
 import static _Strings.GeodisyStrings.COUNTRY_VALS;
+import static _Strings.GeodisyStrings.EXISTING_LOCATION_BBOXES;
 
 /**
  * A basically static class that opens a file that holds all the Country codes and bounding box values
  * This can then be accessed to quickly grab a bounding box for a dataset that has a country label but
  * no defined bounding box or geospatial file.
  */
-public class Countries {
+public class Places {
     HashMap<String, Country> countries;
     HashMap<String, String> countryCodes;
-    HashMap<String, BoundingBox> boundingBoxes;
-    private static Countries single_instance = null;
+    ExistingLocations boundingBoxes;
+    private static Places single_instance = null;
     static Document doc;
 
-    public static Countries getCountry(){
+    public static Places getCountry(){
         if(single_instance==null)
-            single_instance = new Countries();
+            single_instance = new Places();
         return single_instance;
     }
 
-    private Countries(){
+    private Places(){
         File xmlFile = new File(COUNTRY_VALS);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder;
         countries = new HashMap<>();
         countryCodes = new HashMap<>();
-        boundingBoxes = new HashMap<>();
+        boundingBoxes = ExistingLocations.getExistingLocations();
 
         try {
             dBuilder = dbFactory.newDocumentBuilder();
@@ -151,27 +154,47 @@ public class Countries {
     }
 
     public void addProvince(String country, Province province){
-        if(province.getBoundingBox().getLongWest()!=361)
-            boundingBoxes.put(country+"zzz"+province, province.getBoundingBox());
+        if(province.hasBoundingBox()) {
+            boundingBoxes.addBBox(country + "zzz" + province, province.getBoundingBox());
+            boundingBoxes.saveExistingSearchs(boundingBoxes.getbBoxes(),EXISTING_LOCATION_BBOXES,boundingBoxes.getClass().getName());
+        }
+
     }
 
-    public BoundingBox getExistingBB(String country, String province){
-        if(boundingBoxes.containsKey(country+"zzz"+province))
-            return boundingBoxes.get(country+"zzz"+province);
-        return new BoundingBox();
+    public void addCity(String country, City city){
+        if(city.getBoundingBox().getLongWest()!=361) {
+            boundingBoxes.addBBox(country + "zzz" + city.getProvinceName() + "zzz" + city.getCommonName(), city.boundingBox);
+
+        }
+    }
+
+    public void addCountry(String country,BoundingBox b){
+        boundingBoxes.addBBox(country,b);
     }
 
     public BoundingBox getExistingBB(String country, String province, String city){
-        if(boundingBoxes.containsKey(country+"zzz"+ province+ "zzz" + city))
-            return boundingBoxes.get(country+"zzz"+ province+ "zzz" + city);
+        if(boundingBoxes.hasBB(country,province,city))
+            return boundingBoxes.getBB(country, province, city);
+        return new BoundingBox();
+    }
+
+    public BoundingBox getExistingBB(String country, String province){
+        if(boundingBoxes.getBB(country,province).getLongWest()!=361)
+            return boundingBoxes.getBB(country,province);
+        return new BoundingBox();
+    }
+
+    public BoundingBox getExistingBB(String country){
+        if(boundingBoxes.hasBB(country))
+            return boundingBoxes.getBB(country);
         return new BoundingBox();
     }
 
     public HashMap getBoundingBoxes(){
-        return boundingBoxes;
+        return boundingBoxes.getbBoxes();
     }
 
     public void setBoundingBoxes(HashMap<String, BoundingBox> bBoxes){
-        this.boundingBoxes = bBoxes;
+        this.boundingBoxes.setbBoxes(bBoxes);;
     }
 }

@@ -4,6 +4,7 @@ import BaseFiles.Geonames;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicCoverage;
 import Dataverse.DataverseJavaObject;
+import Dataverse.ExistingLocations;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.City;
 import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
@@ -24,25 +25,28 @@ import static _Strings.DVFieldNameStrings.*;
  */
 public class GeonamesBBs extends FindBoundBox {
     private String USER_NAME = "geodisy";
-    Countries countries;
+    Places places;
     HashMap<String, BoundingBox> bBoxes;
     String doi;
     public DataverseJavaObject djo;
     Geonames geo;
+    ExistingLocations existingLocations;
 
     public GeonamesBBs(String doi) {
         this.doi = doi;
-        this.countries = Countries.getCountry();
-        this.bBoxes = countries.getBoundingBoxes();
+        this.places = Places.getCountry();
+        this.bBoxes = places.getBoundingBoxes();
         geo = new Geonames();
+        existingLocations = ExistingLocations.getExistingLocations();
     }
 
     public GeonamesBBs(DataverseJavaObject djo){
         this.djo = djo;
         doi = this.djo.getPID();
-        this.countries = Countries.getCountry();
-        this.bBoxes = countries.getBoundingBoxes();
+        this.places = Places.getCountry();
+        this.bBoxes = places.getBoundingBoxes();
         geo = new Geonames();
+        existingLocations = ExistingLocations.getExistingLocations();
     }
 
     /**
@@ -54,10 +58,10 @@ public class GeonamesBBs extends FindBoundBox {
     @Override
     public BoundingBox getDVBoundingBox(String countryName) {
         Country country;
-        if(countries.isCountryCode(countryName))
-            country = countries.getCountryByCode(countryName);
+        if(places.isCountryCode(countryName))
+            country = places.getCountryByCode(countryName);
          else
-             country = countries.getCountryByName(countryName);
+             country = places.getCountryByName(countryName);
         if(country.getCountryCode().matches("_JJ")||country.getCountryCode().matches("")){
             logger.info(countryName + " is not a valid country givenName in record at PERSISTENT_ID: " + doi + ", so no bounding box could be automatically generated. Check this record manually ", djo);
 
@@ -77,7 +81,7 @@ public class GeonamesBBs extends FindBoundBox {
      */
     @Override
     public BoundingBox getDVBoundingBox(String country, String province)  {
-        BoundingBox box = countries.getExistingBB(country, province);
+        BoundingBox box = places.getExistingBB(country, province);
         if(box.getLongWest()!=361)
             return box;
 
@@ -92,8 +96,9 @@ public class GeonamesBBs extends FindBoundBox {
         if(box.getLongWest()!=361) {
             Province p = new Province(unURLedProvince, country);
             p.setBoundingBox(box);
+            existingLocations.addBBox(country,province, box);
             bBoxes.put(addDelimiter(country, unURLedProvince), box);
-            countries.setBoundingBoxes(bBoxes);
+            places.setBoundingBoxes(bBoxes);
         }
         return box;
     }
@@ -113,7 +118,7 @@ public class GeonamesBBs extends FindBoundBox {
 
     @Override
     public BoundingBox getDVBoundingBox(String country, String province, String city) {
-        BoundingBox box = countries.getExistingBB(country, province, city);
+        BoundingBox box = places.getExistingBB(country, province, city);
         if(box.getLongWest()!=361)
             return box;
         String unURLedProvince = province;
@@ -131,7 +136,7 @@ public class GeonamesBBs extends FindBoundBox {
             City cit = new City(city, province, country);
             cit.setBoundingBox(box);
             bBoxes.put(addDelimiter(country, unURLedProvince, unURLedCity), box);
-            countries.setBoundingBoxes(bBoxes);
+            places.setBoundingBoxes(bBoxes);
         }
 
         return box;

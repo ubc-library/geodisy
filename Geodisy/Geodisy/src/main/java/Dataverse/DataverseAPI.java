@@ -11,16 +11,12 @@ import BaseFiles.GeoLogger;
 import BaseFiles.Geonames;
 import BaseFiles.HTTPCallerDataverse;
 import BaseFiles.HTTPCallerGeoNames;
-import Crosswalking.Crosswalk;
-import Crosswalking.GeoBlacklightJson.DataGBJSON;
 import Crosswalking.JSONParsing.DataverseParser;
-import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 import static _Strings.GeodisyStrings.*;
@@ -41,7 +37,7 @@ public class DataverseAPI extends SourceAPI {
 
     @Override
     public LinkedList<SourceJavaObject> harvest(LinkedList<SourceJavaObject> answers) {
-        ExistingHarvests existingHarvests = ExistingHarvests.getExistingHarvests();
+        ExistingDatasetBBoxes existingDatasetBBoxes = ExistingDatasetBBoxes.getExistingHarvests();
         HashSet<String> dois = searchDV();
         LinkedList<JSONObject> jsons = downloadMetadata(dois);
         HashMap<String, DataverseRecordInfo> recordsThatNoLongerExist = new HashMap<>();
@@ -89,8 +85,8 @@ public class DataverseAPI extends SourceAPI {
                     djo = (DataverseJavaObject) getBBFromGeonames(djo);
                 if(djo.hasBoundingBox()) {
                     crosswalkRecord(djo);
-                    existingHarvests.addBBox(djo.getPID(),djo.getBoundingBox());
-                    existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
+                    existingDatasetBBoxes.addBBox(djo.getPID(),djo.getBoundingBox());
+                    existingDatasetBBoxes.saveExistingSearchs(existingDatasetBBoxes.getbBoxes(), EXISTING_DATASET_BBOXES, "ExistingBBoxes");
                     answers.add(djo);
                 } else{
                     File folderToDelete = new File(doi);
@@ -99,7 +95,7 @@ public class DataverseAPI extends SourceAPI {
             }else{
                 continue;
             }
-            existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
+            existingDatasetBBoxes.saveExistingSearchs(existingDatasetBBoxes.getbBoxes(), EXISTING_DATASET_BBOXES, "ExistingBBoxes");
             System.out.println("Parsed and saved " + doi);
             DownloadedFiles dF = DownloadedFiles.getDownloadedFiles();
             dF.saveDownloads();

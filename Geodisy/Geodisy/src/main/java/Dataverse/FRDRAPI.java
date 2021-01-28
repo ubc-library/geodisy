@@ -2,7 +2,6 @@ package Dataverse;
 
 import BaseFiles.GeoLogger;
 import Crosswalking.JSONParsing.DataverseParser;
-import _Strings.GeodisyStrings;
 import org.json.JSONException;
 import org.json.JSONTokener;
 import org.json.JSONArray;
@@ -68,9 +67,9 @@ public class FRDRAPI extends SourceAPI{
                     }
                     if (djo.hasBoundingBox()) {
                         crosswalkRecord(djo);
-                        ExistingHarvests existingHarvests = ExistingHarvests.getExistingHarvests();
-                        existingHarvests.addBBox(djo.getPID(),djo.getBoundingBox());
-                        existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
+                        ExistingDatasetBBoxes existingDatasetBBoxes = ExistingDatasetBBoxes.getExistingHarvests();
+                        existingDatasetBBoxes.addBBox(djo.getPID(),djo.getBoundingBox());
+                        existingDatasetBBoxes.saveExistingSearchs(existingDatasetBBoxes.getbBoxes(), EXISTING_DATASET_BBOXES, "ExistingBBoxes");
                         djos.add(djo);
                     }
                     int record_id = jo.getInt("id");

@@ -13,21 +13,21 @@ import static _Strings.GeodisyStrings.*;
 /**
  * Class that holds bounding boxes that have already been found and what versions of records have already been downloaded.
  */
-public class ExistingHarvests extends ExistingSearches implements Serializable {
+public class ExistingDatasetBBoxes extends ExistingSearches implements Serializable {
     private static final long serialVersionUID = 8947943825774008362L;
     private static HashMap<String, BoundingBox> bBoxes;
-    private static ExistingHarvests single_instance = null;
+    private static ExistingDatasetBBoxes single_instance = null;
 
-    public static ExistingHarvests getExistingHarvests(){
+    public static ExistingDatasetBBoxes getExistingHarvests(){
 
         if (single_instance == null) {
-            single_instance = new ExistingHarvests();
+            single_instance = new ExistingDatasetBBoxes();
         }
 
         return single_instance;
     }
 
-    private ExistingHarvests(){
+    private ExistingDatasetBBoxes(){
         logger = new GeoLogger(this.getClass());
         bBoxes = readExistingBoundingBoxes();
     }
@@ -68,7 +68,7 @@ public class ExistingHarvests extends ExistingSearches implements Serializable {
         HashMap<String, BoundingBox> newFile = new HashMap<>();
         FileWriter fw = new FileWriter();
         try {
-            return  (HashMap<String, BoundingBox>) fw.readSavedObject(EXISTING_BBOXES);
+            return  (HashMap<String, BoundingBox>) fw.readSavedObject(EXISTING_DATASET_BBOXES);
         } catch (IOException e) {
             logger.error("Something went wrong reading the Existing bBoxes file");
             return newFile;
