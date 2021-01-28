@@ -3,7 +3,7 @@ package BaseFiles;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicCoverage;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJavaObject;
-import Dataverse.FindingBoundingBoxes.Countries;
+import Dataverse.FindingBoundingBoxes.Places;
 import Dataverse.FindingBoundingBoxes.GeonamesBBs;
 import Dataverse.SourceJavaObject;
 import org.w3c.dom.Document;
@@ -25,10 +25,10 @@ import static _Strings.GeodisyStrings.GEONAMES_USERNAME;
 
 public class Geonames {
     GeoLogger logger =  new GeoLogger(this.getClass());
-    Countries countries;
+    Places places;
 
     public Geonames() {
-        this.countries = Countries.getCountry();
+        this.places = Places.getCountry();
     }
 
 
@@ -141,7 +141,7 @@ public class Geonames {
         parameters.put("username", GEONAMES_USERNAME);
         parameters.put("style","FULL");
         parameters.put("maxRows","1");
-        String countryCode = countries.isCountryCode(country) ? country : countries.getCountryCode(country);
+        String countryCode = places.isCountryCode(country) ? country : places.getCountryCode(country);
         parameters.put("country",countryCode);
 
         return parameters;
@@ -159,8 +159,8 @@ public class Geonames {
     }
 
     public String getCountryCode(String countryName){
-        if(countries.isCountryCode(countryName))
+        if(places.isCountryCode(countryName))
             return countryName;
-        return countries.getCountryCode(countryName);
+        return places.getCountryCode(countryName);
     }
 }

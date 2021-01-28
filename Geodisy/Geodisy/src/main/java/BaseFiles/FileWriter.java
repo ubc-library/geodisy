@@ -1,7 +1,7 @@
 package BaseFiles;
 
 
-import Dataverse.ExistingHarvests;
+import Dataverse.ExistingDatasetBBoxes;
 import _Strings.GeodisyStrings;
 import org.apache.commons.io.FileUtils;
 
@@ -105,25 +105,25 @@ public class FileWriter {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public ExistingHarvests readExistingSearches(String path) throws IOException {
-        ExistingHarvests es = ExistingHarvests.getExistingHarvests();
+    public ExistingDatasetBBoxes readExistingSearches(String path) throws IOException {
+        ExistingDatasetBBoxes es = ExistingDatasetBBoxes.getExistingHarvests();
         try {
             File file = new File(path);
             File directory = new File(file.getParentFile().getAbsolutePath());
             directory.mkdirs();
             if(file.createNewFile())
-                return ExistingHarvests.getExistingHarvests();
+                return ExistingDatasetBBoxes.getExistingHarvests();
             FileInputStream f = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(f);
-            es = (ExistingHarvests) ois.readObject();
+            es = (ExistingDatasetBBoxes) ois.readObject();
         } catch (FileNotFoundException e) {
-            es = ExistingHarvests.getExistingHarvests();
+            es = ExistingDatasetBBoxes.getExistingHarvests();
             writeObjectToFile(es, path);
         } catch (EOFException e) {
-            return ExistingHarvests.getExistingHarvests();
+            return ExistingDatasetBBoxes.getExistingHarvests();
         } catch (ClassNotFoundException e){
             System.out.println("something went wonky loading the existing searches from the file");
-            return ExistingHarvests.getExistingHarvests();
+            return ExistingDatasetBBoxes.getExistingHarvests();
         }
         return es;
     }
