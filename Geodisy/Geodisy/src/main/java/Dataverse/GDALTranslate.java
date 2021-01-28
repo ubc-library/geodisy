@@ -122,7 +122,6 @@ public class GDALTranslate {
                         e.printStackTrace();
                     }
                     p.destroy();
-                    System.out.println(output);
                     if(output.contains("FAILURE"))
                         return false;
                     if(name.toLowerCase().endsWith(".shp")) {

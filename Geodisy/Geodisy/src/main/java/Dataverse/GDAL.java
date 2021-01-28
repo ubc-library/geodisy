@@ -134,13 +134,13 @@ public class GDAL {
             if(temp.hasBB()) {
                 GeographicBoundingBox gbb = new GeographicBoundingBox(doi);
                 gbb.setIsGeneratedFromGeoFile(temp.isGeneratedFromGeoFile());
-                gbb.setField(FILE_NAME,temp.getBB().getFileName());
+                gbb.setField(FILE_NAME,temp.getField(FILE_NAME));
                 gbb.setField(GEOMETRY,temp.getField(GEOMETRY));
                 gbb.setField(PROJECTION,projection);
                 gbb.setBB(temp.getBB());
                 gbb.setField(GDAL_STRING,gdalString);
                 ExistingGeoLabelsVals existingGeoLabelsVals = ExistingGeoLabelsVals.getExistingGeoLabelsVals();
-                lowerName = gbb.getField(FILE_NAME);
+                lowerName = gbb.getField(FILE_NAME).toLowerCase();
                 if(lowerName.endsWith(".shp")) {
                     gbb.setField(GEOSERVER_LABEL,existingGeoLabelsVals.addVector(doi,file.getName()));
                     gbb.setFileNumber(Integer.valueOf(number));
@@ -207,11 +207,13 @@ public class GDAL {
             return new GeographicBoundingBox("junk");
         if(bb.hasUTMCoords()||!fileName.endsWith(".tif")) {
             fileName = convertToAppropriateFileFormat(filePath, IS_WINDOWS, fileName);
-            filePath = filePath.substring(0,filePath.lastIndexOf("."))+".tif";
-            gdalString = getGDALInfo(filePath,fileName);
+            filePath = filePath.substring(0, filePath.lastIndexOf(".")) + ".tif";
+            gdalString = getGDALInfo(filePath, fileName);
             bb = getLatLongGdalInfo(gdalString);
-            bb.setFileName(fileName);
+
         }
+
+        bb.setFileName(fileName);
         temp.setBB(bb);
         temp.setField(GEOMETRY,RASTER);
         temp.setWidthHeight(gdalString);
