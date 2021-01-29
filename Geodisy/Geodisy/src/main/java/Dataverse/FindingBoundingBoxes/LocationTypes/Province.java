@@ -1,8 +1,5 @@
 package Dataverse.FindingBoundingBoxes.LocationTypes;
 
-import BaseFiles.Geonames;
-import Dataverse.FindingBoundingBoxes.Countries;
-import Dataverse.FindingBoundingBoxes.GeonamesJSON;
 import Dataverse.FindingBoundingBoxes.Location;
 
 import java.util.HashMap;
@@ -12,12 +9,8 @@ public class Province extends Location {
     private HashMap<String, City> cities = new HashMap<>();
 
     public Province(String name, String countryName) {
-        super(name, new GeonamesJSON(new Geonames().getGeonamesProvince(name,countryName)));
-        this.commonName = this.geonamesJSON.getCommonStateName();
-        if(countryName.isEmpty())
-            country = new Country();
-        else
-            country = Countries.getCountry().getCountryByName(countryName);
+        super(countryName,name);
+        this.country = new Country(countryName);
     }
     //placeholder province constructor
     public Province() {

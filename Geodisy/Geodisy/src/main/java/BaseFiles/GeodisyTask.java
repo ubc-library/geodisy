@@ -2,7 +2,7 @@ package BaseFiles;
 
 import Crosswalking.GeoBlacklightJson.GeoCombine;
 import Dataverse.*;
-import Dataverse.FindingBoundingBoxes.Countries;
+import Dataverse.FindingBoundingBoxes.Places;
 import _Strings.GeodisyStrings;
 
 import java.io.*;
@@ -17,10 +17,11 @@ import static _Strings.GeodisyStrings.*;
 
 public class GeodisyTask {
     GeoLogger logger = new GeoLogger(this.getClass());
-    ExistingHarvests existingHarvests;
+    ExistingDatasetBBoxes existingDatasetBBoxes;
     ExistingCallsToCheck existingCallsToCheck;
     ExistingGeoLabels existingGeoLabels;
     ExistingGeoLabelsVals existingGeoLabelsVals;
+    ExistingLocations existingLocations;
 
     SourceRecordFiles srf;
     public GeodisyTask() {
@@ -35,13 +36,16 @@ public class GeodisyTask {
        String startWarningLog;
        String endWarningLog;
        long startTime = Calendar.getInstance().getTimeInMillis();
-        Countries.getCountry();
+        Places.getCountry();
         try {
             FileWriter fW = new FileWriter();
             verifyFiles(fW);
 
-            existingHarvests = ExistingHarvests.getExistingHarvests();
-            existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
+            existingDatasetBBoxes = ExistingDatasetBBoxes.getExistingHarvests();
+            existingDatasetBBoxes.saveExistingSearchs(existingDatasetBBoxes.getbBoxes(), EXISTING_DATASET_BBOXES, ExistingDatasetBBoxes.class.getName());
+            existingLocations = ExistingLocations.getExistingLocations();
+            existingLocations.saveExistingSearchs(existingLocations.getbBoxes(),EXISTING_LOCATION_BBOXES, ExistingLocations.class.getName());
+            existingLocations.saveExistingSearchs(existingLocations.getNames(),EXISTING_LOCATION_NAMES, ExistingLocations.class.getName());
             existingCallsToCheck = ExistingCallsToCheck.getExistingCallsToCheck();
             existingCallsToCheck.saveExistingSearchs(existingCallsToCheck.getRecords(),EXISTING_CHECKS,"ExistingCallsToCheck");
             existingGeoLabels = ExistingGeoLabels.getExistingLabels();
@@ -96,7 +100,7 @@ public class GeodisyTask {
             if(!startWarningLog.equals(endWarningLog)){
                 fW.writeStringToFile(endWarningLog,WARNING_LOG);
             }
-            existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
+            existingDatasetBBoxes.saveExistingSearchs(existingDatasetBBoxes.getbBoxes(), EXISTING_DATASET_BBOXES, "ExistingBBoxes");
             existingGeoLabelsVals.saveExistingFile(existingGeoLabelsVals.getValues(), EXISTING_GEO_LABELS_VALS, "ExistingGeoLabelsVals");
             existingGeoLabels.saveExistingFile(existingGeoLabels.getGeoLabels(),EXISTING_GEO_LABELS,"ExistingGeoLabels");
 
@@ -124,12 +128,14 @@ public class GeodisyTask {
             ExistingCallsToCheck.getExistingCallsToCheck();
         fW.verifyFileExistence(ERROR_LOG);
         fW.verifyFileExistence(WARNING_LOG);
-        fW.verifyFileExistence(EXISTING_BBOXES);
+        fW.verifyFileExistence(EXISTING_DATASET_BBOXES);
         fW.verifyFileExistence(EXISTING_CHECKS);
         fW.verifyFileExistence(DOWNLOADED_FILES);
         fW.verifyFileExistence(EXISTING_GEO_LABELS_VALS);
         fW.verifyFileExistence(RASTER_RECORDS);
         fW.verifyFileExistence(VECTOR_RECORDS);
+        fW.verifyFileExistence(EXISTING_LOCATION_NAMES);
+        fW.verifyFileExistence(EXISTING_LOCATION_BBOXES);
     }
 
     private void deleteEmptyFolders() {

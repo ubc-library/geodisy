@@ -20,7 +20,9 @@ public class GeodisyStrings {
         SAVED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles");
         LOGS = GEODISY_PATH_ROOT + replaceSlashes("logs");
         EXISTING_CHECKS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingChecks.txt");
-        EXISTING_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingBBoxes.txt");
+        EXISTING_DATASET_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingDatasetBBoxes.txt");
+        EXISTING_LOCATION_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingBBoxes.txt");
+        EXISTING_LOCATION_NAMES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingLocationNames.txt");
         EXISTING_GEO_LABELS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExisitingGeoLabels.txt");
         EXISTING_GEO_LABELS_VALS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExisitingGeoLabelsVals.txt");
         DOWNLOADED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/DownloadedFiles.csv");
@@ -107,7 +109,9 @@ public class GeodisyStrings {
         public static String SAVED_FILES;
         public static String LOGS;
         public static String EXISTING_CHECKS;
-        public static String EXISTING_BBOXES;
+        public static String EXISTING_DATASET_BBOXES;
+        public static String EXISTING_LOCATION_BBOXES;
+        public static String EXISTING_LOCATION_NAMES;
         public static String EXISTING_GEO_LABELS;
         public static String EXISTING_GEO_LABELS_VALS;
         public static String DOWNLOADED_FILES;

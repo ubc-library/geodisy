@@ -1,6 +1,8 @@
 package Dataverse.FindingBoundingBoxes;
 
 import BaseFiles.GeoLogger;
+import BaseFiles.Geonames;
+import Dataverse.ExistingLocations;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -14,6 +16,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.StringWriter;
 
+import static _Strings.GeodisyStrings.EXISTING_LOCATION_NAMES;
+
 public class Location implements GeographicPoliticalUnit {
     protected String givenName = "";
     protected String commonName = "";
@@ -22,9 +26,11 @@ public class Location implements GeographicPoliticalUnit {
     protected String altNames = "";
     protected GeonamesJSON geonamesJSON;
     protected GeoLogger logger = new GeoLogger(this.getClass());
+    ExistingLocations existingLocations;
 
 
     public Location(String givenName, GeonamesJSON geonamesJSON) {
+        existingLocations = ExistingLocations.getExistingLocations();
         this.geonamesJSON = geonamesJSON;
         this.givenName = givenName;
         boundingBox = geonamesJSON.getBBFromGeonamesJSON();
@@ -32,13 +38,76 @@ public class Location implements GeographicPoliticalUnit {
 
     }
 
+    public Location(String givenName, BoundingBox b){
+        existingLocations = ExistingLocations.getExistingLocations();
+        this.geonamesJSON = new GeonamesJSON();
+        this.givenName = givenName;
+        this.boundingBox = b;
+
+    }
+
+    public Location(String countryName){
+        if(existingLocations.hasBB(countryName)){
+            this.geonamesJSON = new GeonamesJSON();
+            this.givenName = countryName;
+            this.boundingBox = existingLocations.getBB(countryName);
+            this.altNames = existingLocations.getLocationNames(countryName)[1];
+            this.commonName = existingLocations.getLocationNames(countryName)[0];
+        } else {
+            this.geonamesJSON = new GeonamesJSON(new Geonames().getGeonamesCountry(countryName));
+            this.givenName = countryName;
+            this.boundingBox = geonamesJSON.getBBFromGeonamesJSON();
+            this.altNames = geonamesJSON.getAltNames();
+            this.commonName = this.geonamesJSON.getCommonStateName();
+            existingLocations.addNames(countryName,commonName,altNames);
+            existingLocations.saveExistingSearchs(existingLocations.getNames(),EXISTING_LOCATION_NAMES,ExistingLocations.class.getName());
+        }
+    }
+
+    public Location(String countryName, String provinceName){
+        if(existingLocations.hasBB(countryName,provinceName)){
+            this.geonamesJSON = new GeonamesJSON();
+            this.givenName = provinceName;
+            this.boundingBox = existingLocations.getBB(countryName,provinceName);
+            this.altNames = existingLocations.getLocationNames(countryName,provinceName)[1];
+            this.commonName = existingLocations.getLocationNames(countryName,provinceName)[0];
+        } else {
+            this.geonamesJSON = new GeonamesJSON(new Geonames().getGeonamesProvince(provinceName,countryName));
+            this.givenName = provinceName;
+            this.boundingBox = geonamesJSON.getBBFromGeonamesJSON();
+            this.altNames = geonamesJSON.getAltNames();
+            this.commonName = this.geonamesJSON.getCommonStateName();
+            existingLocations.addNames(countryName,provinceName,commonName,altNames);
+            existingLocations.saveExistingSearchs(existingLocations.getNames(),EXISTING_LOCATION_NAMES,ExistingLocations.class.getName());
+        }
+    }
+
+    public Location(String countryName, String provinceName, String cityName){
+        if(existingLocations.hasBB(countryName,provinceName, cityName)){
+            this.geonamesJSON = new GeonamesJSON();
+            this.givenName = provinceName;
+            this.boundingBox = existingLocations.getBB(countryName,provinceName);
+            this.altNames = existingLocations.getLocationNames(countryName,provinceName, cityName)[1];
+            this.commonName = existingLocations.getLocationNames(countryName,provinceName, cityName)[0];
+        } else {
+            this.geonamesJSON = new GeonamesJSON(new Geonames().getGeonamesCity(cityName, provinceName,countryName));
+            this.givenName = provinceName;
+            this.boundingBox = geonamesJSON.getBBFromGeonamesJSON();
+            this.altNames = geonamesJSON.getAltNames();
+            this.commonName = this.geonamesJSON.getCommonStateName();
+            existingLocations.addNames(countryName,provinceName,cityName, commonName,altNames);
+            existingLocations.saveExistingSearchs(existingLocations.getNames(),EXISTING_LOCATION_NAMES,ExistingLocations.class.getName());
+        }
+    }
     public Location(String givenName, Element element){
+        existingLocations = ExistingLocations.getExistingLocations();
         this.geonamesJSON = new GeonamesJSON(elementToString(element));
         this.givenName = givenName;
         boundingBox = geonamesJSON.getBBFromGeonamesBBElementString();
     }
     //Placeholder location constructor
     public Location(){
+        existingLocations = ExistingLocations.getExistingLocations();
         boundingBox = new BoundingBox();
     }
 
