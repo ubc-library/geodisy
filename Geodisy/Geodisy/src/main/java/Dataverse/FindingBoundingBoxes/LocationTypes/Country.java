@@ -17,7 +17,6 @@ public class Country extends Location {
     }
     public Country(String countryName){
         super(countryName);
-        ExistingLocations existingLocations = ExistingLocations.getExistingLocations();
         countryCode = existingLocations.getLocationNames(countryName)[2];
     }
 

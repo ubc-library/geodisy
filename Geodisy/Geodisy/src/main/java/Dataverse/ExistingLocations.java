@@ -89,25 +89,25 @@ public class ExistingLocations extends ExistingSearches implements Serializable 
         return locationNames.containsKey(location);
     }
 
-    public void addNames(String country, String common, String altNamesString){
-        String[] names = new String[]{common,altNamesString};
+    public void addNames(String country, String common, String altNamesString, String countryCode){
+        String[] names = {common,altNamesString, countryCode};
         locationNames.put(country,names);
     }
 
-    public void addNames(String country, String province, String common, String altNamesString){
-        String[] names = new String[]{common,altNamesString};
+    public void addNames(String country, String province, String common,  String altNamesString, String countryCode){
+        String[] names = {common,altNamesString,""};
         locationNames.put(country+"zzz"+province,names);
     }
 
-    public void addNames(String country, String province, String city, String common, String altNamesString){
-        String[] names = new String[]{common,altNamesString};
+    public void addNames(String country, String province, String city, String common, String altNamesString, String countryCode){
+        String[] names = {common,altNamesString,""};
         locationNames.put(country+"zzz"+province+"zzz"+city,names);
     }
 
     private String[] getNames(String locations){
         if(hasNames(locations))
             return locationNames.get(locations);
-        return new String[]{"",""};
+        return new String[]{"","",""};
     }
 
     public boolean hasLocationNames(String country, String province, String city){
@@ -198,5 +198,15 @@ public class ExistingLocations extends ExistingSearches implements Serializable 
 
     public void setLocationNames(HashMap<String, String[]> names){
         locationNames = names;
+    }
+
+    public String getCountryFromCode(String countryCode){
+        for(String key: locationNames.keySet()){
+            if(key.contains("zzz"))
+                continue;
+            if(locationNames.get(key)[2].equals(countryCode))
+                return key;
+        }
+        return "";
     }
 }

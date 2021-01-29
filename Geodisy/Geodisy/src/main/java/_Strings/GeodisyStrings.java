@@ -21,7 +21,7 @@ public class GeodisyStrings {
         LOGS = GEODISY_PATH_ROOT + replaceSlashes("logs");
         EXISTING_CHECKS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingChecks.txt");
         EXISTING_DATASET_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingDatasetBBoxes.txt");
-        EXISTING_LOCATION_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingBBoxes.txt");
+        EXISTING_LOCATION_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingLocationBBoxes.txt");
         EXISTING_LOCATION_NAMES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingLocationNames.txt");
         EXISTING_GEO_LABELS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExisitingGeoLabels.txt");
         EXISTING_GEO_LABELS_VALS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExisitingGeoLabelsVals.txt");

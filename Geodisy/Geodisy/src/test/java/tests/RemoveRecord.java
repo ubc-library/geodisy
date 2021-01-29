@@ -1,7 +1,7 @@
 package tests;
 
 import BaseFiles.FileWriter;
-import Dataverse.ExistingHarvests;
+import Dataverse.ExistingDatasetBBoxes;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 
@@ -16,9 +16,9 @@ public class RemoveRecord {
     @Test
     public void removeRecord() {
         FileWriter fW = new FileWriter();
-        fW.verifyFileExistence(EXISTING_BBOXES);
-        ExistingHarvests existingHarvests = ExistingHarvests.getExistingHarvests();
-        existingHarvests.saveExistingSearchs(existingHarvests.getbBoxes(),EXISTING_BBOXES, "ExistingBBoxes");
+        fW.verifyFileExistence(EXISTING_DATASET_BBOXES);
+        ExistingDatasetBBoxes existingDatasetBBoxes = ExistingDatasetBBoxes.getExistingHarvests();
+        existingDatasetBBoxes.saveExistingSearchs(existingDatasetBBoxes.getbBoxes(), EXISTING_DATASET_BBOXES, "ExistingBBoxes");
         String folderized = record2Remove.replace(".","/");
         File file = new File(DATA_DIR_LOC + folderized);
         try {

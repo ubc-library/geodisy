@@ -28,7 +28,7 @@ public class Location implements GeographicPoliticalUnit {
     protected String altNames = "";
     protected GeonamesJSON geonamesJSON;
     protected GeoLogger logger = new GeoLogger(this.getClass());
-    ExistingLocations existingLocations;
+    protected ExistingLocations existingLocations;
 
 
     public Location(String givenName, GeonamesJSON geonamesJSON) {
