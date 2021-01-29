@@ -1,11 +1,12 @@
 package Dataverse.FindingBoundingBoxes.LocationTypes;
 
 
+import Dataverse.ExistingLocations;
 import Dataverse.FindingBoundingBoxes.Location;
 import org.w3c.dom.Element;
 
 public class Country extends Location {
-    private String countryCode = "";
+    private String countryCode;
 
     public Country(Element country, String commonName) {
         super(commonName, country);
@@ -16,6 +17,8 @@ public class Country extends Location {
     }
     public Country(String countryName){
         super(countryName);
+        ExistingLocations existingLocations = ExistingLocations.getExistingLocations();
+        countryCode = existingLocations.getLocationNames(countryName)[2];
     }
 
 

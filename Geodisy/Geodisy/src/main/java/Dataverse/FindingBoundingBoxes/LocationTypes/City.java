@@ -10,7 +10,7 @@ public class City extends Location {
     //TODO deal with higher levels of the location hierarchy if the lower level does or does not find a bounding box
     public City(String name, String provinceName, String countryName) {
         super(countryName,provinceName,name);
-        this.province = new Province(countryName,provinceName);
+        this.province = new Province(provinceName, countryName);
     }
     //When no province is given, but city and country are;
     public City(String name, String countryName){

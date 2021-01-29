@@ -81,7 +81,7 @@ public class GeonamesJSON {
     }
 
     public String getAltNames(){
-        return getVal("altName");
+        return getVal("alternateNames");
     }
 
     public String getCommonCountryName(){
@@ -89,11 +89,11 @@ public class GeonamesJSON {
     }
     //TODO check the label is correct
     public String getCommonCityName(){
-        return getVal("cityName");
+        return getVal("name");
     }
     //TODO check the label is correct
     public String getCommonStateName(){
-        return getVal("stateName");
+        return getVal("name");
     }
 
     public String getCountryCode(){
