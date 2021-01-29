@@ -3,7 +3,8 @@ package BaseFiles;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicCoverage;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicFields;
 import Dataverse.DataverseJavaObject;
-import Dataverse.FindingBoundingBoxes.Places;
+import Dataverse.ExistingLocations;
+import Dataverse.FindingBoundingBoxes.LocationTypes.Country;
 import Dataverse.FindingBoundingBoxes.GeonamesBBs;
 import Dataverse.SourceJavaObject;
 import org.w3c.dom.Document;
@@ -25,10 +26,8 @@ import static _Strings.GeodisyStrings.GEONAMES_USERNAME;
 
 public class Geonames {
     GeoLogger logger =  new GeoLogger(this.getClass());
-    Places places;
 
     public Geonames() {
-        this.places = Places.getCountry();
     }
 
 
@@ -79,7 +78,7 @@ public class Geonames {
     public String getGeonamesCountry(String country){
         if(country.isEmpty())
             return "";
-        Map<String, String> parameters = getBaseParameters(country);
+        Map<String, String> parameters = getBaseParametersCountry(country);
         parameters.remove("country");
         String searchString = country;
         parameters.put("fcode","PCL*");
@@ -141,12 +140,24 @@ public class Geonames {
         parameters.put("username", GEONAMES_USERNAME);
         parameters.put("style","FULL");
         parameters.put("maxRows","1");
-        String countryCode = places.isCountryCode(country) ? country : places.getCountryCode(country);
+        String countryCode = getCountryCode(country);
         parameters.put("country",countryCode);
 
         return parameters;
     }
 
+    private HashMap<String, String> getBaseParametersCountry(String country){
+        HashMap<String, String> parameters = new HashMap<>();
+        ExistingLocations existingLocations = ExistingLocations.getExistingLocations();
+        parameters.put("username", GEONAMES_USERNAME);
+        parameters.put("style","FULL");
+        parameters.put("maxRows","1");
+        String countryCode = existingLocations.getLocationNames(country)[2];
+        if(!countryCode.isEmpty())
+            parameters.put("country",countryCode);
+
+        return parameters;
+    }
     public SourceJavaObject getBoundingBox(SourceJavaObject sjo) {
         DataverseJavaObject djo = (DataverseJavaObject) sjo;
         GeonamesBBs geonamesBBs = new GeonamesBBs(djo);
@@ -159,8 +170,10 @@ public class Geonames {
     }
 
     public String getCountryCode(String countryName){
-        if(places.isCountryCode(countryName))
-            return countryName;
-        return places.getCountryCode(countryName);
+        ExistingLocations existingLocations = ExistingLocations.getExistingLocations();
+        String cc = existingLocations.getLocationNames(countryName)[2];
+        if(!cc.isEmpty())
+            return cc;
+        return (new Country(countryName)).getCountryCode();
     }
 }

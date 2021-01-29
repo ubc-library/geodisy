@@ -2,7 +2,6 @@ package BaseFiles;
 
 import Crosswalking.GeoBlacklightJson.GeoCombine;
 import Dataverse.*;
-import Dataverse.FindingBoundingBoxes.Places;
 import _Strings.GeodisyStrings;
 
 import java.io.*;
@@ -36,7 +35,6 @@ public class GeodisyTask {
        String startWarningLog;
        String endWarningLog;
        long startTime = Calendar.getInstance().getTimeInMillis();
-        Places.getCountry();
         try {
             FileWriter fW = new FileWriter();
             verifyFiles(fW);

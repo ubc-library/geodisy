@@ -25,8 +25,6 @@ import static _Strings.DVFieldNameStrings.*;
  */
 public class GeonamesBBs extends FindBoundBox {
     private String USER_NAME = "geodisy";
-    Places places;
-    HashMap<String, BoundingBox> bBoxes;
     String doi;
     public DataverseJavaObject djo;
     Geonames geo;
@@ -34,8 +32,6 @@ public class GeonamesBBs extends FindBoundBox {
 
     public GeonamesBBs(String doi) {
         this.doi = doi;
-        this.places = Places.getCountry();
-        this.bBoxes = places.getBoundingBoxes();
         geo = new Geonames();
         existingLocations = ExistingLocations.getExistingLocations();
     }
@@ -43,8 +39,6 @@ public class GeonamesBBs extends FindBoundBox {
     public GeonamesBBs(DataverseJavaObject djo){
         this.djo = djo;
         doi = this.djo.getPID();
-        this.places = Places.getCountry();
-        this.bBoxes = places.getBoundingBoxes();
         geo = new Geonames();
         existingLocations = ExistingLocations.getExistingLocations();
     }
@@ -58,13 +52,13 @@ public class GeonamesBBs extends FindBoundBox {
     @Override
     public BoundingBox getDVBoundingBox(String countryName) {
         Country country;
-        if(places.isCountryCode(countryName))
-            country = places.getCountryByCode(countryName);
+        String c = existingLocations.getCountryFromCode(countryName);
+        if(c.isEmpty())
+            country = new Country(c);
          else
-             country = places.getCountryByName(countryName);
-        if(country.getCountryCode().matches("_JJ")||country.getCountryCode().matches("")){
+             country = new Country(countryName);
+        if(!country.hasBoundingBox()){
             logger.info(countryName + " is not a valid country givenName in record at PERSISTENT_ID: " + doi + ", so no bounding box could be automatically generated. Check this record manually ", djo);
-
             return new BoundingBox();
         }
         return country.getBoundingBox();
@@ -81,26 +75,13 @@ public class GeonamesBBs extends FindBoundBox {
      */
     @Override
     public BoundingBox getDVBoundingBox(String country, String province)  {
-        BoundingBox box = places.getExistingBB(country, province);
+        BoundingBox box = existingLocations.getBB(country, province);
         if(box.getLongWest()!=361)
             return box;
-
-        String unURLedProvince =province;
-        try {
-            province = URLEncoder.encode(province, "UTF-8");
-        } catch (UnsupportedEncodingException ignored) {
-            // Can be safely ignored because UTF-8 is always supported
-        }
-        String responseString = geo.getGeonamesProvince(province,country);
-        box = readResponse(responseString,doi, djo);
-        if(box.getLongWest()!=361) {
-            Province p = new Province(unURLedProvince, country);
-            p.setBoundingBox(box);
-            existingLocations.addBBox(country,province, box);
-            bBoxes.put(addDelimiter(country, unURLedProvince), box);
-            places.setBoundingBoxes(bBoxes);
-        }
-        return box;
+        Province p = new Province(province, country);
+        if(p.hasBoundingBox())
+            return p.getBoundingBox();
+        return new BoundingBox();
     }
 
 
@@ -118,28 +99,13 @@ public class GeonamesBBs extends FindBoundBox {
 
     @Override
     public BoundingBox getDVBoundingBox(String country, String province, String city) {
-        BoundingBox box = places.getExistingBB(country, province, city);
+        BoundingBox box = existingLocations.getBB(country, province, city);
         if(box.getLongWest()!=361)
             return box;
-        String unURLedProvince = province;
-        String unURLedCity = city;
-        try {
-            city = URLEncoder.encode(city, "UTF-8");
-            province = URLEncoder.encode(province, "UTF-8");
-        } catch (UnsupportedEncodingException ignored) {
-            // Can be safely ignored because UTF-8 is always supported
-        }
-
-        String responseString = geo.getGeonamesCity(city,province, country);
-        box = readResponse(responseString,doi, djo);
-        if(box.getLongWest()==361) {
-            City cit = new City(city, province, country);
-            cit.setBoundingBox(box);
-            bBoxes.put(addDelimiter(country, unURLedProvince, unURLedCity), box);
-            places.setBoundingBoxes(bBoxes);
-        }
-
-        return box;
+        City cit = new City(city, province, country);
+        if(cit.hasBoundingBox())
+            return cit.getBoundingBox();
+        return new BoundingBox();
     }
 
     public DataverseJavaObject getDJO(){
