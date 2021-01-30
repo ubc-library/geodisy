@@ -30,7 +30,7 @@ public class ExistingGeoLabels extends ExisitingFile implements Serializable {
 
     private ExistingGeoLabels(){
         logger = new GeoLogger(this.getClass());
-        geoFiles = readExistingGeoLabels(EXISTING_GEO_LABELS);
+        geoFiles = readExistingGeoLabels();
     }
 
     public void addOrReplaceGeoLabel(String geoserverID, String pID, String fileName){
@@ -38,14 +38,15 @@ public class ExistingGeoLabels extends ExisitingFile implements Serializable {
             geoFiles.put(geoserverID, pID+fileName);
     }
 
-    public HashMap<String, String> readExistingGeoLabels(String path){
+    public HashMap<String, String> readExistingGeoLabels(){
+        String path = GeodisyStrings.replaceSlashes(EXISTING_GEO_LABELS);
         HashMap<String, String> newFile = new HashMap<>();
         FileWriter fw = new FileWriter();
         File checkBlank = new File(path);
         if(checkBlank.toString().isEmpty())
             return newFile;
         try {
-            geoFiles =  (HashMap<String, String>) fw.readSavedObject(GeodisyStrings.replaceSlashes(path));
+            geoFiles =  (HashMap<String, String>) fw.readSavedObject(path);
             return geoFiles;
         } catch (FileNotFoundException e){
             return newFile;

@@ -107,7 +107,7 @@ public class DataverseRecordFile {
         DownloadedFiles downloads = DownloadedFiles.getDownloadedFiles();
         downloads.addDownload(originalTitle,djo.getPID(),dbID);
         try {
-            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(datasetIdent.replace("_", "/").replace(".","/") + "/"));
+            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(datasetIdent).replace("_", "/").replace(".","/")+"/");
 
             File folder = new File(dirPath);
             folder.mkdirs();

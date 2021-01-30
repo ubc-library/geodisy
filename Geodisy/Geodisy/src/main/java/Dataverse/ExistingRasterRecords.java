@@ -27,21 +27,22 @@ public class ExistingRasterRecords extends ExisitingFile implements Serializable
 
     private ExistingRasterRecords(){
         logger = new GeoLogger(this.getClass());
-        records = readExistingRecords(RASTER_RECORDS);
+        records = readExistingRecords();
     }
 
     public void addOrReplaceRecord(String doi, String fileName){
         records.put(doi+fileName,fileName);
     }
 
-    public HashMap<String, String> readExistingRecords(String path){
+    public HashMap<String, String> readExistingRecords(){
+        String path = GeodisyStrings.replaceSlashes(RASTER_RECORDS);
         HashMap<String, String> newFile = new HashMap<>();
         FileWriter fw = new FileWriter();
         File checkBlank = new File(path);
         if(checkBlank.toString().isEmpty())
             return newFile;
         try {
-            records =  (HashMap<String, String>) fw.readSavedObject(GeodisyStrings.replaceSlashes(path));
+            records =  (HashMap<String, String>) fw.readSavedObject(path);
             return records;
         } catch (FileNotFoundException e){
             return newFile;

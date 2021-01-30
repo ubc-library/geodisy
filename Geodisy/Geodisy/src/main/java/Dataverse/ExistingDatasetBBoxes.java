@@ -3,6 +3,7 @@ package Dataverse;
 import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
+import _Strings.GeodisyStrings;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -68,7 +69,7 @@ public class ExistingDatasetBBoxes extends ExistingSearches implements Serializa
         HashMap<String, BoundingBox> newFile = new HashMap<>();
         FileWriter fw = new FileWriter();
         try {
-            return  (HashMap<String, BoundingBox>) fw.readSavedObject(EXISTING_DATASET_BBOXES);
+            return  (HashMap<String, BoundingBox>) fw.readSavedObject(GeodisyStrings.replaceSlashes(EXISTING_DATASET_BBOXES));
         } catch (IOException e) {
             logger.error("Something went wrong reading the Existing bBoxes file");
             return newFile;

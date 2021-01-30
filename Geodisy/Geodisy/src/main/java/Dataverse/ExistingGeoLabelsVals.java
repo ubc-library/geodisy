@@ -2,6 +2,7 @@ package Dataverse;
 
 import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
+import _Strings.GeodisyStrings;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -83,7 +84,7 @@ public class ExistingGeoLabelsVals extends ExistingSearches implements Serializa
         int[] newVals = {0,0};
         FileWriter fw = new FileWriter();
         try {
-            lastRasterAndVectorIDs =  (int[]) fw.readSavedObject(EXISTING_GEO_LABELS_VALS);
+            lastRasterAndVectorIDs =  (int[]) fw.readSavedObject(GeodisyStrings.replaceSlashes(EXISTING_GEO_LABELS_VALS));
         } catch (IOException e) {
             logger.error("Something went wrong reading the Existing GeoLabels file");
             lastRasterAndVectorIDs = newVals;

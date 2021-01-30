@@ -167,10 +167,9 @@ public class DataverseJavaObject extends SourceJavaObject {
     @Override
     public LinkedList<DataverseGeoRecordFile> downloadFiles() {
         String path = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + urlized(GeodisyStrings.removeHTTPSAndReplaceAuthority(citationFields.getPID())));
-        path = GeodisyStrings.removeHTTPSAndReplaceAuthority(path);
         File f = new File(path);
         deleteDir(f);
-        f.mkdir();
+        f.mkdirs();
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
         for (DataverseRecordFile dRF : dataFiles) {
             if (GeodisyStrings.fileTypesToIgnore(dRF.translatedTitle)) {
