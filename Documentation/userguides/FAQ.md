@@ -1,6 +1,6 @@
 ## Frequently Asked Questions
 
-### How do I search with the map in Geodisy
+### How do I search with the map in Geodisy?
 
 1. Move the map to display your area of interest
 	* Use the + and - buttons in the top left of the map to zoom in and out  
