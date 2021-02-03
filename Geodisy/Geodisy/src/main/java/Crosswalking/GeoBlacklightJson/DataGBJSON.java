@@ -38,12 +38,15 @@ public class DataGBJSON extends GeoBlacklightJSON{
         geoMeta = djo.getGeoDataMeta();
     }
     @Override
-    protected JSONObject getRequiredFields(GeographicBoundingBox gbb, int total){
+    protected JSONObject getRequiredFields(GeographicBoundingBox gbb, int total,int boundingBoxNumber){
         String number = gbb.getFileNumber();
         jo.put("geoblacklight_version","1.0");
         jo.put("dc_identifier_s", GeodisyStrings.urlSlashes(javaObject.getSimpleFieldVal(DVFieldNameStrings.RECORD_URL)));
         String geoserverLabel = getGeoserverLabel(gbb);
-        jo.put("layer_slug_s", "geodisy:" + geoserverLabel);
+        if(boundingBoxNumber>0)
+            jo.put("layer_slug_s", "geodisy:" + geoserverLabel+boundingBoxNumber);
+        else
+            jo.put("layer_slug_s", "geodisy:" + geoserverLabel);
         String name = javaObject.getSimpleFields().getField(TITLE);
         if(name.isEmpty())
             name = "Unknown Study Name";
@@ -260,8 +263,12 @@ public class DataGBJSON extends GeoBlacklightJSON{
         if(recs.size()>1){
             JSONArray ja = new JSONArray();
             for(DataverseGeoRecordFile dgrf : recs){
-                if(!getGeoserverLabel(drf.getGBB()).equals(getGeoserverLabel(dgrf.getGBB())))
-                    ja.put(getGeoserverLabel(dgrf.getGBB()).toLowerCase());
+                if(!getGeoserverLabel(drf.getGBB()).equals(getGeoserverLabel(dgrf.getGBB()))) {
+                    if(dgrf.getBbCount()!=0)
+                        ja.put("geodisy:" + getGeoserverLabel(dgrf.getGBB()).toLowerCase() + dgrf.getBbCount());
+                    else
+                        ja.put("geodisy:" + getGeoserverLabel(dgrf.getGBB()).toLowerCase());
+                }
             }
             jo.put("dc_source_sm",ja);
             jo.put("dct_isPartOf_sm",javaObject.getSimpleFieldVal(TITLE));

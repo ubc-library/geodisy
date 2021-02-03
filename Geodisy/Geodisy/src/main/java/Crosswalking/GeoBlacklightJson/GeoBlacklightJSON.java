@@ -39,10 +39,17 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
         int countFile = geoFiles.size();
         int countMeta = geoMeta.size();
         System.out.println("DOI = " + doi + " . Number geoFile: " + countFile + " . Number geoMeta: " + countMeta);
-        List<DataverseGeoRecordFile> list = (countFile >= countMeta)? geoFiles : geoMeta;
-        int count = 1;
+        boolean geoMoreThanMeta = countFile >= countMeta;
+        List<DataverseGeoRecordFile> list = geoMoreThanMeta? geoFiles : geoMeta;
+        if(list.size()>1 && !geoMoreThanMeta){
+            int count = 1;
+            for(DataverseGeoRecordFile d:list){
+                d.setBbCount(count);
+                count++;
+            }
+
+        }
         int total = list.size();
-        int innerCount = 1;
         for(DataverseRecordFile drf:list){
             createJSONFromFiles(drf, total);
         }
@@ -50,7 +57,7 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
 
     private void createJSONFromFiles(DataverseRecordFile drf, int total) {
         boolean single = total == 1;
-        getRequiredFields(drf.getGBB(), total);
+        getRequiredFields(drf.getGBB(), total, drf.getBbCount());
         getOptionalFields(drf,total);
         geoBlacklightJson = jo.toString();
         if (!single)
@@ -71,7 +78,7 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
     public String getDoi(){
         return doi;
     }
-    protected abstract JSONObject getRequiredFields(GeographicBoundingBox gbb, int total);
+    protected abstract JSONObject getRequiredFields(GeographicBoundingBox gbb, int total, int bboxNumber);
 
 
 
