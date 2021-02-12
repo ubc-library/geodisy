@@ -35,7 +35,7 @@ Although _Geodisy_ is a geospatial search tool, it searches for any type of data
 
 ### Does Geodisy contain restricted data?
 
-Geodisy only uses datasets that are open access. Datasets with any kind of restrictions are not included. Because Dataverse does not provide functionility for embargoed data, datasets with embargo restrictions are also not included. 
+Geodisy only uses datasets that are open access. Datasets with any kind of restrictions are not included. Because Dataverse does not provide functionality for embargoed data, datasets with embargo restrictions are also not included. 
 
 ### What is the ISO 19139 metadata link?
 
