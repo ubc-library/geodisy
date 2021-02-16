@@ -348,6 +348,8 @@ public class GeographicBoundingBox extends CompoundJSONField {
     }
 
     private void setFileURL(String fileURL) {
+        if(fileURL.contains("api/dataverses/%%id%/contentsapi/access"))
+            fileURL.replace("api/dataverses/%%id%/contentsapi/access","api/access");
         if(fileURL.startsWith(SCHOLARS_PORTAL_CLONE))
             this.fileURL = SCHOLARS_PORTAL + fileURL.substring(SCHOLARS_PORTAL_CLONE.length());
         else
