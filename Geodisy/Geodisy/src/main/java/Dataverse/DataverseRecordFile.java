@@ -33,6 +33,7 @@ public class DataverseRecordFile {
     String recordURL = "";
     String datasetIdent = "";
     GeographicBoundingBox gbb;
+    int bbCount = 0;
 
     /**
      * Creates a DataverseRecordFile when there is a File-specific fileIdent.
@@ -365,5 +366,13 @@ public class DataverseRecordFile {
 
     public boolean isOnGeoserver(){
         return false;
+    }
+
+    public int getBbCount() {
+        return bbCount;
+    }
+
+    public void setBbCount(int bbCount) {
+        this.bbCount = bbCount;
     }
 }
