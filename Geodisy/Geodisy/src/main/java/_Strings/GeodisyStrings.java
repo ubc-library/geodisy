@@ -150,6 +150,14 @@ public class GeodisyStrings {
         public final static String[] NON_SHP_SHAPEFILE_EXTENSIONS = {".shx", ".dbf", ".sbn",".prj"};
         private final static String[] OGRINFO_PROCESSABLE_EXTENTIONS = {".geojson",".shp",".gpkg"}; //also .csv/.tab, but need to check if the csv is actually geospatial in nature
         private final static String[] CSV_EXTENTIONS = {".csv", ".tab"};
+        private final static String[] LIDAR_EXTENSION = {".las",".laz",".zlas",".e57"};
+        public static boolean isLidar(String title){
+            for(String s: LIDAR_EXTENSION){
+                if(title.endsWith(s))
+                    return true;
+            }
+            return false;
+        }
         private final static String[] INTERIM_VECTOR = ArrayUtils.addAll(OGRINFO_PROCESSABLE_EXTENTIONS,CSV_EXTENTIONS);
         public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = ArrayUtils.addAll(NON_SHP_SHAPEFILE_EXTENSIONS, INTERIM_VECTOR);
         public final static String FINAL_OGRINFO_VECTOR_FILE_EXTENSIONS = ".shp";

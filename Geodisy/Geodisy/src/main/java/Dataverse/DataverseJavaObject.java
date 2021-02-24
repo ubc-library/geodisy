@@ -171,11 +171,14 @@ public class DataverseJavaObject extends SourceJavaObject {
         deleteDir(f);
         f.mkdirs();
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
+        checkDataset();
         for (DataverseRecordFile dRF : dataFiles) {
             if (GeodisyStrings.fileTypesToIgnore(dRF.translatedTitle)) {
                 //System.out.println("Ignored file: " + dRF.translatedTitle);
                 continue;
             }
+            if(dRF.translatedTitle.startsWith("LAS_"))
+                continue;
             LinkedList<DataverseRecordFile> temp = dRF.retrieveFile(this);
             for(DataverseRecordFile d: temp){
                 boolean add = true;
@@ -241,6 +244,27 @@ public class DataverseJavaObject extends SourceJavaObject {
             existingGeoLabelsVals.saveExistingFile(existingGeoLabelsVals.getValues(),EXISTING_GEO_LABELS_VALS,"ExistingGeoLabelsVals");
         }
         return newRecs;
+    }
+    //Filter files to potentially download with a max 5GB individual file size and max 100GB dataset size
+    private void checkDataset() {
+        Long total = 0L;
+        LinkedList<DataverseRecordFile> list = new LinkedList<>();
+        HTTPCallerFiles hCF = new HTTPCallerFiles();
+        for(DataverseRecordFile dataverseRecordFile: dataFiles){
+            String length = hCF.callHTTP(dataverseRecordFile.recordURL);
+            try {
+                Long current = Long.parseLong(length);
+                if (current > 5000000000L)
+                    continue;
+                total += current;
+                list.add(dataverseRecordFile);
+                if (total > 100000000000L)
+                    dataFiles = new LinkedList<>();
+            } catch (NumberFormatException e){
+                logger.error("Something weird with the file length of " + dataverseRecordFile.translatedTitle + ": " + length + "at " + dataverseRecordFile.recordURL);
+            }
+        }
+        dataFiles = list;
     }
 
     @Override
