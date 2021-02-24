@@ -15,6 +15,7 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
+import static _Strings.DVFieldNameStrings.TITLE;
 import static _Strings.GeodisyStrings.GEODISY_PATH_ROOT;
 
 /**
@@ -60,10 +61,11 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
         getRequiredFields(drf.getGBB(), total, drf.getBbCount());
         getOptionalFields(drf,total);
         geoBlacklightJson = jo.toString();
-        if (!single)
-            saveJSONToFile(geoBlacklightJson, doi, GeodisyStrings.replaceSlashes(GeodisyStrings.removeHTTPSAndReplaceAuthority(doi)) + " (File " + drf.getGBBFileNumber() + " of " + total + ")");
-        else
-            saveJSONToFile(geoBlacklightJson, doi, GeodisyStrings.replaceSlashes(GeodisyStrings.removeHTTPSAndReplaceAuthority(doi)));
+        if(!javaObject.getSimpleFields().getField(TITLE).isEmpty())
+            if (!single)
+                saveJSONToFile(geoBlacklightJson, doi, GeodisyStrings.replaceSlashes(GeodisyStrings.removeHTTPSAndReplaceAuthority(doi)) + " (File " + drf.getGBBFileNumber() + " of " + total + ")");
+            else
+                saveJSONToFile(geoBlacklightJson, doi, GeodisyStrings.replaceSlashes(GeodisyStrings.removeHTTPSAndReplaceAuthority(doi)));
     }
 
     public File genDirs(String doi, String localRepoPath) {

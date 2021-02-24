@@ -48,8 +48,10 @@ public class DataGBJSON extends GeoBlacklightJSON{
         else
             jo.put("layer_slug_s", "geodisy:" + geoserverLabel);
         String name = javaObject.getSimpleFields().getField(TITLE);
-        if(name.isEmpty())
+        if(name.isEmpty()) {
+            logger.error("Somehow creating a GBL json without a study title: " + javaObject.getPID());
             name = "Unknown Study Name";
+        }
         if(total>1) {
             number = padZeros(number,total);
             jo.put("dc_title_s", name + " (" + number + " of " + total + ")");
