@@ -46,7 +46,7 @@ public class DataverseParser implements JSONParser {
                 dJO.setGeoFields(new GeographicFields(dJO));
 
             if(metadata.has(FILES))
-                dJO.parseFiles(dJO.getVersionSection(dataverseJSON).getJSONObject("metadataBlocks").getJSONArray(FILES));
+                dJO.parseFiles(metadata.getJSONArray(FILES));
         }catch (JSONException e){
             logger.error("Something was malformed with the JSON string returned from Dataverse: " + jo.toString());
         }

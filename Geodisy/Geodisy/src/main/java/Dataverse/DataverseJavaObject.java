@@ -109,40 +109,43 @@ public class DataverseJavaObject extends SourceJavaObject {
     @Override
     public void parseFiles(JSONArray fileFieldsArray) {
         for(Object o: fileFieldsArray){
-            JSONObject jo = (JSONObject) o;
-            if(jo.getBoolean("restricted"))
-                continue;
-            String title = jo.getString("label");
-            JSONObject dataFile = jo.getJSONObject("dataFile");
-            DataverseRecordFile dRF;
-            //Some Dataverses don't have individual DOIs for files, so for those I will use the database's file id instead
-            int dbID;
-            if(jo.has("frdr_harvester")){
-                String fileName = dataFile.getString("filename");
-                String frdr_server = dataFile.getString("server");
-                dbID = Integer.parseInt(dataFile.getString("record_id"));
-                dRF = new DataverseRecordFile(fileName, dbID, frdr_server, citationFields.getPID());
-                dRF.setFileURL(server+DV_FILE_ACCESS_PATH+dbID);
-                dRF.setOriginalTitle(title);
+            try {
+                JSONObject jo = (JSONObject) o;
+                if (jo.getBoolean("restricted"))
+                    continue;
+                String title = jo.getString("label");
+                JSONObject dataFile = jo.getJSONObject("dataFile");
+                DataverseRecordFile dRF;
+                //Some Dataverses don't have individual DOIs for files, so for those I will use the database's file id instead
+                int dbID;
+                if (jo.has("frdr_harvester")) {
+                    String fileName = dataFile.getString("filename");
+                    String frdr_server = dataFile.getString("server");
+                    dbID = Integer.parseInt(dataFile.getString("record_id"));
+                    dRF = new DataverseRecordFile(fileName, dbID, frdr_server, citationFields.getPID());
+                    dRF.setFileURL(server + DV_FILE_ACCESS_PATH + dbID);
+                    dRF.setOriginalTitle(title);
+                } else if (dataFile.has(PERSISTENT_ID) && !dataFile.getString(PERSISTENT_ID).equals("")) {
+                    dbID = (int) dataFile.get("id");
+                    String doi = dataFile.getString(PERSISTENT_ID);
+                    dRF = new DataverseRecordFile(title, doi, dataFile.getInt("id"), server, citationFields.getPID());
+                    dRF.setFileURL(server + DV_FILE_ACCESS_PATH + dbID);
+                    dRF.setOriginalTitle(title);
+                } else {
+                    dbID = (int) dataFile.get("id");
+                    dRF = new DataverseRecordFile(title, dbID, server, citationFields.getPID());
+                    dRF.setOriginalTitle(title);
+                    dRF.setFileURL(server + DV_FILE_ACCESS_PATH + dbID);
+                }
+                SourceRecordFiles srf = SourceRecordFiles.getSourceRecords();
+                if (!dRF.getDatasetIdent().equals(""))
+                    srf.putRecord(dRF.getDatasetIdent(), dRF.translatedTitle, dRF);
+                else
+                    srf.putRecord(dRF.getDatasetIdent(), dRF.translatedTitle, dRF);
+                dataFiles.add(dRF);
+            }catch (ClassCastException e){
+                logger.error("Something went wrong trying to parse the file metadata section for " + getPID() + " the json was " + fileFieldsArray.toString());
             }
-            else if (dataFile.has(PERSISTENT_ID)&& !dataFile.getString(PERSISTENT_ID).equals("")) {
-                dbID = (int) dataFile.get("id");
-                String doi = dataFile.getString(PERSISTENT_ID);
-                dRF = new DataverseRecordFile(title, doi,dataFile.getInt("id"), server, citationFields.getPID());
-                dRF.setFileURL(server+DV_FILE_ACCESS_PATH+dbID);
-                dRF.setOriginalTitle(title);
-            }else{
-                dbID = (int) dataFile.get("id");
-                dRF = new DataverseRecordFile(title,dbID,server,citationFields.getPID());
-                dRF.setOriginalTitle(title);
-                dRF.setFileURL(server+DV_FILE_ACCESS_PATH+dbID);
-            }
-            SourceRecordFiles srf = SourceRecordFiles.getSourceRecords();
-            if(!dRF.getDatasetIdent().equals(""))
-                srf.putRecord(dRF.getDatasetIdent(),dRF.translatedTitle,dRF);
-            else
-                srf.putRecord(dRF.getDatasetIdent(),dRF.translatedTitle,dRF);
-            dataFiles.add(dRF);
         }
     }
     //if changed, need to change copy in CitationFields Class
@@ -172,6 +175,7 @@ public class DataverseJavaObject extends SourceJavaObject {
         f.mkdirs();
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
         checkDataset();
+        dataFiles = new LinkedList<>();
         for (DataverseRecordFile dRF : dataFiles) {
             if (GeodisyStrings.fileTypesToIgnore(dRF.translatedTitle)) {
                 //System.out.println("Ignored file: " + dRF.translatedTitle);
