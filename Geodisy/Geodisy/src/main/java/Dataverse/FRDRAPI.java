@@ -39,6 +39,8 @@ public class FRDRAPI extends SourceAPI{
         // Repeatedly call the FRDR Harvester Export function until geting a json with finished: True
         while(!done) {
             String fullJSON = getJson();
+            if(fullJSON.isEmpty())
+                break;
             try {
                 JSONTokener tokener = new JSONTokener(fullJSON);
                 JSONObject json = new JSONObject(tokener);
@@ -127,8 +129,10 @@ public class FRDRAPI extends SourceAPI{
             conn.connect();
             int responsecode = conn.getResponseCode();
             String inlines = "";
-            if(responsecode != 200)
-                throw new RuntimeException("HttpResponseCode:" +responsecode);
+            if(responsecode != 200) {
+                logger.error("Failed to get harvester json, HttpResponseCode:" + responsecode);
+                return "";
+            }
             else{
                 Scanner sc = new Scanner(url.openStream());
                 while (sc.hasNext()){
@@ -138,9 +142,9 @@ public class FRDRAPI extends SourceAPI{
                 return inlines;
             }
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            logger.error("Failed to get harvester json, malformed URL: " + e.toString());
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Failed to get harvester json, IOException: " + e.toString());
         }
         return "";
     }
