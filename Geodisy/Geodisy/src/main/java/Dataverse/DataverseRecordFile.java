@@ -53,14 +53,25 @@ public class DataverseRecordFile {
         gbb = new GeographicBoundingBox(datasetIdent);
 
     }
+
+    public DataverseRecordFile(String translatedTitle, String fileIdent, int dbID, String server, String datasetIdent, String fileURL){
+        this.translatedTitle = translatedTitle;
+        this.fileIdent = fileIdent;
+        this.dbID = dbID;
+        this.server = server;
+        recordURL = fileURL;
+        setFileURL(fileURL);
+        this.datasetIdent = GeodisyStrings.removeHTTPSAndReplaceAuthority(datasetIdent.replace(".","_").replace("/","_"));
+        gbb = new GeographicBoundingBox(datasetIdent);
+
+    }
     /**
      * Creates a DataverseRecordFile when there is no File-specific fileIdent, only a dataset fileIdent and a database ID.
      * @param translatedTitle
-     * @param dbID
-     * @param server
      * @param datasetIdent
+     * @param dbID
      */
-    public DataverseRecordFile(String translatedTitle, int dbID, String server, String datasetIdent){
+    public DataverseRecordFile(String translatedTitle, String datasetIdent, int dbID){
         this.translatedTitle = translatedTitle;
         this.dbID = dbID;
         this.fileIdent = "";
@@ -68,9 +79,26 @@ public class DataverseRecordFile {
         recordURL = server+"api/access/datafile/" + dbID;
         this.datasetIdent = GeodisyStrings.removeHTTPSAndReplaceAuthority(GeodisyStrings.replaceSlashes(datasetIdent)).replace(".","_").replace(GeodisyStrings.replaceSlashes("/"),"_");
         gbb = new GeographicBoundingBox(datasetIdent);
-
-
     }
+
+    /**
+     * Creates a DataverseRecord file from the FRDR-generated json
+     * @param translatedTitle
+     * @param datasetIdent
+     * @param fileURL
+     */
+    public DataverseRecordFile(String translatedTitle, String datasetIdent, String fileURL){
+        this.translatedTitle = translatedTitle;
+        this.dbID = 0;
+        this.fileIdent = "";
+        this.server = "N/A";
+        recordURL = fileURL;
+        setFileURL(fileURL);
+        this.datasetIdent = GeodisyStrings.removeHTTPSAndReplaceAuthority(GeodisyStrings.replaceSlashes(datasetIdent)).replace(".","_").replace(GeodisyStrings.replaceSlashes("/"),"_");
+        gbb = new GeographicBoundingBox(datasetIdent);
+    }
+
+
     /**
       * Only to be used for temp DRFs
      */
@@ -106,7 +134,7 @@ public class DataverseRecordFile {
         //System.out.println("downloading file: " + originalTitle);
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
         DownloadedFiles downloads = DownloadedFiles.getDownloadedFiles();
-        downloads.addDownload(originalTitle,djo.getPID(),dbID);
+        downloads.addDownload(originalTitle,djo.getPID(),recordURL);
         try {
             String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(datasetIdent).replace("_", "/").replace(".","/")+"/");
 
@@ -189,9 +217,8 @@ public class DataverseRecordFile {
     }
 
     private DataverseRecordFile replaceRecord() {
-        DataverseRecordFile newDRF = new DataverseRecordFile(translatedTitle,fileIdent,dbID,server,datasetIdent);
+        DataverseRecordFile newDRF = new DataverseRecordFile(translatedTitle,fileIdent,dbID,server,datasetIdent,recordURL);
         newDRF.setOriginalTitle(originalTitle);
-        newDRF.setRecordURL(recordURL);
         return newDRF;
     }
 
