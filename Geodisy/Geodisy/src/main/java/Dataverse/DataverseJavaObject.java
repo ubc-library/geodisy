@@ -270,6 +270,8 @@ public class DataverseJavaObject extends SourceJavaObject {
                 list.add(dataverseRecordFile);
                 if (total > 100000000000L) {
                     list = new LinkedList<>();
+                    logger.warn("Dataset " + getPID() + " was too large to download.");
+                    System.out.println("Dataset too large to download");
                     break;
                 }
             } catch (NumberFormatException e){
