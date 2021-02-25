@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 import static _Strings.GeodisyStrings.*;
@@ -178,11 +179,16 @@ public class DataverseJavaObject extends SourceJavaObject {
         dataFiles = new LinkedList<>();
         for (DataverseRecordFile dRF : dataFiles) {
             if (GeodisyStrings.fileTypesToIgnore(dRF.translatedTitle)) {
+                File bad = new File(path + GeodisyStrings.replaceSlashes("/") + dRF.translatedTitle);
+                bad.delete();
                 //System.out.println("Ignored file: " + dRF.translatedTitle);
                 continue;
             }
-            if(dRF.translatedTitle.startsWith("LAS_"))
+            if(dRF.translatedTitle.startsWith("LAS_")) {
+                File bad = new File(path+GeodisyStrings.replaceSlashes("/")+dRF.translatedTitle);
+                bad.delete();
                 continue;
+            }
             LinkedList<DataverseRecordFile> temp = dRF.retrieveFile(this);
             for(DataverseRecordFile d: temp){
                 boolean add = true;
@@ -262,8 +268,10 @@ public class DataverseJavaObject extends SourceJavaObject {
                     continue;
                 total += current;
                 list.add(dataverseRecordFile);
-                if (total > 100000000000L)
-                    dataFiles = new LinkedList<>();
+                if (total > 100000000000L) {
+                    list = new LinkedList<>();
+                    break;
+                }
             } catch (NumberFormatException e){
                 logger.error("Something weird with the file length of " + dataverseRecordFile.translatedTitle + ": " + length + "at " + dataverseRecordFile.recordURL);
             }
