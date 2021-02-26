@@ -84,7 +84,7 @@ public class HTTPCallerFiles extends HTTPCaller {
             h = getHttpURLConnection(fixed);
             if (h == null)
                 return "0";
-            answer = readResponse(h);
+            answer = readResponse(h, searchUrl);
             if(!answer.contains("Please add a username"))
                 run = false;
             counter++;
