@@ -45,7 +45,7 @@ public class HTTPCallerFiles extends HTTPCaller {
     }
 
     @Override
-    protected String readResponse(HttpURLConnection con) {
+    protected String readResponse(HttpURLConnection con, String request) {
         con.setDoOutput(true);
         int responseCode = 0;
         String answer = "";
@@ -59,7 +59,7 @@ public class HTTPCallerFiles extends HTTPCaller {
                     return "BAD_RESPONSE";
                 answer = (String) words.get(0);
             } else {
-                logger.error("HEADER request didn't work: Code = " + responseCode);
+                logger.error("HEADER request didn't work: Code = " + responseCode + " Call =  " +request);
                 return "BAD_RESPONSE";
             }
         } catch (SocketTimeoutException s) {
