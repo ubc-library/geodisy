@@ -13,18 +13,13 @@ public class DataverseGeoRecordFile extends DataverseRecordFile {
         gdalInfo = new GDALInformation();
     }
 
-    public DataverseGeoRecordFile(String title, int dbID, String server, String datasetIdent) {
-        super(title, dbID, server, datasetIdent);
-        gdalInfo = new GDALInformation();
-    }
-
     public DataverseGeoRecordFile(String datasetIdent, GeographicBoundingBox gbb) {
         super(datasetIdent, gbb);
         gdalInfo = new GDALInformation();
     }
 
     public DataverseGeoRecordFile (DataverseRecordFile drf){
-        super(drf.getTranslatedTitle(),drf.dbID,drf.server,drf.datasetIdent);
+        super(drf.getTranslatedTitle(), drf.datasetIdent, drf.recordURL);
         if(!drf.getFileIdent().equals(""))
             fileIdent = drf.getFileIdent();
         gdalInfo = new GDALInformation();

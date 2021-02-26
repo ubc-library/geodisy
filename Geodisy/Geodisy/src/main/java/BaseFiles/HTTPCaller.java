@@ -19,7 +19,7 @@ public abstract class HTTPCaller {
                 h = getHttpURLConnection(fixed);
             if (h == null)
                 return "HTTP Fail";
-            answer = readResponse(h);
+            answer = readResponse(h,fixed);
             if(!answer.contains("Please add a username"))
                 run = false;
             counter++;
@@ -46,7 +46,7 @@ public abstract class HTTPCaller {
         return null;
     }
 
-    protected String readResponse(HttpURLConnection con) {
+    protected String readResponse(HttpURLConnection con, String request) {
         con.setDoOutput(true);
         int responseCode = 0;
         String answer = "";
@@ -65,7 +65,7 @@ public abstract class HTTPCaller {
                 answer = response.toString();
 
             } else {
-                logger.error("GET request didn't work: Code = " + responseCode);
+                logger.error("GET request didn't work: Code = " + responseCode + " Call = " + request);
                 return "BAD_RESPONSE";
             }
         } catch (SocketTimeoutException s) {
