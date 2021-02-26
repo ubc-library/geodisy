@@ -121,7 +121,7 @@ public class DataverseJavaObject extends SourceJavaObject {
                 String url ="";
                 if (jo.has("frdr_harvester")) {
                     String fileName = dataFile.getString("filename");
-                    url = dataFile.getString("pidURL");
+                    url = dataFile.getString("fileURI");
                     dRF = new DataverseRecordFile(fileName, citationFields.getPID(), url);
                     dRF.setOriginalTitle(title);
                 } else if (dataFile.has(PERSISTENT_ID) && !dataFile.getString(PERSISTENT_ID).equals("")) {
@@ -174,6 +174,7 @@ public class DataverseJavaObject extends SourceJavaObject {
         f.mkdirs();
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
         checkDataset();
+        //TODO move next line to allow downloading of files.
         dataFiles = new LinkedList<>();
         for (DataverseRecordFile dRF : dataFiles) {
             if (GeodisyStrings.fileTypesToIgnore(dRF.translatedTitle)) {
