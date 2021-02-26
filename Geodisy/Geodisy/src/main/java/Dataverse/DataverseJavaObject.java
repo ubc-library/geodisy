@@ -174,8 +174,6 @@ public class DataverseJavaObject extends SourceJavaObject {
         f.mkdirs();
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
         checkDataset();
-        //TODO move next line to allow downloading of files.
-        dataFiles = new LinkedList<>();
         for (DataverseRecordFile dRF : dataFiles) {
             if (GeodisyStrings.fileTypesToIgnore(dRF.translatedTitle)) {
                 File bad = new File(path + GeodisyStrings.replaceSlashes("/") + dRF.translatedTitle);

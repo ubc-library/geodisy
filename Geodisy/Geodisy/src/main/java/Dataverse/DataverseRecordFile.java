@@ -60,9 +60,9 @@ public class DataverseRecordFile {
         this.dbID = dbID;
         this.server = server;
         recordURL = fileURL;
-        setFileURL(fileURL);
         this.datasetIdent = GeodisyStrings.removeHTTPSAndReplaceAuthority(datasetIdent.replace(".","_").replace("/","_"));
         gbb = new GeographicBoundingBox(datasetIdent);
+        setFileURL(fileURL);
 
     }
     /**
@@ -93,9 +93,9 @@ public class DataverseRecordFile {
         this.fileIdent = "";
         this.server = "N/A";
         recordURL = fileURL;
-        setFileURL(fileURL);
         this.datasetIdent = GeodisyStrings.removeHTTPSAndReplaceAuthority(GeodisyStrings.replaceSlashes(datasetIdent)).replace(".","_").replace(GeodisyStrings.replaceSlashes("/"),"_");
         gbb = new GeographicBoundingBox(datasetIdent);
+        setFileURL(fileURL);
     }
 
 
