@@ -10,7 +10,6 @@ import org.json.JSONObject;
 
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.*;
 
 import static _Strings.GeodisyStrings.*;
@@ -114,17 +113,15 @@ public class DataverseJavaObject extends SourceJavaObject {
                 JSONObject jo = (JSONObject) o;
                 if (jo.getBoolean("restricted"))
                     continue;
-                String title = jo.getString("label");
                 JSONObject dataFile = jo.getJSONObject("dataFile");
+                String title = dataFile.getString("filename");
                 DataverseRecordFile dRF;
                 //Some Dataverses don't have individual DOIs for files, so for those I will use the database's file id instead
                 int dbID;
+                String url ="";
                 if (jo.has("frdr_harvester")) {
-                    String fileName = dataFile.getString("filename");
-                    String frdr_server = dataFile.getString("server");
-                    dbID = Integer.parseInt(dataFile.getString("record_id"));
-                    dRF = new DataverseRecordFile(fileName, dbID, frdr_server, citationFields.getPID());
-                    dRF.setFileURL(server + DV_FILE_ACCESS_PATH + dbID);
+                    url = dataFile.getString("fileURI");
+                    dRF = new DataverseRecordFile(title, citationFields.getPID(), url);
                     dRF.setOriginalTitle(title);
                 } else if (dataFile.has(PERSISTENT_ID) && !dataFile.getString(PERSISTENT_ID).equals("")) {
                     dbID = (int) dataFile.get("id");
@@ -134,7 +131,7 @@ public class DataverseJavaObject extends SourceJavaObject {
                     dRF.setOriginalTitle(title);
                 } else {
                     dbID = (int) dataFile.get("id");
-                    dRF = new DataverseRecordFile(title, dbID, server, citationFields.getPID());
+                    dRF = new DataverseRecordFile(title, citationFields.getPID(), dbID);
                     dRF.setOriginalTitle(title);
                     dRF.setFileURL(server + DV_FILE_ACCESS_PATH + dbID);
                 }
@@ -176,7 +173,6 @@ public class DataverseJavaObject extends SourceJavaObject {
         f.mkdirs();
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
         checkDataset();
-        dataFiles = new LinkedList<>();
         for (DataverseRecordFile dRF : dataFiles) {
             if (GeodisyStrings.fileTypesToIgnore(dRF.translatedTitle)) {
                 File bad = new File(path + GeodisyStrings.replaceSlashes("/") + dRF.translatedTitle);
@@ -230,7 +226,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             dgrf.setGbb(gbb, gbb.getField(FILE_NAME));
             if(dgrf.hasValidBB()) {
                 dgrf.setTranslatedTitle(dgrf.gbb.getField(FILE_NAME));
-                dgrf.setFileURL(server + "api/access/datafile/" + dgrf.dbID);
+                dgrf.setFileURL(dRF.getFileURL());
                 newRecs.add(dgrf);
             }
             else{
@@ -304,7 +300,7 @@ public class DataverseJavaObject extends SourceJavaObject {
         for(DataverseRecordFile drf : dataFiles){
             if(drf.getTranslatedTitle().equals(name)) {
                 dvgr = new DataverseGeoRecordFile(drf);
-                dvgr.setFileURL(server+"api/access/datafile/" + drf.dbID);
+                dvgr.setFileURL(drf.getFileURL());
                 return dvgr;
             }
         }

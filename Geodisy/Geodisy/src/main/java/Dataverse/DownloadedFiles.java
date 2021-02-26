@@ -48,9 +48,9 @@ public class DownloadedFiles {
             logger.error("Something went wrong trying to save the list of downloaded files to file " + DOWNLOADED_FILES);
         }
     }
-    public void addDownload(String fileName, String doi, int dbID){
+    public void addDownload(String fileName, String doi, String url){
         String datetime = String.valueOf(ZonedDateTime.now(ZoneId.of("Canada/Pacific")));
-        downloads.add("FileID=" + dbID + ";PersistantID=" + doi + ";File Name=" + fileName + ";DateTime=" + datetime);
+        downloads.add("FileUrl=" + url + ";PersistantID=" + doi + ";File Name=" + fileName + ";DateTime=" + datetime);
     }
 
     public void resetList(){
