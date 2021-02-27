@@ -257,8 +257,8 @@ public class DataverseJavaObject extends SourceJavaObject {
         LinkedList<DataverseRecordFile> list = new LinkedList<>();
         HTTPCallerFiles hCF = new HTTPCallerFiles();
         for(DataverseRecordFile dataverseRecordFile: dataFiles){
-            String url =dataverseRecordFile.recordURL;
-            if(url.startsWith("http://ftp") | url.startsWith("https://ftp"))
+            String url = dataverseRecordFile.recordURL;
+            if( url.startsWith("ftp://") | url.startsWith("http://ftp") | url.startsWith("https://ftp") )
                 continue;
             String length = hCF.callHTTP(dataverseRecordFile.recordURL);
             try {
