@@ -69,7 +69,7 @@ public abstract class HTTPCaller {
                 return "BAD_RESPONSE";
             }
         } catch (SocketTimeoutException s) {
-            logger.warn("Socket Timed out :" + s);
+            logger.warn("Socket Timed out :" + s + " Request was " + request);
         }catch (IOException e) {
             e.printStackTrace();
             ioError(e);

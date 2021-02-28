@@ -260,11 +260,12 @@ public class DataverseJavaObject extends SourceJavaObject {
             String url = dataverseRecordFile.recordURL;
             if( url.startsWith("ftp://") | url.startsWith("http://ftp") | url.startsWith("https://ftp") )
                 continue;
-            String length = hCF.callHTTP(dataverseRecordFile.recordURL);
+            long current = hCF.getFileLength(dataverseRecordFile.recordURL);
             try {
-                Long current = Long.parseLong(length);
-                if (current > 5000000000L)
+                if (current == -2 | current > 5000000000L)
                     continue;
+                if(current==-1)
+                    current = 0;
                 total += current;
                 list.add(dataverseRecordFile);
                 if (total > 100000000000L) {
@@ -274,7 +275,7 @@ public class DataverseJavaObject extends SourceJavaObject {
                     break;
                 }
             } catch (NumberFormatException e){
-                logger.error("Something weird with the file length of " + dataverseRecordFile.translatedTitle + ": " + length + "at " + dataverseRecordFile.recordURL);
+                logger.error("Something weird with the file length of " + dataverseRecordFile.translatedTitle + ": " + current + "at " + dataverseRecordFile.recordURL);
             }
         }
         dataFiles = list;
