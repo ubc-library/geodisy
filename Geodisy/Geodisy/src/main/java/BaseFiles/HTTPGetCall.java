@@ -21,7 +21,7 @@ import static _Strings.GeodisyStrings.DATA_DIR_LOC;
 
 public class HTTPGetCall {
     GeoLogger logger = new GeoLogger(this.getClass().toString());
-
+    //TODO use apache client for checkdataset()
     public void getFile(String fileURL, String fileName, String path){
         CloseableHttpClient client = HttpClients.createDefault();
         URI uri = null;
