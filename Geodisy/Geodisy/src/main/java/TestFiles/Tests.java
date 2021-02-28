@@ -3,8 +3,11 @@ package TestFiles;
 public class Tests {
 
     public void runTests(){
-        HTTPHeaderTest test = new HTTPHeaderTest();
-        test.getHeader();
+        HTTPGetTest test = new HTTPGetTest();
+        test.run();
+
+        /*HTTPHeaderTest test = new HTTPHeaderTest();
+        test.getHeader();*/
 
         //ExisitingLabelsTest exisitingLabelsTest = new ExisitingLabelsTest();
         //exisitingLabelsTest.checkEGL();;
