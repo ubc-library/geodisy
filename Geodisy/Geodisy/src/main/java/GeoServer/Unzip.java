@@ -28,7 +28,6 @@ public class Unzip {
 
     private LinkedList<FileInfo> unzipFunction(String filePath, String destpath){
         LinkedList<FileInfo> answer = new LinkedList<>();
-        System.out.println("FilePath = " + filePath + " destPath = " + destpath);
         String basename = filePath.substring(filePath.lastIndexOf(GeodisyStrings.replaceSlashes("/"))+1,filePath.lastIndexOf("."));
 
         try {
@@ -45,7 +44,6 @@ public class Unzip {
 
             while (ze != null) {
                 String fileName = ze.getName();
-                System.out.println("Unzipped file name: " + fileName);
                 if (ze.isDirectory()||GeodisyStrings.fileTypesToIgnore(fileName.toLowerCase())) {
                     ze = zis.getNextEntry();
                     continue;
@@ -55,19 +53,15 @@ public class Unzip {
                     fileName = basename + "___" + fileName;
                 }
                 String filepath = destpath + fileName;
-                System.out.println("Unzipped file path: " + filepath);
                 File newEntry = new File(filepath);
-                newEntry.mkdirs();
                 if(!ze.isDirectory()){
                     extractFile(zis,filepath);
-                    System.out.println("File at " + filepath + " exists? " + (new File(filepath)).exists());
                 } else{
                     File dir = new File(filepath);
                     dir.mkdirs();
                 }
                 if(fileName.toLowerCase().endsWith(".zip")) {
                     answer.addAll(unzipFunction(destpath + fileName, destpath));
-                    System.out.println("newEntry to delete: " + newEntry.getAbsolutePath());
                     newEntry.delete();
                 }else{
                     if(GeodisyStrings.fileToAllow(fileName))
@@ -78,6 +72,7 @@ public class Unzip {
 
             zis.closeEntry();
             zis.close();
+            new File(filePath).delete();
 
         } catch (IOException | IllegalArgumentException ex) {
             logger.error("Something went wrong trying to parse: " + filePath + " Stack:" + ex.toString());
