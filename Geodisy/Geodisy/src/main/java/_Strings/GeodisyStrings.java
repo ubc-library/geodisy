@@ -382,8 +382,9 @@ public class GeodisyStrings {
                 ,{"data.edmonton.ca/d/","edmonton"}                                             //10
                 ,{"data.surrey.ca/dataset/","surrey"}                                           //11
                 ,{"spectrum.library.concordia.ca/","spectrum"}                                  //12
-                ,{"data.ontario.ca/dataset/", "on"}                                            //15
-                ,{"doi.org/","doi"}                                                            //16,19,20,28,44,46,67,129,131-142,146,147,150-158,160-166,168,169,174,184,186
+                ,{"data.ontario.ca/dataset/", "on"}                                             //15
+                ,{"doi.org/","doi"}                                                             //16,20,28,44,46,67,129,131-142,146,147,150-158,160-166,168,169,174,184,186
+                ,{"www.frdr-dfdr.ca/repo/dataset/", "frdr"}                                     //19
                 ,{"www.donneesquebec.ca/recherche/fr/dataset/","qb"}                            //17
                 ,{"hecate.hakai.org/geonetwork/srv/eng/catalog.search#/metadata/","geonet"}     //21
                 ,{"open.canada.ca/data/en/dataset/","open"}                                     //34
@@ -402,6 +403,7 @@ public class GeodisyStrings {
                 ,{"opendatakingston.cityofkingston.ca/explore/dataset/","kingston"}             //172
                 ,{"donnees.montreal.ca/dataset/", "montreal"}                                   //173
                 ,{"data.montreal.ca/dataset/", "montreal"}                                   //173
+
 
 
 
