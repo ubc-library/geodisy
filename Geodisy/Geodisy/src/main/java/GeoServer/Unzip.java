@@ -29,7 +29,7 @@ public class Unzip {
     private LinkedList<FileInfo> unzipFunction(String filePath, String destpath){
         LinkedList<FileInfo> answer = new LinkedList<>();
         String slash = GeodisyStrings.windowsComputerType()? "\\":"/";
-        String basename = filePath.substring(filePath.lastIndexOf(slash)+1,filePath.lastIndexOf("."));
+        String basename = filePath.substring(filePath.lastIndexOf(GeodisyStrings.replaceSlashes("/"))+1,filePath.lastIndexOf("."));
         byte[] buffer = new byte[1024];
 
         try {
@@ -56,7 +56,7 @@ public class Unzip {
                 if(!newFileName.equals(basename)) {
                     fileName = basename + "___" + fileName;
                 }
-                File newFile = new File(destpath + GeodisyStrings.replaceSlashes(File.separator) + fileName);
+                File newFile = new File(destpath + fileName);
 
 
                 //create all non exists folders
