@@ -374,27 +374,40 @@ public class GeodisyStrings {
 
     private static String nonUniqueFromPid(String path) {
         String[][] nonUnique = {
-                {"hdl.handle.net/","hnd/"}
-                ,{"doi.org/","doi/"}
-                ,{"www.polardata.ca/pdcsearch/PDCSearchDOI.jsp?","pdc/"}
-                ,{"researchdata.sfu.ca/islandora/object/", "sfu/"}
-                ,{"donnees.montreal.ca/dataset/", "montreal/"}
-                ,{"catalogue.cioos.ca/dataset/", "cioos/"}
-                ,{"data.ontario.ca/dataset/", "on/"}
-                ,{"data.surrey.ca/dataset/","surrey/"}
-                ,{"hecate.hakai.org/geonetwork/srv/eng/catalog.search#/metadata/","geonet/"}
-                ,{"lwbin-datahub.ad.umanitoba.ca/dataset/","umb/"}
-                ,{"data.calgary.ca/d/","calgary/"}
-                ,{"search2.odesi.ca/#/details?uri=%2F","odesi/"}
-                ,{"catalogue.data.gov.bc.ca/dataset/","bc/"}
-                ,{"open.toronto.ca/dataset/","toronto/"}
-                ,{"opendatakingston.cityofkingston.ca/explore/dataset/","kingston/"}
-                ,{"data.princeedwardisland.ca/d/","pei/"}
-                ,{"data.winnipeg.ca/d/","winnipeg/"}
-                ,{"opendata.vancouver.ca/explore/dataset/","vancouver/"}
-                ,{"data.novascotia.ca/d/","ns/"}
-                ,{"www.donneesquebec.ca/recherche/fr/dataset/","quebec/"}
-                ,{"digital.library.yorku.ca/", "yorku/"}};
+                {"catalogue.data.gov.bc.ca/dataset/","bc"}                                 //2
+                ,{"catalogue.cioos.ca/dataset/", "cioos"}                                       //4
+                ,{"search2.odesi.ca/#/details?uri=","odesi"}                                    //5
+                ,{"lwbin-datahub.ad.umanitoba.ca/dataset/","umb"}                               //7
+                ,{"data.calgary.ca/d/","calgary"}                                               //9
+                ,{"data.edmonton.ca/d/","edmonton"}                                             //10
+                ,{"data.surrey.ca/dataset/","surrey"}                                           //11
+                ,{"spectrum.library.concordia.ca/","spectrum"}                                  //12
+                ,{"data.ontario.ca/dataset/", "on"}                                            //15
+                ,{"doi.org/","doi"}                                                            //16,19,20,28,44,46,67,129,131-142,146,147,150-158,160-166,168,169,174,184,186
+                ,{"www.donneesquebec.ca/recherche/fr/dataset/","qb"}                            //17
+                ,{"hecate.hakai.org/geonetwork/srv/eng/catalog.search#/metadata/","geonet"}     //21
+                ,{"open.canada.ca/data/en/dataset/","open"}                                     //34
+                ,{"www.polardata.ca/pdcsearch/PDCSearchDOI.jsp?","pdc"}                         //35
+                ,{"open.alberta.ca/opendata/","ab"}                                             //37
+                ,{"data.novascotia.ca/d/","ns"}                                                 //38
+                ,{"data.princeedwardisland.ca/d/","pei"}                                        //39
+                ,{"researchdata.sfu.ca/islandora/object/islandora:", "sfu"}                     //43
+                ,{"hdl.handle.net/","hnd"}                                                      //47
+                ,{"dx.doi.org/","doi"}                                                          //58
+                ,{"data.upei.ca/islandora/object/data:","upei"}                                 //66
+                ,{"digital.library.yorku.ca/", "yorku"}                                         //72
+                ,{"open.toronto.ca/dataset/","toronto"}                                         //85
+                ,{"opendata.vancouver.ca/explore/dataset/","vancouver"}                         //86
+                ,{"data.winnipeg.ca/d/","winnipeg"}                                             //87
+                ,{"opendatakingston.cityofkingston.ca/explore/dataset/","kingston"}             //172
+                ,{"donnees.montreal.ca/dataset/", "montreal"}                                   //173
+
+
+
+
+
+
+        };
         for(String[] u: nonUnique){
             String uPath = GeodisyStrings.replaceSlashes(u[0]);
             String endPathVal = GeodisyStrings.replaceSlashes(u[1]);
