@@ -13,7 +13,7 @@ import java.util.HashMap;
 import static _Strings.GeodisyStrings.VECTOR_RECORDS;
 
 
-public class ExistingVectorRecords extends ExisitingFile implements Serializable {
+public class ExistingVectorRecords extends ExistingFile implements Serializable {
     private static final long serialVersionUID = 5416853597895403201L;
     private HashMap<String, String> records;
     private static ExistingVectorRecords single_instance = null;

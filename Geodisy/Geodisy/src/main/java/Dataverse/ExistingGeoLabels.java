@@ -9,14 +9,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
 
 import static _Strings.GeodisyStrings.EXISTING_GEO_LABELS;
-import static _Strings.GeodisyStrings.RASTER_RECORDS;
 
 
-public class ExistingGeoLabels extends ExisitingFile implements Serializable {
+public class ExistingGeoLabels extends ExistingFile implements Serializable {
     private static final long serialVersionUID = 5416844497895403201L;
     private HashMap<String, String> geoFiles;
     private static ExistingGeoLabels single_instance = null;

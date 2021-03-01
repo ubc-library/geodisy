@@ -23,8 +23,8 @@ public class GeodisyStrings {
         EXISTING_DATASET_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingDatasetBBoxes.txt");
         EXISTING_LOCATION_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingLocationBBoxes.txt");
         EXISTING_LOCATION_NAMES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingLocationNames.txt");
-        EXISTING_GEO_LABELS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExisitingGeoLabels.txt");
-        EXISTING_GEO_LABELS_VALS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExisitingGeoLabelsVals.txt");
+        EXISTING_GEO_LABELS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingGeoLabels.txt");
+        EXISTING_GEO_LABELS_VALS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingGeoLabelsVals.txt");
         DOWNLOADED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/DownloadedFiles.csv");
         VECTOR_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingVectorRecords.txt");
         TEST_EXISTING_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/TestExistingRecords.txt");

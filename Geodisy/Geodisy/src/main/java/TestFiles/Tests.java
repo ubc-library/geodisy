@@ -9,7 +9,7 @@ public class Tests {
         /*HTTPHeaderTest test = new HTTPHeaderTest();
         test.getHeader();*/
 
-        //ExisitingLabelsTest exisitingLabelsTest = new ExisitingLabelsTest();
+        //ExistingLabelsTest exisitingLabelsTest = new ExistingLabelsTest();
         //exisitingLabelsTest.checkEGL();;
 
         //Testing uploading both Rasters and Vectors to Geoserver
