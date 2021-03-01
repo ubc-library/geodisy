@@ -1,6 +1,7 @@
 package Dataverse;
 
 import BaseFiles.GeoLogger;
+import BaseFiles.HTTPGetCall;
 import _Strings.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
@@ -172,7 +173,11 @@ public class DataverseJavaObject extends SourceJavaObject {
         deleteDir(f);
         f.mkdirs();
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
-        checkDataset();
+
+
+        HTTPGetCall httpGetCall = new HTTPGetCall();
+        dataFiles = httpGetCall.checkDataset(dataFiles,getPID());
+
         for (DataverseRecordFile dRF : dataFiles) {
             if (GeodisyStrings.fileTypesToIgnore(dRF.translatedTitle)) {
                 File bad = new File(path + GeodisyStrings.replaceSlashes("/") + dRF.translatedTitle);
@@ -250,35 +255,6 @@ public class DataverseJavaObject extends SourceJavaObject {
             existingGeoLabelsVals.saveExistingFile(existingGeoLabelsVals.getValues(),EXISTING_GEO_LABELS_VALS,"ExistingGeoLabelsVals");
         }
         return newRecs;
-    }
-    //Filter files to potentially download with a max 5GB individual file size and max 100GB dataset size
-    private void checkDataset() {
-        Long total = 0L;
-        LinkedList<DataverseRecordFile> list = new LinkedList<>();
-        HTTPCallerFiles hCF = new HTTPCallerFiles();
-        for(DataverseRecordFile dataverseRecordFile: dataFiles){
-            String url = dataverseRecordFile.recordURL;
-            if( url.startsWith("ftp://") | url.startsWith("http://ftp") | url.startsWith("https://ftp") )
-                continue;
-            long current = hCF.getFileLength(dataverseRecordFile.recordURL);
-            try {
-                if (current == -2 | current > 5000000000L)
-                    continue;
-                if(current==-1)
-                    current = 0;
-                total += current;
-                list.add(dataverseRecordFile);
-                if (total > 100000000000L) {
-                    list = new LinkedList<>();
-                    logger.warn("Dataset " + getPID() + " was too large to download.");
-                    System.out.println("Dataset too large to download");
-                    break;
-                }
-            } catch (NumberFormatException e){
-                logger.error("Something weird with the file length of " + dataverseRecordFile.translatedTitle + ": " + current + "at " + dataverseRecordFile.recordURL);
-            }
-        }
-        dataFiles = list;
     }
 
     @Override

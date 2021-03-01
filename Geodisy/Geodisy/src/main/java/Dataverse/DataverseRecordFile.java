@@ -1,6 +1,7 @@
 package Dataverse;
 
 import BaseFiles.GeoLogger;
+import BaseFiles.HTTPGetCall;
 import _Strings.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
@@ -131,46 +132,31 @@ public class DataverseRecordFile {
 
     public LinkedList<DataverseRecordFile> retrieveFile(DataverseJavaObject djo) {
         FolderFileParser ffp = new FolderFileParser();
-        //System.out.println("downloading file: " + originalTitle);
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
         DownloadedFiles downloads = DownloadedFiles.getDownloadedFiles();
         downloads.addDownload(originalTitle,djo.getPID(),recordURL);
-        try {
-            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(datasetIdent).replace("_", "/").replace(".","/")+"/");
+        String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(datasetIdent).replace("_", "/").replace(".","/")+"/");
 
-            File folder = new File(dirPath);
-            folder.mkdirs();
-            String filePath = dirPath + translatedTitle;
-            FileUtils.copyURLToFile(
-                    new URL(recordURL),
-                    new File(filePath),
-                    10000, //10 seconds connection timeout
-                    1200000); //20 minute read timeout
-            File newFile = new File(filePath);
-            if (translatedTitle.toLowerCase().endsWith(".zip")) {
-                try {
-                    drfs = ffp.unzip(newFile, dirPath, this, djo);
-                }catch (NullPointerException f){
-                        logger.error("Got an null pointer exception, something clearly went wrong with unzipping " + filePath);
-                    }
-                new File(filePath).delete();
-            }else if(newFile.isDirectory())
-                drfs = ffp.openFolders(newFile, dirPath,djo,this);
-            else if (newFile.getName().endsWith(".tab")) {
-                //System.out.println("Converting tab file");
-                drfs.add(ffp.convertTab(newFile, dirPath, newFile.getName(), this));
+        HTTPGetCall httpGetCall = new HTTPGetCall();
+        httpGetCall.getFile(getFileURL(),getFileName(),dirPath);
+
+        String filePath = dirPath + translatedTitle;
+        File newFile = new File(filePath);
+        if (translatedTitle.toLowerCase().endsWith(".zip")) {
+            try {
+                drfs = ffp.unzip(newFile, dirPath, this, djo);
+            }catch (NullPointerException f){
+                logger.error("Got an null pointer exception, something clearly went wrong with unzipping " + filePath);
             }
-            else if(GeodisyStrings.fileToAllow(newFile.getName())) {
-                drfs.add(this);
-            }
-        } catch(SocketTimeoutException e){
-            logger.error(String.format("Socket timed out downloading file %s, with fileIdent %s or dbID %d of Dataset with PID " + datasetIdent, translatedTitle, fileIdent, dbID));
-        } catch (FileNotFoundException e){
-            logger.info(String.format("This dataset file %s couldn't be found from dataset %s. ", dbID, datasetIdent) + "Check out dataset " + datasetIdent, djo);
-        } catch (MalformedURLException e) {
-            logger.error(String.format("Something is wonky with the file PERSISTENT_ID " + fileIdent + " or the dbID " + dbID + " of Dataset with PID "+ datasetIdent));
-        } catch (IOException e) {
-            logger.error(String.format("Something went wrong with downloading file %s, with fileIdent %s or dbID %d of Dataset with PID " + datasetIdent, translatedTitle, fileIdent, dbID));
+            new File(filePath).delete();
+        }else if(newFile.isDirectory())
+            drfs = ffp.openFolders(newFile, dirPath,djo,this);
+        else if (newFile.getName().endsWith(".tab")) {
+            //System.out.println("Converting tab file");
+            drfs.add(ffp.convertTab(newFile, dirPath, newFile.getName(), this));
+        }
+        else if(GeodisyStrings.fileToAllow(newFile.getName())) {
+            drfs.add(this);
         }
         return drfs;
     }
