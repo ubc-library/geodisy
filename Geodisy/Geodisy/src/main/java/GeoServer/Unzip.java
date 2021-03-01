@@ -28,7 +28,6 @@ public class Unzip {
 
     private LinkedList<FileInfo> unzipFunction(String filePath, String destpath){
         LinkedList<FileInfo> answer = new LinkedList<>();
-        String slash = GeodisyStrings.windowsComputerType()? "\\":"/";
         String basename = filePath.substring(filePath.lastIndexOf(GeodisyStrings.replaceSlashes("/"))+1,filePath.lastIndexOf("."));
         byte[] buffer = new byte[1024];
 
@@ -50,34 +49,27 @@ public class Unzip {
                     ze = zis.getNextEntry();
                     continue;
                 }
-
-                fileName = new File(fileName).getName();
                 String newFileName = fileName.substring(0,fileName.lastIndexOf("."));
                 if(!newFileName.equals(basename)) {
                     fileName = basename + "___" + fileName;
                 }
-                File newFile = new File(destpath + fileName);
-
-
-                //create all non exists folders
-                //else you will hit FileNotFoundException for compressed folder
-                new File(newFile.getParent()).mkdirs();
-
-                FileOutputStream fos = new FileOutputStream(newFile);
-
-                int len;
-                while ((len = zis.read(buffer)) > 0) {
-                    fos.write(buffer, 0, len);
+                String filepath = destpath + fileName;
+                File newEntry = new File(filepath);
+                newEntry.mkdirs();
+                if(!ze.isDirectory()){
+                    extractFile(zis,filepath);
+                } else{
+                    File dir = new File(filepath);
+                    dir.mkdirs();
                 }
-
-                fos.close();
-                ze = zis.getNextEntry();
                 if(fileName.toLowerCase().endsWith(".zip")) {
                     answer.addAll(unzipFunction(destpath + fileName, destpath));
+                    newEntry.delete();
                 }else{
-                    if(GeodisyStrings.fileToAllow(newFile.getName()))
-                        answer.add(new FileInfo(newFile,basename+".zip"));
+                    if(GeodisyStrings.fileToAllow(fileName))
+                        answer.add(new FileInfo(new File(filepath),basename+".zip"));
                 }
+                ze = zis.getNextEntry();
             }
 
             zis.closeEntry();
@@ -86,11 +78,17 @@ public class Unzip {
         } catch (IOException | IllegalArgumentException ex) {
             logger.error("Something went wrong trying to parse: " + filePath + " Stack:" + ex.toString());
         }
-        File orig = new File(filePath);
-        orig.delete();
-
-
         return answer;
+    }
+
+    private void extractFile(ZipInputStream zis, String filepath) throws IOException {
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filepath));
+        byte[] bytesIn = new byte[4096];
+        int read = 0;
+        while ((read = zis.read(bytesIn)) != -1) {
+            bos.write(bytesIn, 0, read);
+        }
+        bos.close();
     }
 
 
