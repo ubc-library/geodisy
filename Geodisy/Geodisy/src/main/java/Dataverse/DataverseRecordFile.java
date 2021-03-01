@@ -52,6 +52,7 @@ public class DataverseRecordFile {
         recordURL = server+"api/access/datafile/" + dbID;
         this.datasetIdent = GeodisyStrings.removeHTTPSAndReplaceAuthority(datasetIdent.replace(".","_").replace("/","_"));
         gbb = new GeographicBoundingBox(datasetIdent);
+        setFileName(translatedTitle);
 
     }
 
@@ -64,6 +65,8 @@ public class DataverseRecordFile {
         this.datasetIdent = GeodisyStrings.removeHTTPSAndReplaceAuthority(datasetIdent.replace(".","_").replace("/","_"));
         gbb = new GeographicBoundingBox(datasetIdent);
         setFileURL(fileURL);
+        setFileName(translatedTitle);
+        this.originalTitle=translatedTitle;
 
     }
     /**
@@ -80,6 +83,8 @@ public class DataverseRecordFile {
         recordURL = server+"api/access/datafile/" + dbID;
         this.datasetIdent = GeodisyStrings.removeHTTPSAndReplaceAuthority(GeodisyStrings.replaceSlashes(datasetIdent)).replace(".","_").replace(GeodisyStrings.replaceSlashes("/"),"_");
         gbb = new GeographicBoundingBox(datasetIdent);
+        setFileName(translatedTitle);
+        originalTitle = translatedTitle;
     }
 
     /**
@@ -96,6 +101,8 @@ public class DataverseRecordFile {
         recordURL = fileURL;
         this.datasetIdent = GeodisyStrings.removeHTTPSAndReplaceAuthority(GeodisyStrings.replaceSlashes(datasetIdent)).replace(".","_").replace(GeodisyStrings.replaceSlashes("/"),"_");
         gbb = new GeographicBoundingBox(datasetIdent);
+        this.originalTitle = translatedTitle;
+        setFileName(translatedTitle);
         setFileURL(fileURL);
     }
 
@@ -302,6 +309,10 @@ public class DataverseRecordFile {
 
     public String getFileName(){
         return gbb.getField(FILE_NAME);
+    }
+
+    public void setFileName(String s){
+        gbb.setField(FILE_NAME,s);
     }
 
     public boolean isFromFile(){
