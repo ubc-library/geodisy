@@ -74,7 +74,6 @@ public class Unzip {
                 ze = zis.getNextEntry();
                 if(fileName.toLowerCase().endsWith(".zip")) {
                     answer.addAll(unzipFunction(destpath + fileName, destpath));
-                    newFile.delete();
                 }else{
                     if(GeodisyStrings.fileToAllow(newFile.getName()))
                         answer.add(new FileInfo(newFile,basename+".zip"));
