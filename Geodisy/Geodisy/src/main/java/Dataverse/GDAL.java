@@ -56,8 +56,8 @@ public class GDAL {
     //Not used by main program
     public DataverseJavaObject generateBB(DataverseJavaObject djo) {
         String doi = djo.getPID();
-        String path = GeodisyStrings.removeHTTPSAndReplaceAuthority(doi).replace(".","/");
-        String folderName = DATA_DIR_LOC +path+"/";
+        String path = GeodisyStrings.removeHTTPSAndReplaceAuthority(doi).replace(".","/") + GeodisyStrings.replaceSlashes("/");
+        String folderName = DATA_DIR_LOC +path;
         LinkedList<DataverseGeoRecordFile> origRecords = djo.getGeoDataFiles();
         if(origRecords.size()==0)
             return djo;
@@ -77,7 +77,7 @@ public class GDAL {
         GeographicBoundingBox temp = new GeographicBoundingBox(doi);
         for(DataverseGeoRecordFile drf : origRecords) {
             String name = drf.getTranslatedTitle();
-            String filePath = DATA_DIR_LOC + path + "/" + name;
+            String filePath = DATA_DIR_LOC + path + name;
             File file = new File(filePath);
 
             if (name.endsWith("tif")) {
@@ -179,9 +179,9 @@ public class GDAL {
     }
 
     public GeographicBoundingBox generateBoundingBoxFromCSV(String fileName, DataverseJavaObject djo){
-        String path = GeodisyStrings.removeHTTPSAndReplaceAuthority(djo.getPID()).replace("/","_");
+        String path = GeodisyStrings.removeHTTPSAndReplaceAuthority(djo.getPID()).replace("/","_") + GeodisyStrings.replaceSlashes("/");
         path = path.replace(".","_");
-        String filePath = DATA_DIR_LOC + path + "/" + fileName;
+        String filePath = DATA_DIR_LOC + path + fileName;
         String name = fileName;
         String ogrString = null;
         try {

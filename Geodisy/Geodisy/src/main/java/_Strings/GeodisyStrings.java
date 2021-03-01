@@ -401,6 +401,7 @@ public class GeodisyStrings {
                 ,{"data.winnipeg.ca/d/","winnipeg"}                                             //87
                 ,{"opendatakingston.cityofkingston.ca/explore/dataset/","kingston"}             //172
                 ,{"donnees.montreal.ca/dataset/", "montreal"}                                   //173
+                ,{"data.montreal.ca/dataset/", "montreal"}                                   //173
 
 
 
@@ -413,7 +414,7 @@ public class GeodisyStrings {
             String endPathVal = GeodisyStrings.replaceSlashes(u[1]);
             String slash = GeodisyStrings.replaceSlashes("\\");
             if(path.contains(uPath))
-                path = path.replace(uPath,endPathVal);
+                path = path.replace(uPath,endPathVal+GeodisyStrings.replaceSlashes("/"));
             String underUPath = uPath.replace(slash,"_").replace(".","_");
             if(path.contains(underUPath)) {
                 path = path.replace(underUPath, endPathVal.replace(slash,"_").replace(".","_"));

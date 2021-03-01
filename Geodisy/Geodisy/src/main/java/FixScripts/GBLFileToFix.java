@@ -31,7 +31,7 @@ public class GBLFileToFix {
     }
 
     public void setGeoserverLabel(String geoserverEnd) {
-        geoserverLabel = "geodisy:" + GeodisyStrings.removeHTTPSAndReplaceAuthority(pID).replace(".","_").replace("/","_")+geoserverEnd;
+        geoserverLabel = "geodisy:" + GeodisyStrings.removeHTTPSAndReplaceAuthority(pID).replace(".","_").replace("/","_")+  GeodisyStrings.replaceSlashes("/") + geoserverEnd;
         geoserverLabel = geoserverLabel.toLowerCase();
     }
 
