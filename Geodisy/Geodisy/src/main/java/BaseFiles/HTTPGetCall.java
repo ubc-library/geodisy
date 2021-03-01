@@ -9,6 +9,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import sun.net.ftp.FtpClient;
 
 import java.io.*;
 import java.net.URI;
@@ -25,6 +26,10 @@ public class HTTPGetCall {
     }
 
     public void getFile(String fileURL, String fileName, String path){
+        if(fileURL.startsWith("ftp://")||fileURL.startsWith("http://ftp")||fileURL.startsWith("http://ftp")) {
+            getFTPFile(fileURL,fileName,path);
+            return;
+        }
         CloseableHttpClient client = HttpClients.createDefault();
         URI uri = URI.create(fileURL);
         HttpGet request = new HttpGet(uri);
@@ -79,6 +84,10 @@ public class HTTPGetCall {
         }
     }
 
+    private void getFTPFile(String fileURL, String fileName, String path) {
+        //TODO Figure out how to pull files from an FTP
+    }
+
     /**
      *  Checks to make sure no file is >5GB and no dataset is >100GB
      * @param dataset
@@ -90,6 +99,11 @@ public class HTTPGetCall {
         LinkedList<DataverseRecordFile> list = new LinkedList<>();
         long total = 0L;
         for(DataverseRecordFile drf: dataset) {
+            String url = drf.getFileURL();
+            if(url.startsWith("ftp://")||url.startsWith("http://ftp")||url.startsWith("http://ftp")) {
+                list.add(drf);
+                continue;
+            }
             try {
                 uri = URI.create(drf.getFileURL());
                 HttpGet request = new HttpGet(uri);
