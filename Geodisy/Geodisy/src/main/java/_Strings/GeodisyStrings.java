@@ -180,7 +180,7 @@ public class GeodisyStrings {
         public static String GDALADDO(String source){ return getGdalAddo(source);}
         public static String GDAL_ADDO_LOCAL(String source){return LOCAL_GDAL_PATH + "gdaladdo " + source + " -r nearest --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
         public static String GDAL_ADDO_CLOUD(String source){return "sudo /usr/gdal30/bin/gdaladdo " + source + " -r nearest --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
-        public final static String[] PROCESSABLE_EXTENSIONS = ArrayUtils.addAll(GDALINFO_PROCESSABLE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS);
+        public final static String[] PROCESSABLE_EXTENSIONS = ArrayUtils.addAll(ArrayUtils.addAll(GDALINFO_PROCESSABLE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS),CSV_EXTENTIONS);
 
         private static String getGdalWarp(String path, String fileName){
             if(IS_WINDOWS)
@@ -393,6 +393,7 @@ public class GeodisyStrings {
                 ,{"data.novascotia.ca/d/","ns"}                                                 //38
                 ,{"data.princeedwardisland.ca/d/","pei"}                                        //39
                 ,{"researchdata.sfu.ca/islandora/object/islandora:", "sfu"}                     //43
+                ,{"researchdata.sfu.ca/islandora/object/sfu:", "sfu"}
                 ,{"hdl.handle.net/","hnd"}                                                      //47
                 ,{"dx.doi.org/","doi"}                                                          //58
                 ,{"data.upei.ca/islandora/object/data:","upei"}                                 //66
