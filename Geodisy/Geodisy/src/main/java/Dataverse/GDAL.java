@@ -241,7 +241,7 @@ public class GDAL {
             return new GeographicBoundingBox("junk");
         if(isZeroPoint(bb))
             return new GeographicBoundingBox("junk");
-        if(bb.hasUTMCoords() || !fileName.endsWith("shp")) {
+        if(bb.hasBoundingBox()&&(bb.hasUTMCoords() || !fileName.endsWith("shp"))) {
             fileName = convertToAppropriateFileFormat(filePath, IS_WINDOWS, fileName);
             filePath = filePath.substring(0,filePath.lastIndexOf("."))+".shp";
             gdalString = getGDALInfo(filePath,fileName);
