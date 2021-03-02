@@ -7,14 +7,10 @@ package BaseFiles;/*
 
 
 import Dataverse.DataverseAPI;
-import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.SourceAPI;
 import Dataverse.SourceJavaObject;
-import Dataverse.DataverseJavaObject;
-import Dataverse.DownloadDJOFiles;
 import DataSourceLocations.Dataverse;
 import GeoServer.GeoServerAPI;
-
 import java.util.LinkedList;
 import java.util.List;
 

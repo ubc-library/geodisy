@@ -8,6 +8,7 @@ import Dataverse.DataverseRecordFile;
 
 import java.io.*;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -62,7 +63,7 @@ public class Unzip {
                 }
                 if(fileName.toLowerCase().endsWith(".zip")) {
                     answer.addAll(unzipFunction(destpath + fileName, destpath));
-                    newEntry.delete();
+                    Files.deleteIfExists(Path.of(newEntry.getAbsolutePath()));
                 }else{
                     if(GeodisyStrings.fileToAllow(fileName))
                         answer.add(new FileInfo(new File(filepath),basename+".zip"));
@@ -72,7 +73,7 @@ public class Unzip {
 
             zis.closeEntry();
             zis.close();
-            new File(filePath).delete();
+            Files.deleteIfExists(Path.of(filePath));
 
         } catch (IOException | IllegalArgumentException ex) {
             logger.error("Something went wrong trying to parse: " + filePath + " Stack:" + ex.toString());
@@ -136,7 +137,11 @@ public class Unzip {
                 if (myFile.isDirectory()) {
                     deleteDir(myFile);
                 }
-                myFile.delete();
+                try {
+                    Files.deleteIfExists(myFile.toPath());
+                } catch (IOException e) {
+                    logger.error("Something went wrong deleting folder " + myFile.getAbsolutePath());
+                }
             }
         }
     }

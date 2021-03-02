@@ -13,6 +13,8 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.Stack;
 
@@ -155,7 +157,11 @@ public class DataverseRecordFile {
             }catch (NullPointerException f){
                 logger.error("Got an null pointer exception, something clearly went wrong with unzipping " + filePath);
             }
-            new File(filePath).delete();
+            try {
+                Files.deleteIfExists(Path.of(filePath));
+            } catch (IOException e) {
+                logger.error("Something went wrong trying to delete file: " + filePath);
+            }
         }else if(newFile.isDirectory())
             drfs = ffp.openFolders(newFile, dirPath,djo,this);
         else if (newFile.getName().endsWith(".tab")) {
@@ -201,8 +207,11 @@ public class DataverseRecordFile {
                 String path = djo.getPID().replace("/", "_");
                 path = path.replace(".", "_");
                 String badFilesPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + path + "/" + name);
-                File file = new File(badFilesPath);
-                file.delete();
+                try {
+                    Files.deleteIfExists(Path.of(badFilesPath));
+                } catch (IOException e) {
+                    logger.error("Something went wrong trying to delete file that couldn't generate BBox: " + badFilesPath);
+                }
                 return new DataverseRecordFile();
             }
         }
@@ -234,7 +243,7 @@ public class DataverseRecordFile {
                 if (!stack.empty())
                     writer.write("\n");
             }
-            inputFile.delete();
+            Files.deleteIfExists(inputFile.toPath());
         } catch (FileNotFoundException e) {
             logger.error("Tried to convert an non-existant .tab file: " + title);
         } catch (IOException e) {

@@ -6,6 +6,8 @@ import Dataverse.DataverseRecordFile;
 import _Strings.GeodisyStrings;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.Stack;
 
@@ -58,7 +60,6 @@ public class FolderFileParser {
                 if (!stack.empty())
                     writer.write("\n");
             }
-            inputFile.delete();
         } catch (FileNotFoundException e) {
             logger.error("Tried to convert an non-existant .tab file: " + title);
         } catch (IOException e) {
@@ -80,6 +81,11 @@ public class FolderFileParser {
                     logger.error("Something went wrong when converting a .tab file to .csv when closing writer: " + title);
                 }
             }
+        }
+        try {
+            Files.deleteIfExists(Path.of(inputFile.getAbsolutePath()));
+        } catch (IOException e) {
+            logger.error("Something went wrong trying to delete " + inputFile.getAbsolutePath());
         }
         return fileName;
     }

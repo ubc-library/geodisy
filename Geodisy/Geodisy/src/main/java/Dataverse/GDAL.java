@@ -6,6 +6,7 @@ import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.G
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.LinkedList;
 
 import static _Strings.GeodisyStrings.*;
@@ -67,7 +68,11 @@ public class GDAL {
 
 
         if(folder.listFiles().length==0) {
-            folder.delete();
+            try {
+                Files.deleteIfExists(folder.toPath());
+            } catch (IOException e) {
+                logger.error("Something went wrong trying to delete folder: " + folder.getAbsolutePath());
+            }
             return djo;
         }
 

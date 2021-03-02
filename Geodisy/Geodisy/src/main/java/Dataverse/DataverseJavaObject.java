@@ -11,6 +11,9 @@ import org.json.JSONObject;
 
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 import static _Strings.GeodisyStrings.*;
@@ -170,24 +173,23 @@ public class DataverseJavaObject extends SourceJavaObject {
     public LinkedList<DataverseGeoRecordFile> downloadFiles() {
         String path = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + urlized(GeodisyStrings.removeHTTPSAndReplaceAuthority(citationFields.getPID())));
         File f = new File(path);
-        deleteDir(f);
+        try {
+            deleteDir(f);
+        } catch (IOException e) {
+            logger.error("Something went wrong trying to delete folder: " + f.getAbsolutePath());
+        }
         f.mkdirs();
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
 
 
         HTTPGetCall httpGetCall = new HTTPGetCall();
         dataFiles = httpGetCall.checkDataset(dataFiles,getPID());
-
         for (DataverseRecordFile dRF : dataFiles) {
             if (GeodisyStrings.fileTypesToIgnore(dRF.translatedTitle)) {
-                File bad = new File(path + GeodisyStrings.replaceSlashes("/") + dRF.translatedTitle);
-                bad.delete();
                 //System.out.println("Ignored file: " + dRF.translatedTitle);
                 continue;
             }
             if(dRF.translatedTitle.startsWith("LAS_")) {
-                File bad = new File(path+GeodisyStrings.replaceSlashes("/")+dRF.translatedTitle);
-                bad.delete();
                 continue;
             }
             LinkedList<DataverseRecordFile> temp = dRF.retrieveFile(this);
@@ -205,7 +207,11 @@ public class DataverseJavaObject extends SourceJavaObject {
         }
 
         if(drfs.size()==0){
-            f.delete();
+            try {
+                Files.deleteIfExists(Path.of(path));
+            } catch (IOException e) {
+                logger.error("Something went wrong deleting empty folder: " + path);
+            }
             return new LinkedList<DataverseGeoRecordFile>();
         }
 
@@ -241,13 +247,23 @@ public class DataverseJavaObject extends SourceJavaObject {
                     String stub = name.substring(0,name.lastIndexOf(".shp"));
                     for(String ex: NON_SHP_SHAPEFILE_EXTENSIONS){
                         f1 = new File(dirPath+stub+ex);
-                        if(f1.exists())
-                            f1.delete();
+                        if(f1.exists()) {
+                            try {
+                                Files.deleteIfExists(Path.of(f1.getAbsolutePath()));
+                            } catch (IOException e) {
+                                logger.error("Something went wrong trying to delete : " + f1.getAbsolutePath());
+                            }
+                        }
                     }
                 }
                 f1 = new File(dirPath+name);
-                if(f1.exists())
-                    f1.delete();
+                if(f1.exists()) {
+                    try {
+                        Files.deleteIfExists(Path.of(f1.getAbsolutePath()));
+                    } catch (IOException e) {
+                        logger.error("Something went wrong trying to delete : " + f1.getAbsolutePath());
+                    }
+                }
             }
             ExistingGeoLabels existingGeoLabels = ExistingGeoLabels.getExistingLabels();
             ExistingGeoLabelsVals existingGeoLabelsVals = ExistingGeoLabelsVals.getExistingGeoLabelsVals();
