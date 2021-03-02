@@ -1,6 +1,7 @@
 package BaseFiles;
 
 import Dataverse.DataverseRecordFile;
+import _Strings.GeodisyStrings;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
@@ -37,8 +38,8 @@ public class HTTPGetCall {
         // 50 seconds timeout
         RequestConfig requestConfig = RequestConfig.custom()
                 .setConnectionRequestTimeout(5000)
-                .setConnectTimeout(50000)
-                .setSocketTimeout(50000)
+                .setConnectTimeout(10000)
+                .setSocketTimeout(1200000)
                 .build();
 
         request.setConfig(requestConfig);
@@ -154,7 +155,6 @@ public class HTTPGetCall {
                     logger.error(drf.getRecordURL() + " had a IOException (pID: " + pID + ")");
                 } finally {
                         request.abort();
-
                 }
 
             } catch (NullPointerException e) {
