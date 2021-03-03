@@ -27,9 +27,9 @@ public class Unzip {
         logger = new GeoLogger(this.getClass());
     }
 
-    private LinkedList<FileInfo> unzipFunction(String filePath, String destpath){
+    private LinkedList<FileInfo> unzipFunction(String zipfilePath, String destpath){
         LinkedList<FileInfo> answer = new LinkedList<>();
-        String basename = filePath.substring(filePath.lastIndexOf(GeodisyStrings.replaceSlashes("/"))+1,filePath.lastIndexOf("."));
+        String basename = zipfilePath.substring(zipfilePath.lastIndexOf(GeodisyStrings.replaceSlashes("/"))+1,zipfilePath.lastIndexOf("."));
 
         try {
             //create output directory is not exists
@@ -39,7 +39,7 @@ public class Unzip {
             }
 
             //get the zip file content
-            ZipInputStream zis = new ZipInputStream(new FileInputStream(filePath));
+            ZipInputStream zis = new ZipInputStream(new FileInputStream(zipfilePath));
             //get the zipped file list entry
             ZipEntry ze = zis.getNextEntry();
 
@@ -63,7 +63,6 @@ public class Unzip {
                 }
                 if(fileName.toLowerCase().endsWith(".zip")) {
                     answer.addAll(unzipFunction(destpath + fileName, destpath));
-                    Files.deleteIfExists(Paths.get(newEntry.getAbsolutePath()));
                 }else{
                     if(GeodisyStrings.fileToAllow(fileName))
                         answer.add(new FileInfo(new File(filepath),basename+".zip"));
@@ -73,10 +72,10 @@ public class Unzip {
 
             zis.closeEntry();
             zis.close();
-            Files.deleteIfExists(Paths.get(filePath));
+            Files.deleteIfExists(Paths.get(zipfilePath));
 
         } catch (IOException | IllegalArgumentException ex) {
-            logger.error("Something went wrong trying to parse: " + filePath + " Stack:" + ex.toString());
+            logger.error("Something went wrong trying to parse: " + zipfilePath + " Stack:" + ex.toString());
         }
         return answer;
     }
