@@ -75,13 +75,6 @@ public class FolderFileParser {
             catch(IOException|NullPointerException d){
                 logger.error("Something went wrong when converting a .tab file to .csv when closing br: " + title);
             }
-            finally{
-                try{
-                    writer.close();
-                } catch (IOException e) {
-                    logger.error("Something went wrong when converting a .tab file to .csv when closing writer: " + title);
-                }
-            }
         }
         try {
             Files.deleteIfExists(Paths.get(inputFile.getAbsolutePath()));
