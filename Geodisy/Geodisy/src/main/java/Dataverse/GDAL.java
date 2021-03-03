@@ -52,6 +52,7 @@ public class GDAL {
 
         /*if(!name.endsWith(".csv")&& gdalString.toString().contains("FAILURE"))
             System.out.println(gdalString.toString());*/
+        stdInput.close();
         return gdalString.toString();
     }
     //Not used by main program
@@ -241,7 +242,7 @@ public class GDAL {
             return new GeographicBoundingBox("junk");
         if(isZeroPoint(bb))
             return new GeographicBoundingBox("junk");
-        if(bb.hasBoundingBox()&&(bb.hasUTMCoords() || !fileName.endsWith("shp"))) {
+        if(bb.hasUTMCoords() || !fileName.endsWith("shp")) {
             fileName = convertToAppropriateFileFormat(filePath, IS_WINDOWS, fileName);
             filePath = filePath.substring(0,filePath.lastIndexOf("."))+".shp";
             gdalString = getGDALInfo(filePath,fileName);
@@ -320,7 +321,7 @@ public class GDAL {
                 bb.setLatSouth(south);
                 bb.setGenerated(true);
             } catch (StringIndexOutOfBoundsException e) {
-                return bb;
+                return new BoundingBox();
             }
         }
         return bb;
