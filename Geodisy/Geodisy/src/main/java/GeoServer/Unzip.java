@@ -5,17 +5,19 @@ import _Strings.GeodisyStrings;
 
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordFile;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
+import org.apache.commons.compress.utils.IOUtils;
 
 import java.io.*;
 
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.LinkedList;
 
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
+
 /**
  * Class for unzipping a file right before uploading things to Geosever
  * and then deleting the unzipped files after the uploadVector process is finished
@@ -27,7 +29,9 @@ public class Unzip {
         logger = new GeoLogger(this.getClass());
     }
 
-    private LinkedList<FileInfo> unzipFunction(String zipfilePath, String destpath){
+    public LinkedList<FileInfo> unzipFunction(String zipfilePath, String destpath){
+        if(!destpath.endsWith(GeodisyStrings.replaceSlashes("/")))
+            destpath = destpath + GeodisyStrings.replaceSlashes("/");
         LinkedList<FileInfo> answer = new LinkedList<>();
         String basename = zipfilePath.substring(zipfilePath.lastIndexOf(GeodisyStrings.replaceSlashes("/"))+1,zipfilePath.lastIndexOf("."));
 
@@ -39,14 +43,14 @@ public class Unzip {
             }
 
             //get the zip file content
-            ZipInputStream zis = new ZipInputStream(new FileInputStream(zipfilePath));
+            ZipArchiveInputStream zis = new ZipArchiveInputStream(new FileInputStream(zipfilePath));
             //get the zipped file list entry
-            ZipEntry ze = zis.getNextEntry();
+            ZipArchiveEntry ze = zis.getNextZipEntry();
 
             while (ze != null) {
                 String fileName = ze.getName();
                 if (ze.isDirectory()||GeodisyStrings.fileTypesToIgnore(fileName.toLowerCase())) {
-                    ze = zis.getNextEntry();
+                    ze = (ZipArchiveEntry) zis.getNextEntry();
                     continue;
                 }
                 String newFileName = fileName.substring(0,fileName.lastIndexOf("."));
@@ -54,9 +58,8 @@ public class Unzip {
                     fileName = basename + "___" + fileName;
                 }
                 String filepath = destpath + fileName;
-                File newEntry = new File(filepath);
                 if(!ze.isDirectory()){
-                    extractFile(zis,filepath);
+                    extractFile(zis,filepath, ze);
                 } else{
                     File dir = new File(filepath);
                     dir.mkdirs();
@@ -67,10 +70,9 @@ public class Unzip {
                     if(GeodisyStrings.fileToAllow(fileName))
                         answer.add(new FileInfo(new File(filepath),basename+".zip"));
                 }
-                ze = zis.getNextEntry();
+                ze = zis.getNextZipEntry();
             }
 
-            zis.closeEntry();
             zis.close();
             Files.deleteIfExists(Paths.get(zipfilePath));
 
@@ -80,14 +82,12 @@ public class Unzip {
         return answer;
     }
 
-    private void extractFile(ZipInputStream zis, String filepath) throws IOException {
-        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filepath));
-        byte[] bytesIn = new byte[4096];
-        int read = 0;
-        while ((read = zis.read(bytesIn)) != -1) {
-            bos.write(bytesIn, 0, read);
+    private void extractFile(ZipArchiveInputStream zis, String filepath, ZipArchiveEntry ze) throws IOException {
+
+        File entryDestination =  new File(filepath);
+        try (OutputStream out = new FileOutputStream(entryDestination)) {
+            IOUtils.copy(zis, out);
         }
-        bos.close();
     }
 
 
