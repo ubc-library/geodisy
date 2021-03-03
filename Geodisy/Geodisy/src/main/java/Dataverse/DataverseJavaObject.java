@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -212,7 +213,7 @@ public class DataverseJavaObject extends SourceJavaObject {
 
         if(drfs.size()==0){
             try {
-                Files.deleteIfExists(Path.of(path));
+                Files.deleteIfExists(Paths.get(path));
             } catch (IOException e) {
                 logger.error("Something went wrong deleting empty folder: " + path);
             }
@@ -253,7 +254,7 @@ public class DataverseJavaObject extends SourceJavaObject {
                         f1 = new File(dirPath+stub+ex);
                         if(f1.exists()) {
                             try {
-                                Files.deleteIfExists(Path.of(f1.getAbsolutePath()));
+                                Files.deleteIfExists(Paths.get(f1.getAbsolutePath()));
                             } catch (IOException e) {
                                 logger.error("Something went wrong trying to delete : " + f1.getAbsolutePath());
                             }
@@ -263,7 +264,7 @@ public class DataverseJavaObject extends SourceJavaObject {
                 f1 = new File(dirPath+name);
                 if(f1.exists()) {
                     try {
-                        Files.deleteIfExists(Path.of(f1.getAbsolutePath()));
+                        Files.deleteIfExists(Paths.get(f1.getAbsolutePath()));
                     } catch (IOException e) {
                         logger.error("Something went wrong trying to delete : " + f1.getAbsolutePath());
                     }
