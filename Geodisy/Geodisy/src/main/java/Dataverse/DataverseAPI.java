@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 import static _Strings.GeodisyStrings.*;
@@ -165,11 +166,11 @@ public class DataverseAPI extends SourceAPI {
                     if(f.isDirectory()) {
                         deleteFolder(f);
                     } else {
-                            Files.deleteIfExists(Path.of(f.getAbsolutePath()));
+                            Files.deleteIfExists(Paths.get(f.getAbsolutePath()));
                     }
                 }
             }
-            Files.deleteIfExists(Path.of(folder.getAbsolutePath()));
+            Files.deleteIfExists(Paths.get(folder.getAbsolutePath()));
         } catch (IOException e) {
             logger.error("Something went wrong trying to delete folder: " + folder.getAbsolutePath());
         }

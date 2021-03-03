@@ -63,7 +63,7 @@ public class Unzip {
                 }
                 if(fileName.toLowerCase().endsWith(".zip")) {
                     answer.addAll(unzipFunction(destpath + fileName, destpath));
-                    Files.deleteIfExists(Path.of(newEntry.getAbsolutePath()));
+                    Files.deleteIfExists(Paths.get(newEntry.getAbsolutePath()));
                 }else{
                     if(GeodisyStrings.fileToAllow(fileName))
                         answer.add(new FileInfo(new File(filepath),basename+".zip"));
@@ -73,7 +73,7 @@ public class Unzip {
 
             zis.closeEntry();
             zis.close();
-            Files.deleteIfExists(Path.of(filePath));
+            Files.deleteIfExists(Paths.get(filePath));
 
         } catch (IOException | IllegalArgumentException ex) {
             logger.error("Something went wrong trying to parse: " + filePath + " Stack:" + ex.toString());

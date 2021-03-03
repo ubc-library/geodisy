@@ -158,7 +158,7 @@ public class GeodisyTask {
         if (listofFiles.length == 0) {
             System.out.println("Folder Name :: " + folder.getAbsolutePath() + " is deleted.");
             try {
-                Files.deleteIfExists(Path.of(location));
+                Files.deleteIfExists(Paths.get(location));
             } catch (IOException e) {
                 logger.error("Something went wrong trying to delete folder: " + location);
             }

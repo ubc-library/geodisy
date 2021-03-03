@@ -15,6 +15,7 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.Stack;
 
@@ -158,7 +159,7 @@ public class DataverseRecordFile {
                 logger.error("Got an null pointer exception, something clearly went wrong with unzipping " + filePath);
             }
             try {
-                Files.deleteIfExists(Path.of(filePath));
+                Files.deleteIfExists(Paths.get(filePath));
             } catch (IOException e) {
                 logger.error("Something went wrong trying to delete file: " + filePath);
             }
@@ -208,7 +209,7 @@ public class DataverseRecordFile {
                 path = path.replace(".", "_");
                 String badFilesPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + path + "/" + name);
                 try {
-                    Files.deleteIfExists(Path.of(badFilesPath));
+                    Files.deleteIfExists(Paths.get(badFilesPath));
                 } catch (IOException e) {
                     logger.error("Something went wrong trying to delete file that couldn't generate BBox: " + badFilesPath);
                 }

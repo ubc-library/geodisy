@@ -8,6 +8,7 @@ import _Strings.GeodisyStrings;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.Stack;
 
@@ -83,7 +84,7 @@ public class FolderFileParser {
             }
         }
         try {
-            Files.deleteIfExists(Path.of(inputFile.getAbsolutePath()));
+            Files.deleteIfExists(Paths.get(inputFile.getAbsolutePath()));
         } catch (IOException e) {
             logger.error("Something went wrong trying to delete " + inputFile.getAbsolutePath());
         }
