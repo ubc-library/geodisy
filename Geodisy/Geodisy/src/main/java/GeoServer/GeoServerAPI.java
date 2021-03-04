@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.io.*;
 
 import java.nio.file.Files;
+import java.util.concurrent.TimeUnit;
 
 import static _Strings.GeoBlacklightStrings.GEOSERVER_REST;
 import static _Strings.GeodisyStrings.*;
@@ -48,7 +49,7 @@ public class GeoServerAPI extends DestinationAPI {
             String line;
             while ((line = reader.readLine()) != null)
                 continue;
-            p.waitFor();
+            p.waitFor(10, TimeUnit.SECONDS);
             p.destroy();
         } catch (InterruptedException|IOException e) {
             logger.error("Something went wrong trying to create the workspace " + workspaceName + " in geoserver");
@@ -88,7 +89,7 @@ public class GeoServerAPI extends DestinationAPI {
             String line;
             while ((line = reader.readLine()) != null)
                 continue;
-            p.waitFor();
+            p.waitFor(30, TimeUnit.SECONDS);
             p.destroy();
         } catch (IOException | InterruptedException e) {
             logger.error("Something went wrong adding vector layer " + geoserverlabel + " from POSTGIS");
@@ -191,7 +192,7 @@ public class GeoServerAPI extends DestinationAPI {
         String line;
         while ((line = reader.readLine()) != null)
             continue;
-        p.waitFor();
+        p.waitFor(10, TimeUnit.SECONDS);
         p.destroy();
 
     }
@@ -205,7 +206,7 @@ public class GeoServerAPI extends DestinationAPI {
         String line;
         while ((line = reader.readLine()) != null)
             continue;
-        p.waitFor();
+        p.waitFor(30, TimeUnit.SECONDS);
         p.destroy();
     }
 
@@ -218,7 +219,7 @@ public class GeoServerAPI extends DestinationAPI {
         String line;
         while ((line = reader.readLine()) != null)
             continue;
-        p.waitFor();
+        p.waitFor(5, TimeUnit.SECONDS);
         p.destroy();
     }
 
@@ -231,7 +232,7 @@ public class GeoServerAPI extends DestinationAPI {
         String line;
         while ((line = reader.readLine()) != null)
             continue;
-        p.waitFor();
+        p.waitFor(10, TimeUnit.SECONDS);
         p.destroy();
     }
 
@@ -244,7 +245,7 @@ public class GeoServerAPI extends DestinationAPI {
         String line;
         while ((line = reader.readLine()) != null)
             continue;
-        p.waitFor();
+        p.waitFor(5, TimeUnit.SECONDS);
         p.destroy();
     }
 
@@ -260,7 +261,7 @@ public class GeoServerAPI extends DestinationAPI {
         String line;
         while ((line = reader.readLine()) != null)
             continue;
-    p.waitFor();
+    p.waitFor(5, TimeUnit.SECONDS);
     p.destroy();
     }
 
@@ -274,7 +275,7 @@ public class GeoServerAPI extends DestinationAPI {
         String line;
         while ((line = reader.readLine()) != null)
             continue;
-        p.waitFor();
+        p.waitFor(2, TimeUnit.MINUTES);
         p.destroy();
     }
 

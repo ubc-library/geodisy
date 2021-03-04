@@ -8,6 +8,7 @@ import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
 
 import static _Strings.GeodisyStrings.*;
 import static _Strings.DVFieldNameStrings.*;
@@ -38,7 +39,7 @@ public class GDAL {
         }
         process = processBuilder.start();
         try {
-            process.waitFor();
+            process.waitFor(30, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             logger.error("Something went wrong running GDAL info on " + filePath);
         }
