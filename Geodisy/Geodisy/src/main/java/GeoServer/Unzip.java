@@ -44,6 +44,7 @@ public class Unzip {
 
             //get the zip file content
             ZipArchiveInputStream zis = new ZipArchiveInputStream(new FileInputStream(zipfilePath));
+            zis.wait(300000);
             //get the zipped file list entry
             ZipArchiveEntry ze = zis.getNextZipEntry();
 
@@ -78,6 +79,13 @@ public class Unzip {
 
         } catch (IOException | IllegalArgumentException ex) {
             logger.error("Something went wrong trying to parse: " + zipfilePath + " Stack:" + ex.toString());
+        } catch (InterruptedException e) {
+            logger.error("Unzipping took too long");
+            try {
+                Files.deleteIfExists(Paths.get(zipfilePath));
+            } catch (IOException ioException) {
+                logger.error("Couldn't delete zip after it timed out trying to unzip");
+            }
         }
         return answer;
     }
