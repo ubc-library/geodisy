@@ -43,23 +43,18 @@ public class FolderFileParser {
         return d;
     }
 
-    private String convertFromTabToCSV(File inputFile, String dirPath, String title) {
-        String fileName = title.substring(0, title.length() - 3) + "csv";
+    public String convertFromTabToCSV(File inputFile, String dirPath, String title) {
+        String fileName = title.endsWith(".tab")? title.replace(".tab",".csv"):title+".csv";
         File outputFile = new File(dirPath + fileName);
         BufferedReader br = null;
         FileWriter writer = null;
         try {
             String line;
-            Stack<String> stack = new Stack<>();
             br = new BufferedReader(new FileReader(inputFile));
             writer = (new FileWriter(outputFile));
             while ((line = br.readLine()) != null) {
-                stack.push(line.replace("\t", ","));
-            }
-            while (!stack.isEmpty()) {
-                writer.write(stack.pop());
-                if (!stack.empty())
-                    writer.write("\n");
+                writer.write(line.replace("\t", ","));
+                writer.write("\n");
             }
         } catch (FileNotFoundException e) {
             logger.error("Tried to convert an non-existant .tab file: " + title);
@@ -71,6 +66,7 @@ public class FolderFileParser {
         finally {
             try{
                 br.close();
+                writer.close();
             }
             catch(IOException|NullPointerException d){
                 logger.error("Something went wrong when converting a .tab file to .csv when closing br: " + title);
