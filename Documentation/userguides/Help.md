@@ -1,6 +1,6 @@
-##Help
+## Help
 
-###How do I search with the map in Geodisy?
+### How do I search with the map in Geodisy?
 
 1. Move the map to display your area of interest
     * Use the + and - buttons in the top left of the map to zoom in and out
@@ -13,7 +13,7 @@
 
 The “Relevance” of the search results is determined by bounding box size. Data with bounding boxes that most closely fit the area you are searching will be boosted, while bounding boxes that are far larger or smaller than the pictured area will be suppressed.
 
-###What does the undetermined data type mean when I see results in Geodisy?
+### What does the undetermined data type mean when I see results in Geodisy?
 
 Geodisy harvests all kinds of data, and not all of those data types are explicitly geospatial. Undetermined can have multiple meanings:
 
@@ -29,17 +29,17 @@ Geodisy harvests all kinds of data, and not all of those data types are explicit
 
 This does not mean that data sets will not work with a geographic information system, only that they are not downloadable as shapefiles or raster data from the Geodisy interface. They are still downloadable from the original source repository, by following the More details at link
 
-###What kind of data is being searched in Geodisy?
+### What kind of data is being searched in Geodisy?
 
 Although Geodisy is a geospatial search tool, it searches for any type of data which has a geographic component in the description of the data. This means that it's possible to find data about a place. A map-based search has traditionally returned only items that can be viewed in an application specifically for mapping, but Geodisy returns all types of data. Searching for data in Nigeria will return survey data about Nigeria, even though the data set may not contain latitude/longitude points or imagery.
 
 Currently in beta, the map search includes datasets from repositories indexed by FRDR with bounding box metadata. FRDR-indexed Dataverse repository datasets with location metadata and/or geospatial files are also included. FRDR’s Geodisy will continue to expand upon its collection to include more datasets from FRDR’s source list of institutional repositories
 
-###Does Geodisy contain restricted data?
+### Does Geodisy contain restricted data?
 
 Geodisy only uses datasets that are open access. Datasets with any kind of restrictions are not included. Because Dataverse does not provide functionality for embargoed data, datasets with embargo restrictions are also not included.
 
-###What is the ISO 19139 metadata link?
+### What is the ISO 19139 metadata link?
 
 All items appearing in Geodisy will have ISO 19115 geospatial metadata created when added to Geodisy that is available in ISO 19139 XML format. ISO 19115 is an international standard used for describing geographic data. This ensures that:
 
@@ -47,7 +47,7 @@ All items appearing in Geodisy will have ISO 19115 geospatial metadata created w
 * Geographic information not present in the source record but discovered by Geodisy will be added to metadata in consistent fashion
 * Metadata will be readable and usable by modern geographic information systems
 
-###How do data repository records become Geodisy records?
+### How do data repository records become Geodisy records?
 
 Researchers need only deposit their data into a repository with a connection to FRDR. If the deposit contains appropriate information in the record or in the associated files:
 
