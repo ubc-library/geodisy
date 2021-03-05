@@ -9,13 +9,13 @@
     * Hold the shift key and click to draw a box for the map to zoom toward
     * On a mobile device, use two fingers to zoom and drag within the map
 
-2. Click Search here to see the results
+2. Click **Search here** to see the results
 
 The “Relevance” of the search results is determined by bounding box size. Data with bounding boxes that most closely fit the area you are searching will be boosted, while bounding boxes that are far larger or smaller than the pictured area will be suppressed.
 
-### What does the undetermined data type mean when I see results in Geodisy?
+### What does the _undetermined_ data type mean when I see results in Geodisy?
 
-Geodisy harvests all kinds of data, and not all of those data types are explicitly geospatial. Undetermined can have multiple meanings:
+Geodisy harvests all kinds of data, and not all of those data types are explicitly geospatial. _Undetermined_ can have multiple meanings:
 
 * The data in question is related to place, but is not a traditional geospatial file. Examples include:
 
@@ -27,21 +27,21 @@ Geodisy harvests all kinds of data, and not all of those data types are explicit
     * Data in older formats, such as Esri .e00 interchange formats
     * Uncommon spatial data types, such as Spatialite databases
 
-This does not mean that data sets will not work with a geographic information system, only that they are not downloadable as shapefiles or raster data from the Geodisy interface. They are still downloadable from the original source repository, by following the More details at link
+This does not mean that data sets will not work with a geographic information system, only that they are not downloadable as shapefiles or raster data from the Geodisy interface. They are still downloadable from the original source repository, by following the **Data source** link
 
 ### What kind of data is being searched in Geodisy?
 
-Although Geodisy is a geospatial search tool, it searches for any type of data which has a geographic component in the description of the data. This means that it's possible to find data about a place. A map-based search has traditionally returned only items that can be viewed in an application specifically for mapping, but Geodisy returns all types of data. Searching for data in Nigeria will return survey data about Nigeria, even though the data set may not contain latitude/longitude points or imagery.
+Although Geodisy is a geospatial search tool, it searches for any type of data which has a geographic component in the _description_ of the data. This means that it's possible to find data **about** a place. A map-based search has traditionally returned only items that can be viewed in an application specifically for mapping, but Geodisy returns all types of data. Searching for data in Nigeria will return survey data **about** Nigeria, even though the data set may not contain latitude/longitude points or imagery.
 
 Currently in beta, the map search includes datasets from repositories indexed by FRDR with bounding box metadata. FRDR-indexed Dataverse repository datasets with location metadata and/or geospatial files are also included. FRDR’s Geodisy will continue to expand upon its collection to include more datasets from FRDR’s source list of institutional repositories
 
 ### Does Geodisy contain restricted data?
 
-Geodisy only uses datasets that are open access. Datasets with any kind of restrictions are not included. Because Dataverse does not provide functionality for embargoed data, datasets with embargo restrictions are also not included.
+Geodisy only uses publicly available metadata and data.
 
 ### What is the ISO 19139 metadata link?
 
-All items appearing in Geodisy will have ISO 19115 geospatial metadata created when added to Geodisy that is available in ISO 19139 XML format. ISO 19115 is an international standard used for describing geographic data. This ensures that:
+All items appearing in Geodisy will have [ISO 19115](https://www.iso.org/standard/53798.html) geospatial metadata created when added to Geodisy that is available in [ISO 19139](https://www.iso.org/standard/32557.html) XML format. ISO 19115 is an international standard used for describing geographic data. This ensures that:
 
 * All metadata appearing in Geodisy will have a consistent, standardized schema
 * Geographic information not present in the source record but discovered by Geodisy will be added to metadata in consistent fashion
@@ -49,7 +49,7 @@ All items appearing in Geodisy will have ISO 19115 geospatial metadata created w
 
 ### How do data repository records become Geodisy records?
 
-Researchers need only deposit their data into a repository with a connection to FRDR. If the deposit contains appropriate information in the record or in the associated files:
+Researchers need only deposit their data into a [repository with a connection to FRDR](https://www.frdr-dfdr.ca/discover/html/repository-list.html?lang=en). If the deposit contains appropriate information in the record or in the associated files:
 
 * The record will be harvested by Geodisy
 * Any geographic information found in the study record and associated files will be automatically harvested
@@ -60,7 +60,7 @@ Researchers need only deposit their data into a repository with a connection to 
 * Bounding boxes for data being harvested will be generated and made searchable by the interface
 * Download links will be generated for valid file types
 
-For Dataverse-specific guidance on adding metadata to records to make them discoverable by Geodisy, see our Dataverse depositor guide
+For Dataverse-specific guidance on adding metadata to records to make them discoverable by Geodisy, see our [Dataverse depositor guide](https://github.com/ubc-library/geodisy/blob/master/Documentation/userguides/GeodisyDepositorGuide.md)  
 
 
 
