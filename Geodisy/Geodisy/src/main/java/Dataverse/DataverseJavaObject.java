@@ -193,6 +193,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             if(dRF.translatedTitle.startsWith("LAS_")) {
                 continue;
             }
+            System.out.println("Getting file " + dRF.getFileName());
             LinkedList<DataverseRecordFile> temp = dRF.retrieveFile(this);
             for(DataverseRecordFile d: temp){
                 boolean add = true;
