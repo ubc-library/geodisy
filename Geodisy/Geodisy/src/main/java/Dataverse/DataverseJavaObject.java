@@ -9,16 +9,11 @@ import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 
 import static _Strings.GeodisyStrings.*;
@@ -176,6 +171,7 @@ public class DataverseJavaObject extends SourceJavaObject {
 
     @Override
     public LinkedList<DataverseGeoRecordFile> downloadFiles() {
+        long startTime = Calendar.getInstance().getTimeInMillis();
         String path = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + urlized(GeodisyStrings.removeHTTPSAndReplaceAuthority(citationFields.getPID())));
         File f = new File(path);
         try {
@@ -210,7 +206,8 @@ public class DataverseJavaObject extends SourceJavaObject {
                     drfs.add(d);
             }
         }
-
+        Long total = Calendar.getInstance().getTimeInMillis() - startTime;
+        System.out.println("Finished downloading and unzipping files from " + getPID() + " after " + total + " milliseconds");
         if(drfs.size()==0){
             try {
                 Files.deleteIfExists(Paths.get(path));

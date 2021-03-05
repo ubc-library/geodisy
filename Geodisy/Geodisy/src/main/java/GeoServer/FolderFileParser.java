@@ -9,6 +9,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.Stack;
 
@@ -85,8 +86,10 @@ public class FolderFileParser {
         String filePath = GeodisyStrings.replaceSlashes(f.getAbsolutePath());
         Unzip zip = new Unzip();
         try {
+            Long start = Calendar.getInstance().getTimeInMillis();
             System.out.println("Unzipping file " + f.getName());
             drfs = zip.unzip(filePath, dirPath, drf, djo);
+            System.out.println(Calendar.getInstance().getTimeInMillis()-start + " milliseconds to unzip " + f.getName());
         }catch (NullPointerException e){
             logger.error("Got an null pointer exception, something clearly went wrong with unzipping " + filePath);
         }

@@ -54,12 +54,8 @@ public class FRDRAPI extends SourceAPI{
                     if (djo.hasGeoGraphicCoverage())
                         djo = (DataverseJavaObject) getBBFromGeonames(djo);if (djo.hasContent && !testing) {
                         System.out.println("Downloading record: " + djo.getPID());
-                        long startTime = Calendar.getInstance().getTimeInMillis();
                         if(!dontProcessSpecificRecords(djo.getPID())) {
                             djo.setGeoDataFiles(djo.downloadFiles());
-                            Calendar end = Calendar.getInstance();
-                            Long total = end.getTimeInMillis() - startTime;
-                            System.out.println("Finished downloading " + djo.getPID() + " after " + total + " milliseconds");
                             if(djo.geoDataFiles.size()>0||djo.geoDataMeta.size()>0)
                                 djo.updateRecordFileNumbers();
                             if(djo.geoDataFiles.size()>0)
