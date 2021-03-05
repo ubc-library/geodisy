@@ -5,6 +5,7 @@ import _Strings.GeodisyStrings;
 
 import Dataverse.DataverseJavaObject;
 import Dataverse.DataverseRecordFile;
+import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.compress.utils.IOUtils;
@@ -44,14 +45,13 @@ public class Unzip {
 
             //get the zip file content
             ZipArchiveInputStream zis = new ZipArchiveInputStream(new FileInputStream(zipfilePath));
-            zis.wait(300000);
             //get the zipped file list entry
             ZipArchiveEntry ze = zis.getNextZipEntry();
 
             while (ze != null) {
                 String fileName = ze.getName();
                 if (ze.isDirectory()||GeodisyStrings.fileTypesToIgnore(fileName.toLowerCase())) {
-                    ze = (ZipArchiveEntry) zis.getNextEntry();
+                    ze = zis.getNextZipEntry();
                     continue;
                 }
                 String newFileName = fileName.substring(0,fileName.lastIndexOf("."));
@@ -60,7 +60,7 @@ public class Unzip {
                 }
                 String filepath = destpath + fileName;
                 if(!ze.isDirectory()){
-                    extractFile(zis,filepath, ze);
+                    extractFile(zis,filepath);
                 } else{
                     File dir = new File(filepath);
                     dir.mkdirs();
@@ -79,22 +79,14 @@ public class Unzip {
 
         } catch (IOException | IllegalArgumentException ex) {
             logger.error("Something went wrong trying to parse: " + zipfilePath + " Stack:" + ex.toString());
-        } catch (InterruptedException e) {
-            logger.error("Unzipping took too long");
-            try {
-                Files.deleteIfExists(Paths.get(zipfilePath));
-            } catch (IOException ioException) {
-                logger.error("Couldn't delete zip after it timed out trying to unzip");
-            }
         }
         return answer;
     }
 
-    private void extractFile(ZipArchiveInputStream zis, String filepath, ZipArchiveEntry ze) throws IOException {
-
+    private void extractFile(ZipArchiveInputStream zis, String filepath) throws IOException {
         File entryDestination =  new File(filepath);
         try (OutputStream out = new FileOutputStream(entryDestination)) {
-            IOUtils.copy(zis, out);
+            IOUtils.copy(zis, out, 8024);
         }
     }
 
