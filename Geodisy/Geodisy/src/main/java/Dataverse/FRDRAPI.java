@@ -103,6 +103,7 @@ public class FRDRAPI extends SourceAPI{
             /*ProcessBuilder processBuilder= new ProcessBuilder();
             Process p;
             processBuilder.command("/usr/bin/bash", "-c", generateWorkspace);
+            processBuilder.redirectErrorStream(true);
             p = processBuilder.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
                 String line;

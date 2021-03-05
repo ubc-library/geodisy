@@ -83,6 +83,7 @@ public class GDALTranslate {
                 } else {
                     processBuilder.command("bash", "-c", call);
                 }
+                processBuilder.redirectErrorStream(true);
                 process = processBuilder.start();
                 process.waitFor(120, TimeUnit.SECONDS);
                 if(name.endsWith(".tif"))

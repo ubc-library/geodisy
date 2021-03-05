@@ -321,6 +321,7 @@ public class DataverseJavaObject extends SourceJavaObject {
         String transform ="gdal_translate -of GTiff -co \"COMPRESS=JPEG\" -co \"PHOTOMETRIC=YCBCR\" -co \"TILED=YES\" mosaic.vrt" + drf.getDatasetIdent() + ".tif";
         ProcessBuilder p = new ProcessBuilder();
         p.command("bash","-c",merge);
+        processBuilder.redirectErrorStream(true);
         Process process = null;
         try {
             process = p.start();

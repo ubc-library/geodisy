@@ -37,6 +37,7 @@ public class GDAL {
         } else {
             processBuilder.command("/usr/bin/bash", "-c", gdal+filePath);
         }
+        processBuilder.redirectErrorStream(true);
         process = processBuilder.start();
         try {
             process.waitFor(30, TimeUnit.SECONDS);

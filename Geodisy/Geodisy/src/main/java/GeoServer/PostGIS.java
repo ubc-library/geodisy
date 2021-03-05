@@ -30,6 +30,7 @@ public class PostGIS {
         call = GeodisyStrings.replaceSlashes(call);
         ProcessBuilder processBuilder= new ProcessBuilder();
         processBuilder.command("/usr/bin/bash", "-c", call);
+        processBuilder.redirectErrorStream(true);
         Process p;
         try {
             p = processBuilder.start();
