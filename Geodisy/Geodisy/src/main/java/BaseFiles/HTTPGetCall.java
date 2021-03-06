@@ -13,6 +13,7 @@ import org.apache.http.impl.client.HttpClients;
 
 
 import java.io.*;
+import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.util.LinkedList;
 
@@ -79,6 +80,8 @@ public class HTTPGetCall {
                         logger.error("Something went wrong trying close the response and client from  " + fileName + " at " + fileURL);
                     }
             }
+        }catch (SocketTimeoutException e){
+            logger.warn(fileName + " from " + fileURL + "timed our during donwload. Do we need this file?");
         }catch(IOException e){
             logger.error("Something went wrong trying download " + fileName + " from " + fileURL);
         }
