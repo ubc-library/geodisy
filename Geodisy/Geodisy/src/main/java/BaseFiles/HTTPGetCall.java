@@ -160,7 +160,7 @@ public class HTTPGetCall {
                             break;
                         }
                     } catch (NumberFormatException e) {
-                        logger.error("Something weird with the file length of " + drf.getTranslatedTitle() + ": " + current + "at " + drf.getRecordURL());
+                        logger.error("When checking headers, " + "Something weird with the file length of " + drf.getTranslatedTitle() + ": " + current + "at " + drf.getRecordURL());
                     } finally {
                         try {
                             if (response != null) {
@@ -172,17 +172,17 @@ public class HTTPGetCall {
 
                     }
                 } catch (ClientProtocolException e) {
-                    logger.error(drf.getRecordURL() + " had a ClientProtocolError (pID: " + pID + ")");
+                    logger.error("When checking headers, " + drf.getRecordURL() + " had a ClientProtocolError (pID: " + pID + ")");
                 } catch (IOException e) {
-                    logger.error(drf.getRecordURL() + " had a IOException (pID: " + pID + ")");
+                    logger.error("When checking headers, " + drf.getRecordURL() + " had a IOException (pID: " + pID + ")");
                 } finally {
                         request.abort();
                 }
 
             } catch (NullPointerException e) {
-                logger.error("FileURL was null for pID = " + pID);
+                logger.error("When checking headers, " + "FileURL was null for pID = " + pID);
             } catch (IllegalArgumentException e){
-                logger.error("Something was wrong with the fileURL (" + drf.getFileURL() + ") from pID: " + pID);
+                logger.error("When checking headers, " + "Something was wrong with the fileURL (" + drf.getFileURL() + ") from pID: " + pID);
             }
         }
         return list;
