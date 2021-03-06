@@ -11,6 +11,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.execchain.RequestAbortedException;
 
 
 import java.io.*;
@@ -107,8 +108,8 @@ public class HTTPGetCall {
                         logger.error("Something went wrong trying close the response and client from  " + fileName + " at " + fileURL);
                     }
             }
-        }catch (SocketTimeoutException e){
-            logger.warn(fileName + " from " + fileURL + "timed our during donwload. Do we need this file?");
+        }catch (SocketTimeoutException| RequestAbortedException e){
+            logger.warn(fileName + " from " + fileURL + "timed out during donwload. Do we need this file?");
             try {
                 Files.deleteIfExists(Paths.get(path+fileName));
             } catch (IOException ioException) {
