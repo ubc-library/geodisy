@@ -9,6 +9,7 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 
 
@@ -34,19 +35,20 @@ public class HTTPGetCall {
             getFTPFile(fileURL, fileName, path);
             return;
         }
-        CloseableHttpClient client = HttpClients.createDefault();
-        URI uri = URI.create(fileURL);
-        HttpGet request = new HttpGet(uri);
 
         // 5 minute timeout
+        int millisecond = 1000;
+        int minutes = 60;
         RequestConfig requestConfig = RequestConfig.custom()
-                .setConnectionRequestTimeout(5000)
-                .setConnectTimeout(10000)
-                .setSocketTimeout(300000)
+                .setConnectionRequestTimeout(5 * millisecond)
+                .setConnectTimeout(10 * millisecond)
+                .setSocketTimeout(5 * minutes * millisecond)
                 .build();
 
-        request.setConfig(requestConfig);
+        CloseableHttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
         try {
+            URI uri = URI.create(fileURL);
+            HttpGet request = new HttpGet(uri);
             CloseableHttpResponse response = client.execute(request);
             if (fileName.equals("unknown")) {
                 if (response.getFirstHeader("Content-Disposition") != null)
