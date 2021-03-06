@@ -19,6 +19,8 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class HTTPGetCall {
@@ -49,6 +51,27 @@ public class HTTPGetCall {
         try {
             URI uri = URI.create(fileURL);
             HttpGet request = new HttpGet(uri);
+
+
+            //Setting a hard stop for the download
+            int hardTimeout = 10; //minutes
+            String finalFileName = fileName;
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    if (request != null) {
+                        request.abort();
+                        logger.warn(finalFileName + " from " + fileURL + "timed our during donwload. Do we need this file?");
+                        try {
+                            Files.deleteIfExists(Paths.get(path+ finalFileName));
+                        } catch (IOException ioException) {
+                            logger.error("Something went wrong trying delete incomplete download " + finalFileName + " from " + fileURL);
+                        }
+                    }
+                }
+            };
+            new Timer(true).schedule(task, hardTimeout * 60 * 1000);
+            
             CloseableHttpResponse response = client.execute(request);
             if (fileName.equals("unknown")) {
                 if (response.getFirstHeader("Content-Disposition") != null)
