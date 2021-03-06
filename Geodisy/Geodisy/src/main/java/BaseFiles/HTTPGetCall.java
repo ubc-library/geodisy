@@ -15,6 +15,8 @@ import org.apache.http.impl.client.HttpClients;
 import java.io.*;
 import java.net.SocketTimeoutException;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 
 
@@ -82,8 +84,18 @@ public class HTTPGetCall {
             }
         }catch (SocketTimeoutException e){
             logger.warn(fileName + " from " + fileURL + "timed our during donwload. Do we need this file?");
+            try {
+                Files.deleteIfExists(Paths.get(path+fileName));
+            } catch (IOException ioException) {
+                logger.error("Something went wrong trying delete incomplete download " + fileName + " from " + fileURL);
+            }
         }catch(IOException e){
             logger.error("Something went wrong trying download " + fileName + " from " + fileURL);
+            try {
+                Files.deleteIfExists(Paths.get(path+fileName));
+            } catch (IOException ioException) {
+                logger.error("Something went wrong trying delete failed download " + fileName + " from " + fileURL);
+            }
         }
     }
 
