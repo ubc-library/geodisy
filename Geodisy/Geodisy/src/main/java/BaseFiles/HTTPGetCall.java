@@ -161,6 +161,7 @@ public class HTTPGetCall {
                         }
                     } catch (NumberFormatException e) {
                         logger.error("When checking headers, " + "Something weird with the file length of " + drf.getTranslatedTitle() + ": " + current + "at " + drf.getRecordURL());
+                        list.add(drf);
                     } finally {
                         try {
                             if (response != null) {
@@ -173,8 +174,10 @@ public class HTTPGetCall {
                     }
                 } catch (ClientProtocolException e) {
                     logger.error("When checking headers, " + drf.getRecordURL() + " had a ClientProtocolError (pID: " + pID + ")");
+                    list.add(drf);
                 } catch (IOException e) {
                     logger.error("When checking headers, " + drf.getRecordURL() + " had a IOException (pID: " + pID + ")");
+                    list.add(drf);
                 } finally {
                         request.abort();
                 }
