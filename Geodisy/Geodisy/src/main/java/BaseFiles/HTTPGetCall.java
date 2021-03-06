@@ -106,6 +106,7 @@ public class HTTPGetCall {
     }
 
     private void getFTPFile(String fileURL, String fileName, String path) {
+        System.out.println("File is on an FTP");
         //TODO Figure out how to pull files from an FTP
     }
 
