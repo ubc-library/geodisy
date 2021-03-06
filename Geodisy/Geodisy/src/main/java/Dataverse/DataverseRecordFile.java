@@ -152,6 +152,7 @@ public class DataverseRecordFile {
 
 
         String filePath = dirPath + translatedTitle;
+        System.out.println(filePath);
         File newFile = new File(filePath);
         if(!newFile.exists())
             return drfs;
