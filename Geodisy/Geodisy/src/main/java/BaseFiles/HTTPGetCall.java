@@ -54,6 +54,7 @@ public class HTTPGetCall {
         BufferedInputStream bis = null;
         ProcessBuilder processBuilder= new ProcessBuilder();
         String call = "/usr/bin/curl " + fileURL + " > " + path + fileName;
+        System.out.println(fileURL);
         if (IS_WINDOWS) {
             processBuilder.command("cmd.exe", "/c", call);
         } else {
