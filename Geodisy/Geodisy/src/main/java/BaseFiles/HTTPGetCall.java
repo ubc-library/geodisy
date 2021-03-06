@@ -21,6 +21,7 @@ import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -53,6 +54,7 @@ public class HTTPGetCall {
         BufferedInputStream bis = null;
         ProcessBuilder processBuilder= new ProcessBuilder();
         String call = "/usr/bin/curl " + fileURL + " >" + path + fileName;
+        System.out.println(call);
         if (IS_WINDOWS) {
             processBuilder.command("cmd.exe", "/c", call);
         } else {
@@ -82,26 +84,25 @@ public class HTTPGetCall {
             new Timer(true).schedule(task, hardTimeout * 60 * 1000);
             process = processBuilder.start();
 
-            process.waitFor(20, TimeUnit.MINUTES);
 
-            bis = new BufferedInputStream(process.getInputStream());
+            /*bis = new BufferedInputStream(process.getInputStream());
             File loc = new File(path);
             if (!loc.exists())
                 loc.mkdirs();
             File outputFile =  new File(path+fileName);
-            FileUtils.copyInputStreamToFile(bis,outputFile);
+            OutputStream outStream = new FileOutputStream(outputFile);
+
+            byte[] buffer = new byte[8 * 1024];
+            int bytesRead;
+            while ((bytesRead = bis.read(buffer)) != -1) {
+                outStream.write(buffer, 0, bytesRead);
+            }
             IOUtils.closeQuietly(bis);
-        } catch (InterruptedException|IOException e) {
+            IOUtils.closeQuietly(outStream);*/
+        } catch (IOException e) {
             logger.error("Something went wrong trying to download " + fileURL);
             deleteFile(path+fileName);
         } finally {
-            if(bis != null) {
-                try {
-                    bis.close();
-                } catch (IOException e) {
-                    logger.error("Something went wrong trying to close BufferedInputStream for " + fileURL);
-                }
-            }
             if (process != null) {
                 process.destroy();
             }

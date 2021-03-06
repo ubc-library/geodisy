@@ -71,7 +71,7 @@ public class FRDRAPI extends SourceAPI{
                     }
                     int record_id = jo.getInt("id");
 
-                    updateFRDRHarvesterDB(record_id);
+                    //updateFRDRHarvesterDB(record_id);
                 }
             } catch (JSONException e) {
                 logger.error("Something went wrong parsing the FRDR JSON: \n" + fullJSON);
