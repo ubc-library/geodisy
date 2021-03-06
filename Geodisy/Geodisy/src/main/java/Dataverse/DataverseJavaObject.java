@@ -6,6 +6,7 @@ import _Strings.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
+import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -211,7 +212,7 @@ public class DataverseJavaObject extends SourceJavaObject {
         System.out.println("Finished downloading and unzipping files from " + getPID() + " after " + total + " milliseconds");
         if(drfs.size()==0){
             try {
-                Files.deleteIfExists(Paths.get(path));
+                FileUtils.deleteDirectory(f);
             } catch (IOException e) {
                 logger.error("Something went wrong deleting empty folder: " + path);
             }
