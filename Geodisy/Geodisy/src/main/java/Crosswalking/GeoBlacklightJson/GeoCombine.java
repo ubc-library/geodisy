@@ -28,6 +28,7 @@ public class GeoCombine {
         try{
             System.out.println("Calling Geocombine");
             processBuilder.command("/bin/bash", "-c", GEOCOMBINE);
+            processBuilder.redirectErrorStream(true);
             p = processBuilder.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String line;
@@ -46,6 +47,7 @@ public class GeoCombine {
         try{
             System.out.println("Calling Geocombine");
             processBuilder.command(bash);
+            processBuilder.redirectErrorStream(true);
             p = processBuilder.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String line;
@@ -62,6 +64,7 @@ public class GeoCombine {
         ProcessBuilder processBuilder = new ProcessBuilder();
         System.out.println("Moving metadata: " + MOVE_METADATA);
         processBuilder.command("/bin/bash", "-c", MOVE_METADATA);
+        processBuilder.redirectErrorStream(true);
         Process p = null;
         try{
             System.out.println("Moving metadata");
@@ -79,6 +82,7 @@ public class GeoCombine {
 
     public void clearSolr(){
         ProcessBuilder processBuilder = new ProcessBuilder();
+        processBuilder.redirectErrorStream(true);
         Process p = null;
         try{
             System.out.println("Clearing Solr");

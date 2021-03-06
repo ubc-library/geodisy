@@ -26,27 +26,27 @@ public class HTTPGetCall {
         client = HttpClients.createDefault();
     }
 
-    public void getFile(String fileURL, String fileName, String path){
-        if(fileURL.startsWith("ftp://")||fileURL.startsWith("http://ftp")||fileURL.startsWith("http://ftp")) {
-            getFTPFile(fileURL,fileName,path);
+    public void getFile(String fileURL, String fileName, String path) {
+        if (fileURL.startsWith("ftp://") || fileURL.startsWith("http://ftp") || fileURL.startsWith("http://ftp")) {
+            getFTPFile(fileURL, fileName, path);
             return;
         }
         CloseableHttpClient client = HttpClients.createDefault();
         URI uri = URI.create(fileURL);
         HttpGet request = new HttpGet(uri);
 
-        // 50 seconds timeout
+        // 5 minute timeout
         RequestConfig requestConfig = RequestConfig.custom()
                 .setConnectionRequestTimeout(5000)
                 .setConnectTimeout(10000)
-                .setSocketTimeout(1200000)
+                .setSocketTimeout(300000)
                 .build();
 
         request.setConfig(requestConfig);
         try {
             CloseableHttpResponse response = client.execute(request);
-            if(fileName.equals("unknown")) {
-                if(response.getFirstHeader("Content-Disposition")!=null)
+            if (fileName.equals("unknown")) {
+                if (response.getFirstHeader("Content-Disposition") != null)
                     fileName = response.getFirstHeader("Content-Disposition").getValue().replaceFirst("(?i)^.*filename=\"([^\"]+)\".*$", "$1");
             }
             try {
@@ -55,11 +55,11 @@ public class HTTPGetCall {
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
                     long len = entity.getContentLength();
-                    if(len<5000000000L) {
+                    if (len < 5000000000L) {
                         // return it as a String
                         InputStream is = entity.getContent();
                         File loc = new File(path);
-                        if(!loc.exists())
+                        if (!loc.exists())
                             loc.mkdirs();
                         String filePath = path + fileName;
                         File file = new File(filePath);
@@ -71,17 +71,16 @@ public class HTTPGetCall {
                         fos.close();
                     }
                 }
-            } finally {
-                response.close();
+            }finally{
+                    try {
+                        response.close();
+                        client.close();
+                    } catch (IOException e) {
+                        logger.error("Something went wrong trying close the response and client from  " + fileName + " at " + fileURL);
+                    }
             }
-            } catch (IOException e) {
+        }catch(IOException e){
             logger.error("Something went wrong trying download " + fileName + " from " + fileURL);
-            } finally {
-            try {
-                client.close();
-            } catch (IOException e) {
-                logger.error("Something went wrong trying to close the client for getting " + fileName + " from " + fileURL);
-            }
         }
     }
 
@@ -95,6 +94,7 @@ public class HTTPGetCall {
      * @param pID
      * @return
      */
+
     public LinkedList<DataverseRecordFile> checkDataset(LinkedList<DataverseRecordFile> dataset, String pID){
         URI uri = null;
         LinkedList<DataverseRecordFile> list = new LinkedList<>();

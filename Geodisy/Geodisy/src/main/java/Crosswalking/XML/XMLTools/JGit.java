@@ -52,6 +52,7 @@ public class JGit {
         try{
             System.out.println("Pushing Metadata to OpenGeoMetaData");
             processBuilder.command(cmdList);
+            processBuilder.redirectErrorStream(true);
             p = processBuilder.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String line;
