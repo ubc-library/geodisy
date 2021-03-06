@@ -53,7 +53,7 @@ public class HTTPGetCall {
         Process process = null;
         BufferedInputStream bis = null;
         ProcessBuilder processBuilder= new ProcessBuilder();
-        String call = "/usr/bin/curl " + fileURL + " >" + path + fileName;
+        String call = "/usr/bin/curl " + fileURL + " > " + path + fileName;
         System.out.println(call);
         if (IS_WINDOWS) {
             processBuilder.command("cmd.exe", "/c", call);
@@ -86,22 +86,6 @@ public class HTTPGetCall {
             };
             new Timer(true).schedule(task, hardTimeout * 60 * 1000);
             process = processBuilder.start();
-
-
-            /*bis = new BufferedInputStream(process.getInputStream());
-            File loc = new File(path);
-            if (!loc.exists())
-                loc.mkdirs();
-            File outputFile =  new File(path+fileName);
-            OutputStream outStream = new FileOutputStream(outputFile);
-
-            byte[] buffer = new byte[8 * 1024];
-            int bytesRead;
-            while ((bytesRead = bis.read(buffer)) != -1) {
-                outStream.write(buffer, 0, bytesRead);
-            }
-            IOUtils.closeQuietly(bis);
-            IOUtils.closeQuietly(outStream);*/
         } catch (IOException e) {
             logger.error("Something went wrong trying to download " + fileURL);
             deleteFile(path+fileName);
