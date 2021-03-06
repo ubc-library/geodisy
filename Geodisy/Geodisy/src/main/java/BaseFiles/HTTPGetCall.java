@@ -61,6 +61,25 @@ public class HTTPGetCall {
         processBuilder.redirectErrorStream(true);
 
         try{
+            //Setting a hard stop for the download
+            int hardTimeout = 20; //minutes
+            String finalFileName = fileName;
+            Process finalProcess = process;
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    if (finalProcess != null) {
+                        finalProcess.destroy();
+                        logger.warn(finalFileName + " from " + fileURL + "timed our during donwload. Do we need this file?");
+                        try {
+                            Files.deleteIfExists(Paths.get(path+ finalFileName));
+                        } catch (IOException ioException) {
+                            logger.error("Something went wrong trying delete incomplete download " + finalFileName + " from " + fileURL);
+                        }
+                    }
+                }
+            };
+            new Timer(true).schedule(task, hardTimeout * 60 * 1000);
             process = processBuilder.start();
 
             process.waitFor(20, TimeUnit.MINUTES);
