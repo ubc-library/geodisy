@@ -61,6 +61,9 @@ public class HTTPGetCall {
             processBuilder.command("/usr/bin/bash", "-c", call);
         }
         processBuilder.redirectErrorStream(true);
+        File loc = new File(path);
+        if (!loc.exists())
+            loc.mkdirs();
 
         try{
             //Setting a hard stop for the download
