@@ -120,7 +120,6 @@ public class FRDRAPI extends SourceAPI{
         //TODO set this up once Joel has given me the API endpoint to hit
         try {
             URL url = new URL(EXPORTER);
-            System.out.println(EXPORTER);
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();
