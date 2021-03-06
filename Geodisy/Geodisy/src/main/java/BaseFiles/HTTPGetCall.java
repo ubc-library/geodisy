@@ -123,7 +123,7 @@ public class HTTPGetCall {
         long total = 0L;
         for(DataverseRecordFile drf: dataset) {
             String url = drf.getFileURL();
-            if(url.startsWith("ftp://")||url.startsWith("http://ftp")||url.startsWith("http://ftp")) {
+            if(url.startsWith("ftp://")||url.startsWith("http://ftp")||url.startsWith("https://ftp")) {
                 list.add(drf);
                 continue;
             }
