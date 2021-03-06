@@ -54,7 +54,7 @@ public class HTTPGetCall {
 
 
             //Setting a hard stop for the download
-            int hardTimeout = 10; //minutes
+            int hardTimeout = 20; //minutes
             String finalFileName = fileName;
             TimerTask task = new TimerTask() {
                 @Override
@@ -71,7 +71,7 @@ public class HTTPGetCall {
                 }
             };
             new Timer(true).schedule(task, hardTimeout * 60 * 1000);
-            
+
             CloseableHttpResponse response = client.execute(request);
             if (fileName.equals("unknown")) {
                 if (response.getFirstHeader("Content-Disposition") != null)
