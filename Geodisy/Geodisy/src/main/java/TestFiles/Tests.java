@@ -3,6 +3,12 @@ package TestFiles;
 public class Tests {
 
     public void runTests(){
+        /*TabTest tt = new TabTest();
+        tt.run();*/
+
+       /*ZipTest zipTest = new ZipTest();
+        zipTest.run();*/
+
         HTTPGetTest test = new HTTPGetTest();
         test.run();
 
