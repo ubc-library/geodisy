@@ -150,9 +150,14 @@ public class DataverseRecordFile {
         HTTPGetCall httpGetCall = new HTTPGetCall();
         httpGetCall.getFile(getFileURL(),getFileName(),dirPath);
 
-        String filePath = dirPath + translatedTitle;
+        //TODO Remove after testing
+        return drfs;
+
+        /*String filePath = dirPath + translatedTitle;
         File newFile = new File(filePath);
-        if (translatedTitle.toLowerCase().endsWith(".zip")) {
+        if(!newFile.exists())
+            return drfs;
+        else if (translatedTitle.toLowerCase().endsWith(".zip")) {
             try {
                 drfs = ffp.unzip(newFile, dirPath, this, djo);
             }catch (NullPointerException f){
@@ -172,7 +177,7 @@ public class DataverseRecordFile {
         else if(GeodisyStrings.fileToAllow(newFile.getName())) {
             drfs.add(this);
         }
-        return drfs;
+        return drfs;*/
     }
 
     public DataverseRecordFile translateFile(DataverseJavaObject djo) {
