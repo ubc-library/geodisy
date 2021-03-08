@@ -90,12 +90,14 @@ public class HTTPGetCall {
                 logger.error("Something went wrong trying to close bout when downloading from " + fileURL);
             }
             try {
-                in.close();
+                if(in!=null)
+                    in.close();
             } catch (IOException e) {
                 logger.error("Something went wrong trying to close in when downloading from " + fileURL);
             }
             try {
-                fos.close();
+                if(fos!=null)
+                    fos.close();
             } catch (IOException e) {
                 logger.error("Something went wrong trying to close fos when downloading from " + fileURL);
             }
