@@ -84,7 +84,8 @@ public class HTTPGetCall {
             logger.error("Took too long downloading file " + fileName + "from " + fileURL);
         } finally {
             try {
-                bout.close();
+                if(bout!=null)
+                    bout.close();
             } catch (IOException e) {
                 logger.error("Something went wrong trying to close bout when downloading from " + fileURL);
             }
