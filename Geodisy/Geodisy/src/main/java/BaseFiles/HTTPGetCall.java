@@ -1,9 +1,9 @@
 package BaseFiles;
 
 import Dataverse.DataverseRecordFile;
-import _Strings.GeodisyStrings;
-import org.apache.commons.compress.utils.IOUtils;
-import org.apache.commons.io.FileUtils;
+import java.io.FileInputStream;
+
+import io.netty.handler.timeout.TimeoutException;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
@@ -11,17 +11,18 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.execchain.RequestAbortedException;
 
 
 import java.io.*;
 import java.net.SocketTimeoutException;
 import java.net.URI;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -50,48 +51,52 @@ public class HTTPGetCall {
     }
 
     private void makeCurlCall(String fileURL, String fileName, String path) {
-        Process process = null;
-        BufferedInputStream bis = null;
-        ProcessBuilder processBuilder= new ProcessBuilder();
-        String call = "/usr/bin/curl " + fileURL + " > " + path + fileName;
-        System.out.println(fileURL);
-        if (IS_WINDOWS) {
-            processBuilder.command("cmd.exe", "/c", call);
-        } else {
-            processBuilder.command("/usr/bin/bash", "-c", call);
-        }
-        processBuilder.redirectErrorStream(true);
+        BufferedInputStream in = null;
+        FileOutputStream fos = null;
+        BufferedOutputStream bout = null;
         File loc = new File(path);
-        if (!loc.exists())
+        if(!loc.exists())
             loc.mkdirs();
-
         try{
-            //Setting a hard stop for the download
-            int hardTimeout = 20; //minutes
-            String finalFileName = fileName;
-            Process finalProcess = process;
-            TimerTask task = new TimerTask() {
-                @Override
-                public void run() {
-                    if (finalProcess != null) {
-                        finalProcess.destroy();
-                        logger.warn(finalFileName + " from " + fileURL + "timed our during donwload. Do we need this file?");
-                        try {
-                            Files.deleteIfExists(Paths.get(path+ finalFileName));
-                        } catch (IOException ioException) {
-                            logger.error("Something went wrong trying delete incomplete download " + finalFileName + " from " + fileURL);
-                        }
-                    }
+            URL url=new URL(fileURL);
+            URLConnection connection = url.openConnection();
+                in = new java.io.BufferedInputStream(connection.getInputStream());
+                fos = new java.io.FileOutputStream(path+fileName);
+                bout = new BufferedOutputStream(fos,2048);
+            byte[] data = new byte[2048];
+            int i=0;
+            long seconds = 1000;
+            long minutes = 60;
+            long timeToStop = 20 * minutes * seconds;
+            long start = Calendar.getInstance().getTimeInMillis();
+            while((i=in.read(data,0,2048))>=0) {
+                bout.write(data,0,i);
+                if(Calendar.getInstance().getTimeInMillis()-start > timeToStop) {
+                    bout.close();
+                    Files.deleteIfExists(Paths.get(path+fileName));
+                    throw new Exception();
                 }
-            };
-            new Timer(true).schedule(task, hardTimeout * 60 * 1000);
-            process = processBuilder.start();
+            }
         } catch (IOException e) {
             logger.error("Something went wrong trying to download " + fileURL);
             deleteFile(path+fileName);
+        } catch (Exception e) {
+            logger.error("Took too long downloading file " + fileName + "from " + fileURL);
         } finally {
-            if (process != null) {
-                process.destroy();
+            try {
+                bout.close();
+            } catch (IOException e) {
+                logger.error("Something went wrong trying to close bout when downloading from " + fileURL);
+            }
+            try {
+                in.close();
+            } catch (IOException e) {
+                logger.error("Something went wrong trying to close in when downloading from " + fileURL);
+            }
+            try {
+                fos.close();
+            } catch (IOException e) {
+                logger.error("Something went wrong trying to close fos when downloading from " + fileURL);
             }
         }
 
