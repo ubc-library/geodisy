@@ -35,6 +35,7 @@ public class Unzip {
             destpath = destpath + GeodisyStrings.replaceSlashes("/");
         LinkedList<FileInfo> answer = new LinkedList<>();
         String basename = zipfilePath.substring(zipfilePath.lastIndexOf(GeodisyStrings.replaceSlashes("/"))+1,zipfilePath.lastIndexOf("."));
+        ZipArchiveInputStream zis = null;
 
         try {
             //create output directory is not exists
@@ -44,7 +45,7 @@ public class Unzip {
             }
 
             //get the zip file content
-            ZipArchiveInputStream zis = new ZipArchiveInputStream(new FileInputStream(zipfilePath));
+            zis = new ZipArchiveInputStream(new FileInputStream(zipfilePath));
             //get the zipped file list entry
             ZipArchiveEntry ze = zis.getNextZipEntry();
 
@@ -74,11 +75,17 @@ public class Unzip {
                 ze = zis.getNextZipEntry();
             }
 
-            zis.close();
-            Files.deleteIfExists(Paths.get(zipfilePath));
 
         } catch (IOException | IllegalArgumentException ex) {
             logger.error("Something went wrong trying to parse: " + zipfilePath + " Stack:" + ex.toString());
+        } finally {
+            try {
+                if (zis != null)
+                    zis.close();
+                Files.deleteIfExists(Paths.get(zipfilePath));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return answer;
     }
