@@ -196,7 +196,6 @@ public class DataverseJavaObject extends SourceJavaObject {
             }
             System.out.println("Getting file " + dRF.getFileName());
             LinkedList<DataverseRecordFile> temp = dRF.retrieveFile(this);
-            System.out.println("Number of files to check = " + temp.size());
             for(DataverseRecordFile d: temp){
                 boolean add = true;
                 for(DataverseRecordFile d2: drfs){
