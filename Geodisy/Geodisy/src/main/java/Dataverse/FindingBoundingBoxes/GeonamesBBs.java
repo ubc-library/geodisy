@@ -54,9 +54,9 @@ public class GeonamesBBs extends FindBoundBox {
         Country country;
         String c = existingLocations.getCountryFromCode(countryName);
         if(c.isEmpty())
-            country = new Country(c);
+            country = new Country(countryName);
          else
-             country = new Country(countryName);
+             country = new Country(c);
         if(!country.hasBoundingBox()){
             logger.info(countryName + " is not a valid country givenName in record at PERSISTENT_ID: " + doi + ", so no bounding box could be automatically generated. Check this record manually ", djo);
             return new BoundingBox();

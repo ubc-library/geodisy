@@ -282,7 +282,7 @@ public class GDAL {
             path = path.substring(0,path.lastIndexOf(GeodisyStrings.replaceSlashes("/"))+1) + stub;
         File check = new File(path);
         if(!check.exists())
-            logger.warn("Couldn't convert " + name +" to  WGS84");
+            logger.warn("Couldn't convert " + name +" to  WGS84 from location " + filePath);
         return stub;
     }
 
