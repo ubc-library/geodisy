@@ -53,7 +53,8 @@ public class GeographicFields extends MetadataType {
                         incrementCounter();
                         drf.setFileNumber(djo.getGeoDataMeta().size()+1);
                         djo.addGeoDataMeta(drf);
-                    }
+                    }else
+                        logger.info("Had a bounding box in the metadata but it was not a valid bounding box for some reason. See " + doi,djo);
                 }
                 setFullBoundingBox();
                 break;

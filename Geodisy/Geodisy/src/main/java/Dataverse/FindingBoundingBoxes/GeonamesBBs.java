@@ -81,6 +81,7 @@ public class GeonamesBBs extends FindBoundBox {
         Province p = new Province(province, country);
         if(p.hasBoundingBox())
             return p.getBoundingBox();
+        logger.info(province + ", " + country + " is not returned nothing from geonames, so no bounding box could be automatically generated from it. Check "+ doi + " record manually ", djo);
         return new BoundingBox();
     }
 
@@ -105,6 +106,7 @@ public class GeonamesBBs extends FindBoundBox {
         City cit = new City(city, province, country);
         if(cit.hasBoundingBox())
             return cit.getBoundingBox();
+        logger.info(city+ ", " + province + ", " + country + " is not returned nothing from geonames, so no bounding box could be automatically generated from it. Check "+ doi + " record manually ", djo);
         return new BoundingBox();
     }
 
