@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 
 import io.netty.handler.timeout.TimeoutException;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
@@ -60,9 +61,11 @@ public class HTTPGetCall {
         try{
             URL url=new URL(fileURL);
             URLConnection connection = url.openConnection();
-                in = new java.io.BufferedInputStream(connection.getInputStream());
-                fos = new java.io.FileOutputStream(path+fileName);
-                bout = new BufferedOutputStream(fos,2048);
+            if(fileURL.contains("data.globus.org"))
+                connection.setRequestProperty("Referer", url.toExternalForm());
+            in = new java.io.BufferedInputStream(connection.getInputStream());
+            fos = new java.io.FileOutputStream(path+fileName);
+            bout = new BufferedOutputStream(fos,2048);
             byte[] data = new byte[2048];
             int i=0;
             long seconds = 1000;
@@ -139,6 +142,8 @@ public class HTTPGetCall {
             try {
                 uri = URI.create(drf.getFileURL());
                 HttpGet request = new HttpGet(uri);
+                if(drf.getFileURL().contains("data.globus.org"))
+                    request.setHeader(HttpHeaders.REFERER,drf.getFileURL());
                 // 50 seconds timeout
                 RequestConfig requestConfig = RequestConfig.custom()
                         .setConnectionRequestTimeout(5000)
