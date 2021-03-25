@@ -2,7 +2,7 @@ package _Strings;
 
 public class ENDPOINT_STRINGS {
     public static final String GEOSERVER_BASE_DEV       = "http://geoservertest.frdr.ca:8080/geoserver/";
-    public static final String GEOSERVER_BASE_PROD      = "http://prod-gs-g1.frdr.ca:8080/geoserver/";
+    public static final String GEOSERVER_BASE_PROD      = "http://prod-gs-g1:8080/geoserver/";
 
     public static final String FRONTEND_DEV_ADDRESS     = "https://206-12-95-26.cloud.computecanada.ca";
     public static final String FRONTEND_PROD_ADDRESS    = "https://geo.frdr-dfdr.ca";
