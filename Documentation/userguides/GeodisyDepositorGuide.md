@@ -47,7 +47,7 @@ This process allows even non-geospatial data to be displayed in Geodisy. For exa
 
 If you’re depositing geospatial data (such as a Shapefile, GeoTIFF, geoJSON, etc.), Geodisy will generate records and previews for each item included in your data set. For example, if your data contains three Shapefiles, Geodisy will preview each shapefile separately, with a note indicating each one has been deposited with partner Shapefiles (File 1/3, File 2/3, etc.) 
 
-[The Dataverse North Geospatial Guide](https://test.invalid/UserGuide) provides more information on best practices for using Dataverse’s Geospatial Metadata block. 
+[The Dataverse North Geospatial Guide](https://dx.doi.org/10.14288/1.0388724) provides more information on best practices for using Dataverse’s Geospatial Metadata block. 
 
 ## Geodisy for institutions
 If you’ve come across this guide and you would like your institution to implement a Geodisy connection, please see [Geodisy: Implementing a Dataverse connection at your institution](https://somelink.invalid/ImplementationGuide).

@@ -23,6 +23,6 @@ For institutions that do not wish to be part of FRDR’s Geodisy, it’s also po
 
 All of the components involved in Geodisy are free and open source. More information can be found below:
 
-* [Geodisy project on Github] (https://github.com/ubc-library/geodisy)
+* [Geodisy project on Github](https://github.com/ubc-library/geodisy)
 
 Questions? Contact the Geodisy team at [geodisy.info@ubc.ca](mailto:geodisy.info@ubc.ca).
