@@ -23,8 +23,8 @@ public class GeodisyStrings {
         EXISTING_DATASET_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingDatasetBBoxes.txt");
         EXISTING_LOCATION_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingLocationBBoxes.txt");
         EXISTING_LOCATION_NAMES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingLocationNames.txt");
-        EXISTING_GEO_LABELS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExisitingGeoLabels.txt");
-        EXISTING_GEO_LABELS_VALS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExisitingGeoLabelsVals.txt");
+        EXISTING_GEO_LABELS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingGeoLabels.txt");
+        EXISTING_GEO_LABELS_VALS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingGeoLabelsVals.txt");
         DOWNLOADED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/DownloadedFiles.csv");
         VECTOR_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingVectorRecords.txt");
         TEST_EXISTING_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/TestExistingRecords.txt");
@@ -180,7 +180,7 @@ public class GeodisyStrings {
         public static String GDALADDO(String source){ return getGdalAddo(source);}
         public static String GDAL_ADDO_LOCAL(String source){return LOCAL_GDAL_PATH + "gdaladdo " + source + " -r nearest --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
         public static String GDAL_ADDO_CLOUD(String source){return "sudo /usr/gdal30/bin/gdaladdo " + source + " -r nearest --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
-        public final static String[] PROCESSABLE_EXTENSIONS = ArrayUtils.addAll(GDALINFO_PROCESSABLE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS);
+        public final static String[] PROCESSABLE_EXTENSIONS = ArrayUtils.addAll(ArrayUtils.addAll(GDALINFO_PROCESSABLE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS),CSV_EXTENTIONS);
 
         private static String getGdalWarp(String path, String fileName){
             if(IS_WINDOWS)
@@ -374,33 +374,50 @@ public class GeodisyStrings {
 
     private static String nonUniqueFromPid(String path) {
         String[][] nonUnique = {
-                {"hdl.handle.net/","hnd/"}
-                ,{"doi.org/","doi/"}
-                ,{"www.polardata.ca/pdcsearch/PDCSearchDOI.jsp?","pdc/"}
-                ,{"researchdata.sfu.ca/islandora/object/", "sfu/"}
-                ,{"donnees.montreal.ca/dataset/", "montreal/"}
-                ,{"catalogue.cioos.ca/dataset/", "cioos/"}
-                ,{"data.ontario.ca/dataset/", "on/"}
-                ,{"data.surrey.ca/dataset/","surrey/"}
-                ,{"hecate.hakai.org/geonetwork/srv/eng/catalog.search#/metadata/","geonet/"}
-                ,{"lwbin-datahub.ad.umanitoba.ca/dataset/","umb/"}
-                ,{"data.calgary.ca/d/","calgary/"}
-                ,{"search2.odesi.ca/#/details?uri=%2F","odesi/"}
-                ,{"catalogue.data.gov.bc.ca/dataset/","bc/"}
-                ,{"open.toronto.ca/dataset/","toronto/"}
-                ,{"opendatakingston.cityofkingston.ca/explore/dataset/","kingston/"}
-                ,{"data.princeedwardisland.ca/d/","pei/"}
-                ,{"data.winnipeg.ca/d/","winnipeg/"}
-                ,{"opendata.vancouver.ca/explore/dataset/","vancouver/"}
-                ,{"data.novascotia.ca/d/","ns/"}
-                ,{"www.donneesquebec.ca/recherche/fr/dataset/","quebec/"}
-                ,{"digital.library.yorku.ca/", "yorku/"}};
+                {"catalogue.data.gov.bc.ca/dataset/","bc"}                                 //2
+                ,{"catalogue.cioos.ca/dataset/", "cioos"}                                       //4
+                ,{"search2.odesi.ca/#/details?uri=","odesi"}                                    //5
+                ,{"lwbin-datahub.ad.umanitoba.ca/dataset/","umb"}                               //7
+                ,{"data.calgary.ca/d/","calgary"}                                               //9
+                ,{"data.edmonton.ca/d/","edmonton"}                                             //10
+                ,{"data.surrey.ca/dataset/","surrey"}                                           //11
+                ,{"spectrum.library.concordia.ca/","spectrum"}                                  //12
+                ,{"data.ontario.ca/dataset/", "on"}                                             //15
+                ,{"doi.org/","doi"}                                                             //16,20,28,44,46,67,129,131-142,146,147,150-158,160-166,168,169,174,184,186
+                ,{"www.frdr-dfdr.ca/repo/dataset/", "frdr"}                                     //19
+                ,{"www.donneesquebec.ca/recherche/fr/dataset/","qb"}                            //17
+                ,{"hecate.hakai.org/geonetwork/srv/eng/catalog.search#/metadata/","geonet"}     //21
+                ,{"open.canada.ca/data/en/dataset/","open"}                                     //34
+                ,{"www.polardata.ca/pdcsearch/PDCSearchDOI.jsp?","pdc"}                         //35
+                ,{"open.alberta.ca/opendata/","ab"}                                             //37
+                ,{"data.novascotia.ca/d/","ns"}                                                 //38
+                ,{"data.princeedwardisland.ca/d/","pei"}                                        //39
+                ,{"researchdata.sfu.ca/islandora/object/islandora:", "sfu"}                     //43
+                ,{"researchdata.sfu.ca/islandora/object/sfu:", "sfu"}
+                ,{"hdl.handle.net/","hnd"}                                                      //47
+                ,{"dx.doi.org/","doi"}                                                          //58
+                ,{"data.upei.ca/islandora/object/data:","upei"}                                 //66
+                ,{"digital.library.yorku.ca/", "yorku"}                                         //72
+                ,{"open.toronto.ca/dataset/","toronto"}                                         //85
+                ,{"opendata.vancouver.ca/explore/dataset/","vancouver"}                         //86
+                ,{"data.winnipeg.ca/d/","winnipeg"}                                             //87
+                ,{"opendatakingston.cityofkingston.ca/explore/dataset/","kingston"}             //172
+                ,{"donnees.montreal.ca/dataset/", "montreal"}                                   //173
+                ,{"data.montreal.ca/dataset/", "montreal"}                                   //173
+
+
+
+
+
+
+
+        };
         for(String[] u: nonUnique){
             String uPath = GeodisyStrings.replaceSlashes(u[0]);
             String endPathVal = GeodisyStrings.replaceSlashes(u[1]);
             String slash = GeodisyStrings.replaceSlashes("\\");
             if(path.contains(uPath))
-                path = path.replace(uPath,endPathVal);
+                path = path.replace(uPath,endPathVal+GeodisyStrings.replaceSlashes("/"));
             String underUPath = uPath.replace(slash,"_").replace(".","_");
             if(path.contains(underUPath)) {
                 path = path.replace(underUPath, endPathVal.replace(slash,"_").replace(".","_"));

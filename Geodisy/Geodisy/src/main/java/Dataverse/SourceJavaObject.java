@@ -12,6 +12,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -70,17 +72,17 @@ public abstract class SourceJavaObject {
         return pid.replace(".","/");
 
     }
-    protected void deleteDir(File f) {
+    protected void deleteDir(File f) throws IOException {
         File[] files = f.listFiles();
         if(files != null && files.length >0) {
             for (File myFile : files) {
                 if (myFile.isDirectory()) {
                     deleteDir(myFile);
                 }
-                myFile.delete();
+                Files.deleteIfExists(myFile.toPath());
             }
         }
-        f.delete();
+        Files.deleteIfExists(f.toPath());
     }
     public String getPID(){
         return citationFields.getPID();

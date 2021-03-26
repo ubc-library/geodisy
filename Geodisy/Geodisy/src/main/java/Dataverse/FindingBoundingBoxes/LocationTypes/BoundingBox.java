@@ -36,7 +36,7 @@ public class BoundingBox implements Serializable {
         return longitude;
     }
     public boolean hasBoundingBox(){
-        return (getLatSouth()>=-90 && getLatNorth()<=90 && getLongEast()<=180 && getLongWest()>=-180)&&(getLatSouth()!=361 && getLatNorth()!=361 && getLongEast()!=361 && getLongWest()!=361)&&!((getLatSouth()==0 && getLatNorth()==0) || (getLongEast()==0 && getLongWest()==0));
+        return ((getLatSouth()>=-90 && getLatNorth()<=90 && getLongEast()<=180 && getLongWest()>=-180)&&(getLatSouth()!=361 && getLatNorth()!=361 && getLongEast()!=361 && getLongWest()!=361));
     }
     public boolean hasUTMCoords(){
         return Math.abs(getLatSouthUnchecked()) > 90 || Math.abs(getLatNorthUncheck()) > 90 || Math.abs(getLongEastUnchecked()) > 180 || Math.abs(getLongWestUnchecked()) > 180;

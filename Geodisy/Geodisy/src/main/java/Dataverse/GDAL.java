@@ -6,7 +6,9 @@ import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.G
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
 
 import static _Strings.GeodisyStrings.*;
 import static _Strings.DVFieldNameStrings.*;
@@ -35,9 +37,10 @@ public class GDAL {
         } else {
             processBuilder.command("/usr/bin/bash", "-c", gdal+filePath);
         }
+        processBuilder.redirectErrorStream(true);
         process = processBuilder.start();
         try {
-            process.waitFor();
+            process.waitFor(30, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             logger.error("Something went wrong running GDAL info on " + filePath);
         }
@@ -51,13 +54,14 @@ public class GDAL {
 
         /*if(!name.endsWith(".csv")&& gdalString.toString().contains("FAILURE"))
             System.out.println(gdalString.toString());*/
+        stdInput.close();
         return gdalString.toString();
     }
     //Not used by main program
     public DataverseJavaObject generateBB(DataverseJavaObject djo) {
         String doi = djo.getPID();
-        String path = GeodisyStrings.removeHTTPSAndReplaceAuthority(doi).replace(".","/");
-        String folderName = DATA_DIR_LOC +path+"/";
+        String path = GeodisyStrings.removeHTTPSAndReplaceAuthority(doi).replace(".","/") + GeodisyStrings.replaceSlashes("/");
+        String folderName = DATA_DIR_LOC +path;
         LinkedList<DataverseGeoRecordFile> origRecords = djo.getGeoDataFiles();
         if(origRecords.size()==0)
             return djo;
@@ -67,7 +71,11 @@ public class GDAL {
 
 
         if(folder.listFiles().length==0) {
-            folder.delete();
+            try {
+                Files.deleteIfExists(folder.toPath());
+            } catch (IOException e) {
+                logger.error("Something went wrong trying to delete folder: " + folder.getAbsolutePath());
+            }
             return djo;
         }
 
@@ -77,7 +85,7 @@ public class GDAL {
         GeographicBoundingBox temp = new GeographicBoundingBox(doi);
         for(DataverseGeoRecordFile drf : origRecords) {
             String name = drf.getTranslatedTitle();
-            String filePath = DATA_DIR_LOC + path + "/" + name;
+            String filePath = DATA_DIR_LOC + path + name;
             File file = new File(filePath);
 
             if (name.endsWith("tif")) {
@@ -179,9 +187,9 @@ public class GDAL {
     }
 
     public GeographicBoundingBox generateBoundingBoxFromCSV(String fileName, DataverseJavaObject djo){
-        String path = GeodisyStrings.removeHTTPSAndReplaceAuthority(djo.getPID()).replace("/","_");
+        String path = GeodisyStrings.removeHTTPSAndReplaceAuthority(djo.getPID()).replace("/","_") + GeodisyStrings.replaceSlashes("/");
         path = path.replace(".","_");
-        String filePath = DATA_DIR_LOC + path + "/" + fileName;
+        String filePath = DATA_DIR_LOC + path + fileName;
         String name = fileName;
         String ogrString = null;
         try {
@@ -274,7 +282,7 @@ public class GDAL {
             path = path.substring(0,path.lastIndexOf(GeodisyStrings.replaceSlashes("/"))+1) + stub;
         File check = new File(path);
         if(!check.exists())
-            logger.warn("Couldn't convert " + name +" to  WGS84");
+            logger.warn("Couldn't convert " + name +" to  WGS84 from location " + filePath);
         return stub;
     }
 
@@ -315,7 +323,7 @@ public class GDAL {
                 bb.setLatSouth(south);
                 bb.setGenerated(true);
             } catch (StringIndexOutOfBoundsException e) {
-                return bb;
+                return new BoundingBox();
             }
         }
         return bb;

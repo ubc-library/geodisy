@@ -17,6 +17,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 import static _Strings.GeodisyStrings.*;
@@ -156,16 +160,20 @@ public class DataverseAPI extends SourceAPI {
 
     private void deleteFolder(File folder) {
         File[] files = folder.listFiles();
-        if(files!=null) { //some JVMs return null for empty dirs
-            for(File f: files) {
-                if(f.isDirectory()) {
-                    deleteFolder(f);
-                } else {
-                    f.delete();
+        try {
+            if(files!=null) { //some JVMs return null for empty dirs
+                for(File f: files) {
+                    if(f.isDirectory()) {
+                        deleteFolder(f);
+                    } else {
+                            Files.deleteIfExists(Paths.get(f.getAbsolutePath()));
+                    }
                 }
             }
+            Files.deleteIfExists(Paths.get(folder.getAbsolutePath()));
+        } catch (IOException e) {
+            logger.error("Something went wrong trying to delete folder: " + folder.getAbsolutePath());
         }
-        folder.delete();
     }
     //Not used by main program
     public DataverseJavaObject generateBoundingBox(DataverseJavaObject djo) {

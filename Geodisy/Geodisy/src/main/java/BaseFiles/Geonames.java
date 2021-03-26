@@ -46,6 +46,15 @@ public class Geonames {
         HTTPCallerGeoNames caller = new HTTPCallerGeoNames();
         String answer = "";
         answer = caller.callHTTP(urlString);
+        //TODO uncomment if we want to check for areas in the city field
+        /*if(answer.contains("<totalResultsCount>0</totalResultsCount>")) {
+            parameters = getBaseParameters(country);
+            parameters.put("fcode", "AREA");
+            searchString = city + "%2C%20" + province + addParameters(parameters);
+            urlString = GEONAMES_SEARCH_BASE + searchString;
+            caller = new HTTPCallerGeoNames();
+            answer = caller.callHTTP(urlString);
+        }*/
         if(answer.contains("<totalResultsCount>0</totalResultsCount>"))
             answer = getGeonamesProvince(province,country);
         return answer;

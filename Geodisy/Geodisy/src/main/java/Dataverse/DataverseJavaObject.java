@@ -1,16 +1,21 @@
 package Dataverse;
 
 import BaseFiles.GeoLogger;
+import BaseFiles.HTTPGetCall;
 import _Strings.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
+import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+
 
 import static _Strings.GeodisyStrings.*;
 import static _Strings.DVFieldNameStrings.*;
@@ -167,24 +172,29 @@ public class DataverseJavaObject extends SourceJavaObject {
 
     @Override
     public LinkedList<DataverseGeoRecordFile> downloadFiles() {
+        long startTime = Calendar.getInstance().getTimeInMillis();
         String path = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + urlized(GeodisyStrings.removeHTTPSAndReplaceAuthority(citationFields.getPID())));
         File f = new File(path);
-        deleteDir(f);
+        try {
+            deleteDir(f);
+        } catch (IOException e) {
+            logger.error("Something went wrong trying to delete folder: " + f.getAbsolutePath());
+        }
         f.mkdirs();
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
-        checkDataset();
+
+
+        HTTPGetCall httpGetCall = new HTTPGetCall();
+        dataFiles = httpGetCall.checkDataset(dataFiles,getPID());
         for (DataverseRecordFile dRF : dataFiles) {
             if (GeodisyStrings.fileTypesToIgnore(dRF.translatedTitle)) {
-                File bad = new File(path + GeodisyStrings.replaceSlashes("/") + dRF.translatedTitle);
-                bad.delete();
                 //System.out.println("Ignored file: " + dRF.translatedTitle);
                 continue;
             }
             if(dRF.translatedTitle.startsWith("LAS_")) {
-                File bad = new File(path+GeodisyStrings.replaceSlashes("/")+dRF.translatedTitle);
-                bad.delete();
                 continue;
             }
+            System.out.println("Getting file " + dRF.getFileName());
             LinkedList<DataverseRecordFile> temp = dRF.retrieveFile(this);
             for(DataverseRecordFile d: temp){
                 boolean add = true;
@@ -198,9 +208,14 @@ public class DataverseJavaObject extends SourceJavaObject {
                     drfs.add(d);
             }
         }
-
+        Long total = Calendar.getInstance().getTimeInMillis() - startTime;
+        System.out.println("Finished downloading and unzipping files from " + getPID() + " after " + total + " milliseconds");
         if(drfs.size()==0){
-            f.delete();
+            try {
+                FileUtils.deleteDirectory(f);
+            } catch (IOException e) {
+                logger.error("Something went wrong deleting empty folder: " + path);
+            }
             return new LinkedList<DataverseGeoRecordFile>();
         }
 
@@ -236,13 +251,23 @@ public class DataverseJavaObject extends SourceJavaObject {
                     String stub = name.substring(0,name.lastIndexOf(".shp"));
                     for(String ex: NON_SHP_SHAPEFILE_EXTENSIONS){
                         f1 = new File(dirPath+stub+ex);
-                        if(f1.exists())
-                            f1.delete();
+                        if(f1.exists()) {
+                            try {
+                                Files.deleteIfExists(Paths.get(f1.getAbsolutePath()));
+                            } catch (IOException e) {
+                                logger.error("Something went wrong trying to delete : " + f1.getAbsolutePath());
+                            }
+                        }
                     }
                 }
                 f1 = new File(dirPath+name);
-                if(f1.exists())
-                    f1.delete();
+                if(f1.exists()) {
+                    try {
+                        Files.deleteIfExists(Paths.get(f1.getAbsolutePath()));
+                    } catch (IOException e) {
+                        logger.error("Something went wrong trying to delete : " + f1.getAbsolutePath());
+                    }
+                }
             }
             ExistingGeoLabels existingGeoLabels = ExistingGeoLabels.getExistingLabels();
             ExistingGeoLabelsVals existingGeoLabelsVals = ExistingGeoLabelsVals.getExistingGeoLabelsVals();
@@ -250,35 +275,6 @@ public class DataverseJavaObject extends SourceJavaObject {
             existingGeoLabelsVals.saveExistingFile(existingGeoLabelsVals.getValues(),EXISTING_GEO_LABELS_VALS,"ExistingGeoLabelsVals");
         }
         return newRecs;
-    }
-    //Filter files to potentially download with a max 5GB individual file size and max 100GB dataset size
-    private void checkDataset() {
-        Long total = 0L;
-        LinkedList<DataverseRecordFile> list = new LinkedList<>();
-        HTTPCallerFiles hCF = new HTTPCallerFiles();
-        for(DataverseRecordFile dataverseRecordFile: dataFiles){
-            String url = dataverseRecordFile.recordURL;
-            if( url.startsWith("ftp://") | url.startsWith("http://ftp") | url.startsWith("https://ftp") )
-                continue;
-            long current = hCF.getFileLength(dataverseRecordFile.recordURL);
-            try {
-                if (current == -2 | current > 5000000000L)
-                    continue;
-                if(current==-1)
-                    current = 0;
-                total += current;
-                list.add(dataverseRecordFile);
-                if (total > 100000000000L) {
-                    list = new LinkedList<>();
-                    logger.warn("Dataset " + getPID() + " was too large to download.");
-                    System.out.println("Dataset too large to download");
-                    break;
-                }
-            } catch (NumberFormatException e){
-                logger.error("Something weird with the file length of " + dataverseRecordFile.translatedTitle + ": " + current + "at " + dataverseRecordFile.recordURL);
-            }
-        }
-        dataFiles = list;
     }
 
     @Override
@@ -326,6 +322,7 @@ public class DataverseJavaObject extends SourceJavaObject {
         String transform ="gdal_translate -of GTiff -co \"COMPRESS=JPEG\" -co \"PHOTOMETRIC=YCBCR\" -co \"TILED=YES\" mosaic.vrt" + drf.getDatasetIdent() + ".tif";
         ProcessBuilder p = new ProcessBuilder();
         p.command("bash","-c",merge);
+        processBuilder.redirectErrorStream(true);
         Process process = null;
         try {
             process = p.start();

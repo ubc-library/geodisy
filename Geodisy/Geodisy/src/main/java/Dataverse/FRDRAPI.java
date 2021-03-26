@@ -52,15 +52,10 @@ public class FRDRAPI extends SourceAPI{
                     DataverseJavaObject djo = parser.frdrParse(jo);
                     System.out.println("#" + counter + " ID = " + djo.getPID());
                     if (djo.hasGeoGraphicCoverage())
-                        djo = (DataverseJavaObject) getBBFromGeonames(djo);
-                    if (djo.hasContent && !testing) {
+                        djo = (DataverseJavaObject) getBBFromGeonames(djo);if (djo.hasContent && !testing) {
                         System.out.println("Downloading record: " + djo.getPID());
-                        long startTime = Calendar.getInstance().getTimeInMillis();
                         if(!dontProcessSpecificRecords(djo.getPID())) {
                             djo.setGeoDataFiles(djo.downloadFiles());
-                            Calendar end = Calendar.getInstance();
-                            Long total = end.getTimeInMillis() - startTime;
-                            System.out.println("Finished downloading " + djo.getPID() + " after " + total + " milliseconds");
                             if(djo.geoDataFiles.size()>0||djo.geoDataMeta.size()>0)
                                 djo.updateRecordFileNumbers();
                             if(djo.geoDataFiles.size()>0)
@@ -76,7 +71,7 @@ public class FRDRAPI extends SourceAPI{
                     }
                     int record_id = jo.getInt("id");
 
-                    updateFRDRHarvesterDB(record_id);
+                    //updateFRDRHarvesterDB(record_id);
                 }
             } catch (JSONException e) {
                 logger.error("Something went wrong parsing the FRDR JSON: \n" + fullJSON);
@@ -108,6 +103,7 @@ public class FRDRAPI extends SourceAPI{
             /*ProcessBuilder processBuilder= new ProcessBuilder();
             Process p;
             processBuilder.command("/usr/bin/bash", "-c", generateWorkspace);
+            processBuilder.redirectErrorStream(true);
             p = processBuilder.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
                 String line;
@@ -124,7 +120,6 @@ public class FRDRAPI extends SourceAPI{
         //TODO set this up once Joel has given me the API endpoint to hit
         try {
             URL url = new URL(EXPORTER);
-            System.out.println(EXPORTER);
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();

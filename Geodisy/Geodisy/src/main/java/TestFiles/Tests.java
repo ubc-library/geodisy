@@ -3,10 +3,19 @@ package TestFiles;
 public class Tests {
 
     public void runTests(){
-        HTTPHeaderTest test = new HTTPHeaderTest();
-        test.getHeader();
+        /*TabTest tt = new TabTest();
+        tt.run();*/
 
-        //ExisitingLabelsTest exisitingLabelsTest = new ExisitingLabelsTest();
+       /*ZipTest zipTest = new ZipTest();
+        zipTest.run();*/
+
+        HTTPGetTest test = new HTTPGetTest();
+        test.run();
+
+        /*HTTPHeaderTest test = new HTTPHeaderTest();
+        test.getHeader();*/
+
+        //ExistingLabelsTest exisitingLabelsTest = new ExistingLabelsTest();
         //exisitingLabelsTest.checkEGL();;
 
         //Testing uploading both Rasters and Vectors to Geoserver

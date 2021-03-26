@@ -6,6 +6,7 @@ import _Strings.GeodisyStrings;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.time.LocalDateTime;
@@ -156,7 +157,11 @@ public class GeodisyTask {
         File[] listofFiles = folder.listFiles();
         if (listofFiles.length == 0) {
             System.out.println("Folder Name :: " + folder.getAbsolutePath() + " is deleted.");
-            folder.delete();
+            try {
+                Files.deleteIfExists(Paths.get(location));
+            } catch (IOException e) {
+                logger.error("Something went wrong trying to delete folder: " + location);
+            }
             return false;
         } else {
             for (int j = 0; j < listofFiles.length; j++) {

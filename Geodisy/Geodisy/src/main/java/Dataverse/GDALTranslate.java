@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -82,6 +83,7 @@ public class GDALTranslate {
                 } else {
                     processBuilder.command("bash", "-c", call);
                 }
+                processBuilder.redirectErrorStream(true);
                 process = processBuilder.start();
                 process.waitFor(120, TimeUnit.SECONDS);
                 if(name.endsWith(".tif"))
@@ -89,7 +91,7 @@ public class GDALTranslate {
                 File newFile = new File(destPath + "temp.tif");
                 if(newFile.exists()) {
                     file = new File(sourcePath + name);
-                    file.delete();
+                    Files.deleteIfExists(file.toPath());
                     newFile.renameTo(new File(destPath + nameStub + ".tif"));
                     return true;
                 }else{
@@ -136,7 +138,7 @@ public class GDALTranslate {
                         for(String s: extensions){
                             File tempFile = new File(destPath+nameStub+s);
                             if(tempFile.exists())
-                                tempFile.delete();
+                                Files.deleteIfExists(tempFile.toPath());
                         }
                         files = new File(destPath).listFiles();
                         for(File f: files){
@@ -156,11 +158,11 @@ public class GDALTranslate {
                             for(String ex: NON_SHP_SHAPEFILE_EXTENSIONS){
                                 File file1 = new File(stub+ex);
                                 if(file1.exists())
-                                    file1.delete();
+                                    Files.deleteIfExists(file1.toPath());
                             }
                         }
                         file = new File(sourcePath);
-                        file.delete();
+                        Files.deleteIfExists(file.toPath());
                         File[] files = new File(destPath).listFiles();
                         for(File f: files){
                             String fileName = f.getName();
@@ -176,8 +178,13 @@ public class GDALTranslate {
                 }
             }
         file = new File(sourcePath);
-        if(!(sourcePath.toLowerCase().endsWith(".tif")||sourcePath.toLowerCase().endsWith(".shp")))
-            file.delete();
+        if(!(sourcePath.toLowerCase().endsWith(".tif")||sourcePath.toLowerCase().endsWith(".shp"))) {
+            try {
+                Files.deleteIfExists(file.toPath());
+            } catch (IOException e) {
+                logger.error("Something went wrong trying to delete not TIF or SHP file: " + file.getAbsolutePath());
+            }
+        }
         return false;
     }
 

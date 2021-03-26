@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.io.*;
 
 import java.nio.file.Files;
+import java.util.concurrent.TimeUnit;
 
 import static _Strings.GeoBlacklightStrings.GEOSERVER_REST;
 import static _Strings.GeodisyStrings.*;
@@ -30,17 +31,19 @@ import static _Strings.GeoserverStrings.*;
 public class GeoServerAPI extends DestinationAPI {
     SourceJavaObject sjo;
     HTTPCallerGeosever caller;
+    ProcessBuilder processBuilder;
 
     public GeoServerAPI(SourceJavaObject sjo) {
         this.sjo = sjo;
         caller = new HTTPCallerGeosever();
         logger =  new GeoLogger(this.getClass());
+        processBuilder= new ProcessBuilder();
+        processBuilder.redirectErrorStream(true);
     }
     //TODO FIGURE OUT GEOSERVER REST ENDPOINT WITH JOEL
     private boolean generateWorkspace(String workspaceName) {
         try {
             String generateWorkspace = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + "-XPOST -H \"Content-type: text/xml\" -d \"<workspace><name>" + workspaceName + "</name></workspace>\" " + GEOSERVER_REST + "workspaces";
-            ProcessBuilder processBuilder= new ProcessBuilder();
             Process p;
             processBuilder.command("/usr/bin/bash", "-c", generateWorkspace);
             p = processBuilder.start();
@@ -48,7 +51,7 @@ public class GeoServerAPI extends DestinationAPI {
             String line;
             while ((line = reader.readLine()) != null)
                 continue;
-            p.waitFor();
+            p.waitFor(10, TimeUnit.SECONDS);
             p.destroy();
         } catch (InterruptedException|IOException e) {
             logger.error("Something went wrong trying to create the workspace " + workspaceName + " in geoserver");
@@ -77,7 +80,6 @@ public class GeoServerAPI extends DestinationAPI {
         public boolean addPostGISLayerToGeoserver(String geoserverlabel, String filename){
         String vectorDB = GEOSERVER_VECTOR_STORE;
         String title = filename.substring(0,filename.lastIndexOf('.'));
-        ProcessBuilder processBuilder= new ProcessBuilder();
 
         try {
             //bring new layer over from POSTGIS
@@ -88,7 +90,7 @@ public class GeoServerAPI extends DestinationAPI {
             String line;
             while ((line = reader.readLine()) != null)
                 continue;
-            p.waitFor();
+            p.waitFor(30, TimeUnit.SECONDS);
             p.destroy();
         } catch (IOException | InterruptedException e) {
             logger.error("Something went wrong adding vector layer " + geoserverlabel + " from POSTGIS");
@@ -100,8 +102,7 @@ public class GeoServerAPI extends DestinationAPI {
     private boolean updateTitleInGeoserver(String geoserverLabel, String fileName) {
         String vectorDB = GEOSERVER_VECTOR_STORE;
         String title = fileName.substring(0,fileName.lastIndexOf('.'));
-        ProcessBuilder processBuilder= new ProcessBuilder();
-        String call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -H 'Accept: text/xml' -XGET "+ GEODISY_PATH_ROOT + "/geoserver/rest/workspaces/geodisy/datastores/"+ vectorDB + "/featuretypes/" + geoserverLabel+".xml";
+        String call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -H 'Accept: text/xml' -XGET "+ GEODISY_PATH_ROOT + "geoserver/rest/workspaces/geodisy/datastores/"+ vectorDB + "/featuretypes/" + geoserverLabel+".xml";
         call = GeodisyStrings.replaceSlashes(call);
         try {
             processBuilder.command("/usr/bin/bash", "-c",call);
@@ -113,8 +114,9 @@ public class GeoServerAPI extends DestinationAPI {
             }
             xml.replace("<title>"+geoserverLabel+"</title>","<title>"+title+"</title>");
             call = "curl -u admin:geoserver -H 'Accept: application/xml' -H 'Content-type: application/xml' -XPUT " + GEOSERVER_REST + " workspaces/geodisy/datastores/"+ vectorDB+"/featuretypes/" + geoserverLabel+ ".xml -d '" + xml + "'";
-            ProcessBuilder processBuilder2= new ProcessBuilder();
+            ProcessBuilder processBuilder2 = new ProcessBuilder();
             processBuilder2.command("/usr/bin/bash", "-c",call);
+            processBuilder2.redirectErrorStream(true);
             Process p2 = processBuilder.start();
 // wait for 10 seconds and then destroy the process
             Thread.sleep(10000);
@@ -137,7 +139,6 @@ public class GeoServerAPI extends DestinationAPI {
         if (fileName.contains("."))
             fileName = fileName.substring(0, fileName.lastIndexOf("."));
         fileName = fileName + ".tif";
-        ProcessBuilder processBuilder= new ProcessBuilder();
 
         try { deleteOldCoverstore(processBuilder, geoserverLabel);
         }catch (InterruptedException | IOException f) {
@@ -191,7 +192,7 @@ public class GeoServerAPI extends DestinationAPI {
         String line;
         while ((line = reader.readLine()) != null)
             continue;
-        p.waitFor();
+        p.waitFor(10, TimeUnit.SECONDS);
         p.destroy();
 
     }
@@ -205,7 +206,7 @@ public class GeoServerAPI extends DestinationAPI {
         String line;
         while ((line = reader.readLine()) != null)
             continue;
-        p.waitFor();
+        p.waitFor(30, TimeUnit.SECONDS);
         p.destroy();
     }
 
@@ -218,7 +219,7 @@ public class GeoServerAPI extends DestinationAPI {
         String line;
         while ((line = reader.readLine()) != null)
             continue;
-        p.waitFor();
+        p.waitFor(5, TimeUnit.SECONDS);
         p.destroy();
     }
 
@@ -231,7 +232,7 @@ public class GeoServerAPI extends DestinationAPI {
         String line;
         while ((line = reader.readLine()) != null)
             continue;
-        p.waitFor();
+        p.waitFor(10, TimeUnit.SECONDS);
         p.destroy();
     }
 
@@ -244,7 +245,7 @@ public class GeoServerAPI extends DestinationAPI {
         String line;
         while ((line = reader.readLine()) != null)
             continue;
-        p.waitFor();
+        p.waitFor(5, TimeUnit.SECONDS);
         p.destroy();
     }
 
@@ -260,12 +261,12 @@ public class GeoServerAPI extends DestinationAPI {
         String line;
         while ((line = reader.readLine()) != null)
             continue;
-    p.waitFor();
+    p.waitFor(5, TimeUnit.SECONDS);
     p.destroy();
     }
 
     private void addRasterLayer(ProcessBuilder processBuilder, String geoserverLabel, String translatedTitle)throws InterruptedException, IOException{
-        String fileLocation = DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority((sjo.getPID())+"/").replace(".","/")+  translatedTitle;
+        String fileLocation = DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority((sjo.getPID())+"/").replace(".","/")+ GeodisyStrings.replaceSlashes("/") + translatedTitle;
         String addRaster = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPUT -H \"Content-type: text/plain\" -d 'file://" + fileLocation + "' " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores/"+ geoserverLabel.toLowerCase() + "/external.geotiff?configure=first&coverageName=" + geoserverLabel);
         Process p;
         processBuilder.command("/usr/bin/bash", "-c", addRaster);
@@ -274,7 +275,7 @@ public class GeoServerAPI extends DestinationAPI {
         String line;
         while ((line = reader.readLine()) != null)
             continue;
-        p.waitFor();
+        p.waitFor(2, TimeUnit.MINUTES);
         p.destroy();
     }
 

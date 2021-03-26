@@ -3,7 +3,7 @@ package TestFiles;
 import Dataverse.ExistingGeoLabels;
 import Dataverse.ExistingGeoLabelsVals;
 
-public class ExisitingLabelsTest {
+public class ExistingLabelsTest {
     ExistingGeoLabels eGL;
     ExistingGeoLabelsVals eGLV;
 

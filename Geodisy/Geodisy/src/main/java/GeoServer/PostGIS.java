@@ -8,6 +8,7 @@ import _Strings.GeodisyStrings;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.concurrent.TimeUnit;
 
 
 import static _Strings.DVFieldNameStrings.PERSISTENT_ID;
@@ -29,6 +30,7 @@ public class PostGIS {
         call = GeodisyStrings.replaceSlashes(call);
         ProcessBuilder processBuilder= new ProcessBuilder();
         processBuilder.command("/usr/bin/bash", "-c", call);
+        processBuilder.redirectErrorStream(true);
         Process p;
         try {
             p = processBuilder.start();
@@ -37,7 +39,7 @@ public class PostGIS {
                 String line;
                 while ((line = reader.readLine()) != null)
                     continue;
-                p.waitFor();
+                p.waitFor(5, TimeUnit.MINUTES);
             } catch (InterruptedException e) {
                 logger.error("Something went wrong trying to upload " + geoserverLabel + " to postgis");
             }finally{
