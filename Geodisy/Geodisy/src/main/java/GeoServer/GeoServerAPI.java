@@ -18,7 +18,7 @@ import org.json.JSONObject;
 import java.io.*;
 
 import java.nio.file.Files;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 import static _Strings.GeoBlacklightStrings.GEOSERVER_REST;
 import static _Strings.GeodisyStrings.*;
@@ -66,9 +66,79 @@ public class GeoServerAPI extends DestinationAPI {
         boolean success = addVectorToPostGIS(fileName,geoserverLabel);
         if(!success) return success;
         System.out.println("Adding to Geoserver");
-        success = addPostGISLayerToGeoserver(geoserverLabel,fileName);
-        if(!success) return success;
-        return updateTitleInGeoserver(geoserverLabel,fileName);
+        return timedAddVector(geoserverLabel,fileName);
+        }
+
+    private boolean timedAddVector(String geoserverLabel, String fileName) {
+        VectorCall vectorCall = new VectorCall(geoserverLabel,fileName);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<Boolean> future = executorService.submit(vectorCall);
+        executorService.shutdown();
+        try{
+            if(!executorService.awaitTermination(5, TimeUnit.MINUTES)){
+                logger.warn("Timed out trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
+                return false;
+            }
+        }catch (InterruptedException e){
+            logger.error("Something went wrong trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
+            return false;
+        }
+        boolean success;
+        try {
+            success = future.get(2,TimeUnit.SECONDS);
+        } catch (InterruptedException|ExecutionException|TimeoutException e) {
+            return false;
+        }
+        if(success)
+            return timedUpdateTitleInGeosercer(geoserverLabel,fileName);
+        return false;
+    }
+
+    private boolean timedUpdateTitleInGeosercer(String geoserverLabel,String fileName) {
+        VectorCallTitle v = new VectorCallTitle(geoserverLabel,fileName);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<Boolean> future = executorService.submit(v);
+        executorService.shutdown();
+        try{
+            if(!executorService.awaitTermination(30, TimeUnit.SECONDS)){
+                logger.warn("Timed out trying to update title in geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
+                return false;
+            }
+        }catch (InterruptedException e){
+            logger.error("Something went wrong trying to update title in geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
+            return false;
+        }
+        boolean success;
+        try {
+            success = future.get(2,TimeUnit.SECONDS);
+        } catch (InterruptedException|ExecutionException|TimeoutException e) {
+            return false;
+        }
+        return success;
+    }
+    private class VectorCall implements Callable<Boolean>{
+        String geoserverLabel;
+        String fileName;
+        public VectorCall(String geoserverLabel, String fileName) {
+            this.geoserverLabel = geoserverLabel;
+            this.fileName = fileName;
+        }
+        @Override
+        public Boolean call() throws Exception {
+            return addPostGISLayerToGeoserver(geoserverLabel, fileName);
+        }
+    }
+    private class VectorCallTitle implements Callable<Boolean>{
+        String geoserverLabel;
+        String fileName;
+        public VectorCallTitle(String geoserverLabel, String fileName) {
+            this.geoserverLabel = geoserverLabel;
+            this.fileName = fileName;
+        }
+        @Override
+        public Boolean call() throws Exception {
+            return updateTitleInGeoserver(geoserverLabel,fileName);
+        }
     }
 
     private boolean addVectorToPostGIS(String fileName, String geoserverlabel) {
@@ -133,8 +203,43 @@ public class GeoServerAPI extends DestinationAPI {
     public boolean addRaster(DataverseGeoRecordFile dgrf) {
         String fileName = dgrf.getTranslatedTitle();
         String geoserverLabel = dgrf.getGeoserverLabel();
-        return addRaster(fileName,geoserverLabel);
+        return timedAddRaster(fileName,geoserverLabel);
     }
+
+    private boolean timedAddRaster(String fileName, String geoserverLabel) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        RasterCall r = new RasterCall(geoserverLabel,fileName);
+        Future<Boolean> successBool = executorService.submit(r);
+        executorService.shutdown();
+        try{
+            if(!executorService.awaitTermination(10, TimeUnit.MINUTES)){
+                logger.warn("Timed out trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
+                return false;
+            }
+        }catch (InterruptedException e){
+            logger.error("Something went wrong trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
+            return false;
+        }
+        try {
+            return successBool.get();
+        } catch (InterruptedException | ExecutionException e) {
+            return false;
+        }
+    }
+    private class RasterCall implements Callable<Boolean> {
+        String geoserverLabel;
+        String fileName;
+        public RasterCall(String geoserverLabel, String fileName) {
+            this.geoserverLabel=geoserverLabel;
+            this.fileName=fileName;
+        }
+
+        @Override
+        public Boolean call(){
+            return addRaster(geoserverLabel, fileName);
+        }
+    }
+
     public boolean addRaster(String fileName, String geoserverLabel){
         if (fileName.contains("."))
             fileName = fileName.substring(0, fileName.lastIndexOf("."));
