@@ -70,6 +70,7 @@ public class GeoServerAPI extends DestinationAPI {
         }
 
     private boolean timedAddVector(String geoserverLabel, String fileName) {
+        System.out.println("Adding: "+ fileName);
         VectorCall vectorCall = new VectorCall(geoserverLabel,fileName);
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<Boolean> future = executorService.submit(vectorCall);
@@ -77,6 +78,7 @@ public class GeoServerAPI extends DestinationAPI {
         try{
             if(!executorService.awaitTermination(5, TimeUnit.MINUTES)){
                 logger.warn("Timed out trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
+                System.out.println("Timed out trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
                 return false;
             }
         }catch (InterruptedException e){
@@ -207,6 +209,7 @@ public class GeoServerAPI extends DestinationAPI {
     }
 
     private boolean timedAddRaster(String fileName, String geoserverLabel) {
+        System.out.println("Adding: "+ fileName);
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         RasterCall r = new RasterCall(geoserverLabel,fileName);
         Future<Boolean> successBool = executorService.submit(r);
@@ -214,6 +217,7 @@ public class GeoServerAPI extends DestinationAPI {
         try{
             if(!executorService.awaitTermination(10, TimeUnit.MINUTES)){
                 logger.warn("Timed out trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
+                System.out.println("Timed out trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
                 return false;
             }
         }catch (InterruptedException e){
