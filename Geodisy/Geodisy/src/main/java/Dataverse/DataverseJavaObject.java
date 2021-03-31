@@ -287,6 +287,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             }else if(dgrf.getTranslatedTitle().endsWith(".tif")) {
                 dgrf.onGeoserver = createRecords(dgrf, Integer.parseInt(dgrf.getGBBFileNumber()), RASTER);
             }
+            System.out.println("Finished Adding file to geoserver");
         }
     }
     class SortByFileName implements Comparator<DataverseGeoRecordFile>{
