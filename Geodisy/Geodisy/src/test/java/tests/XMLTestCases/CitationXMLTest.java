@@ -7,6 +7,8 @@ import Crosswalking.XML.XMLTools.XMLDocObject;
 import Crosswalking.XML.XMLTools.ISOXMLGen;
 import Crosswalking.XML.XMLTools.XMLValidator;
 import Dataverse.DataverseJavaObject;
+import _Strings.GeodisyStrings;
+
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,13 +24,9 @@ import static org.junit.Assert.assertTrue;
 public class CitationXMLTest {
 DataverseJavaObject djo;
     @Before public void initialize(){
-        InputStream is = null;
+        GeodisyStrings.load();
 
-        try {
-            is = new FileInputStream(ALL_CITATION_METADATA);
-
-            BufferedReader buf = new BufferedReader(new InputStreamReader(is));
-
+        try (BufferedReader buf = new BufferedReader(new InputStreamReader(new FileInputStream(ALL_CITATION_METADATA)))) {
             String line = buf.readLine();
             StringBuilder sb = new StringBuilder();
 
