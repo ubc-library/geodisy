@@ -25,10 +25,10 @@ public abstract class ExistingSearches extends ExisitingFile {
         try {
             return  (HashMap<String, DataverseRecordInfo>) fw.readSavedObject(GeodisyStrings.replaceSlashes(path));
         } catch (IOException e) {
-            logger.error("Something went wrong reading " + path + ". Ignore this if the file didn't exist before this run or the file is empty");
+            getLogger().error("Something went wrong reading " + path + ". Ignore this if the file didn't exist before this run or the file is empty");
             return newFile;
         } catch (ClassNotFoundException e) {
-            logger.error("Something went wrong parsing " + path);
+            getLogger().error("Something went wrong parsing " + path);
             return newFile;
         } catch (NullPointerException e){
             return newFile;

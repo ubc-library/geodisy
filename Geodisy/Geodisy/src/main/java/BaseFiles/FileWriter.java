@@ -76,26 +76,19 @@ public class FileWriter {
     public Object readSavedObject(String path) throws ClassNotFoundException,IOException {
         if (!verifyFileExistence(path))
             throw new FileNotFoundException();
-        FileInputStream fi = null;
-        try {
-            fi = new FileInputStream(new File(path));
+        try (FileInputStream fi = new FileInputStream(new File(path))) {
+            try (ObjectInputStream oi = new ObjectInputStream(fi)) {
+                Object answer = null;
+                try {
+                    answer = oi.readObject();
+                } catch (ClassNotFoundException e) {
+                    throw new ClassNotFoundException();
+                }
+                return answer;
+            }
         } catch (FileNotFoundException e) {
-            fi.close();
             throw new FileNotFoundException();
-        }
-        ObjectInputStream oi;
-        oi =  new ObjectInputStream(fi);
-        Object answer = null;
-        try {
-            answer = oi.readObject();
-        } catch (ClassNotFoundException e) {
-            oi.close();
-            fi.close();
-            throw new ClassNotFoundException();
-        }
-        oi.close();
-        fi.close();
-        return answer;
+        }        
     }
 
     /**
@@ -107,6 +100,7 @@ public class FileWriter {
      */
     public ExistingDatasetBBoxes readExistingSearches(String path) throws IOException {
         ExistingDatasetBBoxes es = ExistingDatasetBBoxes.getExistingHarvests();
+        ObjectInputStream ois = null;
         try {
             File file = new File(path);
             File directory = new File(file.getParentFile().getAbsolutePath());
@@ -114,7 +108,7 @@ public class FileWriter {
             if(file.createNewFile())
                 return ExistingDatasetBBoxes.getExistingHarvests();
             FileInputStream f = new FileInputStream(file);
-            ObjectInputStream ois = new ObjectInputStream(f);
+            ois = new ObjectInputStream(f);
             es = (ExistingDatasetBBoxes) ois.readObject();
         } catch (FileNotFoundException e) {
             es = ExistingDatasetBBoxes.getExistingHarvests();
@@ -124,6 +118,10 @@ public class FileWriter {
         } catch (ClassNotFoundException e){
             System.out.println("something went wonky loading the existing searches from the file");
             return ExistingDatasetBBoxes.getExistingHarvests();
+        } finally {
+            if (ois != null) {
+                ois.close();
+            }
         }
         return es;
     }

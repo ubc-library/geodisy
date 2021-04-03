@@ -4,7 +4,6 @@ import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 public abstract class ExisitingFile {
     GeoLogger logger;
@@ -13,7 +12,9 @@ public abstract class ExisitingFile {
         try {
             fw.writeObjectToFile(object,path);
         } catch (IOException e) {
-            logger.error("Something went wrong saving " + className);
+            getLogger().error("Something went wrong saving " + className);
         }
     }
+
+    protected abstract GeoLogger getLogger();
 }
