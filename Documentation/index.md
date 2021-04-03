@@ -16,9 +16,13 @@ For more information, please have a look at the [factsheet](factsheet.md)
 
 ## Documentation
 
-Documentation for all users, including researchers depositing data into Geodisy-enabled data repositories, is available below:
+Documentation for all users, including researchers depositing data into Geodisy-enabled data repositories:
 
-[Documentation](documentationIndex.md)
+- [User Documentation](documentationIndex.md)
+
+Documentation for software developers building, modifying, and contributing to the project:
+
+- [Developer Documentation](devDocumentation.md)
 
 ## Release notes
 
