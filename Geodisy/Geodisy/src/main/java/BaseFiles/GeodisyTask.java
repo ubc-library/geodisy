@@ -1,6 +1,7 @@
 package BaseFiles;
 
 import Crosswalking.GeoBlacklightJson.GeoCombine;
+import Crosswalking.XML.XMLTools.JGit;
 import Dataverse.*;
 import _Strings.GeodisyStrings;
 
@@ -49,15 +50,13 @@ public class GeodisyTask {
             List<SourceJavaObject> sJOs = geo.harvestFRDRMetadata();
             //deleteEmptyFolders();
 
-            //TODO Uncomment sendRecordsToGeoBlacklight() once harvesting of FRDR has been approved on Prod
-            /*if(!IS_WINDOWS) {
+            if(!IS_WINDOWS) {
                 sendRecordsToGeoBlacklight();
-                *//*We are no longer updating Open Geo Metadata records due to sparely populated metadata files
                 if(!TEST) {
                     JGit jgit = new JGit();
                     jgit.updateRemoteMetadata();
-                }*//*
-            }*/
+                }
+            }
              
             /**
              *
