@@ -32,6 +32,10 @@ public class ExistingLocations extends ExistingSearches implements Serializable 
         logger = new GeoLogger(this.getClass());
         bBoxes = readExistingBoundingBoxes();
         locationNames = readExistingAltNames();
+        if(bBoxes==null)
+            bBoxes= new HashMap<>();
+        if(locationNames==null)
+            locationNames= new HashMap<>();
     }
 
     public void addBBox(String country, BoundingBox boundingBox){
@@ -184,7 +188,7 @@ public class ExistingLocations extends ExistingSearches implements Serializable 
     }
 
 
-    public HashMap<String, BoundingBox> getbBoxes() {
+    public HashMap<String, BoundingBox> getBBoxes() {
         return bBoxes;
     }
 

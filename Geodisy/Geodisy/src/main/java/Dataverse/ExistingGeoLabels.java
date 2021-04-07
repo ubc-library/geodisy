@@ -29,6 +29,8 @@ public class ExistingGeoLabels extends ExistingFile implements Serializable {
     private ExistingGeoLabels(){
         logger = new GeoLogger(this.getClass());
         geoFiles = readExistingGeoLabels();
+        if(geoFiles==null)
+            geoFiles = new HashMap<>();
     }
 
     public void addOrReplaceGeoLabel(String geoserverID, String pID, String fileName){
