@@ -25,13 +25,13 @@ public class BoundingBox implements Serializable {
      */
 
     private double checkLat(double lat) {
-        if(lat<-90 || lat>90)
+        if(lat<-90.0 || lat>90.0)
             return 361;
         return lat;
     }
 
     private double checkLong(double longitude) {
-        if(longitude<-180 || longitude>180)
+        if(longitude<-180.0 || longitude>180.0)
             return 361;
         return longitude;
     }
