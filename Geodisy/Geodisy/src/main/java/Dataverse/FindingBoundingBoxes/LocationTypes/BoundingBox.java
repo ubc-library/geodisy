@@ -51,7 +51,7 @@ public class BoundingBox implements Serializable {
         double val;
         try{
             val = Double.parseDouble(numString);
-            if(val<0.0001)
+            if(Math.abs(val)<0.0001)
                 val = 0;
         } catch (NumberFormatException e){
             val = 361;
@@ -63,7 +63,7 @@ public class BoundingBox implements Serializable {
         double val;
         try{
             val = Double.parseDouble(numString);
-            if(val<0.0001)
+            if(Math.abs(val)<0.0001)
                 val = 0;
         } catch (NumberFormatException e){
             val = 361;
