@@ -66,7 +66,7 @@ public class Location implements GeographicPoliticalUnit {
             this.commonName = this.geonamesJSON.getCommonCountryName();
             this.countryCode = this.geonamesJSON.getCountryCode();
             existingLocations.addBBox(countryName,boundingBox);
-            existingLocations.saveExistingSearchs(existingLocations.getbBoxes(),EXISTING_LOCATION_BBOXES,ExistingLocations.class.getName());
+            existingLocations.saveExistingSearchs(existingLocations.getBBoxes(),EXISTING_LOCATION_BBOXES,ExistingLocations.class.getName());
             existingLocations.addNames(countryName,commonName,altNames,countryCode);
             existingLocations.saveExistingSearchs(existingLocations.getNames(),EXISTING_LOCATION_NAMES,ExistingLocations.class.getName());
         }
@@ -90,7 +90,7 @@ public class Location implements GeographicPoliticalUnit {
             existingLocations.addNames(countryName,provinceName,commonName,altNames,"");
             existingLocations.addBBox(countryName,provinceName,boundingBox);
             existingLocations.saveExistingSearchs(existingLocations.getNames(),EXISTING_LOCATION_NAMES,ExistingLocations.class.getName());
-            existingLocations.saveExistingSearchs(existingLocations.getbBoxes(),EXISTING_LOCATION_BBOXES,existingLocations.getClass().getName());
+            existingLocations.saveExistingSearchs(existingLocations.getBBoxes(),EXISTING_LOCATION_BBOXES,existingLocations.getClass().getName());
         }
     }
 
@@ -110,7 +110,7 @@ public class Location implements GeographicPoliticalUnit {
             this.commonName = this.geonamesJSON.getCommonCityName();
             this.countryCode = "";
             existingLocations.addBBox(countryName,provinceName,cityName,boundingBox);
-            existingLocations.saveExistingSearchs(existingLocations.getbBoxes(),EXISTING_LOCATION_BBOXES,ExistingLocations.class.getName());
+            existingLocations.saveExistingSearchs(existingLocations.getBBoxes(),EXISTING_LOCATION_BBOXES,ExistingLocations.class.getName());
             existingLocations.addNames(countryName,provinceName,cityName, commonName,altNames,"");
             existingLocations.saveExistingSearchs(existingLocations.getNames(),EXISTING_LOCATION_NAMES,ExistingLocations.class.getName());
         }
