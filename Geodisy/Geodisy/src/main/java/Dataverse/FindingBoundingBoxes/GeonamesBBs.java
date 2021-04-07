@@ -52,6 +52,10 @@ public class GeonamesBBs extends FindBoundBox {
     @Override
     public BoundingBox getDVBoundingBox(String countryName) {
         Country country;
+        if(countryName.startsWith("http")) {
+            logger.error("Somehow got a country name that was a url: " + countryName + " from record" + doi);
+            return new BoundingBox();
+        }
         String c = existingLocations.getCountryFromCode(countryName);
         if(c.isEmpty())
             country = new Country(countryName);
