@@ -39,7 +39,7 @@ Geodisy ne fonctionne qu’avec des ensembles de données en libre accès. Les e
 
 ### En quoi consiste le lien de métadonnées ISO 19139?
 
-Tous les objets apparaissant dans _Geodisy_ se verront attribuer des métadonnées géospatiales[ISO 19115](https://www.iso.org/standard/53798.html) geospatial metadata créées lors de leur ajout à Geodisy qui sont disponibles [ISO 19139](https://www.iso.org/standard/32557.html) en format XML. La norme internationale ISO 19115 sert à décrire les données géographiques. Ce processus fait en sorte que:
+Tous les objets apparaissant dans _Geodisy_ se verront attribuer des métadonnées géospatiales[ISO 19115](https://www.iso.org/fr/standard/53798.html) geospatial metadata créées lors de leur ajout à Geodisy qui sont disponibles [ISO 19139](https://www.iso.org/fr/standard/32557.html) en format XML. La norme internationale ISO 19115 sert à décrire les données géographiques. Ce processus fait en sorte que:
 
 * Toutes les métadonnées apparaissant dans _Geodisy_ auront un schéma cohérent et standardisé  
 * Les informations géographiques absentes de la fiche source mais découvertes par _Geodisy_ seront ajoutées aux métadonnées de manière cohérente  
