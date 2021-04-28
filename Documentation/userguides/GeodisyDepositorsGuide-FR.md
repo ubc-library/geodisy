@@ -48,7 +48,7 @@ Si vous déposez des données géospatiales (telles qu’un Shapefile, GeoTIFF, 
 
 [The Dataverse North Geospatial Guide](https://dx.doi.org/10.14288/1.0388724) fournit plus d’informations sur les meilleures pratiques pour l’utilisation des blocs de métadonnées géospatiales de Dataverse.
 
-## Geodisy pour les établissements
+### Geodisy pour les établissements
 Si vous avez découvert ce guide et souhaitez que votre établissement mette en place une connexion Geodisy, veuillez consulter Geodisy : Implementing a Dataverse connection at your institution.
 
 **Questions ?** Communiquer avec l’équipe Geodisy à [geodisy.info@ubc.ca](mailto:geodisy.info@ubc.ca)
