@@ -1,0 +1,89 @@
+1)	 Copier l’application.scss par défaut à /var/www/geoblacklight/geodisy/app/views/ et mettre à jour :
+		@import 'bootstrap';
+		@import 'geoblacklight/geoblacklight';
+		@import 'geodisy';
+
+
+2) Ajouter _geo_footer.html.erb à /var/www/geoblacklight/geodisy/app/views/shared/:
+	voir fichier personnalisé
+	
+3) Ajouter geo_footer.scss à /home/geoblack/.rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/geoblacklight-2.2.1/app/assets/stylesheets/geoblacklight/modules/:
+	voir fichier personnalisé
+
+4) Mettre à jour assets.rb dans /var/www/geoblacklight/geodisy/config/initializers/
+	ajouter)
+		Rails.application.config.assets.precompile += %w( ubc.png )
+		Rails.application.config.assets.precompile += %w( canarie.png )
+		Rails.application.config.assets.precompile += %w( frdr.png )
+		
+5) Ajouter les logos suivants à /var/www/geoblacklight/geodisy/app/assets/images/
+	a) canarie.png
+	b) ubc.png
+	c) frdr.png
+	d) geodisy.svg et renommer logo.svg
+	
+
+6) Créer geodisy.scss dans /home/geoblack/.rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/geoblacklight-2.2.1/app/assets/stylesheets/geoblacklight/:
+		@import 'modules/geo_footer';
+	
+7) cp par défaut base.html.erb à /var/www/geoblacklight/geodisy/app/views/layouts/geoblacklight/:
+	a)
+		<%= render partial: 'shared/footer' %>
+		à
+		<%= render partial: 'shared/geo_footer' %>
+
+		
+8) Copier geoblacklight.en.yml par défaut à /var/www/geoblacklight/geodisy/config/locales/geoblacklight.en.yml et mettre à jour: 
+    a)
+		headline: 'Explorer et découvrir...'
+		search_heading: Chercher maintenant'
+		category_heading; 'Chercher par...'
+		map_heading: 'Chercher par lieu'
+		
+		DEVIENT
+		
+		headline: 'Explorer les données de recherche canadiennes'
+		search_heading: 'Naviguer par mot-clé'
+		category_heading: 'Naviguer par catégorie'
+		map_heading: 'Naviguer par lieu'
+		
+	b)
+		relations:
+		descendant: 'Ensembles de données dérivés  (%{count})'
+	 
+		DEVIENT
+	 
+		relations:
+		decendant: 'Enregistrements liés'
+9) Utiliser des relations parent-enfant pour les enregistrements liés
+	Copier index.html.erb par défaut dans /var/www/geoblacklight/geodisy/app/views/relation/ et mettre à jour :
+		a)
+			remplacer
+			<%= render 'ancestor' unless @relations.descendants['numFound'].to_i == 0 %>
+			
+			par
+			
+			<!-- commenter les descendants afin que nous puissions utiliser la relation parent-enfant pour les enregistrements liés -->
+			<-- <%= render 'ancestor' unless @relations.descendants['numFound'].to_i == 0 %>-->
+		
+10) Copier catalog_controller par défaut à /var/www/geoblacklight/geodisy/app/controllers/ et mettre à jour:
+	a)
+		# Nav actions de Blacklight
+		config.add_nav_action(:bookmark, partial: 'blacklight/nav/bookmark', if: :render_bookmarks_control?)
+		config.add_nav_action(:search_history, partial: 'blacklight/nav/search_history')
+
+		# Tools de Blacklight
+		config.add_results_collection_tool(:sort_widget)
+		config.add_results_collection_tool(:per_page_widget)
+		config.add_show_tools_partial(:bookmark, partial: 'bookmark_control', if: :render_bookmarks_control?)
+		config.add_show_tools_partial(:email, callback: :email_action, validator: :validate_email_params)
+		config.add_show_tools_partial(:sms, if: :render_sms_action?, callback: :sms_action, validator: :validate_sms_params)
+
+		À
+		
+		# Nav actions de Blacklight
+		config.add_nav_action(:search_history, partial: 'blacklight/nav/search_history')
+
+		# Tools de Blacklight
+		config.add_results_collection_tool(:sort_widget)
+		config.add_results_collection_tool(:per_page_widget)

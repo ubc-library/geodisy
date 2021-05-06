@@ -1,0 +1,190 @@
+intergiciel VM
+--------------
+CentOS 7
+yum -y update
+
+Sauf si indiqué autrement, les commandes exécutées dans un shell root
+
+1. Installer Java 8
+yum install java-1.8.0-openjdk
+
+2. Installer GDAL
+* yum install gdal30-libs gdal30 gdal30-debuginfo gdal30-devel gdal30-do
+(installer des codes binaires à /usr/gdal30/bin)
+
+3. Installer GeoBlacklight et Solr
+
+* Installer Rbenv
+yum install git-core zlib zlib-devel gcc-c++ patch readline readline-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison curl sqlite-devel
+
+* Créer un utilisateur et des répertoires
+
+mkdir -p /opt/geoblacklight
+chown -R geoblack /opt/geoblacklight/
+
+créer un repertoire d’accueil
+[root@middleware home]# mkdir geoblack
+[root@middleware home]# cd geoblack/
+[root@middleware geoblack]# cp -r /etc/skel/.??* .
+[root@middleware geoblack]# cd ..
+[root@middleware home]# chown -R geoblack:geoblack geoblack/
+
+* Installer node.js et yarn
+node.js
+curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
+sudo yum install -y nodejs
+
+Yarn
+curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+sudo yum install yarn
+
+* À titre d’utilisateur "geoblack", installer ruby et gems
+curl -sL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash -
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+source ~/.bashrc
+rbenv install 2.6.1
+rbenv global 2.6.1
+rbenv rehash
+
+gem install rails -v 5.2.3
+gem install bundler
+gem install --default -v2.0.2 bundler
+gem install execjs
+
+* Installer Solr 8.3.0
+yum install lsof
+export LATEST_VER="8.3.0"
+curl -O https://www-eu.apache.org/dist/lucene/solr/${LATEST_VER}/solr-${LATEST_VER}.tgz
+tar xvf solr-${LATEST_VER}.tgz
+
+cd solr-${LATEST_VER}/bin/
+./install_solr_service.sh ~/solr-${LATEST_VER}.tgz
+systemctl enable solr
+
+Dans /etc/security/limits.conf, ajouter
+solr             -       nofile          65000
+solr             -       nproc           65000
+
+Référence: https://github.com/projectblacklight/blacklight/wiki/README_SOLR
+
+Configurer la sécurité Solr:
+vi /var/solr/data/security.json
+
+# Encoded pw = ge0d1sy
+{
+  "authentication":{ 
+    "blockUnknown": true, 
+    "class":"solr.BasicAuthPlugin",
+    "credentials":{"admin":"yjGh8657QV5ryRDBiNe07MUPKrlrkW/fG4xLDnA5Pnw= SukmLiIEomRrC2XvvpSMQONs7CVXsw/nEVPX2jv+luM="}, 
+    "realm":"Solr users" 
+  },
+  "authorization":{
+    "class":"solr.RuleBasedAuthorizationPlugin",
+    "permissions":[{
+       "name":"security-edit",
+       "role":"admin"}], 
+    "user-role":{"admin":"admin"} 
+  }
+}
+
+chown solr:solr /var/solr/data/security.json
+chmod 640 /var/solr/data/security.json
+
+systemctl enable solr
+systemctl start solr
+
+* Créer Solr core pour Geodisy pour tester rapidement
+/opt/solr/bin/solr create_core -c geodisy
+
+* Installer GeoBlacklight à titre d’utilisateur "geoblack"
+Reference: https://github.com/geoblacklight/geoblacklight/wiki/Installation
+
+cd /opt/geoblacklight
+RBENV_VERSION=2.6.1 rbenv exec rails _5.2.3_ new geodisy -m https://raw.githubusercontent.com/geoblacklight/geoblacklight/master/template.rb
+
+* Configurer GeoBlacklight Solr core à titre d’utilisateur "solr"
+cd /var/solr/data
+mkdir geoblacklight-core
+cd geoblacklight-core
+mkdir conf
+mkdir data
+cp -a /opt/geoblacklight/geodisy/solr/conf/* /var/solr/data/geoblacklight-core/conf/
+
+* Ajouter core dans Solr admin web (http://206-12-92-97.cloud.computecanada.ca:8983/)
+systemctl restart solr
+
+Se connecter comme administrateur
+- core admin -> nouvel utilisateur core
+- nom: geoblacklight-core
+- instanceDir: geoblacklight-core
+- dataDir: data
+- config: solrconfig.xml
+- schema: schema.xml
+
+S’assurer que /opt/geoblacklight/geodisy/config/blacklight.yml a le nom core approprié
+
+* GeoBlacklight peut être démarré:
+
+RAILS_ENV=production rails s
+
+* Installer le script de démarrage:
+
+Installer le script de démarrage dans /etc/systemd/system/geoblacklight.service
+[Unit]
+Description=GeoBlacklight
+Requires=network.target
+
+[Service]
+Type=simple
+User=geoblack
+Group=geoblack
+WorkingDirectory=/opt/geoblacklight/geodisy
+ExecStart=/bin/bash -lc 'bundle exec rails server -e production --port 3000'
+TimeoutSec=60s
+RestartSec=30s
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+systemctl daemon-reload
+systemctl start geoblacklight.service
+systemctl enable geoblacklight.service
+
+* Configuration production finalisée
+
+- Dans Dans /opt/geoblacklight/geodisy/config/environments/production.rb: , configurer config.assets.compile = true et commenter #config.assets.js_compressor = :uglifier
+- Dans /opt/geoblacklight/geodisy/db: cp test.sqlite3 production.sqlite3
+
+Tester en visitant http://206-12-92-97.cloud.computecanada.ca:3000
+
+
+4. Installer GeoCombine
+
+git clone https://github.com/OpenGeoMetadata/GeoCombine.git
+cd GeoCombine
+bundle install
+
+* Indexer certains documents
+- S’assurer que dans /home/geoblack/GeoCombine/lib/tasks/geo_combine.rake, l’URL approprié Solr est configuré
+- Dans GeoCombine dir, mkdir tmp
+- Exécuter rake geocombine:clone et ensuite rake geocombine:index
+
+
+5. Configurer SELinux 
+
+* Pour SELinux, appliquer les opérateurs booléens permettant l’opération proxy httpd :
+/usr/sbin/setsebool -P httpd_can_network_connect 1
+
+
+
+6. Scripts de démarrage
+
+* GeoBlacklight: /etc/systemd/system/geoblacklight.service
+* Solr: activé via systemctl
+
+7. TODO
+
+* Possiblement facultatif : trouver comment (si) l’authentification à solr est nécessaire ou prise en charge par GeoBlacklight. Pour l’instant, exécuter avec blockUnknown: false in "/var/solr/data/security.json"
+* SSL support: GeoBlacklight

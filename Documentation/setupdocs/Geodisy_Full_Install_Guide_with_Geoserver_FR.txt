@@ -1,0 +1,128 @@
+1. Installer GeoServer 2.17.x (Stable)
+* Installer Java 8
+yum install java-1.8.0-openjdk
+
+* Installer le code binaire indépendant des plateformes à http://geoserver.org/release/stable/
+wget http://sourceforge.net/projects/geoserver/files/GeoServer/2.17.0/geoserver-2.17.0-bin.zip
+mkdir -p /opt/share/geoserver
+unzip geoserver-2.17.0-bin.zip in /opt/share/geoserver
+useradd -r geoserver
+
+chown -R geoserver /opt/share/geoserver/
+
+* À titre d’utilisateur geoserver (démarrage manuel)
+export GEOSERVER_DATA_DIR=/geodata/geoserver/data
+export GEOSERVER_HOME=/opt/share/geoserver/geoserver-2.17.0
+cd /opt/share/geoserver/geoserver-2.17.0
+sh startup.sh
+
+* Installer le script de démarrage dans /etc/systemd/system/geoserver.service
+[Unit]
+Description=Startup GeoServer
+After=network.target
+
+[Service]
+Type=simple
+User=geoserver
+Group=geoserver
+Environment=GEOSERVER_DATA_DIR=/geodata/geoserver/data
+Environment=GEOSERVER_HOME=/opt/share/geoserver/geoserver-2.17.0
+ExecStart=/opt/share/geoserver/geoserver-2.17.0/bin/startup.sh
+TimeoutStartSec=0
+
+[Install]
+WantedBy=default.target
+
+systemctl daemon-reload
+systemctl start geoserver.service
+
+* Se connecter et tester
+http://206.12.92.97:8080/geoserver
+admin
+<< mot de passe fourni séparément >>
+
+* Installer l’extension d’importation
+Geoserver avec l’extension d’importation
+Télécharger le Core d’extension d’importation de http://geoserver.org/release/stable/
+unzip geoserver-2.17.0-importer-plugin.zip dans /opt/share/geoserver/geoserver-2.17.0/webapps/geoserver/WEB-INF/lib
+
+* Proxy inverse Apache
+yum install mod_ssl openssl
+
+systemctl enable httpd
+systemctl start httpd
+
+yum install certbot python2-certbot-apache mod_ssl
+mkdir -p /var/www/206-12-92-97.cloud.computecanada.ca/html
+
+Ajouter l’hôte virtuel dans /etc/httpd/conf.d/206-12-92-97.cloud.computecanada.ca.conf
+<VirtualHost *:80>
+ServerName 206-12-92-97.cloud.computecanada.ca
+DocumentRoot /var/www/206-12-92-97.cloud.computecanada.ca/html
+ErrorLog /etc/httpd/logs/error_log
+CustomLog /etc/httpd/logs/access_log combined
+</VirtualHost>
+
+certbot --apache -d 206-12-92-97.cloud.computecanada.ca
+
+Dans /etc/httpd/conf.d/206-12-92-97.cloud.computecanada.ca-le-ssl.conf
+<Location /geoserver>
+        ProxyPass         http://localhost:8080/geoserver
+        ProxyPassReverse  http://localhost:8080/geoserver
+        Order allow,deny
+        Allow from all
+</Location>
+
+Dans GeoServer Global Settings, configurer l’URL de base à :
+https://206-12-92-97.cloud.computecanada.ca/geoserver
+
+Noter : l’accès https peut être ouvert ; toutefois, l'accès port 8080 au GeoServer doit être limité aux adresses IP des administrateurs uniquement.
+
+
+2. Installer PostGIS 30 et GDAL 30 pour PostgreSQL 12
+wget https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+rpm -ivh pgdg-redhat-repo-latest.noarch.rpm
+
+* Installer PostgreSQL 12
+yum install postgresql12 postgresql12-server postgresql12-libs postgresql12-contrib postgresql12-devel
+
+/usr/pgsql-12/bin/postgresql-12-setup initdb
+systemctl enable postgresql-12
+systemctl start postgresql-12
+
+* yum install postgis30_12 postgis30_12-client postgis30_12-debuginfo postgis30_12-devel postgis30_12-docs postgis30_12-gui postgis30_12-utils
+
+* yum install gdal30-libs gdal30 gdal30-debuginfo gdal30-devel gdal30-do
+(installs binaries to /usr/gdal30/bin)
+
+
+* Créer un utilisateur et des répertoires GeoBlacklight
+useradd -r geoserver
+
+
+5. Installer Docker et GDAL 2.4.1 
+
+GDAL 3.x ne crée pas actuellement de Geotiffs lisibles par Geoserver, il faut donc se procurer une ancienne version de GDAL pour créer des Geotiffs.
+
+*Docker
+
+sudo yum check-update
+curl -fsSL https://get.docker.com/ | sh
+sudo systemctl start docker
+sudo systemctl status docker
+sudo systemctl enable docker
+
+* Image GDAL 2.4.1 Docker
+sudo docker pull osgeo/gdal:alpine-ultrasmall-v2.4.1
+
+Dans ~/.bash_profile:
+    export GDAL_DOCK="sudo docker run --rm -v /home:/home osgeo/gdal:alpine-ultrasmall-v2.4.1"
+
+
+
+8. Scripts de démarrage
+
+* GeoServer: /etc/systemd/system/geoserver.service
+* PostgreSQL: enabled via systemctl
+* GeoBlacklight: /etc/systemd/system/geoblacklight.service
+* Solr: enabled via systemctl
