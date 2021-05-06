@@ -16,7 +16,7 @@
 
 ## Metadata crosswalk documentation (Microsoft Excel .xlsx)
 
-* [Dataverse JSON to ISO19115](crosswalks/v2_Dec_2019_Dataverse_to_ISO_19115_metadata_crosswalk.xlsx)
+* [Dataverse JSON to ISO19115](crosswalks/v3_Jun_2020_Dataverse_to_ISO19115_metadata_crosswalk.xlsx)
 
 * [GeoBlacklight Metadata](crosswalks/v1_Dec_2019_GeoBlacklight_metadata.xlsx)
 
