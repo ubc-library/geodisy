@@ -49,7 +49,7 @@ Tous les objets apparaissant dans _Geodisy_ se verront attribuer des métadonné
 
 ### Comment se fait la conversion d’enregistrements de dépôts de données en enregistrements Geodisy?
 
-Les chercheurs n’ont qu’à déposer leurs données dans un [dépôt ayant un lien avec le DFDR] (https://www.frdr-dfdr.ca/discover/html/repository-list.html?lang=fr). Si le dépôt contient des informations appropriées dans l’enregistrement ou dans les fichiers connexes :
+Les chercheurs n’ont qu’à déposer leurs données dans un [dépôt ayant un lien avec le DFDR](https://www.frdr-dfdr.ca/discover/html/repository-list.html?lang=fr). Si le dépôt contient des informations appropriées dans l’enregistrement ou dans les fichiers connexes :
 
 * L’enregistrement sera moissonné par _Geodisy_  
 * Toutes les informations géographiques trouvées dans l’enregistrement d’étude et les fichiers connexes seront automatiquement moissonnées  
