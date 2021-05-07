@@ -46,7 +46,7 @@ All of the software you need will be free and open source (FOSS). The Geodisy mi
 3. [Geoblacklight](https://geoblacklight.org) to allow users to search
 
 ### When will it be available?
-**Geodisy** is available now. See it in action at [geo.frdr.ca](https://geo.frdr.ca)
+**Geodisy** is available now. See it in action at [geo.frdr-dfdr.ca](https://geo.frdr-dfdr.ca)
 
 ### Where can I find documentation?
 **Geodisy** documentation is available in our [Github repository](https://github.com/ubc-library/geodisy/blob/master/Documentation/index.md)

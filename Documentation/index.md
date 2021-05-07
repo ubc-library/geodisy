@@ -10,7 +10,7 @@
 
 Using the web-based interface, end users will be able to find data which has previously only been discoverable by text-based searches rather than location-based searches.
 
-You can try out Geodisy by looking at Canada's Federated Research Data Respostory, FRDR. [Try it!](https://geo.frdr.ca)
+You can try out Geodisy by looking at Canada's Federated Research Data Respostory, FRDR. [Try it!](https://geo.frdr-dfdr.ca)
 
 For more information, please have a look at the [factsheet](factsheet.md)
 

@@ -1,8 +1,8 @@
-﻿## Geodisy: Implementing a connection for data discovery at your institution
+## Geodisy: Implementing a connection for data discovery at your institution
 
 ### What is Geodisy?
 Geodisy is an open source discovery tool that allows users to find open data from Canadian researchers visually, spatially and quickly.
-Research data can be hard to find, and even harder when looking for data about a specific area or place. Geodisy changes that, giving users a window into the world of research data with map-based tools familiar to everyone. Users can search by place name or using an interactive map. The Geodisy search interface will be available on Canada’s Federated Research Data Repository website (<https://geo.frdr.ca>) and is accessible to the public. Data from institutions across Canada make up the source collection for Geodisy – making your data discoverable alongside other rich content deposited by researchers from across Canada.
+Research data can be hard to find, and even harder when looking for data about a specific area or place. Geodisy changes that, giving users a window into the world of research data with map-based tools familiar to everyone. Users can search by place name or using an interactive map. The Geodisy search interface will be available on Canada’s Federated Research Data Repository website (<https://geo.frdr-dfdr.ca>) and is accessible to the public. Data from institutions across Canada make up the source collection for Geodisy – making your data discoverable alongside other rich content deposited by researchers from across Canada.
 
 #### How does Geodisy work?
 Coordinates from both data and metadata are used to map each dataset by its location. Geodisy is not limited to traditional geospatial data - it can generate coordinates for any dataset associated with a terrestrial location. This makes it a powerful tool for many different subject areas.

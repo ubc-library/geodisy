@@ -52,7 +52,7 @@ Documentation for Geodisy can be found on its home page: <https://github.com/ubc
 Brief user guides are available for:
 
 * Adding metadata to records so that they're easily discoverable by Geodisy: [Depositor guide](https://github.com/ubc-library/geodisy/blob/master/Documentation/userguides/GeodisyDepositorGuide.md)  
-* Connecting your Dataverse repository to Geodisy at Canada's [Federated Research Data Repository](https://geo.frdr.ca): [Institutional guide](https://github.com/ubc-library/geodisy/blob/master/Documentation/userguides/GeodisyInstitutionalGuide.md)
+* Connecting your Dataverse repository to Geodisy at Canada's [Federated Research Data Repository](https://geo.frdr-dfdr.ca): [Institutional guide](https://github.com/ubc-library/geodisy/blob/master/Documentation/userguides/GeodisyInstitutionalGuide.md)
 
 ### How do Dataverse records become Geodisy records?
 
