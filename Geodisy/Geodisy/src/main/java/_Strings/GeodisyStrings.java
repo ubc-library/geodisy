@@ -358,6 +358,7 @@ public class GeodisyStrings {
             path = path.replace(".", "_");
             path = path.replace("?", "_");
         }
+        //replace any colon beyond the Windows drive colon
         if(path.startsWith("D:"))
             path = path.replace("D:","D***");
         if(path.startsWith("C:"))
@@ -412,24 +413,27 @@ public class GeodisyStrings {
 
 
         };
+        String slash = GeodisyStrings.replaceSlashes("\\");
         for(String[] u: nonUnique){
             String uPath = GeodisyStrings.replaceSlashes(u[0]);
-            String endPathVal = GeodisyStrings.replaceSlashes(u[1]);
-            String slash = GeodisyStrings.replaceSlashes("\\");
+            String endPathVal =  u[1];
+
             if(path.contains(uPath))
-                path = path.replace(uPath,endPathVal+GeodisyStrings.replaceSlashes("/"));
+                return path.replace(uPath,endPathVal+slash).replace("%2F",slash);
             String underUPath = uPath.replace(slash,"_").replace(".","_");
             if(path.contains(underUPath)) {
                 path = path.replace(underUPath, endPathVal.replace(slash,"_").replace(".","_"));
                 if(path.contains("%2F"))
                     path.replace("%2F","_");
+                return path;
             }
             if(path.contains(uPath.substring(0, uPath.length()-1)))
-                path = path.replace(endPathVal.substring(endPathVal.length()-1),"");
+                return path.replace(endPathVal.substring(endPathVal.length() - 1), "");
             if(path.contains((uPath.replace(".",slash))))
-              path = path.replace(endPathVal.replace(".",slash),"");
+              return  path.replace(endPathVal.replace(".",slash),"").replace("%2F",slash);;
             path = path.replace("%2F",slash);
         }
+        path = path.replace("%2F",slash);
         return path;
     }
 }
