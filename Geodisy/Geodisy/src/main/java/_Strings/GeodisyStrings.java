@@ -13,8 +13,8 @@ public class GeodisyStrings {
         END_XML_JSON_FILE_PATH = FRONTEND_ADDRESS + "/metadata/geodisy/";
         PATH_TO_XML_JSON_FILES = BACKEND_ADDRESS + "/geodisy/";
         GEODISY_PATH_ROOT = (IS_WINDOWS)? WINDOWS_ROOT: FRDR_VM_CENTOS_ROOT;
-        MOVE_METADATA = "sudo rsync -auhv " + GEODISY_PATH_ROOT + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
-        MOVE_DATA = "sudo rsync -auhv " + GEODISY_PATH_ROOT + "datasetFiles/* " + DATA_DIR_LOC;
+        MOVE_METADATA = "sudo rsync -au --delete " + GEODISY_PATH_ROOT + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
+        MOVE_DATA = "sudo rsync -au --delete " + GEODISY_PATH_ROOT + "datasetFiles/* " + DATA_DIR_LOC;
         GEOCOMBINE = "sh " + GEODISY_PATH_ROOT + "geodisyFiles/combine.sh";
         GITCALL = "sh " + GEODISY_PATH_ROOT + "geodisyFiles/git.sh";
         SAVED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles");
