@@ -2,6 +2,7 @@ package Dataverse;
 
 import BaseFiles.GeoLogger;
 import Crosswalking.JSONParsing.DataverseParser;
+import _Strings.TestStrings;
 import org.json.JSONException;
 import org.json.JSONTokener;
 import org.json.JSONArray;
@@ -36,9 +37,13 @@ public class FRDRAPI extends SourceAPI{
         int counter = 0;
         LinkedList<SourceJavaObject> djos = new LinkedList<>();
         DataverseParser parser = new DataverseParser();
-        // Repeatedly call the FRDR Harvester Export function until geting a json with finished: True
+        // Repeatedly call the FRDR Harvester Export function until getting a json with finished: True
         while(!done) {
-            String fullJSON = getJson();
+            String fullJSON;
+            if(!testing)
+                fullJSON = getJson();
+            else
+                fullJSON = "{\"records\": ["+ TestStrings.doiJson + "], \"finished\": true}";
             if(fullJSON.isEmpty())
                 break;
             try {
@@ -52,10 +57,13 @@ public class FRDRAPI extends SourceAPI{
                     DataverseJavaObject djo = parser.frdrParse(jo);
                     System.out.println("#" + counter + " ID = " + djo.getPID());
                     if (djo.hasGeoGraphicCoverage())
-                        djo = (DataverseJavaObject) getBBFromGeonames(djo);if (djo.hasContent && !testing) {
+                        djo = (DataverseJavaObject) getBBFromGeonames(djo);if (djo.hasContent) {
                         System.out.println("Downloading record: " + djo.getPID());
                         if(!dontProcessSpecificRecords(djo.getPID())) {
-                            djo.setGeoDataFiles(djo.downloadFiles());
+                            if(!testing) {
+                                System.out.println("Downloading record: " + djo.getPID());
+                                djo.setGeoDataFiles(djo.downloadFiles());
+                            }
                             if(djo.geoDataFiles.size()>0||djo.geoDataMeta.size()>0)
                                 djo.updateRecordFileNumbers();
                             if(djo.geoDataFiles.size()>0)
@@ -71,7 +79,8 @@ public class FRDRAPI extends SourceAPI{
                     }
                     int record_id = jo.getInt("id");
 
-                    updateFRDRHarvesterDB(record_id);
+                    if(!testing)
+                        updateFRDRHarvesterDB(record_id);
                 }
             } catch (JSONException e) {
                 logger.error("Something went wrong parsing the FRDR JSON: \n" + fullJSON);

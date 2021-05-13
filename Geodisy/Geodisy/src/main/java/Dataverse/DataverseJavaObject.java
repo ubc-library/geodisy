@@ -199,7 +199,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             for(DataverseRecordFile d: temp){
                 boolean add = true;
                 for(DataverseRecordFile d2: drfs){
-                    if(d.getTranslatedTitle() == d2.getTranslatedTitle()) {
+                    if(d.getTranslatedTitle().equals(d2.getTranslatedTitle())) {
                         add = false;
                         break;
                     }
