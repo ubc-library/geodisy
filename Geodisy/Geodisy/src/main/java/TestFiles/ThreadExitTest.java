@@ -2,7 +2,7 @@ package TestFiles;
 
 import java.util.concurrent.*;
 
-public class ThreadExitTest {
+public class ThreadExitTest implements Test{
     public void run() {
         Funct funct = new Funct();
         ExecutorService executorService = Executors.newSingleThreadExecutor();

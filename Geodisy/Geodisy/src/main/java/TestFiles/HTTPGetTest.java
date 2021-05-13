@@ -7,7 +7,7 @@ import _Strings.GeodisyStrings;
 
 import java.util.LinkedList;
 
-public class HTTPGetTest {
+public class HTTPGetTest implements Test{
     public void run(){
         HTTPGetCall call = new HTTPGetCall();
         /*call.getFile("https://www150.statcan.gc.ca/n1/tbl/sdmx/17100109-SDMX.zip","36100051-SDMX.zip", GeodisyStrings.dataDir()+"test/");*/

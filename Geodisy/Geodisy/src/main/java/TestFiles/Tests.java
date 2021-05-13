@@ -3,14 +3,23 @@ package TestFiles;
 public class Tests {
 
     public void runTests(){
+        TestAddingDatasets t = new TestAddingDatasets();
+        t.run();
+
+        /*ThreadExitTest t = new ThreadExitTest();
+        t.run();*/
+
+        /*ExistingBoundingBoxesTest e = new ExistingBoundingBoxesTest();
+        e.run();*/
+
         /*TabTest tt = new TabTest();
         tt.run();*/
 
        /*ZipTest zipTest = new ZipTest();
         zipTest.run();*/
 
-        HTTPGetTest test = new HTTPGetTest();
-        test.run();
+        /*HTTPGetTest test = new HTTPGetTest();
+        test.run();*/
 
         /*HTTPHeaderTest test = new HTTPHeaderTest();
         test.getHeader();*/
