@@ -133,7 +133,7 @@ public class GeodisyStrings {
         public final static String ISO_19139_XML = "iso19139.xml";
 
     //Geonames
-        public final static String GEONAMES_SEARCH_BASE = "http://api.geonames.org/search?q=";
+        public final static String GEONAMES_SEARCH_BASE = "https://secure.geonames.net/search?q=";
 
 
     //GDAL
