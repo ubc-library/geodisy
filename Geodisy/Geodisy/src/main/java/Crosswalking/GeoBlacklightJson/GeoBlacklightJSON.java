@@ -66,9 +66,10 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
         getRequiredFields(drf.getGBB(), total, drf.getBbCount());
         getOptionalFields(drf,total);
         geoBlacklightJson = jo.toString();
+        String slash = GeodisyStrings.replaceSlashes("/");
         if(!javaObject.getSimpleFields().getField(TITLE).isEmpty())
             if (!single)
-                saveJSONToFile(geoBlacklightJson, doi, GeodisyStrings.replaceSlashes(GeodisyStrings.removeHTTPSAndReplaceAuthority(doi)) + " (File " + drf.getGBBFileNumber() + " of " + total + ")");
+                saveJSONToFile(geoBlacklightJson, doi, GeodisyStrings.replaceSlashes(GeodisyStrings.removeHTTPSAndReplaceAuthority(doi)) + slash+drf.getGBBFileNumber());
             else
                 saveJSONToFile(geoBlacklightJson, doi, GeodisyStrings.replaceSlashes(GeodisyStrings.removeHTTPSAndReplaceAuthority(doi)));
     }
