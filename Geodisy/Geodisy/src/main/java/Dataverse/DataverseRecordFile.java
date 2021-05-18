@@ -53,7 +53,7 @@ public class DataverseRecordFile {
         this.dbID = dbID;
         this.server = server;
         recordURL = server+"api/access/datafile/" + dbID;
-        this.datasetIdent = GeodisyStrings.removeHTTPSAndReplaceAuthority(datasetIdent.replace(".","_").replace("/","_"));
+        this.datasetIdent = GeodisyStrings.removeHTTPSAndReplaceAuthority(datasetIdent).replace(".","_").replace("/","_");
         gbb = new GeographicBoundingBox(datasetIdent);
         setFileName(translatedTitle);
 
