@@ -3,6 +3,8 @@ package TestFiles;
 public class Tests {
 
     public void runTests(){
+        /*RepoNameNormalizationTest r = new RepoNameNormalizationTest();
+        r.run();*/
         TestAddingDatasets t = new TestAddingDatasets();
         t.run();
 
@@ -24,8 +26,8 @@ public class Tests {
         /*HTTPHeaderTest test = new HTTPHeaderTest();
         test.getHeader();*/
 
-        //ExistingLabelsTest exisitingLabelsTest = new ExistingLabelsTest();
-        //exisitingLabelsTest.checkEGL();;
+        /*ExistingLabelsTest exisitingLabelsTest = new ExistingLabelsTest();
+        exisitingLabelsTest.run();*/
 
         //Testing uploading both Rasters and Vectors to Geoserver
         /*PostGIS postGIS = new PostGIS();
