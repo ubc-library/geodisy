@@ -105,7 +105,9 @@ public class DataGBJSON extends GeoBlacklightJSON{
         jo.put(EXTERNAL_SERVICES, j.toString());
         if(!geoserverLabel.isEmpty())
             if(count!=0)
-            jo.put("layer_id_s", geoserverLabel+padZeros(count, total));
+                jo.put("layer_id_s", geoserverLabel+padZeros(count, total));
+            else
+                jo.put("layer_id_s", geoserverLabel);
     }
 
     private String getGeoserverLabel(GeographicBoundingBox gbb) {
