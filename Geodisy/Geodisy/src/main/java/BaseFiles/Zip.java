@@ -13,7 +13,7 @@ public class Zip {
         byte[] buf = new byte[1024];
         try {
             String path = file.getAbsolutePath();
-            FileOutputStream fos = new FileOutputStream(path.substring(0,path.indexOf("xml"))+"zip");
+            FileOutputStream fos = new FileOutputStream(path.substring(0,path.lastIndexOf("xml"))+"zip");
             ZipOutputStream zipOS = new ZipOutputStream(fos);
             FileInputStream in  = new FileInputStream(file.getAbsolutePath());
             zipOS.putNextEntry(new ZipEntry(ISO_19139_XML));
