@@ -162,9 +162,9 @@ public class GeodisyStrings {
         public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = ArrayUtils.addAll(NON_SHP_SHAPEFILE_EXTENSIONS, INTERIM_VECTOR);
         public final static String FINAL_OGRINFO_VECTOR_FILE_EXTENSIONS = ".shp";
         public final static String[] PREVIEWABLE_FILE_EXTENSIONS = {".tif"};
-        private final static String OGR2OGR_LOCAL = LOCAL_GDAL_PATH + "ogr2ogr -f \"ESRI Shapefile\" -t_srs EPSG:4326 ";
+        private final static String OGR2OGR_LOCAL = LOCAL_GDAL_PATH + "ogr2ogr -f \"ESRI Shapefile\" -t_srs EPSG:4326  -lco ENCODING=UTF-8 ";
         private final static String GDAL_TRANSLATE_LOCAL = LOCAL_GDAL_PATH + "gdal_translate -of GTiff ";
-        private final static String OGR2OGR_CLOUD = "/usr/gdal30/bin/ogr2ogr -t_srs EPSG:4326 -f \"ESRI Shapefile\" ";
+        private final static String OGR2OGR_CLOUD = "/usr/gdal30/bin/ogr2ogr -t_srs EPSG:4326 -f \"ESRI Shapefile\" -lco ENCODING=UTF-8 ";
         //GDAL for Raster conversion needs to be using GDAL version 2.x, so had to use a docker version of it for use with Centos
         //public final static String GDAL_DOCKER = "sudo docker run --rm -v /home:/home osgeo/gdal:alpine-ultrasmall-v2.4.1 "; //base call for docker gdal, but need the program call added on
         private final static String GDAL_TRANSLATE_CLOUD = "/usr/gdal30/bin/gdal_translate -of GTiff ";
