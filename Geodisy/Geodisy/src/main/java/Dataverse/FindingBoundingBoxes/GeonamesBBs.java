@@ -24,7 +24,6 @@ import static _Strings.DVFieldNameStrings.*;
  * set to 361 is used.
  */
 public class GeonamesBBs extends FindBoundBox {
-    private String USER_NAME = "geodisy";
     String doi;
     public DataverseJavaObject djo;
     Geonames geo;
