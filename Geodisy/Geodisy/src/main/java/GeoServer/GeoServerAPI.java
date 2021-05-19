@@ -289,11 +289,13 @@ public class GeoServerAPI extends DestinationAPI {
         }
         ExistingRasterRecords existingRasterRecords = ExistingRasterRecords.getExistingRasters();
         existingRasterRecords.addOrReplaceRecord(sjo.getPID(),fileName);
+        System.out.println("Added raster with fileName: " + fileName + " and geoserverLabel: " + geoserverLabel);
         return true;
     }
 
     private void deleteOldCoverstore(ProcessBuilder processBuilder, String geoserverLable) throws InterruptedException, IOException{
         String deleteCoveragestore = "curl -u admin:" + GEOSERVER_PASSWORD + " -XDELETE " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores/" + geoserverLable.toLowerCase() + "?recurse=true");
+        System.out.println("Delete old coverage: " + deleteCoveragestore);
         Process p;
         processBuilder.command("/usr/bin/bash", "-c", deleteCoveragestore);
         p = processBuilder.start();
@@ -308,6 +310,7 @@ public class GeoServerAPI extends DestinationAPI {
 
     private void normalizeRaster(ProcessBuilder processBuilder, String fileName) throws InterruptedException, IOException {
         String warp = GDALWARP(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(sjo.getPID()).replace(".","/") + "/", fileName);
+        System.out.println("Normalize raster: " + warp);
         Process p;
         processBuilder.command("/usr/bin/bash", "-c", warp);
         p = processBuilder.start();
@@ -321,6 +324,7 @@ public class GeoServerAPI extends DestinationAPI {
 
     private void renameRasterToOrig(ProcessBuilder processBuilder, String datasetID, String fileName) throws InterruptedException, IOException{
         String rename = "sudo mv -f " + DATA_DIR_LOC + datasetID + "/1" + fileName + " " + DATA_DIR_LOC + datasetID + "/" + fileName;
+        System.out.println("Rename raster to orig: " + rename);
         Process p;
         processBuilder.command("/usr/bin/bash", "-c", rename);
         p = processBuilder.start();
@@ -347,6 +351,7 @@ public class GeoServerAPI extends DestinationAPI {
 
     private void createCoverstore(String geoserverLable, ProcessBuilder processBuilder, String fileName) throws InterruptedException, IOException{
         String createCoveragestore = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:text/xml") +  " -d '<coverageStore><name>" + geoserverLable.toLowerCase()+ "</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>file:" + GeodisyStrings.removeHTTPSAndReplaceAuthority(sjo.getPID()).replace(".","/") + "/" + fileName + "</url></coverageStore>' " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores?configure=all");
+        System.out.println("Create coverage: " + createCoveragestore);
         Process p;
         processBuilder.command("/usr/bin/bash", "-c", createCoveragestore);
         p = processBuilder.start();
@@ -363,6 +368,7 @@ public class GeoServerAPI extends DestinationAPI {
     if(title.contains("."))
         title=title.substring(0,title.lastIndexOf("."));
     String enableCoverageStore = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:application/xml") + " -d '<coverage><name>"+ geoserverLabel.toLowerCase() + "</name><nativeCRS>" + RASTER_CRS + "</nativeCRS><title>" + title + "</title><enabled>True</enabled></coverage>' " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores/"+ geoserverLabel.toLowerCase() + "/coverages");
+    System.out.println("Create coverage: " + enableCoverageStore);
     Process p;
     processBuilder.command("/usr/bin/bash", "-c", enableCoverageStore);
     p = processBuilder.start();
@@ -377,6 +383,7 @@ public class GeoServerAPI extends DestinationAPI {
     private void addRasterLayer(ProcessBuilder processBuilder, String geoserverLabel, String translatedTitle)throws InterruptedException, IOException{
         String fileLocation = DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority((sjo.getPID())+"/").replace(".","/")+ GeodisyStrings.replaceSlashes("/") + translatedTitle;
         String addRaster = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPUT -H \"Content-type: text/plain\" -d 'file://" + fileLocation + "' " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores/"+ geoserverLabel.toLowerCase() + "/external.geotiff?configure=first&coverageName=" + geoserverLabel);
+        System.out.println("Add raster layer: " + addRaster);
         Process p;
         processBuilder.command("/usr/bin/bash", "-c", addRaster);
         p = processBuilder.start();
@@ -386,40 +393,6 @@ public class GeoServerAPI extends DestinationAPI {
             continue;
         p.waitFor(2, TimeUnit.MINUTES);
         p.destroy();
-    }
-
-
-    /// Below methods seem unused at the moment
-    private void saveJsonToFile(String jsonString) {
-        FileWriter fileWriter = new FileWriter();
-        String doi = sjo.getPID();
-        String doiPath = doi.replace("/","_");
-        String filePath = DATA_DIR_LOC + doiPath + "/import.json";
-        try {
-            fileWriter.writeStringToFile(jsonString,filePath);
-        } catch (IOException e) {
-            logger.error("Something went wrong trying to create the temp json for uploading to geoserver");
-        }
-    }
-
-    private String generateUploadCall() {
-        String curlCall = "/usr/bin/curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H \"Content-type: application/json\" -d @_tempFiles/import.json \""+ GEOSERVER_REST + "imports\"";
-        return curlCall;
-    }
-
-    private String createDirectoryUploadJSON(String filename, String doi, String store, String workspace) {
-
-        String jsonModified = "";
-        if(generateWorkspace(workspace)) {
-            if (addPostGISStore()) {
-                JSONObject root = new JSONObject();
-                JSONArray array = addWorkspaceStore(workspace, store, doi);
-                root.put(stringed("import"), array);
-                String json = root.toString();
-                jsonModified = jsonArrayBracketChange(json);
-            }
-        }
-        return jsonModified;
     }
 
     private boolean addPostGISStore() {
