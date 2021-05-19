@@ -74,30 +74,27 @@ public class GeoServerAPI extends DestinationAPI {
         VectorCall vectorCall = new VectorCall(geoserverLabel,fileName);
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<Boolean> future = executorService.submit(vectorCall);
+        executorService.shutdown();
         try{
             if(!executorService.awaitTermination(5, TimeUnit.MINUTES)){
-                executorService.shutdown();
                 logger.warn("Timed out trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
                 System.out.println("Timed out trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
                 return false;
             }
         }catch (InterruptedException e){
-            executorService.shutdown();
             logger.error("Something went wrong trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
+            executorService.shutdownNow();
             return false;
         }
         boolean success;
         try {
             success = future.get(2,TimeUnit.SECONDS);
         } catch (InterruptedException|ExecutionException|TimeoutException e) {
-            executorService.shutdown();
             return false;
         }
         if(success) {
-            executorService.shutdown();
             return timedUpdateTitleInGeosercer(geoserverLabel, fileName);
         }
-        executorService.shutdown();
         return false;
     }
 
@@ -113,12 +110,13 @@ public class GeoServerAPI extends DestinationAPI {
             }
         }catch (InterruptedException e){
             logger.error("Something went wrong trying to update title in geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
+            executorService.shutdownNow();
             return false;
         }
         boolean success;
         try {
-            success = future.get(2,TimeUnit.SECONDS);
-        } catch (InterruptedException|ExecutionException|TimeoutException e) {
+            success = future.get();
+        } catch (InterruptedException|ExecutionException e) {
             return false;
         }
         return success;
@@ -256,11 +254,13 @@ public class GeoServerAPI extends DestinationAPI {
             }
         }catch (InterruptedException e){
             logger.error("Something went wrong trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
+            executorService.shutdownNow();
             return false;
         }
         try {
             return successBool.get();
         } catch (InterruptedException | ExecutionException e) {
+            logger.error("Something went wrong trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
             return false;
         }
     }
