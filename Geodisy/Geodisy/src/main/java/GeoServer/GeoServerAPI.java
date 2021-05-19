@@ -153,12 +153,13 @@ public class GeoServerAPI extends DestinationAPI {
             return postGIS.addFile2PostGIS((DataverseJavaObject) sjo, fileName,geoserverlabel);
         }
 
-        //TODO fix this?
         public boolean addPostGISLayerToGeoserver(String geoserverlabel, String filename){
         String vectorDB = GEOSERVER_VECTOR_STORE;
         String title = filename.substring(0,filename.lastIndexOf('.'));
 
         try {
+            deleteVectorLayer(geoserverlabel);
+
             //bring new layer over from POSTGIS
             String call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H \"Content-type: text/xml\" -d \"<featureType><name>" + geoserverlabel.toLowerCase() + "</name><title>"+ title +"</title><nativeCRS>EPSG:4326</nativeCRS><srs>EPSG:4326</srs><enabled>true</enabled></featureType>\" " + GEOSERVER_REST + "workspaces/geodisy/datastores/" + vectorDB + "/featuretypes";
             System.out.println("App shp to Geoserver: "+ call);
@@ -175,6 +176,33 @@ public class GeoServerAPI extends DestinationAPI {
             return false;
         }
         return true;
+    }
+
+    private void deleteVectorLayer(String geoserverlabel) throws IOException, InterruptedException {
+        try {
+            String call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XDELETE " + GEOSERVER_REST + "layers/geodisy:" + geoserverlabel + ".xml";
+            processBuilder.command("/usr/bin/bash", "-c", call);
+            Process p = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null)
+                continue;
+            p.waitFor(30, TimeUnit.SECONDS);
+            p.destroy();
+
+            call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XDELETE " + GEOSERVER_REST + "workspaces/geodisy/datastores/" + GEOSERVER_VECTOR_STORE + "/featuretypes/" + geoserverlabel + ".xml";
+            processBuilder.command("/usr/bin/bash", "-c", call);
+            p = processBuilder.start();
+            reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            while ((line = reader.readLine()) != null)
+                continue;
+            p.waitFor(30, TimeUnit.SECONDS);
+            p.destroy();
+        }catch (FileNotFoundException ignored){
+        } catch (IOException | InterruptedException e) {
+            logger.error("Something went wrong trying to delete layer with geolabel: " + geoserverlabel);
+            throw e;
+        }
     }
 
     private boolean updateTitleInGeoserver(String geoserverLabel, String fileName) {
