@@ -74,14 +74,15 @@ public class GeoServerAPI extends DestinationAPI {
         VectorCall vectorCall = new VectorCall(geoserverLabel,fileName);
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<Boolean> future = executorService.submit(vectorCall);
-        executorService.shutdown();
         try{
             if(!executorService.awaitTermination(5, TimeUnit.MINUTES)){
+                executorService.shutdown();
                 logger.warn("Timed out trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
                 System.out.println("Timed out trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
                 return false;
             }
         }catch (InterruptedException e){
+            executorService.shutdown();
             logger.error("Something went wrong trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
             return false;
         }
@@ -89,10 +90,14 @@ public class GeoServerAPI extends DestinationAPI {
         try {
             success = future.get(2,TimeUnit.SECONDS);
         } catch (InterruptedException|ExecutionException|TimeoutException e) {
+            executorService.shutdown();
             return false;
         }
-        if(success)
-            return timedUpdateTitleInGeosercer(geoserverLabel,fileName);
+        if(success) {
+            executorService.shutdown();
+            return timedUpdateTitleInGeosercer(geoserverLabel, fileName);
+        }
+        executorService.shutdown();
         return false;
     }
 
@@ -156,6 +161,7 @@ public class GeoServerAPI extends DestinationAPI {
         try {
             //bring new layer over from POSTGIS
             String call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H \"Content-type: text/xml\" -d \"<featureType><name>" + geoserverlabel.toLowerCase() + "</name><title>"+ title +"</title><nativeCRS>EPSG:4326</nativeCRS><srs>EPSG:4326</srs><enabled>true</enabled></featureType>\" " + GEOSERVER_REST + "workspaces/geodisy/datastores/" + vectorDB + "/featuretypes";
+            System.out.println("App shp to Geoserver: "+ call);
             processBuilder.command("/usr/bin/bash", "-c",call);
             Process p = processBuilder.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
