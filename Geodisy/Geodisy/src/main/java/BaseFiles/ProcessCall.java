@@ -60,6 +60,7 @@ public class ProcessCall {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
                 String line;
                 while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
                     result.append(line);
                 }
                 p.waitFor();
