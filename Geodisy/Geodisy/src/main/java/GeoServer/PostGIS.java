@@ -32,56 +32,33 @@ public class PostGIS {
 
         String call = GeodisyStrings.replaceSlashes(SHP_2_PGSQL + folderized(djo.getSimpleFieldVal(PERSISTENT_ID)) + "/" + fileName + " " + POSTGRES_SCHEMA + geoserverLabel + PSQL_CALL + VECTOR_DB + POSTGIS_USER_CALL);
         System.out.println("Adding file to postgres with:" + call);
-        SHP2PGSQL shp = new SHP2PGSQL(call);
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        Future<String> future = executorService.submit(shp);
-        executorService.shutdown();
+        ProcessCall pc = new ProcessCall();
         String results = "";
         try {
-            if (!executorService.awaitTermination(5, TimeUnit.MINUTES)) {
-                executorService.shutdownNow();
-                throw new TimeoutException();
-            }
-            results = future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            logger.warn("Something went wrong trying to get " + djo.getPID() + fileName + " into postGIS using encoding UTF-8, see: " + e);
-        } catch (TimeoutException e) {
-            logger.warn("Timed out trying to run SHP_2_PGSQL with encoding: UTF-8, see: " + e);
-        }
-        if(!results.contains("Unable to convert data value to UTF-8")) {
-            return true;
-        } else {
-            String[] encodings= new String[]{"LATIN1", "LATIN2", "LATIN3", "LATIN4", "LATIN5", "LATIN6", "LATIN7", "LATIN8", "LATIN9", "LATIN10", "BIG5", "WIN866", "WIN874", "WIN1250", "WIN1251", "WIN1252", "WIN1256", "WIN1258", "EUC_CN", "EUC_JP", "EUC_KR", "EUC_TW", "GB18030", "GBK", "ISO_8859_5", "ISO_8859_6", "ISO_8859_7", "ISO_8859_8", "JOHAB", "KOI", "MULE_INTERNAL", "SJIS", "SQL_ASCII", "UHC"};
+            results = pc.runProcess(call,10,TimeUnit.SECONDS,logger);
 
-            for(String e: encodings){
-                call = GeodisyStrings.replaceSlashes(SHP_2_PGSQL_ALT(e) + folderized(djo.getSimpleFieldVal(PERSISTENT_ID)) + "/" + fileName + " " + POSTGRES_SCHEMA + geoserverLabel + PSQL_CALL + VECTOR_DB + POSTGIS_USER_CALL);
-                shp = new SHP2PGSQL(call);
-                executorService = Executors.newSingleThreadExecutor();
-                shp = new SHP2PGSQL(call);
-                future = executorService.submit(shp);
-                executorService.shutdown();
-                try {
-                    if (!executorService.awaitTermination(5, TimeUnit.MINUTES)) {
-                        executorService.shutdownNow();
-                            throw new TimeoutException();
+            if(!results.contains("Unable to convert data value to UTF-8")) {
+                return true;
+            } else {
+                String[] encodings = new String[]{"LATIN1", "LATIN2", "LATIN3", "LATIN4", "LATIN5", "LATIN6", "LATIN7", "LATIN8", "LATIN9", "LATIN10", "BIG5", "WIN866", "WIN874", "WIN1250", "WIN1251", "WIN1252", "WIN1256", "WIN1258", "EUC_CN", "EUC_JP", "EUC_KR", "EUC_TW", "GB18030", "GBK", "ISO_8859_5", "ISO_8859_6", "ISO_8859_7", "ISO_8859_8", "JOHAB", "KOI", "MULE_INTERNAL", "SJIS", "SQL_ASCII", "UHC"};
+
+                for(String en: encodings){
+                    call = GeodisyStrings.replaceSlashes(SHP_2_PGSQL_ALT(en) + folderized(djo.getSimpleFieldVal(PERSISTENT_ID)) + "/" + fileName + " " + POSTGRES_SCHEMA + geoserverLabel + PSQL_CALL + VECTOR_DB + POSTGIS_USER_CALL);
+                    results = pc.runProcess(call, 10, TimeUnit.SECONDS, logger);
+                    if (!results.contains("Unable to convert data value to UTF-8")) {
+                        return true;
                     }
-                } catch (InterruptedException interruptedException) {
-                    logger.warn("Something went wrong trying to get " + djo.getPID() + fileName + " into postGIS using encoding " + e);
-                } catch (TimeoutException timeoutException) {
-                    logger.warn("Timed out trying to run SHP_2_PGSQL with encoding: " + e);
-                }
-                try {
-                    results =  future.get();
-                } catch (InterruptedException| ExecutionException f) {
-                    logger.error("Something went wrong reading the results of SHP_2_POSTGRES using encoding " + e + " for " + djo.getPID() + fileName);
-                }
-                if(!results.contains("Unable to convert data value to UTF-8")){
-                    return true;
                 }
             }
-            logger.error("Something went wrong trying to get " + djo.getPID() + fileName + " into postGIS, couldn't find a working encoding");
-            return false;
-        }
+        } catch (InterruptedException | ExecutionException e) {
+                logger.warn("Something went wrong trying to get " + djo.getPID() + fileName + " into postGIS");
+            } catch (TimeoutException e) {
+                logger.warn("Timed out trying to run SHP_2_PGSQL with encoding: UTF-8, see: " + e);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        logger.error("Something went wrong trying to get " + djo.getPID() + fileName + " into postGIS, couldn't find a working encoding");
+        return false;
     }
 
     private String folderized(String simpleFieldVal) {
