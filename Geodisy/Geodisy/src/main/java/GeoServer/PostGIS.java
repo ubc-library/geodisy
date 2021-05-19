@@ -38,6 +38,7 @@ public class PostGIS {
             results = pc.runProcess(call,10,TimeUnit.SECONDS,logger);
 
             if(!results.contains("Unable to convert data value to UTF-8")) {
+                System.out.println("Good convert: " + results);
                 return true;
             } else {
                 String[] encodings = new String[]{"LATIN1", "LATIN2", "LATIN3", "LATIN4", "LATIN5", "LATIN6", "LATIN7", "LATIN8", "LATIN9", "LATIN10", "BIG5", "WIN866", "WIN874", "WIN1250", "WIN1251", "WIN1252", "WIN1256", "WIN1258", "EUC_CN", "EUC_JP", "EUC_KR", "EUC_TW", "GB18030", "GBK", "ISO_8859_5", "ISO_8859_6", "ISO_8859_7", "ISO_8859_8", "JOHAB", "KOI", "MULE_INTERNAL", "SJIS", "SQL_ASCII", "UHC"};
@@ -46,6 +47,7 @@ public class PostGIS {
                     call = GeodisyStrings.replaceSlashes(SHP_2_PGSQL_ALT(en) + folderized(djo.getSimpleFieldVal(PERSISTENT_ID)) + "/" + fileName + " " + POSTGRES_SCHEMA + geoserverLabel + PSQL_CALL + VECTOR_DB + POSTGIS_USER_CALL);
                     results = pc.runProcess(call, 10, TimeUnit.SECONDS, logger);
                     if (!results.contains("Unable to convert data value to UTF-8")) {
+                        System.out.println("Good convert with "+ en + " : " + results);
                         return true;
                     }
                 }
@@ -57,7 +59,9 @@ public class PostGIS {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+
         logger.error("Something went wrong trying to get " + djo.getPID() + fileName + " into postGIS, couldn't find a working encoding");
+        System.out.println("Bad convert: " + results);
         return false;
     }
 
