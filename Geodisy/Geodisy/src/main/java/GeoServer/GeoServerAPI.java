@@ -151,10 +151,9 @@ public class GeoServerAPI extends DestinationAPI {
 
         try {
             deleteVectorLayer(geoserverlabel);
-            System.out.println("Get here?");
             //bring new layer over from POSTGIS
             String call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H \"Content-type: text/xml\" -d \"<featureType><name>" + geoserverlabel.toLowerCase() + "</name><title>"+ title +"</title><nativeCRS>EPSG:4326</nativeCRS><srs>EPSG:4326</srs><enabled>true</enabled></featureType>\" " + GEOSERVER_REST + "workspaces/geodisy/datastores/" + vectorDB + "/featuretypes";
-            System.out.println("App shp to Geoserver: "+ call);
+            System.out.println("App shp to Geoserver");
             ProcessCall pc = new ProcessCall();
             pc.runProcess(call,30, TimeUnit.SECONDS, logger);
 

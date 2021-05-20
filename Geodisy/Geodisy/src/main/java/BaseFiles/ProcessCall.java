@@ -1,7 +1,5 @@
 package BaseFiles;
 
-import GeoServer.HTTPCallerGeosever;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -55,17 +53,17 @@ public class ProcessCall {
         public String[] call() throws FileNotFoundException, IOException  {
             processBuilder.command(args);
             Process p = processBuilder.start();
-            String result = "";
-            String errorResult = "";
+            StringBuilder result = new StringBuilder();
+            StringBuilder errorResult = new StringBuilder();
             try{
                 BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
                 BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    result += line + "\n";
+                    result.append(line).append("\n");
                 }
                 while ((line = error.readLine()) != null) {
-                    errorResult += line + "\n";
+                    errorResult.append(line).append("\n");
                 }
                 p.waitFor();
                 p.destroy();
@@ -77,8 +75,8 @@ public class ProcessCall {
                 throw new IOException();
             }
             String[] results = new String[2];
-            results[0]=result;
-            results[1]=errorResult;
+            results[0]= result.toString();
+            results[1]= errorResult.toString();
             return results;
         }
     }
