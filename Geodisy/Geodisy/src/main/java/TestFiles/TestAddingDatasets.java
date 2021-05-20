@@ -17,7 +17,7 @@ public class TestAddingDatasets implements Test{
         /*FRDRAPI api = new FRDRAPI();
         api.callFRDRHarvester(true);*/
         DataverseJavaObject djo = new DataverseJavaObject("test");
-        djo.setPID("http://hdl.handke.net/11272.1/AB2/CFHEOW");
+        djo.setPID("http://hdl.handle.net/11272.1/AB2/CGHEOW");
         PostGIS p = new PostGIS();
         p.addFile2PostGIS(djo,"2011AgriCensusBoundary___gcar000a11a_e.shp", "v0000001666");
         ProcessCall pc = new ProcessCall();
