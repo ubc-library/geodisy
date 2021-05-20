@@ -52,11 +52,6 @@ public class ProcessCall {
         @Override
         public String[] call() throws FileNotFoundException, IOException  {
             processBuilder.command(args);
-            try {
-                TimeUnit.SECONDS.sleep(14);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             Process p = processBuilder.start();
             StringBuilder result = new StringBuilder();
             StringBuilder errorResult = new StringBuilder();
