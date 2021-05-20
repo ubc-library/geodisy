@@ -56,13 +56,13 @@ public class ProcessCall {
         public String call() throws FileNotFoundException, IOException  {
             processBuilder.command(args);
             Process p = processBuilder.start();
-            StringBuilder result = new StringBuilder();
+            String result = "";
             try{
                 BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
                 String line;
                 while ((line = reader.readLine()) != null) {
                     System.out.println(line);
-                    result.append(line);
+                    result += line;
                 }
                 p.waitFor();
                 p.destroy();
@@ -73,9 +73,8 @@ public class ProcessCall {
                 System.out.println("IOException");
                 throw new IOException();
             }
-            String answer = result.toString();
-            System.out.println("Got something: " + answer + "!!!");
-            return result.toString();
+            System.out.println("Got something: " + result + "!!!");
+            return result;
         }
     }
 }
