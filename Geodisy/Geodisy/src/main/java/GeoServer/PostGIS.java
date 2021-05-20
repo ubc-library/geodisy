@@ -46,6 +46,7 @@ public class PostGIS {
 
                 for(String en: encodings){
                     call = GeodisyStrings.replaceSlashes(SHP_2_PGSQL_ALT(en) + folderized(djo.getSimpleFieldVal(PERSISTENT_ID)) + "/" + fileName + " " + POSTGRES_SCHEMA + geoserverLabel + PSQL_CALL + VECTOR_DB + POSTGIS_USER_CALL);
+                    pc = new ProcessCallError();
                     results = pc.runProcess(call, 10, TimeUnit.SECONDS, logger);
                     if (!results.contains("Unable to convert data value to UTF-8")) {
                         System.out.println("Good convert with "+ en + " : " + results);
