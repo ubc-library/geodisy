@@ -2,6 +2,7 @@ package GeoServer;
 
 import BaseFiles.GeoLogger;
 import BaseFiles.ProcessCall;
+import BaseFiles.ProcessCallError;
 import Dataverse.DataverseJavaObject;
 import _Strings.GeodisyStrings;
 
@@ -32,7 +33,7 @@ public class PostGIS {
 
         String call = GeodisyStrings.replaceSlashes(SHP_2_PGSQL + folderized(djo.getSimpleFieldVal(PERSISTENT_ID)) + "/" + fileName + " " + POSTGRES_SCHEMA + geoserverLabel + PSQL_CALL + VECTOR_DB + POSTGIS_USER_CALL);
         System.out.println("Adding file to postgres with:" + call);
-        ProcessCall pc = new ProcessCall();
+        ProcessCallError pc = new ProcessCallError();
         String results = "";
         try {
             results = pc.runProcess(call,10,TimeUnit.SECONDS,logger);
