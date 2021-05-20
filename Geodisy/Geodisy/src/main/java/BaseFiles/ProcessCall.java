@@ -32,9 +32,10 @@ public class ProcessCall {
         SubProcess process = new SubProcess(s, args, logger);
         Future<String> future = executorService.submit(process);
         executorService.shutdown();
-            if (!executorService.awaitTermination(time, unit)) {
-                throw new TimeoutException();
-            }
+        if (!executorService.awaitTermination(time, unit)) {
+            throw new TimeoutException();
+        }
+        String answer = future.get();
         return future.get();
     }
 
@@ -66,10 +67,13 @@ public class ProcessCall {
                 p.waitFor();
                 p.destroy();
             } catch (FileNotFoundException e) {
+                System.out.println("FileNotFound");
                 throw new FileNotFoundException();
             } catch (InterruptedException e) {
+                System.out.println("IOException");
                 throw new IOException();
             }
+            System.out.println("Got something");
             return result.toString();
         }
     }
