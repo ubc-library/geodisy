@@ -1,24 +1,25 @@
 package Dataverse;
 
 import BaseFiles.GeoLogger;
-import BaseFiles.Geodisy;
+import BaseFiles.ProcessCall;
 import _Strings.GeodisyStrings;
 
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 
 import static _Strings.GeodisyStrings.*;
 
 public class GDALTranslate {
     GeoLogger logger;
+    ProcessCall processCall;
 
     public GDALTranslate() {
         logger = new GeoLogger(this.getClass());
@@ -33,8 +34,8 @@ public class GDALTranslate {
         }else
             return name;
     }
-    public void rasterTransformTest(String dirPath, String name, boolean newLocation){
-        process(dirPath,name,RASTER,newLocation);
+    public void rasterTransformTest(String dirPath, String name){
+        process(dirPath,name,RASTER);
     }
 
     public String vectorTransform(String dirPath, String name){
@@ -49,18 +50,15 @@ public class GDALTranslate {
         }
 
     }
-    public void vectorTransformTest(String dirPath, String name, boolean newLocation) {
-        boolean transformed = process(dirPath, name, VECTOR, newLocation);
+    public void vectorTransformTest(String dirPath, String name) {
+        process(dirPath, name, VECTOR);
     }
 
     private boolean process(String dirPath, String name, String transformType) {
-        return process(dirPath,dirPath,name,transformType, false);
+        return process(dirPath,dirPath,name,transformType);
     }
 
-    private boolean process(String dirPath, String name, String transformType, boolean newLocation) {
-        return process(dirPath,dirPath,name,transformType, newLocation);
-    }
-    public boolean process(String sourcePath, String destPath, String name, String transformType, boolean newLocation){
+    public boolean process(String sourcePath, String destPath, String name, String transformType){
 
         sourcePath = GeodisyStrings.replaceSlashes(sourcePath);
         destPath = GeodisyStrings.replaceSlashes(destPath);
@@ -71,21 +69,13 @@ public class GDALTranslate {
         String nameStub = name.substring(0,name.lastIndexOf("."));
         File file;
 
-        ProcessBuilder processBuilder= new ProcessBuilder();
-
         if(transformType.equals(RASTER)) {
             call = GDAL_TRANSLATE + sourcePath + " " + destPath + "temp.tif";
             call = GeodisyStrings.replaceSlashes(call);
-            Process process = null;
+
             try {
-                if (IS_WINDOWS) {
-                    processBuilder.command("cmd.exe", "/c", call);
-                } else {
-                    processBuilder.command("bash", "-c", call);
-                }
-                processBuilder.redirectErrorStream(true);
-                process = processBuilder.start();
-                process.waitFor(120, TimeUnit.SECONDS);
+                processCall = new ProcessCall();
+                processCall.runProcess(call,120,TimeUnit.SECONDS,logger);
                 if(name.endsWith(".tif"))
                     return true;
                 File newFile = new File(destPath + "temp.tif");
@@ -98,32 +88,19 @@ public class GDALTranslate {
                     throw new IOException();
                 }
 
-            } catch (IOException | InterruptedException e) {
+            } catch (IOException | InterruptedException |  ExecutionException e) {
                 logger.error("Something went wrong converting " + name + " to geotiff");
-            }finally{
-                if(process!=null)
-                    process.destroy();
+            } catch (TimeoutException e) {
+                logger.error("Call timed out trying to convert " + name + " to geotiff");
             }
         } else
             {
                 call = OGR2OGR + destPath + "temp.shp " + sourcePath;
                 call = GeodisyStrings.replaceSlashes(call);
-                processBuilder.command("bash", "-c", call);
-                Process p;
-                String output ="";
+                String output;
                 try {
-                    if (IS_WINDOWS) {
-                        processBuilder.command("cmd.exe", "/c", call);
-                    } else {
-                        processBuilder.command("bash", "-c", call);
-                    }
-                    p = processBuilder.start();
-                    try {
-                        p.waitFor(3,TimeUnit.SECONDS);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    p.destroy();
+                    processCall = new ProcessCall();
+                    output = processCall.runProcess(call,3,TimeUnit.SECONDS,logger)[0];
                     if(output.contains("FAILURE"))
                         return false;
                     if(name.toLowerCase().endsWith(".shp")) {
@@ -173,8 +150,10 @@ public class GDALTranslate {
                         }
                         return true;
                     }
-                } catch (IOException e) {
+                } catch (IOException | ExecutionException | InterruptedException e) {
                     logger.error("Something went wrong converting " + name + " to shapefile");
+                } catch (TimeoutException e) {
+                    logger.error("Timeout when trying to convert " + name + " to shapefile");
                 }
             }
         file = new File(sourcePath);

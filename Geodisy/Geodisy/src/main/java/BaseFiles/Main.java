@@ -38,27 +38,11 @@ public class Main {
         else
             dev = "Using the prod servers, is this correct?";
         GeodisyStrings.load();
-        GeodisyTask geodisyTask = new GeodisyTask();
-        geodisyTask.run();
-
-        /*Tests tests = new Tests();
-        tests.runTests();*/
+        /*GeodisyTask geodisyTask = new GeodisyTask();
+        geodisyTask.run();*/
+        System.out.println(GEOSERVER_PASSWORD);
+        Tests tests = new Tests();
+        tests.runTests();
 
     }
-    //Only use this method for testing syntax for calling Geocombine
-    private static void testCombine(String[] args) {
-        List<String> cmdList = new ArrayList<String>();
-        cmdList.add("/bin/bash");
-        cmdList.add("-c");
-        cmdList.add(GEOCOMBINE);
-        if(args.length>0) {
-            cmdList.clear();
-            for(String s:args) {
-                cmdList.add(s);
-            }
-        }
-        GeoCombine geoCombine = new GeoCombine();
-        geoCombine.combine(cmdList);
-    }
-
 }
