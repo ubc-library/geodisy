@@ -167,7 +167,7 @@ public class GeoServerAPI extends DestinationAPI {
             return true;
     }
 
-    private void deleteVectorLayer(String geoserverlabel) throws InterruptedException, ExecutionException {
+    private void deleteVectorLayer(String geoserverlabel) {
         ProcessCall pc = new ProcessCall();
         try {
             //Part 1
@@ -177,6 +177,7 @@ public class GeoServerAPI extends DestinationAPI {
 
             //Part2
             call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XDELETE " + GEOSERVER_REST + "workspaces/geodisy/datastores/" + GEOSERVER_VECTOR_STORE + "/featuretypes/" + geoserverlabel + ".xml";
+            pc = new ProcessCall();
             pc.runProcess(call,30,TimeUnit.SECONDS, logger);
 
         }catch (FileNotFoundException ignored) {
@@ -186,7 +187,6 @@ public class GeoServerAPI extends DestinationAPI {
         } catch (InterruptedException | ExecutionException e) {
             System.out.println("Something went wrong trying to delete layer with geolabel: " + geoserverlabel);
             logger.error("Something went wrong trying to delete layer with geolabel: " + geoserverlabel);
-            throw e;
         }
     }
 
