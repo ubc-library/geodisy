@@ -4,6 +4,7 @@ import BaseFiles.GeoLogger;
 import BaseFiles.ProcessCall;
 import Dataverse.DataverseJavaObject;
 import Dataverse.FRDRAPI;
+import GeoServer.GeoServerAPI;
 import GeoServer.PostGIS;
 
 import java.io.FileNotFoundException;
@@ -18,22 +19,7 @@ public class TestAddingDatasets implements Test{
         api.callFRDRHarvester(true);*/
         DataverseJavaObject djo = new DataverseJavaObject("test");
         djo.setPID("http://hdl.handle.net/11272.1/AB2/CGHEOW");
-        PostGIS p = new PostGIS();
-        p.addFile2PostGIS(djo,"2011AgriCensusBoundary___gcar000a11a_e.shp", "v0000001666");
-        ProcessCall pc = new ProcessCall();
-        String s = "curl -u admin:YsHtK5XyuCNWRA9j -XPOST -H \"Content-type: text/xml\" -d \"<featureType><name>v0000001666</name><title>2011AgriCensusBoundary___gcar000a11a_e</title><nativeCRS>EPSG:4326</nativeCRS><srs>EPSG:4326</srs><enabled>true</enabled></featureType>\" http://prod-gs-g1:8080/geoserver/rest/workspaces/geodisy/datastores/vectordata/featuretypes";
-        GeoLogger logger = new GeoLogger(this.getClass());
-        try {
-            System.out.println("Start");
-            System.out.println(pc.runProcess(s,30, TimeUnit.SECONDS,logger));
-        } catch (TimeoutException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        GeoServerAPI g = new GeoServerAPI(djo);
+        g.addVector("2011AgriCensusBoundary___gcar000a11a_e.shp", "v0000001666");
     }
 }
