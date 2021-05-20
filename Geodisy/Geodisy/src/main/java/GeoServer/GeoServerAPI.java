@@ -263,9 +263,11 @@ public class GeoServerAPI extends DestinationAPI {
         fileName = fileName + ".tif";
 
         try { deleteOldCoverstore(geoserverLabel);
-        }catch (InterruptedException | IOException | TimeoutException | ExecutionException f) {
+        }catch (InterruptedException | IOException |  ExecutionException f) {
             logger.error("Error trying to delete existing raster from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
             return false;
+        } catch (TimeoutException e) {
+            logger.error("Timeout trying to delete existing raster from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" +  fileName);
         }
         try { normalizeRaster(fileName);
         }catch (InterruptedException | IOException | TimeoutException | ExecutionException f) {
