@@ -73,7 +73,8 @@ public class ProcessCall {
                 System.out.println("IOException");
                 throw new IOException();
             }
-            System.out.println("Got something");
+            String answer = result.toString();
+            System.out.println("Got something: " + answer + "!!!");
             return result.toString();
         }
     }
