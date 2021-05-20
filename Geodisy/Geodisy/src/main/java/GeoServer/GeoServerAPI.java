@@ -268,15 +268,22 @@ public class GeoServerAPI extends DestinationAPI {
             return false;
         } catch (TimeoutException e) {
             logger.error("Timeout trying to delete existing raster from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" +  fileName);
+            return false;
         }
         try { normalizeRaster(fileName);
-        }catch (InterruptedException | IOException | TimeoutException | ExecutionException f) {
+        }catch (InterruptedException | IOException  | ExecutionException f) {
             logger.error("Error trying to normalize raster from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
+            return false;
+        } catch (TimeoutException e) {
+            logger.error("Timeout trying to normalize raster from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
             return false;
         }
         try { renameRasterToOrig(GeodisyStrings.removeHTTPSAndReplaceAuthority(sjo.getPID()).replace(".","/"),fileName);
-        }catch (InterruptedException | IOException | TimeoutException | ExecutionException f) {
+        }catch (InterruptedException | IOException |  ExecutionException f) {
             logger.error("Error trying to rename raster back to correct name from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
+            return false;
+        } catch (TimeoutException e) {
+            logger.error("Timeout trying to rename raster back to correct name from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
             return false;
         }
         /*try { addRasterOverviews(processBuilder, fileName);
@@ -286,20 +293,29 @@ public class GeoServerAPI extends DestinationAPI {
         }*/
 
         try { createCoverstore(geoserverLabel, fileName);
-        }catch (InterruptedException | IOException | TimeoutException | ExecutionException f) {
+        }catch (InterruptedException | IOException | ExecutionException f) {
             logger.error("Error trying to create a coverstore for raster from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
+            return false;
+        } catch (TimeoutException e) {
+            logger.error("Timeout trying to create a coverstore for raster from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
             return false;
         }
 
         try{ enableCoverageStore(geoserverLabel,fileName);
-        }catch (InterruptedException | IOException | TimeoutException | ExecutionException f){
+        }catch (InterruptedException | IOException | ExecutionException f){
         logger.error("Error trying to enable coveragestore on geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
+            return false;
+        } catch (TimeoutException e) {
+            logger.error("Timeout trying to enable coveragestore on geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
             return false;
         }
 
         try{ addRasterLayer(geoserverLabel,fileName);
-        }catch (InterruptedException | IOException | TimeoutException | ExecutionException f){
+        }catch (InterruptedException | IOException  | ExecutionException f){
             logger.error("Error trying to add raster to geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
+            return false;
+        } catch (TimeoutException e) {
+            logger.error("Timeout trying to add raster to geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
             return false;
         }
         ExistingRasterRecords existingRasterRecords = ExistingRasterRecords.getExistingRasters();
