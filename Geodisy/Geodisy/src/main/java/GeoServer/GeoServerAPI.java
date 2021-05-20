@@ -145,7 +145,7 @@ public class GeoServerAPI extends DestinationAPI {
             return postGIS.addFile2PostGIS((DataverseJavaObject) sjo, fileName,geoserverlabel);
         }
 
-        public boolean addPostGISLayerToGeoserver(String geoserverlabel, String filename){
+    public boolean addPostGISLayerToGeoserver(String geoserverlabel, String filename){
         String vectorDB = GEOSERVER_VECTOR_STORE;
         String title = filename.substring(0,filename.lastIndexOf('.'));
 
@@ -196,7 +196,7 @@ public class GeoServerAPI extends DestinationAPI {
         String call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -H 'Accept: text/xml' -XGET "+ GEODISY_PATH_ROOT + "geoserver/rest/workspaces/geodisy/datastores/"+ vectorDB + "/featuretypes/" + geoserverLabel+".xml";
         call = GeodisyStrings.replaceSlashes(call);
         try {
-            String xml = processCall.runProcess(call,10, TimeUnit.SECONDS,logger);
+            String xml = processCall.runProcess(call,10, TimeUnit.SECONDS,logger)[0];
             xml.replace("<title>"+geoserverLabel+"</title>","<title>"+title+"</title>");
             call = "curl -u admin:geoserver -H 'Accept: application/xml' -H 'Content-type: application/xml' -XPUT " + GEOSERVER_REST + " workspaces/geodisy/datastores/"+ vectorDB+"/featuretypes/" + geoserverLabel+ ".xml -d '" + xml + "'";
             processCall.runProcess(call,1, TimeUnit.SECONDS,logger);

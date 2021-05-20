@@ -37,10 +37,10 @@ public class GDAL {
                 LinkedList<String> args = new LinkedList<>();
                 args.add("cmd.exe");
                 args.add("/c");
-                gdalString = new StringBuilder(processCall.runProcess(gdal + filePath,30, TimeUnit.SECONDS,args,logger));
+                gdalString = new StringBuilder(processCall.runProcess(gdal + filePath,30, TimeUnit.SECONDS,args,logger)[0]);
 
             } else {
-                gdalString = new StringBuilder(processCall.runProcess(gdal + filePath,30, TimeUnit.SECONDS,logger));
+                gdalString = new StringBuilder(processCall.runProcess(gdal + filePath,30, TimeUnit.SECONDS,logger)[0]);
 
             }
         } catch (InterruptedException|ExecutionException e) {

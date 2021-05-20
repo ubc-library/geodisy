@@ -19,7 +19,7 @@ public class ProcessCall {
         executorService = Executors.newSingleThreadExecutor();
 
     }
-    public String runProcess(String s, int time, TimeUnit unit, GeoLogger logger) throws TimeoutException,FileNotFoundException, ExecutionException, InterruptedException  {
+    public String[] runProcess(String s, int time, TimeUnit unit, GeoLogger logger) throws TimeoutException,FileNotFoundException, ExecutionException, InterruptedException  {
         List<String> args = new LinkedList<>();
         args.add("/usr/bin/bash");
         args.add("-c");
@@ -27,19 +27,18 @@ public class ProcessCall {
     }
 
 
-    public String runProcess(String s, int time, TimeUnit unit,  List<String> args, GeoLogger logger) throws TimeoutException,FileNotFoundException, ExecutionException, InterruptedException  {
+    public String[] runProcess(String s, int time, TimeUnit unit,  List<String> args, GeoLogger logger) throws TimeoutException,FileNotFoundException, ExecutionException, InterruptedException  {
         this.logger = logger;
         SubProcess process = new SubProcess(s, args, logger);
-        Future<String> future = executorService.submit(process);
+        Future<String[]> future = executorService.submit(process);
         executorService.shutdown();
         if (!executorService.awaitTermination(time, unit)) {
             throw new TimeoutException();
         }
-        String answer = future.get();
         return future.get();
     }
 
-    class SubProcess implements Callable<String> {
+    class SubProcess implements Callable<String[]> {
         String call;
         ProcessBuilder processBuilder;
         List<String> args;
@@ -53,10 +52,11 @@ public class ProcessCall {
             this.logger = logger;
         }
         @Override
-        public String call() throws FileNotFoundException, IOException  {
+        public String[] call() throws FileNotFoundException, IOException  {
             processBuilder.command(args);
             Process p = processBuilder.start();
             String result = "";
+            String errorResult = "";
             try{
                 BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
                 BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
@@ -67,7 +67,7 @@ public class ProcessCall {
                 }
                 while ((line = error.readLine()) != null) {
                     System.out.println(line);
-                    result += line + "\n";
+                    errorResult += line + "\n";
                 }
                 p.waitFor();
                 p.destroy();
@@ -78,8 +78,10 @@ public class ProcessCall {
                 System.out.println("IOException");
                 throw new IOException();
             }
-            System.out.println("Got something: " + result + "!!!");
-            return result;
+            String[] results = new String[2];
+            results[0]=result;
+            results[1]=errorResult;
+            return results;
         }
     }
 }
