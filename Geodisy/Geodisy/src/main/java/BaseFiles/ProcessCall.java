@@ -62,11 +62,9 @@ public class ProcessCall {
                 BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    System.out.println(line);
                     result += line + "\n";
                 }
                 while ((line = error.readLine()) != null) {
-                    System.out.println(line);
                     errorResult += line + "\n";
                 }
                 p.waitFor();

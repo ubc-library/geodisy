@@ -30,7 +30,6 @@ public class PostGIS {
 
 
         String call = GeodisyStrings.replaceSlashes(SHP_2_PGSQL + folderized(djo.getSimpleFieldVal(PERSISTENT_ID)) + "/" + fileName + " " + POSTGRES_SCHEMA + geoserverLabel + PSQL_CALL + VECTOR_DB + POSTGIS_USER_CALL);
-        System.out.println("Adding file to postgres with:" + call);
         ProcessCall pc = new ProcessCall();
         String[] results = new String[2];
         String error = "";
@@ -71,39 +70,6 @@ public class PostGIS {
 
     private String folderized(String simpleFieldVal) {
         return  GeodisyStrings.replaceSlashes(GeodisyStrings.removeHTTPSAndReplaceAuthority(simpleFieldVal).replace(".","/").replace("_","/"));
-    }
-
-    class SHP2PGSQL implements Callable<String>{
-        String call;
-
-        public SHP2PGSQL(String call) {
-            this.call = call;
-        }
-
-        @Override
-        public String call() throws Exception {
-            List<String> args = new LinkedList<>();
-            args.add("/usr/bin/bash");
-            args.add("-c");
-            args.add(call);
-            ProcessBuilder processBuilder = new ProcessBuilder();
-            Process p = processBuilder.start();
-            StringBuilder result = new StringBuilder();
-            try{
-                BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    result.append(line);
-                }
-                p.waitFor();
-                p.destroy();
-            } catch (FileNotFoundException e) {
-                throw new FileNotFoundException();
-            } catch (InterruptedException e) {
-                throw new IOException();
-            }
-            return result.toString();
-        }
     }
 }
 
