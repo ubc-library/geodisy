@@ -37,7 +37,7 @@ public class PostGIS {
         try {
             results = pc.runProcess(call,10,TimeUnit.SECONDS,logger);
 
-            if(!results.contains("Unable to convert data value to UTF-8")) {
+            if(!results.contains("Unable to convert data value to \'UTF-8\'")) {
                 System.out.println("Good convert: " + results);
                 return true;
             } else {
