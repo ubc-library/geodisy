@@ -64,9 +64,6 @@ public class GeoCombine {
     }
 
     public void clearSolr(){
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.redirectErrorStream(true);
-        Process p = null;
         try{
             System.out.println("Clearing Solr");
             SOLR solr = new SOLR();
