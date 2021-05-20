@@ -103,23 +103,10 @@ public class FRDRAPI extends SourceAPI{
             os.close();
             InputStream in = new BufferedInputStream(conn.getInputStream());
             String result = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
-            JSONObject jsonObject = new JSONObject(result);
 
 
             in.close();
             conn.disconnect();
-
-            /*ProcessBuilder processBuilder= new ProcessBuilder();
-            Process p;
-            processBuilder.command("/usr/bin/bash", "-c", generateWorkspace);
-            processBuilder.redirectErrorStream(true);
-            p = processBuilder.start();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-                String line;
-                while ((line = reader.readLine()) != null)
-                    continue;
-            p.waitFor();
-            p.destroy();*/
         } catch (IOException e) {
             logger.error("Something went wrong trying to call FRDR to mark record #" + record_id + " as processed by Geodisy");
         }
