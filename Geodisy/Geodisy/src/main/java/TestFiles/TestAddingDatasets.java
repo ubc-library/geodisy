@@ -15,11 +15,10 @@ import java.util.concurrent.TimeoutException;
 public class TestAddingDatasets implements Test{
     @Override
     public void run() {
-        /*FRDRAPI api = new FRDRAPI();
-        api.callFRDRHarvester(true);*/
+
         DataverseJavaObject djo = new DataverseJavaObject("test");
-        djo.setPID("http://hdl.handle.net/11272.1/AB2/CGHEOW");
+        djo.setPID("http://hdl.handle.net/11272.1/AB2/RAMZ8A");
         GeoServerAPI g = new GeoServerAPI(djo);
-        g.addVector("2011AgriCensusBoundary___gcar000a11a_e.shp", "v0000001666");
+        g.addRaster("F1.tif", "r0000009999");
     }
 }
