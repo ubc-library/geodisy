@@ -149,8 +149,8 @@ public class Geonames {
         parameters.put("style","FULL");
         parameters.put("maxRows","1");
         String countryCode = getCountryCode(country);
-        parameters.put("country",countryCode);
-
+        if(!countryCode.equals(""))
+            parameters.put("country",countryCode);
         return parameters;
     }
 
@@ -182,6 +182,6 @@ public class Geonames {
         String cc = existingLocations.getLocationNames(countryName)[2];
         if(!cc.isEmpty())
             return cc;
-        return (new Country(countryName)).getCountryCode();
+        return "";
     }
 }
