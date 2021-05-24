@@ -40,9 +40,9 @@ public class DownloadRecord {
         for(File f: files){
             String name = f.getName();
             if(GeodisyStrings.gdalinfoRasterExtention(name))
-                trans.rasterTransformTest(path,name,true);
+                trans.rasterTransformTest(path,name);
             else if(GeodisyStrings.ogrinfoVectorExtension(name))
-                trans.vectorTransformTest(path,name,true);
+                trans.vectorTransformTest(path,name);
             else
                 count--;
         }

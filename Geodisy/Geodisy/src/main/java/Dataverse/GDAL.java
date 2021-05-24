@@ -1,6 +1,7 @@
 package Dataverse;
 
 import BaseFiles.GeoLogger;
+import BaseFiles.ProcessCall;
 import _Strings.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
@@ -8,7 +9,9 @@ import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.LinkedList;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import static _Strings.GeodisyStrings.*;
 import static _Strings.DVFieldNameStrings.*;
@@ -20,7 +23,6 @@ public class GDAL {
         String gdal;
         StringBuilder gdalString = new StringBuilder();
 
-        Process process;
         if(GeodisyStrings.gdalinfoRasterExtention(name)) {
             gdal = GDALINFO;
         }
@@ -29,32 +31,23 @@ public class GDAL {
         }else
             return "FAILURE";
 
-        ProcessBuilder processBuilder= new ProcessBuilder();
+        ProcessCall processCall = new ProcessCall();
+        try{
+            if (IS_WINDOWS) {
+                LinkedList<String> args = new LinkedList<>();
+                args.add("cmd.exe");
+                args.add("/c");
+                gdalString = new StringBuilder(processCall.runProcess(gdal + filePath,30, TimeUnit.SECONDS,args,logger)[0]);
 
-        int counter = 0;
-        if (IS_WINDOWS) {
-            processBuilder.command("cmd.exe", "/c", gdal + filePath);
-        } else {
-            processBuilder.command("/usr/bin/bash", "-c", gdal+filePath);
-        }
-        processBuilder.redirectErrorStream(true);
-        process = processBuilder.start();
-        try {
-            process.waitFor(30, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
+            } else {
+                gdalString = new StringBuilder(processCall.runProcess(gdal + filePath,30, TimeUnit.SECONDS,logger)[0]);
+
+            }
+        } catch (InterruptedException|ExecutionException e) {
             logger.error("Something went wrong running GDAL info on " + filePath);
+        } catch (TimeoutException e) {
+            logger.error("System timed out running GDAL info on " + filePath);
         }
-        BufferedReader stdInput = new BufferedReader(new
-                InputStreamReader(process.getInputStream()));
-
-        String s;
-        while ((s = stdInput.readLine()) != null) {
-            gdalString.append(s);
-        }
-
-        /*if(!name.endsWith(".csv")&& gdalString.toString().contains("FAILURE"))
-            System.out.println(gdalString.toString());*/
-        stdInput.close();
         return gdalString.toString();
     }
     //Not used by main program
@@ -130,11 +123,11 @@ public class GDAL {
                 return new GeographicBoundingBox(doi);
             }
             if(gdalInfo) {
-                temp = getRaster(gdalString, filePath, IS_WINDOWS, regularName );
+                temp = getRaster(gdalString, filePath, regularName );
                 projection = getProjection(gdalString);
             }
             else {
-                temp = getVector(gdalString, IS_WINDOWS, regularName, filePath);
+                temp = getVector(gdalString, regularName, filePath);
                 projection = temp.getField(PROJECTION);
             }
             temp.setIsGeneratedFromGeoFile(true);
@@ -198,7 +191,7 @@ public class GDAL {
                 logger.warn("Something went wrong parsing " + name + " at " + filePath);
                 return new GeographicBoundingBox(djo.getPID());
             }
-        GeographicBoundingBox temp = getVector(ogrString, IS_WINDOWS, name, filePath);
+        GeographicBoundingBox temp = getVector(ogrString, name, filePath);
         temp.setIsGeneratedFromGeoFile(true);
         return temp;
         } catch (IOException e) {
@@ -207,14 +200,14 @@ public class GDAL {
         return new GeographicBoundingBox("junk");
     }
 
-    private GeographicBoundingBox getRaster(String gdalString, String filePath, boolean isWindows, String fileName) throws IOException {
+    private GeographicBoundingBox getRaster(String gdalString, String filePath, String fileName) throws IOException {
 
         GeographicBoundingBox temp = new GeographicBoundingBox("temp");
         BoundingBox bb = getLatLongGdalInfo(gdalString);
         if(isZeroPoint(bb))
             return new GeographicBoundingBox("junk");
         if(bb.hasUTMCoords()||!fileName.endsWith(".tif")) {
-            fileName = convertToAppropriateFileFormat(filePath, IS_WINDOWS, fileName);
+            fileName = convertToAppropriateFileFormat(filePath, fileName);
             filePath = filePath.substring(0, filePath.lastIndexOf(".")) + ".tif";
             gdalString = getGDALInfo(filePath, fileName);
             bb = getLatLongGdalInfo(gdalString);
@@ -233,7 +226,7 @@ public class GDAL {
         return bb.getLongWest()==0 && bb.getLongEast()==0 && bb.getLatNorth()==0 && bb.getLatSouth()==0;
     }
 
-    private GeographicBoundingBox getVector(String gdalString, boolean isWindows, String fileName, String filePath) throws IOException {
+    private GeographicBoundingBox getVector(String gdalString, String fileName, String filePath) throws IOException {
         String geo = getGeometryType(gdalString);
         GeographicBoundingBox gbb = new GeographicBoundingBox("temp");
         BoundingBox bb;
@@ -245,7 +238,7 @@ public class GDAL {
         if(isZeroPoint(bb))
             return new GeographicBoundingBox("junk");
         if(bb.hasUTMCoords() || !fileName.endsWith("shp")) {
-            fileName = convertToAppropriateFileFormat(filePath, IS_WINDOWS, fileName);
+            fileName = convertToAppropriateFileFormat(filePath, fileName);
             filePath = filePath.substring(0,filePath.lastIndexOf("."))+".shp";
             gdalString = getGDALInfo(filePath,fileName);
             bb = getLatLongOgrInfo(gdalString);
@@ -270,7 +263,7 @@ public class GDAL {
         return first + ":" + second;
     }
  
-    private String convertToAppropriateFileFormat(String filePath, boolean isWindows, String name) throws IOException {
+    private String convertToAppropriateFileFormat(String filePath, String name) throws IOException {
         GDALTranslate gdalTranslate = new GDALTranslate();
         String path = new File(filePath).getPath();
         String stub;
@@ -390,9 +383,9 @@ public class GDAL {
             temp.setGeometryType(getGeometryType(gdalString));
             GeographicBoundingBox bb;
             if(GeodisyStrings.gdalinfoRasterExtention(name))
-                bb = getRaster(gdalString, file.getAbsolutePath() , IS_WINDOWS, file.getName() );
+                bb = getRaster(gdalString, file.getAbsolutePath() , file.getName() );
             else
-                bb = getVector(gdalString,IS_WINDOWS,file.getName(),file.getAbsolutePath());
+                bb = getVector(gdalString, file.getName(),file.getAbsolutePath());
             temp.setIsFromFile(true);
             temp.setBB(bb.getBB());
         } catch (IOException e) {

@@ -14,7 +14,7 @@ public class ENDPOINT_STRINGS {
     public static final String DATA_DIR_LOC_CLOUD       = "/geodata/geoserver/data/downloads/";
 
     public static final String WINDOWS_ROOT             = "D:\\Work\\Geodisy\\Geodisy\\";
-    public static final String FRDR_VM_CENTOS_ROOT      = "/home/centos/geodisy/Geodisy/Geodisy/";
+    public static final String FRDR_VM_CENTOS_ROOT      = "./";
 
     public static String DEV_HARVESTER_BASE             = "https://dev3.frdr.ca/harvestapi/";
     public static String PROD_HARVESTER_BASE            = "https://www.frdr-dfdr.ca/harvestapi/";

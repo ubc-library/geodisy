@@ -2,6 +2,7 @@ package Dataverse;
 
 import BaseFiles.GeoLogger;
 import BaseFiles.HTTPGetCall;
+import BaseFiles.ProcessCall;
 import _Strings.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
@@ -15,6 +16,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 
 import static _Strings.GeodisyStrings.*;
@@ -321,37 +325,37 @@ public class DataverseJavaObject extends SourceJavaObject {
         String merge = "gdalbuildvrt mpsaic.vrt " + DATASET_FILES_PATH + drf.getDatasetIdent().replace("_","/") + "/";
         String delete = "rm "+ DATASET_FILES_PATH + drf.getDatasetIdent().replace("_","/") + "/*.tif";
         String transform ="gdal_translate -of GTiff -co \"COMPRESS=JPEG\" -co \"PHOTOMETRIC=YCBCR\" -co \"TILED=YES\" mosaic.vrt" + drf.getDatasetIdent() + ".tif";
-        ProcessBuilder p = new ProcessBuilder();
-        p.command("bash","-c",merge);
-        processBuilder.redirectErrorStream(true);
-        Process process = null;
+        ProcessCall processCall;
         try {
-            process = p.start();
+            processCall = new ProcessCall();
+            processCall.runProcess(merge,5, TimeUnit.SECONDS,logger);
 
-            process.waitFor();
-            process.destroy();
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException | ExecutionException e) {
             logger.error("Something went wrong trying to merge tifs in a mosaic file in record: " + drf.getDatasetIdent());
+        } catch (TimeoutException e) {
+            logger.error("Timeout trying to merge tifs in a mosaic file in record: " + drf.getDatasetIdent());
         }
         try{
-            p.command("bash","-c",delete);
-            process = p.start();
-            process.waitFor();
-            process.destroy();
-        } catch (IOException | InterruptedException e) {
+            processCall = new ProcessCall();
+            processCall.runProcess(delete,5, TimeUnit.SECONDS,logger);
+
+        } catch (IOException | InterruptedException | ExecutionException e) {
             logger.error("Something went wrong trying to delete merged tifs in record: " + drf.getDatasetIdent());
+        } catch (TimeoutException e) {
+            logger.error("Timeout trying to merge tifs in a mosaic file in record: " + drf.getDatasetIdent());
         }
         try{
-        p.command("bash","-c",transform);
-            process = p.start();
-            process.waitFor();
-            process.destroy();
-        } catch (IOException | InterruptedException e) {
+            processCall = new ProcessCall();
+            processCall.runProcess(transform,5, TimeUnit.SECONDS,logger);
+
+        } catch (IOException | InterruptedException | ExecutionException e) {
             logger.error("Something went wrong trying to convert merged tifs (mosaic) to to a new tif in record: " + drf.getDatasetIdent());
+        } catch (TimeoutException e) {
+            logger.error("Timeout trying to merge tifs in a mosaic file in record: " + drf.getDatasetIdent());
         }
         DataverseRecordFile temp;
         if(drf.getFileIdent().equals(""))
-            temp = new DataverseRecordFile(drf.getDatasetIdent().replace("_","/") + "/*.tif",drf.getDbID(),drf.getServer(),drf.getDatasetIdent());
+            temp = new DataverseRecordFile(drf.getFileName(),drf.getDatasetIdent(),drf.getDbID());
         else
             temp = new DataverseRecordFile(drf.getDatasetIdent().replace("_","/") + "/*.tif",drf.getFileIdent(),drf.getDbID(),drf.getServer(),drf.getDatasetIdent());
 
