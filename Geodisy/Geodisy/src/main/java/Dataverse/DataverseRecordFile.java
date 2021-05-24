@@ -2,22 +2,20 @@ package Dataverse;
 
 import BaseFiles.GeoLogger;
 import BaseFiles.HTTPGetCall;
+import BaseFiles.ProcessCallFileDownload;
 import _Strings.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import GeoServer.FolderFileParser;
-import org.apache.commons.io.FileUtils;
 
 
 import java.io.*;
-import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
-import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.Stack;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 
 import static _Strings.GeodisyStrings.*;
@@ -147,8 +145,23 @@ public class DataverseRecordFile {
         downloads.addDownload(originalTitle,djo.getPID(),recordURL);
         String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(datasetIdent).replace("_", "/").replace(".","/")+"/");
 
-        HTTPGetCall httpGetCall = new HTTPGetCall();
-        httpGetCall.getFile(getFileURL(),getFileName(),dirPath);
+        ProcessCallFileDownload process = new ProcessCallFileDownload();
+        String fileName = getFileName();
+        String url = getFileURL();
+        String path = dirPath;
+        try{
+            try {
+                process.downloadFile(getFileURL(),getFileName(),dirPath,logger,20, TimeUnit.MINUTES);
+            } catch (TimeoutException e) {
+                logger.error("Download Timedout for " + fileName + " at url " + url);
+                Files.deleteIfExists(Paths.get(path+fileName));
+            } catch (InterruptedException e) {
+                logger.error("Download Error for " + fileName + " at url " + url);
+                Files.deleteIfExists(Paths.get(path+fileName));
+            }
+        }catch (IOException e) {
+            logger.error("Delete failed download failed for " + fileName + " from " + url);
+        }
 
 
         String filePath = dirPath + translatedTitle;

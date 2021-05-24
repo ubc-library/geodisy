@@ -42,7 +42,7 @@ public class HTTPGetCall {
         client = HttpClients.createDefault();
     }
 
-    public void getFile(String fileURL, String fileName, String path) {
+    public void getFile(String fileURL, String fileName, String path) throws IOException {
 
         if (fileURL.startsWith("ftp://") || fileURL.startsWith("http://ftp") || fileURL.startsWith("https://ftp")) {
             getFTPFile(fileURL, fileName, path);
@@ -51,7 +51,7 @@ public class HTTPGetCall {
         makeCurlCall(fileURL, fileName, path);
     }
 
-    private void makeCurlCall(String fileURL, String fileName, String path) {
+    private void makeCurlCall(String fileURL, String fileName, String path) throws IOException {
         BufferedInputStream in = null;
         FileOutputStream fos = null;
         BufferedOutputStream bout = null;
@@ -68,23 +68,9 @@ public class HTTPGetCall {
             bout = new BufferedOutputStream(fos,2048);
             byte[] data = new byte[2048];
             int i=0;
-            long seconds = 1000;
-            long minutes = 60;
-            long timeToStop = 20 * minutes * seconds;
-            long start = Calendar.getInstance().getTimeInMillis();
             while((i=in.read(data,0,2048))>=0) {
                 bout.write(data,0,i);
-                if(Calendar.getInstance().getTimeInMillis()-start > timeToStop) {
-                    bout.close();
-                    Files.deleteIfExists(Paths.get(path+fileName));
-                    throw new Exception();
-                }
             }
-        } catch (IOException e) {
-            logger.error("Something went wrong trying to download " + fileURL);
-            deleteFile(path+fileName);
-        } catch (Exception e) {
-            logger.error("Took too long downloading file " + fileName + "from " + fileURL);
         } finally {
             try {
                 if(bout!=null)
