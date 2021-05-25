@@ -232,7 +232,12 @@ public class DataverseJavaObject extends SourceJavaObject {
             String name = dataFiles.get(i).getTranslatedTitle();
             if (!name.endsWith("zip") && !name.endsWith("tab"))
                 left.add(dataFiles.get(i));
+            if((i+1)%50 == 0)
+                System.out.print(".");
+            if(i%250==0)
+                System.out.print(i);
         }
+        System.out.print("Finished deleting .zip and .tab files that still exist");
         dataFiles = left;
 
         LinkedList<DataverseGeoRecordFile> newRecs = new LinkedList<>();
