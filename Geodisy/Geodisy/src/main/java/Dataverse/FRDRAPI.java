@@ -58,7 +58,6 @@ public class FRDRAPI extends SourceAPI{
                     System.out.println("#" + counter + " ID = " + djo.getPID());
                     if (djo.hasGeoGraphicCoverage())
                         djo = (DataverseJavaObject) getBBFromGeonames(djo);if (djo.hasContent) {
-                        System.out.println("Downloading record: " + djo.getPID());
                         if(!dontProcessSpecificRecords(djo.getPID())) {
                             if(!testing) {
                                 System.out.println("Downloading record: " + djo.getPID());
