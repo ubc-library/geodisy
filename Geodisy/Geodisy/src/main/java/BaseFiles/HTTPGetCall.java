@@ -70,6 +70,7 @@ public class HTTPGetCall {
             int i=0;
             while((i=in.read(data,0,2048))>=0) {
                 bout.write(data,0,i);
+                System.out.print(".");
             }
         } finally {
             try {
