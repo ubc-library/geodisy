@@ -24,14 +24,27 @@ public class GeoCombine {
     }
 
     public void index(){
-
+        deleteXML();
         moveMetadata();
         clearSolr();
         combine();
     }
+
+    private void deleteXML() {
+        try{
+            processCall = new ProcessCall();
+            processCall.runProcess(DELETE_XML, 1, TimeUnit.HOURS, logger);
+        } catch (IOException | InterruptedException |  ExecutionException e) {
+            logger.error("Something went wrong trying to delete XML files");
+        } catch (TimeoutException e) {
+            logger.error("Deleting XML files timed out!");
+        }
+    }
+
     public void combine(){
         try{
             System.out.println("Calling Geocombine");
+            processCall = new ProcessCall();
             processCall.runProcess(GEOCOMBINE,5, TimeUnit.HOURS,logger);
         } catch (IOException | InterruptedException |  ExecutionException e) {
             logger.error("Something went wrong calling GeoCombine to index files: " + e);
@@ -54,6 +67,7 @@ public class GeoCombine {
 
     public void moveMetadata(){
         try{
+            processCall = new ProcessCall();
             System.out.println("Moving metadata");
             processCall.runProcess(MOVE_METADATA,2,TimeUnit.HOURS,logger);
         } catch (IOException|InterruptedException|ExecutionException e){

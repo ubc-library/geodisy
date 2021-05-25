@@ -17,6 +17,7 @@ public class GeodisyStrings {
         MOVE_DATA = "sudo rsync -au --delete " + GEODISY_PATH_ROOT + "datasetFiles/* " + DATA_DIR_LOC;
         GEOCOMBINE = "sh " + GEODISY_PATH_ROOT + "geodisyFiles/combine.sh";
         GITCALL = "sh " + GEODISY_PATH_ROOT + "geodisyFiles/git.sh";
+        DELETE_XML = "sudo find " + GEODISY_PATH_ROOT + "metadata/ -name \"iso19139.xml\" -delete";
         SAVED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles");
         LOGS = GEODISY_PATH_ROOT + replaceSlashes("logs");
         EXISTING_CHECKS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingChecks.txt");
@@ -253,6 +254,7 @@ public class GeodisyStrings {
     public static String MOVE_DATA;
     public static String GEOCOMBINE;
     public static String GITCALL;
+    public static String DELETE_XML;
 
     public static String dataDir(){
         if(IS_WINDOWS)
