@@ -201,7 +201,7 @@ public class GeoServerAPI extends DestinationAPI {
             xml = xml.replace("<title>"+geoserverLabel+"</title>","<title>"+title+"</title>");
             call = "curl -u admin:geoserver -H 'Accept: application/xml' -H 'Content-type: application/xml' -XPUT " + GEOSERVER_REST + " workspaces/geodisy/datastores/"+ vectorDB+"/featuretypes/" + geoserverLabel+ ".xml -d '" + xml + "'";
             processCall = new ProcessCall();
-            processCall.runProcess(call,1, TimeUnit.SECONDS,logger);
+            processCall.runProcess(call,30, TimeUnit.SECONDS,logger);
         } catch (IOException | InterruptedException |  ExecutionException e) {
             logger.error("Something went wrong updating " + geoserverLabel + " with the title: " + title);
             return false;

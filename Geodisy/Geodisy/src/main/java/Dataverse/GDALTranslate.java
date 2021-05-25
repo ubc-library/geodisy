@@ -100,7 +100,7 @@ public class GDALTranslate {
                 String output;
                 try {
                     processCall = new ProcessCall();
-                    output = processCall.runProcess(call,3,TimeUnit.SECONDS,logger)[0];
+                    output = processCall.runProcess(call,10,TimeUnit.SECONDS,logger)[0];
                     if(output.contains("FAILURE"))
                         return false;
                     if(name.toLowerCase().endsWith(".shp")) {
@@ -153,7 +153,7 @@ public class GDALTranslate {
                 } catch (IOException | ExecutionException | InterruptedException e) {
                     logger.error("Something went wrong converting " + name + " to shapefile");
                 } catch (TimeoutException e) {
-                    logger.error("Timeout when trying to convert " + name + " to shapefile");
+                    logger.error("Timeout when trying to convert " + name + " to shapefile at path:" + destPath);
                 }
             }
         file = new File(sourcePath);
