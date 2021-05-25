@@ -227,11 +227,13 @@ public class DataverseJavaObject extends SourceJavaObject {
 
         dataFiles = drfs;
         System.out.print("Deleting .zip and .tab files that still exist");
+        LinkedList<DataverseRecordFile> left = new LinkedList<>();
         for (int i = 0; i < dataFiles.size(); i++) {
             String name = dataFiles.get(i).getTranslatedTitle();
-            if (name.endsWith("zip") ||name.endsWith("tab"))
-                dataFiles.remove(i);
+            if (!name.endsWith("zip") && !name.endsWith("tab"))
+                left.add(dataFiles.get(i));
         }
+        dataFiles = left;
 
         LinkedList<DataverseGeoRecordFile> newRecs = new LinkedList<>();
         DataverseGeoRecordFile dgrf;
