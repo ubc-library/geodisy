@@ -215,6 +215,7 @@ public class DataverseJavaObject extends SourceJavaObject {
         Long total = Calendar.getInstance().getTimeInMillis() - startTime;
         System.out.println("Finished downloading and unzipping files from " + getPID() + " after " + total + " milliseconds");
         if(drfs.size()==0){
+            System.out.print("No drfs generated so deleting folder");
             try {
                 FileUtils.deleteDirectory(f);
             } catch (IOException e) {
@@ -225,6 +226,7 @@ public class DataverseJavaObject extends SourceJavaObject {
 
 
         dataFiles = drfs;
+        System.out.print("Deleting .zip and .tab files that still exist");
         for (int i = 0; i < dataFiles.size(); i++) {
             String name = dataFiles.get(i).getTranslatedTitle();
             if (name.endsWith("zip") ||name.endsWith("tab"))
@@ -233,6 +235,7 @@ public class DataverseJavaObject extends SourceJavaObject {
 
         LinkedList<DataverseGeoRecordFile> newRecs = new LinkedList<>();
         DataverseGeoRecordFile dgrf;
+        System.out.print("Creating a new list of DGRFs that have valid bounding boxes");
         for (DataverseRecordFile dRF : dataFiles) {
             if (!GeodisyStrings.isProcessable(dRF.translatedTitle))
                 continue;
