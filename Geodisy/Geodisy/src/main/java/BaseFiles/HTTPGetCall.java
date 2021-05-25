@@ -68,9 +68,12 @@ public class HTTPGetCall {
             bout = new BufferedOutputStream(fos,2048);
             byte[] data = new byte[2048];
             int i=0;
+            int counter = 0;
             while((i=in.read(data,0,2048))>=0) {
                 bout.write(data,0,i);
-                System.out.print(".");
+                if(counter%1000000 == 0)
+                    System.out.print(".");
+                counter +=1;
             }
         } finally {
             try {
