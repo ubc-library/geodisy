@@ -170,7 +170,7 @@ public class DataverseRecordFile {
             return drfs;
         else if (translatedTitle.toLowerCase().endsWith(".zip")) {
             try {
-                drfs = ffp.unzip(newFile, dirPath, this, djo);
+                drfs = ffp.unzip(newFile, dirPath, this);
             }catch (NullPointerException f){
                 logger.error("Got an null pointer exception, something clearly went wrong with unzipping " + filePath);
             }

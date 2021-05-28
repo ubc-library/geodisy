@@ -24,7 +24,7 @@ public class FolderFileParser {
                 recs = openFolders(f, dirPath, djo, drf);
             }
             else if(f.getName().toLowerCase().endsWith(".zip")) {
-                recs.addAll(unzip(f, dirPath, drf, djo));
+                recs.addAll(unzip(f, dirPath, drf));
             }
             else if(f.getName().toLowerCase().endsWith(".tab"))
                 recs.add(convertTab(f, dirPath,f.getName(),drf));
@@ -81,14 +81,14 @@ public class FolderFileParser {
         return fileName;
     }
 
-    public LinkedList<DataverseRecordFile> unzip(File f, String dirPath, DataverseRecordFile drf, DataverseJavaObject djo){
+    public LinkedList<DataverseRecordFile> unzip(File f, String dirPath, DataverseRecordFile drf){
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
         String filePath = GeodisyStrings.replaceSlashes(f.getAbsolutePath());
         Unzip zip = new Unzip();
         try {
             Long start = Calendar.getInstance().getTimeInMillis();
             System.out.println("Unzipping file " + f.getName());
-            drfs = zip.unzip(filePath, dirPath, drf, djo);
+            drfs = zip.unzip(filePath, dirPath, drf);
             System.out.println(Calendar.getInstance().getTimeInMillis()-start + " milliseconds to unzip " + f.getName());
         }catch (NullPointerException e){
             logger.error("Got an null pointer exception, something clearly went wrong with unzipping " + filePath);

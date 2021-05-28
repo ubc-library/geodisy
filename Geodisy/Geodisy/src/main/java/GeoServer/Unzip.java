@@ -1,6 +1,7 @@
 package GeoServer;
 
 import BaseFiles.GeoLogger;
+import BaseFiles.ProcessCallUnzip;
 import _Strings.GeodisyStrings;
 
 import Dataverse.DataverseJavaObject;
@@ -17,6 +18,9 @@ import java.nio.file.Paths;
 
 import java.util.LinkedList;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.zip.ZipEntry;
 
 /**
@@ -67,7 +71,18 @@ public class Unzip {
                     dir.mkdirs();
                 }
                 if(fileName.toLowerCase().endsWith(".zip")) {
-                    answer.addAll(unzipFunction(destpath + fileName, destpath));
+                    String filePath = destpath + fileName;
+                    String destPath = destpath;
+                    ProcessCallUnzip process = new ProcessCallUnzip();
+                    try {
+
+                        LinkedList<FileInfo> zippedFile = process.unzipFile(filePath, destPath, logger);
+                        answer.addAll(zippedFile);
+                    } catch (InterruptedException | ExecutionException e) {
+                        logger.error("Something went wrong trying to unzip: " + filePath + " from " + zipfilePath);
+                    } catch (TimeoutException e) {
+                        logger.error("Timed out when trying to unzip: " + filePath + " from " + zipfilePath);
+                    }
                 }else{
                     if(GeodisyStrings.fileToAllow(fileName))
                         answer.add(new FileInfo(new File(filepath),basename+".zip"));
@@ -98,20 +113,28 @@ public class Unzip {
     }
 
 
-    public LinkedList<DataverseRecordFile> unzip(String filePath, String destPath, DataverseRecordFile dRF, DataverseJavaObject djo ) throws NullPointerException{
+    public LinkedList<DataverseRecordFile> unzip(String filePath, String destPath, DataverseRecordFile dRF) throws NullPointerException{
         LinkedList<FileInfo> files;
         File destDir = new File(destPath);
         destDir.mkdirs();
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
-        files = unzipFunction(filePath,destPath);
-        for(FileInfo f: files){
-            DataverseRecordFile temp = new DataverseRecordFile(dRF);
-            temp.setTranslatedTitle(f.getFileName());
-            temp.setOriginalTitle(f.getOrigName());
-            temp.setFileIdent(f.getFile().getAbsolutePath());
-            drfs.add(temp);
+        ProcessCallUnzip process = new ProcessCallUnzip();
+        try {
+            files = process.unzipFile(filePath, destPath, logger);
+            for (FileInfo f : files) {
+                DataverseRecordFile temp = new DataverseRecordFile(dRF);
+                temp.setTranslatedTitle(f.getFileName());
+                temp.setOriginalTitle(f.getOrigName());
+                temp.setFileIdent(f.getFile().getAbsolutePath());
+                drfs.add(temp);
+            }
+        } catch (InterruptedException e) {
+            logger.error("Something went wrong trying to unzip: " + filePath + " to " + destPath);
+        } catch (TimeoutException e) {
+            logger.error("Timed out when trying to unzip: " + filePath + " to " + destPath);
+        } finally {
+            return drfs;
         }
-        return drfs;
     }
 
 
