@@ -52,7 +52,7 @@ La documentation sur Geodisy se trouve sur la page d’accueil: <https://github.
 On y trouve des guides d’utilisation abrégés pour:
 
 * L’ajout de métadonnées aux enregistrements afin qu’ils soient facilement repérables par Geodisy: [Guide à l’intention des déposants](https://github.com/ubc-library/geodisy/blob/master/Documentation/userguides/GeodisyDepositorGuide-FR.md)  
-* La liaison de votre dépôt Dataverse à Geodisy au [Dépôt Fédéré de Données de Recherche](https://geo.frdr.ca): [Guide à l’intention des établissements](https://github.com/ubc-library/geodisy/blob/master/Documentation/userguides/GeodisyInstitutionalGuide-FR.md)
+* La liaison de votre dépôt Dataverse à Geodisy au [Dépôt Fédéré de Données de Recherche](https://geo.frdr-dfdr.ca/fr): [Guide à l’intention des établissements](https://github.com/ubc-library/geodisy/blob/master/Documentation/userguides/GeodisyInstitutionalGuide-FR.md)
 
 ### Comment se fait la conversion d’enregistrements Dataverse en enregistrements Geodisy?
 
