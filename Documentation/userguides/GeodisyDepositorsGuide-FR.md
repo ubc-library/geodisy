@@ -23,7 +23,7 @@ Comment déposer vos données dans Dataverse pour que les données soient relev�
 
 ### Comment inclure les métadonnées appropriées :
 La section des métadonnées géospatiales dans Dataverse :
-![Dataverse Geospatial Metadata Block](images/GeospatialMetadataSample.png)
+![Métadonnées géospatiales](images/GeospatialMetadataSampleFR.png)
 
 Faire apparaître vos données dans la recherche géographique de Geodisy ne demande pas beaucoup de travail supplémentaire. Suivez les quatre étapes suivantes pour faire en sorte que vos données puissent être incluses :
 1.	Une fois que votre ensemble de données a été déposé, cliquez l’onglet « Métadonnées » pour accéder à l’enregistrement et sélectionnez « Add + Edit Metadata ».
