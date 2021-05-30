@@ -2,13 +2,13 @@
 
 _Vous souhaitez accroître la possibilité de découvrir vos données ? Geodisy offre un moyen intéressant de faire connaître la recherche par localisation à un large public._
 
-Pour accéder à Geodisy : https://geo.frdr.ca/
+Pour accéder à Geodisy : https://geo.frdr-dfdr.ca/fr
 
 ### En quoi consiste Geodisy ?
 
 Geodisy est un outil de découverte à source ouverte qui permet aux utilisateurs de trouver les données ouvertes des chercheurs canadiens de manière visuelle, spatiale et rapide.
 
-Les données de recherche peuvent être difficiles à trouver, surtout lorsqu’on cherche des données sur une région ou un endroit précis. Geodisy pallie cette difficulté en offrant aux utilisateurs une fenêtre sur le monde des données de recherche grâce à des outils cartographiques familiers. Les utilisateurs peuvent effectuer des recherches par nom de lieu ou à l’aide d’une carte interactive. L’interface de recherche Geodisy sera disponible sur le site web du Dépôt fédéré de données de recherche du Canada (https://geo.frdr.ca) et accessible au public. Les données provenant d’établissements de tout le Canada constituent la collection source de Geodisy, permettant la découverte de vos données ainsi que d’autres contenus riches déposés par des chercheurs du Canada.
+Les données de recherche peuvent être difficiles à trouver, surtout lorsqu’on cherche des données sur une région ou un endroit précis. Geodisy pallie cette difficulté en offrant aux utilisateurs une fenêtre sur le monde des données de recherche grâce à des outils cartographiques familiers. Les utilisateurs peuvent effectuer des recherches par nom de lieu ou à l’aide d’une carte interactive. L’interface de recherche Geodisy sera disponible sur le site web du Dépôt fédéré de données de recherche du Canada (https://geo.frdr-dfdr.ca/fr) et accessible au public. Les données provenant d’établissements de tout le Canada constituent la collection source de Geodisy, permettant la découverte de vos données ainsi que d’autres contenus riches déposés par des chercheurs du Canada.
 
 ### Geodisy me convient-il ?
 
@@ -49,6 +49,6 @@ Si vous déposez des données géospatiales (telles qu’un Shapefile, GeoTIFF, 
 [The Dataverse North Geospatial Guide](https://dx.doi.org/10.14288/1.0388724) fournit plus d’informations sur les meilleures pratiques pour l’utilisation des blocs de métadonnées géospatiales de Dataverse.
 
 ### Geodisy pour les établissements
-Si vous avez découvert ce guide et souhaitez que votre établissement mette en place une connexion Geodisy, veuillez consulter Geodisy : Implementing a Dataverse connection at your institution.
+Si vous avez découvert ce guide et souhaitez que votre établissement mette en place une connexion Geodisy, veuillez consulter [Geodisy : Mise en œuvre d’une connexion pour la découverte de données dans votre établissement](https://github.com/ubc-library/geodisy/blob/master/Documentation/userguides/GeodisyInstitutionalGuide-FR.md).
 
 **Questions ?** Communiquer avec l’équipe Geodisy à [geodisy.info@ubc.ca](mailto:geodisy.info@ubc.ca)
