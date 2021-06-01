@@ -253,7 +253,7 @@ public class GeoServerAPI extends DestinationAPI {
 
         @Override
         public Boolean call(){
-            return addRaster(geoserverLabel, fileName);
+            return addRaster( fileName, geoserverLabel);
         }
     }
 
