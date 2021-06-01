@@ -221,11 +221,11 @@ public class GeoServerAPI extends DestinationAPI {
     private boolean timedAddRaster(String fileName, String geoserverLabel) {
         System.out.println("Adding: "+ fileName);
         ExecutorService executorService = Executors.newSingleThreadExecutor();
-        RasterCall r = new RasterCall(geoserverLabel,fileName);
+        RasterCall r = new RasterCall(fileName, geoserverLabel);
         Future<Boolean> successBool = executorService.submit(r);
         executorService.shutdown();
         try{
-            addRaster(geoserverLabel, fileName);
+            addRaster(fileName, geoserverLabel);
             if(!executorService.awaitTermination(10, TimeUnit.MINUTES)){
                 logger.warn("Timed out trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
                 System.out.println("Timed out trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
@@ -246,7 +246,7 @@ public class GeoServerAPI extends DestinationAPI {
     private class RasterCall implements Callable<Boolean> {
         String geoserverLabel;
         String fileName;
-        public RasterCall(String geoserverLabel, String fileName) {
+        public RasterCall(String fileName, String geoserverLabel) {
             this.geoserverLabel=geoserverLabel;
             this.fileName=fileName;
         }

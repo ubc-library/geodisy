@@ -226,7 +226,7 @@ public class DataverseJavaObject extends SourceJavaObject {
 
 
         dataFiles = drfs;
-        System.out.print("Deleting .zip and .tab files that still exist");
+        System.out.println("Deleting .zip and .tab files that still exist");
         LinkedList<DataverseRecordFile> left = new LinkedList<>();
         for (int i = 0; i < dataFiles.size(); i++) {
             String name = dataFiles.get(i).getTranslatedTitle();
@@ -237,6 +237,7 @@ public class DataverseJavaObject extends SourceJavaObject {
             if(i%250==0)
                 System.out.print(i);
         }
+        System.out.println();
         System.out.print("Finished deleting .zip and .tab files that still exist");
         dataFiles = left;
 
