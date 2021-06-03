@@ -100,7 +100,7 @@ public class GDALTranslate {
                 String output;
                 try {
                     processCall = new ProcessCall();
-                    output = processCall.runProcess(call,10,TimeUnit.SECONDS,logger)[0];
+                    output = processCall.runProcess(call,20,TimeUnit.SECONDS,logger)[0];
                     if(output.contains("FAILURE"))
                         return false;
                     if(name.toLowerCase().endsWith(".shp")) {

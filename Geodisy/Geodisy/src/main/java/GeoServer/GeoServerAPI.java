@@ -301,14 +301,15 @@ public class GeoServerAPI extends DestinationAPI {
             return false;
         }
 
-        try{ enableCoverageStore(geoserverLabel,fileName);
+        //Previous Step seems to enable the store
+        /*try{ enableCoverageStore(geoserverLabel,fileName);
         }catch (InterruptedException | IOException | ExecutionException f){
         logger.error("Error trying to enable coveragestore on geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
             return false;
         } catch (TimeoutException e) {
             logger.error("Timeout trying to enable coveragestore on geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
             return false;
-        }
+        }*/
 
         try{ addRasterLayer(geoserverLabel,fileName);
         }catch (InterruptedException | IOException  | ExecutionException f){
@@ -321,6 +322,23 @@ public class GeoServerAPI extends DestinationAPI {
         ExistingRasterRecords existingRasterRecords = ExistingRasterRecords.getExistingRasters();
         existingRasterRecords.addOrReplaceRecord(sjo.getPID(),fileName);
         System.out.println("Added raster with fileName: " + fileName + " and geoserverLabel: " + geoserverLabel);
+        return true;
+    }
+
+    private boolean checkForCoveragestore(String geoserverLabel){
+        String checkForCov = "curl -u admin:" + GEOSERVER_PASSWORD + " -X GET  " + GEOSERVER_REST + "workspaces/geodisy/coveragestores/" + geoserverLabel.toLowerCase() + "/coverages -H \"accept: text/html\" -H \"content-type: text/html\"";
+        System.out.println("Checking for existing Coveragestore");
+        processCall = new ProcessCall();
+        String[] output = new String[0];
+        try {
+            output = processCall.runProcess(checkForCov,10, TimeUnit.SECONDS,logger);
+        } catch (TimeoutException|FileNotFoundException|ExecutionException|InterruptedException e) {
+            return false;
+        }
+        for(String s: output){
+            if(s.startsWith("No such coverage store"))
+                return false;
+        }
         return true;
     }
 
@@ -363,14 +381,14 @@ public class GeoServerAPI extends DestinationAPI {
         if(title.contains("."))
             title=title.substring(0,title.lastIndexOf("."));
         String enableCoverageStore = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:application/xml") + " -d '<coverage><name>"+ geoserverLabel.toLowerCase() + "</name><nativeCRS>" + RASTER_CRS + "</nativeCRS><title>" + title + "</title><enabled>True</enabled></coverage>' " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores/"+ geoserverLabel.toLowerCase() + "/coverages");
-        System.out.println("Create coverage: " + enableCoverageStore);
+        System.out.println("Enable coverage: " + enableCoverageStore);
         processCall = new ProcessCall();
         processCall.runProcess(enableCoverageStore,5,TimeUnit.SECONDS,logger);
     }
 
     private void addRasterLayer(String geoserverLabel, String translatedTitle) throws InterruptedException, IOException, TimeoutException, ExecutionException {
-        String fileLocation = DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority((sjo.getPID())+"/").replace(".","/")+ GeodisyStrings.replaceSlashes("/") + translatedTitle;
-        String addRaster = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPUT -H \"Content-type: text/plain\" -d 'file://" + fileLocation + "' " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores/"+ geoserverLabel.toLowerCase() + "/external.geotiff?configure=first&coverageName=" + geoserverLabel);
+        String fileLocation = DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority((sjo.getPID())+"/").replace(".","/")+ translatedTitle;
+        String addRaster = GeodisyStrings.replaceSlashes("/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPUT -H \"Content-type: text/plain\" -d 'file://" + fileLocation + "' " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores/"+ geoserverLabel.toLowerCase() + "/external.geotiff?configure=first&coverageName=" + geoserverLabel));
         System.out.println("Add raster layer: " + addRaster);
         processCall = new ProcessCall();
         processCall.runProcess(addRaster,2,TimeUnit.MINUTES,logger);

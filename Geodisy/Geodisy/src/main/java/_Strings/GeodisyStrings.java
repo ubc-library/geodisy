@@ -172,8 +172,8 @@ public class GeodisyStrings {
         public static String OGR2OGR;
         public static String GDAL_TRANSLATE;
         public final static String RASTER_CRS = "EPSG:3857";
-        public static String GDALWARP(String path,String fileName){ return getGdalWarp(path,fileName);}
-        public static String GDAL_WARP_LOCAL(String path, String filename){ return LOCAL_GDAL_PATH + "gdalwarp -overwrite -t_srs " + RASTER_CRS +" -r near -multi -co TILED=YES -co COMPRESS=LZW {} {} " + path + filename +" " + path + "1" + filename;}
+        public static String GDALWARP(String path,String fileName){ return replaceSlashes(getGdalWarp(path,fileName));}
+        public static String GDAL_WARP_LOCAL(String path, String filename){ return LOCAL_GDAL_PATH + "gdalwarp -overwrite -t_srs " + RASTER_CRS +" -r near -multi -co TILED=YES -co COMPRESS=LZW " + path + filename +" " + path + "1" + filename;}
 
         public static String GDAL_WARP_CLOUD(String path, String fileName){
         return "sudo /usr/gdal30/bin/gdalwarp -overwrite -t_srs "+ RASTER_CRS +" -r near -multi -co TILED=YES -co COMPRESS=LZW " + path + fileName + " " + path + "1"+ fileName; }

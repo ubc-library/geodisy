@@ -1,5 +1,7 @@
 package BaseFiles;
 
+import _Strings.GeodisyStrings;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,7 +21,10 @@ public class ProcessCall {
     }
     public String[] runProcess(String s, int time, TimeUnit unit, GeoLogger logger) throws TimeoutException,FileNotFoundException, ExecutionException, InterruptedException  {
         List<String> args = new LinkedList<>();
-        args.add("/usr/bin/bash");
+        if(GeodisyStrings.IS_WINDOWS)
+            args.add("cmd.exe");
+        else
+            args.add("/usr/bin/bash");
         args.add("-c");
         return runProcess(s, time, unit, args, logger);
     }
