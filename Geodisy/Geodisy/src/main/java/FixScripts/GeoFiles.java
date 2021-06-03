@@ -43,8 +43,6 @@ public class GeoFiles {
             System.out.println("Bad file name path: " + DATA_DIR_LOC+folder);
             return;
         }
-        int raster = 1;
-        int vector = 1;
         LinkedList<Record> records = new LinkedList<>();
         HashSet<String> processed = new HashSet<>();
         gBLFs.sort(new SortByGeoLabel());
@@ -91,7 +89,6 @@ public class GeoFiles {
 
                             records.add(record);
                         }
-                        raster++;
                         processed.add(f.getName());
                         counter++;
                         break;
@@ -116,7 +113,6 @@ public class GeoFiles {
                             }
                             records.add(record);
                         }
-                        vector++;
                         processed.add(f.getName());
                         counter++;
                         break;
@@ -147,6 +143,7 @@ public class GeoFiles {
 
                 JSONObject gBLObject = new JSONObject(gBLJSON);
                 JSONArray source;
+                //Related Records
                 if(r.geoserverIDs.size()>0) {
                     source = new JSONArray();
                     for (String s : r.geoserverIDs) {

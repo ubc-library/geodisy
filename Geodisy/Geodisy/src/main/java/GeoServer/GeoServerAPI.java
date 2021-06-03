@@ -39,7 +39,7 @@ public class GeoServerAPI extends DestinationAPI {
         caller = new HTTPCallerGeosever();
         logger =  new GeoLogger(this.getClass());
     }
-    //TODO FIGURE OUT GEOSERVER REST ENDPOINT WITH JOEL
+
     private boolean generateWorkspace(String workspaceName) {
         try {
             String generateWorkspace = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + "-XPOST -H \"Content-type: text/xml\" -d \"<workspace><name>" + workspaceName + "</name></workspace>\" " + GEOSERVER_REST + "workspaces";
@@ -87,12 +87,12 @@ public class GeoServerAPI extends DestinationAPI {
             return false;
         }
         if(success) {
-            return timedUpdateTitleInGeosercer(geoserverLabel, fileName);
+            return timedUpdateTitleInGeoserver(geoserverLabel, fileName);
         }
         return false;
     }
 
-    private boolean timedUpdateTitleInGeosercer(String geoserverLabel,String fileName) {
+    private boolean timedUpdateTitleInGeoserver(String geoserverLabel, String fileName) {
         VectorCallTitle v = new VectorCallTitle(geoserverLabel,fileName);
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<Boolean> future = executorService.submit(v);

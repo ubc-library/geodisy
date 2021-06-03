@@ -173,14 +173,14 @@ public class GeodisyStrings {
         public static String GDAL_TRANSLATE;
         public final static String RASTER_CRS = "EPSG:3857";
         public static String GDALWARP(String path,String fileName){ return getGdalWarp(path,fileName);}
-        public static String GDAL_WARP_LOCAL(String path, String filename){ return LOCAL_GDAL_PATH + "gdalwarp -overwrite -t_srs " + RASTER_CRS +" -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW {} {}" + path + filename +" " + path + "1" + filename;}
+        public static String GDAL_WARP_LOCAL(String path, String filename){ return LOCAL_GDAL_PATH + "gdalwarp -overwrite -t_srs " + RASTER_CRS +" -r near -multi -co TILED=YES -co COMPRESS=LZW {} {} " + path + filename +" " + path + "1" + filename;}
 
         public static String GDAL_WARP_CLOUD(String path, String fileName){
-        return "sudo /usr/gdal30/bin/gdalwarp -overwrite -t_srs "+ RASTER_CRS +" -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW " + path + fileName + " " + path + "1"+ fileName; }
+        return "sudo /usr/gdal30/bin/gdalwarp -overwrite -t_srs "+ RASTER_CRS +" -r near -multi -co TILED=YES -co COMPRESS=LZW " + path + fileName + " " + path + "1"+ fileName; }
 
         public static String GDALADDO(String source){ return getGdalAddo(source);}
-        public static String GDAL_ADDO_LOCAL(String source){return LOCAL_GDAL_PATH + "gdaladdo " + source + " -r nearest --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
-        public static String GDAL_ADDO_CLOUD(String source){return "sudo /usr/gdal30/bin/gdaladdo " + source + " -r nearest --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
+        public static String GDAL_ADDO_LOCAL(String source){return LOCAL_GDAL_PATH + "gdaladdo " + source + " -r near --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
+        public static String GDAL_ADDO_CLOUD(String source){return "sudo /usr/gdal30/bin/gdaladdo " + source + " -r near --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
         public final static String[] PROCESSABLE_EXTENSIONS = ArrayUtils.addAll(ArrayUtils.addAll(GDALINFO_PROCESSABLE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS),CSV_EXTENTIONS);
 
         private static String getGdalWarp(String path, String fileName){
