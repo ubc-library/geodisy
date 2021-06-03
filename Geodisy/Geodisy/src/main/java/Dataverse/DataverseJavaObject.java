@@ -296,14 +296,18 @@ public class DataverseJavaObject extends SourceJavaObject {
     public void updateGeoserver() {
         System.out.println("Updating geoserver");
         Collections.sort(getGeoDataFiles(), new SortByFileName());
+        LinkedList<DataverseGeoRecordFile> onGeoserver = new LinkedList<>();
         for(DataverseGeoRecordFile dgrf:getGeoDataFiles()){
             if(dgrf.getTranslatedTitle().endsWith(".shp")) {
                 dgrf.onGeoserver = createRecords(dgrf, Integer.parseInt(dgrf.getGBBFileNumber()), VECTOR);
             }else if(dgrf.getTranslatedTitle().endsWith(".tif")) {
                 dgrf.onGeoserver = createRecords(dgrf, Integer.parseInt(dgrf.getGBBFileNumber()), RASTER);
             }
+            if(dgrf.onGeoserver)
+                onGeoserver.add(dgrf);
             System.out.println("Finished Adding file to geoserver");
         }
+        setGeoDataFiles(onGeoserver);
     }
     class SortByFileName implements Comparator<DataverseGeoRecordFile>{
         public int compare(DataverseGeoRecordFile a, DataverseGeoRecordFile b){
