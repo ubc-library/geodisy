@@ -118,7 +118,7 @@ public class GDAL {
         String projection =  "";
         try {
             gdalString = getGDALInfo(filePath, regularName);
-            if(gdalString.contains("FAILURE")) {
+            if(gdalString.contains("FAILURE")||(gdalString.contains("ERROR"))) {
                 logger.warn("Something went wrong parsing " + regularName + " at " + filePath);
                 return new GeographicBoundingBox(doi);
             }
