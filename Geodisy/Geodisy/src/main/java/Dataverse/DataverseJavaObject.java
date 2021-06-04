@@ -238,7 +238,7 @@ public class DataverseJavaObject extends SourceJavaObject {
                 System.out.print(i);
         }
         System.out.println();
-        System.out.print("Finished deleting .zip and .tab files that still exist");
+        System.out.println("Finished deleting .zip and .tab files that still exist");
         dataFiles = left;
 
         LinkedList<DataverseGeoRecordFile> newRecs = new LinkedList<>();
