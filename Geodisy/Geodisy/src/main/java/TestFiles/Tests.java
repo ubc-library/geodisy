@@ -3,10 +3,13 @@ package TestFiles;
 public class Tests {
 
     public void runTests(){
+        DatasetProcessTest t = new DatasetProcessTest();
+        t.run();
+
         /*RepoNameNormalizationTest r = new RepoNameNormalizationTest();
         r.run();*/
-        TestAddingDatasets t = new TestAddingDatasets();
-        t.run();
+        /*TestAddingDatasets t = new TestAddingDatasets();
+        t.run();*/
 
         /*ThreadExitTest t = new ThreadExitTest();
         t.run();*/
@@ -43,8 +46,8 @@ public class Tests {
 
         /*System.out.println("Running a test on Raster Upload");
         GeoserverTest gt = new GeoserverTest();
-        gt.testAddingARaster();
-        gt.testAddingAVector();*/
+        gt.testAddingARaster();*/
+        /*gt.testAddingAVector();*/
 
         //testCombine(args);
 

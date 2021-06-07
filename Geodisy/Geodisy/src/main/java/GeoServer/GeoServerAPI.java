@@ -261,7 +261,6 @@ public class GeoServerAPI extends DestinationAPI {
         if (fileName.contains("."))
             fileName = fileName.substring(0, fileName.lastIndexOf("."));
         fileName = fileName + ".tif";
-
         try { deleteOldCoverstore(geoserverLabel);
         }catch (InterruptedException | IOException |  ExecutionException f) {
             logger.error("Error trying to delete existing raster from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
