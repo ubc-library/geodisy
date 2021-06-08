@@ -28,6 +28,11 @@ def fix_gbl(folder):
             data = json.load(f)
             slug = data["layer_slug_s"]
             data["layer_slug_s"] = slug.lower()
+            sources = data["dc_source_sm"]
+            new_sources = []
+            for s in sources:
+                new_sources.append(s.lower())
+            data["dc_source_sm"] = new_sources
             f.close()
         with open(gbl, "w") as outfile:
             json.dump(data, outfile)
