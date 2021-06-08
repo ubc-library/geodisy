@@ -43,10 +43,12 @@ public class DataGBJSON extends GeoBlacklightJSON{
         jo.put("geoblacklight_version","1.0");
         jo.put("dc_identifier_s", GeodisyStrings.urlSlashes(javaObject.getSimpleFieldVal(DVFieldNameStrings.RECORD_URL)));
         String geoserverLabel = getGeoserverLabel(gbb);
-        if(boundingBoxNumber>0)
-            jo.put("layer_slug_s", "geodisy:" + geoserverLabel.toLowerCase()+padZeros(boundingBoxNumber,total));
-        else
+        if((geoserverLabel.startsWith("r00")||geoserverLabel.startsWith("v00")) && geoserverLabel.length()==11)
             jo.put("layer_slug_s", "geodisy:" + geoserverLabel.toLowerCase());
+        else(boundingBoxNumber>0)
+            jo.put("layer_slug_s", "geodisy:" + geoserverLabel.toLowerCase() + padZeros(boundingBoxNumber, total));
+
+
         String name = javaObject.getSimpleFields().getField(TITLE);
         if(name.isEmpty()) {
             logger.error("Somehow creating a GBL json without a study title: " + javaObject.getPID());
