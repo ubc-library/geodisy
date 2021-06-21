@@ -130,6 +130,12 @@ public class DataverseJavaObject extends SourceJavaObject {
                 String url ="";
                 if (jo.has("frdr_harvester")) {
                     url = dataFile.getString("fileURI");
+                    //OpenDataSoft repositories do streaming downloads in geojson format and give
+                    if(GeodisyStrings.checkIfOpenDataSoftRepo(url)){
+                        int fileName = url.indexOf("download?dataset=") + 17;
+                        title = url.substring(fileName) + ".geojson";
+                    }
+
                     dRF = new DataverseRecordFile(title, citationFields.getPID(), url);
                     dRF.setOriginalTitle(title);
                 } else if (dataFile.has(PERSISTENT_ID) && !dataFile.getString(PERSISTENT_ID).equals("")) {

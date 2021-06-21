@@ -38,7 +38,9 @@ public class GeoLogger {
         }
 
     }
-
+    public void info(String message, String fileUrl){
+        logger.info("File being saved: "+ message +" was too long. URL of file was: " + fileUrl);
+    }
     public void warn(String message){
         logger.warn(message);
     }

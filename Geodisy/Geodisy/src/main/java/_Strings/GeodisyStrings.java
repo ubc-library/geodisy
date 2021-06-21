@@ -438,4 +438,16 @@ public class GeodisyStrings {
         path = path.replace("%2F",slash);
         return path;
     }
+
+    public static boolean checkIfOpenDataSoftRepo(String url){
+        String[] repos = {
+                "https://opendata.vancouver.ca/"
+                ,"https://opendatakingston.cityofkingston.ca"
+        };
+        for(String s: repos){
+            if(url.startsWith(s))
+                return true;
+        }
+        return false;
+    }
 }

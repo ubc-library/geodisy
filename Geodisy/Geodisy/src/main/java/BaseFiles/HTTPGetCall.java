@@ -3,6 +3,7 @@ package BaseFiles;
 import Dataverse.DataverseRecordFile;
 import java.io.FileInputStream;
 
+import _Strings.GeodisyStrings;
 import io.netty.handler.timeout.TimeoutException;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
@@ -69,11 +70,18 @@ public class HTTPGetCall {
             byte[] data = new byte[2048];
             int i=0;
             int counter = 1;
+            long tots = 0;
             while((i=in.read(data,0,2048))>=0) {
                 bout.write(data,0,i);
                 if(counter%10000 == 0)
                     System.out.print(".");
                 counter +=1;
+                tots += 2048;
+                if(tots >= 20000000000L){
+                    deleteFile(path+fileName);
+                    logger.info(path+fileName, fileURL);
+                    break;
+                }
             }
         } finally {
             try {
@@ -125,7 +133,7 @@ public class HTTPGetCall {
         long total = 0L;
         for(DataverseRecordFile drf: dataset) {
             String url = drf.getFileURL();
-            if(url.startsWith("ftp://")||url.startsWith("http://ftp")||url.startsWith("https://ftp")) {
+            if(url.startsWith("ftp://")||url.startsWith("http://ftp")||url.startsWith("https://ftp")|| GeodisyStrings.checkIfOpenDataSoftRepo(url)) {
                 list.add(drf);
                 continue;
             }
