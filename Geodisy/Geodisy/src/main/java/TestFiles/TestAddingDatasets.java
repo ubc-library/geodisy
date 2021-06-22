@@ -1,16 +1,7 @@
 package TestFiles;
 
-import BaseFiles.GeoLogger;
-import BaseFiles.ProcessCall;
 import Dataverse.DataverseJavaObject;
-import Dataverse.FRDRAPI;
 import GeoServer.GeoServerAPI;
-import GeoServer.PostGIS;
-
-import java.io.FileNotFoundException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 public class TestAddingDatasets implements Test{
     @Override

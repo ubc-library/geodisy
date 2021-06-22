@@ -1,5 +1,6 @@
 package _Strings;
 
+import static _Strings.ENDPOINT_STRINGS.OPEN_GEO_METADATA_URL;
 import static _Strings.GeodisyStrings.*;
 
 public class XMLStrings {
@@ -47,7 +48,7 @@ public class XMLStrings {
     //OPEN METADATA
     public static String OPEN_METADATA_LOCAL_REPO;
     public final static String TEST_OPEN_METADATA_LOCAL_REPO = "XMLFilesTest/";
-    public final static String OPEN_METADATA_REMOTE_REPO = "https://github.com/OpenGeoMetadata/ca.frdr.geodisy/";
+    public final static String OPEN_METADATA_REMOTE_REPO = OPEN_GEO_METADATA_URL;
     public final static String OPEN_METADATA_REMOTE_USERNAME = OPENGEOMETADATA_USERNAME;
     public final static String OPEN_METADATA_REMOTE_PASSWORD = OPENGEOMETADATA_PASSWORD;
 

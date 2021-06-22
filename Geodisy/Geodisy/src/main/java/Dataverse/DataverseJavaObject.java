@@ -128,17 +128,7 @@ public class DataverseJavaObject extends SourceJavaObject {
                 //Some Dataverses don't have individual DOIs for files, so for those I will use the database's file id instead
                 int dbID;
                 String url ="";
-                if (jo.has("frdr_harvester")) {
-                    url = dataFile.getString("fileURI");
-                    //OpenDataSoft repositories do streaming downloads in geojson format and give
-                    if(GeodisyStrings.checkIfOpenDataSoftRepo(url)){
-                        int fileName = url.indexOf("download?dataset=") + 17;
-                        title = url.substring(fileName) + ".geojson";
-                    }
-
-                    dRF = new DataverseRecordFile(title, citationFields.getPID(), url);
-                    dRF.setOriginalTitle(title);
-                } else if (dataFile.has(PERSISTENT_ID) && !dataFile.getString(PERSISTENT_ID).equals("")) {
+                if (dataFile.has(PERSISTENT_ID) && !dataFile.getString(PERSISTENT_ID).equals("")) {
                     dbID = (int) dataFile.get("id");
                     String doi = dataFile.getString(PERSISTENT_ID);
                     dRF = new DataverseRecordFile(title, doi, dataFile.getInt("id"), server, citationFields.getPID());

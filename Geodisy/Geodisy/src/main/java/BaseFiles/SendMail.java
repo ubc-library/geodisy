@@ -1,8 +1,5 @@
 package BaseFiles;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;

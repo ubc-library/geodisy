@@ -59,7 +59,6 @@ public class DataverseAPI extends SourceAPI {
             String doi ="";
             try {
                 doi = jo.getString("authority") + "/" + jo.getString("identifier");
-
                 if(processSpecificRecords(doi)) {
                     System.out.println("Processing only specic records, is that what you want? If not delete all doi in PROCESS_THESE_DOIS in GeodisyStrings class");
                     for(String s:PROCESS_THESE_DOIS){
@@ -81,9 +80,12 @@ public class DataverseAPI extends SourceAPI {
                 djo.setGeoDataFiles(djo.downloadFiles());
                 Calendar end =  Calendar.getInstance();
                 Long total = end.getTimeInMillis()-startTime;
+
                 System.out.println("Finished downloading " + doi +" after " + total + " milliseconds");
                 djo.updateRecordFileNumbers();
-                djo.updateGeoserver();
+
+                if(djo.geoDataFiles.size()>0)
+                    djo.updateGeoserver();
 
                 if(djo.hasGeoGraphicCoverage())
                     djo = (DataverseJavaObject) getBBFromGeonames(djo);

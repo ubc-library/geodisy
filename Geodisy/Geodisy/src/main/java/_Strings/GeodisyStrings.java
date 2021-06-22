@@ -12,7 +12,7 @@ public class GeodisyStrings {
         FRONTEND_ADDRESS = (TEST)? FRONTEND_DEV_ADDRESS: FRONTEND_PROD_ADDRESS;
         END_XML_JSON_FILE_PATH = FRONTEND_ADDRESS + "/metadata/geodisy/";
         PATH_TO_XML_JSON_FILES = BACKEND_ADDRESS + "/geodisy/";
-        GEODISY_PATH_ROOT = (IS_WINDOWS)? WINDOWS_ROOT: FRDR_VM_CENTOS_ROOT;
+        GEODISY_PATH_ROOT = (IS_WINDOWS)? WINDOWS_ROOT: VM_LINUX_ROOT;
         MOVE_METADATA = "sudo rsync -au --delete " + GEODISY_PATH_ROOT + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
         MOVE_DATA = "sudo rsync -au --delete " + GEODISY_PATH_ROOT + "datasetFiles/* " + DATA_DIR_LOC;
         GEOCOMBINE = "sh " + GEODISY_PATH_ROOT + "geodisyFiles/combine.sh";
@@ -105,7 +105,7 @@ public class GeodisyStrings {
 
     //File paths
         private final static String WINDOWS_ROOT = ENDPOINT_STRINGS.WINDOWS_ROOT;
-        private final static String FRDR_VM_CENTOS_ROOT = ENDPOINT_STRINGS.FRDR_VM_CENTOS_ROOT;
+        private final static String VM_LINUX_ROOT = ENDPOINT_STRINGS.VM_LINUX_ROOT;
         public static String GEODISY_PATH_ROOT;
         public static String SAVED_FILES;
         public static String LOGS;
@@ -166,7 +166,6 @@ public class GeodisyStrings {
         private final static String OGR2OGR_LOCAL = LOCAL_GDAL_PATH + "ogr2ogr -f \"ESRI Shapefile\" -t_srs EPSG:4326  -lco ENCODING=UTF-8 ";
         private final static String GDAL_TRANSLATE_LOCAL = LOCAL_GDAL_PATH + "gdal_translate -of GTiff ";
         private final static String OGR2OGR_CLOUD = "/usr/gdal30/bin/ogr2ogr -t_srs EPSG:4326 -f \"ESRI Shapefile\" -lco ENCODING=UTF-8 ";
-        //GDAL for Raster conversion needs to be using GDAL version 2.x, so had to use a docker version of it for use with Centos
         //public final static String GDAL_DOCKER = "sudo docker run --rm -v /home:/home osgeo/gdal:alpine-ultrasmall-v2.4.1 "; //base call for docker gdal, but need the program call added on
         private final static String GDAL_TRANSLATE_CLOUD = "/usr/gdal30/bin/gdal_translate -of GTiff ";
         public static String OGR2OGR;
@@ -235,7 +234,7 @@ public class GeodisyStrings {
     //Add value (including space at end) to SOLR_PATH if you want to index to somewhere other than what is in the rake file
     public final static String SOLR_PATH_PROD = ""; //"SOLR_URL=http://www.example.com:1234/solr/collection ";
     //Add value (including space at end) to OGM_PATH if you are harvesting from somewhere other than what's in the rake file
-    public final static String OGM_PATH = ""; //"OGM_PATH=/var/www/geoserver.frdr.ca/html/geodisy/ ";
+    public final static String OGM_PATH = ""; //"OGM_PATH=/var/www/[backend VM]/html/geodisy/ ";
     public final static String BACKEND_DEV_ADDRESS = ENDPOINT_STRINGS.BACKEND_DEV_ADDRESS;
     public final static String BACKEND_PROD_ADDRESS = ENDPOINT_STRINGS.BACKEND_PROD_ADDRESS;
     public final static String FRONTEND_DEV_ADDRESS = ENDPOINT_STRINGS.FRONTEND_DEV_ADDRESS;

@@ -47,16 +47,8 @@ public class GeodisyTask {
             Geodisy geo = new Geodisy();
 
             //Call to get metadata from FRDR Harvester
-            List<SourceJavaObject> sJOs = geo.harvestFRDRMetadata();
+            List<SourceJavaObject> sJOs = geo.harvestDataverseMetadata();
             //deleteEmptyFolders();
-
-            if(!IS_WINDOWS) {
-                sendRecordsToGeoBlacklight();
-                if(!TEST) {
-                    JGit jgit = new JGit();
-                    jgit.updateRemoteMetadata();
-                }
-            }
              
             /**
              *

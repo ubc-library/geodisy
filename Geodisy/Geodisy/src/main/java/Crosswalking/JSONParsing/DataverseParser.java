@@ -27,38 +27,6 @@ public class DataverseParser implements JSONParser {
 
     }
 
-    public DataverseJavaObject frdrParse(JSONObject jo){
-        String repo;
-        if(jo.has("repo_base_url"))
-            repo = jo.getString("repo_base_url");
-        else {
-            repo = "test";
-            System.out.println("Running as test so repo_base_url is not real");
-        }
-        return frdrParse(jo, repo, false);
-    }
-
-    private DataverseJavaObject frdrParse(JSONObject jo, String server, boolean testing){
-        DataverseJavaObject dJO = new DataverseJavaObject(server);
-        JSONObject dataverseJSON;
-        try {
-            dataverseJSON = jo;
-            dJO.parseCitationFields(dataverseJSON);
-            JSONObject metadata;
-            metadata = dJO.getVersionSection(dataverseJSON).getJSONObject("metadataBlocks");
-            if (metadata.has(GEOSPATIAL))
-                dJO.parseGeospatialFields(metadata.getJSONObject(GEOSPATIAL).getJSONArray(FIELDS));
-            else
-                dJO.setGeoFields(new GeographicFields(dJO));
-
-            if(metadata.has(FILES))
-                dJO.parseFiles(metadata.getJSONArray(FILES));
-        }catch (JSONException e){
-            logger.error("Something was malformed with the JSON string returned from Dataverse: " + jo.toString());
-        }
-        return dJO;
-    }
-
     public DataverseJavaObject parse(JSONObject jo, String server, boolean testing)  {
         DataverseJavaObject dJO = new DataverseJavaObject(server);
         JSONObject dataverseJSON;

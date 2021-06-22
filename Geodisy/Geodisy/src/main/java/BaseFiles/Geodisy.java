@@ -39,16 +39,6 @@ public class Geodisy {
         return records;
     }
 
-    /**
-     * Harvesting metadata from FRDR Harvester
-     * @return
-     */
-    public List<SourceJavaObject> harvestFRDRMetadata(){
-        FRDRGeodisy frdrGeodisy = new FRDRGeodisy();
-        return frdrGeodisy.harvestFRDRMetadata();
-    }
-
-
     /** 
      * Creates the universal part of the Dataverse BaseFiles.API search/retrieve
      * URLs "://{database name}/api/". 
