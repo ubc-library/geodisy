@@ -112,7 +112,6 @@ public class FRDRAPI extends SourceAPI{
     }
 
     public String getJson() {
-        //TODO set this up once Joel has given me the API endpoint to hit
         try {
             URL url = new URL(EXPORTER);
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
