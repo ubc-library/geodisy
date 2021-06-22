@@ -1,6 +1,7 @@
 package Crosswalking.XML.XMLTools;
 
 import BaseFiles.GeoLogger;
+import BaseFiles.ProcessCall;
 import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.dircache.DirCache;
@@ -16,6 +17,9 @@ import java.io.InputStreamReader;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import static _Strings.GeodisyStrings.GEOCOMBINE;
 import static _Strings.GeodisyStrings.GITCALL;
@@ -41,26 +45,16 @@ public class JGit {
     }
 
     public void updateRemoteMetadata(){
-        List<String> cmdList = new ArrayList<String>();
-        cmdList.add("/bin/bash");
-        cmdList.add("-c");
-        cmdList.add(GITCALL);
-        cmdList.add(OPEN_METADATA_LOCAL_REPO);
-        cmdList.add(String.valueOf(ZonedDateTime.now(ZoneId.of("Canada/Pacific"))));
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        Process p = null;
+        String call = GITCALL + " " + OPEN_METADATA_LOCAL_REPO + " " + ZonedDateTime.now(ZoneId.of("Canada/Pacific"));
+        ProcessCall processCall;
         try{
             System.out.println("Pushing Metadata to OpenGeoMetaData");
-            processBuilder.command(cmdList);
-            p = processBuilder.start();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null)
-                continue;
-            p.waitFor();
-            p.destroy();
-        } catch (IOException | InterruptedException e) {
+            processCall = new ProcessCall();
+            processCall.runProcess(call,10, TimeUnit.SECONDS,logger);
+        } catch (IOException | InterruptedException |ExecutionException e) {
             logger.error("Something went wrong pushing metadata to OpenGeoMetaData: " + e);
+        } catch (TimeoutException e) {
+            logger.error("Timed out trying to update OpenGeoMetadata");
         }
     }
 

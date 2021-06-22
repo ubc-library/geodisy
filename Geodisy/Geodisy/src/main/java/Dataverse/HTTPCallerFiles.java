@@ -8,6 +8,7 @@ import java.net.*;
 
 public class HTTPCallerFiles {
     protected GeoLogger logger;
+
     public HTTPCallerFiles() {
         logger = new GeoLogger(this.getClass());
     }

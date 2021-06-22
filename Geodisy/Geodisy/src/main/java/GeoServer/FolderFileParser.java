@@ -6,6 +6,10 @@ import Dataverse.DataverseRecordFile;
 import _Strings.GeodisyStrings;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.Stack;
 
@@ -20,7 +24,7 @@ public class FolderFileParser {
                 recs = openFolders(f, dirPath, djo, drf);
             }
             else if(f.getName().toLowerCase().endsWith(".zip")) {
-                recs.addAll(unzip(f, dirPath, drf, djo));
+                recs.addAll(unzip(f, dirPath, drf));
             }
             else if(f.getName().toLowerCase().endsWith(".tab"))
                 recs.add(convertTab(f, dirPath,f.getName(),drf));
@@ -40,25 +44,19 @@ public class FolderFileParser {
         return d;
     }
 
-    private String convertFromTabToCSV(File inputFile, String dirPath, String title) {
-        String fileName = title.substring(0, title.length() - 3) + "csv";
+    public String convertFromTabToCSV(File inputFile, String dirPath, String title) {
+        String fileName = title.endsWith(".tab")? title.replace(".tab",".csv"):title+".csv";
         File outputFile = new File(dirPath + fileName);
         BufferedReader br = null;
         FileWriter writer = null;
         try {
             String line;
-            Stack<String> stack = new Stack<>();
             br = new BufferedReader(new FileReader(inputFile));
             writer = (new FileWriter(outputFile));
             while ((line = br.readLine()) != null) {
-                stack.push(line.replace("\t", ","));
+                writer.write(line.replace("\t", ","));
+                writer.write("\n");
             }
-            while (!stack.isEmpty()) {
-                writer.write(stack.pop());
-                if (!stack.empty())
-                    writer.write("\n");
-            }
-            inputFile.delete();
         } catch (FileNotFoundException e) {
             logger.error("Tried to convert an non-existant .tab file: " + title);
         } catch (IOException e) {
@@ -69,28 +67,29 @@ public class FolderFileParser {
         finally {
             try{
                 br.close();
+                writer.close();
             }
             catch(IOException|NullPointerException d){
                 logger.error("Something went wrong when converting a .tab file to .csv when closing br: " + title);
             }
-            finally{
-                try{
-                    writer.close();
-                } catch (IOException e) {
-                    logger.error("Something went wrong when converting a .tab file to .csv when closing writer: " + title);
-                }
-            }
+        }
+        try {
+            Files.deleteIfExists(Paths.get(inputFile.getAbsolutePath()));
+        } catch (IOException e) {
+            logger.error("Something went wrong trying to delete " + inputFile.getAbsolutePath());
         }
         return fileName;
     }
 
-    public LinkedList<DataverseRecordFile> unzip(File f, String dirPath, DataverseRecordFile drf, DataverseJavaObject djo){
+    public LinkedList<DataverseRecordFile> unzip(File f, String dirPath, DataverseRecordFile drf){
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
         String filePath = GeodisyStrings.replaceSlashes(f.getAbsolutePath());
         Unzip zip = new Unzip();
         try {
+            Long start = Calendar.getInstance().getTimeInMillis();
             System.out.println("Unzipping file " + f.getName());
-            drfs = zip.unzip(filePath, dirPath, drf, djo);
+            drfs = zip.unzip(filePath, dirPath, drf);
+            System.out.println(Calendar.getInstance().getTimeInMillis()-start + " milliseconds to unzip " + f.getName());
         }catch (NullPointerException e){
             logger.error("Got an null pointer exception, something clearly went wrong with unzipping " + filePath);
         }

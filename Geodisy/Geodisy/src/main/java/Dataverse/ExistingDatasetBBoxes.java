@@ -31,6 +31,8 @@ public class ExistingDatasetBBoxes extends ExistingSearches implements Serializa
     private ExistingDatasetBBoxes(){
         logger = new GeoLogger(this.getClass());
         bBoxes = readExistingBoundingBoxes();
+        if(bBoxes==null)
+            bBoxes = new HashMap<>();
     }
 
     public void addBBox(String name, BoundingBox boundingBox){

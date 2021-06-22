@@ -6,7 +6,7 @@ import BaseFiles.GeoLogger;
 import java.io.IOException;
 import java.util.HashMap;
 
-public abstract class ExisitingFile {
+public abstract class ExistingFile {
     GeoLogger logger;
     public void saveExistingFile(Object object, String path, String className){
         FileWriter fw  = new FileWriter();

@@ -1,85 +1,83 @@
 package Crosswalking.GeoBlacklightJson;
 
 import BaseFiles.GeoLogger;
+import BaseFiles.ProcessCall;
 import org.apache.solr.client.solrj.SolrServerException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import static _Strings.GeodisyStrings.*;
 
 public class GeoCombine {
     GeoLogger logger;
+    ProcessCall processCall;
+
     public GeoCombine() {
-        logger = new GeoLogger(this.getClass());
+        this.logger = new GeoLogger(this.getClass());
+        this.processCall = new ProcessCall();
     }
 
     public void index(){
-
+        deleteXML();
         moveMetadata();
         clearSolr();
         combine();
     }
-    public void combine(){
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        Process p = null;
+
+    private void deleteXML() {
         try{
-            System.out.println("Calling Geocombine");
-            processBuilder.command("/bin/bash", "-c", GEOCOMBINE);
-            p = processBuilder.start();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null)
-                continue;
-            p.waitFor();
-            p.destroy();
-        } catch (IOException | InterruptedException e) {
-            logger.error("Something went wrong calling GeoCombine to index files: " + e);
+            processCall = new ProcessCall();
+            processCall.runProcess(DELETE_XML, 1, TimeUnit.HOURS, logger);
+        } catch (IOException | InterruptedException |  ExecutionException e) {
+            logger.error("Something went wrong trying to delete XML files");
+        } catch (TimeoutException e) {
+            logger.error("Deleting XML files timed out!");
         }
     }
 
-    public void combine(List<String> bash){
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        Process p = null;
+    public void combine(){
         try{
             System.out.println("Calling Geocombine");
-            processBuilder.command(bash);
-            p = processBuilder.start();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null)
-                continue;
-            p.waitFor();
-            p.destroy();
-        } catch (IOException | InterruptedException e) {
+            processCall = new ProcessCall();
+            processCall.runProcess(GEOCOMBINE,5, TimeUnit.HOURS,logger);
+        } catch (IOException | InterruptedException |  ExecutionException e) {
             logger.error("Something went wrong calling GeoCombine to index files: " + e);
+        } catch (TimeoutException e) {
+            logger.error("Geocombine timed out!");
+        }
+    }
+
+    public void combine(List<String> args, String call){
+        processCall = new ProcessCall();
+        try{
+            System.out.println("Calling Geocombine");
+            processCall.runProcess(call,5, TimeUnit.HOURS,args,logger);
+        } catch (IOException | InterruptedException|ExecutionException e) {
+            logger.error("Something went wrong calling GeoCombine to index files: " + e);
+        } catch (TimeoutException e) {
+            logger.error("Geocombine timed out!");
         }
     }
 
     public void moveMetadata(){
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        System.out.println("Moving metadata: " + MOVE_METADATA);
-        processBuilder.command("/bin/bash", "-c", MOVE_METADATA);
-        Process p = null;
         try{
+            processCall = new ProcessCall();
             System.out.println("Moving metadata");
-            p = processBuilder.start();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null)
-                continue;
-            p.waitFor();
-            p.destroy();
-        } catch (IOException|InterruptedException e){
+            processCall.runProcess(MOVE_METADATA,2,TimeUnit.HOURS,logger);
+        } catch (IOException|InterruptedException|ExecutionException e){
             logger.error("Something went wrong trying to move the metadata");
+        } catch (TimeoutException e) {
+            logger.error("Moving metadata timed out!");
         }
     }
 
     public void clearSolr(){
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        Process p = null;
         try{
             System.out.println("Clearing Solr");
             SOLR solr = new SOLR();

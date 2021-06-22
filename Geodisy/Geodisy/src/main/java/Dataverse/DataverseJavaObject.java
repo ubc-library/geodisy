@@ -1,16 +1,25 @@
 package Dataverse;
 
 import BaseFiles.GeoLogger;
+import BaseFiles.HTTPGetCall;
+import BaseFiles.ProcessCall;
 import _Strings.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.*;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONSocialFieldClasses.SocialFields;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
+import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 
 import static _Strings.GeodisyStrings.*;
 import static _Strings.DVFieldNameStrings.*;
@@ -121,6 +130,12 @@ public class DataverseJavaObject extends SourceJavaObject {
                 String url ="";
                 if (jo.has("frdr_harvester")) {
                     url = dataFile.getString("fileURI");
+                    //OpenDataSoft repositories do streaming downloads in geojson format and give
+                    if(GeodisyStrings.checkIfOpenDataSoftRepo(url)){
+                        int fileName = url.indexOf("download?dataset=") + 17;
+                        title = url.substring(fileName) + ".geojson";
+                    }
+
                     dRF = new DataverseRecordFile(title, citationFields.getPID(), url);
                     dRF.setOriginalTitle(title);
                 } else if (dataFile.has(PERSISTENT_ID) && !dataFile.getString(PERSISTENT_ID).equals("")) {
@@ -167,29 +182,34 @@ public class DataverseJavaObject extends SourceJavaObject {
 
     @Override
     public LinkedList<DataverseGeoRecordFile> downloadFiles() {
+        long startTime = Calendar.getInstance().getTimeInMillis();
         String path = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + urlized(GeodisyStrings.removeHTTPSAndReplaceAuthority(citationFields.getPID())));
         File f = new File(path);
-        deleteDir(f);
+        try {
+            deleteDir(f);
+        } catch (IOException e) {
+            logger.error("Something went wrong trying to delete folder: " + f.getAbsolutePath());
+        }
         f.mkdirs();
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
-        checkDataset();
+
+
+        HTTPGetCall httpGetCall = new HTTPGetCall();
+        dataFiles = httpGetCall.checkDataset(dataFiles,getPID());
         for (DataverseRecordFile dRF : dataFiles) {
             if (GeodisyStrings.fileTypesToIgnore(dRF.translatedTitle)) {
-                File bad = new File(path + GeodisyStrings.replaceSlashes("/") + dRF.translatedTitle);
-                bad.delete();
                 //System.out.println("Ignored file: " + dRF.translatedTitle);
                 continue;
             }
             if(dRF.translatedTitle.startsWith("LAS_")) {
-                File bad = new File(path+GeodisyStrings.replaceSlashes("/")+dRF.translatedTitle);
-                bad.delete();
                 continue;
             }
+            System.out.println("Getting file " + dRF.getFileName());
             LinkedList<DataverseRecordFile> temp = dRF.retrieveFile(this);
             for(DataverseRecordFile d: temp){
                 boolean add = true;
                 for(DataverseRecordFile d2: drfs){
-                    if(d.getTranslatedTitle() == d2.getTranslatedTitle()) {
+                    if(d.getTranslatedTitle().equals(d2.getTranslatedTitle())) {
                         add = false;
                         break;
                     }
@@ -198,29 +218,45 @@ public class DataverseJavaObject extends SourceJavaObject {
                     drfs.add(d);
             }
         }
-
+        Long total = Calendar.getInstance().getTimeInMillis() - startTime;
+        System.out.println("Finished downloading and unzipping files from " + getPID() + " after " + total + " milliseconds");
         if(drfs.size()==0){
-            f.delete();
+            System.out.print("No drfs generated so deleting folder");
+            try {
+                FileUtils.deleteDirectory(f);
+            } catch (IOException e) {
+                logger.error("Something went wrong deleting empty folder: " + path);
+            }
             return new LinkedList<DataverseGeoRecordFile>();
         }
 
 
         dataFiles = drfs;
+        System.out.println("Deleting .zip and .tab files that still exist");
+        LinkedList<DataverseRecordFile> left = new LinkedList<>();
         for (int i = 0; i < dataFiles.size(); i++) {
             String name = dataFiles.get(i).getTranslatedTitle();
-            if (name.endsWith("zip") ||name.endsWith("tab"))
-                dataFiles.remove(i);
+            if (!name.endsWith("zip") && !name.endsWith("tab"))
+                left.add(dataFiles.get(i));
+            if((i+1)%50 == 0)
+                System.out.print(".");
+            if(i%250==0)
+                System.out.print(i);
         }
+        System.out.println();
+        System.out.println("Finished deleting .zip and .tab files that still exist");
+        dataFiles = left;
 
         LinkedList<DataverseGeoRecordFile> newRecs = new LinkedList<>();
         DataverseGeoRecordFile dgrf;
+        System.out.print("Creating a new list of DGRFs that have valid bounding boxes");
         for (DataverseRecordFile dRF : dataFiles) {
             if (!GeodisyStrings.isProcessable(dRF.translatedTitle))
                 continue;
             if (dRF.getDbID() == -1)
                 dRF.setFileURL("");
             GDAL gdal = new GDAL();
-            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(getPID()).replace(".","/") + "/");
+            String dirPath = path + GeodisyStrings.replaceSlashes("/");
             dgrf = new DataverseGeoRecordFile(dRF);
             GeographicBoundingBox gbb = gdal.generateBB(new File(dirPath+dRF.getTranslatedTitle()), getPID(),dRF.getGBBFileNumber());
             dgrf.setGbb(gbb, gbb.getField(FILE_NAME));
@@ -236,13 +272,23 @@ public class DataverseJavaObject extends SourceJavaObject {
                     String stub = name.substring(0,name.lastIndexOf(".shp"));
                     for(String ex: NON_SHP_SHAPEFILE_EXTENSIONS){
                         f1 = new File(dirPath+stub+ex);
-                        if(f1.exists())
-                            f1.delete();
+                        if(f1.exists()) {
+                            try {
+                                Files.deleteIfExists(Paths.get(f1.getAbsolutePath()));
+                            } catch (IOException e) {
+                                logger.error("Something went wrong trying to delete : " + f1.getAbsolutePath());
+                            }
+                        }
                     }
                 }
                 f1 = new File(dirPath+name);
-                if(f1.exists())
-                    f1.delete();
+                if(f1.exists()) {
+                    try {
+                        Files.deleteIfExists(Paths.get(f1.getAbsolutePath()));
+                    } catch (IOException e) {
+                        logger.error("Something went wrong trying to delete : " + f1.getAbsolutePath());
+                    }
+                }
             }
             ExistingGeoLabels existingGeoLabels = ExistingGeoLabels.getExistingLabels();
             ExistingGeoLabelsVals existingGeoLabelsVals = ExistingGeoLabelsVals.getExistingGeoLabelsVals();
@@ -251,47 +297,23 @@ public class DataverseJavaObject extends SourceJavaObject {
         }
         return newRecs;
     }
-    //Filter files to potentially download with a max 5GB individual file size and max 100GB dataset size
-    private void checkDataset() {
-        Long total = 0L;
-        LinkedList<DataverseRecordFile> list = new LinkedList<>();
-        HTTPCallerFiles hCF = new HTTPCallerFiles();
-        for(DataverseRecordFile dataverseRecordFile: dataFiles){
-            String url = dataverseRecordFile.recordURL;
-            if( url.startsWith("ftp://") | url.startsWith("http://ftp") | url.startsWith("https://ftp") )
-                continue;
-            long current = hCF.getFileLength(dataverseRecordFile.recordURL);
-            try {
-                if (current == -2 | current > 5000000000L)
-                    continue;
-                if(current==-1)
-                    current = 0;
-                total += current;
-                list.add(dataverseRecordFile);
-                if (total > 100000000000L) {
-                    list = new LinkedList<>();
-                    logger.warn("Dataset " + getPID() + " was too large to download.");
-                    System.out.println("Dataset too large to download");
-                    break;
-                }
-            } catch (NumberFormatException e){
-                logger.error("Something weird with the file length of " + dataverseRecordFile.translatedTitle + ": " + current + "at " + dataverseRecordFile.recordURL);
-            }
-        }
-        dataFiles = list;
-    }
 
     @Override
     public void updateGeoserver() {
         System.out.println("Updating geoserver");
         Collections.sort(getGeoDataFiles(), new SortByFileName());
+        LinkedList<DataverseGeoRecordFile> onGeoserver = new LinkedList<>();
         for(DataverseGeoRecordFile dgrf:getGeoDataFiles()){
             if(dgrf.getTranslatedTitle().endsWith(".shp")) {
                 dgrf.onGeoserver = createRecords(dgrf, Integer.parseInt(dgrf.getGBBFileNumber()), VECTOR);
             }else if(dgrf.getTranslatedTitle().endsWith(".tif")) {
                 dgrf.onGeoserver = createRecords(dgrf, Integer.parseInt(dgrf.getGBBFileNumber()), RASTER);
             }
+            if(dgrf.onGeoserver)
+                onGeoserver.add(dgrf);
+            System.out.println("Finished Adding file to geoserver");
         }
+        setGeoDataFiles(onGeoserver);
     }
     class SortByFileName implements Comparator<DataverseGeoRecordFile>{
         public int compare(DataverseGeoRecordFile a, DataverseGeoRecordFile b){
@@ -324,36 +346,37 @@ public class DataverseJavaObject extends SourceJavaObject {
         String merge = "gdalbuildvrt mpsaic.vrt " + DATASET_FILES_PATH + drf.getDatasetIdent().replace("_","/") + "/";
         String delete = "rm "+ DATASET_FILES_PATH + drf.getDatasetIdent().replace("_","/") + "/*.tif";
         String transform ="gdal_translate -of GTiff -co \"COMPRESS=JPEG\" -co \"PHOTOMETRIC=YCBCR\" -co \"TILED=YES\" mosaic.vrt" + drf.getDatasetIdent() + ".tif";
-        ProcessBuilder p = new ProcessBuilder();
-        p.command("bash","-c",merge);
-        Process process = null;
+        ProcessCall processCall;
         try {
-            process = p.start();
+            processCall = new ProcessCall();
+            processCall.runProcess(merge,5, TimeUnit.SECONDS,logger);
 
-            process.waitFor();
-            process.destroy();
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException | ExecutionException e) {
             logger.error("Something went wrong trying to merge tifs in a mosaic file in record: " + drf.getDatasetIdent());
+        } catch (TimeoutException e) {
+            logger.error("Timeout trying to merge tifs in a mosaic file in record: " + drf.getDatasetIdent());
         }
         try{
-            p.command("bash","-c",delete);
-            process = p.start();
-            process.waitFor();
-            process.destroy();
-        } catch (IOException | InterruptedException e) {
+            processCall = new ProcessCall();
+            processCall.runProcess(delete,5, TimeUnit.SECONDS,logger);
+
+        } catch (IOException | InterruptedException | ExecutionException e) {
             logger.error("Something went wrong trying to delete merged tifs in record: " + drf.getDatasetIdent());
+        } catch (TimeoutException e) {
+            logger.error("Timeout trying to merge tifs in a mosaic file in record: " + drf.getDatasetIdent());
         }
         try{
-        p.command("bash","-c",transform);
-            process = p.start();
-            process.waitFor();
-            process.destroy();
-        } catch (IOException | InterruptedException e) {
+            processCall = new ProcessCall();
+            processCall.runProcess(transform,5, TimeUnit.SECONDS,logger);
+
+        } catch (IOException | InterruptedException | ExecutionException e) {
             logger.error("Something went wrong trying to convert merged tifs (mosaic) to to a new tif in record: " + drf.getDatasetIdent());
+        } catch (TimeoutException e) {
+            logger.error("Timeout trying to merge tifs in a mosaic file in record: " + drf.getDatasetIdent());
         }
         DataverseRecordFile temp;
         if(drf.getFileIdent().equals(""))
-            temp = new DataverseRecordFile(drf.getDatasetIdent().replace("_","/") + "/*.tif",drf.getDbID(),drf.getServer(),drf.getDatasetIdent());
+            temp = new DataverseRecordFile(drf.getFileName(),drf.getDatasetIdent(),drf.getDbID());
         else
             temp = new DataverseRecordFile(drf.getDatasetIdent().replace("_","/") + "/*.tif",drf.getFileIdent(),drf.getDbID(),drf.getServer(),drf.getDatasetIdent());
 

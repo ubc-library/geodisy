@@ -11,7 +11,7 @@ public class UnzipTest {
         Unzip zip = new Unzip();
         DataverseRecordFile drf = new DataverseRecordFile();
         drf.setOriginalTitle("OldPoly.zip");
-        zip.unzip("geodisyFiles/OldPoly.zip","src/test/UnzipTestDepositLocation",drf,new DataverseJavaObject("server"));
+        zip.unzip("geodisyFiles/OldPoly.zip","src/test/UnzipTestDepositLocation",drf);
         
     }
 }

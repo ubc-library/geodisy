@@ -1,19 +1,21 @@
 package Dataverse;
 
 import BaseFiles.GeoLogger;
+import BaseFiles.HTTPGetCall;
+import BaseFiles.ProcessCallFileDownload;
 import _Strings.GeodisyStrings;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
 import Dataverse.FindingBoundingBoxes.LocationTypes.BoundingBox;
 import GeoServer.FolderFileParser;
-import org.apache.commons.io.FileUtils;
 
 
 import java.io.*;
-import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
-import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.Stack;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 
 import static _Strings.GeodisyStrings.*;
@@ -49,8 +51,9 @@ public class DataverseRecordFile {
         this.dbID = dbID;
         this.server = server;
         recordURL = server+"api/access/datafile/" + dbID;
-        this.datasetIdent = GeodisyStrings.removeHTTPSAndReplaceAuthority(datasetIdent.replace(".","_").replace("/","_"));
+        this.datasetIdent = GeodisyStrings.removeHTTPSAndReplaceAuthority(datasetIdent).replace(".","_").replace("/","_");
         gbb = new GeographicBoundingBox(datasetIdent);
+        setFileName(translatedTitle);
 
     }
 
@@ -63,6 +66,8 @@ public class DataverseRecordFile {
         this.datasetIdent = GeodisyStrings.removeHTTPSAndReplaceAuthority(datasetIdent.replace(".","_").replace("/","_"));
         gbb = new GeographicBoundingBox(datasetIdent);
         setFileURL(fileURL);
+        setFileName(translatedTitle);
+        this.originalTitle=translatedTitle;
 
     }
     /**
@@ -79,6 +84,8 @@ public class DataverseRecordFile {
         recordURL = server+"api/access/datafile/" + dbID;
         this.datasetIdent = GeodisyStrings.removeHTTPSAndReplaceAuthority(GeodisyStrings.replaceSlashes(datasetIdent)).replace(".","_").replace(GeodisyStrings.replaceSlashes("/"),"_");
         gbb = new GeographicBoundingBox(datasetIdent);
+        setFileName(translatedTitle);
+        originalTitle = translatedTitle;
     }
 
     /**
@@ -95,6 +102,8 @@ public class DataverseRecordFile {
         recordURL = fileURL;
         this.datasetIdent = GeodisyStrings.removeHTTPSAndReplaceAuthority(GeodisyStrings.replaceSlashes(datasetIdent)).replace(".","_").replace(GeodisyStrings.replaceSlashes("/"),"_");
         gbb = new GeographicBoundingBox(datasetIdent);
+        this.originalTitle = translatedTitle;
+        setFileName(translatedTitle);
         setFileURL(fileURL);
     }
 
@@ -131,46 +140,53 @@ public class DataverseRecordFile {
 
     public LinkedList<DataverseRecordFile> retrieveFile(DataverseJavaObject djo) {
         FolderFileParser ffp = new FolderFileParser();
-        //System.out.println("downloading file: " + originalTitle);
         LinkedList<DataverseRecordFile> drfs = new LinkedList<>();
         DownloadedFiles downloads = DownloadedFiles.getDownloadedFiles();
         downloads.addDownload(originalTitle,djo.getPID(),recordURL);
-        try {
-            String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(datasetIdent).replace("_", "/").replace(".","/")+"/");
+        String dirPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(datasetIdent).replace("_", "/").replace(".","/")+"/");
 
-            File folder = new File(dirPath);
-            folder.mkdirs();
-            String filePath = dirPath + translatedTitle;
-            FileUtils.copyURLToFile(
-                    new URL(recordURL),
-                    new File(filePath),
-                    10000, //10 seconds connection timeout
-                    1200000); //20 minute read timeout
-            File newFile = new File(filePath);
-            if (translatedTitle.toLowerCase().endsWith(".zip")) {
-                try {
-                    drfs = ffp.unzip(newFile, dirPath, this, djo);
-                }catch (NullPointerException f){
-                        logger.error("Got an null pointer exception, something clearly went wrong with unzipping " + filePath);
-                    }
-                new File(filePath).delete();
-            }else if(newFile.isDirectory())
-                drfs = ffp.openFolders(newFile, dirPath,djo,this);
-            else if (newFile.getName().endsWith(".tab")) {
-                //System.out.println("Converting tab file");
-                drfs.add(ffp.convertTab(newFile, dirPath, newFile.getName(), this));
+        ProcessCallFileDownload process = new ProcessCallFileDownload();
+        String fileName = getFileName();
+        String url = getFileURL();
+        String path = dirPath;
+        try{
+            try {
+                process.downloadFile(getFileURL(),getFileName(),dirPath,logger,20, TimeUnit.MINUTES);
+            } catch (TimeoutException e) {
+                logger.error("Download Timedout for " + fileName + " at url " + url);
+                Files.deleteIfExists(Paths.get(path+fileName));
+            } catch (InterruptedException e) {
+                logger.error("Download Error for " + fileName + " at url " + url);
+                Files.deleteIfExists(Paths.get(path+fileName));
             }
-            else if(GeodisyStrings.fileToAllow(newFile.getName())) {
-                drfs.add(this);
+        }catch (IOException e) {
+            logger.error("Delete failed download failed for " + fileName + " from " + url);
+        }
+
+
+        String filePath = dirPath + translatedTitle;
+        File newFile = new File(filePath);
+        if(!newFile.exists())
+            return drfs;
+        else if (translatedTitle.toLowerCase().endsWith(".zip")) {
+            try {
+                drfs = ffp.unzip(newFile, dirPath, this);
+            }catch (NullPointerException f){
+                logger.error("Got an null pointer exception, something clearly went wrong with unzipping " + filePath);
             }
-        } catch(SocketTimeoutException e){
-            logger.error(String.format("Socket timed out downloading file %s, with fileIdent %s or dbID %d of Dataset with PID " + datasetIdent, translatedTitle, fileIdent, dbID));
-        } catch (FileNotFoundException e){
-            logger.info(String.format("This dataset file %s couldn't be found from dataset %s. ", dbID, datasetIdent) + "Check out dataset " + datasetIdent, djo);
-        } catch (MalformedURLException e) {
-            logger.error(String.format("Something is wonky with the file PERSISTENT_ID " + fileIdent + " or the dbID " + dbID + " of Dataset with PID "+ datasetIdent));
-        } catch (IOException e) {
-            logger.error(String.format("Something went wrong with downloading file %s, with fileIdent %s or dbID %d of Dataset with PID " + datasetIdent, translatedTitle, fileIdent, dbID));
+            try {
+                Files.deleteIfExists(Paths.get(filePath));
+            } catch (IOException e) {
+                logger.error("Something went wrong trying to delete file: " + filePath);
+            }
+        }else if(newFile.isDirectory())
+            drfs = ffp.openFolders(newFile, dirPath,djo,this);
+        else if (newFile.getName().endsWith(".tab")) {
+            //System.out.println("Converting tab file");
+            drfs.add(ffp.convertTab(newFile, dirPath, newFile.getName(), this));
+        }
+        else if(GeodisyStrings.fileToAllow(newFile.getName())) {
+            drfs.add(this);
         }
         return drfs;
     }
@@ -208,8 +224,11 @@ public class DataverseRecordFile {
                 String path = djo.getPID().replace("/", "_");
                 path = path.replace(".", "_");
                 String badFilesPath = GeodisyStrings.replaceSlashes(DATA_DIR_LOC + path + "/" + name);
-                File file = new File(badFilesPath);
-                file.delete();
+                try {
+                    Files.deleteIfExists(Paths.get(badFilesPath));
+                } catch (IOException e) {
+                    logger.error("Something went wrong trying to delete file that couldn't generate BBox: " + badFilesPath);
+                }
                 return new DataverseRecordFile();
             }
         }
@@ -241,7 +260,7 @@ public class DataverseRecordFile {
                 if (!stack.empty())
                     writer.write("\n");
             }
-            inputFile.delete();
+            Files.deleteIfExists(inputFile.toPath());
         } catch (FileNotFoundException e) {
             logger.error("Tried to convert an non-existant .tab file: " + title);
         } catch (IOException e) {
@@ -316,6 +335,10 @@ public class DataverseRecordFile {
 
     public String getFileName(){
         return gbb.getField(FILE_NAME);
+    }
+
+    public void setFileName(String s){
+        gbb.setField(FILE_NAME,s);
     }
 
     public boolean isFromFile(){

@@ -13,18 +13,19 @@ public class GeodisyStrings {
         END_XML_JSON_FILE_PATH = FRONTEND_ADDRESS + "/metadata/geodisy/";
         PATH_TO_XML_JSON_FILES = BACKEND_ADDRESS + "/geodisy/";
         GEODISY_PATH_ROOT = (IS_WINDOWS)? WINDOWS_ROOT: FRDR_VM_CENTOS_ROOT;
-        MOVE_METADATA = "sudo rsync -auhv " + GEODISY_PATH_ROOT + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
-        MOVE_DATA = "sudo rsync -auhv " + GEODISY_PATH_ROOT + "datasetFiles/* " + DATA_DIR_LOC;
+        MOVE_METADATA = "sudo rsync -au --delete " + GEODISY_PATH_ROOT + "metadata/* /var/www/" + BACKEND_ADDRESS + "/html/geodisy/";
+        MOVE_DATA = "sudo rsync -au --delete " + GEODISY_PATH_ROOT + "datasetFiles/* " + DATA_DIR_LOC;
         GEOCOMBINE = "sh " + GEODISY_PATH_ROOT + "geodisyFiles/combine.sh";
         GITCALL = "sh " + GEODISY_PATH_ROOT + "geodisyFiles/git.sh";
+        DELETE_XML = "sudo find " + GEODISY_PATH_ROOT + "metadata/ -name \"iso19139.xml\" -delete";
         SAVED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles");
         LOGS = GEODISY_PATH_ROOT + replaceSlashes("logs");
         EXISTING_CHECKS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingChecks.txt");
         EXISTING_DATASET_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingDatasetBBoxes.txt");
         EXISTING_LOCATION_BBOXES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingLocationBBoxes.txt");
         EXISTING_LOCATION_NAMES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingLocationNames.txt");
-        EXISTING_GEO_LABELS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExisitingGeoLabels.txt");
-        EXISTING_GEO_LABELS_VALS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExisitingGeoLabelsVals.txt");
+        EXISTING_GEO_LABELS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingGeoLabels.txt");
+        EXISTING_GEO_LABELS_VALS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingGeoLabelsVals.txt");
         DOWNLOADED_FILES = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/DownloadedFiles.csv");
         VECTOR_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/ExistingVectorRecords.txt");
         TEST_EXISTING_RECORDS = GEODISY_PATH_ROOT + replaceSlashes("savedFiles/TestExistingRecords.txt");
@@ -133,7 +134,7 @@ public class GeodisyStrings {
         public final static String ISO_19139_XML = "iso19139.xml";
 
     //Geonames
-        public final static String GEONAMES_SEARCH_BASE = "http://api.geonames.org/search?q=";
+        public final static String GEONAMES_SEARCH_BASE = "https://secure.geonames.net/search?q=";
 
 
     //GDAL
@@ -162,25 +163,25 @@ public class GeodisyStrings {
         public final static String[] OGRINFO_VECTOR_FILE_EXTENSIONS = ArrayUtils.addAll(NON_SHP_SHAPEFILE_EXTENSIONS, INTERIM_VECTOR);
         public final static String FINAL_OGRINFO_VECTOR_FILE_EXTENSIONS = ".shp";
         public final static String[] PREVIEWABLE_FILE_EXTENSIONS = {".tif"};
-        private final static String OGR2OGR_LOCAL = LOCAL_GDAL_PATH + "ogr2ogr -f \"ESRI Shapefile\" -t_srs EPSG:4326 ";
+        private final static String OGR2OGR_LOCAL = LOCAL_GDAL_PATH + "ogr2ogr -f \"ESRI Shapefile\" -t_srs EPSG:4326  -lco ENCODING=UTF-8 ";
         private final static String GDAL_TRANSLATE_LOCAL = LOCAL_GDAL_PATH + "gdal_translate -of GTiff ";
-        private final static String OGR2OGR_CLOUD = "/usr/gdal30/bin/ogr2ogr -t_srs EPSG:4326 -f \"ESRI Shapefile\" ";
+        private final static String OGR2OGR_CLOUD = "/usr/gdal30/bin/ogr2ogr -t_srs EPSG:4326 -f \"ESRI Shapefile\" -lco ENCODING=UTF-8 ";
         //GDAL for Raster conversion needs to be using GDAL version 2.x, so had to use a docker version of it for use with Centos
         //public final static String GDAL_DOCKER = "sudo docker run --rm -v /home:/home osgeo/gdal:alpine-ultrasmall-v2.4.1 "; //base call for docker gdal, but need the program call added on
         private final static String GDAL_TRANSLATE_CLOUD = "/usr/gdal30/bin/gdal_translate -of GTiff ";
         public static String OGR2OGR;
         public static String GDAL_TRANSLATE;
         public final static String RASTER_CRS = "EPSG:3857";
-        public static String GDALWARP(String path,String fileName){ return getGdalWarp(path,fileName);}
-        public static String GDAL_WARP_LOCAL(String path, String filename){ return LOCAL_GDAL_PATH + "gdalwarp -overwrite -t_srs " + RASTER_CRS +" -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW {} {}" + path + filename +" " + path + "1" + filename;}
+        public static String GDALWARP(String path,String fileName){ return replaceSlashes(getGdalWarp(path,fileName));}
+        public static String GDAL_WARP_LOCAL(String path, String filename){ return LOCAL_GDAL_PATH + "gdalwarp -overwrite -t_srs " + RASTER_CRS +" -r near -multi -co TILED=YES -co COMPRESS=LZW " + path + filename +" " + path + "1" + filename;}
 
         public static String GDAL_WARP_CLOUD(String path, String fileName){
-        return "sudo /usr/gdal30/bin/gdalwarp -overwrite -t_srs "+ RASTER_CRS +" -r near -multi -of GTiff -co TILED=YES -co COMPRESS=LZW " + path + fileName + " " + path + "1"+ fileName; }
+        return "sudo /usr/gdal30/bin/gdalwarp -overwrite -t_srs "+ RASTER_CRS +" -r near -multi -co TILED=YES -co COMPRESS=LZW " + path + fileName + " " + path + "1"+ fileName; }
 
         public static String GDALADDO(String source){ return getGdalAddo(source);}
-        public static String GDAL_ADDO_LOCAL(String source){return LOCAL_GDAL_PATH + "gdaladdo " + source + " -r nearest --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
-        public static String GDAL_ADDO_CLOUD(String source){return "sudo /usr/gdal30/bin/gdaladdo " + source + " -r nearest --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
-        public final static String[] PROCESSABLE_EXTENSIONS = ArrayUtils.addAll(GDALINFO_PROCESSABLE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS);
+        public static String GDAL_ADDO_LOCAL(String source){return LOCAL_GDAL_PATH + "gdaladdo " + source + " -r near --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
+        public static String GDAL_ADDO_CLOUD(String source){return "sudo /usr/gdal30/bin/gdaladdo " + source + " -r near --config COMPRESS_OVERVIEW LZW 2 4 8 16 32 64 128";}
+        public final static String[] PROCESSABLE_EXTENSIONS = ArrayUtils.addAll(ArrayUtils.addAll(GDALINFO_PROCESSABLE_EXTENSIONS,OGRINFO_PROCESSABLE_EXTENTIONS),CSV_EXTENTIONS);
 
         private static String getGdalWarp(String path, String fileName){
             if(IS_WINDOWS)
@@ -253,6 +254,7 @@ public class GeodisyStrings {
     public static String MOVE_DATA;
     public static String GEOCOMBINE;
     public static String GITCALL;
+    public static String DELETE_XML;
 
     public static String dataDir(){
         if(IS_WINDOWS)
@@ -358,6 +360,7 @@ public class GeodisyStrings {
             path = path.replace(".", "_");
             path = path.replace("?", "_");
         }
+        //replace any colon beyond the Windows drive colon
         if(path.startsWith("D:"))
             path = path.replace("D:","D***");
         if(path.startsWith("C:"))
@@ -374,45 +377,77 @@ public class GeodisyStrings {
 
     private static String nonUniqueFromPid(String path) {
         String[][] nonUnique = {
-                {"hdl.handle.net/","hnd/"}
-                ,{"doi.org/","doi/"}
-                ,{"www.polardata.ca/pdcsearch/PDCSearchDOI.jsp?","pdc/"}
-                ,{"researchdata.sfu.ca/islandora/object/", "sfu/"}
-                ,{"donnees.montreal.ca/dataset/", "montreal/"}
-                ,{"catalogue.cioos.ca/dataset/", "cioos/"}
-                ,{"data.ontario.ca/dataset/", "on/"}
-                ,{"data.surrey.ca/dataset/","surrey/"}
-                ,{"hecate.hakai.org/geonetwork/srv/eng/catalog.search#/metadata/","geonet/"}
-                ,{"lwbin-datahub.ad.umanitoba.ca/dataset/","umb/"}
-                ,{"data.calgary.ca/d/","calgary/"}
-                ,{"search2.odesi.ca/#/details?uri=%2F","odesi/"}
-                ,{"catalogue.data.gov.bc.ca/dataset/","bc/"}
-                ,{"open.toronto.ca/dataset/","toronto/"}
-                ,{"opendatakingston.cityofkingston.ca/explore/dataset/","kingston/"}
-                ,{"data.princeedwardisland.ca/d/","pei/"}
-                ,{"data.winnipeg.ca/d/","winnipeg/"}
-                ,{"opendata.vancouver.ca/explore/dataset/","vancouver/"}
-                ,{"data.novascotia.ca/d/","ns/"}
-                ,{"www.donneesquebec.ca/recherche/fr/dataset/","quebec/"}
-                ,{"digital.library.yorku.ca/", "yorku/"}};
+                {"catalogue.data.gov.bc.ca/dataset/","bc"}                                 //2
+                ,{"catalogue.cioos.ca/dataset/", "cioos"}                                       //4
+                ,{"search2.odesi.ca/#/details?uri=","odesi"}                                    //5
+                ,{"lwbin-datahub.ad.umanitoba.ca/dataset/","umb"}                               //7
+                ,{"data.calgary.ca/d/","calgary"}                                               //9
+                ,{"data.edmonton.ca/d/","edmonton"}                                             //10
+                ,{"data.surrey.ca/dataset/","surrey"}                                           //11
+                ,{"spectrum.library.concordia.ca/","spectrum"}                                  //12
+                ,{"data.ontario.ca/dataset/", "on"}                                             //15
+                ,{"doi.org/","doi"}                                                             //16,20,28,44,46,67,129,131-142,146,147,150-158,160-166,168,169,174,184,186
+                ,{"www.frdr-dfdr.ca/repo/dataset/", "frdr"}                                     //19
+                ,{"www.donneesquebec.ca/recherche/fr/dataset/","qb"}                            //17
+                ,{"hecate.hakai.org/geonetwork/srv/eng/catalog.search#/metadata/","geonet"}     //21
+                ,{"open.canada.ca/data/en/dataset/","open"}                                     //34
+                ,{"www.polardata.ca/pdcsearch/PDCSearchDOI.jsp?","pdc"}                         //35
+                ,{"open.alberta.ca/opendata/","ab"}                                             //37
+                ,{"data.novascotia.ca/d/","ns"}                                                 //38
+                ,{"data.princeedwardisland.ca/d/","pei"}                                        //39
+                ,{"researchdata.sfu.ca/islandora/object/islandora:", "sfu"}                     //43
+                ,{"researchdata.sfu.ca/islandora/object/sfu:", "sfu"}
+                ,{"hdl.handle.net/","hnd"}                                                      //47
+                ,{"dx.doi.org/","doi"}                                                          //58
+                ,{"data.upei.ca/islandora/object/data:","upei"}                                 //66
+                ,{"digital.library.yorku.ca/", "yorku"}                                         //72
+                ,{"open.toronto.ca/dataset/","toronto"}                                         //85
+                ,{"opendata.vancouver.ca/explore/dataset/","vancouver"}                         //86
+                ,{"data.winnipeg.ca/d/","winnipeg"}                                             //87
+                ,{"opendatakingston.cityofkingston.ca/explore/dataset/","kingston"}             //172
+                ,{"donnees.montreal.ca/dataset/", "montreal"}                                   //173
+                ,{"data.montreal.ca/dataset/", "montreal"}                                   //173
+
+
+
+
+
+
+
+        };
+        String slash = GeodisyStrings.replaceSlashes("\\");
         for(String[] u: nonUnique){
             String uPath = GeodisyStrings.replaceSlashes(u[0]);
-            String endPathVal = GeodisyStrings.replaceSlashes(u[1]);
-            String slash = GeodisyStrings.replaceSlashes("\\");
+            String endPathVal =  u[1];
+
             if(path.contains(uPath))
-                path = path.replace(uPath,endPathVal);
+                return path.replace(uPath,endPathVal+slash).replace("%2F",slash);
             String underUPath = uPath.replace(slash,"_").replace(".","_");
             if(path.contains(underUPath)) {
                 path = path.replace(underUPath, endPathVal.replace(slash,"_").replace(".","_"));
                 if(path.contains("%2F"))
                     path.replace("%2F","_");
+                return path;
             }
             if(path.contains(uPath.substring(0, uPath.length()-1)))
-                path = path.replace(endPathVal.substring(endPathVal.length()-1),"");
+                return path.replace(endPathVal.substring(endPathVal.length() - 1), "");
             if(path.contains((uPath.replace(".",slash))))
-              path = path.replace(endPathVal.replace(".",slash),"");
+              return  path.replace(endPathVal.replace(".",slash),"").replace("%2F",slash);;
             path = path.replace("%2F",slash);
         }
+        path = path.replace("%2F",slash);
         return path;
+    }
+
+    public static boolean checkIfOpenDataSoftRepo(String url){
+        String[] repos = {
+                "https://opendata.vancouver.ca/"
+                ,"https://opendatakingston.cityofkingston.ca"
+        };
+        for(String s: repos){
+            if(url.startsWith(s))
+                return true;
+        }
+        return false;
     }
 }

@@ -26,6 +26,8 @@ public class ExistingCallsToCheck extends ExistingSearches implements Serializab
         logger = new GeoLogger(this.getClass());
         records = readExistingRecords(EXISTING_CHECKS);
         newRecords = new HashMap<>();
+        if(records==null)
+            records = new HashMap<>();
 
     }
     public boolean isEmpty(){

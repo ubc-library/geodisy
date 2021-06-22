@@ -56,6 +56,7 @@ public class GdalTest {
         for (int i = 0; i < 500; i++) {
             call = OGR2OGR + destPath + newName + " " + sourcePath + name;
             processBuilder.command("bash", "-c", call);
+            processBuilder.redirectErrorStream(true);
             try {
                 if (IS_WINDOWS) {
                     Runtime.getRuntime().exec(call).waitFor();

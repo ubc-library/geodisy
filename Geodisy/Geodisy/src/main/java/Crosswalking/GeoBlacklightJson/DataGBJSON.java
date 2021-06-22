@@ -43,10 +43,12 @@ public class DataGBJSON extends GeoBlacklightJSON{
         jo.put("geoblacklight_version","1.0");
         jo.put("dc_identifier_s", GeodisyStrings.urlSlashes(javaObject.getSimpleFieldVal(DVFieldNameStrings.RECORD_URL)));
         String geoserverLabel = getGeoserverLabel(gbb);
-        if(boundingBoxNumber>0)
-            jo.put("layer_slug_s", "geodisy:" + geoserverLabel+boundingBoxNumber);
+        if(((geoserverLabel.startsWith("r00")||geoserverLabel.startsWith("v00")) && geoserverLabel.length()==11)||(boundingBoxNumber==0))
+            jo.put("layer_slug_s", "geodisy:" + geoserverLabel.toLowerCase());
         else
-            jo.put("layer_slug_s", "geodisy:" + geoserverLabel);
+            jo.put("layer_slug_s", "geodisy:" + geoserverLabel.toLowerCase() + padZeros(boundingBoxNumber, total));
+
+
         String name = javaObject.getSimpleFields().getField(TITLE);
         if(name.isEmpty()) {
             logger.error("Somehow creating a GBL json without a study title: " + javaObject.getPID());
@@ -68,7 +70,9 @@ public class DataGBJSON extends GeoBlacklightJSON{
         jo.put("solr_geom","ENVELOPE(" + getBBString(gbb.getBB()) + ")");
         return jo;
     }
-
+    private String padZeros(int number, int total){
+        return padZeros(Integer.toString(number), total);
+    }
     private String padZeros(String number, int total) {
         if(total>9) {
             if(number.length()<2)
@@ -92,7 +96,7 @@ public class DataGBJSON extends GeoBlacklightJSON{
         return number;
     }
 
-    private void addRecommendedFields(String geoserverLabel, GeographicBoundingBox gbb, boolean isOnGeoserver) {
+    private void addRecommendedFields(String geoserverLabel, GeographicBoundingBox gbb, boolean isOnGeoserver, int count, int total) {
         getDSDescriptionSingle();
         if(!gbb.getField(GEOMETRY).isEmpty())
             jo.put("layer_geom_type_s",gbb.getField(GEOMETRY));
@@ -102,7 +106,10 @@ public class DataGBJSON extends GeoBlacklightJSON{
         }
         jo.put(EXTERNAL_SERVICES, j.toString());
         if(!geoserverLabel.isEmpty())
-            jo.put("layer_id_s", geoserverLabel);
+            if(count!=0)
+                jo.put("layer_id_s", geoserverLabel+padZeros(count, total));
+            else
+                jo.put("layer_id_s", geoserverLabel);
     }
 
     private String getGeoserverLabel(GeographicBoundingBox gbb) {
@@ -158,14 +165,14 @@ public class DataGBJSON extends GeoBlacklightJSON{
         GeographicBoundingBox gbb = drf.getGBB();
         String geoserverLabel = getGeoserverLabel(gbb).toLowerCase();
         getFileType(drf);
-        addRecommendedFields(geoserverLabel, gbb, drf.isOnGeoserver());
+        addRecommendedFields(geoserverLabel, gbb, drf.isOnGeoserver(),drf.getBbCount(), totalRecordsInStudy);
         getAuthors();
         getIssueDate();
         getLanguages();
         getPlaceNames(gbb);
         getSubjects();
         getType();
-        getRelatedRecords(drf);
+        getRelatedRecords(drf, totalRecordsInStudy);
         getModifiedDate();
         getSolrYear();
         getTemporalRange();
@@ -258,18 +265,23 @@ public class DataGBJSON extends GeoBlacklightJSON{
             jo.put("layer_modified_dt",modDate);
     }
 
-    private void getRelatedRecords(DataverseRecordFile drf) {
+    private void getRelatedRecords(DataverseRecordFile drf, int total) {
         LinkedList<DataverseGeoRecordFile> geo = javaObject.getGeoDataFiles();
         LinkedList<DataverseGeoRecordFile> meta = javaObject.getGeoDataMeta();
         LinkedList<DataverseGeoRecordFile> recs = (geo.size()>=meta.size())? geo:meta;
+        boolean geoRecs = geo.size()==recs.size();
+        int count = drf.getBbCount();
         if(recs.size()>1){
             JSONArray ja = new JSONArray();
             for(DataverseGeoRecordFile dgrf : recs){
-                if(!getGeoserverLabel(drf.getGBB()).equals(getGeoserverLabel(dgrf.getGBB()))) {
-                    if(dgrf.getBbCount()!=0)
-                        ja.put("geodisy:" + getGeoserverLabel(dgrf.getGBB()).toLowerCase() + dgrf.getBbCount());
-                    else
+                if(geoRecs) {
+                    if (!getGeoserverLabel(drf.getGBB()).equals(getGeoserverLabel(dgrf.getGBB()))) {
                         ja.put("geodisy:" + getGeoserverLabel(dgrf.getGBB()).toLowerCase());
+                    }
+                } else{
+                    int curBB =  dgrf.getBbCount();
+                    if(count!=curBB)
+                        ja.put("geodisy:" + getGeoserverLabel(dgrf.getGBB()).toLowerCase() + padZeros(curBB,total));
                 }
             }
             jo.put("dc_source_sm",ja);
@@ -417,16 +429,11 @@ public class DataGBJSON extends GeoBlacklightJSON{
     }
 
     public void saveJSONToFile(String json, String doi, String folderName){
-        String name = folderName;
-        String end = "";
-        if(folderName.contains("(")){
-            name = folderName.substring(0,folderName.indexOf(" ("));
-            end = "/" + getNumber(folderName);
-        }
-        genDirs(name + end, BASE_LOCATION_TO_STORE_METADATA);
+        genDirs(folderName, BASE_LOCATION_TO_STORE_METADATA);
         BaseFiles.FileWriter file = new BaseFiles.FileWriter();
+        folderName= GeodisyStrings.replaceSlashes(GEODISY_PATH_ROOT + BASE_LOCATION_TO_STORE_METADATA + folderName + "/" +"geoblacklight.json");
         try {
-            file.writeStringToFile(json,GeodisyStrings.replaceSlashes(GEODISY_PATH_ROOT + BASE_LOCATION_TO_STORE_METADATA + name.replace(".","/") + end + "/" +"geoblacklight.json"));
+            file.writeStringToFile(json,GeodisyStrings.replaceSlashes(folderName));
         } catch (IOException e) {
             logger.error("Something went wrong trying to create a JSON file with doi:" + doi);
         }

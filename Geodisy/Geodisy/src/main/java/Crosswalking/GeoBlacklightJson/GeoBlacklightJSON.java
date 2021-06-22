@@ -1,6 +1,7 @@
 package Crosswalking.GeoBlacklightJson;
 
 import BaseFiles.FileWriter;
+import BaseFiles.GeoLogger;
 import Crosswalking.MetadataSchema;
 import Dataverse.DataverseGeoRecordFile;
 import Dataverse.DataverseJSONFieldClasses.Fields.DataverseJSONGeoFieldClasses.GeographicBoundingBox;
@@ -27,6 +28,7 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
     protected JSONObject jo;
     protected String doi;
     boolean download = false;
+    GeoLogger logger;
     LinkedList<DataverseGeoRecordFile> geoFiles;
     LinkedList<DataverseGeoRecordFile> geoMeta;
     SourceRecordFiles files;
@@ -34,6 +36,7 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
     public GeoBlacklightJSON() {
         this.jo = new JSONObject();
         files = SourceRecordFiles.getSourceRecords();
+        logger = new GeoLogger(this.getClass());
     }
 
     public void createJson() {
@@ -41,8 +44,10 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
         int countMeta = geoMeta.size();
         System.out.println("DOI = " + doi + " . Number geoFile: " + countFile + " . Number geoMeta: " + countMeta);
         boolean geoMoreThanMeta = countFile >= countMeta;
+        if(!geoMoreThanMeta && countFile>0)
+            logger.info("More bounding boxes came from the metadata than the files, but there were file-generated bounding boxes as well. Check " + doi + " to make sure we shouldn't actually be using the files instead", javaObject);
         List<DataverseGeoRecordFile> list = geoMoreThanMeta? geoFiles : geoMeta;
-        if(list.size()>1 && !geoMoreThanMeta){
+        if(list.size()>1){
             int count = 1;
             for(DataverseGeoRecordFile d:list){
                 d.setBbCount(count);
@@ -61,9 +66,10 @@ public abstract class GeoBlacklightJSON extends JSONCreator implements MetadataS
         getRequiredFields(drf.getGBB(), total, drf.getBbCount());
         getOptionalFields(drf,total);
         geoBlacklightJson = jo.toString();
+        String slash = GeodisyStrings.replaceSlashes("/");
         if(!javaObject.getSimpleFields().getField(TITLE).isEmpty())
             if (!single)
-                saveJSONToFile(geoBlacklightJson, doi, GeodisyStrings.replaceSlashes(GeodisyStrings.removeHTTPSAndReplaceAuthority(doi)) + " (File " + drf.getGBBFileNumber() + " of " + total + ")");
+                saveJSONToFile(geoBlacklightJson, doi, GeodisyStrings.replaceSlashes(GeodisyStrings.removeHTTPSAndReplaceAuthority(doi)) + slash+drf.getBbCount());
             else
                 saveJSONToFile(geoBlacklightJson, doi, GeodisyStrings.replaceSlashes(GeodisyStrings.removeHTTPSAndReplaceAuthority(doi)));
     }

@@ -1,11 +1,14 @@
 package BaseFiles;
 
 
+import Dataverse.ExistingCallsToCheck;
 import Dataverse.ExistingDatasetBBoxes;
 import _Strings.GeodisyStrings;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
+
+import static _Strings.GeodisyStrings.*;
 
 /**
  * Class used to write things to files (logs and existing records files)
@@ -165,5 +168,27 @@ public class FileWriter {
 
     public String getPath(){
         return fw.toString();
+    }
+
+    public void verifyFiles() {
+            File folder = new File(SAVED_FILES);
+            if(!folder.exists())
+                folder.mkdir();
+            File logs = new File(LOGS);
+            if(!logs.exists())
+                logs.mkdir();
+            if(!verifyFileExistence(RECORDS_TO_CHECK))
+                ExistingCallsToCheck.getExistingCallsToCheck();
+            verifyFileExistence(ERROR_LOG);
+            verifyFileExistence(WARNING_LOG);
+            verifyFileExistence(EXISTING_DATASET_BBOXES);
+            verifyFileExistence(EXISTING_CHECKS);
+            verifyFileExistence(DOWNLOADED_FILES);
+            verifyFileExistence(EXISTING_GEO_LABELS_VALS);
+            verifyFileExistence(EXISTING_GEO_LABELS);
+            verifyFileExistence(RASTER_RECORDS);
+            verifyFileExistence(VECTOR_RECORDS);
+            verifyFileExistence(EXISTING_LOCATION_NAMES);
+            verifyFileExistence(EXISTING_LOCATION_BBOXES);
     }
 }

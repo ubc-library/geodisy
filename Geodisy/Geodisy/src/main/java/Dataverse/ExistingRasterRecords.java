@@ -13,7 +13,7 @@ import java.util.HashMap;
 import static _Strings.GeodisyStrings.RASTER_RECORDS;
 
 
-public class ExistingRasterRecords extends ExisitingFile implements Serializable {
+public class ExistingRasterRecords extends ExistingFile implements Serializable {
     private static final long serialVersionUID = 5416853597895403201L;
     private HashMap<String, String> records;
     private static ExistingRasterRecords single_instance = null;

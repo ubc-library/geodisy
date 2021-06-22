@@ -62,15 +62,19 @@ public class GeographicCoverage extends CompoundJSONField {
     }
 
     public void setGivenProvince(String givenProvince) {
-        this.givenProvince = givenProvince;
-        provinceObject =  new Province(this.givenProvince, givenCountry);
-        commonProvince = provinceObject.getGivenName();
+        if(!givenCountry.equals("")) {
+            this.givenProvince = givenProvince;
+            provinceObject = new Province(this.givenProvince, givenCountry);
+            commonProvince = provinceObject.getGivenName();
+        }
     }
 
     public void setGivenCity(String givenCity) {
-        this.givenCity = givenCity;
-        cityObject = new City(this.givenCity, givenProvince, givenCountry);
-        commonCity = cityObject.getGivenName();
+        if(!(givenCountry.equals("")||givenProvince.equals(""))){
+            this.givenCity = givenCity;
+            cityObject = new City(this.givenCity, givenProvince, givenCountry);
+            commonCity = cityObject.getGivenName();
+        }
     }
 
 
@@ -88,6 +92,8 @@ public class GeographicCoverage extends CompoundJSONField {
             JSONObject fieldTitle = (JSONObject) field.get(s);
             String title = fieldTitle.getString(TYPE_NAME);
             String value = fieldTitle.getString(VAL);
+            if(value.startsWith("http"))
+                continue;
             switch (title) {
                 case COUNTRY:
                     setGivenCountry(value);

@@ -24,7 +24,6 @@ import static _Strings.DVFieldNameStrings.*;
  * set to 361 is used.
  */
 public class GeonamesBBs extends FindBoundBox {
-    private String USER_NAME = "geodisy";
     String doi;
     public DataverseJavaObject djo;
     Geonames geo;
@@ -52,11 +51,15 @@ public class GeonamesBBs extends FindBoundBox {
     @Override
     public BoundingBox getDVBoundingBox(String countryName) {
         Country country;
+        if(countryName.startsWith("http")) {
+            logger.error("Somehow got a country name that was a url: " + countryName + " from record" + doi);
+            return new BoundingBox();
+        }
         String c = existingLocations.getCountryFromCode(countryName);
         if(c.isEmpty())
-            country = new Country(c);
+            country = new Country(countryName);
          else
-             country = new Country(countryName);
+             country = new Country(c);
         if(!country.hasBoundingBox()){
             logger.info(countryName + " is not a valid country givenName in record at PERSISTENT_ID: " + doi + ", so no bounding box could be automatically generated. Check this record manually ", djo);
             return new BoundingBox();
@@ -81,6 +84,7 @@ public class GeonamesBBs extends FindBoundBox {
         Province p = new Province(province, country);
         if(p.hasBoundingBox())
             return p.getBoundingBox();
+        logger.info(province + ", " + country + " is not returned nothing from geonames, so no bounding box could be automatically generated from it. Check "+ doi + " record manually ", djo);
         return new BoundingBox();
     }
 
@@ -105,6 +109,7 @@ public class GeonamesBBs extends FindBoundBox {
         City cit = new City(city, province, country);
         if(cit.hasBoundingBox())
             return cit.getBoundingBox();
+        logger.info(city+ ", " + province + ", " + country + " is not returned nothing from geonames, so no bounding box could be automatically generated from it. Check "+ doi + " record manually ", djo);
         return new BoundingBox();
     }
 

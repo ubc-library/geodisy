@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 
-public abstract class ExistingSearches extends ExisitingFile {
+public abstract class ExistingSearches extends ExistingFile {
     GeoLogger logger;
 
     public void saveExistingSearchs(HashMap object, String path, String className){

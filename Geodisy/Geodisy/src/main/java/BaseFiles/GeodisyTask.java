@@ -1,6 +1,7 @@
 package BaseFiles;
 
 import Crosswalking.GeoBlacklightJson.GeoCombine;
+import Crosswalking.XML.XMLTools.JGit;
 import Dataverse.*;
 import _Strings.GeodisyStrings;
 
@@ -36,20 +37,8 @@ public class GeodisyTask {
        String endWarningLog;
        long startTime = Calendar.getInstance().getTimeInMillis();
         try {
-            FileWriter fW = new FileWriter();
-            verifyFiles(fW);
+            FileWriter fW = loadSavedFiles();
 
-            existingDatasetBBoxes = ExistingDatasetBBoxes.getExistingHarvests();
-            existingDatasetBBoxes.saveExistingSearchs(existingDatasetBBoxes.getbBoxes(), EXISTING_DATASET_BBOXES, ExistingDatasetBBoxes.class.getName());
-            existingLocations = ExistingLocations.getExistingLocations();
-            existingLocations.saveExistingSearchs(existingLocations.getbBoxes(),EXISTING_LOCATION_BBOXES, ExistingLocations.class.getName());
-            existingLocations.saveExistingSearchs(existingLocations.getNames(),EXISTING_LOCATION_NAMES, ExistingLocations.class.getName());
-            existingCallsToCheck = ExistingCallsToCheck.getExistingCallsToCheck();
-            existingCallsToCheck.saveExistingSearchs(existingCallsToCheck.getRecords(),EXISTING_CHECKS,"ExistingCallsToCheck");
-            existingGeoLabels = ExistingGeoLabels.getExistingLabels();
-            existingGeoLabels.saveExistingFile(existingGeoLabels.getGeoLabels(),EXISTING_GEO_LABELS,ExistingGeoLabels.class.getName());
-            existingGeoLabelsVals = ExistingGeoLabelsVals.getExistingGeoLabelsVals();
-            existingGeoLabelsVals.saveExistingFile(existingGeoLabelsVals.getValues(),EXISTING_GEO_LABELS_VALS,ExistingGeoLabelsVals.class.getName());
             srf = SourceRecordFiles.getSourceRecords();
 
             startErrorLog = new String(Files.readAllBytes(Paths.get(ERROR_LOG)));
@@ -61,15 +50,13 @@ public class GeodisyTask {
             List<SourceJavaObject> sJOs = geo.harvestFRDRMetadata();
             //deleteEmptyFolders();
 
-            //TODO Uncomment sendRecordsToGeoBlacklight() once harvesting of FRDR has been approved on Prod
-            /*if(!IS_WINDOWS) {
+            if(!IS_WINDOWS) {
                 sendRecordsToGeoBlacklight();
-                *//*We are no longer updating Open Geo Metadata records due to sparely populated metadata files
                 if(!TEST) {
                     JGit jgit = new JGit();
                     jgit.updateRemoteMetadata();
-                }*//*
-            }*/
+                }
+            }
              
             /**
              *
@@ -117,23 +104,21 @@ public class GeodisyTask {
         }
     }
 
-    private void verifyFiles(FileWriter fW) {
-        File folder = new File(SAVED_FILES);
-        folder.mkdir();
-        File logs = new File(LOGS);
-        logs.mkdir();
-        if(!fW.verifyFileExistence(RECORDS_TO_CHECK))
-            ExistingCallsToCheck.getExistingCallsToCheck();
-        fW.verifyFileExistence(ERROR_LOG);
-        fW.verifyFileExistence(WARNING_LOG);
-        fW.verifyFileExistence(EXISTING_DATASET_BBOXES);
-        fW.verifyFileExistence(EXISTING_CHECKS);
-        fW.verifyFileExistence(DOWNLOADED_FILES);
-        fW.verifyFileExistence(EXISTING_GEO_LABELS_VALS);
-        fW.verifyFileExistence(RASTER_RECORDS);
-        fW.verifyFileExistence(VECTOR_RECORDS);
-        fW.verifyFileExistence(EXISTING_LOCATION_NAMES);
-        fW.verifyFileExistence(EXISTING_LOCATION_BBOXES);
+    public FileWriter loadSavedFiles() throws IOException{
+        FileWriter fw = new FileWriter();
+        fw.verifyFiles();
+        existingDatasetBBoxes = ExistingDatasetBBoxes.getExistingHarvests();
+        existingDatasetBBoxes.saveExistingSearchs(existingDatasetBBoxes.getbBoxes(), EXISTING_DATASET_BBOXES, ExistingDatasetBBoxes.class.getName());
+        existingLocations = ExistingLocations.getExistingLocations();
+        existingLocations.saveExistingSearchs(existingLocations.getBBoxes(),EXISTING_LOCATION_BBOXES, ExistingLocations.class.getName());
+        existingLocations.saveExistingSearchs(existingLocations.getNames(),EXISTING_LOCATION_NAMES, ExistingLocations.class.getName());
+        existingCallsToCheck = ExistingCallsToCheck.getExistingCallsToCheck();
+        existingCallsToCheck.saveExistingSearchs(existingCallsToCheck.getRecords(),EXISTING_CHECKS,"ExistingCallsToCheck");
+        existingGeoLabels = ExistingGeoLabels.getExistingLabels();
+        existingGeoLabels.saveExistingFile(existingGeoLabels.getGeoLabels(),EXISTING_GEO_LABELS,ExistingGeoLabels.class.getName());
+        existingGeoLabelsVals = ExistingGeoLabelsVals.getExistingGeoLabelsVals();
+        existingGeoLabelsVals.saveExistingFile(existingGeoLabelsVals.getValues(),EXISTING_GEO_LABELS_VALS,ExistingGeoLabelsVals.class.getName());
+        return fw;
     }
 
     private void deleteEmptyFolders() {
@@ -156,7 +141,11 @@ public class GeodisyTask {
         File[] listofFiles = folder.listFiles();
         if (listofFiles.length == 0) {
             System.out.println("Folder Name :: " + folder.getAbsolutePath() + " is deleted.");
-            folder.delete();
+            try {
+                Files.deleteIfExists(Paths.get(location));
+            } catch (IOException e) {
+                logger.error("Something went wrong trying to delete folder: " + location);
+            }
             return false;
         } else {
             for (int j = 0; j < listofFiles.length; j++) {

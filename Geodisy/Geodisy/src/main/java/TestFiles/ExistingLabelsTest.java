@@ -3,11 +3,11 @@ package TestFiles;
 import Dataverse.ExistingGeoLabels;
 import Dataverse.ExistingGeoLabelsVals;
 
-public class ExisitingLabelsTest {
+public class ExistingLabelsTest implements Test{
     ExistingGeoLabels eGL;
     ExistingGeoLabelsVals eGLV;
 
-    public void checkEGL(){
+    public void run(){
         eGL = ExistingGeoLabels.getExistingLabels();
         eGLV = ExistingGeoLabelsVals.getExistingGeoLabelsVals();
         System.out.println(eGLV.addVector("v1230","test.shp"));

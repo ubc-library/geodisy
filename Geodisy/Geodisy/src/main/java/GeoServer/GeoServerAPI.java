@@ -8,6 +8,7 @@ package GeoServer;
 import BaseFiles.FileWriter;
 import BaseFiles.GeoLogger;
 import BaseFiles.HTTPCaller;
+import BaseFiles.ProcessCall;
 import Crosswalking.GeoBlacklightJson.HTTPCombineCaller;
 import Dataverse.*;
 
@@ -18,6 +19,7 @@ import org.json.JSONObject;
 import java.io.*;
 
 import java.nio.file.Files;
+import java.util.concurrent.*;
 
 import static _Strings.GeoBlacklightStrings.GEOSERVER_REST;
 import static _Strings.GeodisyStrings.*;
@@ -30,29 +32,24 @@ import static _Strings.GeoserverStrings.*;
 public class GeoServerAPI extends DestinationAPI {
     SourceJavaObject sjo;
     HTTPCallerGeosever caller;
+    ProcessCall processCall;
 
     public GeoServerAPI(SourceJavaObject sjo) {
         this.sjo = sjo;
         caller = new HTTPCallerGeosever();
         logger =  new GeoLogger(this.getClass());
     }
-    //TODO FIGURE OUT GEOSERVER REST ENDPOINT WITH JOEL
+
     private boolean generateWorkspace(String workspaceName) {
         try {
             String generateWorkspace = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + "-XPOST -H \"Content-type: text/xml\" -d \"<workspace><name>" + workspaceName + "</name></workspace>\" " + GEOSERVER_REST + "workspaces";
-            ProcessBuilder processBuilder= new ProcessBuilder();
-            Process p;
-            processBuilder.command("/usr/bin/bash", "-c", generateWorkspace);
-            p = processBuilder.start();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null)
-                continue;
-            p.waitFor();
-            p.destroy();
-        } catch (InterruptedException|IOException e) {
+            processCall = new ProcessCall();
+            processCall.runProcess(generateWorkspace,10, TimeUnit.SECONDS,logger);
+        } catch (InterruptedException | IOException | ExecutionException e) {
             logger.error("Something went wrong trying to create the workspace " + workspaceName + " in geoserver");
             return false;
+        } catch (TimeoutException e) {
+            logger.error("Action timed out trying to create workspace " + workspaceName + " in geoserver");
         }
         return true;
     }
@@ -63,9 +60,84 @@ public class GeoServerAPI extends DestinationAPI {
         boolean success = addVectorToPostGIS(fileName,geoserverLabel);
         if(!success) return success;
         System.out.println("Adding to Geoserver");
-        success = addPostGISLayerToGeoserver(geoserverLabel,fileName);
-        if(!success) return success;
-        return updateTitleInGeoserver(geoserverLabel,fileName);
+        return timedAddVector(geoserverLabel,fileName);
+        }
+
+    private boolean timedAddVector(String geoserverLabel, String fileName) {
+        System.out.println("Adding: "+ fileName);
+        VectorCall vectorCall = new VectorCall(geoserverLabel,fileName);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<Boolean> future = executorService.submit(vectorCall);
+        executorService.shutdown();
+        try{
+            if(!executorService.awaitTermination(5, TimeUnit.MINUTES)){
+                logger.warn("Timed out trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
+                System.out.println("Timed out trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
+                return false;
+            }
+        }catch (InterruptedException e){
+            logger.error("Something went wrong trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
+            executorService.shutdownNow();
+            return false;
+        }
+        boolean success;
+        try {
+            success = future.get(2,TimeUnit.SECONDS);
+        } catch (InterruptedException|ExecutionException|TimeoutException e) {
+            return false;
+        }
+        if(success) {
+            return timedUpdateTitleInGeoserver(geoserverLabel, fileName);
+        }
+        return false;
+    }
+
+    private boolean timedUpdateTitleInGeoserver(String geoserverLabel, String fileName) {
+        VectorCallTitle v = new VectorCallTitle(geoserverLabel,fileName);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<Boolean> future = executorService.submit(v);
+        executorService.shutdown();
+        try{
+            if(!executorService.awaitTermination(30, TimeUnit.SECONDS)){
+                logger.warn("Timed out trying to update title in geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
+                return false;
+            }
+        }catch (InterruptedException e){
+            logger.error("Something went wrong trying to update title in geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
+            executorService.shutdownNow();
+            return false;
+        }
+        boolean success;
+        try {
+            success = future.get();
+        } catch (InterruptedException|ExecutionException e) {
+            return false;
+        }
+        return success;
+    }
+    private class VectorCall implements Callable<Boolean>{
+        String geoserverLabel;
+        String fileName;
+        public VectorCall(String geoserverLabel, String fileName) {
+            this.geoserverLabel = geoserverLabel;
+            this.fileName = fileName;
+        }
+        @Override
+        public Boolean call() {
+            return addPostGISLayerToGeoserver(geoserverLabel, fileName);
+        }
+    }
+    private class VectorCallTitle implements Callable<Boolean>{
+        String geoserverLabel;
+        String fileName;
+        public VectorCallTitle(String geoserverLabel, String fileName) {
+            this.geoserverLabel = geoserverLabel;
+            this.fileName = fileName;
+        }
+        @Override
+        public Boolean call(){
+            return updateTitleInGeoserver(geoserverLabel,fileName);
+        }
     }
 
     private boolean addVectorToPostGIS(String fileName, String geoserverlabel) {
@@ -73,56 +145,68 @@ public class GeoServerAPI extends DestinationAPI {
             return postGIS.addFile2PostGIS((DataverseJavaObject) sjo, fileName,geoserverlabel);
         }
 
-        //TODO fix this?
-        public boolean addPostGISLayerToGeoserver(String geoserverlabel, String filename){
+    public boolean addPostGISLayerToGeoserver(String geoserverlabel, String filename){
         String vectorDB = GEOSERVER_VECTOR_STORE;
         String title = filename.substring(0,filename.lastIndexOf('.'));
-        ProcessBuilder processBuilder= new ProcessBuilder();
 
         try {
+            deleteVectorLayer(geoserverlabel);
             //bring new layer over from POSTGIS
             String call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H \"Content-type: text/xml\" -d \"<featureType><name>" + geoserverlabel.toLowerCase() + "</name><title>"+ title +"</title><nativeCRS>EPSG:4326</nativeCRS><srs>EPSG:4326</srs><enabled>true</enabled></featureType>\" " + GEOSERVER_REST + "workspaces/geodisy/datastores/" + vectorDB + "/featuretypes";
-            processBuilder.command("/usr/bin/bash", "-c",call);
-            Process p = processBuilder.start();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null)
-                continue;
-            p.waitFor();
-            p.destroy();
-        } catch (IOException | InterruptedException e) {
+            System.out.println("App shp to Geoserver");
+            ProcessCall pc = new ProcessCall();
+            pc.runProcess(call,30, TimeUnit.SECONDS, logger);
+
+        } catch (IOException | InterruptedException | ExecutionException e) {
             logger.error("Something went wrong adding vector layer " + geoserverlabel + " from POSTGIS");
             return false;
+        } catch (TimeoutException e) {
+            logger.error("Action timed out trying to add " + geoserverlabel + " to geoserver. Filename: " + filename + " PID: " + sjo.getPID());
         }
-        return true;
+            return true;
+    }
+
+    private void deleteVectorLayer(String geoserverlabel) {
+        ProcessCall pc = new ProcessCall();
+        try {
+            //Part 1
+            String call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XDELETE " + GEOSERVER_REST + "layers/geodisy:" + geoserverlabel + ".xml";
+            System.out.println("Deleting layer: " + geoserverlabel);
+            pc.runProcess(call, 30, TimeUnit.SECONDS,   logger);
+
+            //Part2
+            call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XDELETE " + GEOSERVER_REST + "workspaces/geodisy/datastores/" + GEOSERVER_VECTOR_STORE + "/featuretypes/" + geoserverlabel + ".xml";
+            pc = new ProcessCall();
+            pc.runProcess(call,30,TimeUnit.SECONDS, logger);
+
+        }catch (FileNotFoundException ignored) {
+        } catch (TimeoutException e){
+            System.out.println("Timeout when trying to delete " + geoserverlabel + " from geoserver");
+            logger.error("Timeout when trying to delete " + geoserverlabel + " from geoserver");
+        } catch (InterruptedException | ExecutionException e) {
+            System.out.println("Something went wrong trying to delete layer with geolabel: " + geoserverlabel);
+            logger.error("Something went wrong trying to delete layer with geolabel: " + geoserverlabel);
+        }
     }
 
     private boolean updateTitleInGeoserver(String geoserverLabel, String fileName) {
+        System.out.println("Updating Title");
         String vectorDB = GEOSERVER_VECTOR_STORE;
         String title = fileName.substring(0,fileName.lastIndexOf('.'));
-        ProcessBuilder processBuilder= new ProcessBuilder();
-        String call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -H 'Accept: text/xml' -XGET "+ GEODISY_PATH_ROOT + "/geoserver/rest/workspaces/geodisy/datastores/"+ vectorDB + "/featuretypes/" + geoserverLabel+".xml";
+        String call = "curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -H 'Accept: text/xml' -XGET "+ GEODISY_PATH_ROOT + "geoserver/rest/workspaces/geodisy/datastores/"+ vectorDB + "/featuretypes/" + geoserverLabel+".xml";
         call = GeodisyStrings.replaceSlashes(call);
         try {
-            processBuilder.command("/usr/bin/bash", "-c",call);
-            Process p = processBuilder.start();
-            InputStream iS = p.getInputStream();
-            String xml = "";
-            for(int i = 0; i<iS.available();i++){
-                xml+=iS.read();
-            }
-            xml.replace("<title>"+geoserverLabel+"</title>","<title>"+title+"</title>");
+            processCall = new ProcessCall();
+            String xml = processCall.runProcess(call,10, TimeUnit.SECONDS,logger)[0];
+            xml = xml.replace("<title>"+geoserverLabel+"</title>","<title>"+title+"</title>");
             call = "curl -u admin:geoserver -H 'Accept: application/xml' -H 'Content-type: application/xml' -XPUT " + GEOSERVER_REST + " workspaces/geodisy/datastores/"+ vectorDB+"/featuretypes/" + geoserverLabel+ ".xml -d '" + xml + "'";
-            ProcessBuilder processBuilder2= new ProcessBuilder();
-            processBuilder2.command("/usr/bin/bash", "-c",call);
-            Process p2 = processBuilder.start();
-// wait for 10 seconds and then destroy the process
-            Thread.sleep(10000);
-            p2.destroy();
-            p.destroy();
-        } catch (IOException | InterruptedException e) {
+            processCall = new ProcessCall();
+            processCall.runProcess(call,30, TimeUnit.SECONDS,logger);
+        } catch (IOException | InterruptedException |  ExecutionException e) {
             logger.error("Something went wrong updating " + geoserverLabel + " with the title: " + title);
             return false;
+        } catch (TimeoutException e) {
+            logger.error(String.format("Updating Title in Geoserver timed out for geoserverLabel: %s, title: %s, and PID: %s ", geoserverLabel, title, sjo.getPID()));
         }
         return true;
     }
@@ -131,27 +215,74 @@ public class GeoServerAPI extends DestinationAPI {
     public boolean addRaster(DataverseGeoRecordFile dgrf) {
         String fileName = dgrf.getTranslatedTitle();
         String geoserverLabel = dgrf.getGeoserverLabel();
-        return addRaster(fileName,geoserverLabel);
+        return timedAddRaster(fileName,geoserverLabel);
     }
+
+    private boolean timedAddRaster(String fileName, String geoserverLabel) {
+        System.out.println("Adding: "+ fileName);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        RasterCall r = new RasterCall(fileName, geoserverLabel);
+        Future<Boolean> successBool = executorService.submit(r);
+        executorService.shutdown();
+        try{
+            addRaster(fileName, geoserverLabel);
+            if(!executorService.awaitTermination(10, TimeUnit.MINUTES)){
+                logger.warn("Timed out trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
+                System.out.println("Timed out trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
+                return false;
+            }
+        }catch (InterruptedException e){
+            logger.error("Something went wrong trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
+            executorService.shutdownNow();
+            return false;
+        }
+        try {
+            return successBool.get();
+        } catch (InterruptedException | ExecutionException e) {
+            logger.error("Something went wrong trying to add file to geoserver: Filename = " + fileName + " doi = " + sjo.getPID());
+            return false;
+        }
+    }
+    private class RasterCall implements Callable<Boolean> {
+        String geoserverLabel;
+        String fileName;
+        public RasterCall(String fileName, String geoserverLabel) {
+            this.geoserverLabel=geoserverLabel;
+            this.fileName=fileName;
+        }
+
+        @Override
+        public Boolean call(){
+            return addRaster( fileName, geoserverLabel);
+        }
+    }
+
     public boolean addRaster(String fileName, String geoserverLabel){
         if (fileName.contains("."))
             fileName = fileName.substring(0, fileName.lastIndexOf("."));
         fileName = fileName + ".tif";
-        ProcessBuilder processBuilder= new ProcessBuilder();
-
-        try { deleteOldCoverstore(processBuilder, geoserverLabel);
-        }catch (InterruptedException | IOException f) {
+        try { deleteOldCoverstore(geoserverLabel);
+        }catch (InterruptedException | IOException |  ExecutionException f) {
             logger.error("Error trying to delete existing raster from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
             return false;
-        }
-        try { normalizeRaster(processBuilder, fileName);
-        }catch (InterruptedException | IOException f) {
-            logger.error("Error trying to normalize raster from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
+        } catch (TimeoutException e) {
+            logger.error("Timeout trying to delete existing raster from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" +  fileName);
             return false;
         }
-        try { renameRasterToOrig(processBuilder, GeodisyStrings.removeHTTPSAndReplaceAuthority(sjo.getPID()).replace(".","/"),fileName);
-        }catch (InterruptedException | IOException f) {
+        try { normalizeRaster(fileName);
+        }catch (InterruptedException | IOException  | ExecutionException f) {
+            logger.error("Error trying to normalize raster from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
+            return false;
+        } catch (TimeoutException e) {
+            logger.error("Timeout trying to normalize raster from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
+            return false;
+        }
+        try { renameRasterToOrig(GeodisyStrings.removeHTTPSAndReplaceAuthority(sjo.getPID()).replace(".","/"),fileName);
+        }catch (InterruptedException | IOException |  ExecutionException f) {
             logger.error("Error trying to rename raster back to correct name from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
+            return false;
+        } catch (TimeoutException e) {
+            logger.error("Timeout trying to rename raster back to correct name from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
             return false;
         }
         /*try { addRasterOverviews(processBuilder, fileName);
@@ -160,156 +291,106 @@ public class GeoServerAPI extends DestinationAPI {
             return false;
         }*/
 
-        try { createCoverstore(geoserverLabel, processBuilder, fileName);
-        }catch (InterruptedException | IOException f) {
+        try { createCoverstore(geoserverLabel, fileName);
+        }catch (InterruptedException | IOException | ExecutionException f) {
             logger.error("Error trying to create a coverstore for raster from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
             return false;
-        }
-
-        try{ enableCoverageStore(processBuilder, geoserverLabel,fileName);
-        }catch (InterruptedException | IOException f){
-        logger.error("Error trying to enable coveragestore on geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
+        } catch (TimeoutException e) {
+            logger.error("Timeout trying to create a coverstore for raster from geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
             return false;
         }
 
-        try{ addRasterLayer(processBuilder,geoserverLabel,fileName);
-        }catch (InterruptedException | IOException f){
+        //Previous Step seems to enable the store
+        /*try{ enableCoverageStore(geoserverLabel,fileName);
+        }catch (InterruptedException | IOException | ExecutionException f){
+        logger.error("Error trying to enable coveragestore on geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
+            return false;
+        } catch (TimeoutException e) {
+            logger.error("Timeout trying to enable coveragestore on geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
+            return false;
+        }*/
+
+        try{ addRasterLayer(geoserverLabel,fileName);
+        }catch (InterruptedException | IOException  | ExecutionException f){
             logger.error("Error trying to add raster to geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
+            return false;
+        } catch (TimeoutException e) {
+            logger.error("Timeout trying to add raster to geoserver: doi=" + sjo.getPID() + ", geoserver label=" + geoserverLabel + ", file name=" + fileName);
             return false;
         }
         ExistingRasterRecords existingRasterRecords = ExistingRasterRecords.getExistingRasters();
         existingRasterRecords.addOrReplaceRecord(sjo.getPID(),fileName);
+        System.out.println("Added raster with fileName: " + fileName + " and geoserverLabel: " + geoserverLabel);
         return true;
     }
 
-    private void deleteOldCoverstore(ProcessBuilder processBuilder, String geoserverLable) throws InterruptedException, IOException{
-        String deleteCoveragestore = "curl -u admin:" + GEOSERVER_PASSWORD + " -XDELETE " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores/" + geoserverLable.toLowerCase() + "?recurse=true");
-        Process p;
-        processBuilder.command("/usr/bin/bash", "-c", deleteCoveragestore);
-        p = processBuilder.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line;
-        while ((line = reader.readLine()) != null)
-            continue;
-        p.waitFor();
-        p.destroy();
-
-    }
-
-    private void normalizeRaster(ProcessBuilder processBuilder, String fileName) throws InterruptedException, IOException {
-        String warp = GDALWARP(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(sjo.getPID()).replace(".","/") + "/", fileName);
-        Process p;
-        processBuilder.command("/usr/bin/bash", "-c", warp);
-        p = processBuilder.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line;
-        while ((line = reader.readLine()) != null)
-            continue;
-        p.waitFor();
-        p.destroy();
-    }
-
-    private void renameRasterToOrig(ProcessBuilder processBuilder, String datasetID, String fileName) throws InterruptedException, IOException{
-        String rename = "sudo mv -f " + DATA_DIR_LOC + datasetID + "/1" + fileName + " " + DATA_DIR_LOC + datasetID + "/" + fileName;
-        Process p;
-        processBuilder.command("/usr/bin/bash", "-c", rename);
-        p = processBuilder.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line;
-        while ((line = reader.readLine()) != null)
-            continue;
-        p.waitFor();
-        p.destroy();
-    }
-
-    private void addRasterOverviews(ProcessBuilder processBuilder, String fileName) throws InterruptedException, IOException {
-        String addo = GDALADDO(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(sjo.getPID()).replace(".","/") + "/" + fileName);
-        Process p;
-        processBuilder.command("/usr/bin/bash", "-c", addo);
-        p = processBuilder.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line;
-        while ((line = reader.readLine()) != null)
-            continue;
-        p.waitFor();
-        p.destroy();
-    }
-
-    private void createCoverstore(String geoserverLable, ProcessBuilder processBuilder, String fileName) throws InterruptedException, IOException{
-        String createCoveragestore = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:text/xml") +  " -d '<coverageStore><name>" + geoserverLable.toLowerCase()+ "</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>file:" + GeodisyStrings.removeHTTPSAndReplaceAuthority(sjo.getPID()).replace(".","/") + "/" + fileName + "</url></coverageStore>' " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores?configure=all");
-        Process p;
-        processBuilder.command("/usr/bin/bash", "-c", createCoveragestore);
-        p = processBuilder.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line;
-        while ((line = reader.readLine()) != null)
-            continue;
-        p.waitFor();
-        p.destroy();
-    }
-
-    private void enableCoverageStore(ProcessBuilder processBuilder, String geoserverLabel, String translatedTitle) throws InterruptedException, IOException{
-    String title = translatedTitle;
-    if(title.contains("."))
-        title=title.substring(0,title.lastIndexOf("."));
-    String enableCoverageStore = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:application/xml") + " -d '<coverage><name>"+ geoserverLabel.toLowerCase() + "</name><nativeCRS>" + RASTER_CRS + "</nativeCRS><title>" + title + "</title><enabled>True</enabled></coverage>' " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores/"+ geoserverLabel.toLowerCase() + "/coverages");
-    Process p;
-    processBuilder.command("/usr/bin/bash", "-c", enableCoverageStore);
-    p = processBuilder.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line;
-        while ((line = reader.readLine()) != null)
-            continue;
-    p.waitFor();
-    p.destroy();
-    }
-
-    private void addRasterLayer(ProcessBuilder processBuilder, String geoserverLabel, String translatedTitle)throws InterruptedException, IOException{
-        String fileLocation = DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority((sjo.getPID())+"/").replace(".","/")+  translatedTitle;
-        String addRaster = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPUT -H \"Content-type: text/plain\" -d 'file://" + fileLocation + "' " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores/"+ geoserverLabel.toLowerCase() + "/external.geotiff?configure=first&coverageName=" + geoserverLabel);
-        Process p;
-        processBuilder.command("/usr/bin/bash", "-c", addRaster);
-        p = processBuilder.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line;
-        while ((line = reader.readLine()) != null)
-            continue;
-        p.waitFor();
-        p.destroy();
-    }
-
-
-    /// Below methods seem unused at the moment
-    private void saveJsonToFile(String jsonString) {
-        FileWriter fileWriter = new FileWriter();
-        String doi = sjo.getPID();
-        String doiPath = doi.replace("/","_");
-        String filePath = DATA_DIR_LOC + doiPath + "/import.json";
+    private boolean checkForCoveragestore(String geoserverLabel){
+        String checkForCov = "curl -u admin:" + GEOSERVER_PASSWORD + " -X GET  " + GEOSERVER_REST + "workspaces/geodisy/coveragestores/" + geoserverLabel.toLowerCase() + "/coverages -H \"accept: text/html\" -H \"content-type: text/html\"";
+        System.out.println("Checking for existing Coveragestore");
+        processCall = new ProcessCall();
+        String[] output = new String[0];
         try {
-            fileWriter.writeStringToFile(jsonString,filePath);
-        } catch (IOException e) {
-            logger.error("Something went wrong trying to create the temp json for uploading to geoserver");
+            output = processCall.runProcess(checkForCov,10, TimeUnit.SECONDS,logger);
+        } catch (TimeoutException|FileNotFoundException|ExecutionException|InterruptedException e) {
+            return false;
         }
+        for(String s: output){
+            if(s.startsWith("No such coverage store"))
+                return false;
+        }
+        return true;
     }
 
-    private String generateUploadCall() {
-        String curlCall = "/usr/bin/curl -u " + GEOSERVER_USERNAME + ":" + GEOSERVER_PASSWORD + " -XPOST -H \"Content-type: application/json\" -d @_tempFiles/import.json \""+ GEOSERVER_REST + "imports\"";
-        return curlCall;
+    private void deleteOldCoverstore(String geoserverLabel) throws InterruptedException, IOException, TimeoutException, ExecutionException {
+        String deleteCoveragestore = "curl -u admin:" + GEOSERVER_PASSWORD + " -XDELETE " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores/" + geoserverLabel.toLowerCase() + "?recurse=true");
+        System.out.println("Delete old coverage: " + deleteCoveragestore);
+        processCall = new ProcessCall();
+        processCall.runProcess(deleteCoveragestore, 10, TimeUnit.SECONDS,logger);
     }
 
-    private String createDirectoryUploadJSON(String filename, String doi, String store, String workspace) {
+    private void normalizeRaster(String fileName) throws InterruptedException, IOException, TimeoutException, ExecutionException {
+        String warp = GDALWARP(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(sjo.getPID()).replace(".","/") + "/", fileName);
+        System.out.println("Normalize raster: " + warp);
+        processCall = new ProcessCall();
+        processCall.runProcess(warp, 30, TimeUnit.SECONDS,logger);
+    }
 
-        String jsonModified = "";
-        if(generateWorkspace(workspace)) {
-            if (addPostGISStore()) {
-                JSONObject root = new JSONObject();
-                JSONArray array = addWorkspaceStore(workspace, store, doi);
-                root.put(stringed("import"), array);
-                String json = root.toString();
-                jsonModified = jsonArrayBracketChange(json);
-            }
-        }
-        return jsonModified;
+    private void renameRasterToOrig(String datasetID, String fileName) throws InterruptedException, IOException, TimeoutException, ExecutionException {
+        String rename = "sudo mv -f " + DATA_DIR_LOC + datasetID + "/1" + fileName + " " + DATA_DIR_LOC + datasetID + "/" + fileName;
+        System.out.println("Rename raster to orig: " + rename);
+        processCall = new ProcessCall();
+        processCall.runProcess(rename,5,TimeUnit.SECONDS,logger);
+    }
+
+    private void addRasterOverviews(String fileName) throws InterruptedException, IOException, TimeoutException, ExecutionException {
+        String addo = GDALADDO(DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority(sjo.getPID()).replace(".","/") + "/" + fileName);
+        processCall = new ProcessCall();
+        processCall.runProcess(addo,10, TimeUnit.SECONDS,logger);
+    }
+
+    private void createCoverstore(String geoserverLable, String fileName) throws InterruptedException, IOException, TimeoutException, ExecutionException {
+        String createCoveragestore = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:text/xml") +  " -d '<coverageStore><name>" + geoserverLable.toLowerCase()+ "</name><workspace>geodisy</workspace><enabled>true</enabled><type>GeoTIFF</type><url>file:" + GeodisyStrings.removeHTTPSAndReplaceAuthority(sjo.getPID()).replace(".","/") + "/" + fileName + "</url></coverageStore>' " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores?configure=all");
+        System.out.println("Create coverage: " + createCoveragestore);
+        processCall = new ProcessCall();
+        processCall.runProcess(createCoveragestore,5, TimeUnit.SECONDS,logger);
+    }
+
+    private void enableCoverageStore(String geoserverLabel, String translatedTitle) throws InterruptedException, IOException, TimeoutException, ExecutionException {
+        String title = translatedTitle;
+        if(title.contains("."))
+            title=title.substring(0,title.lastIndexOf("."));
+        String enableCoverageStore = "/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPOST -H " + stringed("Content-type:application/xml") + " -d '<coverage><name>"+ geoserverLabel.toLowerCase() + "</name><nativeCRS>" + RASTER_CRS + "</nativeCRS><title>" + title + "</title><enabled>True</enabled></coverage>' " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores/"+ geoserverLabel.toLowerCase() + "/coverages");
+        System.out.println("Enable coverage: " + enableCoverageStore);
+        processCall = new ProcessCall();
+        processCall.runProcess(enableCoverageStore,5,TimeUnit.SECONDS,logger);
+    }
+
+    private void addRasterLayer(String geoserverLabel, String translatedTitle) throws InterruptedException, IOException, TimeoutException, ExecutionException {
+        String fileLocation = DATA_DIR_LOC + GeodisyStrings.removeHTTPSAndReplaceAuthority((sjo.getPID())+"/").replace(".","/")+ translatedTitle;
+        String addRaster = GeodisyStrings.replaceSlashes("/usr/bin/curl -u admin:" + GEOSERVER_PASSWORD + " -XPUT -H \"Content-type: text/plain\" -d 'file://" + fileLocation + "' " + stringed(GEOSERVER_REST + "workspaces/geodisy/coveragestores/"+ geoserverLabel.toLowerCase() + "/external.geotiff?configure=first&coverageName=" + geoserverLabel));
+        System.out.println("Add raster layer: " + addRaster);
+        processCall = new ProcessCall();
+        processCall.runProcess(addRaster,2,TimeUnit.MINUTES,logger);
     }
 
     private boolean addPostGISStore() {

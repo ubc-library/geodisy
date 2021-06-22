@@ -25,18 +25,18 @@ public class BoundingBox implements Serializable {
      */
 
     private double checkLat(double lat) {
-        if(lat<-90 || lat>90)
+        if(lat<-90.0 || lat>90.0)
             return 361;
         return lat;
     }
 
     private double checkLong(double longitude) {
-        if(longitude<-180 || longitude>180)
+        if(longitude<-180.0 || longitude>180.0)
             return 361;
         return longitude;
     }
     public boolean hasBoundingBox(){
-        return (getLatSouth()>=-90 && getLatNorth()<=90 && getLongEast()<=180 && getLongWest()>=-180)&&(getLatSouth()!=361 && getLatNorth()!=361 && getLongEast()!=361 && getLongWest()!=361)&&!((getLatSouth()==0 && getLatNorth()==0) || (getLongEast()==0 && getLongWest()==0));
+        return ((getLatSouth()>=-90 && getLatNorth()<=90 && getLongEast()<=180 && getLongWest()>=-180)&&(getLatSouth()!=361 && getLatNorth()!=361 && getLongEast()!=361 && getLongWest()!=361));
     }
     public boolean hasUTMCoords(){
         return Math.abs(getLatSouthUnchecked()) > 90 || Math.abs(getLatNorthUncheck()) > 90 || Math.abs(getLongEastUnchecked()) > 180 || Math.abs(getLongWestUnchecked()) > 180;
@@ -51,7 +51,7 @@ public class BoundingBox implements Serializable {
         double val;
         try{
             val = Double.parseDouble(numString);
-            if(val<0.0001)
+            if(Math.abs(val)<0.0001)
                 val = 0;
         } catch (NumberFormatException e){
             val = 361;
@@ -63,7 +63,7 @@ public class BoundingBox implements Serializable {
         double val;
         try{
             val = Double.parseDouble(numString);
-            if(val<0.0001)
+            if(Math.abs(val)<0.0001)
                 val = 0;
         } catch (NumberFormatException e){
             val = 361;

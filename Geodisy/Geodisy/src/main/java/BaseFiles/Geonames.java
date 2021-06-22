@@ -46,6 +46,15 @@ public class Geonames {
         HTTPCallerGeoNames caller = new HTTPCallerGeoNames();
         String answer = "";
         answer = caller.callHTTP(urlString);
+        //TODO uncomment if we want to check for areas in the city field
+        /*if(answer.contains("<totalResultsCount>0</totalResultsCount>")) {
+            parameters = getBaseParameters(country);
+            parameters.put("fcode", "AREA");
+            searchString = city + "%2C%20" + province + addParameters(parameters);
+            urlString = GEONAMES_SEARCH_BASE + searchString;
+            caller = new HTTPCallerGeoNames();
+            answer = caller.callHTTP(urlString);
+        }*/
         if(answer.contains("<totalResultsCount>0</totalResultsCount>"))
             answer = getGeonamesProvince(province,country);
         return answer;
@@ -106,7 +115,6 @@ public class Geonames {
     }
 
     private String addParameters(Map<String, String> parameters) {
-        parameters.put("username","geodisy");
         String answer = "";
         for(String s: parameters.keySet()){
             answer+= "&" + s + "=" + parameters.get(s);
@@ -141,8 +149,8 @@ public class Geonames {
         parameters.put("style","FULL");
         parameters.put("maxRows","1");
         String countryCode = getCountryCode(country);
-        parameters.put("country",countryCode);
-
+        if(!countryCode.equals(""))
+            parameters.put("country",countryCode);
         return parameters;
     }
 
@@ -174,6 +182,6 @@ public class Geonames {
         String cc = existingLocations.getLocationNames(countryName)[2];
         if(!cc.isEmpty())
             return cc;
-        return (new Country(countryName)).getCountryCode();
+        return "";
     }
 }

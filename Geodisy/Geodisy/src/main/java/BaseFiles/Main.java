@@ -6,7 +6,6 @@ package BaseFiles;
  */
 
 import Crosswalking.GeoBlacklightJson.GeoCombine;
-import TestFiles.ExisitingLabelsTest;
 import TestFiles.Tests;
 import _Strings.GeodisyStrings;
 
@@ -46,20 +45,4 @@ public class Main {
         tests.runTests();*/
 
     }
-    //Only use this method for testing syntax for calling Geocombine
-    private static void testCombine(String[] args) {
-        List<String> cmdList = new ArrayList<String>();
-        cmdList.add("/bin/bash");
-        cmdList.add("-c");
-        cmdList.add(GEOCOMBINE);
-        if(args.length>0) {
-            cmdList.clear();
-            for(String s:args) {
-                cmdList.add(s);
-            }
-        }
-        GeoCombine geoCombine = new GeoCombine();
-        geoCombine.combine(cmdList);
-    }
-
 }

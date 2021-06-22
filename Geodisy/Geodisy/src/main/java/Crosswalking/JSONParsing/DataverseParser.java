@@ -28,7 +28,13 @@ public class DataverseParser implements JSONParser {
     }
 
     public DataverseJavaObject frdrParse(JSONObject jo){
-        String repo = jo.getString("repo_base_url");
+        String repo;
+        if(jo.has("repo_base_url"))
+            repo = jo.getString("repo_base_url");
+        else {
+            repo = "test";
+            System.out.println("Running as test so repo_base_url is not real");
+        }
         return frdrParse(jo, repo, false);
     }
 
