@@ -23,7 +23,6 @@ public class ExistingCallsToCheck extends ExistingSearches implements Serializab
     }
 
     private ExistingCallsToCheck(){
-        logger = new GeoLogger(this.getClass());
         records = readExistingRecords(EXISTING_CHECKS);
         newRecords = new HashMap<>();
 
@@ -73,6 +72,14 @@ public class ExistingCallsToCheck extends ExistingSearches implements Serializab
 
     public void deleteRecords(String location){
         records.remove(location);
+    }
+
+    @Override
+    protected GeoLogger getLogger() {
+        if (logger == null) {
+            logger = new GeoLogger(this.getClass());
+        }
+        return logger;
     }
 
 }

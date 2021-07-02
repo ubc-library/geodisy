@@ -29,7 +29,6 @@ public class ExistingLocations extends ExistingSearches implements Serializable 
     }
 
     private ExistingLocations(){
-        logger = new GeoLogger(this.getClass());
         bBoxes = readExistingBoundingBoxes();
         locationNames = readExistingAltNames();
     }
@@ -53,12 +52,6 @@ public class ExistingLocations extends ExistingSearches implements Serializable 
         if(hasBBox(location))
             return bBoxes.get(location);
         return new BoundingBox();
-    }
-
-    private boolean hasLocationBB(String location){
-        if(hasBBox(location))
-            return true;
-        return false;
     }
 
     public boolean hasBB(String country, String province, String city){
@@ -148,7 +141,7 @@ public class ExistingLocations extends ExistingSearches implements Serializable 
         try {
             fw.writeObjectToFile(bBoxes,TEST_EXISTING_BBOXES);
         } catch (IOException e) {
-            logger.error("Something went wrong saving existing bboxes");
+            getLogger().error("Something went wrong saving existing bboxes");
         }
     }
 
@@ -158,10 +151,10 @@ public class ExistingLocations extends ExistingSearches implements Serializable 
         try {
             return  (HashMap<String, BoundingBox>) fw.readSavedObject(EXISTING_LOCATION_BBOXES);
         } catch (IOException e) {
-            logger.error("Something went wrong reading the Existing bBoxes file");
+            getLogger().error("Something went wrong reading the Existing bBoxes file");
             return newFile;
         } catch (ClassNotFoundException e) {
-            logger.error("Something went wrong parsing the Existing BBoxes file");
+            getLogger().error("Something went wrong parsing the Existing BBoxes file");
             return newFile;
         }catch (NullPointerException e){
             return newFile;
@@ -173,10 +166,10 @@ public class ExistingLocations extends ExistingSearches implements Serializable 
         try {
             return  (HashMap<String, String[]>) fw.readSavedObject(EXISTING_LOCATION_NAMES);
         } catch (IOException e) {
-            logger.error("Something went wrong reading the Existing bBoxes file");
+            getLogger().error("Something went wrong reading the Existing bBoxes file");
             return newFile;
         } catch (ClassNotFoundException e) {
-            logger.error("Something went wrong parsing the Existing BBoxes file");
+            getLogger().error("Something went wrong parsing the Existing BBoxes file");
             return newFile;
         }catch (NullPointerException e){
             return newFile;
@@ -208,5 +201,13 @@ public class ExistingLocations extends ExistingSearches implements Serializable 
                 return key;
         }
         return "";
+    }
+
+    @Override
+    protected GeoLogger getLogger() {
+        if (logger == null) {
+            logger = new GeoLogger(this.getClass());
+        }
+        return logger;
     }
 }

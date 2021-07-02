@@ -9,11 +9,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
 
 import static _Strings.GeodisyStrings.EXISTING_GEO_LABELS;
-import static _Strings.GeodisyStrings.RASTER_RECORDS;
 
 
 public class ExistingGeoLabels extends ExisitingFile implements Serializable {
@@ -29,7 +27,6 @@ public class ExistingGeoLabels extends ExisitingFile implements Serializable {
     }
 
     private ExistingGeoLabels(){
-        logger = new GeoLogger(this.getClass());
         geoFiles = readExistingGeoLabels();
     }
 
@@ -51,10 +48,10 @@ public class ExistingGeoLabels extends ExisitingFile implements Serializable {
         } catch (FileNotFoundException e){
             return newFile;
         } catch (IOException e) {
-            logger.error("IO Exception: Something went wrong reading " + path);
+            getLogger().error("IO Exception: Something went wrong reading " + path);
             return newFile;
         } catch (ClassNotFoundException e) {
-            logger.error("Class Not Found Error: Something went wrong parsing " + path + " or file was empty");
+            getLogger().error("Class Not Found Error: Something went wrong parsing " + path + " or file was empty");
             return newFile;
         }
     }
@@ -95,5 +92,13 @@ public class ExistingGeoLabels extends ExisitingFile implements Serializable {
             }
         }
         return "error";
+    }
+
+    @Override
+    protected GeoLogger getLogger() {
+        if (logger == null) {
+            logger = new GeoLogger(this.getClass());
+        }
+        return logger;
     }
 }

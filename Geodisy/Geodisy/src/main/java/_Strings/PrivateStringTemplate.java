@@ -8,4 +8,6 @@ public class PrivateStringTemplate {
     public final static String PRIVATE_GEOSERVER_USERNAME = "[Your Geoserver Username]";
     public final static String PRIVATE_GEONAMES_USERNAME = "[Your Geonames Username]";
     public final static String PRIVATE_POSTGIS_USER_PASSWORD = "[Your POSTGIS USER PASSWORD]";
+    public final static String PRIVATE_OPENGEOMETADATA_USERNAME = "[Your OpenGeoMetadata Username]";
+    public final static String PRIVATE_OPENGEOMETADATA_PASSWORD = "[Your OpenGeoMetadata Password]";
 }
