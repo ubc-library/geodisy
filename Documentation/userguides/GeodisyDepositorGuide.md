@@ -50,6 +50,6 @@ If you’re depositing geospatial data (such as a Shapefile, GeoTIFF, geoJSON, e
 [The Dataverse North Geospatial Guide](https://dx.doi.org/10.14288/1.0388724) provides more information on best practices for using Dataverse’s Geospatial Metadata block. 
 
 ## Geodisy for institutions
-If you’ve come across this guide and you would like your institution to implement a Geodisy connection, please see [Geodisy: Implementing a Dataverse connection at your institution](https://somelink.invalid/ImplementationGuide).
+If you’ve come across this guide and you would like your institution to implement a Geodisy connection, please see [Geodisy: Implementing a Dataverse connection at your institution](https://github.com/ubc-library/geodisy/blob/master/Documentation/userguides/GeodisyInstitutionalGuide.md).
 
 **Questions?** Contact the Geodisy team at [geodisy.info@ubc.ca](mailto:geodisy.info@ubc.ca)

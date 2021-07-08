@@ -12,7 +12,7 @@ public class CheckRasterRecords {
     @Test
     public void checkRasterRecords(){
         ExistingRasterRecords existingRasterRecords = ExistingRasterRecords.getExistingRasters();
-        existingRasterRecords.readExistingRecords(RASTER_RECORDS);
+        existingRasterRecords.readExistingRecords();
         HashMap<String, String> records = existingRasterRecords.getRecords();
         Set<String> keys =  records.keySet();
         for(String key:keys){

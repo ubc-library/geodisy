@@ -16,4 +16,6 @@ public class PrivateStringTemplate {
 
     // Postgis is used to store vector data and provides that data to Geoserver
     public final static String PRIVATE_POSTGIS_USER_PASSWORD = "[Your POSTGIS USER PASSWORD]";
+    public final static String PRIVATE_OPENGEOMETADATA_USERNAME = "[Your OpenGeoMetadata Username]";
+    public final static String PRIVATE_OPENGEOMETADATA_PASSWORD = "[Your OpenGeoMetadata Password]";
 }
