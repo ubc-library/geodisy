@@ -1,3 +1,5 @@
+## :warning: While the pipeline can still be implemented with the resources in this repository,<br>The Geodisy Project is no longer in active development/maintanence as of Nov 8th, 2022 :warning:
+
 # Geodisy
 #### The world of data at your fingertips
 
